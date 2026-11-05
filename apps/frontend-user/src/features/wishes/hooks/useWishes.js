@@ -10,7 +10,10 @@ export function useWishes(invitationId) {
 
   const loadWishes = useCallback(() => {
     const request = ++generation.current;
-    if (!invitationId) { if (request === generation.current) setLoading(false); return; }
+    if (!invitationId) {
+      if (request === generation.current) setLoading(false);
+      return;
+    }
     setLoading(true);
     setError("");
     wishesApi
@@ -23,12 +26,16 @@ export function useWishes(invitationId) {
         if (request !== generation.current) return;
         setError(err?.message || "Could not load wishes");
       })
-      .finally(() => { if (request === generation.current) setLoading(false); });
+      .finally(() => {
+        if (request === generation.current) setLoading(false);
+      });
   }, [invitationId]);
 
   useEffect(() => {
     loadWishes();
-    return () => { generation.current += 1; };
+    return () => {
+      generation.current += 1;
+    };
   }, [loadWishes]);
 
   const deleteWish = async (wishId) => {
@@ -36,8 +43,11 @@ export function useWishes(invitationId) {
     try {
       await wishesApi.deleteWish(invitationId, wishId);
       setWishes((prev) => prev.filter((w) => w.id !== wishId));
+      return { success: true };
     } catch (err) {
-      setError(err?.message || "Could not delete wish");
+      const message = err?.message || "Could not delete wish";
+      setError(message);
+      return { success: false, error: message };
     } finally {
       setDeletingId(null);
     }

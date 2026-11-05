@@ -246,6 +246,56 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npm run test:e2e tests/e2e/royal-garden-v33.spec.js` (frontend-user) | **13 tests passed**, 2 skipped across desktop and mobile Chromium |
 | `npm run test:e2e tests/e2e/invitation-styles-v2.spec.js` (frontend-user) | **42 tests passed** across desktop and mobile Chromium |
 
+## Batch 8 — Invitation Delivery, QR Management, Event Check-In Desk, Ticket Designer & Guest Wishes (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| pps/frontend-user/src/features/invitations/InvitationDeliveryManager.jsx | Modernized delivery operations workspace with 6 KPI summary metric cards (	otal, 
+eady, sent, opened, 
+esponded, ailed), event publication & delivery readiness status banner, guest recipient search and status filter tabs (ALL, SENT, OPENED, RESPONDED, FAILED, PENDING), responsive recipient cards with mobile reflow (<768px), personalized link copy with truthful share recording, native Web Share API, reminder dispatch modal, and 44px min touch targets |
+| pps/frontend-user/src/features/invitations/DeliveryWorkspace.css | Styled luxury delivery workspace, KPI cards with gold top indicator borders, status badges, recipient list table, mobile card reflow, and accessible focus states |
+| pps/frontend-user/src/features/qr/QrPage.css | High-contrast scannable QR card preview with refined gold frame and @media print rules for physical wedding table signs and reception display stands |
+| pps/frontend-user/src/features/invitations/components/QrCameraScanner.jsx | Modernized camera scanner with secure-context (isSecureContext) check, camera device support verification, track cleanup on close/unmount, neutral verification state (isVerifying), raw token DOM masking, and elimination of premature audio success before server confirmation |
+| pps/frontend-user/src/features/invitations/InvitationCheckInPage.jsx | Fixed string vs number ID comparison bug in checkedGuestIds.has(String(guest.id)), upgraded color contrast from #8b7a66 to #5c4f3d for WCAG AA compliance (4.5:1+), added WCAG table landmarks, duplicate scan warning alert banner with guest identification and dismiss action, and instant celebration modal with seating table and gift recording |
+| pps/frontend-user/src/features/invitations/checkIn.test.jsx | Expanded unit test suite verifying duplicate check-in warnings, guest status filter tabs, manual check-in token entry, and walk-in modal focus trapping (5 passed) |
+| pps/frontend-user/src/features/tickets/TicketDesigner.test.jsx | New unit test suite verifying live pass preview, layout/frame/font/accent controls, cover/background photo uploads, dirty state change indicator, and guest recipient switching (3 passed) |
+| pps/frontend-user/src/features/wishes/hooks/useWishes.js | Fixed deletion-state defect where deleteWish swallowed API rejections into internal state; function now returns { success: true } on success and { success: false, error: message } on failure |
+| pps/frontend-user/src/features/wishes/WishesPage.jsx | Modernized guest wishes operations board with wishes counter badge, search input with instant clear, gold left-accent parchment cards, guest name and timestamp formatting, and safe delete confirmation modal that remains open with clear error message on server failure |
+| pps/frontend-user/src/features/wishes/WishesPage.css | Styled wishes operations grid, luxury parchment cards with left gold accent border, delete confirmation dialog, and responsive reflow |
+| pps/frontend-user/src/features/wishes/WishesPage.test.jsx | Dedicated unit test suite verifying wishes list rendering, search filtering, empty states, and modal retry on deletion error (4 passed) |
+| pps/frontend-user/tests/e2e/batch8-delivery-qr-checkin-wishes.spec.js | Full Playwright E2E suite verifying Delivery Workspace, QR Management, Event Check-in Desk, and Wishes Management across desktop (1440px) and mobile viewports (375px, 390px, 768px) with zero Axe accessibility violations (10 passed) |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| 
+px vitest run src/features/invitations/InvitationDeliveryManager.test.jsx src/features/qr/ src/features/invitations/checkIn.test.jsx src/features/tickets/ src/features/wishes/ (customer cwd) | **8 test files passed**, **37 tests passed**; 1.72s; exit 0 |
+| 
+pm run lint (frontend-user) | Pass, **0 errors, 0 warnings**; exit 0 |
+| 
+pm run build (frontend-user) | Production build passed in 1.54s with **0 errors**; exit 0 |
+| 
+pm run lint (frontend-admin) | Pass, **0 errors, 0 warnings**; exit 0 |
+| 
+pm run build (frontend-admin) | Production build passed in 0.70s with **0 errors**; exit 0 |
+| 
+ode scripts/sync-design-tokens.cjs --check | Verified 2 application token exports; exit 0 |
+| python scripts/validate-agent-routing.py | Validated 58 skills, 10 pinned skills, 0 errors/failures; exit 0 |
+| 
+pm run test:e2e tests/e2e/batch8-delivery-qr-checkin-wishes.spec.js (frontend-user) | **10 tests passed** across desktop and mobile Chromium; 37.8s; exit 0 |
+| 
+pm run test:e2e tests/e2e/phase9-tickets.spec.js (frontend-user) | **4 tests passed** across desktop and mobile Chromium; 7.0s; exit 0 |
+
+### Visual evidence captured (docs/design/evidence/batch8/)
+
+- delivery-desktop-1440.png, delivery-768.png, delivery-390.png, delivery-375.png
+- qr-desktop-1440.png, qr-768.png, qr-390.png, qr-375.png
+- checkin-desktop-1440.png, checkin-768.png, checkin-390.png, checkin-375.png
+- wishes-desktop-1440.png, wishes-768.png, wishes-390.png, wishes-375.png
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).

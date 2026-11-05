@@ -439,7 +439,7 @@ export default function InvitationCheckInPage() {
                     </div>
 
                     <div className="guest-table-wrap">
-                        <table className="checkin-guest-table guest-table">
+                        <table className="checkin-guest-table guest-table" aria-label={copy("បញ្ជីភ្ញៀវកត់ត្រាវត្តមាន", "Guest roster")} data-testid="guest-roster-table">
                             <thead>
                                 <tr>
                                     <th>{uiCopy("ភ្ញៀវ", "Guest")}</th>
@@ -450,7 +450,7 @@ export default function InvitationCheckInPage() {
                             </thead>
                             <tbody>
                                 {filteredGuests.map((guest) => {
-                                    const checked = checkedGuestIds.has(guest.id);
+                                    const checked = checkedGuestIds.has(String(guest.id));
                                     const initial = (guest.guestName || "G").charAt(0).toUpperCase();
                                     return (
                                         <tr key={guest.id}>
@@ -484,7 +484,7 @@ export default function InvitationCheckInPage() {
                                             <td>
                                                 <div>
                                                     <span style={{ fontWeight: 600, color: "#1f2421" }}>{guest.phone || copy("មិនមានលេខទូរស័ព្ទ", "No phone")}</span>
-                                                    {guest.email ? <small style={{ color: "#8b7a66", display: "block" }}>{guest.email}</small> : null}
+                                                    {guest.email ? <small style={{ color: "#5c4f3d", display: "block" }}>{guest.email}</small> : null}
                                                 </div>
                                             </td>
                                             <td>
@@ -514,7 +514,7 @@ export default function InvitationCheckInPage() {
                                 })}
                                 {!filteredGuests.length && (
                                     <tr>
-                                        <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#8b7a66" }}>
+                                        <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#5c4f3d" }}>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
                                                 <Search size={28} color="#cbbeaa" />
                                                 <span>{uiCopy("រកមិនឃើញភ្ញៀវទេ។", "No guests found.")}</span>
@@ -540,7 +540,7 @@ export default function InvitationCheckInPage() {
                 </div>
 
                 <div className="guest-table-wrap">
-                    <table className="checkin-guest-table guest-table">
+                    <table className="checkin-guest-table guest-table" aria-label={copy("បញ្ជីចូលរួមចុងក្រោយ", "Recent check-ins")} data-testid="recent-checkins-table">
                         <thead>
                             <tr>
                                 <th>{uiCopy("ភ្ញៀវ", "Guest")}</th>
@@ -567,7 +567,7 @@ export default function InvitationCheckInPage() {
                                             </div>
                                         )}
                                         {item.note && (
-                                            <div style={{ fontSize: "0.78rem", color: "#8b7a66", marginTop: "2px" }}>
+                                            <div style={{ fontSize: "0.78rem", color: "#5c4f3d", marginTop: "2px" }}>
                                                 📝 {item.note}
                                             </div>
                                         )}

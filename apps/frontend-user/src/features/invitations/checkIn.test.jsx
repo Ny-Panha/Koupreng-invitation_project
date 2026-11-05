@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useLanguageStore } from '@/stores/useLanguageStore';
@@ -97,6 +97,78 @@ describe("InvitationCheckInPage Feature", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Keo Sophea")).toBeInTheDocument();
+    });
+  });
+
+  it("displays duplicate scan warning banner when a guest was already checked in", async () => {
+    const { guestService } = await import("@/features/guests/api/guestApi");
+    guestService.scanCheckIn.mockResolvedValueOnce({
+      id: 101,
+      guestId: 1,
+      guestName: "Sok Dara",
+      alreadyCheckedIn: true,
+      checkedInAt: "2026-09-01T10:00:00Z",
+      source: "Server Record",
+    });
+
+    render(
+      <MemoryRouter initialEntries={["/app/events/10/check-in"]}>
+        <Routes>
+          <Route path="/app/events/:eventId/check-in" element={<InvitationCheckInPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("QR link or token")).toBeInTheDocument();
+    });
+
+    const tokenInput = screen.getByLabelText("QR link or token");
+    fireEvent.change(tokenInput, { target: { value: "token-already-checked" } });
+
+    const scanForm = tokenInput.closest("form");
+    fireEvent.submit(scanForm);
+
+    await waitFor(() => {
+      const banner = screen.getByText("This guest is already checked in.").closest(".checkin-duplicate-banner");
+      expect(within(banner).getByText("Sok Dara")).toBeInTheDocument();
+    });
+  });
+
+  it("filters roster by pending and checked-in status", async () => {
+    render(
+      <MemoryRouter initialEntries={["/app/events/10/check-in"]}>
+        <Routes>
+          <Route path="/app/events/:eventId/check-in" element={<InvitationCheckInPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      const rosterTable = screen.getByTestId("guest-roster-table");
+      expect(within(rosterTable).getByText("Keo Sophea")).toBeInTheDocument();
+      expect(within(rosterTable).getByText("Sok Dara")).toBeInTheDocument();
+    });
+
+    // Filter to Pending
+    const pendingTab = screen.getByRole("button", { name: /Pending/i });
+    fireEvent.click(pendingTab);
+
+    await waitFor(() => {
+      const rosterTable = screen.getByTestId("guest-roster-table");
+      // Keo Sophea is pending, Sok Dara is checked in
+      expect(within(rosterTable).getByText("Keo Sophea")).toBeInTheDocument();
+      expect(within(rosterTable).queryByText("Sok Dara")).not.toBeInTheDocument();
+    });
+
+    // Filter to Checked in
+    const checkedTab = screen.getByRole("button", { name: /Checked in/i });
+    fireEvent.click(checkedTab);
+
+    await waitFor(() => {
+      const rosterTable = screen.getByTestId("guest-roster-table");
+      expect(within(rosterTable).queryByText("Keo Sophea")).not.toBeInTheDocument();
+      expect(within(rosterTable).getByText("Sok Dara")).toBeInTheDocument();
     });
   });
 });

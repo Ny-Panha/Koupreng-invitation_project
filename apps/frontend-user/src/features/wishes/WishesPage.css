@@ -1,29 +1,146 @@
+/* ──────────────────────────────────────────────────────────
+   Koupreng Wishes Management Page — Modern Luxury Theme
+   ────────────────────────────────────────────────────────── */
+
 .wishes-page {
-  max-width: 1180px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px clamp(16px, 3vw, 36px) 64px;
 }
 
+.wishes-header {
+  margin-bottom: 24px;
+}
+
+.wishes-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.wishes-title-row h1 {
+  margin: 4px 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  color: var(--app-ink, #1f2421);
+}
+
+.wishes-counter-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(176, 146, 106, 0.14);
+  color: var(--app-gold, #926c34);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.wishes-subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--app-muted, #696053);
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+/* Toolbar & Search */
+.wishes-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wishes-search-bar {
+  flex: 1 1 280px;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  min-height: 46px;
+  border: 1.5px solid var(--app-border, #e8dfcf);
+  border-radius: 12px;
+  background: var(--app-surface, #ffffff);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wishes-search-bar:focus-within {
+  border-color: var(--app-gold, #b0926a);
+  box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.2);
+}
+
+.wishes-search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--app-ink, #1f2421);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.wishes-clear-search {
+  border: none;
+  background: none;
+  color: var(--app-muted, #696053);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.wishes-clear-search:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.wishes-search-count {
+  font-size: 13px;
+  color: var(--app-muted, #696053);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Wishes Grid */
 .wishes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 18px;
+  margin-top: 10px;
 }
 
 .wish-card {
-  border: 1px solid var(--app-border);
-  border-radius: 14px;
-  background: var(--app-surface);
-  padding: 20px;
+  position: relative;
+  border: 1.5px solid var(--app-border, #e8dfcf);
+  border-left: 4px solid var(--app-gold, #b0926a);
+  border-radius: 16px;
+  background: var(--app-surface, #ffffff);
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 2px 8px rgba(42, 31, 16, 0.03);
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(42, 31, 16, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(42, 31, 16, 0.08);
 }
 
 .wish-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12px;
 }
 
 .wish-author-info {
@@ -33,48 +150,68 @@
 }
 
 .wish-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--app-subtle);
-  color: var(--app-muted);
+  background: linear-gradient(135deg, rgba(176, 146, 106, 0.2) 0%, rgba(176, 146, 106, 0.08) 100%);
+  color: var(--app-gold, #926c34);
+  border: 1px solid rgba(176, 146, 106, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 16px;
+  flex-shrink: 0;
 }
 
 .wish-name {
   font-size: 15px;
-  font-weight: 600;
-  color: var(--app-ink);
+  font-weight: 750;
+  color: var(--app-ink, #1f2421);
   margin: 0;
 }
 
 .wish-date {
-  font-size: 13px;
-  color: var(--app-muted);
+  font-size: 12.5px;
+  color: var(--app-muted, #696053);
+  margin-top: 2px;
+  display: block;
 }
 
 .wish-message {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--app-ink);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--app-ink, #1f2421);
   margin: 0;
   white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--app-subtle, #faf6ee);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(176, 146, 106, 0.15);
 }
 
 .wish-delete-btn {
-  background: #fee4e2;
-  border: 1px solid #fecdca;
-  color: #b42318;
-  border-radius: 6px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 8px;
   padding: 8px 12px;
   min-height: 44px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.wish-delete-btn:hover:not(:disabled) {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
 }
 
 .wish-delete-btn:disabled {
@@ -82,24 +219,90 @@
   cursor: not-allowed;
 }
 
+/* Empty State */
 .wishes-empty-state {
   text-align: center;
-  padding: 48px;
-  color: var(--app-muted);
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 14px;
-  margin-top: 16px;
+  padding: 56px 24px;
+  color: var(--app-muted, #696053);
+  background: var(--app-surface, #ffffff);
+  border: 1.5px solid var(--app-border, #e8dfcf);
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(93, 67, 32, 0.04);
 }
-.wishes-empty-icon-wrap { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 24px; background: var(--ws-gold-light, #f5efdf); color: var(--ws-gold-dark, #76572d); }
-.wishes-empty-title { font-size: 21px; line-height: 1.8; color: var(--ws-ink, #1f2421); margin: 0 0 12px; }
-.wishes-empty-desc { font-size: 16px; line-height: 1.8; max-width: 580px; margin: 0 auto; }
 
-.wishes-skeleton-grid {
+.wishes-empty-icon-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 24px;
+  background: rgba(176, 146, 106, 0.14);
+  color: var(--app-gold, #926c34);
 }
-.wishes-next-action { display: flex; justify-content: center; margin-top: 20px; }
-.wishes-dialog-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+.wishes-empty-title {
+  font-size: 21px;
+  line-height: 1.5;
+  font-weight: 800;
+  color: var(--app-ink, #1f2421);
+  margin: 0 0 10px;
+}
+
+.wishes-empty-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.wishes-next-action {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Dialog */
+.wishes-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wishes-dialog-body p {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--app-ink, #1f2421);
+  line-height: 1.6;
+}
+
+.wishes-delete-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.wishes-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.workspace-button.danger {
+  background: #dc2626;
+  color: #ffffff;
+  border: 1px solid #b91c1c;
+}
+
+.workspace-button.danger:hover:not(:disabled) {
+  background: #b91c1c;
+}

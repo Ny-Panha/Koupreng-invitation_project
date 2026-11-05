@@ -168,3 +168,35 @@
   padding: 40px 20px;
   color: #59615c;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .qr-page, .qr-page * {
+    visibility: visible;
+  }
+  .qr-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .qr-header, .qr-actions, .dash-kicker {
+    display: none !important;
+  }
+  .qr-card {
+    border: 2px solid #000000;
+    box-shadow: none;
+    page-break-inside: avoid;
+    max-width: 500px;
+    margin: 40px auto;
+  }
+  .qr-frame {
+    border: 1px solid #cccccc;
+    box-shadow: none;
+  }
+}
+
