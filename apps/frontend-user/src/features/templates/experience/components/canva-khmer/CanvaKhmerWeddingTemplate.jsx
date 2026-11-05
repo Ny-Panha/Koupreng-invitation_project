@@ -347,7 +347,7 @@ function CanvaKhmerProgram({ content }) {
             <div className="ck-program__paper">
                 <SectionTitle english="WEDDING PROGRAM"><InvitationLabel value={"កម្មវិធីមង្គលការ"} /></SectionTitle>
                 {content.dateText && <time className="ck-program__date">{content.dateText}</time>}
-                {content.programDays ? <ProgramTimeline content={content} /> : <div className="ck-program__list">
+                {(content.programDays || content.invitationStyleV1?.program) ? <ProgramTimeline content={content} /> : <div className="ck-program__list">
                     {items.map((item, index) => (
                         <article key={item.id || `${scheduleTime(item)}-${index}`}>
                             <div className="ck-program__icon"><IoTimeOutline /></div>

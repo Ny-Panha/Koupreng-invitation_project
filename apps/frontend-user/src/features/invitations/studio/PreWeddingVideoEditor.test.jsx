@@ -1,0 +1,41 @@
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import PreWeddingVideoEditor from './PreWeddingVideoEditor';
+const mocks = vi.hoisted(() => ({ list: vi.fn(), upload: vi.fn(), entitled: true }));
+vi.mock('@/features/events/workspace/EventContext', () => ({ useEventWorkspace: () => ({ access: { ownerFeatures: mocks.entitled ? ['PRE_WEDDING_VIDEO'] : [] } }) }));
+vi.mock('../api/mediaApi', () => ({ mediaService: { list: mocks.list, uploadPreWeddingVideo: mocks.upload } }));
+vi.mock('@/shared/access/FeatureAccessCard', () => ({ default: () => <p>Premium required</p> }));
+beforeEach(() => { mocks.entitled = true; mocks.list.mockReset(); mocks.upload.mockReset(); });
+afterEach(cleanup);
+const empty = { all: [], galleryImages: [] };
+it('does not display previous event media while a new event library is loading', async () => {
+  mocks.list.mockResolvedValueOnce({ all: [{ id: 12, mediaType: 'PRE_WEDDING_VIDEO', originalFilename: 'First event.mp4' }] });
+  let resolveNext;
+  mocks.list.mockImplementationOnce(() => new Promise(resolve => { resolveNext = resolve; }));
+  const { rerender } = render(<PreWeddingVideoEditor eventId={1} english onChange={vi.fn()} />);
+  expect(await screen.findByRole('option', { name: 'First event.mp4' })).toBeInTheDocument();
+  rerender(<PreWeddingVideoEditor eventId={2} english onChange={vi.fn()} />);
+  expect(screen.queryByRole('option', { name: 'First event.mp4' })).toBeNull();
+  expect(screen.getByLabelText(/Upload or replace/)).toBeDisabled();
+  await act(async () => resolveNext(empty));
+  expect(screen.getByLabelText(/Upload or replace/)).toBeEnabled();
+});
+it('discards a completed upload after switching events', async () => {
+  mocks.list.mockResolvedValue(empty);
+  let completeUpload;
+  mocks.upload.mockImplementation(() => new Promise(resolve => { completeUpload = resolve; }));
+  const onChange = vi.fn();
+  const { rerender } = render(<PreWeddingVideoEditor eventId={1} english onChange={onChange} />);
+  await act(async () => {});
+  fireEvent.change(screen.getByLabelText(/Upload or replace/), { target: { files: [new File(['video'], 'film.mp4', { type: 'video/mp4' })] } });
+  rerender(<PreWeddingVideoEditor eventId={2} english onChange={onChange} />);
+  await act(async () => completeUpload({ id: 10, mediaType: 'PRE_WEDDING_VIDEO' }));
+  expect(onChange).not.toHaveBeenCalled();
+});
+it('keeps uploads unavailable without server-reported Premium and handles a new draft without an event ID', () => {
+  mocks.entitled = false;
+  render(<PreWeddingVideoEditor english onChange={vi.fn()} />);
+  expect(screen.getByText('Premium required')).toBeInTheDocument();
+  expect(screen.queryByLabelText(/Upload or replace/)).toBeNull();
+  expect(mocks.list).not.toHaveBeenCalled();
+});

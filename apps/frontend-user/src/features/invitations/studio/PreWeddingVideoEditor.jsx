@@ -1,6 +1,6 @@
 import FeatureAccessCard from "@/shared/access/FeatureAccessCard";
 import { feedback } from '@/shared/feedback/feedback';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEventWorkspace } from '@/features/events/workspace/EventContext';
 import { mediaService } from '../api/mediaApi';
 import { validateLibraryFile } from '../mediaLibraryModel';
@@ -10,13 +10,17 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
   const workspace = useEventWorkspace();
   const entitled = workspace?.access?.ownerFeatures?.includes('PRE_WEDDING_VIDEO') === true;
   const text = (en, kh) => english ? en : kh;
-  const [library, setLibrary] = useState(null), [error, setError] = useState('');
+  const [libraryResult, setLibraryResult] = useState(null), [error, setError] = useState('');
+  const library = libraryResult && libraryResult.eventId === eventId ? libraryResult.media : null;
+  const currentEvent = useRef(eventId);
+  useEffect(() => { currentEvent.current = eventId; return () => { currentEvent.current = null; }; }, [eventId]);
+  const setLibrary = update => setLibraryResult(current => ({ eventId, media: typeof update === 'function' ? update(current && current.eventId === eventId ? current.media : null) : update }));
   const [busy, setBusy] = useState(false), [progress, setProgress] = useState(0), [preview, setPreview] = useState(false);
   const config = value || { enabled: false, videoMediaId: null, posterMediaId: null };
   useEffect(() => {
     if (!entitled || !/^[1-9]\d*$/.test(String(eventId))) return;
     let active = true;
-    mediaService.list(eventId).then(media => { if (active) { setLibrary(media); setError(''); } })
+    mediaService.list(eventId).then(media => { if (active) { setLibraryResult({ eventId, media }); setError(''); } })
       .catch(err => { if (active) setError(err.message); });
     return () => { active = false; };
   }, [eventId, entitled]);
@@ -31,6 +35,7 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
     setBusy(true); setError(''); setProgress(0); setPreview(false);
     try {
       const uploaded = await mediaService.uploadPreWeddingVideo(eventId, file, event => { if (event.total) setProgress(Math.round(event.loaded / event.total * 100)); });
+      if (currentEvent.current !== eventId) return;
       setLibrary(current => ({ ...current, all: [...(current?.all || []), uploaded] }));
       onChange({ ...config, videoMediaId: uploaded.id });
     } catch (err) { setError(err.message || text('Upload failed. Try again.', 'មិនអាចបញ្ចូលបាន។ សូមព្យាយាមម្ដងទៀត។')); feedback.explain(err, { event:workspace,feature:'PRE_WEDDING_VIDEO',permission:'MANAGE_INVITATION' }); }

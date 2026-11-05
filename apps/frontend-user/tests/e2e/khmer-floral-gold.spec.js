@@ -11,7 +11,7 @@ const code = 'khmer-floral-gold';
 // Synthetic catalog ID is scoped to intercepted browser contracts, never shipped as a renderer ID.
 const catalog = { id: 81, code, name: 'Khmer Floral Gold', status: 'ACTIVE', category: 'TRADITIONAL', premium: false, price: 0, currency: 'USD', supportedEventTypes: ['WEDDING'], supportedLanguages: ['KH','EN','BOTH'], thumbnailUrl: `/templates/${code}/preview.svg`, description: JSON.stringify(demo.design) };
 const json = (route, data, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify({ data }) });
-const open = async page => { await page.locator('.kfg-open').click(); await expect(page.locator('.kfg-content')).toBeVisible(); };
+const open = async page => { await page.locator('.kfg-open').click(); await expect.poll(async () => await page.locator('.kfg-content, .kfg-welcome-scene').count()).toBeGreaterThan(0); if (await page.locator('.kfg-continue').count()) await page.locator('.kfg-continue').click(); await expect(page.locator('.kfg-content')).toBeVisible(); };
 async function publicFixtures(page, { published = false, failure = false, contentOverrides = {} } = {}) {
   let rsvps = [], attempts = 0;
   const content = { ...demo, couple: { groom: demo.groom, bride: demo.bride }, photos: [], localizedContentV1: demo.localizedContentV1, ...contentOverrides };
@@ -42,12 +42,12 @@ for (const width of [360,390,430,512,768,1024,1440]) test(`reference scenes fit 
   await expect(page.locator('.kfg-invitation')).toHaveAttribute('lang', 'km');
   await expect(page.locator('.kfg-monogram')).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  const directory = '../../docs/design/khmer-floral-gold/screenshots';
+  const directory = '../../docs/design/khmer-floral-gold/screenshots/v2';
   await mkdir(directory, { recursive: true });
   if (info.project.name === 'desktop-chromium') await page.screenshot({ path: `${directory}/cover-${width}.png`, scale: 'css' });
   await open(page);
-  await expect(page.locator('.kfg-section')).toHaveCount(9);
-  await expect(page.locator('.kp-calendar')).toBeVisible();
+  await expect(page.locator('.kfg-section')).toHaveCount(8);
+  await expect(page.locator('.kfg-family')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(await page.locator('.kfg-invitation').evaluate(node => [...node.querySelectorAll('h1,h2,h3,p,button,input,select')].filter(n => n.clientWidth > 2 && n.scrollWidth > n.clientWidth + 2).map(n => ({ tag: n.tagName, text: n.textContent?.slice(0, 80), width: n.clientWidth, scroll: n.scrollWidth })))).toEqual([]);
   if (info.project.name === 'desktop-chromium') {
@@ -65,7 +65,7 @@ test('English, calendar download, lightbox keyboard/focus and nonpersistent demo
   await page.locator('.kfg-language select').selectOption('en');
   await expect(page.locator('.kfg-opening h1')).toHaveText(demo.localizedContentV1.en.title);
   await open(page);
-  await expect(page.locator('.kfg-family')).toContainText('Sok Dara');
+  await expect(page.locator('.kfg-family')).toContainText('Vireak');
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Add to calendar', exact: true }).click();
   expect((await download).suggestedFilename()).toMatch(/\.ics$/);
@@ -74,17 +74,17 @@ test('English, calendar download, lightbox keyboard/focus and nonpersistent demo
   const dialog = page.getByRole('dialog', { name: 'Wedding photo viewer' });
   await expect(dialog).toBeVisible();
   await dialog.evaluate(node => Promise.all([...node.getAnimations({ subtree: true }), ...node.parentElement.getAnimations()].map(animation => animation.finished.catch(() => {}))));
-  await mkdir('../../docs/design/khmer-floral-gold/screenshots', { recursive: true });
-  await page.screenshot({ path: `../../docs/design/khmer-floral-gold/screenshots/lightbox-${info.project.name}.png`, scale: 'css' });
+  await mkdir('../../docs/design/khmer-floral-gold/screenshots/v2', { recursive: true });
+  await page.screenshot({ path: `../../docs/design/khmer-floral-gold/screenshots/v2/lightbox-${info.project.name}.png`, scale: 'css' });
   await page.keyboard.press('ArrowRight');
-  await expect(dialog.locator('header')).toContainText('2 / 4');
+  await expect(dialog.locator('header')).toContainText('2 / 12');
   await page.keyboard.press('Tab');
   expect(await dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
   await page.keyboard.press('Escape'); await expect(page.locator('.kfg-slide')).toBeFocused();
   const bounds = await page.locator('.kfg-slide').boundingBox();
   await page.mouse.move(bounds.x + bounds.width * .7, bounds.y + bounds.height / 2);
   await page.mouse.down(); await page.mouse.move(bounds.x + bounds.width * .3, bounds.y + bounds.height / 2, { steps: 8 }); await page.mouse.up();
-  await expect(page.locator('.kfg-carousel-controls')).toContainText('3 / 4');
+  await expect(page.locator('.kfg-carousel-controls')).toContainText('3 / 12');
   await expect(dialog).toHaveCount(0);
   await page.getByRole('button', { name: 'View larger venue map' }).click();
   await expect(page.getByRole('dialog', { name: 'Venue diagram' })).toBeVisible();

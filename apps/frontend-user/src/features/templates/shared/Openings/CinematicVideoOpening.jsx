@@ -343,7 +343,7 @@ function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, exiti
   const locale = useInvitationLocale();
   const video = useRef(null), onFinish = useRef(onOpen), recovery = useRef(null);
   const [source, setSource] = useState(videoUrl || "");
-  const lockSound = presentation?.royal === true || alwaysMuted;
+  const lockSound = presentation?.royal === true || presentation?.alwaysMuted === true || alwaysMuted;
   const [muted, setMuted] = useState(lockSound || presentation?.sound !== 'on'), [paused, setPaused] = useState(false);
   const [status, setStatus] = useState("loading"), [progressValue, setProgressValue] = useState(0);
   useEffect(() => { onFinish.current = onOpen; }, [onOpen]);

@@ -1,0 +1,17 @@
+{
+  "opening": {
+    "samples": 259,
+    "medianMs": 16.699999999999818,
+    "p95Ms": 16.700000000000728,
+    "maxMs": 16.800000000000182,
+    "longTasksMs": [],
+    "context": "Headless Chromium, 512x896, cover release and welcome fade. Browser frame intervals under this test workload, not physical-device FPS."
+  },
+  "idle": {
+    "samples": 119,
+    "medianMs": 16.699999999999818,
+    "p95Ms": 16.700000000000728,
+    "maxMs": 16.800000000000182,
+    "context": "Headless Chromium, 512x896, idle invitation after opening; not a physical-device FPS certification."
+  }
+}

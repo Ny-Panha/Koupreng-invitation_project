@@ -144,9 +144,29 @@ class Phase9MediaMySqlTests {
         assertEquals(200, content(event.path("slug").asText(), video, access).statusCode());
     }
 
+    @Test void freeFloralTemplateKeepsThePremiumVideoBoundaryThroughRealPublication() throws Exception {
+        Auth owner = register(); grant(owner, "PREMIUM");
+        var body = eventBody();
+        body.put("templateId", jdbc.queryForObject("SELECT template_id FROM templates WHERE code='khmer-floral-gold'", Long.class));
+        Reply created = call("POST", "/api/v1/invitations", owner, body);
+        assertEquals(201, created.status); long id = created.data().path("id").asLong();
+        Reply video = upload(eventPath(id) + "/media/pre-wedding-video", owner, "file", "floral-film.mp4", "video/mp4", MP4);
+        assertEquals(201, video.status); long mediaId = video.data().path("id").asLong();
+        assertEquals(200, saveContent(owner, id, Map.of("preWeddingVideo", Map.of("enabled", true, "videoMediaId", mediaId),
+                "invitationStyleV1", Map.of("version", 1, "date", "gold-calendar", "program", "gold-curve"))).status);
+        assertEquals(200, call("PATCH", eventPath(id) + "/publish", owner, null).status);
+        String slug = created.data().path("slug").asText();
+        Reply guest = call("GET", "/api/v1/public/invitations/" + slug, null, null);
+        assertEquals("khmer-floral-gold", guest.data().path("templateCode").asText());
+        assertTrue(guest.data().path("cinematicOpening").path("enabled").asBoolean());
+        assertArrayEquals(MP4, content(slug, mediaId, null).body());
+    }
+
     private Reply saveContent(Auth auth, long id, Object settings) throws Exception {
         var body = eventBody(); body.put("contentJson", json.writeValueAsString(settings));
-        body.put("expectedUpdatedAt", call("GET", eventPath(id), auth, null).data().path("updatedAt").asText());
+        JsonNode current = call("GET", eventPath(id), auth, null).data();
+        if (current.path("templateId").isIntegralNumber()) body.put("templateId", current.path("templateId").asLong());
+        body.put("expectedUpdatedAt", current.path("updatedAt").asText());
         return call("PUT", eventPath(id), auth, body);
     }
     private JsonNode createEvent(Auth auth) throws Exception { Reply created = call("POST", "/api/v1/invitations", auth, eventBody()); assertEquals(201, created.status); return created.data(); }

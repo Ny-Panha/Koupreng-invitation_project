@@ -36,6 +36,7 @@ export function floralPhotos(content, english) {
     id: item?.id || `photo-${index}`, src: safeIntroMedia(typeof item === 'string' ? item : item?.src || item?.url || item?.preview),
     alt: (typeof item === 'object' && item?.alt) || (english ? `Wedding photograph ${index + 1}` : `រូបអនុស្សាវរីយ៍ទី ${index + 1}`),
     caption: item?.caption || '',
+    thumbnail: safeIntroMedia(item?.thumbnail),
   })).filter(item => item.src);
 }
 export function floralInitials(content) {

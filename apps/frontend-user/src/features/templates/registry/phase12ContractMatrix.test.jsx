@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import process from 'node:process';
 import { afterAll, afterEach, expect, it, vi } from 'vitest';
-import { cleanup, render, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { TEMPLATES } from '../data/templatesData';
 import { templateCapabilities } from './templateCapabilities';
@@ -38,13 +38,22 @@ it.each(presentations.flatMap(template => ['KH', 'EN'].map(languageMode => ({ te
   const { tpl } = draftToTemplate(draft);
   const { container } = render(<MemoryRouter><TemplateExperience tpl={tpl} preview showActions={false} showBreadcrumb={false} /></MemoryRouter>);
   await waitFor(() => expect(container.textContent).toContain('Fictional first partner'));
+  let invitationWording = container.textContent.includes(content.messageText);
+  if (code === 'khmer-floral-gold') {
+    // Floral presents the authored greeting in its standalone welcome scene.
+    const welcome = render(<MemoryRouter><TemplateExperience tpl={tpl} preview previewStartClosed showActions={false} showBreadcrumb={false} /></MemoryRouter>);
+    fireEvent.click(welcome.container.querySelector('.kfg-open'));
+    await waitFor(() => expect(welcome.container.textContent).toContain(content.messageText));
+    invitationWording = welcome.container.textContent.includes(content.messageText);
+    welcome.unmount();
+  }
   const probes = {
     coupleNames: [true, container.textContent.includes(content.groomName) && (code === 'event-essential' || container.textContent.includes(content.brideName))],
     familyGroups: [capabilities.familyLayout, !!container.querySelector('.kp-family-names')],
     monogram: [capabilities.monogram, !!container.querySelector('.kp-monogram')],
     illustratedMap: [capabilities.illustratedMap, !!container.querySelector('.kp-illustrated-map')],
     program: [capabilities.schedule, container.textContent.includes('Our authored ceremony')],
-    invitationWording: [true, container.textContent.includes(content.messageText)],
+    invitationWording: [true, invitationWording],
     venue: [true, container.textContent.includes(content.venueName)],
   };
   for (const [field, [supported, rendered]] of Object.entries(probes)) {

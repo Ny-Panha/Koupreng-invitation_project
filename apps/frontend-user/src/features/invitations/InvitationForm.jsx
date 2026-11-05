@@ -17,7 +17,7 @@ import { translationSection } from './studio/localeNavigation';
 import { templateCapabilities } from "../templates/registry/templateCapabilities";
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useEventWorkspace } from "../events/workspace/EventContext";
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import WeddingProgramEditor from "./studio/WeddingProgramEditor";
 import SaveTheDateEditor from "./studio/SaveTheDateEditor";
 import { eventPresentationFields } from '../templates/shared/eventPresentation';
@@ -35,6 +35,7 @@ import PublishReview from "./studio/PublishReview";
 import { publishReadiness } from "./studio/publishReadiness";
 import { createPortal } from "react-dom";
 import StudioAppearance from "./studio/StudioAppearance";
+const InvitationStyleEditor = lazy(() => import('./studio/InvitationStyleEditor'));
 import CinematicIntroEditor from './studio/CinematicIntroEditor';
 import { useStudioPersistence } from "./studio/useStudioPersistence";
 import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
@@ -681,7 +682,7 @@ export default function InvitationForm({ invitation }) {
         const config = getLocalizedTemplateFormFlow(template?.code === 'khmer-floral-gold' ? template : capabilities.appearance ? 'khmer-celestial' : template || form.templateId, uiLanguage);
         config.sectionOrder = config.sectionOrder.filter(key => capabilities[key] !== false && (key !== "story" || !invitation?.eventType || invitation.eventType === "WEDDING"));
         const appearance = capabilities.typography;
-        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), ...(capabilities.cinematicIntro ? ['cinematicIntro'] : []), "music", ...(capabilities.preWeddingVideo === false ? [] : ['preWeddingVideo'])] };
+        return { ...config, sectionOrder: ["eventInfo", ...config.sectionOrder.flatMap(key => key === "cover" && appearance ? [key, "appearance"] : [key]), ...(capabilities.dateStyles || capabilities.programStyles || capabilities.coverStyles ? ['invitationStyles'] : []), ...(capabilities.cinematicIntro ? ['cinematicIntro'] : []), "music", ...(capabilities.preWeddingVideo === false ? [] : ['preWeddingVideo'])] };
     }, [form.templateId, catalogVersion, invitation?.eventType, uiLanguage]);
     const activeSection = resolveStudioSection(selectedSection, flowConfig.sectionOrder);
     const floralTemplate = getTemplateById(form.templateId)?.code === 'khmer-floral-gold';
@@ -3080,6 +3081,7 @@ export default function InvitationForm({ invitation }) {
     );
 
     const sectionRenderers = {
+        invitationStyles: () => <Suspense fallback={<p role="status">{englishUI ? 'Loading invitation styles…' : 'កំពុងផ្ទុករចនាប័ទ្មធៀប…'}</p>}><InvitationStyleEditor form={form} update={update} capabilities={templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })} english={englishUI} eventId={invitation?.backendInvitationId || invitationId} /></Suspense>,
         cinematicIntro: () => <CinematicIntroEditor value={form.cinematicIntro} photos={form.photos} english={englishUI} onChange={change => setForm(previous => ({ ...previous, cinematicIntro: change(previous.cinematicIntro) }))} />,
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,

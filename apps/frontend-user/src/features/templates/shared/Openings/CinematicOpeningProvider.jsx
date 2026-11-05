@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Modal } from '@/shared/ui';
 import { usePrefersReducedMotion } from '@/shared/hooks/usePrefersReducedMotion';
-import CinematicVideoOpening from './CinematicVideoOpening';
 import { CinematicOpeningContext, CinematicPlaybackContext } from './cinematicOpeningContext';
 import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from '@/shared/preview/previewMessaging';
 import { safeIntroMedia } from '../cinematicIntro';
+const CinematicVideoOpening = lazy(() => import('./CinematicVideoOpening'));
 
 export default function CinematicOpeningProvider({ configuration, loadVideo, demoVideo, presentation, previewChannel, english, fallbackCover, title, children }) {
   const reduced = usePrefersReducedMotion();
+  const saveData = typeof navigator !== 'undefined' && navigator.connection?.saveData === true;
   const [open, setOpen] = useState(false);
   const [coverDismissed, setCoverDismissed] = useState(false);
   const [previewRequested, setPreviewRequested] = useState(false);
@@ -20,7 +21,7 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
     clearTimeout(timer.current); active.current = false; started.current = false; resume.current = null; callbacks.current = {}; setOpen(false); setExiting(false); setCompleted(false); setPreviewRequested(false);
   }, []);
   const start = useCallback((resumeMusic, delay = 0, options = {}) => {
-    if (!enabled || reduced || active.current || (started.current && !options.replay)) return false;
+    if (!enabled || reduced || saveData || active.current || (started.current && !options.replay)) return false;
     clearTimeout(timer.current); active.current = true;
     started.current = true;
     setCompleted(false);
@@ -30,7 +31,7 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
     setStagePresentation(options.presentation || presentation);
     timer.current = window.setTimeout(() => { setOpen(true); options.onStart?.(); }, delay);
     return true;
-  }, [enabled, reduced, presentation]);
+  }, [enabled, reduced, saveData, presentation]);
   const finish = useCallback(() => {
     if (!active.current) return;
     active.current = false; clearTimeout(timer.current);
@@ -64,11 +65,11 @@ export default function CinematicOpeningProvider({ configuration, loadVideo, dem
     window.addEventListener('message', message);
     return () => window.removeEventListener('message', message);
   }, [previewChannel, start, stop]);
-  const showCover = enabled && !reduced && fallbackCover && !coverDismissed;
+  const showCover = enabled && !reduced && !saveData && fallbackCover && !coverDismissed;
   const currentPresentation = presentation || stagePresentation;
   const royal = currentPresentation?.royal;
   const poster = safeIntroMedia(demoVideo?.poster || configuration?.posterUrl);
-  const player = open ? <CinematicVideoOpening stageOnly loadVideo={demoVideo ? undefined : loadVideo} videoUrl={demoVideo?.src} posterUrl={poster} presentation={currentPresentation} exiting={exiting} english={english} onOpen={finish} /> : null;
+  const player = open ? <Suspense fallback={<button type="button" onClick={finish}>{english ? 'Skip video' : 'រំលងវីដេអូ'}</button>}><CinematicVideoOpening stageOnly loadVideo={demoVideo ? undefined : loadVideo} videoUrl={demoVideo?.src} posterUrl={poster} presentation={currentPresentation} exiting={exiting} english={english} onOpen={finish} /></Suspense> : null;
   // Royal Garden owns the section placement inside its persistent decorative shell.
   // The protected-media loader and completion policy stay here for every template.
   return <CinematicOpeningContext.Provider value={start}><CinematicPlaybackContext.Provider value={{ active: open, stop, stage: royal ? player : null, completed, poster }}>

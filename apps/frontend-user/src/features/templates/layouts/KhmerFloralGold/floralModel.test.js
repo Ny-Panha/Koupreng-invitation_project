@@ -23,7 +23,7 @@ describe('Khmer Floral Gold integration', () => {
       const vm = floralContent(content, locale);
       expect(vm.messageText).toBe(template.localizedContentV1[locale].messageText);
       expect(vm.groom).toBe(template.localizedContentV1[locale].groomName);
-      expect(floralPhotos(vm, locale === 'en')).toHaveLength(4);
+      expect(floralPhotos(vm, locale === 'en')).toHaveLength(12);
     }
   });
   it('does not prefill a new host with sample people, photos, venue or program', () => {

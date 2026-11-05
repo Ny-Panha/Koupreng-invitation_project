@@ -52,13 +52,14 @@ class KhmerFloralGoldIntegrationTests {
         request.setEventType(EventType.WEDDING); request.setGroomName("Dara"); request.setBrideName("Sophea");
         request.setLanguageMode("EN"); request.setEventDate(LocalDate.now().plusDays(30)); request.setEventTime(LocalTime.of(17, 0));
         request.setVenueName("Owner hall"); request.setVenueAddress("Owner address"); request.setVisibility("PUBLIC");
-        request.setContentJson("{\"monogramText\":\"DS\",\"sketchMapImage\":\"/uploads/owner-map.webp\",\"invitationImage\":\"/uploads/groom.webp\",\"invitationImage2\":\"/uploads/bride.webp\",\"eventTimezone\":\"Asia/Phnom_Penh\"}");
+        request.setContentJson("{\"monogramText\":\"DS\",\"sketchMapImage\":\"/uploads/owner-map.webp\",\"invitationImage\":\"/uploads/groom.webp\",\"invitationImage2\":\"/uploads/bride.webp\",\"eventTimezone\":\"Asia/Phnom_Penh\",\"invitationStyleV1\":{\"version\":1,\"date\":\"tear-off\",\"program\":\"alternating\",\"guestFrame\":\"royal\",\"headingImage\":\"\"}}");
         request.setDesignJson("{\"presetId\":\"KHMER_FLORAL_GOLD\",\"monogramText\":\"DS\"}");
         var created = invitations.create(auth, request); em.flush(); em.clear();
         assertThat(created.getTemplateCode()).isEqualTo("khmer-floral-gold");
-        assertThat(invitations.get(auth, created.getId()).getContentJson()).contains("owner-map.webp", "groom.webp", "bride.webp", "DS");
+        assertThat(invitations.get(auth, created.getId()).getContentJson()).contains("owner-map.webp", "groom.webp", "bride.webp", "DS", "invitationStyleV1", "tear-off", "alternating", "royal");
         var published = invitations.publish(auth, created.getId()); em.flush(); em.clear();
         assertThat(invitations.publicBySlug(published.getSlug()).getTemplateCode()).isEqualTo("khmer-floral-gold");
+        assertThat(invitations.publicBySlug(published.getSlug()).getContentJson()).contains("invitationStyleV1", "tear-off", "alternating", "royal");
         var response = new RsvpRequest(); response.setGuestName("Floral guest"); response.setPhone("012345678");
         response.setResponseStatus(RsvpStatus.ATTENDING); response.setAttendeeCount(1);
         var saved = rsvp.submitPublic(published.getSlug(), response); em.flush(); em.clear();

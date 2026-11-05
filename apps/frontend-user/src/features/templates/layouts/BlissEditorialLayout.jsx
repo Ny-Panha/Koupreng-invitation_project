@@ -183,7 +183,7 @@ export default function BlissEditorialLayout({
             <h2 className="bliss-title"><InvitationLabel value={"កាលវិភាគពិធីមង្គលការ"} /></h2>
           </div>
 
-          {effectiveContent.programDays ? <ProgramTimeline content={effectiveContent} /> : <div className="bliss-program-list">{(effectiveContent.schedule || []).map((item, i) => <article className="bliss-program-row" key={item.id || i}><div className="bliss-program-time">{item.time}<ProgramDetails item={item} content={effectiveContent} /></div><div><h3 className="bliss-program-title">{item.title}</h3><p className="bliss-program-desc">{item.description}</p></div></article>)}</div>}
+          {(effectiveContent.programDays || effectiveContent.invitationStyleV1?.program) ? <ProgramTimeline content={effectiveContent} /> : <div className="bliss-program-list">{(effectiveContent.schedule || []).map((item, i) => <article className="bliss-program-row" key={item.id || i}><div className="bliss-program-time">{item.time}<ProgramDetails item={item} content={effectiveContent} /></div><div><h3 className="bliss-program-title">{item.title}</h3><p className="bliss-program-desc">{item.description}</p></div></article>)}</div>}
         </section>
       )}
 

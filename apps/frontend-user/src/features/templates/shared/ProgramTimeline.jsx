@@ -2,6 +2,8 @@ import { programDayAnchor, programDayHeading, visibleProgramDays, PROGRAM_PERIOD
 import { formatEventDate, formatEventTime, formatNumerals } from './eventDateTime';
 import './event-sections.css';
 import CeremonyIcon from './CeremonyIcon';
+import { invitationStyles } from './invitationStyles';
+import './invitation-styles.css';
 
 export default function ProgramTimeline({ content = {}, english = String(content.languageMode).toLowerCase() === 'en', days: suppliedDays, idPrefix, naturalTime = false }) {
   const numerals = content.saveTheDate?.numerals || (english ? 'latin' : 'khmer');
@@ -9,14 +11,15 @@ export default function ProgramTimeline({ content = {}, english = String(content
   const days = suppliedDays || visibleProgramDays(content);
   const time = value => naturalTime ? formatEventTime(value, english, numerals) : formatNumerals(value, numerals);
   if (!days.length) return null;
-  return <div className="kp-program" lang={english ? 'en' : 'km'}>{days.map((day, index) => <div className="kp-program-day" key={day.id} id={idPrefix ? programDayAnchor(idPrefix, day.id) : undefined} tabIndex={idPrefix ? -1 : undefined}>
-    <h3 className="kp-program-day-title">{programDayHeading(day, index, english, value => formatNumerals(value, numerals))}
+  const style = content.invitationStyleV1 ? invitationStyles(content).program : null;
+  return <div className={`kp-program${style ? ` kp-program--${style}` : ''}`} data-program-style={style || undefined} lang={english ? 'en' : 'km'}>{days.map((day, index) => <div className="kp-program-day" key={day.id} id={idPrefix ? programDayAnchor(idPrefix, day.id) : undefined} tabIndex={idPrefix ? -1 : undefined}>
+    <h3 className="kp-program-day-title">{!(style === 'gold-curve' && day.resolvedDate && !day.title && !(english ? day.titleEn : day.titleKm)) && programDayHeading(day, index, english, value => formatNumerals(value, numerals))}
       {day.resolvedDate && <time dateTime={day.resolvedDate}>{formatEventDate(day.resolvedDate, english, numerals, { weekday: 'long' })}</time>}
       {bilingual && !english && day.titleEn && <span lang="en">{day.titleEn}</span>}
     </h3>
     <ol className="kp-timeline">{day.items.filter(item => item.enabled !== false).map(item => <li key={item.id}>
       <span className="kp-timeline-time">{time(item.time || '')}{item.endTime && <><span aria-hidden="true">–</span>{time(item.endTime)}</>}{item.period && <small>{PROGRAM_PERIODS[item.period]?.[english ? 1 : 0] || item.period}</small>}</span>
-      <span className="kp-timeline-marker" aria-hidden="true"><CeremonyIcon iconKey={item.iconKey} /></span>
+      <span className="kp-timeline-marker" aria-hidden="true">{style === 'gold-curve' ? <><svg className="kp-program-curve" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none"><path d="M50 0C50 18 82 20 82 50S50 82 50 100" vectorEffect="non-scaling-stroke" /></svg><i className="kp-curve-dot" /></> : <CeremonyIcon iconKey={item.iconKey} />}</span>
       <div className="kp-timeline-copy"><h4>{(english ? item.titleEn : item.titleKm) || item.title || item.titleEn}</h4>
         {bilingual && !english && item.titleEn && <p lang="en">{item.titleEn}</p>}
         {((english ? item.descriptionEn : item.descriptionKm) || item.description) && <p>{(english ? item.descriptionEn : item.descriptionKm) || item.description}</p>}

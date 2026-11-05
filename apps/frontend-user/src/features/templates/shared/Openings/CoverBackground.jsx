@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import "./CoverBackground.css";
@@ -32,6 +32,8 @@ export default function CoverBackground({
   children = null,
 }) {
   const prefersReduced = usePrefersReducedMotion();
+  const preferStatic = prefersReduced || (typeof navigator !== 'undefined' && navigator.connection?.saveData === true);
+  const videoRef = useRef(null);
   const [videoError, setVideoError] = useState(false);
   const [failedImages, setFailedImages] = useState([]);
 
@@ -65,11 +67,11 @@ export default function CoverBackground({
   if (customCoverImage && !failedImages.includes(customCoverImage)) {
     mediaType = "image";
     mediaSrc = customCoverImage;
-  } else if (customCoverVideo && !videoError && !prefersReduced) {
+  } else if (customCoverVideo && !videoError && !preferStatic) {
     mediaType = "video";
     mediaSrc = customCoverVideo;
   } else if (defaultSrc) {
-    if (defaultType === "video" && !videoError && !prefersReduced) {
+    if (defaultType === "video" && !videoError && !preferStatic) {
       mediaType = "video";
       mediaSrc = defaultSrc;
     } else if (defaultType === "image" && !failedImages.includes(defaultSrc)) {
@@ -84,12 +86,21 @@ export default function CoverBackground({
     setFailedImages([]);
   }, [customCoverImage, customCoverVideo, defaultSrc]);
   const failImage = (src) => setFailedImages((items) => items.includes(src) ? items : [...items, src]);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const visibility = () => { if (document.hidden) video.pause(); else void video.play().catch(() => {}); };
+    document.addEventListener('visibilitychange', visibility);
+    if (document.hidden) video.pause();
+    return () => { document.removeEventListener('visibilitychange', visibility); video.pause(); };
+  }, [mediaType, mediaSrc]);
 
   return (
     <div className={`cover-bg-root ${className}`.trim()} data-cover-media={mediaType} aria-hidden="true">
       {/* Media Layer */}
       {mediaType === "video" ? (
         <video
+          ref={videoRef}
           key={mediaSrc}
           className="cover-bg-media"
           src={mediaSrc}

@@ -136,6 +136,7 @@ describe('royal entrance and video recovery', () => {
     expect(container.querySelector('[data-cinematic-content]')).not.toHaveAttribute('hidden');
     expect(stage.querySelector('.cinematic-film-frame .cinematic-film-footer')).toBeNull();
     expect(within(stage).getByRole('button', { name: 'Skip video' })).toBeEnabled();
+    await vi.waitFor(() => expect(stage.querySelector('video')).toBeInTheDocument());
     expect(stage.querySelector('video').muted).toBe(true);
     expect(stage.querySelector('.rg-video-date')).toHaveAttribute('datetime', '2028-02-29');
     expect(stage.querySelector('.rg-video-date')).toHaveTextContent('29 February 2028 · 17:30');

@@ -2,6 +2,8 @@ import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import FamilyNames from '@/features/templates/shared/FamilyNames';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
+import GuestSectionNavigation from "../../shared/Controls/GuestSectionNavigation";
+import { useCinematicPlayback } from "../../shared/Openings/cinematicOpeningContext";
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import useEventCountdown from '../../../wedding-site/hooks/useCountdown';
 import { CALENDAR_FALLBACK_MINUTES, resolveEvent, wallTimeToInstant } from '../../shared/eventDateTime';
@@ -169,6 +171,7 @@ export default function KhmerCelestialLayout({
   const [openTransitionActive, setOpenTransitionActive] = useState(false);
   const [musicState, setMusicState] = useState("idle");
   const mainRef = useRef(null);
+  const playback = useCinematicPlayback();
   const heroRef = useRef(null);
   const audioRef = useRef(null);
   const musicUrl = formatMusicSource(content.music)
@@ -529,7 +532,7 @@ export default function KhmerCelestialLayout({
                 languageMode={languageMode}
               />
               {content.scheduleDate ? <CelestialReveal as="p" className="kc-schedule__date">{content.scheduleDate}</CelestialReveal> : null}
-              {content.programDays ? <ProgramTimeline content={content} /> : <div className="kc-schedule__list">
+              {(content.programDays || content.invitationStyleV1?.program) ? <ProgramTimeline content={content} /> : <div className="kc-schedule__list">
                 {schedule.map((item, index) => {
                   const ProgrammeIcon = PROGRAM_ICONS[index % PROGRAM_ICONS.length];
                   return (
@@ -686,6 +689,7 @@ export default function KhmerCelestialLayout({
         ) : null}
       </main>
 
+      <GuestSectionNavigation rootRef={mainRef} visible={opened && !playback.active} english={languageMode === "en"} sectionKeys={JSON.stringify(content.enabledSections)} />
       {musicEnabled && opened && musicState !== "error" ? (
         <button
           type="button"

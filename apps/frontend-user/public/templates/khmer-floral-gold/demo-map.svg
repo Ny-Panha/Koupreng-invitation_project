@@ -1,1 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 480"><rect width="700" height="480" rx="24" fill="#fbf7ed"/><g fill="none" stroke="#bb9a61" stroke-width="13"><path d="M80 420L260 250 210 30M260 250 560 130 650 10M260 250 610 405M35 120 260 250 510 45"/><circle cx="450" cy="333" r="35" fill="#fbf7ed"/></g><g fill="none" stroke="#fbf7ed" stroke-width="6"><path d="M80 420L260 250 210 30M260 250 560 130 650 10M260 250 610 405M35 120 260 250 510 45"/></g><g fill="#876326"><path d="M135 176v-40h40v40h-12v-25h-16v25Z"/><circle cx="155" cy="124" r="5"/><path d="M155 190l-14 20h9v27h10v-27h9Z"/></g><text x="350" y="455" fill="#685647" font-family="sans-serif" text-anchor="middle" font-size="18">Illustrative demonstration only · Replace with your venue map</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520">
+  <title>Illustrative wedding venue diagram</title>
+  <desc>Original gold road schematic for the demonstration. Replace with the actual venue map.</desc>
+  <rect width="700" height="520" fill="#fffaf2"/>
+  <defs><path id="roads" d="M76 516V146M76 370L242 303 354 252 464 211 567 180M242 303V79L311 115 354 205 354 252M321 39L391 76 464 211 495 281M76 441L245 389 452 339M545 313L598 267 636 128M516 364L564 478M476 374L452 484M446 351L372 458M542 342L649 414"/></defs>
+  <g fill="none" stroke-linecap="square" stroke-linejoin="round">
+    <use href="#roads" stroke="#b59a63" stroke-width="9"/>
+    <use href="#roads" stroke="#fffaf2" stroke-width="5"/>
+    <circle cx="500" cy="328" r="47" stroke="#b59a63" stroke-width="8"/>
+    <circle cx="500" cy="328" r="47" stroke="#fffaf2" stroke-width="4.5"/>
+    <path d="M165 293V211M177 289V211M354 252V330L452 305M395 383L365 423" stroke="#b59a63" stroke-width="2"/>
+  </g>
+  <g stroke="#9a7b40" fill="none" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M125 214v-35l17-14 17 14v35ZM119 180l23-22 23 22M132 214v-20h20v20M136 177h12v8h-12Z"/>
+    <path d="m132 226 10-11 10 11h-6v17h-8v-17Z" fill="#9a7b40"/>
+    <path d="M271 189v-26h34v26M267 163l21-16 21 16M281 189v-15h14v15"/>
+  </g>
+  <g fill="#8c703e" font-family="Kantumruy Pro, sans-serif" font-size="14" text-anchor="middle">
+    <text x="142" y="258">សាលមង្គលការ</text>
+    <text x="288" y="208">សួនច្បារ</text>
+    <text x="500" y="325" font-size="12">រង្វង់មូល</text>
+    <text x="500" y="341" font-size="9">ROUNDABOUT</text>
+    <text x="204" y="348" transform="rotate(-18 204 348)">មហាវិថី</text>
+    <text x="55" y="370" transform="rotate(-90 55 370)">ផ្លូវចូលកម្មវិធី</text>
+    <text x="424" y="145" transform="rotate(62 424 145)">ផ្លូវសួនផ្កា</text>
+    <text x="622" y="218" transform="rotate(-74 622 218)">ផ្លូវភ្ជាប់</text>
+    <text x="567" y="391" transform="rotate(36 567 391)">ផ្លូវទទួលភ្ញៀវ</text>
+    <text x="261" y="491" font-size="11" fill="#756652">ផែនទីគំរូ · Illustrative demo diagram</text>
+  </g>
+</svg>

@@ -4,6 +4,7 @@ import useCountdown from '../../wedding-site/hooks/useCountdown';
 import { calendarMonth, formatEventDate, formatNumerals, resolveEvent, shiftMonth } from './eventDateTime';
 import { buildEventCalendar } from './eventCalendarExport';
 import './event-sections.css';
+import DatePresentation from './DatePresentation';
 
 export function WeddingCountdown({ instant, english, numerals, style = 'theme' }) {
   const count = useCountdown(instant);
@@ -66,7 +67,7 @@ export default function SaveTheDate({ content = {}, english = String(content.lan
       {settings.showVenue && <p>{content.venueName || content.venue?.name}</p>}
       {(settings.showCountdown ?? content.showCountdown ?? true) && event.instant !== null && <WeddingCountdown instant={event.instant} english={english} numerals={numerals} style={settings.countdownStyle || 'theme'} />}
       {event.time && event.instant === null && <p>{english ? 'Event time will be confirmed.' : 'ម៉ោងកម្មវិធីនឹងត្រូវបានបញ្ជាក់។'}</p>}
-      {settings.showCalendar && <EventCalendar date={event.date} english={english} numerals={numerals} navigation={settings.calendarNavigation} />}
+      {(settings.showCalendar || content.invitationStyleV1?.date) && <DatePresentation content={content} english={english} calendar={<EventCalendar date={event.date} english={english} numerals={numerals} navigation={settings.calendarNavigation} />} />}
       {settings.showAddToCalendar && (event.allDay || event.instant !== null) && <AddToCalendar content={content} english={english} />}
     </> : <p>{english ? 'The date will be announced soon.' : 'កាលបរិច្ឆេទនឹងត្រូវប្រកាសឆាប់ៗនេះ។'}</p>}
   </div>;

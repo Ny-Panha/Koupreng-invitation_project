@@ -1,70 +1,85 @@
 {
-  "reviewed": "2026-11-04",
+  "reviewed": "2026-11-05",
   "photography": [
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-480.webp",
       "width": 480,
       "height": 720,
-      "bytes": 52158,
-      "sha256": "e25e9a22643f341fed73e7e1d56237f77538233cf159ddaa86ce8c8a28044fd6",
-      "source": "https://www.pexels.com/photo/19126456/",
-      "author": "HANUMAN PHOTO STUDIO",
+      "bytes": 25140,
+      "sha256": "db5e214c69c5a5ab7dac4d534fde4fca8ee8f27fb2b888852195bf7ac51f70da",
+      "author": "Jin Wedding",
+      "source": "https://www.pexels.com/photo/smiling-asian-newlyweds-touching-hands-gently-in-stylish-studio-5729053/",
+      "sourceId": 5729053,
       "license": "Pexels License",
       "licenseUrl": "https://www.pexels.com/license/",
-      "changes": "Center crop to portrait; resize and WebP compression",
-      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+      "downloaded": "2026-11-05",
+      "changes": "Original portrait proportions; resize and WebP compression",
+      "role": "responsive main couple photograph",
+      "scope": "Explicit marketing demo stock models only; never inherited by owner or published invitations."
     },
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-960.webp",
       "width": 960,
       "height": 1440,
-      "bytes": 183448,
-      "sha256": "474b8985f13ebc3b889269eda9b99acf0607c5447ac98c7f0d7f4d0fd4fd89d2",
-      "source": "https://www.pexels.com/photo/19126456/",
-      "author": "HANUMAN PHOTO STUDIO",
+      "bytes": 69966,
+      "sha256": "fc98074e76bfa663bc57a514db1f3a15a037c4c846d8e54bf9b04a9fa15f9a4f",
+      "author": "Jin Wedding",
+      "source": "https://www.pexels.com/photo/smiling-asian-newlyweds-touching-hands-gently-in-stylish-studio-5729053/",
+      "sourceId": 5729053,
       "license": "Pexels License",
       "licenseUrl": "https://www.pexels.com/license/",
-      "changes": "Center crop to portrait; resize and WebP compression",
-      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+      "downloaded": "2026-11-05",
+      "changes": "Original portrait proportions; resize and WebP compression",
+      "role": "responsive main couple photograph",
+      "scope": "Explicit marketing demo stock models only; never inherited by owner or published invitations."
     },
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/couple-1280.webp",
       "width": 1280,
       "height": 1920,
-      "bytes": 316656,
-      "sha256": "fb6ed61843e0bdf42c4bf562bbc74cf8002538b9da40df8273c59373d2d9bdfb",
-      "source": "https://www.pexels.com/photo/19126456/",
-      "author": "HANUMAN PHOTO STUDIO",
+      "bytes": 104434,
+      "sha256": "e919172e6660ff6baea4b982e842c9aab5d69af306759af3e88b0bf973f6db6a",
+      "author": "Jin Wedding",
+      "source": "https://www.pexels.com/photo/smiling-asian-newlyweds-touching-hands-gently-in-stylish-studio-5729053/",
+      "sourceId": 5729053,
       "license": "Pexels License",
       "licenseUrl": "https://www.pexels.com/license/",
-      "changes": "Center crop to portrait; resize and WebP compression",
-      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+      "downloaded": "2026-11-05",
+      "changes": "Original portrait proportions; resize and WebP compression",
+      "role": "responsive main couple photograph",
+      "scope": "Explicit marketing demo stock models only; never inherited by owner or published invitations."
     },
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/groom.webp",
-      "width": 480,
-      "height": 720,
-      "bytes": 47450,
-      "sha256": "3b2734733a74b19804ddf27781d2eefaf5819715e30daa1689452644aaef927d",
-      "source": "https://www.pexels.com/photo/19126456/",
-      "author": "HANUMAN PHOTO STUDIO",
+      "width": 640,
+      "height": 800,
+      "bytes": 26978,
+      "sha256": "919a2d95e9e677a8c2ce61e7935135b702171981bd7a04869d3253ae8243b052",
+      "author": "Jin Wedding",
+      "source": "https://www.pexels.com/photo/happy-young-asian-newlyweds-touching-hands-gently-in-stylish-studio-5729052/",
+      "sourceId": 5729052,
       "license": "Pexels License",
       "licenseUrl": "https://www.pexels.com/license/",
-      "changes": "Individual crop of the licensed couple photograph; resize and WebP compression",
-      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+      "downloaded": "2026-11-05",
+      "changes": "Independent photograph from hero; groom crop 640x800 at x650,y180 on 2400px-wide original; WebP compression",
+      "role": "groom demo portrait",
+      "scope": "Explicit marketing demo stock models only; never inherited by owner or published invitations."
     },
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/bride.webp",
-      "width": 480,
-      "height": 720,
-      "bytes": 52564,
-      "sha256": "69c80df1542978bca4150d59c55f1a19bdeb5804eee11352052f1a71d612ab1b",
-      "source": "https://www.pexels.com/photo/19126456/",
-      "author": "HANUMAN PHOTO STUDIO",
+      "width": 640,
+      "height": 960,
+      "bytes": 49376,
+      "sha256": "b43e3550359b696ad3fe221ee6ca08cba0554fd1dfc8f74d1d7404aded2cd8a9",
+      "author": "Jin Wedding",
+      "source": "https://www.pexels.com/photo/beautiful-bride-in-wedding-dress-wearing-crown-5729222/",
+      "sourceId": 5729222,
       "license": "Pexels License",
       "licenseUrl": "https://www.pexels.com/license/",
-      "changes": "Individual crop of the licensed couple photograph; resize and WebP compression",
-      "scope": "Explicitly labeled template demonstration; never a published invitation fallback"
+      "downloaded": "2026-11-05",
+      "changes": "Independent solo bridal photograph; proportions preserved; resize to 640px wide and WebP compression",
+      "role": "bride demo portrait",
+      "scope": "Explicit marketing demo stock models only; never inherited by owner or published invitations."
     },
     {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/together.webp",
@@ -119,16 +134,6 @@
       "role": "Original botanical source for the inlined catalog thumbnail artwork"
     },
     {
-      "path": "apps/frontend-user/public/templates/khmer-floral-gold/demo-map.svg",
-      "origin": "Original project SVG, independently drawn; no reference artwork copied",
-      "width": 700,
-      "height": 480,
-      "bytes": 780,
-      "sha256": "18e6e5421e98c38b0814b6646346e11570e10f0358a38eae450a1ed538c0f3f2",
-      "license": "Original project artwork",
-      "role": "Explicit illustrative demo venue diagram"
-    },
-    {
       "path": "apps/frontend-user/public/templates/khmer-floral-gold/preview.svg",
       "origin": "Original project SVG, independently drawn; no reference artwork copied",
       "width": 420,
@@ -137,6 +142,16 @@
       "sha256": "3e3c11d5c8db82bf26e68bed54dced4facc13e9538fe7156680f89f0462b1ee1",
       "license": "Original project artwork",
       "role": "Public catalog thumbnail"
+    },
+    {
+      "path": "apps/frontend-user/public/templates/khmer-floral-gold/demo-map.svg",
+      "origin": "Original project road schematic, independently drawn for the reference-aligned composition; illustrative only, no real route asserted",
+      "width": 700,
+      "height": 520,
+      "bytes": 2303,
+      "sha256": "0f8f99997891b05a5c84d91e3ef0536ab8786cccb93338881b33f4ce05bb8dc0",
+      "license": "Original project artwork",
+      "role": "Explicit illustrative demo venue diagram"
     }
   ],
   "fonts": "Existing local Moul, Kantumruy Pro, Battambang and Cormorant Garamond; adjacent SIL OFL notices retained",
@@ -152,5 +167,7 @@
     "height": 800,
     "bytes": 233724,
     "sha256": "d8551e4a1b93583cb8fcecd511e69a5505f864e06790abc27695e5eae5fc747f"
-  }
+  },
+  "currentDemoManifest": "ASSETS_V2.json",
+  "currentDemoNote": "2026-11-05: demo photography replaced at user request; unused legacy gallery assets retained for historical evidence."
 }

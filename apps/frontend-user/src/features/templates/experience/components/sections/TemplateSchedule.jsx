@@ -15,7 +15,7 @@ import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion"
  */
 export default function TemplateSchedule({ content }) {
     if (!content.schedule?.length) return null;
-    if (content.programDays) return <section className="tx-section tx-schedule" data-tx-section="schedule"><div className="tx-shell tx-shell--narrow"><h2 className="tx-section__title">{String(content.languageMode).toLowerCase() === 'en' ? 'Event program' : 'កម្មវិធីមង្គលការ'}</h2><ProgramTimeline content={content} /></div></section>;
+    if (content.programDays || content.invitationStyleV1?.program) return <section className="tx-section tx-schedule" data-tx-section="schedule"><div className="tx-shell tx-shell--narrow"><h2 className="tx-section__title">{String(content.languageMode).toLowerCase() === 'en' ? 'Event program' : 'កម្មវិធីមង្គលការ'}</h2><ProgramTimeline content={content} /></div></section>;
     return <ScheduleTimeline content={content} />;
 }
 

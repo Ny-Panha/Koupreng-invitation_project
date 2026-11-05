@@ -409,7 +409,7 @@ export default function DigitalYesLayout({
             {isEnabled("schedule") && (
               <>
                 <SectionDivider />
-                {tpl.programDays ? <section><h2>{String(tpl.languageMode).toLowerCase() === "en" ? "Wedding program" : "កម្មវិធីមង្គលការ"}</h2><ProgramTimeline content={tpl} /></section> : <DigitalYesSchedule schedule={tpl.schedule} />}
+                {(tpl.programDays || tpl.invitationStyleV1?.program) ? <section><h2>{String(tpl.languageMode).toLowerCase() === "en" ? "Wedding program" : "កម្មវិធីមង្គលការ"}</h2><ProgramTimeline content={tpl} /></section> : <DigitalYesSchedule schedule={tpl.schedule} />}
               </>
             )}
 

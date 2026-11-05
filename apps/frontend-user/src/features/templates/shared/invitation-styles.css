@@ -1,0 +1,46 @@
+.kp-date-presentation{--style-gold:var(--kfg-gold,#8a682c);--style-paper:var(--kfg-paper,#fffaf2);position:relative;margin:24px auto;width:100%;max-width:400px;color:inherit}
+.kp-date-card{display:flex;flex-direction:column;align-items:center;gap:12px;padding:26px 18px;color:inherit}
+.kp-date-card strong{font-size:clamp(48px,15vw,88px);line-height:1.4;font-weight:400;color:var(--style-gold);font-variant-numeric:tabular-nums}
+.kp-date-card time{font-size:16px;line-height:1.8}.kp-date-month{color:var(--style-gold);font-size:20px}
+.kp-date--minimal .kp-calendar{border:0!important;box-shadow:none!important;background:transparent!important;border-radius:0!important}
+.kp-date--gold-calendar{padding:10px;border:1px solid #b99b60;border-radius:9px;box-shadow:inset 0 0 0 4px var(--style-paper),inset 0 0 0 5px #c6a77088,0 8px 25px #80633912}
+.kp-date--gold-calendar .kp-calendar{margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.kp-date--watercolor{background:radial-gradient(ellipse at 5% 15%,#d6b6ca55,transparent 60%),radial-gradient(ellipse at 95% 90%,#e7bdc966,transparent 65%);border-radius:43% 12% 35% 8% / 8% 15% 10% 19%;padding:12px}
+.kp-date--watercolor .kp-calendar{background:#fffaf2a8!important;border:0!important}
+.kp-date--tear-off{max-width:220px;background:var(--style-paper);border:1px solid #c6a77055;box-shadow:0 12px 25px #80633918;border-radius:8px 8px 0 0}
+.kp-date--tear-off::before{content:'';position:absolute;top:-9px;left:28%;right:28%;height:20px;background:repeating-linear-gradient(90deg,transparent 0 12px,#b7a68c 13px 16px,transparent 17px 29px);border-radius:4px}
+.kp-date--tear-off .kp-date-month{background:var(--style-gold);color:var(--style-paper);width:calc(100% + 36px);margin:-26px -18px 0;padding:14px 8px;font-size:18px}
+.kp-date--typographic{border-block:1px solid #c6a77088}.kp-date--typographic .kp-date-card strong{font-family:Georgia,serif;font-size:100px;line-height:1.1}
+.kp-date--horizontal .kp-date-card{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-block:1px solid #c6a77088}.kp-date--horizontal strong{grid-column:1;grid-row:1/4;border-right:1px solid #c6a77088}.kp-date--horizontal .kp-date-month{grid-column:2;grid-row:1}
+.kp-date--floral{background:url('/templates/khmer-floral-gold/floral-watercolor.webp') top right/70% auto no-repeat;border:1px solid #c6a77066;border-radius:45% 45% 8px 8px;padding:24px 0 0}.kp-date--floral .kp-date-card{background:linear-gradient(transparent,var(--style-paper) 55%)}
+.kp-program[data-program-style]{--style-gold:var(--kfg-gold,#8a682c);--style-line:#b69a6355}.kp-program[data-program-style] .kp-timeline{counter-reset:ceremony}
+.kp-program[data-program-style] .kp-timeline>li{counter-increment:ceremony}
+.kp-program--gold-curve .kp-timeline::before{border-left:2px solid var(--style-gold);border-radius:50%;transform:rotate(-3deg)}
+.kp-program--gold-curve .kp-timeline-marker{border:1px solid var(--style-gold);border-radius:50%;padding:3px;box-shadow:0 0 0 4px #c6a77022}
+.kp-program--alternating .kp-timeline>li{grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr)!important;gap:10px!important}.kp-program--alternating .kp-timeline::before{left:50%!important;transform:translateX(-50%)}
+.kp-program--alternating .kp-timeline-time{text-align:right}.kp-program--alternating li:nth-child(even) .kp-timeline-time{grid-column:3;text-align:left;grid-row:1}.kp-program--alternating li:nth-child(even) .kp-timeline-copy{grid-column:1;text-align:right;grid-row:1}.kp-program--alternating .kp-timeline-marker{grid-column:2;grid-row:1}
+.kp-program--ceremonial .kp-timeline::before,.kp-program--editorial .kp-timeline::before,.kp-program--numbered .kp-timeline::before,.kp-program--floral-list .kp-timeline::before{display:none}
+.kp-program--ceremonial .kp-timeline>li{padding:20px 12px;border:1px solid var(--style-line);box-shadow:inset 0 0 0 4px #c6a77011;border-radius:6px;background:#c6a7700a}
+.kp-program--editorial .kp-timeline>li{border-top:1px solid var(--style-line);padding-top:20px;grid-template-columns:80px minmax(0,1fr)!important}.kp-program--editorial .kp-timeline-marker{display:none}.kp-program--editorial .kp-timeline-time{font-weight:600}
+.kp-program--numbered .kp-timeline>li{position:relative;padding:20px 14px 20px 54px;border:1px solid var(--style-line);grid-template-columns:1fr!important}.kp-program--numbered li::before{content:counter(ceremony,decimal-leading-zero);position:absolute;left:12px;top:18px;color:var(--style-gold);font:28px/1.5 Georgia,serif}.kp-program--numbered .kp-timeline-marker{display:none}
+.kp-program--floral-list .kp-timeline>li{border-bottom:1px dashed var(--style-line);padding-bottom:20px}.kp-program--floral-list .kp-timeline-marker{color:#956780;transform:rotate(-12deg)}
+.kp-program--multi-day .kp-program-day{border:1px solid var(--style-line);padding:12px 18px 24px;margin-block:24px;border-radius:70px 70px 8px 8px;background:#c6a77008}.kp-program--multi-day .kp-program-day-title{border-bottom:1px solid var(--style-line);padding-bottom:18px}
+@media(prefers-reduced-motion:reduce){.kp-date-presentation *,.kp-program *{animation:none!important;transition:none!important}}
+
+/* Original flowing gold thread: time and ceremony alternate around one continuous path. */
+.kp-program.kp-program--gold-curve .kp-timeline{display:grid;gap:0;padding:0;position:relative}
+.kp-program.kp-program--gold-curve .kp-timeline::before{display:none}
+.kp-program.kp-program--gold-curve .kp-timeline>li{display:grid;grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;align-content:center;min-height:132px;padding:22px 0;position:relative}
+.kp-program.kp-program--gold-curve .kp-timeline-time{grid-column:3;grid-row:1;align-self:end;padding:0 0 4px;text-align:left;font-size:16px;font-weight:700;line-height:1.8;color:var(--style-gold)}
+.kp-program.kp-program--gold-curve .kp-timeline-copy{grid-column:3;grid-row:2;text-align:left;align-self:start}
+.kp-program.kp-program--gold-curve .kp-timeline>li:nth-child(even) .kp-timeline-time,.kp-program.kp-program--gold-curve .kp-timeline>li:nth-child(even) .kp-timeline-copy{grid-column:1;text-align:right}
+.kp-program.kp-program--gold-curve .kp-timeline-marker{position:absolute;inset:0 auto 0 calc(50% - 26px);width:52px;max-width:none;display:block;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--style-gold)}
+.kp-program.kp-program--gold-curve .kp-timeline-marker::before,.kp-program.kp-program--gold-curve .kp-timeline-marker::after{display:none}
+.kp-program.kp-program--gold-curve .kp-timeline-marker .kp-program-curve{position:absolute;inset:0;display:block;width:100%;height:100%;background:none;border-radius:0;stroke:currentColor;stroke-width:1.25;opacity:.55;transform:none}
+.kp-program.kp-program--gold-curve li:nth-child(even) .kp-program-curve{transform:scaleX(-1)}
+.kp-curve-dot{position:absolute;left:82%;top:50%;width:9px;height:9px;transform:translate(-50%,-50%);border-radius:50%;background:currentColor;box-shadow:0 0 0 3px #c6a77012}
+.kp-program--gold-curve li:nth-child(even) .kp-curve-dot{left:18%}
+.kp-program.kp-program--gold-curve .kp-timeline-copy h4{font-size:16px;font-weight:400;line-height:1.9}
+.kp-program.kp-program--gold-curve .kp-timeline-copy p{font-size:14px;line-height:1.9}
+.kp-program--gold-curve .kp-program-day-title::after{content:'◆';display:block;width:180px;max-width:70%;margin:14px auto 8px;background:linear-gradient(currentColor,currentColor) left center/43% 1px no-repeat,linear-gradient(currentColor,currentColor) right center/43% 1px no-repeat;color:var(--style-gold);font:10px/18px serif;text-align:center;opacity:.55}
+@media(max-width:390px){.kp-program.kp-program--gold-curve .kp-timeline>li{column-gap:8px;min-height:124px}.kp-program.kp-program--gold-curve .kp-timeline-time,.kp-program.kp-program--gold-curve .kp-timeline-copy h4{font-size:14px}}

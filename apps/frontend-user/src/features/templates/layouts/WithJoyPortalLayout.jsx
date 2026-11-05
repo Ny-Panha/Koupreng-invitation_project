@@ -202,7 +202,7 @@ export default function WithJoyPortalLayout({
             <p className="wj-section-sub"><InvitationLabel value={"សូមអញ្ជើញចូលរួមតាមពេលវេលាកំណត់ ដើម្បីរួមអបអរសាទរ"} /></p>
           </div>
 
-          {effectiveContent.programDays ? <ProgramTimeline content={effectiveContent} /> : <div className="wj-schedule-grid">
+          {(effectiveContent.programDays || effectiveContent.invitationStyleV1?.program) ? <ProgramTimeline content={effectiveContent} /> : <div className="wj-schedule-grid">
             {scheduleItems.map((item, i) => (
               <div key={i} className="wj-schedule-card">
                 <div className="wj-schedule-icon">

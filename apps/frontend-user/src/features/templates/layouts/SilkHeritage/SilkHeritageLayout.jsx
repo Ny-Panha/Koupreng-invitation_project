@@ -1,6 +1,9 @@
 import FamilyNames from '@/features/templates/shared/FamilyNames';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
+import GuestSectionNavigation from "../../shared/Controls/GuestSectionNavigation";
+import { useCinematicPlayback } from "../../shared/Openings/cinematicOpeningContext";
+import { cloneElement } from "react";
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import ProgramTimeline from '../../shared/ProgramTimeline';
@@ -91,6 +94,7 @@ export default function SilkHeritageLayout({
   const [gate, setGate] = useState(preview && !previewStartClosed ? "open" : "closed");
   const [folioBounds, setFolioBounds] = useState(null);
   const root = useRef(null);
+  const playback = useCinematicPlayback();
   const cover = useRef(null);
   const hero = useRef(null);
   const openButton = useRef(null);
@@ -182,7 +186,7 @@ export default function SilkHeritageLayout({
     </section>,
     schedule: enabled("schedule") && vm.schedule.length > 0 && <section className="sh-program sh-section" id="sh-program" key="schedule" aria-labelledby="sh-program-title">
       <div className="sh-section-intro"><SilkOrnament /><p className="sh-kicker">{copy("ថ្ងៃពិសេសរបស់យើង", "THE DAY, BEAUTIFULLY TOGETHER")}</p><h2 id="sh-program-title">{heading(vm.scheduleTitle || "កម្មវិធីមង្គលការ", "The wedding program")}</h2><p>{language === "en" ? date : vm.scheduleDate || date}</p></div>
-      {vm.programDays ? <ProgramTimeline content={vm} english={language === "en"} /> : <ol>{vm.schedule.map((item, index) => <li key={item.id}>
+      {(vm.programDays || vm.invitationStyleV1?.program) ? <ProgramTimeline content={vm} english={language === "en"} /> : <ol>{vm.schedule.map((item, index) => <li key={item.id}>
         <div>{language === "en" ? latinTime(item.time) : item.time}<ProgramDetails item={item} content={vm} /></div>
         <span className="sh-timeline-point" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         <div><h3>{language === "en" ? item.titleEn || item.title : item.title}</h3>{language === "both" && item.titleEn && <p lang="en">{item.titleEn}</p>}{item.description && <p>{item.description}</p>}{item.location && <p>{item.location}</p>}</div>
@@ -240,7 +244,7 @@ export default function SilkHeritageLayout({
         <div className="sh-hero-copy"><SilkOrnament /><p className="sh-kicker">{copy("សិរីមង្គលអាពាហ៍ពិពាហ៍", "TOGETHER WITH OUR FAMILIES")}</p><h1 id="sh-hero-title" ref={hero} tabIndex={-1} style={elementFont("couple")}>{names}</h1>{language === "both" && (vm.groomEn || vm.brideEn) && <p className="sh-latin-names" lang="en">{[vm.groomEn, vm.brideEn].filter(Boolean).join(" & ")}</p>}<p className="sh-hero-date" style={elementFont("date")}>{date}</p>{vm.eventTime && <p>{language === "en" ? latinTime(vm.eventTime) : vm.eventTime}</p>}<p>{venueName}</p><a className="sh-scroll-cue" href="#sh-formal">{copy("ដោយក្តីរីករាយ សូមអញ្ជើញ", "An invitation, with love")}<span aria-hidden="true">↓</span></a></div>
         <figure className="sh-hero-photo"><Photo src={gate !== "closed" ? vm.coverImage : ""} alt={copy("រូបគូស្វាមីភរិយា", "The couple's portrait")} priority />{!vm.hasHostContent && <figcaption>{copy("រូបភាពសម្រាប់គំរូបង្ហាញ", "Demo photography")}</figcaption>}<span className="sh-photo-monogram" aria-hidden="true">{monogram}</span></figure>
       </section>
-      <section className="sh-formal sh-section" id="sh-formal" aria-labelledby="sh-formal-title">
+      <section data-section-key="family" className="sh-formal sh-section" id="sh-formal" aria-labelledby="sh-formal-title">
         <div className="sh-section-intro"><SilkOrnament />{(familyGroom || familyBride) && <p className="sh-kicker">{heading(vm.familyHeading || "គ្រួសារទាំងសងខាង", "OUR TWO FAMILIES")}</p>}<h2 id="sh-formal-title">{heading(vm.messageTitle || "សូមគោរពអញ្ជើញ", vm.messageTitle || "You are warmly invited")}</h2></div>
         {(usesFamilyLayout(vm) || familyGroom || familyBride) && (usesFamilyLayout(vm) ? <FamilyNames content={vm} /> : (<div className="sh-families">
           {familyGroom && <article><p className="sh-family-side">{copy(vm.family?.groomTitle || "ខាងកូនប្រុស", "The groom's family")}</p><p className="sh-parent-names" lang={/[\u1780-\u17ff]/.test(familyGroom) ? "km" : "en"}>{familyGroom}</p><p className="sh-family-label">{copy(vm.family?.groomLabel || "កូនប្រុសនាម", "The groom")}</p><h3>{groom}</h3></article>}
@@ -251,7 +255,7 @@ export default function SilkHeritageLayout({
         {vm.invitationImage && <div className="sh-invitation-photo"><Photo src={vm.invitationImage} alt={copy("រូបភាពអញ្ជើញ", "Invitation artwork")} /></div>}
         {vm.invitationImage2 && <div className="sh-invitation-photo"><Photo src={vm.invitationImage2} alt={copy("រូបភាពអញ្ជើញបន្ថែម", "Additional invitation artwork")} /></div>}
       </section>
-      {order.map((key) => sections[key] || null)}
+      {order.map((key) => sections[key] ? cloneElement(sections[key], { 'data-section-key': key }) : null)}
       {enabled("apology") && vm.apologyText && <section className="sh-apology sh-section" aria-labelledby="sh-apology-title"><div className="sh-note"><SilkOrnament /><p className="sh-kicker">{copy("ដោយមេត្រីភាព និងក្តីគោរព", "WITH WARMTH AND RESPECT")}</p><h2 id="sh-apology-title">{heading(vm.apologyTitle || "លិខិតសូមអភ័យទោស", vm.apologyTitleEn || "A heartfelt invitation")}</h2><p>{passage(vm.apologyText, vm.apologyTextEn)}</p></div></section>}
       <footer className="sh-closing">
         <SilkOrnament /><p className="sh-kicker">{copy("ដោយក្តីស្រលាញ់ ពីគ្រួសារយើងខ្ញុំ", "WITH LOVE, FROM OUR FAMILIES")}</p>
@@ -261,6 +265,7 @@ export default function SilkHeritageLayout({
         <nav aria-label={copy("ព័ត៌មានពិធី", "Wedding details")}>{sections.schedule && <a href="#sh-program">{copy("កម្មវិធី", "Program")}</a>}{sections.map && <a href="#sh-venue">{copy("ទីតាំង", "Venue")}</a>}{sections.rsvp && <a href="#sh-rsvp">RSVP</a>}<button type="button" onClick={closeCover}>{copy("មើលគម្របវិញ", "View cover")}</button></nav>
       </footer>
     </main>
+    <GuestSectionNavigation rootRef={root} visible={opened && !playback.active} english={language === "en"} sectionKeys={order.join(',')} />
     {music.hasMusic && <><audio ref={audioRef} src={musicSource} preload="none" loop /><button type="button" className="sh-music" onClick={music.toggle} aria-pressed={music.playing}>{music.playing ? copy("បិទតន្ត្រី", "Pause music") : copy("បើកតន្ត្រី", "Play music")}</button>{music.status === "error" && <p className="sh-music-error" role="status">{copy("តន្ត្រីមិនអាចចាក់បាន។ សូមសាកម្ដងទៀត។", "Music could not play. Please try again.")}</p>}</>}
   </div>;
 }

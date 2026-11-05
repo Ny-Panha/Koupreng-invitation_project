@@ -23,7 +23,7 @@ export default function EventEssentialLayout({ tpl = {}, preview = false, backLi
       {tpl.venueName && <h2>{tpl.venueName}</h2>}<p>{tpl.venueAddress || ""}</p>
       {(details.messageText || tpl.message) && <p>{details.messageText || tpl.message}</p>}
       {details.saveTheDate && details.saveTheDate.enabled !== false && details.enabledSections?.countdown !== false && <SaveTheDate content={{ ...tpl, ...details }} english={language === "en"} />}
-      {details.showSchedule !== false && details.enabledSections?.schedule !== false && details.schedule?.length > 0 && <section><h2>{copy("កាលវិភាគ", "Schedule")}</h2>{details.programDays ? <ProgramTimeline content={{ ...tpl, ...details }} english={language === "en"} /> : details.schedule.map((item, index) => <p key={item.id || index}>{item.time} · {item.title}</p>)}</section>}
+      {details.showSchedule !== false && details.enabledSections?.schedule !== false && details.schedule?.length > 0 && <section><h2>{copy("កាលវិភាគ", "Schedule")}</h2>{(details.programDays || details.invitationStyleV1?.program) ? <ProgramTimeline content={{ ...tpl, ...details }} english={language === "en"} /> : details.schedule.map((item, index) => <p key={item.id || index}>{item.time} · {item.title}</p>)}</section>}
       {(details.contact?.name || details.contact?.phone || details.contact?.email) && <section><h2>{copy("ទំនាក់ទំនង", "Contact")}</h2><p>{[details.contact.name, details.contact.phone, details.contact.email].filter(Boolean).join(" · ")}</p></section>}
       {children}
       {showActions && !preview && <Link to="/app/events/new">{copy("បង្កើតកម្មវិធី", "Create event")}</Link>}

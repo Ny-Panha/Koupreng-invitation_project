@@ -1,0 +1,132 @@
+{
+  "reviewed": "2026-11-05",
+  "baseCommit": "5e0ad75c0b28a5f2e28ec0551513ae028bd76163",
+  "commands": [
+    {
+      "command": "npm --prefix apps/frontend-user run lint",
+      "exitCode": 0,
+      "localIgnoredLog": "output/floral-v2/lint.log",
+      "logSha256": "52fffd10a27da7ca85657cb07ca8f4c376d8991bb3efbe96d624f017b515ebf8"
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run test -- --maxWorkers=2",
+      "exitCode": 0,
+      "filesPassed": 166,
+      "passed": 1257,
+      "failed": 0,
+      "durationSeconds": 75.02,
+      "localIgnoredLog": "output/floral-v2/unit-final.log",
+      "logSha256": "b916c8ae792f4ee4be2c88dd8374e1d14db338f8d56553167df7778e09cf0d04"
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run build",
+      "exitCode": 0,
+      "viteSeconds": 1.56,
+      "localIgnoredLog": "output/floral-v2/build-user.log",
+      "logSha256": "d65a8c95cc847f94d7c4d00dd31637ddfc17fc8fcb204d2e785492a418c42595"
+    },
+    {
+      "command": "npm --prefix apps/frontend-admin run lint",
+      "exitCode": 0,
+      "localIgnoredLog": "output/floral-v2/admin-lint.log",
+      "logSha256": "7b0521746442f3a07ba830d3886d680d679002bb88a4358a1cdab4758c0ee841"
+    },
+    {
+      "command": "npm --prefix apps/frontend-admin run build",
+      "exitCode": 0,
+      "viteSeconds": 4.84,
+      "localIgnoredLog": "output/floral-v2/admin-build.log",
+      "logSha256": "a646518c8273510379a297678845865995b95b84c4117219f2bde6811a1e1637"
+    },
+    {
+      "command": "python scripts/validate-agent-routing.py",
+      "exitCode": 0,
+      "validSkills": 58,
+      "pinnedSkills": 10,
+      "errors": 0,
+      "localIgnoredLog": "output/floral-v2/routing.log",
+      "logSha256": "2080160106f47c83b6ad59d1a2fa2b4ddff8730b6297a85461e1e6ed99265f6e"
+    },
+    {
+      "command": ".\\mvnw.cmd test",
+      "cwd": "apps/backend",
+      "exitCode": 0,
+      "discovered": 669,
+      "passed": 591,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 78,
+      "duration": "2:02",
+      "localIgnoredLog": "output/floral-v2/backend-full.log",
+      "logSha256": "368ae887793978bb70c2b532bc036a9bf194d7eac154af9cfdad0e64a2b499a9"
+    },
+    {
+      "command": ".\\mvnw.cmd test -Dtest=Phase9MediaMySqlTests",
+      "cwd": "apps/backend",
+      "environment": "RUN_PHASE7_MYSQL=true; FLYWAY_TEST_DB_URL points to disposable loopback 3416; private ephemeral credentials omitted",
+      "exitCode": 0,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration": "2:13",
+      "localIgnoredLog": "output/floral-v2/mysql-media.log",
+      "logSha256": "157393a5f5bb16bffdea61dc8c92e30bbb7a62fbd142cfc09ec272ed52af243d"
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/floral-motion-v2.spec.js tests/e2e/floral-agenda-map-v2.spec.js tests/e2e/khmer-floral-gold.spec.js tests/e2e/invitation-styles-v2.spec.js tests/e2e/khmer-floral-media.spec.js tests/e2e/template-identity.spec.js tests/e2e/phase9-video.spec.js --workers=2",
+      "exitCode": 0,
+      "passed": 152,
+      "failed": 0,
+      "skipped": 0,
+      "duration": "3.9m",
+      "projects": [
+        "desktop-chromium",
+        "mobile-chromium"
+      ],
+      "localIgnoredLog": "output/floral-v2/release-e2e.log",
+      "logSha256": "3c38e6daf0ee836915ff2b1e24a81b692fd51c6a6dc573e244d102b92cc63c72"
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run test:e2e -- --list",
+      "exitCode": 0,
+      "discovered": 1188,
+      "files": 91,
+      "executedAll": false,
+      "localIgnoredLog": "output/floral-v2/e2e-inventory.log",
+      "logSha256": "e290d423eec92386c303572728c0fae1ec548e3ad5e44a9690a44fa2fa54c649"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "assetVerification": {
+    "files": 43,
+    "hashOrSizeMismatches": 0,
+    "photoFiles": 41,
+    "photoBytes": 1841502,
+    "galleryPhotographs": 12
+  },
+  "bundle": {
+    "mainJsKb": 440.6,
+    "mainJsGzipKb": 131.47,
+    "floralJsKb": 25.61,
+    "floralJsGzipKb": 8.41,
+    "lazyStyleEditorJsKb": 8.14,
+    "lazyStyleEditorJsGzipKb": 3.16,
+    "lazyFilmPlayerJsKb": 14.2,
+    "lazyFilmPlayerJsGzipKb": 4.38,
+    "runtimeDependenciesAdded": 0
+  },
+  "frameTiming": "FRAME_TIMING_V2.json",
+  "limitations": [
+    "Physical Safari/iOS unavailable",
+    "Cloudinary provider contract mocked, no live credentials",
+    "Browser API fixtures separate from real H2/MySQL tests",
+    "Full E2E corpus not executed: 1036 other scenarios",
+    "73 other opt-in MySQL scenarios remain unexecuted; 5 of the 78 full-suite skips passed separately",
+    "Original artwork, licensed stock and saved content differ from private recording; no percentage similarity claim",
+    "No production deployment"
+  ]
+}

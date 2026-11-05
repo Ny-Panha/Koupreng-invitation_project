@@ -1,3 +1,4 @@
+import { FLORAL_DEMO_PHOTOS } from './floralDemoMedia';
 const root = '/templates/khmer-floral-gold';
 const km = {
   title: 'សិរីមង្គលអាពាហ៍ពិពាហ៍', subtitle: 'សូមគោរពអញ្ជើញ',
@@ -30,7 +31,7 @@ export const KHMER_FLORAL_GOLD_TEMPLATE = {
   dateText: ['weekday', 'day', 'month', 'year'].map(part => new Intl.DateTimeFormat('km-KH', { [part]: ['day', 'year'].includes(part) ? 'numeric' : 'long', timeZone: 'UTC', numberingSystem: 'khmr' }).format(new Date('2027-02-14T12:00:00Z'))).join(' '),
   dateTextEn: 'Sunday, 14 February 2027',
   eventDate: '2027-02-14', eventTime: '17:00', eventTimezone: 'Asia/Phnom_Penh', targetDate: '2027-02-14T17:00:00+07:00',
-  gallery: ['couple-960', 'together', 'blessing', 'memories'].map((file, index) => ({ id: `floral-demo-${index}`, src: `${root}/${file}.webp`, alt: 'Demonstration wedding photographs by Hanuman Photo Studio' })),
+  gallery: FLORAL_DEMO_PHOTOS,
   sketchMapImage: `${root}/demo-map.svg`, googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Phnom+Penh+Cambodia',
   schedule: [
     { id: 'welcome', time: '07:00', title: 'ពិធីហែជំនូន', titleKm: 'ពិធីហែជំនូន', titleEn: 'Groom’s procession', iconKey: 'procession' },

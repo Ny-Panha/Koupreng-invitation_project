@@ -108,3 +108,6 @@ client_secret*.json
 
 # Database snapshots may contain guest records and credentials.
 /backups/*.sql
+
+# Local reference-video frames, stock downloads, disposable database metadata and raw QA logs.
+/output/floral-v2/

@@ -91,7 +91,7 @@ export default function Card3DFlip({
           </div>
 
           <div style={{ marginBottom: "1.5rem" }}>
-            {tpl.enabledSections?.schedule !== false && (tpl.programDays ? <ProgramTimeline content={tpl} /> : scheduleItems.map((item, idx) => (
+            {tpl.enabledSections?.schedule !== false && ((tpl.programDays || tpl.invitationStyleV1?.program) ? <ProgramTimeline content={tpl} /> : scheduleItems.map((item, idx) => (
               <div key={item.id || idx} className="el-schedule-item"><ProgramDetails item={item} content={tpl} />
                 <div className="el-time font-mono">{item.time}</div>
                 <div>

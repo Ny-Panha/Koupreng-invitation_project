@@ -2,7 +2,7 @@ import { isPublicCatalogTemplate, requiresTemplateAccess } from "../model/catalo
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { getMusicTrack } from '../../../shared/data/musicTracks';
-import { KHMER_FLORAL_GOLD_TEMPLATE } from './khmerFloralGoldTemplate';
+import { floralDemoFromCelestial } from './floralDemoAdapter';
 
 export const KEEP_TEMPLATE_CODE = "silk-heritage";
 export const KHMER_CELESTIAL_TEMPLATE_CODE = "khmer-celestial";
@@ -650,7 +650,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },
 };
 
-export { KHMER_FLORAL_GOLD_TEMPLATE } from './khmerFloralGoldTemplate';
+export const KHMER_FLORAL_GOLD_TEMPLATE = floralDemoFromCelestial(KHMER_CELESTIAL_TEMPLATE);
 
 export const TEMPLATES = [
     SILK_HERITAGE_TEMPLATE,

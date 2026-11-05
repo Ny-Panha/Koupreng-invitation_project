@@ -5,7 +5,7 @@ import { eventLocaleModel } from './localizedEventModel';
 import { invitationFeatureFields } from '../../templates/shared/invitationFeatures';
 import IllustratedMapEditor from '../../invitations/studio/IllustratedMapEditor';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEventWorkspace } from "../workspace/EventContext";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -15,6 +15,7 @@ import { eventPayload } from "./eventFields";
 import EventFields from "./EventFields.jsx";
 import StudioGuide from '@/features/invitations/studio/StudioGuide';
 import SaveTheDateEditor from '@/features/invitations/studio/SaveTheDateEditor';
+const InvitationStyleEditor = lazy(() => import('@/features/invitations/studio/InvitationStyleEditor'));
 import WeddingProgramEditor from '@/features/invitations/studio/WeddingProgramEditor';
 import PreWeddingVideoEditor from '@/features/invitations/studio/PreWeddingVideoEditor';
 import { eventPresentationFields } from '@/features/templates/shared/eventPresentation';
@@ -114,6 +115,7 @@ export default function EventDetails() {
     <div hidden={mode === 'guided' && step !== 1}>{generic && <>
       <IllustratedMapEditor value={form.illustratedMap} onChange={value => setForm(current => ({ ...current, illustratedMap: value }))} entitled={workspace.access?.ownerFeatures?.includes('ILLUSTRATED_VENUE_MAP') === true} locale={authorLocale} onUndo={persistence.undo} onRedo={persistence.redo} />
       <SaveTheDateEditor form={form} english={en} showEventFields={false} onChange={patch => setForm(current => ({ ...current, ...patch }))} />
+      <Suspense fallback={<p role="status">{en ? 'Loading invitation styles…' : 'កំពុងផ្ទុករចនាប័ទ្មធៀប…'}</p>}><InvitationStyleEditor form={{ ...form, schedule }} english={en} eventId={eventId} capabilities={{ dateStyles: true, programStyles: true }} update={(key, value) => setForm(current => ({ ...current, [key]: value }))} /></Suspense>
       <label>{en ? "Invitation message or description (optional)" : "សារអញ្ជើញ ឬការពិពណ៌នា (មិនបាច់បំពេញ)"}<textarea maxLength={5000} value={form.localizedContentV1 ? projectLocale(form, "km").messageText : form.storyText || ""} onChange={e => setForm(current => ({ ...editLocalizedField(current, "km", "messageText", e.target.value), storyText: e.target.value }))} /></label>
       <label>{en ? "Invitation language" : "ភាសាសំបុត្រអញ្ជើញ"}<select value={form.languageMode || "KH"} onChange={e => setForm(current => ({ ...current, languageMode: e.target.value }))}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
       <fieldset><legend>{en ? "Contact (optional)" : "ទំនាក់ទំនង (មិនបាច់បំពេញ)"}</legend>

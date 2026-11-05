@@ -53,6 +53,7 @@ export function normalizeTemplateViewModel(tpl = {}, content = {}) {
       src: img.src || img.url || img.preview || "",
       alt: img.alt || `Wedding photo ${i + 1}`,
       caption: img.caption || "",
+      ...(img.thumbnail ? { thumbnail: img.thumbnail } : {}),
       span: img.span || ["tall", "wide", "small", "small"][i % 4],
     };
   });

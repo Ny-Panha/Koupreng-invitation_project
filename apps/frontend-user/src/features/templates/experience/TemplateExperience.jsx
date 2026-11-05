@@ -310,6 +310,7 @@ function WeddingTemplateExperience({
             schedule: Array.isArray(liveData.schedule) ? normalizeProgram(liveData.schedule) : baseContent.schedule,
             programDays: liveData.programDays ?? baseContent.programDays,
             saveTheDate: liveData.saveTheDate ?? baseContent.saveTheDate,
+            invitationStyleV1: liveData.invitationStyleV1 ?? baseContent.invitationStyleV1,
             eventDate: liveData.eventDate ?? baseContent.eventDate,
             eventTimezone: liveData.eventTimezone ?? baseContent.eventTimezone,
             eventEndDate: liveData.eventEndDate ?? baseContent.eventEndDate,
@@ -779,7 +780,8 @@ export default function TemplateExperience(props) {
     const ownerLoad = useCallback(signal => mediaService.ownerCinematicContent(previewContent?.previewEventId, previewContent?.preWeddingVideo?.videoMediaId, signal), [previewContent?.previewEventId, previewContent?.preWeddingVideo?.videoMediaId]);
     const previewConfiguration = previewContent?.previewVideoEntitled === true && /^[1-9]\d*$/.test(String(previewContent?.previewEventId)) ? previewContent.preWeddingVideo : null;
     const royal = [tpl?.code, tpl?.slug, tpl?.templateCode].includes('royal-garden-cinematic');
-    const videoPresentation = useMemo(() => royal ? { ...royalGardenPresentation(previewContent || tpl?.hostContent || props.content || tpl).video, royal: true } : undefined, [royal, previewContent, tpl, props.content]);
+    const floral = [tpl?.code, tpl?.slug, tpl?.templateCode].includes('khmer-floral-gold');
+    const videoPresentation = useMemo(() => royal ? { ...royalGardenPresentation(previewContent || tpl?.hostContent || props.content || tpl).video, royal: true } : floral ? { alwaysMuted: true, fit: 'contain', replay: true } : undefined, [royal, floral, previewContent, tpl, props.content]);
     // A public catalog sample is never inherited by owner drafts or public invitations.
     const demoVideo = royal && !channel && !previewContent && !tpl?.hostContent && !props.isHostedInvitation && !props.content?.hasHostContent
         ? { src: ROYAL_ASSETS.demoVideo, poster: ROYAL_ASSETS.poster } : undefined;
