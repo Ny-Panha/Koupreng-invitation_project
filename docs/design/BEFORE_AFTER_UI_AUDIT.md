@@ -37,3 +37,18 @@ The WithJoy capture also exposes an existing readability problem: white ceremoni
 No real payments or production deployments were performed. The test harness initially targeted a custom checkout's nonexistent shared close selector; that harness was corrected to open the real event-deletion confirmation. Only the corrected baseline/current runs count as visual evidence.
 
 Build entry measurements are stored in `docs/qa/premium-modernization/{before,after}/bundle-sizes.json`. They measure emitted asset size, not LCP/INP/CLS or device rendering speed. Build timing varies with contention; a faster build is not a runtime performance claim.
+
+## Batch 11 - Confirmed integration and UX repairs (2026-11-05)
+
+| Before | After | Evidence |
+|---|---|---|
+| Clipboard copy persisted a SENT/share marker | Copy prepares text only; explicit/server-recorded sharing remains separate | Delivery unit tests, updated Batch 8 regression, Batch 11 copy-only browser test; [320px capture](../qa/batch11/evidence/delivery-en-320.png) |
+| Legacy delivery redirects discarded selected guest/section context | Numeric identity, allowlisted operational context and plain anchors survive; credential query values are dropped | Ten redirect unit cases, deep-link/reload/back/forward browser test |
+| Editable notification action link was absent from the backend DTO; creation claimed successful sending | Unsupported control is disabled with bilingual explanation; toast reports server status and no inferred external delivery | Notification component/payload/browser tests; [English desktop](../qa/batch11/evidence/notifications-en-1440.png), [Khmer mobile](../qa/batch11/evidence/notifications-km-390.png) |
+| Encoded/path/header/nested/session credentials could escape diagnostic filtering | Key normalization, recursive filtering and whole-export sanitization preserve useful safe identifiers | Adversarial redaction and exported-session tests; existing CSV/XLSX formula defenses retained |
+| Duplicate monitor frames inflated totals; stale aborted requests could replace reconnect state | Bounded de-duplication precedes counters; aborted reads/responses/errors are ignored; clear removes selected details | Stream-frame/reconnect/selection regressions |
+| Fullscreen template toolbar collapsed its heading; notification secondary copy fell below contrast threshold | Toolbar wraps with visible title and named mobile back control; feature-local secondary copy is darker | Fullscreen new/edit routes in both Chromium projects; notification Axe contrast enabled |
+
+These are verified scoped repairs. [The route matrix](../qa/batch11/route-matrix.json) separates 30 content/fallback smoke patterns from guard-only and destination-only evidence. Real browser/HTTP/JPA/MySQL state is documented in [integrated journeys](../qa/batch11/integrated-journeys.md); external provider/device behavior and remaining UI work stay [pending](../qa/batch11/remaining-gaps.md).
+
+Final screenshot review also repaired the customer mobile menu: its three bars had formed an oversized horizontal row outside the 320px viewport. The button now stacks the bars within a 44px target; focused browser checks assert its bounds across all narrow representative widths. See B11-10 in the [Batch 11 defect ledger](../qa/batch11/test-results.md).

@@ -51,3 +51,11 @@ For each batch: inspect source/current state; record baseline; make focused chan
 - Source/license decisions live in TEN_LIBRARY_INTEGRATION_MATRIX.md and THIRD_PARTY_UI_LICENSES.md. Research does not imply import. Restricted builder/output components require independent implementation or appropriate rights.
 
 No full-project, phase-wide, 100% or production-ready completion is claimed. Exact first-batch files/checks/screenshots/limits are in [verification](UI_MODERNIZATION_VERIFICATION.md) and [before/after audit](BEFORE_AFTER_UI_AUDIT.md). Upgrade statuses only after the relevant gates pass.
+
+## Batch 11 - Current verification state (2026-11-05)
+
+The current continuation supersedes the earlier Batch 10 active-work list. Batch 11 delivered integrated QA and focused repairs, with all 135 route patterns reconciled and separate guard, smoke, functional, persistent-journey and external-provider evidence. See [Batch 11 results](../qa/batch11/test-results.md) and [per-route tiers](../qa/batch11/route-matrix.json).
+
+Verified gates: 1,322 customer and 189 admin unit/component tests; 104 fixture browser regressions plus two fallback checks; 35 disposable MySQL integrity tests; one live browser journey within a separate 21-test real MySQL run; frontend lint/build/token/routing checks. The full default backend suite passed 669 tests with 78 explicit environment-gated skips. Historical route modernization status was not promoted by shared shell/guard tests.
+
+Continue with **Batch 12: Performance, Security, Accessibility, Cross-Browser QA and Release-Readiness Assessment**. Prioritize [the remaining authenticated leaf audits and external/device gaps](../qa/batch11/remaining-gaps.md). No full-platform or production-ready completion is claimed.

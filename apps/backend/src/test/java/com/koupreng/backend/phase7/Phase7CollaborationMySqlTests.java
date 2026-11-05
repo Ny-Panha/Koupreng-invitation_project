@@ -61,6 +61,7 @@ class Phase7CollaborationMySqlTests {
         registry.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.MySQLDialect");
         registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.MySQLDialect");
         registry.add("spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access", () -> true);
+        registry.add("app.security.cors.allowed-origins", () -> "http://localhost:5173,http://localhost:5174,http://127.0.0.1:4175,http://127.0.0.1:4176");
     }
 
     @BeforeAll void reviewedProductPolicy() throws Exception {
@@ -92,6 +93,10 @@ class Phase7CollaborationMySqlTests {
             var plan = packages.findAll().stream().filter(value -> code.equals(value.getCode())).findFirst().orElseThrow();
             JsonNode offer = null;
             for (JsonNode candidate : catalog.data()) if (code.equals(candidate.path("code").asText())) offer = candidate;
+            if (!plan.isPublicVisible()) {
+                assertNull(offer, "Hidden plans must not become purchasable catalog offers");
+                continue;
+            }
             assertNotNull(offer, "Public catalog is missing " + code);
             for (String field : List.of("price", "currency", "maxInvitations", "maxGuests", "maxGuestsPerInvitation", "qrInvitationsEnabled", "qrCheckInEnabled")) {
                 assertTrue(offer.hasNonNull(field), code + " is missing " + field);
@@ -501,7 +506,8 @@ class Phase7CollaborationMySqlTests {
             assertEquals(plan.isQrInvitationsEnabled(), features.contains("QR_INVITATIONS"));
             assertEquals(plan.isQrCheckInEnabled(), features.contains("QR_CHECK_IN"));
             assertEquals(plan.isPremiumTemplatesEnabled(), features.contains("PREMIUM_TEMPLATES"));
-            for (String premium : List.of("PRE_WEDDING_VIDEO", "COUPLE_MONOGRAM", "ILLUSTRATED_VENUE_MAP")) assertEquals("PREMIUM".equals(code), features.contains(premium));
+            for (String premium : List.of("PRE_WEDDING_VIDEO", "COUPLE_MONOGRAM")) assertEquals("PREMIUM".equals(code), features.contains(premium));
+            assertEquals(Set.of("PRO", "PREMIUM").contains(code), features.contains("ILLUSTRATED_VENUE_MAP"));
             assertEquals(plan.getMaxGuests().longValue(), response.data().path("quotas").path("guests").path("limit").asLong());
             if ("FREE".equals(code)) {
                 var admin = users.findById(actor.id).orElseThrow(); admin.setRole(com.koupreng.backend.user.domain.Role.ADMIN); users.saveAndFlush(admin);
@@ -575,6 +581,93 @@ class Phase7CollaborationMySqlTests {
         subscriptions.saveAndFlush(subscription);
     }
 
+    @Test void batch11PublishedGuestJourneyReconcilesRsvpCheckInAndAdminReporting() throws Exception {
+        Fixture f = fixture(3, 5);
+        String title = "Batch11-" + UUID.randomUUID();
+        var saved = call("GET", eventPath(f), f.owner, null).data();
+        var body = eventBody(title, saved.path("updatedAt").asText());
+        body.put("visibility", "PUBLIC");
+        body.put("contentJson", "{\"messageText\":\"Fictional Batch 11 invitation\"}");
+        assertEquals(200, call("PUT", eventPath(f), f.owner, body).status);
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        saved = call("GET", eventPath(f), f.owner, null).data();
+        assertEquals(f.eventId, saved.path("id").asLong());
+        String slug = saved.path("slug").asText();
+        assertEquals(200, call("GET", "/api/v1/public/invitations/" + slug, null, null).status);
+        Reply guest = call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Batch 11 fictional guest", "seatCount", 2));
+        assertEquals(201, guest.status);
+        long guestId = guest.data().path("id").asLong();
+        String token = guest.data().path("inviteToken").asText();
+        assertFalse(token.isBlank());
+        assertEquals(200, call("POST", eventPath(f) + "/delivery/prepare", f.owner, null).status);
+        Reply message = call("GET", eventPath(f) + "/delivery/guests/" + guestId + "/share-message", f.owner, null);
+        assertEquals(200, message.status);
+        assertTrue(message.data().path("invitationUrl").asText().contains(token));
+        String rsvpPath = "/api/v1/public/invitations/" + slug + "/guests/" + token + "/rsvp";
+        assertEquals(201, call("POST", rsvpPath, null, Map.of("responseStatus", "ATTENDING", "attendeeCount", 2)).status);
+        assertEquals(201, call("POST", rsvpPath, null, Map.of("responseStatus", "ATTENDING", "attendeeCount", 1)).status);
+        Reply summary = call("GET", eventPath(f) + "/rsvps/summary", f.owner, null);
+        assertEquals(1, summary.data().path("attending").asInt());
+        assertEquals(1, summary.data().path("totalAttendeeCount").asInt());
+        Reply qr = call("GET", eventPath(f) + "/guests/" + guestId + "/qr", f.owner, null);
+        assertEquals(200, qr.status);
+        assertEquals("GUEST", qr.data().path("tokenType").asText());
+        String scan = eventPath(f) + "/check-in/scan";
+        assertEquals(403, call("POST", scan, f.stranger, Map.of("token", token)).status);
+        assertEquals(200, call("POST", scan, f.owner, Map.of("token", qr.data().path("qrPayload").asText())).status);
+        Reply repeat = call("POST", scan, f.owner, Map.of("token", token));
+        assertEquals("ALREADY_CHECKED_IN", repeat.data().path("result").asText());
+        assertEquals(1, call("GET", eventPath(f) + "/check-in/summary", f.owner, null).data().path("checkedIn").asInt());
+        String report = "/api/v1/admin/reports/management/invitations?search=" + title;
+        assertEquals(403, call("GET", report, f.owner, null).status);
+        var administrator = users.findById(f.stranger.id).orElseThrow();
+        administrator.setRole(com.koupreng.backend.user.domain.Role.ADMIN);
+        users.saveAndFlush(administrator);
+        Reply reporting = call("GET", report, f.stranger, null);
+        assertEquals(200, reporting.status);
+        assertEquals(1, reporting.data().path("rows").size());
+        var row = reporting.data().path("rows").get(0);
+        assertEquals(f.eventId, row.path("id").asLong());
+        assertEquals(1, row.path("guestCount").asInt());
+        assertEquals(1, row.path("rsvpCount").asInt());
+        assertEquals(1, row.path("checkedInCount").asInt());
+        assertEquals(200, call("DELETE", eventPath(f) + "/guests/" + guestId + "/check-in", f.owner, null).status);
+        reporting = call("GET", report, f.stranger, null);
+        assertEquals(0, reporting.data().path("rows").get(0).path("checkedInCount").asInt());
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "RUN_BATCH11_BROWSER", matches = "true")
+    void batch11RealBrowserUsesTheDisposableBackend() throws Exception {
+        Fixture f = fixture(3, 5);
+        Auth administrator = register();
+        var user = users.findById(administrator.id).orElseThrow();
+        user.setRole(com.koupreng.backend.user.domain.Role.ADMIN);
+        users.saveAndFlush(user);
+        var userApp = java.nio.file.Path.of("..", "frontend-user").toAbsolutePath().normalize();
+        var evidence = userApp.resolve("../../.cache/batch11").normalize();
+        java.nio.file.Files.createDirectories(evidence);
+        var credentials = java.nio.file.Files.createTempFile(evidence, "disposable-browser-", ".json");
+        try {
+            java.nio.file.Files.writeString(credentials, json.writeValueAsString(Map.of(
+                    "owner", Map.of("email", f.owner.email, "password", f.owner.password),
+                    "admin", Map.of("email", administrator.email, "password", administrator.password))));
+            var runner = new ProcessBuilder("node", "node_modules/@playwright/test/cli.js", "test",
+                    "--config", "playwright.batch11-live.config.js", "--reporter=json")
+                    .directory(userApp.toFile()).redirectErrorStream(true)
+                    .redirectOutput(evidence.resolve("live-playwright.json").toFile());
+            runner.environment().put("BATCH11_BROWSER_FIXTURES", credentials.toString());
+            runner.environment().put("BACKEND_PORT", String.valueOf(port));
+            Process browser = runner.start();
+            boolean completed = browser.waitFor(240, TimeUnit.SECONDS);
+            if (!completed) browser.destroyForcibly();
+            assertTrue(completed, "Batch 11 browser timed out; inspect .cache/batch11/live-playwright.json");
+            assertEquals(0, browser.exitValue(), "Batch 11 browser failed; inspect .cache/batch11/live-playwright.json");
+        } finally {
+            java.nio.file.Files.deleteIfExists(credentials);
+        }
+    }
+
     private Fixture fixture(int teamLimit) throws Exception {
         return fixture(teamLimit,1);
     }
@@ -601,8 +694,9 @@ class Phase7CollaborationMySqlTests {
     }
     private Auth register() throws Exception {
         String email = "p7-" + UUID.randomUUID() + "@example.test";
-        Reply reply = call("POST", "/api/auth/register", null, Map.of("fullName", "Phase 7 fictional account", "email", email, "password", "Phase7!aA7" + UUID.randomUUID()));
-        assertEquals(200, reply.status); return new Auth(reply.root.path("user").path("id").asLong(), email, reply.root.path("accessToken").asText());
+        String password = "Phase7!aA7" + UUID.randomUUID();
+        Reply reply = call("POST", "/api/auth/register", null, Map.of("fullName", "Phase 7 fictional account", "email", email, "password", password));
+        assertEquals(200, reply.status); return new Auth(reply.root.path("user").path("id").asLong(), email, reply.root.path("accessToken").asText(), password);
     }
     private Reply invite(Fixture f, String email, String role) throws Exception { return call("POST", "/api/v1/organizations/" + f.orgId + "/members", f.owner, Map.of("email", email, "role", role)); }
     private Reply accept(Auth user, String token) throws Exception { return call("POST", "/api/v1/organizations/invitations/accept", user, Map.of("token", token)); }
@@ -625,7 +719,7 @@ class Phase7CollaborationMySqlTests {
         }
     }
     private static String required(String key) { String value = System.getenv(key); if (value == null || value.isBlank()) throw new IllegalStateException("Missing disposable configuration: " + key); return value; }
-    private record Auth(long id, String email, String token) { }
+    private record Auth(long id, String email, String token, String password) { }
     private record Fixture(Auth owner, Auth member, Auth stranger, long orgId, long eventId, long grantId) { }
     private record Reply(int status, JsonNode root,String body) { JsonNode data() { return root.path("data"); } }
 }

@@ -420,3 +420,19 @@ Completed 2026-11-05. Modernized the administrative observability, governance, a
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
 
 No backend/worker tests were rerun because their code/contracts/configuration were not modified. Safari/iOS, Android hardware behavior, Firefox, manual screen readers, virtual keyboards, cameras, low-memory devices, live auth providers, uploads and real bank/Telegram settlement remain unverified. No full release-ready claim, production deployment or real payment was made.
+
+## Batch 11 - Integrated journeys and regression QA (2026-11-05)
+
+This section supersedes older batch-wide assumptions about backend testing and notification/share truth. Actual starting HEAD was `b57b9edc58a954de650ff42e7e9ee6d042b57e33`, clean on `main`, equal to fetched `origin/main`.
+
+- Customer Vitest: **1,322 passed / 186 files**, 0 failures/skips. Admin Vitest: **189 passed / 32 files**, 0 failures/skips. Both lint/build gates passed.
+- Backend default Maven: **669 tests, 0 failures/errors, 78 environment-gated skips**. Disposable MySQL integrity: **35 passed**, 0 failures/errors/skips. Separate opt-in real-browser/MySQL run: **21 passed**, including **one real Chromium owner-to-guest-to-admin journey**; overlapping tests are not added as unique coverage.
+- Final fixture Playwright regression: **104 passed**, 0 failed/skipped/flaky, 182.50s; fallback supplement **2 passed**, 0 failed/skipped. Desktop and emulated mobile Chromium; no physical device/provider certification.
+- All 135 routes source reconciled. Strict route-content/fallback smoke: **30 patterns**; selected functional controls: **22 patterns**; alias destinations: **34 patterns**; anonymous guards: **106 patterns**. Categories overlap; 105 patterns still need dedicated full leaf smoke. No guard-only/container check certifies an authenticated page.
+- New delivery/notification tests cover English and Khmer at 320, 375, 390, 430, 768, 1024 and 1440 pixels. Axe keeps contrast enabled. Six fictional-data [screenshots](../qa/batch11/evidence/) are retained; live personalized URLs/credentials are excluded from screenshots and traces.
+
+Confirmed repairs: copy-only delivery no longer records SENT; legacy redirects keep safe selected-guest/anchor context; unsupported notification links are disabled with an explanation; notification success reflects server status; diagnostic displays/exports redact encoded/nested/header/path/session secrets; SSE duplicate totals and stale reconnect updates are fixed; standalone template toolbar titles remain visible; notification secondary copy contrast is strengthened. Financial authorization, entitlement rules, existing renderers, production configuration and migrations remain unchanged.
+
+Exact commands, initial failures and corrections: [test results](../qa/batch11/test-results.md), [sanitized machine summary](../qa/batch11/test-summary.json). Coverage: [route matrix](../qa/batch11/route-matrix.json). [Remaining gaps](../qa/batch11/remaining-gaps.md) include provider settlement/delivery, hardware, Safari/Firefox, exhaustive route states and manual accessibility. No production deployment or real payment was performed.
+
+Final screenshot review also repaired the customer mobile menu: its three bars had formed an oversized horizontal row outside the 320px viewport. The button now stacks the bars within a 44px target; focused browser checks assert its bounds across all narrow representative widths. See B11-10 in the [Batch 11 defect ledger](../qa/batch11/test-results.md).

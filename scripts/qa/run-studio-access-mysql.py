@@ -21,6 +21,7 @@ def main():
     parser.add_argument("--env-file", default=".env")
     parser.add_argument("--tests", default="Phase7CollaborationMySqlTests")
     parser.add_argument("--label", default="real-mysql-security")
+    parser.add_argument("--browser", action="store_true", help="Run the opt-in Batch 11 real-browser journey while the disposable backend is alive")
     args = parser.parse_args()
     if not re.fullmatch(r"[a-z0-9-]+", args.label):
         raise SystemExit("Use a safe report label")
@@ -58,6 +59,8 @@ def main():
             FLYWAY_TEST_DB_USERNAME=config["DB_USERNAME"], FLYWAY_TEST_DB_PASSWORD=config["DB_PASSWORD"],
             STUDIO_PACKAGE_CONFIG=str(root / "docs/next-studio-ux/evidence/baseline-product-policy.json"))
         env.setdefault("MAVEN_OPTS", "-Xmx1536m")
+        if args.browser:
+            env["RUN_BATCH11_BROWSER"] = "true"
         wrapper = root / "apps/backend/mvnw.cmd"
         command = ["cmd", "/d", "/c", str(wrapper), "-Dtest=" + args.tests, "test"] if os.name == "nt" else [str(root / "apps/backend/mvnw"), "-Dtest=" + args.tests, "test"]
         started = time.time()

@@ -6,6 +6,12 @@ Discovery: 2026-11-04. Route authority is the checked-out route factories; runti
 
 Allowed statuses: VERIFIED COMPLETE; IMPLEMENTED — VERIFICATION BLOCKED; NOT IMPLEMENTED; INTENTIONALLY UNCHANGED — WITH JUSTIFICATION; NOT APPLICABLE — WITH EVIDENCE. Redirects require destination/query/access checks before any completion claim.
 
+## Batch 11 evidence overlay (2026-11-05)
+
+All **135 patterns (111 customer / 24 admin)** reconcile with executed route factories. Current evidence is recorded per route in [the machine matrix](../qa/batch11/route-matrix.json): **30 content/fallback smoke patterns**, **22 patterns with selected functional controls**, **34 alias patterns with destination evidence**, and **106 anonymous guard patterns**. These categories overlap. Another 47 rows have destination/container-only evidence; **105 patterns still need dedicated full leaf smoke**. The historical **87 NOT IMPLEMENTED** route rows remain modernization debt, not missing product screens.
+
+The statuses and Batch 1-10 counts below are historical modernization records, not a current system-wide certification. In particular, Batch 11 disables unsupported notification action links, reports returned server status instead of claiming delivery, preserves safe redirect context, stops copy-only SENT writes, strengthens diagnostic filtering, and repairs standalone template toolbar visibility. See [results and failures](../qa/batch11/test-results.md), [real journeys](../qa/batch11/integrated-journeys.md), [security boundaries](../qa/batch11/security-boundaries.md) and [remaining gaps](../qa/batch11/remaining-gaps.md). Real MySQL/browser evidence is separate from fixtures and external-provider/device verification.
+
 ## Routes
 
 | App | Route/Feature | Previous State | Design Work | Library Inspiration | Implemented Code | Test Evidence | Status |

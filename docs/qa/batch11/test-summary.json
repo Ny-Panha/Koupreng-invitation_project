@@ -1,0 +1,2342 @@
+{
+  "date": "2026-11-05",
+  "baselineSha": "b57b9edc58a954de650ff42e7e9ee6d042b57e33",
+  "evidenceWarning": "Browser fixtures, real MySQL HTTP integration, and real-browser integration are separate. No external/provider/device pass is claimed. Raw logs are ignored and not published.",
+  "routeSummary": {
+    "sourceReconciledPatterns": 135,
+    "anonymousGuardPatterns": 106,
+    "contentOrDestinationSmokePatterns": 77,
+    "functionalPatterns": 22,
+    "liveBrowserJourneyPatterns": 7,
+    "historicalNotImplementedModernizationRows": 87,
+    "routeContentOrFallbackSmokePatterns": 30,
+    "destinationOrContainerOnlyPatterns": 47,
+    "pendingDedicatedRouteSmokePatterns": 105,
+    "legacyAliasDestinationPatterns": 34
+  },
+  "browserRuns": [
+    {
+      "artifact": ".cache/batch11/playwright-initial.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:23:37.994Z",
+        "duration": 123993.06,
+        "expected": 30,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 10837
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 12264
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3072
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5220
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 515
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 493
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 511
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 608
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 608
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 545
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 572
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 461
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 663
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 543
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 496
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 503
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 12614
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4079
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1161
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 12239
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4149
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1135
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1388
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 953
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1518
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 975
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 42490
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5852
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 56795
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5722
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-cross-feature.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:30:51.772Z",
+        "duration": 76029.424,
+        "expected": 23,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3498
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4519
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3722
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5604
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2217
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3378
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2844
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3205
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "desktop-chromium",
+          "status": "unexpected",
+          "durationMs": 11712
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3709
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "unexpected",
+          "durationMs": 7649
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "mobile-chromium",
+          "status": "unexpected",
+          "durationMs": 10166
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3732
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5273
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2893
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2197
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5310
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4201
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 14717
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2688
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1882
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2728
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2187
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 12169
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3808
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 6283
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-final.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:35:37.891Z",
+        "duration": 223520.55000000002,
+        "expected": 102,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4528
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4448
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4013
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5773
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2463
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3120
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2614
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3063
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 7221
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3765
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "unexpected",
+          "durationMs": 8057
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5560
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3451
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "unexpected",
+          "durationMs": 6423
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 832
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 665
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 786
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 694
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 789
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 739
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 628
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1507
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 788
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 719
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1670
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1172
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 13940
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4583
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1166
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with en copy and accessible controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3122
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with kh copy and accessible controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3842
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 15331
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4591
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1389
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with en copy and accessible controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2921
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with kh copy and accessible controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2796
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1666
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1045
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1741
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1243
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 56175
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 6595
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 58350
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 8476
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2624
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2028
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3312
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2756
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 13643
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3383
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2473
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3991
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3220
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 15384
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with khmer-celestial",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 8940
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with silk-heritage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5282
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \"\" focuses its inline error without publishing",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2580
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \" \\t \" focuses its inline error without publishing",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2515
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed autosave preserves the address and blocks publication",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 6014
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed publish keeps the saved address and never reports publication",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3588
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with khmer-celestial",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4801
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with silk-heritage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3690
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \"\" focuses its inline error without publishing",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1593
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \" \\t \" focuses its inline error without publishing",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1511
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed autosave preserves the address and blocks publication",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3889
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed publish keeps the saved address and never reports publication",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2104
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2387
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1455
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1446
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1533
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1496
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1306
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1367
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1367
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "public discovery shows public catalog prices and requires authentication for package selection",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1170
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "authenticated offers retain currency, unavailable amounts and exact feature flags",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1195
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "package loading, failure, retry and empty catalog have recoverable states",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1183
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "an unauthorized package response never exposes offers or redirects into checkout",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1068
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact focuses invalid fields and waits for acknowledged delivery without double submits",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1435
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 429 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1607
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 502 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1548
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 503 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1327
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact rejects an unacknowledged response and translates the retained draft",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1525
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "home pricing/help and the guest fixture lead to real destinations without legacy resources",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1854
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1927
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1538
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1592
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1564
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1580
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1403
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1646
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1577
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "public discovery shows public catalog prices and requires authentication for package selection",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1103
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "authenticated offers retain currency, unavailable amounts and exact feature flags",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1480
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "package loading, failure, retry and empty catalog have recoverable states",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1253
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "an unauthorized package response never exposes offers or redirects into checkout",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1072
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact focuses invalid fields and waits for acknowledged delivery without double submits",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1575
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 429 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2372
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 502 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2115
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 503 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2229
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact rejects an unacknowledged response and translates the retained draft",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1613
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "home pricing/help and the guest fixture lead to real destinations without legacy resources",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1752
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3809
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4860
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-admin-final.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:42:53.659Z",
+        "duration": 29002.375,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 6767
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4087
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "unexpected",
+          "durationMs": 11197
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 6458
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3400
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "unexpected",
+          "durationMs": 9687
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-admin-verified.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:45:47.353Z",
+        "duration": 20694.698,
+        "expected": 6,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4617
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3240
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 7811
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4642
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3316
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 6218
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-verified.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:48:19.587Z",
+        "duration": 182496.09900000002,
+        "expected": 104,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2930
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3501
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2840
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4978
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "1. Admin Reports: renders executive overview, filters, and passes Axe audit",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1841
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "2. Admin Notifications: enforces broadcast confirmation modal and validates URLs",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2869
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "3. Admin System Logs: verifies secret redaction and opens inspect drawer",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1883
+        },
+        {
+          "file": "batch10-admin-observability.spec.js",
+          "title": "4. API Monitor: renders live diagnostics, QA recorder, and clear confirmation modal",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2697
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4442
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 3216
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 6675
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "administrative legacy aliases resolve without loops and fullscreen editors stay available",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4219
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "admin user detail, template catalog and packages render fixture data and controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2884
+        },
+        {
+          "file": "batch11-admin-integration.spec.js",
+          "title": "notification composer reports pending creation truth across languages and viewport widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5710
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 555
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 560
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 592
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 493
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 522
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 554
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "USER cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 465
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "STAFF cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 488
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 458
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 409
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects expired token",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 476
+        },
+        {
+          "file": "batch11-auth-boundaries.spec.js",
+          "title": "admin session rejects customer app storage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 538
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 12774
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4188
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1162
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with en copy and accessible controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2490
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with kh copy and accessible controls",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2555
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "legacy destinations preserve event identity and resolve real page content",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 13577
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "personalized delivery deep link keeps selected guest, drops credentials and survives reload/history",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4051
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "copying a link leaves the server delivery state unchanged",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1248
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with en copy and accessible controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1991
+        },
+        {
+          "file": "batch11-legacy-redirects.spec.js",
+          "title": "delivery reflows at seven widths with kh copy and accessible controls",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1894
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1426
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1134
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "payment return aliases use server state regardless of success query values",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1485
+        },
+        {
+          "file": "batch11-payment-journey.spec.js",
+          "title": "a receipt denied by the backend remains inaccessible",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1110
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 46908
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 5356
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-user: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 43949
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "frontend-admin: anonymous guards cover every declared protected pattern",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 5577
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2110
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1890
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2715
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2090
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 12757
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "1. Delivery workspace: metrics, recipient search, copy link, and truthful share status",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2207
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "2. QR management: general event QR preview, isolation, copy, and print layout",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1791
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "3. Check-in desk: KPI cards, scan token, duplicate scan warning, and roster filters",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3046
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "4. Wishes management: guest message cards, delete safety on failure and success",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2112
+        },
+        {
+          "file": "batch8-delivery-qr-checkin-wishes.spec.js",
+          "title": "5. Responsive viewports: mobile 375px, 390px, 768px layout verification",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 14561
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with khmer-celestial",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 6777
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with silk-heritage",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4888
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \"\" focuses its inline error without publishing",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2336
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \" \\t \" focuses its inline error without publishing",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2158
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed autosave preserves the address and blocks publication",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 4572
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed publish keeps the saved address and never reports publication",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2685
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with khmer-celestial",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4091
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "address saves, refreshes and publishes with silk-heritage",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3440
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \"\" focuses its inline error without publishing",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1667
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "missing address \" \\t \" focuses its inline error without publishing",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1471
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed autosave preserves the address and blocks publication",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 3926
+        },
+        {
+          "file": "invitation-publishing-address.spec.js",
+          "title": "failed publish keeps the saved address and never reports publication",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1831
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1664
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1342
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1335
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact km keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1214
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1479
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1114
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1215
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact en keeps shared chrome and fits all required widths",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1378
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "public discovery shows public catalog prices and requires authentication for package selection",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 902
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "authenticated offers retain currency, unavailable amounts and exact feature flags",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1055
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "package loading, failure, retry and empty catalog have recoverable states",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1130
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "an unauthorized package response never exposes offers or redirects into checkout",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 944
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact focuses invalid fields and waits for acknowledged delivery without double submits",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1255
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 429 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1543
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 502 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1378
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 503 keeps the draft and supports retry",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1373
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact rejects an unacknowledged response and translates the retained draft",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1453
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "home pricing/help and the guest fixture lead to real destinations without legacy resources",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2050
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1667
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1191
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1477
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact km keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1266
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/ en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1776
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/templates en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1308
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/pricing en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1613
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "/contact en keeps shared chrome and fits all required widths",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1530
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "public discovery shows public catalog prices and requires authentication for package selection",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1174
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "authenticated offers retain currency, unavailable amounts and exact feature flags",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1232
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "package loading, failure, retry and empty catalog have recoverable states",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1171
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "an unauthorized package response never exposes offers or redirects into checkout",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1078
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact focuses invalid fields and waits for acknowledged delivery without double submits",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1383
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 429 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2089
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 502 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2031
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact HTTP 503 keeps the draft and supports retry",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 2116
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "contact rejects an unacknowledged response and translates the retained draft",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1530
+        },
+        {
+          "file": "marketing-pages.spec.js",
+          "title": "home pricing/help and the guest fixture lead to real destinations without legacy resources",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1647
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 2809
+        },
+        {
+          "file": "phase2-payment.spec.js",
+          "title": "approved template offer creates one pending order and only server PAID unlocks the selected design",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 4905
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-fallback.json",
+      "kind": "fixture backend",
+      "stats": {
+        "startTime": "2026-11-05T09:54:22.262Z",
+        "duration": 3798.437,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "unknown route fallback recovers in both applications",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 1658
+        },
+        {
+          "file": "batch11-route-coverage.spec.js",
+          "title": "unknown route fallback recovers in both applications",
+          "project": "mobile-chromium",
+          "status": "expected",
+          "durationMs": 1599
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/live-playwright.json",
+      "kind": "real backend",
+      "stats": {
+        "startTime": "2026-11-05T09:46:24.314Z",
+        "duration": 9803.467,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "batch11-live-journey.spec.js",
+          "title": "real owner UI publish, guest RSVP, scanner and admin report share persistent identity",
+          "project": "desktop-chromium",
+          "status": "expected",
+          "durationMs": 8109
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/batch11/playwright-navigation-final.json",
+      "kind": "fixture backend after customer menu CSS correction",
+      "stats": {
+        "startTime": "2026-11-05T10:04:15.173Z",
+        "duration": 60250.793,
+        "expected": 20,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "overlap": "20 cases already present in the 104-case run; rerun includes additional menu bounds assertions."
+    }
+  ],
+  "mysqlRuns": [
+    {
+      "artifact": ".cache/next-studio-ux/batch11-real-mysql.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "20",
+          "failures": "2",
+          "errors": "0",
+          "skipped": "0",
+          "time": "29.781"
+        },
+        {
+          "name": "com.koupreng.backend.payment.application.PaymentEvidenceIntegrityMySqlTests",
+          "tests": "4",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "14.4"
+        },
+        {
+          "name": "com.koupreng.backend.entitlement.application.EntitlementIntegrityMySqlTests",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "34.205"
+        },
+        {
+          "name": "com.koupreng.backend.subscription.application.SubscriptionIntegrityMySqlTests",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "4.77"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-journey-isolated.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "20",
+          "failures": "2",
+          "errors": "0",
+          "skipped": "0",
+          "time": "29.04"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-real-mysql-final.json",
+      "exitCode": 0,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "20",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "13.981"
+        },
+        {
+          "name": "com.koupreng.backend.payment.application.PaymentEvidenceIntegrityMySqlTests",
+          "tests": "4",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "2.34"
+        },
+        {
+          "name": "com.koupreng.backend.entitlement.application.EntitlementIntegrityMySqlTests",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "17.056"
+        },
+        {
+          "name": "com.koupreng.backend.subscription.application.SubscriptionIntegrityMySqlTests",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "1.73"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-initial.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "37.994"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-second.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "65.638"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-third.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "38.713"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-fourth.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "216.139"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-final.json",
+      "exitCode": 1,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "54.025"
+        }
+      ]
+    },
+    {
+      "artifact": ".cache/next-studio-ux/batch11-browser-live-verified.json",
+      "exitCode": 0,
+      "reports": [
+        {
+          "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+          "tests": "21",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "37.96"
+        }
+      ]
+    }
+  ],
+  "finalFrontend": {
+    "customer": {
+      "files": 186,
+      "passed": 1322,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 181.88
+    },
+    "admin": {
+      "files": 32,
+      "passed": 189,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 19.68
+    }
+  },
+  "baselineBackend": {
+    "tests": 669,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 78,
+    "durationSeconds": 175
+  },
+  "modifiedFiles": [
+    "apps/backend/src/test/java/com/koupreng/backend/phase7/Phase7CollaborationMySqlTests.java",
+    "apps/frontend-admin/src/app/batch11RouteInventory.test.jsx",
+    "apps/frontend-admin/src/features/api-monitor/batch11Monitor.test.js",
+    "apps/frontend-admin/src/features/api-monitor/useApiMonitorStream.js",
+    "apps/frontend-admin/src/features/api-monitor/useQaSessionRecorder.js",
+    "apps/frontend-admin/src/features/notifications/AdminNotificationsFeature.jsx",
+    "apps/frontend-admin/src/features/notifications/AdminNotificationsFeature.test.jsx",
+    "apps/frontend-admin/src/features/templates/AdminTemplateEditFeature.jsx",
+    "apps/frontend-admin/src/shared/utils/auditSanitizer.js",
+    "apps/frontend-admin/src/shared/utils/auditSanitizer.test.js",
+    "apps/frontend-user/playwright.batch11-live.config.js",
+    "apps/frontend-user/src/app/batch11RouteInventory.test.jsx",
+    "apps/frontend-user/src/app/routes/InvitationScopedRedirect.jsx",
+    "apps/frontend-user/src/app/routes/InvitationScopedRedirect.test.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationDeliveryManager.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationDeliveryManager.test.jsx",
+    "apps/frontend-user/src/layouts/components/HostNav.css",
+    "apps/frontend-user/tests/e2e/batch11-admin-integration.spec.js",
+    "apps/frontend-user/tests/e2e/batch11-auth-boundaries.spec.js",
+    "apps/frontend-user/tests/e2e/batch11-legacy-redirects.spec.js",
+    "apps/frontend-user/tests/e2e/batch11-live-journey.spec.js",
+    "apps/frontend-user/tests/e2e/batch11-payment-journey.spec.js",
+    "apps/frontend-user/tests/e2e/batch11-route-coverage.spec.js",
+    "apps/frontend-user/tests/e2e/batch8-delivery-qr-checkin-wishes.spec.js",
+    "apps/frontend-user/tests/e2e/support/batch11AdminFixtures.js",
+    "docs/design/BEFORE_AFTER_UI_AUDIT.md",
+    "docs/design/FULL_ROUTE_COVERAGE_MATRIX.md",
+    "docs/design/UI_MODERNIZATION_ROADMAP.md",
+    "docs/design/UI_MODERNIZATION_VERIFICATION.md",
+    "docs/qa/batch11/evidence/delivery-en-1440.png",
+    "docs/qa/batch11/evidence/delivery-en-320.png",
+    "docs/qa/batch11/evidence/delivery-kh-390.png",
+    "docs/qa/batch11/evidence/notifications-en-1440.png",
+    "docs/qa/batch11/evidence/notifications-en-320.png",
+    "docs/qa/batch11/evidence/notifications-km-390.png",
+    "docs/qa/batch11/integrated-journeys.md",
+    "docs/qa/batch11/remaining-gaps.md",
+    "docs/qa/batch11/route-matrix.json",
+    "docs/qa/batch11/security-boundaries.md",
+    "docs/qa/batch11/test-results.md",
+    "docs/qa/batch11/test-summary.json",
+    "scripts/qa/routeInventory.mjs",
+    "scripts/qa/run-studio-access-mysql.py"
+  ],
+  "finalSourceNote": "After the combined regression, customer menu CSS alone changed; user build, HostNav 5/5 and the 20-case affected browser regression passed, with new geometry assertions."
+}
