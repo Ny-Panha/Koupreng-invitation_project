@@ -104,6 +104,34 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npx playwright test tests/e2e/event-overview-design.spec.js` | Axe accessibility check: **0 violations**, 6 viewports in English & Khmer; 17.2s; exit 0 |
 | `node scripts/sync-design-tokens.cjs --check` | Verified 2 equivalent application token exports; exit 0 |
 
+## Batch 3 — Premium Invitation Builder & Studio Modernization (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx` | Added global `Ctrl+S` / `Cmd+S` keyboard save listener triggering `studio.flush({ deliberate: true })`, added spinning loader icon when saving, localized shortcut hint in tooltips, preserved all accessibility attributes (`data-phase`, `role="status"`, `aria-live="polite"`, `StudioActionBar`) |
+| `apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx` | 5 unit tests verifying status labels, save button click, Ctrl+S save trigger, preview button click, and undo/redo controls |
+| `apps/frontend-user/src/features/invitations/studio/StudioSections.jsx` | Enhanced keyboard navigation (`ArrowUp` / `ArrowDown`) between studio section tabs, enhanced markup with `.studio-section-tab-btn`, `.studio-section-icon`, and `.studio-section-title` while strictly preserving `data-studio-tab`, `aria-current="page"`, and `.studio-section-select select` |
+| `apps/frontend-user/src/features/invitations/studio/StudioSections.test.jsx` | 5 unit tests verifying all 6 tabs, active tab marker, tab click change, mobile dropdown change, and arrow key navigation |
+| `apps/frontend-user/src/features/invitations/studio/StudioChrome.css` | Elevated `.studio-save-status[data-phase]` into luxury pill badges with color coding (`saved`, `unsaved`, `saving`, `failed`, `offline`, `conflict`, `expired`), modernized `.studio-action--save` (luxury emerald with hover elevation, 44px min height) and `.studio-action--publish` (gold border, champagne background, 44px min height), refined tab sidebar styling |
+| `apps/frontend-user/src/features/invitations/studio/invitation-style-editor.css` | Reformatted minified stylesheet into structured luxury CSS with Koupreng gold variables (`--kfg-gold`, `--kfg-ink`, etc.), refined `.studio-style-option` cards with smooth hover lift, selected gold border (`2px solid #8a682c`), focus indicators, preserved invariants (`.kfg-guest-frame--royal`, `.kfg-guest-frame--minimal`) |
+| `apps/frontend-user/src/features/invitations/studio/InvitationStyleEditor.test.jsx` | 4 unit tests verifying date styles selection, program styles selection, guest frame selection, and bilingual Khmer rendering |
+| `apps/frontend-user/src/features/invitations/InvitationPlanEssentialEditor.css` | Replaced legacy red hover color with Koupreng gold `#926c34` on `.pe-clean-dropzone:hover`, enforced `min-height: 44px` on upload, restore, and delete action controls |
+| `apps/frontend-user/src/features/invitations/studio/StudioUploadField.test.jsx` | 3 unit tests verifying empty dropzone rendering, preview card with delete action, and template default restoration |
+| `apps/frontend-user/src/features/invitations/MediaLibrary.css` | Styled workspace tabs with active pill styling (`#245740`), responsive media asset cards (16:9 / 4:3 previews), upload progress bar with gold/emerald accent, 44px touch targets |
+| `apps/frontend-user/src/features/invitations/InvitationMediaManager.test.jsx` | 2 unit tests verifying media category rendering and category switching with bilingual labels |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npx vitest run src/features/invitations/ src/features/wedding-builder/` (customer cwd) | **28 test files passed**, **168 tests passed**; 7.73s; exit 0 |
+| `npm run lint` (customer cwd) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (customer cwd) | Production build passed in 1.37s with **0 errors**; exit 0 |
+| `npx playwright test tests/e2e/invitation-styles-v2.spec.js` (customer cwd) | **44 tests passed** across desktop and mobile Chromium; 2.2m; exit 0 |
+| `npx playwright test tests/e2e/next-studio-ux.spec.js` (customer cwd) | **7 tests passed**, 1 skipped across desktop and mobile Chromium; Axe accessibility check: **0 violations**; 27.0s; exit 0 |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).

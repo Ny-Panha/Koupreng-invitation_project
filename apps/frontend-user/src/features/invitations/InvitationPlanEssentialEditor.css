@@ -637,9 +637,9 @@
 }
 
 .pe-clean-dropzone:hover {
-    border-color: #c51c35;
-    background: #fdf2f4;
-    color: #c51c35;
+    border-color: #926c34;
+    background: #fdfbf7;
+    color: #926c34;
 }
 
 .pe-clean-dropzone-icon {
@@ -649,7 +649,7 @@
 }
 
 .pe-clean-dropzone:hover .pe-clean-dropzone-icon {
-    color: #c51c35;
+    color: #926c34;
     transform: translateY(-2px);
 }
 
@@ -770,7 +770,8 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 14px;
+    padding: 8px 14px;
+    min-height: 44px;
     background: #f8f6f0;
     border: 1px solid #dcd3c4;
     border-radius: 20px;
@@ -791,7 +792,8 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 11px;
+    padding: 8px 12px;
+    min-height: 44px;
     background: #f1f5f9;
     border: 1px solid #cbd5e1;
     border-radius: 20px;
@@ -813,7 +815,8 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 10px;
+    padding: 6px 12px;
+    min-height: 44px;
     background: transparent;
     border: 1px solid #cbd5e1;
     border-radius: 12px;
@@ -832,7 +835,8 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 6px 12px;
+    padding: 8px 12px;
+    min-height: 44px;
     background: #fef2f2;
     border: 1px solid #fecdd3;
     border-radius: 20px;
