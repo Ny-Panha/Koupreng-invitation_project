@@ -1,12 +1,12 @@
 import { CardGridSkeleton } from '@/shared/ui/LoadingState';
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useEvents } from "./hooks/useEvents";
 import { EventCard } from "./components/EventCard";
 import { EventDeleteModal } from "./components/EventDeleteModal";
 import { toast } from "../../shared/ui/toast";
-import { CalendarHeart } from "lucide-react";
+import { CalendarHeart, Search, X, FilterX } from "lucide-react";
 import "./EventsFeature.css";
 import "./workspace/EventWorkspace.css";
 import { backendEventId, eventPath, EVENT_MODULES } from "./workspace/eventRoutes";
@@ -16,15 +16,42 @@ import { EVENT_TYPES } from "./onboarding/eventFields";
 export function EventsFeature() {
     const navigate = useNavigate();
     const en = useLanguageStore(s => s.lang) === "en";
-    const [search, setSearch] = useState("");
-    const [status, setStatus] = useState("");
-    const [eventType, setEventType] = useState("");
-    const [sort, setSort] = useState("newest");
-    const [page, setPage] = useState(0);
+    const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
     const hasTriggeredRef = useRef(false);
     const { text: t } = useBackendMessages("events");
     const { text: tDash } = useBackendMessages("dashboard");
+
+    // Synchronize filters with URL search parameters
+    const search = searchParams.get("q") || "";
+    const status = searchParams.get("status") || "";
+    const eventType = searchParams.get("type") || "";
+    const sort = searchParams.get("sort") || "newest";
+    const pageParam = parseInt(searchParams.get("page") || "1", 10);
+    const page = isNaN(pageParam) || pageParam < 1 ? 0 : pageParam - 1;
+
+    const updateFilter = (key, value) => {
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            if (value) next.set(key, value);
+            else next.delete(key);
+            next.delete("page"); // Reset to first page on filter change
+            return next;
+        }, { replace: true });
+    };
+
+    const setPage = (newPage) => {
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            if (newPage > 0) next.set("page", String(newPage + 1));
+            else next.delete("page");
+            return next;
+        }, { replace: true });
+    };
+
+    const resetAllFilters = () => {
+        setSearchParams(new URLSearchParams(), { replace: true });
+    };
 
     useEffect(() => {
         if (location.state?.savedSuccess && !hasTriggeredRef.current) {
@@ -43,6 +70,11 @@ export function EventsFeature() {
         confirmDelete,
     } = useEvents(t);
 
+    const handleEdit = (draft) => {
+        const id = backendEventId(draft);
+        navigate(id ? eventPath(id, "invitation") : `/dashboard/invitations/${draft.id}/edit`);
+    };
+
     const handleDashboard = (draft) => {
         const id = backendEventId(draft);
         const module = new URLSearchParams(location.search).get("module");
@@ -50,20 +82,20 @@ export function EventsFeature() {
         else handleEdit(draft);
     };
 
-    const handleEdit = (draft) => {
-        const id = backendEventId(draft);
-        navigate(id ? eventPath(id, "invitation") : `/dashboard/invitations/${draft.id}/edit`);
-    };
-
     const eventTypes = [...new Set(drafts.map(draft => draft.eventType).filter(Boolean))];
+
     const filtered = drafts.filter(draft => (!status || (draft.status || "DRAFT") === status)
       && (!eventType || draft.eventType === eventType)
       && [draft.title, draft.venueName, draft.groomName, draft.brideName].filter(Boolean).join(" ").toLocaleLowerCase().includes(search.toLocaleLowerCase()))
       .sort((a, b) => sort === "title" ? String(a.title || "").localeCompare(String(b.title || ""))
         : sort === "date" ? String(a.eventDate || "9999").localeCompare(String(b.eventDate || "9999"))
-        : 0); // Both providers already return their records in recent-first order.
-    const currentPage = Math.min(page, Math.max(0, Math.ceil(filtered.length / 12) - 1));
+        : 0);
+
+    const maxPage = Math.max(0, Math.ceil(filtered.length / 12) - 1);
+    const currentPage = Math.min(page, maxPage);
     const visible = filtered.slice(currentPage * 12, (currentPage + 1) * 12);
+
+    const hasActiveFilters = Boolean(search || status || eventType || sort !== "newest");
     const createBtnText = (t("createBtn") || (en ? "Create Event" : "បង្កើតកម្មវិធី")).replace(/^\+*\s*/, "");
     const emptyActionText = (t("goToCreate") || t("createBtn") || (en ? "Create First Event" : "បង្កើតកម្មវិធីថ្មី")).replace(/^\+*\s*/, "");
 
@@ -73,6 +105,7 @@ export function EventsFeature() {
                 <div>
                     <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "ធៀបអញ្ជើញ"}`}</span>
                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
+                    <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលធៀប តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
                 </div>
                 <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
                     + {createBtnText}
@@ -88,52 +121,110 @@ export function EventsFeature() {
                 </div>
             )}
 
+            {/* Filter and Search Bar */}
             <div className="events-filters">
-              <label>
-                {en ? "Search events" : "ស្វែងរកកម្មវិធី"}
-                <input
-                    type="search"
-                    placeholder={en ? "Filter by name or venue…" : "ស្វែងរកតាមឈ្មោះ ឬទីតាំង…"}
-                    value={search}
-                    onChange={e => { setSearch(e.target.value); setPage(0); }}
-                />
-              </label>
-              <label>
-                {en ? "Status" : "ស្ថានភាព"}
-                <select value={status} onChange={e => { setStatus(e.target.value); setPage(0); }}>
-                    <option value="">{en ? "All statuses" : "គ្រប់ស្ថានភាព"}</option>
-                    <option value="DRAFT">{en ? "Draft" : "ព្រាង"}</option>
-                    <option value="PUBLISHED">{en ? "Published" : "បានផ្សាយ"}</option>
-                    <option value="UNPUBLISHED">{en ? "Unpublished" : "ផ្អាកផ្សាយ"}</option>
-                </select>
-              </label>
-              <label>
-                {en ? "Event type" : "ប្រភេទកម្មវិធី"}
-                <select aria-label={en ? "Event type" : "ប្រភេទកម្មវិធី"} value={eventType} onChange={e => { setEventType(e.target.value); setPage(0); }}>
-                    <option value="">{en ? "All event types" : "គ្រប់ប្រភេទកម្មវិធី"}</option>
-                    {eventTypes.map(type => <option key={type} value={type}>{EVENT_TYPES.find(item => item[0] === type)?.[en ? 2 : 1] || type}</option>)}
-                </select>
-              </label>
-              <label>
-                {en ? "Sort" : "តម្រៀប"}
-                <select value={sort} onChange={e => { setSort(e.target.value); setPage(0); }}>
-                    <option value="newest">{en ? "Newest" : "ថ្មីបំផុត"}</option>
-                    <option value="date">{en ? "Event date" : "កាលបរិច្ឆេទ"}</option>
-                    <option value="title">{en ? "Title" : "ឈ្មោះ"}</option>
-                </select>
-              </label>
+                <label className="events-filter-search-label">
+                    {en ? "Search events" : "ស្វែងរកកម្មវិធី"}
+                    <div className="events-search-input-wrap">
+                        <Search size={16} className="events-search-icon" aria-hidden="true" />
+                        <input
+                            type="search"
+                            placeholder={en ? "Filter by name or venue…" : "ស្វែងរកតាមឈ្មោះ ឬទីតាំង…"}
+                            value={search}
+                            onChange={e => updateFilter("q", e.target.value)}
+                        />
+                        {search && (
+                            <button
+                                type="button"
+                                className="events-search-clear-btn"
+                                onClick={() => updateFilter("q", "")}
+                                aria-label={en ? "Clear search query" : "លុបពាក្យស្វែងរក"}
+                            >
+                                <X size={15} aria-hidden="true" />
+                            </button>
+                        )}
+                    </div>
+                </label>
+
+                <label>
+                    {en ? "Status" : "ស្ថានភាព"}
+                    <select value={status} onChange={e => updateFilter("status", e.target.value)}>
+                        <option value="">{en ? "All statuses" : "គ្រប់ស្ថានភាព"}</option>
+                        <option value="DRAFT">{en ? "Draft" : "ព្រាង"}</option>
+                        <option value="PUBLISHED">{en ? "Published" : "បានផ្សាយ"}</option>
+                        <option value="UNPUBLISHED">{en ? "Unpublished" : "ផ្អាកផ្សាយ"}</option>
+                    </select>
+                </label>
+
+                <label>
+                    {en ? "Event type" : "ប្រភេទកម្មវិធី"}
+                    <select
+                        aria-label={en ? "Event type" : "ប្រភេទកម្មវិធី"}
+                        value={eventType}
+                        onChange={e => updateFilter("type", e.target.value)}
+                    >
+                        <option value="">{en ? "All event types" : "គ្រប់ប្រភេទកម្មវិធី"}</option>
+                        {eventTypes.map(type => (
+                            <option key={type} value={type}>
+                                {EVENT_TYPES.find(item => item[0] === type)?.[en ? 2 : 1] || type}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
+                <label>
+                    {en ? "Sort" : "តម្រៀប"}
+                    <select value={sort} onChange={e => updateFilter("sort", e.target.value)}>
+                        <option value="newest">{en ? "Newest" : "ថ្មីបំផុត"}</option>
+                        <option value="date">{en ? "Event date" : "កាលបរិច្ឆេទ"}</option>
+                        <option value="title">{en ? "Title" : "ឈ្មោះ"}</option>
+                    </select>
+                </label>
+
+                {hasActiveFilters && (
+                    <div className="events-filter-reset-wrap">
+                        <button
+                            type="button"
+                            className="events-filter-reset-btn"
+                            onClick={resetAllFilters}
+                            title={en ? "Reset all filters" : "សម្អាតការចម្រោះ"}
+                        >
+                            <FilterX size={15} aria-hidden="true" />
+                            <span>{en ? "Clear filters" : "សម្អាតការចម្រោះ"}</span>
+                        </button>
+                    </div>
+                )}
             </div>
 
+            {/* Results Count Summary */}
+            {!loading && drafts.length > 0 && (
+                <div className="events-results-summary" aria-live="polite">
+                    <span>
+                        {en
+                            ? `Showing ${filtered.length} of ${drafts.length} event${drafts.length === 1 ? "" : "s"}`
+                            : `បង្ហាញ ${filtered.length} នៃ ${drafts.length} កម្មវិធី`}
+                    </span>
+                </div>
+            )}
+
             {loading && drafts.length === 0 && <CardGridSkeleton variant="event" />}
-            {loading && drafts.length > 0 && <p role="status" className="workspace-muted">{en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}</p>}
+            {loading && drafts.length > 0 && (
+                <p role="status" className="workspace-muted">
+                    {en ? "Loading your events…" : "កំពុងទាញយកកម្មវិធី…"}
+                </p>
+            )}
 
             {!loading && drafts.length === 0 ? (
                 <div className="events-empty-state">
                     <div className="events-empty-icon">
                         <CalendarHeart size={36} strokeWidth={1.75} aria-hidden="true" />
                     </div>
-                    <div className="events-empty-title">{t("emptyTitle") || (en ? "No Events Yet" : "មិនទាន់មានកម្មវិធីនៅឡើយទេ")}</div>
-                    <div className="events-empty-desc">{t("emptySubtitle") || (en ? "Create your first digital invitation event to get started." : "ចាប់ផ្ដើមដោយបង្កើតកម្មវិធី និងធៀបអញ្ជើញឌីជីថលដំបូងរបស់អ្នក។")}</div>
+                    <div className="events-empty-title">
+                        {t("emptyTitle") || (en ? "No Events Yet" : "មិនទាន់មានកម្មវិធីនៅឡើយទេ")}
+                    </div>
+                    <div className="events-empty-desc">
+                        {t("emptySubtitle") || (en ? "Create your first digital invitation event to get started." : "ចាប់ផ្ដើមដោយបង្កើតកម្មវិធី និងធៀបអញ្ជើញឌីជីថលដំបូងរបស់អ្នក។")}
+                    </div>
                     <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-empty-action">
                         + {emptyActionText}
                     </Link>
@@ -179,18 +270,38 @@ export function EventsFeature() {
             )}
 
             {!loading && drafts.length > 0 && filtered.length === 0 && (
-                <div className="workspace-notice" style={{ marginTop: "24px" }}>
+                <div className="workspace-notice events-no-match-notice">
                     <p>{en ? "No events match your search or filter." : "គ្មានកម្មវិធីត្រូវនឹងការស្វែងរក ឬចម្រោះនេះទេ។"}</p>
+                    <button
+                        type="button"
+                        className="workspace-button"
+                        onClick={resetAllFilters}
+                        style={{ marginTop: "12px" }}
+                    >
+                        {en ? "Clear filters" : "សម្អាតការចម្រោះ"}
+                    </button>
                 </div>
             )}
 
             {filtered.length > 12 && (
                 <nav className="events-pagination" aria-label={en ? "Event pages" : "ទំព័រកម្មវិធី"}>
-                    <button disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)} className="workspace-button">
+                    <button
+                        type="button"
+                        disabled={currentPage === 0}
+                        onClick={() => setPage(currentPage - 1)}
+                        className="workspace-button"
+                    >
                         {en ? "Previous" : "មុន"}
                     </button>
-                    <span className="events-pagination-info">{currentPage + 1} / {Math.ceil(filtered.length / 12)}</span>
-                    <button disabled={(currentPage + 1) * 12 >= filtered.length} onClick={() => setPage(currentPage + 1)} className="workspace-button">
+                    <span className="events-pagination-info">
+                        {currentPage + 1} / {Math.ceil(filtered.length / 12)}
+                    </span>
+                    <button
+                        type="button"
+                        disabled={(currentPage + 1) * 12 >= filtered.length}
+                        onClick={() => setPage(currentPage + 1)}
+                        className="workspace-button"
+                    >
                         {en ? "Next" : "បន្ទាប់"}
                     </button>
                 </nav>

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
 import EventCover from './EventCover';
 import { EVENT_TYPES } from "../onboarding/eventFields";
@@ -14,6 +14,7 @@ import {
   Trash2,
   MoreVertical,
   Heart,
+  AlertCircle,
 } from "lucide-react";
 
 export function EventCard({
@@ -28,21 +29,55 @@ export function EventCard({
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const triggerRef = useRef(null);
+  const dropdownRef = useRef(null);
   const en = useLanguageStore((s) => s.lang) === "en";
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+    triggerRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) return;
+
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const items = dropdownRef.current?.querySelectorAll("button");
+        if (!items || items.length === 0) return;
+        const itemsArr = Array.from(items);
+        const idx = itemsArr.indexOf(document.activeElement);
+        if (event.key === "ArrowDown") {
+          const next = idx < itemsArr.length - 1 ? idx + 1 : 0;
+          itemsArr[next]?.focus();
+        } else {
+          const prev = idx > 0 ? idx - 1 : itemsArr.length - 1;
+          itemsArr[prev]?.focus();
+        }
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    const escape = event => { if (event.key === "Escape") { setIsMenuOpen(false); menuRef.current?.querySelector("button")?.focus(); } };
-    document.addEventListener("keydown", escape);
-    menuRef.current?.querySelector(".event-card-dropdown button")?.focus();
-    return () => { document.removeEventListener("mousedown", handleClickOutside); document.removeEventListener("keydown", escape); };
-  }, [isMenuOpen]);
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Auto-focus first item when opened
+    const firstButton = dropdownRef.current?.querySelector("button");
+    firstButton?.focus();
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMenuOpen, closeMenu]);
 
   let designTemplateId = "";
   try {
@@ -152,7 +187,11 @@ export function EventCard({
         <h2 className="event-card-title" title={title}>
           {title}
         </h2>
-        {draft.shared && <p className="event-card-owner">{en ? 'Shared by' : 'ចែករំលែកដោយ'} {draft.ownerName || (en ? 'event owner' : 'ម្ចាស់កម្មវិធី')}</p>}
+        {draft.shared && (
+          <p className="event-card-owner">
+            {en ? "Shared by" : "ចែករំលែកដោយ"} {draft.ownerName || (en ? "event owner" : "ម្ចាស់កម្មវិធី")}
+          </p>
+        )}
 
         {/* Couple Names */}
         {coupleText && coupleText !== title && (
@@ -181,103 +220,125 @@ export function EventCard({
 
         {/* Sync or Validation status */}
         {draft.syncError && (
-          <p className="event-card-sync-error" role="status">
-            {premiumAccessRequired ? (en ? "Premium access required to save this template." : "ត្រូវការសិទ្ធិបុព្វលាភ ដើម្បីរក្សាទុកគំរូនេះ។") : (en ? "Changes are stored on this device. Open the invitation to review and save them online." : "ការកែប្រែបានរក្សាទុកក្នុងឧបករណ៍នេះ។ បើកធៀបដើម្បីពិនិត្យ និងរក្សាទុកលើអ៊ីនធឺណិត។")}
-            {onReviewAccess && <button type="button" className="event-card-btn event-card-btn--secondary" onClick={() => onReviewAccess(draft)}>{en ? "Review access" : "ពិនិត្យសិទ្ធិ"}</button>}
-          </p>
+          <div className="event-card-sync-error" role="status">
+            <AlertCircle size={16} aria-hidden="true" style={{ flexShrink: 0 }} />
+            <p style={{ margin: 0, flex: 1 }}>
+              {premiumAccessRequired
+                ? (en ? "Premium access required to save this template." : "ត្រូវការសិទ្ធិបុព្វលាភ ដើម្បីរក្សាទុកគំរូនេះ។")
+                : (en ? "Changes are stored on this device. Open the invitation to review and save them online." : "ការកែប្រែបានរក្សាទុកក្នុងឧបករណ៍នេះ។ បើកធៀបដើម្បីពិនិត្យ និងរក្សាទុកលើអ៊ីនធឺណិត។")}
+            </p>
+            {onReviewAccess && (
+              <button
+                type="button"
+                className="event-card-btn event-card-btn--secondary"
+                onClick={() => onReviewAccess(draft)}
+              >
+                {en ? "Review access" : "ពិនិត្យសិទ្ធិ"}
+              </button>
+            )}
+          </div>
         )}
 
         {/* Unified, single action bar */}
         <div className="event-card-footer">
-          <button
-            type="button"
-            className="event-card-btn event-card-btn--primary"
-            onClick={(event) => {
-              event.stopPropagation();
-              if (onManage) onManage(draft);
-              else if (onEdit) onEdit(draft);
-            }}
-          >
-            <LayoutDashboard size={15} aria-hidden="true" />
-            <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
-          </button>
-
-          {!draft.shared && <button
-            type="button"
-            className="event-card-btn event-card-btn--secondary"
-            onClick={(event) => {
-              event.stopPropagation();
-              if (onEdit) onEdit(draft);
-            }}
-          >
-            <Edit3 size={15} aria-hidden="true" />
-            <span>
-              {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
-            </span>
-          </button>}
-
-          {onPreview && (
+          <div className="event-card-actions-left">
             <button
               type="button"
-              className="event-card-btn event-card-btn--secondary"
+              className="event-card-btn event-card-btn--primary"
               onClick={(event) => {
                 event.stopPropagation();
-                onPreview(draft);
+                if (onManage) onManage(draft);
+                else if (onEdit) onEdit(draft);
               }}
             >
-              <Eye size={15} aria-hidden="true" />
-              <span>{(t && t("previewBtn")) || (en ? "Preview" : "មើលជាមុន")}</span>
+              <LayoutDashboard size={15} aria-hidden="true" />
+              <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
             </button>
-          )}
+
+            {!draft.shared && (
+              <button
+                type="button"
+                className="event-card-btn event-card-btn--secondary"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (onEdit) onEdit(draft);
+                }}
+              >
+                <Edit3 size={15} aria-hidden="true" />
+                <span>
+                  {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
+                </span>
+              </button>
+            )}
+
+            {onPreview && (
+              <button
+                type="button"
+                className="event-card-btn event-card-btn--secondary"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onPreview(draft);
+                }}
+              >
+                <Eye size={15} aria-hidden="true" />
+                <span>{(t && t("previewBtn")) || (en ? "Preview" : "មើលជាមុន")}</span>
+              </button>
+            )}
+          </div>
 
           {/* 3-dots overflow menu */}
-          {!draft.shared && <div className="event-card-menu-wrap" ref={menuRef}>
-            <button
-              type="button"
-              className={`event-card-dots-btn ${isMenuOpen ? "is-active" : ""}`}
-              aria-label={en ? "More options" : "ជម្រើសបន្ថែម"}
-              aria-expanded={isMenuOpen}
-              onClick={(event) => {
-                event.stopPropagation();
-                setIsMenuOpen((prev) => !prev);
-              }}
-            >
-              <MoreVertical size={16} aria-hidden="true" />
-            </button>
-
-            {isMenuOpen && (
-              <div
-                className="event-card-dropdown"
-                onClick={(event) => event.stopPropagation()}
+          {!draft.shared && (
+            <div className="event-card-menu-wrap" ref={menuRef}>
+              <button
+                type="button"
+                ref={triggerRef}
+                className={`event-card-dots-btn ${isMenuOpen ? "is-active" : ""}`}
+                aria-label={en ? "More options" : "ជម្រើសបន្ថែម"}
+                aria-haspopup="menu"
+                aria-expanded={isMenuOpen}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setIsMenuOpen((prev) => !prev);
+                }}
               >
-                <button
-                  type="button"
-                  className="event-card-dropdown-item"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setIsMenuOpen(false);
-                    if (onEdit) onEdit(draft);
-                  }}
+                <MoreVertical size={16} aria-hidden="true" />
+              </button>
+
+              {isMenuOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="event-card-dropdown"
+                  onClick={(event) => event.stopPropagation()}
                 >
-                  <Edit3 size={14} aria-hidden="true" />
-                  <span>{(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}</span>
-                </button>
-                <div className="event-card-dropdown-divider" />
-                <button
-                  type="button"
-                  className="event-card-dropdown-item event-card-dropdown-item--danger"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setIsMenuOpen(false);
-                    if (onDelete) onDelete(draft);
-                  }}
-                >
-                  <Trash2 size={14} aria-hidden="true" />
-                  <span>{(t && t("deleteBtn")) || (en ? "Delete" : "លុប")}</span>
-                </button>
-              </div>
-            )}
-          </div>}
+                  <button
+                    type="button"
+                    className="event-card-dropdown-item"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsMenuOpen(false);
+                      if (onEdit) onEdit(draft);
+                    }}
+                  >
+                    <Edit3 size={14} aria-hidden="true" />
+                    <span>{(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}</span>
+                  </button>
+                  <div className="event-card-dropdown-divider" />
+                  <button
+                    type="button"
+                    className="event-card-dropdown-item event-card-dropdown-item--danger"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsMenuOpen(false);
+                      if (onDelete) onDelete(draft);
+                    }}
+                  >
+                    <Trash2 size={14} aria-hidden="true" />
+                    <span>{(t && t("deleteBtn")) || (en ? "Delete" : "លុប")}</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </article>

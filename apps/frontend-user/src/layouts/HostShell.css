@@ -77,6 +77,30 @@
   border-radius: 999px;
 }
 
+.host-skip-link {
+  position: fixed;
+  top: 12px;
+  left: 16px;
+  z-index: 6000;
+  padding: 10px 16px;
+  background: var(--ui-forest, #2e433a);
+  color: #ffffff;
+  border-radius: 8px;
+  font-family: var(--ui-font);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  clip-path: inset(50%);
+  transition: clip-path 0.15s ease;
+}
+
+.host-skip-link:focus-visible {
+  clip-path: none;
+  outline: 3px solid var(--ui-focus, #0f766e);
+  outline-offset: 2px;
+}
+
 @media (max-width: 768px) {
   .dash-wrapper {
     --host-nav-offset: 96px;

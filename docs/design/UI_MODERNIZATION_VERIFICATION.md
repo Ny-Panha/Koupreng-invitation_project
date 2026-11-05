@@ -79,6 +79,31 @@ Values are bytes measured with Node `gzipSync`, not Vite's reporting compression
 
 Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzip size is nearly unchanged. Customer entry growth is small. Lazy route chunks and media also matter; this table is not total transferred application size. No CWV, Lighthouse, hardware-media or device-speed improvement is claimed.
 
+## Batch 2 — Customer Shell & Events Modernization (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/layouts/HostShell.jsx`; `HostShell.css` | Accessible skip link (`#host-main-content`), non-duplicating landmark structure, fluid shell layout |
+| `apps/frontend-user/src/layouts/components/HostNav.jsx`; new `HostNav.css` | Consolidated navigation dictionary (English & Khmer), extracted ~500 lines of inline CSS to modular stylesheet, profile dropdown keyboard navigation (ArrowDown/Up, Home, End, Escape), focus trap in mobile drawer, 44px touch targets, semantic design tokens |
+| `apps/frontend-user/src/layouts/components/HostNav.test.jsx` | 5 unit tests verifying desktop nav labels, Khmer labels, profile menu interaction, Escape dismissal, mobile drawer toggle |
+| `apps/frontend-user/src/features/events/EventsFeature.jsx` | URL search parameter synchronization (`q`, `status`, `type`, `sort`, `page`), search bar with clear button, reset filters action, real-time results counter, empty state CTA |
+| `apps/frontend-user/src/features/events/EventsFeature.css` | Search wrap, filter reset button, results counter, removal of duplicate footer and obsolete classes |
+| `apps/frontend-user/src/features/events/components/EventCard.jsx` | Card visual hierarchy, 16:9 cover ratio, status pills with blur backdrop, couple icon, date/venue metadata, 44px min-height action buttons, accessible overflow menu with Escape handling |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npm run test` (customer cwd) | 167 test files, **1,262 tests passed**; 25.63s; exit 0 |
+| `npm run test` (admin cwd) | 23 test files, **134 tests passed**; 20.04s; exit 0 |
+| `npm run build` (customer cwd) | Production build passed in 1.71s with 0 errors |
+| `npx eslint apps/frontend-user/src/layouts/... apps/frontend-user/src/features/events/...` | 0 errors, 0 warnings; exit 0 |
+| `npx playwright test tests/e2e/event-workspaces.spec.js` | **6 tests passed** across all 7 viewports (320, 375, 390, 430, 768, 1024, 1440) on desktop and mobile Chromium; 41.8s; exit 0 |
+| `npx playwright test tests/e2e/event-overview-design.spec.js` | Axe accessibility check: **0 violations**, 6 viewports in English & Khmer; 17.2s; exit 0 |
+| `node scripts/sync-design-tokens.cjs --check` | Verified 2 equivalent application token exports; exit 0 |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
