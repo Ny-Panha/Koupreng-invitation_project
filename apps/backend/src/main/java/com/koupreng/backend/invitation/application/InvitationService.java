@@ -998,15 +998,14 @@ public class InvitationService {
         Rsvp rsvp = rsvpRepository == null ? null : rsvpRepository.findByInvitationIdAndGuestId(invitation.getId(), guest.getId()).orElse(null);
         String rsvpStatus = rsvp != null && rsvp.getResponseStatus() != null ? rsvp.getResponseStatus().name() : "PENDING";
 
-        List<WishResponse> wishes = rsvpRepository == null
-                ? new ArrayList<>()
-                : rsvpRepository.findByInvitationIdAndMessageIsNotNullOrderByRespondedAtDesc(invitation.getId()).stream()
-                .map(WishResponse::from)
-                .toList();
+        // RSVP messages belong to the organizer; a guest token is not consent to publish them.
+        List<WishResponse> wishes = List.of();
 
         MediaListResponse media = mediaFileRepository == null
                 ? null
-                : MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()));
+                : MediaListResponse.from(mediaFileRepository.findByInvitationIdOrderBySortOrderAscCreatedAtAsc(invitation.getId()).stream()
+                    .filter(file -> file.getMediaType() != MediaType.PRE_WEDDING_VIDEO
+                            && file.getMediaType() != MediaType.TICKET_IMAGE).toList());
 
         String guestCategory = guest.getGuestGroup();
         Integer seatCount = assignment != null ? assignment.getSeatCount() : guest.getSeatCount();

@@ -317,15 +317,31 @@ jobs:
             apps/frontend-admin/package-lock.json
 
       - name: Install and build frontends
+        env:
+          VITE_USER_APP_URL: http://127.0.0.1:4173
         run: |
           npm --prefix apps/frontend-user ci
           npm --prefix apps/frontend-admin ci
           npm --prefix apps/frontend-user run build
           npm --prefix apps/frontend-admin run build
 
-      - name: Install Playwright Chromium
+      - name: Install Playwright engines
         working-directory: apps/frontend-user
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Verify final release contracts across browser engines
+        working-directory: apps/frontend-user
+        run: npx playwright test --config=playwright.batch12.config.js
+
+      - name: Upload final release browser evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: batch12-browser-release-evidence
+          path: |
+            apps/frontend-user/test-results/batch12/
+            apps/frontend-user/test-results/batch12-results.json
+          if-no-files-found: ignore
 
       - name: Run controlled browser journeys
         working-directory: apps/frontend-user

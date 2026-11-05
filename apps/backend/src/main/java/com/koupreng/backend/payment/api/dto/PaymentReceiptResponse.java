@@ -43,7 +43,8 @@ public class PaymentReceiptResponse {
                 .itemName(order.getTemplateName())
                 .packageName(order.getPackageName())
                 .amount(order.getAmount())
-                .paidAmount(order.getPaidAmount() == null ? order.getAmount() : order.getPaidAmount())
+                .paidAmount(order.getPaidAmount() != null ? order.getPaidAmount()
+                        : order.getStatus() == PaymentStatus.PAID ? order.getAmount() : null)
                 .currency(order.getCurrency())
                 .status(order.getStatus())
                 .provider(order.getProvider())
@@ -56,14 +57,7 @@ public class PaymentReceiptResponse {
 
     public static PaymentReceiptResponse from(com.koupreng.backend.subscription.domain.Subscription sub) {
         AppUser user = sub.getUser();
-        PaymentStatus status = PaymentStatus.PENDING;
-        if ("ACTIVE".equalsIgnoreCase(sub.getStatus()) || "COMPLETED".equalsIgnoreCase(sub.getStatus()) || "PAID".equalsIgnoreCase(sub.getStatus()) || sub.isActive()) {
-            status = PaymentStatus.PAID;
-        } else if ("FAILED".equalsIgnoreCase(sub.getStatus())) {
-            status = PaymentStatus.FAILED;
-        } else if ("CANCELLED".equalsIgnoreCase(sub.getStatus())) {
-            status = PaymentStatus.CANCELLED;
-        }
+        PaymentStatus status = PaymentHistoryResponse.subscriptionPaymentStatus(sub);
 
         return PaymentReceiptResponse.builder()
                 .receiptNumber("RCPT-" + sub.getOrderCode())
@@ -73,7 +67,8 @@ public class PaymentReceiptResponse {
                 .itemName(sub.getSubscriptionPackage() != null ? sub.getSubscriptionPackage().getPackageName() : "Subscription Package")
                 .packageName(sub.getSubscriptionPackage() != null ? sub.getSubscriptionPackage().getPackageName() : null)
                 .amount(sub.getAmount())
-                .paidAmount(sub.getPaidAmount() == null ? BigDecimal.ZERO : sub.getPaidAmount())
+                .paidAmount(sub.getPaidAmount() != null ? sub.getPaidAmount()
+                        : status == PaymentStatus.PAID ? sub.getAmount() : null)
                 .currency(sub.getCurrency())
                 .status(status)
                 .provider(sub.getProvider())

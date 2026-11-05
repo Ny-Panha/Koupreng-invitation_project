@@ -1,0 +1,173 @@
+{
+  "combinedAttempt": {
+    "exitCode": 1,
+    "reports": [
+      {
+        "name": "com.koupreng.backend.MigrationUpgradeMySqlTests",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "50.171"
+      },
+      {
+        "name": "com.koupreng.backend.TicketMigrationMySqlTests",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "4.473"
+      },
+      {
+        "name": "com.koupreng.backend.SilkHeritageMigrationMySqlTests",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "4.241"
+      },
+      {
+        "name": "com.koupreng.backend.KhmerFloralGoldMigrationMySqlTests",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "3.426"
+      },
+      {
+        "name": "com.koupreng.backend.auth.application.AuthIntegrityMySqlTests",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "21.564"
+      },
+      {
+        "name": "com.koupreng.backend.subscription.application.SubscriptionIntegrityMySqlTests",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "1.985"
+      },
+      {
+        "name": "com.koupreng.backend.payment.application.PaymentEvidenceIntegrityMySqlTests",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "1.891"
+      },
+      {
+        "name": "com.koupreng.backend.entitlement.application.EntitlementIntegrityMySqlTests",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.127"
+      },
+      {
+        "name": "com.koupreng.backend.checkin.application.GuestMutationIntegrityMySqlTests",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "7.271"
+      },
+      {
+        "name": "com.koupreng.backend.guest.application.GuestBatchMySqlTests",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "4.775"
+      },
+      {
+        "name": "com.koupreng.backend.reporting.application.ReportingIntegrityMySqlTests",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.085"
+      },
+      {
+        "name": "com.koupreng.backend.media.application.MediaIntegrityMySqlTests",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.281"
+      },
+      {
+        "name": "com.koupreng.backend.gift.application.ManualGiftMySqlTests",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "4.916"
+      },
+      {
+        "name": "com.koupreng.backend.seating.application.SeatingLayoutMySqlTests",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.132"
+      },
+      {
+        "name": "com.koupreng.backend.template.application.RoyalGardenCatalogMySqlTests",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "6.177"
+      },
+      {
+        "name": "com.koupreng.backend.invitation.application.RoyalGardenMapMySqlTests",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.45"
+      },
+      {
+        "name": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+        "tests": "3",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "3",
+        "time": "0.001"
+      },
+      {
+        "name": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+        "tests": "22",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "30.238"
+      },
+      {
+        "name": "com.koupreng.backend.phase9.Phase9MediaMySqlTests",
+        "tests": "5",
+        "failures": "0",
+        "errors": "5",
+        "skipped": "0",
+        "time": "0.117"
+      }
+    ]
+  },
+  "mediaRerun": {
+    "exitCode": 0,
+    "reports": [
+      {
+        "name": "com.koupreng.backend.phase9.Phase9MediaMySqlTests",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "22.57"
+      }
+    ]
+  },
+  "cleanup": "Harnesses confirmed owned schema removed"
+}

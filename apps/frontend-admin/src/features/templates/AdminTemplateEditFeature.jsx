@@ -1,3 +1,4 @@
+import { serializeTemplateConfig } from "./templatePersistence";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { usePreviewSyncRetries } from "../../shared/hooks/usePreviewSyncRetries";
@@ -676,6 +677,10 @@ export default function AdminTemplateEditPage() {
   const [previewGateOpen, setPreviewGateOpen] = useState(false);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [loadAttempt, setLoadAttempt] = useState(0);
+  const [baseline, setBaseline] = useState(null);
+  const [loadedCode, setLoadedCode] = useState("");
   const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [form, setForm] = useState(DEFAULT_STUDIO_STATE);
   const [unifiedSections, setUnifiedSections] = useState(() =>
@@ -769,6 +774,18 @@ export default function AdminTemplateEditPage() {
     reader.readAsText(file);
     e.target.value = "";
   };
+
+  const editSnapshot = useMemo(() => JSON.stringify({ form, unifiedSections, customFonts }), [form, unifiedSections, customFonts]);
+  const dirty = baseline !== null && baseline !== editSnapshot;
+  useEffect(() => {
+    if (!loading && !loadError && baseline === null) setBaseline(editSnapshot);
+  }, [loading, loadError, baseline, editSnapshot]);
+  useEffect(() => {
+    if (!dirty) return undefined;
+    const warn = event => { event.preventDefault(); event.returnValue = ""; };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty]);
 
   // Dynamic Font Loading in Admin Studio
   useEffect(() => {
@@ -1058,17 +1075,21 @@ export default function AdminTemplateEditPage() {
   useEffect(() => {
     if (isNew || !templateId || templateId === "undefined") return;
     let active = true;
+    setLoading(true);
+    setLoadError("");
+    setBaseline(null);
     adminManagementService
       .template(templateId)
       .then((t) => {
         if (!active) return;
+        setLoadedCode(t.code || "");
         let parsedConfig = {};
         try {
           if (t.description && t.description.startsWith("{")) {
             parsedConfig = JSON.parse(t.description);
           }
         } catch {
-          // Ignore invalid JSON config
+          throw new Error("Template design data could not be read. Restore a valid configuration before editing.");
         }
 
         const parsedUnified = parseUnifiedSections(
@@ -1096,7 +1117,7 @@ export default function AdminTemplateEditPage() {
 
         setForm((prev) => ({
           ...prev,
-          code: t.code || prev.code,
+          ...parsedConfig,
           name: t.name || prev.name,
           category: t.category || prev.category,
           thumbnailUrl: t.thumbnailUrl || prev.thumbnailUrl,
@@ -1104,7 +1125,7 @@ export default function AdminTemplateEditPage() {
           premium: Boolean(t.premium),
           status: t.status || "ACTIVE",
           price: t.price != null ? String(t.price) : prev.price,
-          ...parsedConfig,
+          code: t.code || prev.code,
           sectionOrder: parsedUnified.sectionOrder,
           enabledSections: parsedUnified.enabledSections,
           primaryColor: t.primaryColor || parsedConfig.primaryColor || prev.primaryColor,
@@ -1113,7 +1134,7 @@ export default function AdminTemplateEditPage() {
         }));
       })
       .catch((err) => {
-        if (active) show(err?.message || "មិនអាចទាញយកទិន្នន័យគំរូបានទេ", "error");
+        if (active) { setLoadError(err?.message || "Template loading failed"); show(err?.message || "មិនអាចទាញយកទិន្នន័យគំរូបានទេ", "error"); }
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -1121,7 +1142,7 @@ export default function AdminTemplateEditPage() {
     return () => {
       active = false;
     };
-  }, [isNew, templateId, show]);
+  }, [isNew, templateId, show, loadAttempt]);
 
   const setField = (key, val) => setForm((prev) => ({ ...prev, [key]: val }));
 
@@ -1408,6 +1429,7 @@ export default function AdminTemplateEditPage() {
 
   // Save Template
   const handleSave = async () => {
+    if (loading || loadError || saving) return;
     if (!form.name.trim()) {
       show("សូមបញ្ចូលឈ្មោះគំរូធៀបការ (Template Name)", "error");
       return;
@@ -1425,8 +1447,8 @@ export default function AdminTemplateEditPage() {
         parseUnifiedSections(unifiedSections, form.sectionOrder, form.enabledSections);
 
       // Serialize full studio config into description JSON
-      const fullConfigJson = JSON.stringify({
-        code: form.code,
+      const fullConfigJson = serializeTemplateConfig(form, {
+        code: isNew ? form.code : loadedCode,
         presetId: form.presetId,
         theme: form.presetId,
         gateStyle: form.gateStyle || "celestial-cover",
@@ -1484,7 +1506,7 @@ export default function AdminTemplateEditPage() {
 
       const payload = {
         name: form.name.trim(),
-        code: form.code,
+        code: isNew ? form.code : loadedCode,
         category: form.category,
         thumbnailUrl: form.thumbnailUrl || form.coverImage,
         previewUrl: form.previewUrl || `/templates/${form.presetId?.toLowerCase() || "custom"}`,
@@ -1499,6 +1521,7 @@ export default function AdminTemplateEditPage() {
         : await adminManagementService.updateTemplate(templateId, payload);
 
       show("បានរក្សាទុក និងផ្សព្វផ្សាយគំរូធៀបការជោគជ័យ ✓");
+      setBaseline(editSnapshot);
       navigate(`/templates/${res.id || templateId}`, { replace: true });
     } catch (err) {
       show(err?.message || "បរាជ័យក្នុងការរក្សាទុកគំរូ", "error");
@@ -1506,6 +1529,8 @@ export default function AdminTemplateEditPage() {
       setSaving(false);
     }
   };
+
+  if (loadError) return <main className="p-8" role="alert"><h1>{lang === "en" ? "Template could not be loaded" : "មិនអាចទាញយកគំរូបានទេ"}</h1><p>{loadError}</p><button type="button" className="btn btn-primary" onClick={() => setLoadAttempt(value => value + 1)}>{lang === "en" ? "Try again" : "ព្យាយាមម្តងទៀត"}</button><Link to="/templates">{lang === "en" ? "Back to templates" : "ត្រឡប់ទៅបញ្ជីគំរូ"}</Link></main>;
 
   if (loading) {
     return (
@@ -1525,6 +1550,7 @@ export default function AdminTemplateEditPage() {
         <div className="flex flex-1 basis-full xl:basis-auto items-center gap-3 min-w-0">
           <Link
             to="/templates"
+            onClick={event => { if (dirty && !window.confirm(lang === "en" ? "Discard unsaved template changes?" : "បោះបង់ការកែប្រែគំរូដែលមិនទាន់រក្សាទុក?")) event.preventDefault(); }}
             aria-label={lang === "en" ? "Back to templates" : "ត្រឡប់ទៅបញ្ជីគំរូ"}
             className="flex h-11 shrink-0 items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-800/50 px-3.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
           >
@@ -1781,6 +1807,7 @@ export default function AdminTemplateEditPage() {
                       <p className="text-xs text-zinc-400">
                         ជ្រើសរើស Architecture & Interactive Style របស់ទំព័រធៀបការ។ ចុចប្តូរ Layout ដើម្បីមើល Live Preview ខាងស្តាំភ្លាមៗ។
                       </p>
+                      {!isNew && <p className="text-xs text-amber-300">{lang === "en" ? "The layout identity is fixed for existing templates. Create a new template to choose another layout." : "គំរូដែលមានស្រាប់មានម៉ូដថេរ។ សូមបង្កើតគំរូថ្មីដើម្បីជ្រើសរើសម៉ូដផ្សេង។"}</p>}
                     </div>
 
                     <div className="grid grid-cols-1 gap-3">
@@ -1790,6 +1817,7 @@ export default function AdminTemplateEditPage() {
                           <button
                             key={layout.code}
                             type="button"
+                            disabled={!isNew}
                             onClick={() => {
                               setField("code", layout.code);
                               show(`បានប្តូរទៅកាន់ម៉ូដ: ${layout.name}`, "success");
@@ -4103,7 +4131,7 @@ export default function AdminTemplateEditPage() {
                     : form.presetId === "EMERALD_GREEN"
                     ? "emerald-canva-luxe-wedding"
                     : "the-digital-yes-wedding")
-                }/preview?embed=true`), previewSession)}
+                }?embed=demo`), previewSession)}
                 className={`w-full h-full border-0 bg-zinc-950 ${
                   isDraggingDivider ? "pointer-events-none" : ""
                 }`}

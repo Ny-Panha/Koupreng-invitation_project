@@ -1,0 +1,2450 @@
+{
+  "recordedAt": "2026-11-05T10:36:36.401Z",
+  "label": "before",
+  "browser": "156.0.8078.4",
+  "environment": {
+    "viewport": "1440x900",
+    "cache": "disabled; fresh contexts",
+    "cpuSlowdown": 2,
+    "latencyMs": 20,
+    "bytesPerSecond": 10000000,
+    "warmupsPerRoute": 1,
+    "measuredSamplesPerRoute": 3,
+    "api": "existing deterministic browser fixtures; no real backend",
+    "thirdParty": "blocked",
+    "motion": "reduced"
+  },
+  "limits": [
+    "Synthetic lab observations, not field INP/CWV.",
+    "Three samples yield a maximum as the reported tail; no population p95 claim.",
+    "Heap is a point observation, not a leak proof.",
+    "Route fixture readiness is reported, including failures; no fallback metrics replace missing journeys."
+  ],
+  "samples": [
+    {
+      "name": "home",
+      "iteration": 1,
+      "lcpMs": 448,
+      "cls": 0.001820723419817387,
+      "longTaskMs": [
+        63,
+        150
+      ],
+      "domContentLoadedMs": 271.2999999988824,
+      "transferredBytes": 480716,
+      "encodedBytes": 473216,
+      "decodedBytes": 1142115,
+      "jsDecodedBytes": 716659,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16180,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 113,
+      "domNodes": 570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/templates",
+        "/api/v1/public/packages",
+        "/api/v1/me/entitlements"
+      ],
+      "errors": []
+    },
+    {
+      "name": "home",
+      "iteration": 2,
+      "lcpMs": 460,
+      "cls": 0.001820723419817387,
+      "longTaskMs": [
+        69,
+        145
+      ],
+      "domContentLoadedMs": 274.09999999962747,
+      "transferredBytes": 480716,
+      "encodedBytes": 473216,
+      "decodedBytes": 1142115,
+      "jsDecodedBytes": 716659,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16180,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 114,
+      "domNodes": 570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/templates",
+        "/api/v1/public/packages",
+        "/api/v1/me/entitlements"
+      ],
+      "errors": []
+    },
+    {
+      "name": "home",
+      "iteration": 3,
+      "lcpMs": 484,
+      "cls": 0.0025031774282782493,
+      "longTaskMs": [
+        68,
+        169
+      ],
+      "domContentLoadedMs": 272.19999999925494,
+      "transferredBytes": 480716,
+      "encodedBytes": 473216,
+      "decodedBytes": 1142115,
+      "jsDecodedBytes": 716659,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16180,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 137,
+      "domNodes": 570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/templates",
+        "/api/v1/public/packages",
+        "/api/v1/me/entitlements"
+      ],
+      "errors": []
+    },
+    {
+      "name": "marketplace",
+      "iteration": 1,
+      "lcpMs": 752,
+      "cls": 0.0019125122572659465,
+      "longTaskMs": [
+        68
+      ],
+      "domContentLoadedMs": 270.90000000037253,
+      "transferredBytes": 425280,
+      "encodedBytes": 417780,
+      "decodedBytes": 1086679,
+      "jsDecodedBytes": 716963,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16485,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 18,
+      "domNodes": 183,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": []
+    },
+    {
+      "name": "marketplace",
+      "iteration": 2,
+      "lcpMs": 796,
+      "cls": 0.0019125122572659465,
+      "longTaskMs": [
+        61
+      ],
+      "domContentLoadedMs": 267.80000000074506,
+      "transferredBytes": 425280,
+      "encodedBytes": 417780,
+      "decodedBytes": 1086679,
+      "jsDecodedBytes": 716963,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16485,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 11,
+      "domNodes": 183,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": []
+    },
+    {
+      "name": "marketplace",
+      "iteration": 3,
+      "lcpMs": 772,
+      "cls": 0.0014355701838991769,
+      "longTaskMs": [
+        69
+      ],
+      "domContentLoadedMs": 275.69999999925494,
+      "transferredBytes": 425280,
+      "encodedBytes": 417780,
+      "decodedBytes": 1086679,
+      "jsDecodedBytes": 716963,
+      "cssDecodedBytes": 214785,
+      "imageEncodedBytes": 16485,
+      "fontEncodedBytes": 138100,
+      "observedBlockingMs": 19,
+      "domNodes": 183,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": []
+    },
+    {
+      "name": "template-preview",
+      "iteration": 1,
+      "lcpMs": 1248,
+      "cls": 0.0011540560163751715,
+      "longTaskMs": [
+        62,
+        243,
+        68,
+        74
+      ],
+      "domContentLoadedMs": 268.69999999925494,
+      "transferredBytes": 3300019,
+      "encodedBytes": 3272119,
+      "decodedBytes": 4526047,
+      "jsDecodedBytes": 1294919,
+      "cssDecodedBytes": 457947,
+      "imageEncodedBytes": 2318258,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 247,
+      "domNodes": 845,
+      "heapUsedBytes": 10000000,
+      "requestCount": 95,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/templates/slug/khmer-celestial"
+      ],
+      "errors": []
+    },
+    {
+      "name": "template-preview",
+      "iteration": 2,
+      "lcpMs": 1580,
+      "cls": 0.0011540560163751715,
+      "longTaskMs": [
+        98,
+        51,
+        490,
+        90,
+        77
+      ],
+      "domContentLoadedMs": 310,
+      "transferredBytes": 3300019,
+      "encodedBytes": 3272119,
+      "decodedBytes": 4526047,
+      "jsDecodedBytes": 1294919,
+      "cssDecodedBytes": 457947,
+      "imageEncodedBytes": 2318258,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 556,
+      "domNodes": 845,
+      "heapUsedBytes": 10000000,
+      "requestCount": 95,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/templates/slug/khmer-celestial"
+      ],
+      "errors": []
+    },
+    {
+      "name": "template-preview",
+      "iteration": 3,
+      "lcpMs": 1852,
+      "cls": 0.0012957116314086076,
+      "longTaskMs": [
+        91,
+        59,
+        585,
+        314,
+        60
+      ],
+      "domContentLoadedMs": 323.5,
+      "transferredBytes": 3300019,
+      "encodedBytes": 3272119,
+      "decodedBytes": 4526047,
+      "jsDecodedBytes": 1294919,
+      "cssDecodedBytes": 457947,
+      "imageEncodedBytes": 2318258,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 859,
+      "domNodes": 845,
+      "heapUsedBytes": 10000000,
+      "requestCount": 95,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/templates/slug/khmer-celestial"
+      ],
+      "errors": []
+    },
+    {
+      "name": "invitation-studio",
+      "iteration": 1,
+      "lcpMs": 1524,
+      "cls": 0.057883801118827155,
+      "longTaskMs": [
+        60,
+        83
+      ],
+      "domContentLoadedMs": 279.7999999988824,
+      "transferredBytes": 3157884,
+      "encodedBytes": 3114984,
+      "decodedBytes": 4775496,
+      "jsDecodedBytes": 1669026,
+      "cssDecodedBytes": 640358,
+      "imageEncodedBytes": 2335914,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 43,
+      "domNodes": 2604,
+      "heapUsedBytes": 14300000,
+      "requestCount": 208,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/media",
+        "/api/v1/i18n/messages",
+        "/api/v1/i18n/messages",
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": [
+        "Unable to preload CSS for http://127.0.0.1:4173/assets/WeddingSite-l0_oLjVb.css"
+      ]
+    },
+    {
+      "name": "invitation-studio",
+      "iteration": 2,
+      "lcpMs": 1520,
+      "cls": 0.057883801118827155,
+      "longTaskMs": [
+        61,
+        99
+      ],
+      "domContentLoadedMs": 267.59999999962747,
+      "transferredBytes": 3157884,
+      "encodedBytes": 3114984,
+      "decodedBytes": 4775496,
+      "jsDecodedBytes": 1669026,
+      "cssDecodedBytes": 640358,
+      "imageEncodedBytes": 2335914,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 60,
+      "domNodes": 2604,
+      "heapUsedBytes": 14300000,
+      "requestCount": 208,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/media",
+        "/api/v1/i18n/messages",
+        "/api/v1/i18n/messages",
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": [
+        "Unable to preload CSS for http://127.0.0.1:4173/assets/WeddingSite-l0_oLjVb.css"
+      ]
+    },
+    {
+      "name": "invitation-studio",
+      "iteration": 3,
+      "lcpMs": 1496,
+      "cls": 0.057883801118827155,
+      "longTaskMs": [
+        57,
+        89
+      ],
+      "domContentLoadedMs": 261.09999999962747,
+      "transferredBytes": 3157884,
+      "encodedBytes": 3114984,
+      "decodedBytes": 4775496,
+      "jsDecodedBytes": 1669026,
+      "cssDecodedBytes": 640358,
+      "imageEncodedBytes": 2335914,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 46,
+      "domNodes": 2604,
+      "heapUsedBytes": 14300000,
+      "requestCount": 208,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/media",
+        "/api/v1/i18n/messages",
+        "/api/v1/i18n/messages",
+        "/api/v1/me/entitlements",
+        "/api/v1/templates"
+      ],
+      "errors": [
+        "Unable to preload CSS for http://127.0.0.1:4173/assets/WeddingSite-l0_oLjVb.css"
+      ]
+    },
+    {
+      "name": "public-wedding",
+      "iteration": 1,
+      "lcpMs": 1500,
+      "cls": 0.0013282862533757717,
+      "longTaskMs": [
+        71,
+        51,
+        153
+      ],
+      "domContentLoadedMs": 289.80000000074506,
+      "transferredBytes": 3092769,
+      "encodedBytes": 3062469,
+      "decodedBytes": 4340529,
+      "jsDecodedBytes": 1303516,
+      "cssDecodedBytes": 485191,
+      "imageEncodedBytes": 2093336,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 125,
+      "domNodes": 629,
+      "heapUsedBytes": 10000000,
+      "requestCount": 103,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes"
+      ],
+      "errors": []
+    },
+    {
+      "name": "public-wedding",
+      "iteration": 2,
+      "lcpMs": 1452,
+      "cls": 0.0009097089770072445,
+      "longTaskMs": [
+        60,
+        147
+      ],
+      "domContentLoadedMs": 269.09999999962747,
+      "transferredBytes": 3092769,
+      "encodedBytes": 3062469,
+      "decodedBytes": 4340529,
+      "jsDecodedBytes": 1303516,
+      "cssDecodedBytes": 485191,
+      "imageEncodedBytes": 2093336,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 107,
+      "domNodes": 629,
+      "heapUsedBytes": 10000000,
+      "requestCount": 103,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes"
+      ],
+      "errors": []
+    },
+    {
+      "name": "public-wedding",
+      "iteration": 3,
+      "lcpMs": 1456,
+      "cls": 0.0013282862533757717,
+      "longTaskMs": [
+        61,
+        152,
+        57
+      ],
+      "domContentLoadedMs": 267.09999999962747,
+      "transferredBytes": 3092769,
+      "encodedBytes": 3062469,
+      "decodedBytes": 4340529,
+      "jsDecodedBytes": 1303516,
+      "cssDecodedBytes": 485191,
+      "imageEncodedBytes": 2093336,
+      "fontEncodedBytes": 454592,
+      "observedBlockingMs": 120,
+      "domNodes": 629,
+      "heapUsedBytes": 10000000,
+      "requestCount": 103,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes"
+      ],
+      "errors": []
+    },
+    {
+      "name": "guest-rsvp",
+      "iteration": 1,
+      "lcpMs": 1288,
+      "cls": 0,
+      "longTaskMs": [
+        63
+      ],
+      "domContentLoadedMs": 274.40000000037253,
+      "transferredBytes": 641803,
+      "encodedBytes": 616603,
+      "decodedBytes": 1882828,
+      "jsDecodedBytes": 1271950,
+      "cssDecodedBytes": 495568,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 13,
+      "domNodes": 141,
+      "heapUsedBytes": 10000000,
+      "requestCount": 86,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes",
+        "/api/v1/public/invitations/audit-event/guest-view"
+      ],
+      "errors": []
+    },
+    {
+      "name": "guest-rsvp",
+      "iteration": 2,
+      "lcpMs": 1292,
+      "cls": 0,
+      "longTaskMs": [
+        61
+      ],
+      "domContentLoadedMs": 275.30000000074506,
+      "transferredBytes": 641803,
+      "encodedBytes": 616603,
+      "decodedBytes": 1882828,
+      "jsDecodedBytes": 1271950,
+      "cssDecodedBytes": 495568,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 11,
+      "domNodes": 141,
+      "heapUsedBytes": 10000000,
+      "requestCount": 86,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes",
+        "/api/v1/public/invitations/audit-event/guest-view"
+      ],
+      "errors": []
+    },
+    {
+      "name": "guest-rsvp",
+      "iteration": 3,
+      "lcpMs": 1284,
+      "cls": 0,
+      "longTaskMs": [
+        58
+      ],
+      "domContentLoadedMs": 268.30000000074506,
+      "transferredBytes": 641803,
+      "encodedBytes": 616603,
+      "decodedBytes": 1882828,
+      "jsDecodedBytes": 1271950,
+      "cssDecodedBytes": 495568,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 8,
+      "domNodes": 141,
+      "heapUsedBytes": 10000000,
+      "requestCount": 86,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/invitations/my",
+        "/api/v1/public/invitations/audit-event",
+        "/api/v1/public/invitations/audit-event/media",
+        "/api/v1/public/invitations/audit-event/wishes",
+        "/api/v1/public/invitations/audit-event/guest-view"
+      ],
+      "errors": []
+    },
+    {
+      "name": "check-in",
+      "iteration": 1,
+      "lcpMs": 1172,
+      "cls": 0,
+      "longTaskMs": [
+        59,
+        100
+      ],
+      "domContentLoadedMs": 272.2000000011176,
+      "transferredBytes": 935739,
+      "encodedBytes": 913539,
+      "decodedBytes": 1884006,
+      "jsDecodedBytes": 1073630,
+      "cssDecodedBytes": 297068,
+      "imageEncodedBytes": 384504,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 59,
+      "domNodes": 1570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/guests",
+        "/api/v1/invitations/101/check-in/summary",
+        "/api/v1/invitations/101/check-in/list"
+      ],
+      "errors": []
+    },
+    {
+      "name": "check-in",
+      "iteration": 2,
+      "lcpMs": 1132,
+      "cls": 0,
+      "longTaskMs": [
+        62,
+        82
+      ],
+      "domContentLoadedMs": 270.2999999988824,
+      "transferredBytes": 935739,
+      "encodedBytes": 913539,
+      "decodedBytes": 1884006,
+      "jsDecodedBytes": 1073630,
+      "cssDecodedBytes": 297068,
+      "imageEncodedBytes": 384504,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 44,
+      "domNodes": 1570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/guests",
+        "/api/v1/invitations/101/check-in/summary",
+        "/api/v1/invitations/101/check-in/list"
+      ],
+      "errors": []
+    },
+    {
+      "name": "check-in",
+      "iteration": 3,
+      "lcpMs": 1172,
+      "cls": 0,
+      "longTaskMs": [
+        62,
+        78
+      ],
+      "domContentLoadedMs": 268,
+      "transferredBytes": 935739,
+      "encodedBytes": 913539,
+      "decodedBytes": 1884006,
+      "jsDecodedBytes": 1073630,
+      "cssDecodedBytes": 297068,
+      "imageEncodedBytes": 384504,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 40,
+      "domNodes": 1570,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/101/guests",
+        "/api/v1/invitations/101/check-in/summary",
+        "/api/v1/invitations/101/check-in/list"
+      ],
+      "errors": []
+    },
+    {
+      "name": "event-dashboard",
+      "iteration": 1,
+      "lcpMs": 1116,
+      "cls": 0.011391404274101938,
+      "longTaskMs": [
+        93
+      ],
+      "domContentLoadedMs": 306.80000000074506,
+      "transferredBytes": 863530,
+      "encodedBytes": 841330,
+      "decodedBytes": 1689446,
+      "jsDecodedBytes": 908398,
+      "cssDecodedBytes": 280518,
+      "imageEncodedBytes": 385176,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 43,
+      "domNodes": 601,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101/dashboard",
+        "/api/v1/invitations/101/budget-items",
+        "/api/v1/invitations/101/gifts",
+        "/api/v1/invitations/101/notifications",
+        "/api/v1/invitations/101/check-in/summary"
+      ],
+      "errors": []
+    },
+    {
+      "name": "event-dashboard",
+      "iteration": 2,
+      "lcpMs": 1108,
+      "cls": 0.011309188411592293,
+      "longTaskMs": [
+        62
+      ],
+      "domContentLoadedMs": 274.90000000037253,
+      "transferredBytes": 863530,
+      "encodedBytes": 841330,
+      "decodedBytes": 1689446,
+      "jsDecodedBytes": 908398,
+      "cssDecodedBytes": 280518,
+      "imageEncodedBytes": 385176,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 12,
+      "domNodes": 601,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101/dashboard",
+        "/api/v1/invitations/101/budget-items",
+        "/api/v1/invitations/101/gifts",
+        "/api/v1/invitations/101/notifications",
+        "/api/v1/invitations/101/check-in/summary"
+      ],
+      "errors": []
+    },
+    {
+      "name": "event-dashboard",
+      "iteration": 3,
+      "lcpMs": 1088,
+      "cls": 0.012619368523073132,
+      "longTaskMs": [
+        59
+      ],
+      "domContentLoadedMs": 268.40000000037253,
+      "transferredBytes": 863530,
+      "encodedBytes": 841330,
+      "decodedBytes": 1689446,
+      "jsDecodedBytes": 908398,
+      "cssDecodedBytes": 280518,
+      "imageEncodedBytes": 385176,
+      "fontEncodedBytes": 113780,
+      "observedBlockingMs": 9,
+      "domNodes": 601,
+      "heapUsedBytes": 10000000,
+      "requestCount": 76,
+      "apiRequests": [
+        "/api/v1/me/entitlements",
+        "/api/v1/templates",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101",
+        "/api/v1/invitations/my",
+        "/api/v1/invitations/101/access",
+        "/api/v1/i18n/messages",
+        "/api/v1/invitations/101/dashboard",
+        "/api/v1/invitations/101/budget-items",
+        "/api/v1/invitations/101/gifts",
+        "/api/v1/invitations/101/notifications",
+        "/api/v1/invitations/101/check-in/summary"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-dashboard",
+      "iteration": 1,
+      "lcpMs": 596,
+      "cls": 0.006633333333333334,
+      "longTaskMs": [],
+      "domContentLoadedMs": 162.2999999988824,
+      "transferredBytes": 172831,
+      "encodedBytes": 165631,
+      "decodedBytes": 626937,
+      "jsDecodedBytes": 436605,
+      "cssDecodedBytes": 190233,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 0,
+      "observedBlockingMs": 0,
+      "domNodes": 429,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/admin/dashboard/summary",
+        "/api/v1/admin/analytics/overview",
+        "/api/v1/admin/analytics/revenue",
+        "/api/v1/admin/analytics/templates",
+        "/api/v1/admin/analytics/delivery",
+        "/api/v1/admin/analytics/rsvp",
+        "/api/v1/admin/analytics/check-in",
+        "/api/v1/admin/system-health",
+        "/api/v1/admin/alerts"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-dashboard",
+      "iteration": 2,
+      "lcpMs": 596,
+      "cls": 0.006633333333333334,
+      "longTaskMs": [
+        52
+      ],
+      "domContentLoadedMs": 151.7000000011176,
+      "transferredBytes": 172831,
+      "encodedBytes": 165631,
+      "decodedBytes": 626937,
+      "jsDecodedBytes": 436605,
+      "cssDecodedBytes": 190233,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 0,
+      "observedBlockingMs": 2,
+      "domNodes": 429,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/admin/dashboard/summary",
+        "/api/v1/admin/analytics/overview",
+        "/api/v1/admin/analytics/revenue",
+        "/api/v1/admin/analytics/templates",
+        "/api/v1/admin/analytics/delivery",
+        "/api/v1/admin/analytics/rsvp",
+        "/api/v1/admin/analytics/check-in",
+        "/api/v1/admin/system-health",
+        "/api/v1/admin/alerts"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-dashboard",
+      "iteration": 3,
+      "lcpMs": 540,
+      "cls": 0.006633333333333334,
+      "longTaskMs": [],
+      "domContentLoadedMs": 162.59999999962747,
+      "transferredBytes": 172831,
+      "encodedBytes": 165631,
+      "decodedBytes": 626937,
+      "jsDecodedBytes": 436605,
+      "cssDecodedBytes": 190233,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 0,
+      "observedBlockingMs": 0,
+      "domNodes": 429,
+      "heapUsedBytes": 10000000,
+      "requestCount": 27,
+      "apiRequests": [
+        "/api/v1/admin/dashboard/summary",
+        "/api/v1/admin/analytics/overview",
+        "/api/v1/admin/analytics/revenue",
+        "/api/v1/admin/analytics/templates",
+        "/api/v1/admin/analytics/delivery",
+        "/api/v1/admin/analytics/rsvp",
+        "/api/v1/admin/analytics/check-in",
+        "/api/v1/admin/system-health",
+        "/api/v1/admin/alerts"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-reports",
+      "iteration": 1,
+      "lcpMs": 676,
+      "cls": 0.03573055555555556,
+      "longTaskMs": [
+        96
+      ],
+      "domContentLoadedMs": 173.09999999962747,
+      "transferredBytes": 263575,
+      "encodedBytes": 259075,
+      "decodedBytes": 761579,
+      "jsDecodedBytes": 469660,
+      "cssDecodedBytes": 215060,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 76848,
+      "observedBlockingMs": 46,
+      "domNodes": 180,
+      "heapUsedBytes": 10000000,
+      "requestCount": 18,
+      "apiRequests": [
+        "/api/v1/admin/reports/management/definitions"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-reports",
+      "iteration": 2,
+      "lcpMs": 656,
+      "cls": 0.03573055555555556,
+      "longTaskMs": [],
+      "domContentLoadedMs": 149.60000000149012,
+      "transferredBytes": 263575,
+      "encodedBytes": 259075,
+      "decodedBytes": 761579,
+      "jsDecodedBytes": 469660,
+      "cssDecodedBytes": 215060,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 76848,
+      "observedBlockingMs": 0,
+      "domNodes": 180,
+      "heapUsedBytes": 10000000,
+      "requestCount": 18,
+      "apiRequests": [
+        "/api/v1/admin/reports/management/definitions"
+      ],
+      "errors": []
+    },
+    {
+      "name": "admin-reports",
+      "iteration": 3,
+      "lcpMs": 604,
+      "cls": 0.03573055555555556,
+      "longTaskMs": [],
+      "domContentLoadedMs": 157.59999999962747,
+      "transferredBytes": 263575,
+      "encodedBytes": 259075,
+      "decodedBytes": 761579,
+      "jsDecodedBytes": 469660,
+      "cssDecodedBytes": 215060,
+      "imageEncodedBytes": 0,
+      "fontEncodedBytes": 76848,
+      "observedBlockingMs": 0,
+      "domNodes": 180,
+      "heapUsedBytes": 10000000,
+      "requestCount": 18,
+      "apiRequests": [
+        "/api/v1/admin/reports/management/definitions"
+      ],
+      "errors": []
+    }
+  ],
+  "failures": [],
+  "assets": {
+    "frontend-user": [
+      {
+        "name": "AccessFailureState-aB7yrWfX.js",
+        "bytes": 408,
+        "gzipBytes": 269
+      },
+      {
+        "name": "AiAssistantPage-CbaqwFwC.css",
+        "bytes": 3508,
+        "gzipBytes": 1041
+      },
+      {
+        "name": "AiAssistantPage-Dg2T3JBD.js",
+        "bytes": 14871,
+        "gzipBytes": 5288
+      },
+      {
+        "name": "armchair-_ct-2rwT.js",
+        "bytes": 404,
+        "gzipBytes": 263
+      },
+      {
+        "name": "arrow-down-HF_ljo1e.js",
+        "bytes": 205,
+        "gzipBytes": 186
+      },
+      {
+        "name": "arrow-left-Co9bFwqD.js",
+        "bytes": 205,
+        "gzipBytes": 188
+      },
+      {
+        "name": "arrow-right-CjmE3qHL.js",
+        "bytes": 205,
+        "gzipBytes": 188
+      },
+      {
+        "name": "AttendanceAnalytics-BlHLDgXF.css",
+        "bytes": 3190,
+        "gzipBytes": 1068
+      },
+      {
+        "name": "AttendanceAnalytics-CWJNuWDI.js",
+        "bytes": 7784,
+        "gzipBytes": 3025
+      },
+      {
+        "name": "AuthLayout-DwRUuCOG.js",
+        "bytes": 1499,
+        "gzipBytes": 626
+      },
+      {
+        "name": "AuthoredClosing-D5vcxWy8.js",
+        "bytes": 465,
+        "gzipBytes": 259
+      },
+      {
+        "name": "AuthPage-ClKYtodB.css",
+        "bytes": 11042,
+        "gzipBytes": 2751
+      },
+      {
+        "name": "background-Dt0NvFi2.js",
+        "bytes": 55,
+        "gzipBytes": 75
+      },
+      {
+        "name": "BlissEditorialLayout-niKU5hMI.css",
+        "bytes": 5192,
+        "gzipBytes": 1539
+      },
+      {
+        "name": "BlissEditorialLayout-ZzhWkimD.js",
+        "bytes": 15386,
+        "gzipBytes": 4586
+      },
+      {
+        "name": "BrowseTemplatesPage-DO3whhvk.js",
+        "bytes": 156,
+        "gzipBytes": 144
+      },
+      {
+        "name": "budgetApi-BHSCGwLM.js",
+        "bytes": 1419,
+        "gzipBytes": 526
+      },
+      {
+        "name": "BudgetPage-CJWQtRWI.css",
+        "bytes": 2159,
+        "gzipBytes": 711
+      },
+      {
+        "name": "BudgetPage-MRGJWkeV.js",
+        "bytes": 15408,
+        "gzipBytes": 4554
+      },
+      {
+        "name": "CanvaKhmerWeddingTemplate-cyoOCvOY.js",
+        "bytes": 24696,
+        "gzipBytes": 7536
+      },
+      {
+        "name": "CanvaKhmerWeddingTemplate-FujMIGo9.css",
+        "bytes": 22855,
+        "gzipBytes": 5729
+      },
+      {
+        "name": "catalogPolicy-O2nCERmB.js",
+        "bytes": 1007,
+        "gzipBytes": 521
+      },
+      {
+        "name": "ChangePasswordPage-CsAKBfFw.js",
+        "bytes": 2967,
+        "gzipBytes": 1085
+      },
+      {
+        "name": "chart-column-HFsnCLDd.js",
+        "bytes": 315,
+        "gzipBytes": 237
+      },
+      {
+        "name": "ChatBot-CDyjbtXZ.js",
+        "bytes": 8234,
+        "gzipBytes": 2802
+      },
+      {
+        "name": "ChatBot-DwJfFoO9.css",
+        "bytes": 4226,
+        "gzipBytes": 1285
+      },
+      {
+        "name": "chevron-down-DxRDuKka.js",
+        "bytes": 168,
+        "gzipBytes": 165
+      },
+      {
+        "name": "cinematicOpeningContext-CzBcNCp6.js",
+        "bytes": 9733,
+        "gzipBytes": 4182
+      },
+      {
+        "name": "cinematicOpeningContext-DWWHaHKW.css",
+        "bytes": 434,
+        "gzipBytes": 251
+      },
+      {
+        "name": "CinematicVideoOpening-CL6_6nkt.js",
+        "bytes": 14169,
+        "gzipBytes": 4368
+      },
+      {
+        "name": "CinematicVideoOpening-DI2lfRqW.css",
+        "bytes": 21776,
+        "gzipBytes": 4598
+      },
+      {
+        "name": "circle-alert-DAJ0l-jr.js",
+        "bytes": 315,
+        "gzipBytes": 228
+      },
+      {
+        "name": "circle-check-DGgvMsbA.js",
+        "bytes": 250,
+        "gzipBytes": 216
+      },
+      {
+        "name": "clock-3-B7QKIK3n.js",
+        "bytes": 209,
+        "gzipBytes": 192
+      },
+      {
+        "name": "clock-CYcN1Ohb.js",
+        "bytes": 209,
+        "gzipBytes": 192
+      },
+      {
+        "name": "ContactPage-DzAn5bYC.js",
+        "bytes": 9825,
+        "gzipBytes": 3568
+      },
+      {
+        "name": "copy-DXssfycg.js",
+        "bytes": 276,
+        "gzipBytes": 236
+      },
+      {
+        "name": "createLucideIcon-iAjGl61D.js",
+        "bytes": 3088,
+        "gzipBytes": 1480
+      },
+      {
+        "name": "currencyTotals-CpX6dh_3.js",
+        "bytes": 380,
+        "gzipBytes": 288
+      },
+      {
+        "name": "DashboardPage-BybaI-uC.js",
+        "bytes": 16087,
+        "gzipBytes": 5290
+      },
+      {
+        "name": "DashboardPage-CnHSXZK-.css",
+        "bytes": 21100,
+        "gzipBytes": 4417
+      },
+      {
+        "name": "DatePicker-BqS2Tumu.js",
+        "bytes": 6282,
+        "gzipBytes": 2517
+      },
+      {
+        "name": "DatePicker-CmASfBZO.css",
+        "bytes": 3396,
+        "gzipBytes": 1123
+      },
+      {
+        "name": "deliveryApi-BvwjkPvY.js",
+        "bytes": 604,
+        "gzipBytes": 247
+      },
+      {
+        "name": "DigitalYesLayout-By6oAR9f.css",
+        "bytes": 5680,
+        "gzipBytes": 1713
+      },
+      {
+        "name": "DigitalYesLayout-_t9u4Zom.js",
+        "bytes": 34522,
+        "gzipBytes": 9206
+      },
+      {
+        "name": "download-BRsF9N4w.js",
+        "bytes": 272,
+        "gzipBytes": 223
+      },
+      {
+        "name": "draftMediaStorage-DTubrHY0.js",
+        "bytes": 984,
+        "gzipBytes": 501
+      },
+      {
+        "name": "draftToTemplate-BRUfJmbP.js",
+        "bytes": 9792,
+        "gzipBytes": 2886
+      },
+      {
+        "name": "earth-DVD7C6k-.js",
+        "bytes": 453,
+        "gzipBytes": 308
+      },
+      {
+        "name": "eighth-note-DwLY30UA.js",
+        "bytes": 254,
+        "gzipBytes": 226
+      },
+      {
+        "name": "eighth-notes-ldlrLYQV.js",
+        "bytes": 326,
+        "gzipBytes": 254
+      },
+      {
+        "name": "ellipsis-DtTzxnNG.js",
+        "bytes": 294,
+        "gzipBytes": 212
+      },
+      {
+        "name": "EmeraldLuxeLayout-glCLC7tW.js",
+        "bytes": 18651,
+        "gzipBytes": 5660
+      },
+      {
+        "name": "EmeraldLuxeLayout-t-wl7iBo.css",
+        "bytes": 5179,
+        "gzipBytes": 1718
+      },
+      {
+        "name": "EnterprisePages-CaLKO3tt.css",
+        "bytes": 3237,
+        "gzipBytes": 1103
+      },
+      {
+        "name": "EventContext-fHWhCzEg.js",
+        "bytes": 157,
+        "gzipBytes": 145
+      },
+      {
+        "name": "EventCover-D4PVI8-M.js",
+        "bytes": 1544,
+        "gzipBytes": 782
+      },
+      {
+        "name": "EventCreatePage-Bsk6EnxD.css",
+        "bytes": 7964,
+        "gzipBytes": 2096
+      },
+      {
+        "name": "EventCreatePage-CkNJ8Ncb.js",
+        "bytes": 22134,
+        "gzipBytes": 7397
+      },
+      {
+        "name": "EventDetails-AAbXJVy7.css",
+        "bytes": 4332,
+        "gzipBytes": 1376
+      },
+      {
+        "name": "EventDetails-BzhXaWKL.js",
+        "bytes": 20095,
+        "gzipBytes": 6949
+      },
+      {
+        "name": "EventEssentialLayout-CEMtsP4k.js",
+        "bytes": 2609,
+        "gzipBytes": 1270
+      },
+      {
+        "name": "EventFields-qqfs-CrI.js",
+        "bytes": 2031,
+        "gzipBytes": 1033
+      },
+      {
+        "name": "eventFields-uQ6QlnAc.js",
+        "bytes": 3031,
+        "gzipBytes": 1321
+      },
+      {
+        "name": "EventInvitation-yJV-3VZj.js",
+        "bytes": 4588,
+        "gzipBytes": 2113
+      },
+      {
+        "name": "eventNavigationModel-DEHT0Q4M.js",
+        "bytes": 4382,
+        "gzipBytes": 1938
+      },
+      {
+        "name": "eventPresentation-st0VK6LJ.js",
+        "bytes": 226,
+        "gzipBytes": 192
+      },
+      {
+        "name": "EventsFeature-JwIAumRO.css",
+        "bytes": 19093,
+        "gzipBytes": 4277
+      },
+      {
+        "name": "EventsPage-CXAckHPy.js",
+        "bytes": 27768,
+        "gzipBytes": 9398
+      },
+      {
+        "name": "EventTeamPanel-TIlLokdK.js",
+        "bytes": 5237,
+        "gzipBytes": 2053
+      },
+      {
+        "name": "EventWorkspace-Bfn1vxD2.css",
+        "bytes": 11798,
+        "gzipBytes": 3094
+      },
+      {
+        "name": "EventWorkspace-gmsbyGtz.js",
+        "bytes": 15566,
+        "gzipBytes": 5558
+      },
+      {
+        "name": "ExpensesPage-C-mWWKWA.css",
+        "bytes": 21034,
+        "gzipBytes": 4496
+      },
+      {
+        "name": "ExpensesPage-DyA_ejbv.js",
+        "bytes": 23556,
+        "gzipBytes": 6739
+      },
+      {
+        "name": "external-link-Cyqe121L.js",
+        "bytes": 291,
+        "gzipBytes": 229
+      },
+      {
+        "name": "eye-BEfRIh58.js",
+        "bytes": 296,
+        "gzipBytes": 230
+      },
+      {
+        "name": "FeatureAccessCard-CNjfSY0w.js",
+        "bytes": 2026,
+        "gzipBytes": 1134
+      },
+      {
+        "name": "FinancialReport-D8HQWmr-.js",
+        "bytes": 18772,
+        "gzipBytes": 6047
+      },
+      {
+        "name": "FinancialReport-DhvG7joz.css",
+        "bytes": 17572,
+        "gzipBytes": 3416
+      },
+      {
+        "name": "ForgotPasswordPage-DP8qL196.js",
+        "bytes": 5123,
+        "gzipBytes": 1904
+      },
+      {
+        "name": "galleryStorage-hdbuO4NG.js",
+        "bytes": 668,
+        "gzipBytes": 358
+      },
+      {
+        "name": "gem-BgV0Nu7W.js",
+        "bytes": 374,
+        "gzipBytes": 271
+      },
+      {
+        "name": "gift-BCi0GZxU.js",
+        "bytes": 389,
+        "gzipBytes": 278
+      },
+      {
+        "name": "giftsApi-D6Ea0mo4.js",
+        "bytes": 368,
+        "gzipBytes": 225
+      },
+      {
+        "name": "guestApi-_WID2RBC.js",
+        "bytes": 2845,
+        "gzipBytes": 804
+      },
+      {
+        "name": "GuestImportModal-CGNB-b4e.js",
+        "bytes": 21855,
+        "gzipBytes": 7158
+      },
+      {
+        "name": "GuestImportModal-O4l2sDhL.css",
+        "bytes": 3967,
+        "gzipBytes": 1260
+      },
+      {
+        "name": "GuestSectionNavigation-CgEtE96C.css",
+        "bytes": 1421,
+        "gzipBytes": 690
+      },
+      {
+        "name": "GuestSectionNavigation-CsUkYlsa.js",
+        "bytes": 2673,
+        "gzipBytes": 1521
+      },
+      {
+        "name": "GuestsPage-CGh8s2DD.css",
+        "bytes": 59142,
+        "gzipBytes": 11137
+      },
+      {
+        "name": "GuestsPage-K0j3oe34.js",
+        "bytes": 50200,
+        "gzipBytes": 15124
+      },
+      {
+        "name": "hostPlanningStorage-C53eoEYx.js",
+        "bytes": 1710,
+        "gzipBytes": 677
+      },
+      {
+        "name": "HostShell-BUcCyFID.css",
+        "bytes": 14161,
+        "gzipBytes": 3197
+      },
+      {
+        "name": "HostShell-CJkM88Jz.js",
+        "bytes": 12675,
+        "gzipBytes": 3816
+      },
+      {
+        "name": "HostTemplateDemoPage-OqTm63YO.js",
+        "bytes": 151,
+        "gzipBytes": 144
+      },
+      {
+        "name": "httpClient-ecMDaaxJ.js",
+        "bytes": 54207,
+        "gzipBytes": 19992
+      },
+      {
+        "name": "IllustratedMapDesignerModal-B-COi56K.js",
+        "bytes": 27560,
+        "gzipBytes": 9014
+      },
+      {
+        "name": "images-DptK46fJ.js",
+        "bytes": 410,
+        "gzipBytes": 301
+      },
+      {
+        "name": "index-BL_6gEK0.js",
+        "bytes": 459567,
+        "gzipBytes": 136970
+      },
+      {
+        "name": "index-DQJwONKG.css",
+        "bytes": 211841,
+        "gzipBytes": 38603
+      },
+      {
+        "name": "invitationApi-CfbbPcdS.js",
+        "bytes": 1871,
+        "gzipBytes": 761
+      },
+      {
+        "name": "InvitationCheckInPage-B8Lxn4mi.js",
+        "bytes": 180179,
+        "gzipBytes": 60701
+      },
+      {
+        "name": "InvitationCreatePage-D82otFCI.js",
+        "bytes": 25134,
+        "gzipBytes": 6420
+      },
+      {
+        "name": "InvitationCreatePage-DfKoFnW2.css",
+        "bytes": 14967,
+        "gzipBytes": 3442
+      },
+      {
+        "name": "InvitationDeliveryPage-DgzHz7M3.js",
+        "bytes": 11775,
+        "gzipBytes": 3809
+      },
+      {
+        "name": "InvitationDeliveryPage-DrVE9xd3.css",
+        "bytes": 10276,
+        "gzipBytes": 2236
+      },
+      {
+        "name": "invitationDraftAdapter-DShZZrO1.js",
+        "bytes": 9921,
+        "gzipBytes": 3327
+      },
+      {
+        "name": "InvitationEditFeature-Di1AmWp7.js",
+        "bytes": 227649,
+        "gzipBytes": 59911
+      },
+      {
+        "name": "InvitationEditFeature-q0yKOd9f.css",
+        "bytes": 55492,
+        "gzipBytes": 10763
+      },
+      {
+        "name": "InvitationEditPage-ze6VjoOF.js",
+        "bytes": 163,
+        "gzipBytes": 155
+      },
+      {
+        "name": "InvitationLabel-BFzhl4mQ.js",
+        "bytes": 8567,
+        "gzipBytes": 2683
+      },
+      {
+        "name": "InvitationMediaPage-C0-ynI8n.js",
+        "bytes": 7453,
+        "gzipBytes": 2919
+      },
+      {
+        "name": "InvitationMediaPage-CJj20E4m.css",
+        "bytes": 3867,
+        "gzipBytes": 1209
+      },
+      {
+        "name": "InvitationPages-BK_MkKfc.css",
+        "bytes": 37650,
+        "gzipBytes": 7567
+      },
+      {
+        "name": "InvitationPreviewPage-Cyrn_GRy.js",
+        "bytes": 5954,
+        "gzipBytes": 2433
+      },
+      {
+        "name": "InvitationStudio-CBFv7bFP.js",
+        "bytes": 46093,
+        "gzipBytes": 13754
+      },
+      {
+        "name": "InvitationStudio-DsZSLt75.css",
+        "bytes": 40900,
+        "gzipBytes": 7952
+      },
+      {
+        "name": "InvitationStyleEditor-BcPJzDQ0.css",
+        "bytes": 2475,
+        "gzipBytes": 985
+      },
+      {
+        "name": "InvitationStyleEditor-DJU2UXRd.js",
+        "bytes": 8148,
+        "gzipBytes": 3150
+      },
+      {
+        "name": "io5-b3milcAS.js",
+        "bytes": 45435,
+        "gzipBytes": 10532
+      },
+      {
+        "name": "jsx-runtime-Wy9s6hX0.js",
+        "bytes": 8911,
+        "gzipBytes": 3383
+      },
+      {
+        "name": "khmer-celestial-BhHWmCfe.css",
+        "bytes": 41784,
+        "gzipBytes": 9189
+      },
+      {
+        "name": "khmer-celestial-BwKWyfY1.js",
+        "bytes": 26207,
+        "gzipBytes": 8250
+      },
+      {
+        "name": "khmer-floral-gold-BRY3jmNv.js",
+        "bytes": 5837,
+        "gzipBytes": 2386
+      },
+      {
+        "name": "khmer-floral-gold-Dw4Rfe39.css",
+        "bytes": 30411,
+        "gzipBytes": 7474
+      },
+      {
+        "name": "KhmerCelestialLayout-CDgdIinN.js",
+        "bytes": 31895,
+        "gzipBytes": 10190
+      },
+      {
+        "name": "KhmerFloralGoldLayout-EhcN23m9.js",
+        "bytes": 25616,
+        "gzipBytes": 8415
+      },
+      {
+        "name": "layers-dn2VuUtx.js",
+        "bytes": 482,
+        "gzipBytes": 279
+      },
+      {
+        "name": "layout-dashboard-BXVxEiuj.js",
+        "bytes": 391,
+        "gzipBytes": 234
+      },
+      {
+        "name": "lib-DKqfGMZD.js",
+        "bytes": 23212,
+        "gzipBytes": 8115
+      },
+      {
+        "name": "loader-circle-wWmsqaDV.js",
+        "bytes": 205,
+        "gzipBytes": 193
+      },
+      {
+        "name": "localDate-D_tAugdn.js",
+        "bytes": 356,
+        "gzipBytes": 251
+      },
+      {
+        "name": "localizedContent-gq2wG_17.js",
+        "bytes": 6629,
+        "gzipBytes": 2311
+      },
+      {
+        "name": "LoginPage-DE-0-nB1.js",
+        "bytes": 3734,
+        "gzipBytes": 1584
+      },
+      {
+        "name": "logo-CnrSq6bR.js",
+        "bytes": 49,
+        "gzipBytes": 69
+      },
+      {
+        "name": "mail-BEvm0P9D.js",
+        "bytes": 253,
+        "gzipBytes": 226
+      },
+      {
+        "name": "map-BtfO4Uj9.js",
+        "bytes": 465,
+        "gzipBytes": 295
+      },
+      {
+        "name": "mapPresets-BTBvgrDu.js",
+        "bytes": 3764,
+        "gzipBytes": 1460
+      },
+      {
+        "name": "mediaApi-qHt0erW9.js",
+        "bytes": 3207,
+        "gzipBytes": 1074
+      },
+      {
+        "name": "mediaLibraryModel-mEEr4ePo.js",
+        "bytes": 1315,
+        "gzipBytes": 664
+      },
+      {
+        "name": "message-circle-heart-DlGxIvU_.js",
+        "bytes": 423,
+        "gzipBytes": 307
+      },
+      {
+        "name": "minus-BUwbHLqS.js",
+        "bytes": 157,
+        "gzipBytes": 160
+      },
+      {
+        "name": "Modal--RMdWDNw.js",
+        "bytes": 4798,
+        "gzipBytes": 1974
+      },
+      {
+        "name": "Modal-DYkaqmR1.css",
+        "bytes": 2944,
+        "gzipBytes": 1105
+      },
+      {
+        "name": "notificationsApi-Bwrpw7Uz.js",
+        "bytes": 459,
+        "gzipBytes": 275
+      },
+      {
+        "name": "NotificationsPage-CHAlT3AJ.css",
+        "bytes": 2135,
+        "gzipBytes": 816
+      },
+      {
+        "name": "NotificationsPage-DvNbwL_4.js",
+        "bytes": 5758,
+        "gzipBytes": 2212
+      },
+      {
+        "name": "openingConfig-4--OkjJT.js",
+        "bytes": 2387,
+        "gzipBytes": 1150
+      },
+      {
+        "name": "organizationApi-C8SzCDsi.js",
+        "bytes": 465,
+        "gzipBytes": 265
+      },
+      {
+        "name": "OrganizationDetailPage-D2wI_TET.js",
+        "bytes": 19211,
+        "gzipBytes": 5811
+      },
+      {
+        "name": "OrganizationPage-Bc9Y-NaS.css",
+        "bytes": 7848,
+        "gzipBytes": 1913
+      },
+      {
+        "name": "OrganizationPage-BkmsOItR.js",
+        "bytes": 8019,
+        "gzipBytes": 2775
+      },
+      {
+        "name": "PaidTemplatesPage-CI-OBQhL.js",
+        "bytes": 8984,
+        "gzipBytes": 2762
+      },
+      {
+        "name": "palette-CmOQPUUD.js",
+        "bytes": 550,
+        "gzipBytes": 305
+      },
+      {
+        "name": "PaymentCancelPage-B_dX72tB.js",
+        "bytes": 1405,
+        "gzipBytes": 656
+      },
+      {
+        "name": "PaymentHistoryPage-DZ6XM5tQ.js",
+        "bytes": 3125,
+        "gzipBytes": 1225
+      },
+      {
+        "name": "PaymentPages-eOc3BU99.css",
+        "bytes": 23275,
+        "gzipBytes": 4627
+      },
+      {
+        "name": "PaymentReceiptPage-Bzp8Wm42.js",
+        "bytes": 3417,
+        "gzipBytes": 1299
+      },
+      {
+        "name": "paymentService-8aiwCpRs.js",
+        "bytes": 1007,
+        "gzipBytes": 351
+      },
+      {
+        "name": "paymentStatus-Ca9Sc1nv.js",
+        "bytes": 2417,
+        "gzipBytes": 866
+      },
+      {
+        "name": "PaymentStatusPage-9oPQLX4T.js",
+        "bytes": 17679,
+        "gzipBytes": 5272
+      },
+      {
+        "name": "PaymentSuccessPage-CSnSHFD2.js",
+        "bytes": 2827,
+        "gzipBytes": 1257
+      },
+      {
+        "name": "pencil-RJR14nLM.js",
+        "bytes": 316,
+        "gzipBytes": 250
+      },
+      {
+        "name": "planningApi-B4YcOiXD.js",
+        "bytes": 770,
+        "gzipBytes": 289
+      },
+      {
+        "name": "previewMessaging-a6DG3MSn.css",
+        "bytes": 4632,
+        "gzipBytes": 1381
+      },
+      {
+        "name": "previewMessaging-DYlMt65T.js",
+        "bytes": 25655,
+        "gzipBytes": 10706
+      },
+      {
+        "name": "PricingPage-DKTGXsc_.js",
+        "bytes": 11636,
+        "gzipBytes": 3554
+      },
+      {
+        "name": "ProfilePage-C_agPfk0.js",
+        "bytes": 13194,
+        "gzipBytes": 3461
+      },
+      {
+        "name": "program-BtHTrX8a.js",
+        "bytes": 3343,
+        "gzipBytes": 1589
+      },
+      {
+        "name": "ProgramTimeline-CTCRCZCW.css",
+        "bytes": 12870,
+        "gzipBytes": 3287
+      },
+      {
+        "name": "ProgramTimeline-lB1daF20.js",
+        "bytes": 18469,
+        "gzipBytes": 7120
+      },
+      {
+        "name": "prop-types-CSvbPeQ-.js",
+        "bytes": 810,
+        "gzipBytes": 505
+      },
+      {
+        "name": "proxy-4htqa7Ib.js",
+        "bytes": 133231,
+        "gzipBytes": 43555
+      },
+      {
+        "name": "PublicInvitationPage-GAncANXT.js",
+        "bytes": 23388,
+        "gzipBytes": 7873
+      },
+      {
+        "name": "qr-code-BkWIctgA.js",
+        "bytes": 690,
+        "gzipBytes": 337
+      },
+      {
+        "name": "QrPage-CuTZfzOJ.css",
+        "bytes": 2822,
+        "gzipBytes": 1061
+      },
+      {
+        "name": "QrPage-DlF8NsTk.js",
+        "bytes": 7187,
+        "gzipBytes": 3022
+      },
+      {
+        "name": "QuotaProgress-Blrhw6RD.js",
+        "bytes": 1197,
+        "gzipBytes": 708
+      },
+      {
+        "name": "react-dom-g7hNCJoM.js",
+        "bytes": 3864,
+        "gzipBytes": 1393
+      },
+      {
+        "name": "refresh-cw-Ca3m3Dup.js",
+        "bytes": 361,
+        "gzipBytes": 253
+      },
+      {
+        "name": "RegisterPage-B49u2jgl.js",
+        "bytes": 6089,
+        "gzipBytes": 2180
+      },
+      {
+        "name": "reportsApi-CHKpMUFc.js",
+        "bytes": 873,
+        "gzipBytes": 525
+      },
+      {
+        "name": "ResetPasswordPage-Dz0dSboq.js",
+        "bytes": 6865,
+        "gzipBytes": 2455
+      },
+      {
+        "name": "RoyalGardenCinematicLayout-B0b8XnB0.js",
+        "bytes": 56377,
+        "gzipBytes": 17845
+      },
+      {
+        "name": "RoyalGardenCinematicLayout-C2vrrr_V.css",
+        "bytes": 64247,
+        "gzipBytes": 12924
+      },
+      {
+        "name": "rsvpApi-BG7yJHjA.js",
+        "bytes": 1037,
+        "gzipBytes": 411
+      },
+      {
+        "name": "RsvpDashboardPage-BLUczP9-.js",
+        "bytes": 13906,
+        "gzipBytes": 4270
+      },
+      {
+        "name": "RsvpDashboardPage-DKQObDxI.css",
+        "bytes": 7528,
+        "gzipBytes": 2086
+      },
+      {
+        "name": "save-BGNRUap4.js",
+        "bytes": 367,
+        "gzipBytes": 254
+      },
+      {
+        "name": "search-sdVUzAfb.js",
+        "bytes": 214,
+        "gzipBytes": 194
+      },
+      {
+        "name": "SeatingFloorPlan-CdbZk0WQ.css",
+        "bytes": 17235,
+        "gzipBytes": 4070
+      },
+      {
+        "name": "SeatingFloorPlan-DkWBUgm9.js",
+        "bytes": 22638,
+        "gzipBytes": 7077
+      },
+      {
+        "name": "SeatingPage-CsgqTI34.css",
+        "bytes": 5186,
+        "gzipBytes": 1511
+      },
+      {
+        "name": "SeatingPage-Dv7c9uTr.js",
+        "bytes": 16677,
+        "gzipBytes": 5009
+      },
+      {
+        "name": "share-2-BEJ_2Nea.js",
+        "bytes": 397,
+        "gzipBytes": 261
+      },
+      {
+        "name": "SilkHeritageLayout-B6Uvq4Lr.js",
+        "bytes": 24091,
+        "gzipBytes": 7865
+      },
+      {
+        "name": "SilkHeritageLayout-H8mHa4sN.css",
+        "bytes": 25415,
+        "gzipBytes": 5303
+      },
+      {
+        "name": "SiteAnimations-DnKXCQkx.css",
+        "bytes": 2577,
+        "gzipBytes": 1106
+      },
+      {
+        "name": "SiteAnimations-sMRLQ9nt.js",
+        "bytes": 3600,
+        "gzipBytes": 1563
+      },
+      {
+        "name": "SocialAuthButtons-B-ECrpHe.js",
+        "bytes": 15436,
+        "gzipBytes": 6210
+      },
+      {
+        "name": "SubscriptionPackagesPage-BzopoiXe.js",
+        "bytes": 36830,
+        "gzipBytes": 10289
+      },
+      {
+        "name": "SubscriptionPackagesPage-CI5Er5LL.css",
+        "bytes": 16160,
+        "gzipBytes": 3556
+      },
+      {
+        "name": "TemplateBoilerplateLayout-Bkp2FoNJ.js",
+        "bytes": 13920,
+        "gzipBytes": 4323
+      },
+      {
+        "name": "TemplateBoilerplateLayout-KsL0tCMp.css",
+        "bytes": 4380,
+        "gzipBytes": 1441
+      },
+      {
+        "name": "TemplateCheckoutPage-IQJ6kb9z.js",
+        "bytes": 9025,
+        "gzipBytes": 3182
+      },
+      {
+        "name": "TemplateDemoPage-C9jFAv--.js",
+        "bytes": 156,
+        "gzipBytes": 147
+      },
+      {
+        "name": "TemplateExperience-ClnD5M8q.js",
+        "bytes": 173597,
+        "gzipBytes": 47481
+      },
+      {
+        "name": "TemplateExperience-WeMIByrq.css",
+        "bytes": 105848,
+        "gzipBytes": 20497
+      },
+      {
+        "name": "TemplateImage-DK1c5FxY.js",
+        "bytes": 636,
+        "gzipBytes": 441
+      },
+      {
+        "name": "templates-CFCVfUoY.css",
+        "bytes": 7049,
+        "gzipBytes": 2029
+      },
+      {
+        "name": "templates-oi4S053Z.js",
+        "bytes": 12286,
+        "gzipBytes": 4523
+      },
+      {
+        "name": "TemplatesFeature-C8Yw0vMe.js",
+        "bytes": 146,
+        "gzipBytes": 139
+      },
+      {
+        "name": "TemplatesPage-C7jg1Ndp.js",
+        "bytes": 158,
+        "gzipBytes": 151
+      },
+      {
+        "name": "templateTypography-D2aSXzJ5.js",
+        "bytes": 461,
+        "gzipBytes": 345
+      },
+      {
+        "name": "ticket-Bz_Q0bYW.js",
+        "bytes": 361,
+        "gzipBytes": 244
+      },
+      {
+        "name": "TicketActions-D28azlMi.js",
+        "bytes": 17271,
+        "gzipBytes": 6985
+      },
+      {
+        "name": "TicketActions-dpxtvUX1.css",
+        "bytes": 7502,
+        "gzipBytes": 2004
+      },
+      {
+        "name": "TicketDesigner-CHSZjJK8.js",
+        "bytes": 14277,
+        "gzipBytes": 4947
+      },
+      {
+        "name": "TicketModal-B64u2spC.js",
+        "bytes": 1608,
+        "gzipBytes": 927
+      },
+      {
+        "name": "TimePicker-D89Iu2dw.js",
+        "bytes": 8925,
+        "gzipBytes": 2877
+      },
+      {
+        "name": "TimePicker-WdylPF6N.css",
+        "bytes": 5265,
+        "gzipBytes": 1504
+      },
+      {
+        "name": "trash-CFx6BrYV.js",
+        "bytes": 386,
+        "gzipBytes": 254
+      },
+      {
+        "name": "triangle-alert-DcfJLe8V.js",
+        "bytes": 332,
+        "gzipBytes": 252
+      },
+      {
+        "name": "ui-ClIHsO0-.css",
+        "bytes": 7186,
+        "gzipBytes": 1764
+      },
+      {
+        "name": "ui-Ow7ZxTgB.js",
+        "bytes": 6623,
+        "gzipBytes": 2475
+      },
+      {
+        "name": "upload-7TWEfXGF.js",
+        "bytes": 270,
+        "gzipBytes": 220
+      },
+      {
+        "name": "useAccessError-BZbsvM4i.js",
+        "bytes": 304,
+        "gzipBytes": 232
+      },
+      {
+        "name": "useBackendMessages-CcpEAlRO.js",
+        "bytes": 105272,
+        "gzipBytes": 26197
+      },
+      {
+        "name": "useClickOutside-D-aSKM02.js",
+        "bytes": 287,
+        "gzipBytes": 214
+      },
+      {
+        "name": "useLanguageStore-mmn9Okko.js",
+        "bytes": 1006,
+        "gzipBytes": 568
+      },
+      {
+        "name": "user-plus-BFPmHxgW.js",
+        "bytes": 350,
+        "gzipBytes": 260
+      },
+      {
+        "name": "users-CZYN77kL.js",
+        "bytes": 346,
+        "gzipBytes": 250
+      },
+      {
+        "name": "useT-BzwU-B6b.js",
+        "bytes": 725,
+        "gzipBytes": 473
+      },
+      {
+        "name": "useUiCopy-nahFYZIp.js",
+        "bytes": 215,
+        "gzipBytes": 191
+      },
+      {
+        "name": "useWeddingStore-CNKo3flo.js",
+        "bytes": 905,
+        "gzipBytes": 415
+      },
+      {
+        "name": "vectorExport-VCYmNhda.js",
+        "bytes": 4588,
+        "gzipBytes": 2190
+      },
+      {
+        "name": "VenuesPage-DctaWXTo.js",
+        "bytes": 18955,
+        "gzipBytes": 5280
+      },
+      {
+        "name": "WeddingGiftPage-C-0hlcrJ.js",
+        "bytes": 18914,
+        "gzipBytes": 6106
+      },
+      {
+        "name": "WeddingGiftPage-nQUrME8U.css",
+        "bytes": 15833,
+        "gzipBytes": 3542
+      },
+      {
+        "name": "WeddingPreviewPage-PEMoGmfr.js",
+        "bytes": 2541,
+        "gzipBytes": 1306
+      },
+      {
+        "name": "WeddingSite-DBJbCTgF.js",
+        "bytes": 1378,
+        "gzipBytes": 817
+      },
+      {
+        "name": "WeddingSite-l0_oLjVb.css",
+        "bytes": 61017,
+        "gzipBytes": 12541
+      },
+      {
+        "name": "weddingStorage-DJXjYQZX.js",
+        "bytes": 3328,
+        "gzipBytes": 1556
+      },
+      {
+        "name": "WishesPage-CAaxGRhy.css",
+        "bytes": 4567,
+        "gzipBytes": 1384
+      },
+      {
+        "name": "WishesPage-DrOHWmHR.js",
+        "bytes": 8515,
+        "gzipBytes": 3266
+      },
+      {
+        "name": "WithJoyPortalLayout-Cia5Wj4E.css",
+        "bytes": 7668,
+        "gzipBytes": 2113
+      },
+      {
+        "name": "WithJoyPortalLayout-DuQatgB9.js",
+        "bytes": 20567,
+        "gzipBytes": 5602
+      },
+      {
+        "name": "workspace-ui-B0ZAnjY1.css",
+        "bytes": 7262,
+        "gzipBytes": 1810
+      }
+    ],
+    "frontend-admin": [
+      {
+        "name": "AdminDashboardPage-DKf7xMzG.js",
+        "bytes": 33541,
+        "gzipBytes": 7698
+      },
+      {
+        "name": "AdminNotificationsPage-Be9h0nbt.js",
+        "bytes": 21230,
+        "gzipBytes": 5777
+      },
+      {
+        "name": "AdminPackagesPage-En4v3IbL.js",
+        "bytes": 55840,
+        "gzipBytes": 12565
+      },
+      {
+        "name": "AdminPaymentsPage-ZXC2pbYN.js",
+        "bytes": 11257,
+        "gzipBytes": 3753
+      },
+      {
+        "name": "AdminReportsPage-D9CzHweh.css",
+        "bytes": 24827,
+        "gzipBytes": 5273
+      },
+      {
+        "name": "AdminReportsPage-DWJF9Zg3.js",
+        "bytes": 68695,
+        "gzipBytes": 20534
+      },
+      {
+        "name": "adminService-BO00ULZA.js",
+        "bytes": 55760,
+        "gzipBytes": 20049
+      },
+      {
+        "name": "AdminSystemLogsPage-B_8A0FNf.js",
+        "bytes": 14535,
+        "gzipBytes": 3958
+      },
+      {
+        "name": "AdminTemplateEditPage-bMuj1nDm.js",
+        "bytes": 231652,
+        "gzipBytes": 53972
+      },
+      {
+        "name": "AdminTemplatesPage-BooQfCqW.js",
+        "bytes": 45909,
+        "gzipBytes": 10189
+      },
+      {
+        "name": "AdminUI-BzA2URIt.js",
+        "bytes": 7898,
+        "gzipBytes": 2917
+      },
+      {
+        "name": "AdminUserDetailPage-D4-n4D9y.js",
+        "bytes": 2954,
+        "gzipBytes": 1081
+      },
+      {
+        "name": "AdminUsersPage-Cjao1gox.js",
+        "bytes": 11377,
+        "gzipBytes": 3825
+      },
+      {
+        "name": "ApiMonitorPage-cvZPOI8a.js",
+        "bytes": 171384,
+        "gzipBytes": 33431
+      },
+      {
+        "name": "arrow-right-DrZ0xTRQ.js",
+        "bytes": 205,
+        "gzipBytes": 187
+      },
+      {
+        "name": "auditSanitizer-SwLxg3cE.js",
+        "bytes": 1653,
+        "gzipBytes": 900
+      },
+      {
+        "name": "check-9BTMvAeC.js",
+        "bytes": 164,
+        "gzipBytes": 167
+      },
+      {
+        "name": "chevron-right-CgZ1MkZC.js",
+        "bytes": 170,
+        "gzipBytes": 167
+      },
+      {
+        "name": "circle-alert-DLW_ohY6.js",
+        "bytes": 315,
+        "gzipBytes": 229
+      },
+      {
+        "name": "circle-check-Dq_NDUmh.js",
+        "bytes": 250,
+        "gzipBytes": 217
+      },
+      {
+        "name": "circle-x-7qNCCrib.js",
+        "bytes": 268,
+        "gzipBytes": 218
+      },
+      {
+        "name": "clock-hkyXFuTV.js",
+        "bytes": 209,
+        "gzipBytes": 192
+      },
+      {
+        "name": "copy-3fENtSRG.js",
+        "bytes": 276,
+        "gzipBytes": 236
+      },
+      {
+        "name": "createLucideIcon-vA1tJcPW.js",
+        "bytes": 53766,
+        "gzipBytes": 15490
+      },
+      {
+        "name": "crown-DCBHMU4s.js",
+        "bytes": 402,
+        "gzipBytes": 283
+      },
+      {
+        "name": "download-Bt9srkfi.js",
+        "bytes": 553,
+        "gzipBytes": 322
+      },
+      {
+        "name": "external-link-CiofJvUY.js",
+        "bytes": 291,
+        "gzipBytes": 230
+      },
+      {
+        "name": "eye-CmI4WJ-m.js",
+        "bytes": 296,
+        "gzipBytes": 230
+      },
+      {
+        "name": "file-text-B5UD8Xwd.js",
+        "bytes": 425,
+        "gzipBytes": 278
+      },
+      {
+        "name": "format-DxCPDTVf.js",
+        "bytes": 911,
+        "gzipBytes": 456
+      },
+      {
+        "name": "globe-DU-jI7pI.js",
+        "bytes": 684,
+        "gzipBytes": 383
+      },
+      {
+        "name": "hooks-DpLqI4cf.js",
+        "bytes": 1363,
+        "gzipBytes": 689
+      },
+      {
+        "name": "index-D7s2sGRq.js",
+        "bytes": 281442,
+        "gzipBytes": 88691
+      },
+      {
+        "name": "index-D92Qzulg.css",
+        "bytes": 190233,
+        "gzipBytes": 27163
+      },
+      {
+        "name": "layout-grid-DMZEbPMk.js",
+        "bytes": 386,
+        "gzipBytes": 222
+      },
+      {
+        "name": "LoginPage-C05jIchS.js",
+        "bytes": 8092,
+        "gzipBytes": 2786
+      },
+      {
+        "name": "mail-DOCYmYco.js",
+        "bytes": 253,
+        "gzipBytes": 226
+      },
+      {
+        "name": "rotate-ccw-DBsMI2AN.js",
+        "bytes": 595,
+        "gzipBytes": 356
+      },
+      {
+        "name": "rotate-cw-Dof5bbA6.js",
+        "bytes": 241,
+        "gzipBytes": 214
+      },
+      {
+        "name": "runtime-Byeqm8j3.js",
+        "bytes": 865,
+        "gzipBytes": 493
+      },
+      {
+        "name": "shield-check-CzVFq386.js",
+        "bytes": 360,
+        "gzipBytes": 278
+      },
+      {
+        "name": "sliders-vertical-D-jLa-hP.js",
+        "bytes": 482,
+        "gzipBytes": 277
+      },
+      {
+        "name": "table-D_M6Mud5.js",
+        "bytes": 472,
+        "gzipBytes": 296
+      },
+      {
+        "name": "trash-Bqnx4WRX.js",
+        "bytes": 386,
+        "gzipBytes": 254
+      },
+      {
+        "name": "trending-up-BwveKC4I.js",
+        "bytes": 215,
+        "gzipBytes": 199
+      },
+      {
+        "name": "triangle-alert-BAMFydgE.js",
+        "bytes": 332,
+        "gzipBytes": 253
+      },
+      {
+        "name": "ui-C4Gd1Dh9.js",
+        "bytes": 15648,
+        "gzipBytes": 4543
+      }
+    ]
+  }
+}

@@ -78,34 +78,24 @@ public class InvitationDeliveryService {
         int failedCount = 0;
 
         for (Guest guest : guests) {
+            boolean linkChanged = !hasText(guest.getInviteToken())
+                    || !invitationUrl(invitation, guest).equals(guest.getQrCodeUrl());
             ensureGuestLink(invitation, guest);
-            if (isSendable(guest)) {
-                guest.setSendStatus(STATUS_LINK_GENERATED);
-                guest.setLastSendError(null);
-                successCount++;
-                recordEvent(
-                        invitation,
-                        guest,
-                        STATUS_LINK_GENERATED,
-                        CHANNEL_LINK,
-                        STATUS_LINK_GENERATED,
-                        shareText(invitation, guest),
-                        null
-                );
-            } else {
-                guest.setSendStatus(STATUS_NOT_READY);
-                guest.setLastSendError("Guest phone or email is required");
-                failedCount++;
-                recordEvent(
-                        invitation,
-                        guest,
-                        STATUS_NOT_READY,
-                        CHANNEL_LINK,
-                        STATUS_NOT_READY,
-                        null,
-                        guest.getLastSendError()
-                );
-            }
+            boolean sendable = isSendable(guest);
+            if (sendable) successCount++; else failedCount++;
+            String previous = guest.getSendStatus();
+            // Preparation cannot erase an established delivery outcome or its error history.
+            if (guest.getLastSentAt() != null || guest.getInvitationViewedAt() != null
+                    || (guest.getReminderCount() != null && guest.getReminderCount() > 0)
+                    || respondedGuestIds.contains(guest.getId())) continue;
+            if (hasText(previous) && !"PENDING".equals(previous)
+                    && !STATUS_LINK_GENERATED.equals(previous) && !STATUS_NOT_READY.equals(previous)) continue;
+            String prepared = sendable ? STATUS_LINK_GENERATED : STATUS_NOT_READY;
+            if (!linkChanged && prepared.equals(previous)) continue;
+            guest.setSendStatus(prepared);
+            guest.setLastSendError(sendable ? null : "Guest phone or email is required");
+            recordEvent(invitation, guest, prepared, CHANNEL_LINK, prepared,
+                    sendable ? shareText(invitation, guest) : null, guest.getLastSendError());
         }
 
         guestRepository.saveAll(guests);

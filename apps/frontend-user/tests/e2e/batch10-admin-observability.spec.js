@@ -361,7 +361,7 @@ test.describe("Batch 10: Admin Reports, Notifications, Logs & API Monitor", () =
     await expect(page.getByText("ADMIN_LOGIN")).toBeVisible();
     await expect(page.getByText("PAYMENT_CONFIRMED")).toBeVisible();
 
-    // Verify secret redaction: "secretKey=live_key_999" must be redacted to "secretKey=[REDACTED]"
+    // The fictional credential in the fixture must be redacted in the rendered log.
     await expect(page.getByText("live_key_999")).not.toBeVisible();
     await expect(page.getByText(/secretKey=\[REDACTED\]/)).toBeVisible();
 

@@ -38,7 +38,6 @@ public class ApiRequestLoggingFilter extends OncePerRequestFilter {
     private static final Pattern SAFE_APP_NAME = Pattern.compile("[A-Za-z0-9._-]{1,50}");
     private static final Pattern SAFE_CLIENT_ACTION = Pattern.compile("[A-Za-z0-9._-]{1,50}");
     private static final Pattern SAFE_ROUTE_PATH = Pattern.compile("[A-Za-z0-9._/~-]{1,100}");
-    private static final Pattern SENSITIVE_QUERY_PARAM = Pattern.compile("(?i)(password|token|secret|access_token|refresh_token|code|key)=([^&]*)");
 
     private final ApiSecurityProperties.ApiLogging properties;
     private final ApiMonitorService apiMonitorService;
@@ -214,7 +213,7 @@ public class ApiRequestLoggingFilter extends OncePerRequestFilter {
                 frontendRoute,
                 clientAction,
                 request.getMethod(),
-                path,
+                DiagnosticRequestTarget.path(path),
                 requestTarget(request),
                 matchedPattern,
                 controller,
@@ -250,7 +249,7 @@ public class ApiRequestLoggingFilter extends OncePerRequestFilter {
     }
 
     private String requestTarget(HttpServletRequest request) {
-        String path = applicationPath(request);
+        String path = DiagnosticRequestTarget.path(applicationPath(request));
         if (!properties.isIncludeQueryString()) {
             return path;
         }
@@ -259,7 +258,7 @@ public class ApiRequestLoggingFilter extends OncePerRequestFilter {
         if (queryString == null || queryString.isBlank()) {
             return path;
         }
-        String sanitizedQuery = SENSITIVE_QUERY_PARAM.matcher(queryString).replaceAll("$1=[REDACTED]");
+        String sanitizedQuery = DiagnosticRequestTarget.query(queryString);
         return path + "?" + sanitizedQuery;
     }
 

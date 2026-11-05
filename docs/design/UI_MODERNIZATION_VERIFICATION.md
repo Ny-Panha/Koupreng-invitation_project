@@ -1,5 +1,13 @@
 # UI modernization verification
 
+## Final Batch 12 evidence (2026-11-05)
+
+Batch 12 closes the initiative; production is **NO-GO**. All 135 route leaves have explicit fixture-backed content/destination checks, including106 protected patterns. Final dedicated browsers:174 passes across Chromium/Firefox/WebKit;24 axe scans have zero serious/critical findings. Customer units:1,324; admin:191. Backend verify:680 discovered / 598 passed / 82 opt-in skipped, zero failures/errors, SpotBugs/PMD pass; JaCoCo74.59% line/57.68% branch. Separate owned MySQL checks, native RSVP load and a real browser/persistence journey are reported independently.
+
+Current source secrets scan clean; merge-inclusive history58 detections and absent revocation proof block release. Current Java dependency data is unavailable; unchanged public asset budgets fail. Provider/device/Docker-runtime limits remain explicit. See [exact commands/failures/skips](../qa/batch12/FINAL_TEST_RESULTS.md), [security](../qa/batch12/SECURITY_ASSESSMENT.md), [performance](../qa/batch12/PERFORMANCE_BENCHMARK.md), [accessibility](../qa/batch12/ACCESSIBILITY_REPORT.md) and [route matrix](../qa/batch12/route-matrix.json).
+
+## Historical evidence below
+
 First implementation batch, 2026-11-04. **The full-project modernization is not complete.** The [matrix](FULL_ROUTE_COVERAGE_MATRIX.md) inventories 111 customer and 24 admin route patterns, plus production components. Route-level completion remains open; only explicitly exercised shared components receive completed rows.
 
 ## Repository and environment

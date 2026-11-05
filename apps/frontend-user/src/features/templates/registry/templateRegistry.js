@@ -1,5 +1,10 @@
-import DefaultTemplateLayout from "../layouts/DefaultTemplate/DefaultTemplateLayout";
-import { lazy } from "react";
+import { createElement, lazy } from "react";
+
+const LazyDefaultTemplateLayout = lazy(() => import("../layouts/DefaultTemplate/DefaultTemplateLayout"));
+// Keep the registry's callable fallback contract while deferring its optional sections.
+function DefaultTemplateLayout(props) {
+  return createElement(LazyDefaultTemplateLayout, props);
+}
 
 const DigitalYesLayout = lazy(() => import("../layouts/DigitalYes/DigitalYesLayout"));
 const EmeraldLuxeLayout = lazy(() => import("../layouts/EmeraldLuxe/EmeraldLuxeLayout"));

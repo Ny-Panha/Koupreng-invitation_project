@@ -1,0 +1,72 @@
+{
+  "interpreter": "apps/telegram-bot/.venv/Scripts/python.exe",
+  "localPythonVersion": "3.14.9",
+  "ciConfiguredPythonVersion": "3.13",
+  "checks": [
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pip install -r apps/telegram-bot/requirements-dev.txt > .cache/batch12/scans/python-install-final.log 2>&1",
+      "exitCode": 0,
+      "result": "Existing local venv refreshed; certifi 2026.10.23"
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pip check",
+      "exitCode": 0,
+      "result": "No broken requirements found"
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m ruff check apps/telegram-bot --output-format=json > .cache/batch12/scans/ruff-final.json",
+      "exitCode": 0,
+      "findings": 0
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m bandit -q -r apps/telegram-bot/main.py apps/telegram-bot/start.py -f json -o .cache/batch12/scans/bandit-final.json",
+      "exitCode": 0,
+      "findings": 0,
+      "metrics": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 1088,
+        "nosec": 0,
+        "skipped_tests": 0
+      }
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pytest -q apps/telegram-bot/tests",
+      "exitCode": 0,
+      "passed": 74,
+      "failed": 0,
+      "warnings": 1,
+      "elapsedSeconds": 0.97,
+      "warning": "FastAPI/Starlette TestClient httpx deprecation",
+      "counting": "Final rerun of the same 74 tests; not 74 additional independent tests"
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m compileall -q apps/telegram-bot/main.py apps/telegram-bot/start.py apps/telegram-bot/tests",
+      "exitCode": 0
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pip_audit --format=json --output=.cache/batch12/scans/pip-audit-installed-final.json",
+      "exitCode": 0,
+      "packages": 54,
+      "advisoryRecords": 0
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pip_audit -r apps/telegram-bot/requirements.txt --format=json --output=.cache/batch12/scans/pip-audit-runtime-final.json",
+      "exitCode": 0,
+      "packages": 18,
+      "advisoryRecords": 0
+    },
+    {
+      "command": "apps/telegram-bot/.venv/Scripts/python.exe -m pip_audit -r apps/telegram-bot/requirements-dev.txt --format=json --output=.cache/batch12/scans/pip-audit-dev-final.json",
+      "exitCode": 0,
+      "packages": 51,
+      "advisoryRecords": 0
+    }
+  ]
+}

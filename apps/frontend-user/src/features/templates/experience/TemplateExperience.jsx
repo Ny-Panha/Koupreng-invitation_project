@@ -16,7 +16,7 @@ import {
 } from "./config/templateExperienceThemes";
 import { getDedicatedTemplateComponent, resolveTemplateRenderer } from "../registry/templateRegistry";
 import TemplateRenderGuard, { TemplateUnavailable } from "./TemplateRenderGuard";
-import DynamicTemplateRenderer from "../blocks/DynamicTemplateRenderer";
+const DynamicTemplateRenderer = lazy(() => import("../blocks/DynamicTemplateRenderer"));
 import TemplateOpeningGate from "./components/sections/TemplateOpeningGate";
 import TemplateHero from "./components/sections/TemplateHero";
 import TemplateMessage from "./components/sections/TemplateMessage";
@@ -796,5 +796,5 @@ export default function TemplateExperience(props) {
     if ([tpl?.code, tpl?.slug, tpl?.templateCode, tpl?.templateId].includes("event-essential")) {
         return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<PageSkeleton layout="public" label="កំពុងផ្ទុក… / Loading…" />}><EventEssentialLayout {...props} /></Suspense></TemplateRenderGuard>);
     }
-    return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><WeddingTemplateExperience {...props} /></TemplateRenderGuard>);
+    return wrap(<TemplateRenderGuard key={renderer.id} id={renderer.id}><Suspense fallback={<PageSkeleton layout="public" label="កំពុងផ្ទុក… / Loading…" />}><WeddingTemplateExperience {...props} /></Suspense></TemplateRenderGuard>);
 }

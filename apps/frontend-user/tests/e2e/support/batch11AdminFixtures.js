@@ -6,6 +6,7 @@ export async function installBatch11Admin(page, { role = "ADMIN", lang = "en", e
   const user = { id: 1101, fullName: "Batch 11 fictional account", email: "batch11@example.test", role, status: "ACTIVE" };
   const template = { id: 30, code: "event-essential", name: "Batch 11 fixture template", status: "ACTIVE", category: "MINIMALIST", premium: false, description: "Fixture template", thumbnailUrl: "/templates/event-essential.svg" };
   await page.addInitScript(({ user, lang, token, expired, customerSessionOnly }) => {
+    if (window !== window.top) return;
     const auth = JSON.stringify({ accessToken: expired ? `e30.${btoa(JSON.stringify({ exp: 1 }))}.` : token, user });
     localStorage.setItem(customerSessionOnly ? "koupreng.auth" : "koupreng.admin.auth", auth);
     if (!localStorage.getItem("koupreng.admin.lang")) localStorage.setItem("koupreng.admin.lang", lang);

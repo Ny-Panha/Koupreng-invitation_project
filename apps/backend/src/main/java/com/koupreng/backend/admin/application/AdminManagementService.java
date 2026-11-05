@@ -254,6 +254,9 @@ public class AdminManagementService {
             HttpServletRequest request
     ) {
         InvitationTemplate template = requireTemplate(templateId);
+        if (requestBody.getCode() != null && !requestBody.getCode().trim().equals(template.getCode())) {
+            throw new ApiException(HttpStatus.CONFLICT, "An existing template's code cannot be changed");
+        }
         applyTemplateRequest(template, requestBody);
         InvitationTemplate saved = templateRepository.save(template);
         auditLogService.logAdminAction(authentication, "TEMPLATE_UPDATED", "TEMPLATE", templateId,

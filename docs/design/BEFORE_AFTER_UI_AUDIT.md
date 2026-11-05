@@ -1,5 +1,17 @@
 # Before/after UI audit
 
+## Final Batch 12 audit (2026-11-05)
+
+Batch 12is complete and closes the initiative; production remainsNO-GO. Before behavior was reproduced with source-derived browser probes and failing regressions: template fields were lost on save, failed loads exposed unsafe defaults, package switches/dialogs failed keyboard use, and WebKit exposed focus/name defects. After behavior passes authored save/reload, load/malformed recovery, discard confirmation, native switches/dialog focus, localized names and contrast checks.
+
+The admin preview also used a static legacy route that could not render a catalog-only template. It now uses the canonical catalog-backed embedded demo; the regression asserts authored content inside the iframe. Public preview origins are supplied through the verification build environment, without editing .env.
+
+[English](../qa/batch12/evidence/screenshots/package-en-widths.png) and [Khmer](../qa/batch12/evidence/screenshots/package-km-widths.png) contact sheets show seven widths in light/dark mode. The [template capture](../qa/batch12/evidence/screenshots/template-roundtrip.png) and wedding captures are curated rendered evidence, not pixel-diff scores. Public screenshots retain the top 1400px; full raw local captures remain outside the committed report.
+
+Actual bytes/timing, including increases and the invalid Studio baseline qualification, are in [performance](../qa/batch12/PERFORMANCE_BENCHMARK.md). All earlier batch results below remain historical.
+
+## Historical audit below
+
 Batch one, 2026-11-04, based on source and freshly rendered production previews. Earlier project audits are historical references; their prior completion claims were not imported into the new coverage matrix.
 
 | Surface | Revalidated previous behavior | Implemented change | Evidence |

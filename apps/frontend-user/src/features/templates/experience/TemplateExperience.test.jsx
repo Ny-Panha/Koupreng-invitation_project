@@ -438,7 +438,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         expect(view.container.querySelector(".dynamic-blocks-engine")).toBeNull();
     });
 
-    it("appends custom CMS blocks after legacy invitation content when sections are present", () => {
+    it("appends custom CMS blocks after legacy invitation content when sections are present", async () => {
         const customBlocks = [
             {
                 id: "b-txt",
@@ -462,6 +462,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
             </MemoryRouter>
         );
 
+        await screen.findByText("Custom Section Header");
         // Legacy content is present
         expect(screen.getAllByText("សុវណ្ណ").length).toBeGreaterThan(0);
         expect(screen.getAllByText("មាលា").length).toBeGreaterThan(0);
@@ -473,7 +474,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
         expect(screen.getByText("Photo from our trip")).toBeInTheDocument();
     });
 
-    it("restores sections from tpl.description JSON string if sections not on tpl root", () => {
+    it("restores sections from tpl.description JSON string if sections not on tpl root", async () => {
         const customBlocks = [
             {
                 id: "b-desc",
@@ -494,11 +495,12 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
             </MemoryRouter>
         );
 
+        await screen.findByText("Extracted from Description JSON");
         expect(view.container.querySelector(".dynamic-blocks-engine")).toBeInTheDocument();
         expect(screen.getByText("Extracted from Description JSON")).toBeInTheDocument();
     });
 
-    it("renders unified mode with admin custom order: gallery before schedule, with custom block interleaved", () => {
+    it("renders unified mode with admin custom order: gallery before schedule, with custom block interleaved", async () => {
         const unifiedSections = [
             {
                 id: "sec-gallery",
@@ -540,6 +542,7 @@ describe("Modular Block CMS appending in TemplateExperience", () => {
             </MemoryRouter>
         );
 
+        await screen.findByText("Interleaved Note Between Gallery and Schedule");
         // 1. Gallery and Schedule both exist
         const galleryEl = view.container.querySelector("[data-tx-section='gallery']");
         const scheduleEl = view.container.querySelector("[data-tx-section='schedule']");

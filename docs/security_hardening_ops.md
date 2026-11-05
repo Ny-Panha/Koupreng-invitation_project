@@ -96,7 +96,7 @@ When an administrator modifies a user's role or status, `UserAuthCacheService.ev
 - `firewall/ufw-setup.sh`: Linux UFW baseline for SSH, HTTP, HTTPS, backend, and monitoring ports.
 - `firewall/windows-firewall.ps1`: Windows Defender Firewall equivalent.
 - `monitoring/prometheus.yml`: Prometheus scrape example for `/actuator/prometheus`.
-- `database/mysql-least-privilege.sql`: app, migration, and backup database users with SSL required.
+- `infra/mysql/mysql-least-privilege.sql`: app, migration, and backup database users with SSL required.
 - `backup/mysql-backup.ps1`: MySQL dump backup with retention cleanup.
 - `backup/postgres-backup.ps1`: legacy backup helper retained for reference only; the current project database is MySQL.
 

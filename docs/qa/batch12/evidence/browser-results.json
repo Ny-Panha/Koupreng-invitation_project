@@ -1,0 +1,1397 @@
+{
+  "count": 174,
+  "cases": [
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 4373,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template Back warns before discarding authored changes",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1977,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "failed template load blocks overwrite and retry recovers",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1428,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 23734,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 11049,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 5293,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template Back warns before discarding authored changes",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 3535,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "failed template load blocks overwrite and retry recovers",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 1763,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 12768,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 6925,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 10508,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "template Back warns before discarding authored changes",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 6409,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "failed template load blocks overwrite and retry recovers",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 2140,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 16644,
+      "retry": 0
+    },
+    {
+      "file": "batch12-core-hardening.spec.js",
+      "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 13766,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/:id/preview: template-demo",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1424,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /create/wedding: create-event",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1419,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /event/create: create-event",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1270,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/events/create: create-event",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1091,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /create/wedding/:id: invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 3021,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /event/:id/manage: invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1967,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /event/:draftId: local-preview",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1402,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /preview/:draftId: local-preview",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1856,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /payments/:orderCode/status: payment-status",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1383,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /payments/success: payment-return",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 493,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /payments/return: payment-return",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 712,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /payments/cancel: payment-cancel",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 636,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /w/:slug: public-invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1462,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /i/:slug: public-invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1459,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /: home",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 801,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates: catalog",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 714,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/:templateId/checkout: checkout",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1294,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /pricing: pricing",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 773,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /contact: contact",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 576,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /venues: venues",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 2075,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /venues/:id: venue-detail",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 2285,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /about: contact",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 759,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /help: contact",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 802,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/:id: template-demo",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1618,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/:id/demo: template-demo",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1774,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /login: auth-login",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1005,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /register: auth-register",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1032,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /forgot-password: auth-forgot",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1075,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /reset-password: auth-reset",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1051,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events: events",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 969,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/new: create-event",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 970,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId: dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1514,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/invitation: invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 2093,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/tickets/design: ticket",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1641,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/settings: settings",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1482,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/team: team",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1566,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/analytics: analytics",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1514,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/preview: preview",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1596,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/guests: guests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1529,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/rsvp: rsvp",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1462,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/gifts: gifts",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1297,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/budget: budget",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1267,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/seating: seating",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1344,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/check-in: check-in",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1373,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/reports: reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1353,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/delivery: delivery",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1272,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/media: media",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1334,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/qr: qr",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1249,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/wishes: wishes",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1170,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/events/:eventId/assistant: assistant",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1170,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/profile: profile",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 757,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/change-password: password",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 698,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/notifications: notifications",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 769,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/packages: packages",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 768,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/payments: payments",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 749,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/payments/:orderCode: receipt",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 706,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/organizations: organizations",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 728,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/organizations/:organizationId: organization-detail",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 727,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /app/templates/paid: paid-templates",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 774,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/profile: profile",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 449,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/change-password: password",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 771,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/notifications: notifications",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 744,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/packages: packages",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 602,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/payments: payments",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 840,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/payments/:orderCode: receipt",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 787,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/organizations: organizations",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 808,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/organizations/:organizationId: organization-detail",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 771,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/templates/paid: paid-templates",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 774,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard: dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1091,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/events: events",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 719,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations: events",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 760,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/new: create-event",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 815,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/design: legacy-unsaved-editor",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1160,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/edit: legacy-unsaved-editor",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1108,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:id/edit: invitation",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1327,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:id/preview: preview",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1374,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:id: dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1141,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/guests: guests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1176,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/rsvp: rsvp",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1070,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/gifts: gifts",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1129,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/budget: budget",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1232,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/seating: seating",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1242,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/check-in: check-in",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1032,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/reports: reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1497,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/qr: qr",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1369,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/wishes: wishes",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1397,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/assistant: assistant",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1530,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/delivery: delivery",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1102,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/invitations/:invitationId/media: media",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1216,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/guests: guests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1565,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/rsvp: rsvp",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1683,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/gifts: gifts",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1338,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/budget: budget",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1733,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/seating: seating",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1244,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/check-in: check-in",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1025,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/reports: reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1050,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/delivery: delivery",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1040,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/media: media",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1053,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/expenses: budget",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1048,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /dashboard/share: delivery",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1061,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /events: events",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 780,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /event/list: events",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 780,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /guests: guests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1618,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /expenses: budget",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 953,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /gift: gifts",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1531,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /gifts: gifts",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1546,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /reports: reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1064,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /profile: profile",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 786,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/browse: catalog",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 747,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user /templates/browse/:id: template-demo",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1283,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-user *: not-found",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 362,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /login: auth-login",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 608,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /templates/new: admin-template-create",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 697,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /templates/:templateId: admin-template-edit",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 766,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /: admin-dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 729,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /dashboard: admin-dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 661,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /users: admin-users",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 589,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /users/:userId: admin-user-detail",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 568,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /templates: admin-templates",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 606,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /payments: admin-payments",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 588,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /packages: admin-packages",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 590,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /notifications: admin-notifications",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 582,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /system-logs: admin-logs",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 565,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /reports: admin-reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 600,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /dev/api-monitor: admin-monitor",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 672,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin: admin-dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 711,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/dashboard: admin-dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 686,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/users: admin-users",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 656,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/templates: admin-templates",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 701,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/payments: admin-payments",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 677,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/packages: admin-packages",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 597,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/notifications: admin-notifications",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 630,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/reports: admin-reports",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 652,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin /admin/system-logs: admin-logs",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 651,
+      "retry": 0
+    },
+    {
+      "file": "batch12-route-content.spec.js",
+      "title": "frontend-admin *: admin-dashboard",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 634,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "USER cannot open an administrative page or issue admin requests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 708,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "STAFF cannot open an administrative page or issue admin requests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1023,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 909,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 712,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects expired token",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 802,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects customer app storage",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 797,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "payment return aliases use server state regardless of success query values",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 1659,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "a receipt denied by the backend remains inaccessible",
+      "project": "batch12-chromium",
+      "status": "passed",
+      "durationMs": 931,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "USER cannot open an administrative page or issue admin requests",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 861,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "STAFF cannot open an administrative page or issue admin requests",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 870,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 938,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 890,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects expired token",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 1035,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects customer app storage",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 1122,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "payment return aliases use server state regardless of success query values",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 1575,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "a receipt denied by the backend remains inaccessible",
+      "project": "batch12-firefox",
+      "status": "passed",
+      "durationMs": 2082,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "USER cannot open an administrative page or issue admin requests",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 1738,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "STAFF cannot open an administrative page or issue admin requests",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 753,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "SUPERADMIN cannot open an administrative page or issue admin requests",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 696,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "INVALID_ROLE cannot open an administrative page or issue admin requests",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 769,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects expired token",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 1653,
+      "retry": 0
+    },
+    {
+      "file": "batch11-auth-boundaries.spec.js",
+      "title": "admin session rejects customer app storage",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 1626,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "payment return aliases use server state regardless of success query values",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 2029,
+      "retry": 0
+    },
+    {
+      "file": "batch11-payment-journey.spec.js",
+      "title": "a receipt denied by the backend remains inaccessible",
+      "project": "batch12-webkit",
+      "status": "passed",
+      "durationMs": 1425,
+      "retry": 0
+    }
+  ]
+}

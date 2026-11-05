@@ -1,5 +1,6 @@
+import AdminDialog from "../../layouts/components/AdminDialog";
 import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Layers,
   Plus,
@@ -314,9 +315,13 @@ function toPayload(form) {
 // Custom iOS-style toggle switch
 function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
   return (
-    <div
+    <button
+      type="button"
+      role="switch"
+      aria-checked={Boolean(checked)}
+      aria-label={label}
       onClick={() => onChange(!checked)}
-      className={`flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer select-none ${
+      className={`w-full text-left flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer select-none ${
         checked
           ? "bg-amber-500/10 border-amber-500/40 dark:bg-amber-500/15"
           : "bg-slate-50 dark:bg-zinc-900/50 border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700"
@@ -328,7 +333,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${
               checked
                 ? "bg-amber-500 text-slate-950 font-bold shadow-xs"
-                : "bg-slate-200/70 dark:bg-zinc-800 text-slate-400 dark:text-zinc-500"
+                : "bg-slate-200/70 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400"
             }`}
           >
             <Icon className="h-4 w-4" />
@@ -339,7 +344,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
             {label}
           </span>
           {sublabel && (
-            <span className="text-[11px] text-slate-500 dark:text-zinc-400 block truncate mt-0.5">
+            <span className="text-[11px] text-slate-600 dark:text-zinc-400 block truncate mt-0.5">
               {sublabel}
             </span>
           )}
@@ -357,7 +362,7 @@ function ToggleSwitch({ checked, onChange, label, sublabel, icon: Icon }) {
           }`}
         />
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -367,6 +372,7 @@ export default function AdminPackagesPage() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [editingId, setEditingId] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerTrigger = useRef(null);
   const [activeTab, setActiveTab] = useState("basic"); // 'basic' | 'quotas' | 'features'
   const [busyId, setBusyId] = useState(null);
   const [viewMode, setViewMode] = useState("cards"); // 'cards' | 'table'
@@ -438,14 +444,16 @@ export default function AdminPackagesPage() {
     show(lang === "en" ? `Selected preset "${preset.name}" ✓` : `បានជ្រើសរើសគំរូ "${preset.name}" ✓`);
   };
 
-  const openCreateDrawer = () => {
+  const openCreateDrawer = (event) => {
+    drawerTrigger.current = event.currentTarget;
     setEditingId(null);
     setForm(EMPTY_FORM);
     setActiveTab("basic");
     setIsDrawerOpen(true);
   };
 
-  const openEditDrawer = (plan) => {
+  const openEditDrawer = (plan, trigger) => {
+    drawerTrigger.current = trigger;
     setEditingId(plan.id);
     setForm(toForm(plan));
     setActiveTab("basic");
@@ -532,7 +540,7 @@ export default function AdminPackagesPage() {
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-zinc-100">
               {t("packages.title", lang === "en" ? "Pricing & Packages" : "កញ្ចប់សេវាកម្ម (Packages)")}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 mt-0.5">
               {t("packages.subtitle", lang === "en" ? "Manage package tiers, quotas, and feature access for users" : "កំណត់តម្លៃ កូតា និងសិទ្ធិប្រើប្រាស់មុខងារសម្រាប់ User")}
             </p>
             <p className="text-xs text-emerald-800 dark:text-emerald-300 mt-2 leading-relaxed">
@@ -598,7 +606,7 @@ export default function AdminPackagesPage() {
       <div className="tavola-glass p-3.5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-2.5 w-full sm:w-auto flex-1">
           <div className="relative flex-1 sm:max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-600 dark:text-zinc-400" />
             <input
               type="text"
               placeholder={t("packages.searchPlaceholder", lang === "en" ? "Search by name or code..." : "ស្វែងរកតាមឈ្មោះ ឬ Code...")}
@@ -626,8 +634,8 @@ export default function AdminPackagesPage() {
             onClick={() => setViewMode("cards")}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
               viewMode === "cards"
-                ? "bg-white dark:bg-zinc-900 text-amber-600 dark:text-amber-400 shadow-xs"
-                : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                ? "bg-white dark:bg-zinc-900 text-amber-800 dark:text-amber-400 shadow-xs"
+                : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
             }`}
           >
             <LayoutGrid className="h-3.5 w-3.5" />
@@ -638,8 +646,8 @@ export default function AdminPackagesPage() {
             onClick={() => setViewMode("table")}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
               viewMode === "table"
-                ? "bg-white dark:bg-zinc-900 text-amber-600 dark:text-amber-400 shadow-xs"
-                : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                ? "bg-white dark:bg-zinc-900 text-amber-800 dark:text-amber-400 shadow-xs"
+                : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
             }`}
           >
             <TableIcon className="h-3.5 w-3.5" />
@@ -695,22 +703,22 @@ export default function AdminPackagesPage() {
                         <div
                           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
                             isPremiumTier
-                              ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                              ? "bg-amber-500/10 text-amber-800 dark:text-amber-400 border-amber-500/20"
                               : isProTier
                               ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20"
-                              : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                              : "bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border-emerald-500/20"
                           } shadow-xs group-hover:scale-105 transition-transform`}
                         >
                           {isPremiumTier ? <Crown className="h-5 w-5" /> : isProTier ? <Sparkles className="h-5 w-5" /> : <Layers className="h-5 w-5" />}
                         </div>
                         <div className="min-w-0">
-                          <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 truncate group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                          <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 truncate group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
                             {plan.packageName}
                           </h3>
-                          <span className="font-mono text-[10px] font-bold text-slate-500 dark:text-zinc-400 block truncate">
+                          <span className="font-mono text-[10px] font-bold text-slate-600 dark:text-zinc-400 block truncate">
                             {plan.code}
                           </span>
-                          <small className="text-[10px] text-slate-500">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
+                          <small className="text-[10px] text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         </div>
                       </div>
 
@@ -719,7 +727,7 @@ export default function AdminPackagesPage() {
                           className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${
                             plan.publicVisible
                               ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
-                              : "bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border-slate-200 dark:border-zinc-700"
+                              : "bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-700"
                           }`}
                           title={plan.publicVisible ? "Publicly listed on /pricing" : "Unlisted / hidden from /pricing"}
                         >
@@ -737,7 +745,7 @@ export default function AdminPackagesPage() {
                       </div>
                     </div>
 
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 line-clamp-2 min-h-[32px] mt-1">
+                    <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 min-h-[32px] mt-1">
                       {plan.description || t("packages.noDescription", lang === "en" ? "No description provided" : "គ្មានការពិពណ៌នា")}
                     </p>
 
@@ -748,18 +756,18 @@ export default function AdminPackagesPage() {
                           {isFree ? "$0.00" : `${plan.currency || "USD"} ${plan.price}`}
                         </span>
                         {isFree ? (
-                          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                          <span className="text-[11px] font-bold text-emerald-800 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                             {t("packages.freeBadge", "Free $0")}
                           </span>
                         ) : (
-                          <span className="text-xs font-semibold text-slate-500 dark:text-zinc-400">
+                          <span className="text-xs font-semibold text-slate-600 dark:text-zinc-400">
                             / {intervalText} ({plan.billingInterval})
                           </span>
                         )}
                       </div>
 
                       {plan.durationDays && (
-                        <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-1 flex items-center gap-1.5">
+                        <p className="text-[11px] text-slate-600 dark:text-zinc-400 mt-1 flex items-center gap-1.5">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
                           <span>{t("packages.validity", lang === "en" ? "Duration:" : "សុពលភាព:")}</span>
                           <span className="font-semibold text-slate-700 dark:text-zinc-300">
@@ -791,7 +799,7 @@ export default function AdminPackagesPage() {
                   {/* Quotas & Capacity (Clean dual metric capsules) */}
                   <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-xl bg-slate-50/90 dark:bg-zinc-900/60 border border-slate-100 dark:border-zinc-800/80">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 flex items-center gap-1">
                         <Mail className="h-3 w-3 text-amber-500" />
                         <span>{lang === "en" ? "Invitations" : "ធៀបការ"}</span>
                       </span>
@@ -800,7 +808,7 @@ export default function AdminPackagesPage() {
                       </p>
                     </div>
                     <div className="border-l border-slate-200/80 dark:border-zinc-800 pl-2.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 flex items-center gap-1">
                         <Users className="h-3 w-3 text-amber-500" />
                         <span>{lang === "en" ? "Guests" : "ចំនួនភ្ញៀវ"}</span>
                       </span>
@@ -813,10 +821,10 @@ export default function AdminPackagesPage() {
                   {/* Features & Permissions (Clean Checklist) */}
                   <div className="pt-3 border-t border-slate-100 dark:border-zinc-800/80">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400">
                         {t("packages.featuresSec", lang === "en" ? "Key Features" : "មុខងារពិសេស")}
                       </span>
-                      <span className="text-[10px] font-extrabold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                      <span className="text-[10px] font-extrabold text-amber-800 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
                         {enabledCount}/{FEATURE_LIST.length} {lang === "en" ? "Active" : "សកម្ម"}
                       </span>
                     </div>
@@ -831,11 +839,11 @@ export default function AdminPackagesPage() {
                             className={`flex items-center gap-2 ${
                               enabled
                                 ? "text-slate-700 dark:text-zinc-300 font-medium"
-                                : "text-slate-400 dark:text-zinc-600"
+                                : "text-slate-600 dark:text-zinc-600"
                             }`}
                           >
                             {enabled ? (
-                              <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+                              <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-400">
                                 <Check className="h-2.5 w-2.5 stroke-[3]" />
                               </div>
                             ) : (
@@ -855,7 +863,7 @@ export default function AdminPackagesPage() {
                 <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => openEditDrawer(plan)}
+                    onClick={(event) => openEditDrawer(plan, event.currentTarget)}
                     className="btn btn-ghost flex-1 h-8.5 rounded-xl text-xs font-semibold hover:border-amber-500/40 hover:bg-amber-500/5 transition-colors"
                   >
                     <Pencil className="h-3.5 w-3.5 text-amber-500" />
@@ -868,7 +876,7 @@ export default function AdminPackagesPage() {
                     className={`btn h-8.5 px-3 rounded-xl text-xs font-semibold transition-colors ${
                       plan.publicVisible
                         ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20"
-                        : "btn-ghost text-slate-400 dark:text-zinc-500"
+                        : "btn-ghost text-slate-600 dark:text-zinc-400"
                     }`}
                     title={plan.publicVisible ? (lang === "en" ? "Make unlisted" : "លាក់ពីសាធារណៈ") : (lang === "en" ? "Make public" : "បង្ហាញជាសាធារណៈ")}
                   >
@@ -881,7 +889,7 @@ export default function AdminPackagesPage() {
                     className={`btn h-8.5 px-3 rounded-xl text-xs font-semibold transition-colors ${
                       plan.active
                         ? "btn-danger"
-                        : "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 hover:bg-emerald-500 hover:text-white"
+                        : "bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 hover:bg-emerald-500 hover:text-white"
                     }`}
                     title={plan.active ? t("packages.deactivate", lang === "en" ? "Deactivate" : "ផ្អាកដំណើរការ") : t("packages.activate", lang === "en" ? "Activate" : "បើកដំណើរការ")}
                   >
@@ -913,7 +921,7 @@ export default function AdminPackagesPage() {
                 return (
                   <tr key={plan.id}>
                     <td>
-                      <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
+                      <span className="font-mono font-bold text-amber-800 dark:text-amber-400">
                         {plan.code}
                       </span>
                     </td>
@@ -922,9 +930,9 @@ export default function AdminPackagesPage() {
                         <p className="font-semibold text-slate-900 dark:text-zinc-100">
                           {plan.packageName}
                         </p>
-                        <small className="text-[10px] text-slate-500">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
+                        <small className="text-[10px] text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         {plan.description && (
-                          <p className="text-[11px] text-slate-400 dark:text-zinc-500 truncate max-w-xs">
+                          <p className="text-[11px] text-slate-600 dark:text-zinc-400 truncate max-w-xs">
                             {plan.description}
                           </p>
                         )}
@@ -935,7 +943,7 @@ export default function AdminPackagesPage() {
                         {isFree ? "Free" : `${plan.currency || "USD"} ${plan.price}`}
                       </span>
                       {!isFree && (
-                        <span className="text-[10px] text-slate-400 ml-1">
+                        <span className="text-[10px] text-slate-600 ml-1 dark:text-zinc-400">
                           /{plan.billingInterval}
                         </span>
                       )}
@@ -945,7 +953,7 @@ export default function AdminPackagesPage() {
                         <p className="text-slate-700 dark:text-zinc-300">
                           💌 {plan.maxInvitations || "—"} {t("packages.invitationsCount", "ធៀប")}
                         </p>
-                        <p className="text-slate-500 dark:text-zinc-400 text-[11px]">
+                        <p className="text-slate-600 dark:text-zinc-400 text-[11px]">
                           👥 {plan.maxGuests || "—"} {t("packages.guestsCount", "ភ្ញៀវ")}
                         </p>
                       </div>
@@ -977,7 +985,7 @@ export default function AdminPackagesPage() {
                           className={`badge text-[10px] cursor-pointer hover:opacity-80 transition ${
                             plan.publicVisible
                               ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
-                              : "bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700"
+                              : "bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700"
                           }`}
                           title={lang === "en" ? "Click to toggle public visibility" : "ចុចដើម្បីផ្លាស់ប្តូរការបង្ហាញជាសាធារណៈ"}
                         >
@@ -990,7 +998,7 @@ export default function AdminPackagesPage() {
                         <button
                           type="button"
                           className="btn btn-ghost btn-sm"
-                          onClick={() => openEditDrawer(plan)}
+                          onClick={(event) => openEditDrawer(plan, event.currentTarget)}
                         >
                           <Pencil className="h-3 w-3 text-amber-500" />
                           <span>{t("packages.editShort", lang === "en" ? "Edit" : "កែ")}</span>
@@ -1000,7 +1008,7 @@ export default function AdminPackagesPage() {
                           className={`btn btn-sm ${
                             plan.publicVisible
                               ? "bg-blue-500/10 text-blue-600 border border-blue-500/20"
-                              : "btn-ghost text-slate-500"
+                              : "btn-ghost text-slate-600"
                           }`}
                           disabled={busyId === plan.id}
                           onClick={() => toggleVisibility(plan)}
@@ -1032,7 +1040,7 @@ export default function AdminPackagesPage() {
 
       {/* Clean, Modern Centered Modal with Clean Tabs */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-200">
+        <AdminDialog label={editingId ? t("packages.modalEditTitle", "Edit package") : t("packages.modalCreateTitle", "New package")} onClose={closeDrawer} returnFocusRef={drawerTrigger} className="w-full max-w-2xl p-0 rounded-2xl bg-transparent">
           <div
             className="w-full max-w-2xl bg-white dark:bg-[#111113] rounded-2xl shadow-2xl flex flex-col border border-slate-200 dark:border-zinc-800 max-h-[90vh] overflow-hidden my-auto"
             onClick={(e) => e.stopPropagation()}
@@ -1040,7 +1048,7 @@ export default function AdminPackagesPage() {
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-slate-100 dark:border-zinc-800/80 flex items-center justify-between shrink-0 bg-slate-50/50 dark:bg-zinc-900/30">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-400">
                   <Layers className="h-5 w-5" />
                 </div>
                 <div>
@@ -1049,12 +1057,12 @@ export default function AdminPackagesPage() {
                       {editingId ? `${t("packages.modalEditTitle", "កែសម្រួលកញ្ចប់:")} ${form.packageName || "—"}` : t("packages.modalCreateTitle", "បង្កើតកញ្ចប់សេវាថ្មី")}
                     </h2>
                     {form.code && (
-                      <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                      <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-800 dark:text-amber-400">
                         {form.code}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                  <p className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5">
                     {editingId ? t("packages.modalEditSub", "កែប្រែព័ត៌មានកញ្ចប់ កូតា និងសិទ្ធិមុខងារ") : t("packages.modalCreateSub", "បន្ថែម Subscription Package ថ្មីសម្រាប់ User")}
                   </p>
                 </div>
@@ -1062,7 +1070,8 @@ export default function AdminPackagesPage() {
               <button
                 type="button"
                 onClick={closeDrawer}
-                className="h-8 w-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer"
+                aria-label={t("common.close", "Close")}
+                className="h-11 w-11 rounded-xl flex items-center justify-center text-slate-600 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer dark:text-zinc-400"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1076,8 +1085,8 @@ export default function AdminPackagesPage() {
                   onClick={() => setActiveTab("basic")}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition cursor-pointer ${
                     activeTab === "basic"
-                      ? "bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 shadow-xs"
-                      : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      ? "bg-white dark:bg-zinc-800 text-amber-800 dark:text-amber-400 shadow-xs"
+                      : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
                   }`}
                 >
                   <FileText className="h-3.5 w-3.5" />
@@ -1089,8 +1098,8 @@ export default function AdminPackagesPage() {
                   onClick={() => setActiveTab("quotas")}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition cursor-pointer ${
                     activeTab === "quotas"
-                      ? "bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 shadow-xs"
-                      : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      ? "bg-white dark:bg-zinc-800 text-amber-800 dark:text-amber-400 shadow-xs"
+                      : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
                   }`}
                 >
                   <Sliders className="h-3.5 w-3.5" />
@@ -1102,13 +1111,13 @@ export default function AdminPackagesPage() {
                   onClick={() => setActiveTab("features")}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-bold transition cursor-pointer ${
                     activeTab === "features"
-                      ? "bg-white dark:bg-zinc-800 text-amber-600 dark:text-amber-400 shadow-xs"
-                      : "text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+                      ? "bg-white dark:bg-zinc-800 text-amber-800 dark:text-amber-400 shadow-xs"
+                      : "text-slate-600 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200"
                   }`}
                 >
                   <Crown className="h-3.5 w-3.5" />
                   <span>{t("packages.featuresSec", "៣. មុខងារពិសេស")}</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-extrabold">
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-400 font-extrabold">
                     {enabledFeaturesCount}
                   </span>
                 </button>
@@ -1127,7 +1136,7 @@ export default function AdminPackagesPage() {
                         <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                         <span>{t("packages.quickPresets", "១. ជ្រើសរើសគំរូរហ័ស (QUICK PRESETS)")}</span>
                       </span>
-                      <span className="text-[10px] text-slate-400">{t("packages.quickPresetsSub", "ចុច ១ Click បំពេញគ្រប់ប្រឡោះ")}</span>
+                      <span className="text-[10px] text-slate-600 dark:text-zinc-400">{t("packages.quickPresetsSub", "ចុច ១ Click បំពេញគ្រប់ប្រឡោះ")}</span>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
                       {PACKAGE_PRESETS.map((preset) => {
@@ -1140,7 +1149,7 @@ export default function AdminPackagesPage() {
                             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer border ${
                               isCurrent
                                 ? "bg-amber-500 text-slate-950 border-amber-500 shadow-xs"
-                                : "bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400"
+                                : "bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:border-amber-500 hover:text-amber-800 dark:hover:text-amber-400"
                             }`}
                           >
                             {preset.label}
@@ -1153,10 +1162,11 @@ export default function AdminPackagesPage() {
                   {/* 2. Name & Code */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
+                      <label htmlFor="package-packageName" className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
                         {t("packages.packageNameLabel", "២. ឈ្មោះកញ្ចប់")} <span className="text-rose-500">*</span>
                       </label>
                       <input
+                        id="package-packageName"
                         className="text-input w-full font-medium"
                         value={form.packageName}
                         onChange={(e) => handleNameChange(e.target.value)}
@@ -1167,16 +1177,17 @@ export default function AdminPackagesPage() {
 
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <label className="text-xs font-semibold text-slate-700 dark:text-zinc-300">
+                        <label htmlFor="package-code" className="text-xs font-semibold text-slate-700 dark:text-zinc-300">
                           {t("packages.packageCodeLabel", "កូដសម្គាល់ (Code)")} <span className="text-rose-500">*</span>
                         </label>
                         {!editingId && (
-                          <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">
+                          <span className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold">
                             Auto-generated
                           </span>
                         )}
                       </div>
                       <input
+                        id="package-code"
                         className="text-input w-full uppercase font-mono tracking-wider font-bold"
                         value={form.code}
                         onChange={(e) => setField("code", e.target.value.toUpperCase())}
@@ -1188,10 +1199,11 @@ export default function AdminPackagesPage() {
 
                   {/* 3. Description (Right after Name & Code, matching Card order) */}
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
+                    <label htmlFor="package-description" className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
                       {t("packages.descriptionLabel", "៣. ការពិពណ៌នាសង្ខេប (Description)")}
                     </label>
                     <textarea
+                        id="package-description"
                       rows={2}
                       className="text-input w-full h-auto py-2.5 resize-none"
                       value={form.description || ""}
@@ -1211,8 +1223,8 @@ export default function AdminPackagesPage() {
                         onClick={() => setField("price", "0.00")}
                         className={`text-[11px] font-semibold px-2 py-0.5 rounded-md transition cursor-pointer ${
                           Number(form.price) === 0
-                            ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold"
-                            : "text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300"
+                            ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-400 font-bold"
+                            : "text-slate-600 hover:text-slate-600 dark:hover:text-zinc-300"
                         }`}
                       >
                         {Number(form.price) === 0 ? t("packages.freePackageOpt", "✓ កញ្ចប់ឥតគិតថ្លៃ (Free $0)") : t("packages.setFreeOpt", "កំណត់ជា Free ($0)")}
@@ -1221,6 +1233,7 @@ export default function AdminPackagesPage() {
 
                     <div className="flex rounded-xl border border-slate-200 dark:border-zinc-800 overflow-hidden focus-within:border-amber-500 focus-within:ring-2 focus-within:ring-amber-500/20 bg-white dark:bg-zinc-900/60 transition">
                       <select
+                        aria-label={t("packages.currency", "currency")}
                         value={form.currency}
                         onChange={(e) => setField("currency", e.target.value)}
                         className="bg-slate-100 dark:bg-zinc-800/80 px-3 py-2 text-xs font-bold text-slate-700 dark:text-zinc-200 border-r border-slate-200 dark:border-zinc-800 outline-none cursor-pointer hover:bg-slate-200/60 dark:hover:bg-zinc-800"
@@ -1229,9 +1242,10 @@ export default function AdminPackagesPage() {
                         <option value="KHR">៛ KHR</option>
                       </select>
                       <input
-                        className="flex-1 h-9 bg-transparent px-3.5 text-sm font-bold text-slate-900 dark:text-zinc-100 outline-none placeholder:text-slate-400"
+                        className="flex-1 h-9 bg-transparent px-3.5 text-sm font-bold text-slate-900 dark:text-zinc-100 outline-none placeholder:text-slate-600"
                         type="number"
                         step="0.01"
+                        aria-label={t("packages.price", "price")}
                         value={form.price}
                         onChange={(e) => setField("price", e.target.value)}
                         placeholder="0.00"
@@ -1257,13 +1271,13 @@ export default function AdminPackagesPage() {
                             }}
                             className={`flex flex-col items-center justify-center p-2.5 rounded-xl border text-xs transition cursor-pointer ${
                               isSelected
-                                ? "bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold shadow-xs ring-1 ring-amber-500/30"
+                                ? "bg-amber-500/15 border-amber-500 text-amber-800 dark:text-amber-400 font-bold shadow-xs ring-1 ring-amber-500/30"
                                 : "bg-slate-50 dark:bg-zinc-900/50 border-slate-200 dark:border-zinc-800 text-slate-600 dark:text-zinc-400 hover:border-slate-300 dark:hover:border-zinc-700"
                             }`}
                           >
                             <span className="text-sm mb-0.5">{int.icon}</span>
                             <span>{lang === "en" ? (int.labelEn || int.label) : (int.labelKm || int.label)}</span>
-                            <span className="text-[10px] font-normal opacity-70">({int.sub})</span>
+                            <span className="text-[10px] font-normal">({int.sub})</span>
                           </button>
                         );
                       })}
@@ -1281,26 +1295,28 @@ export default function AdminPackagesPage() {
                           <input
                             className="text-input w-full pr-12 font-medium"
                             type="number"
-                            value={form.durationDays}
+                            aria-label={t("packages.durationDays", "durationDays")}
+                        value={form.durationDays}
                             onChange={(e) => setField("durationDays", e.target.value)}
                             placeholder="365"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs font-semibold dark:text-zinc-400">
                             {t("packages.days", "ថ្ងៃ")}
                           </span>
                         </div>
-                        <span className="text-[10px] text-slate-400 mt-1 block">{t("packages.durationDaysSub", "សុពលភាពជាថ្ងៃ")}</span>
+                        <span className="text-[10px] text-slate-600 mt-1 block dark:text-zinc-400">{t("packages.durationDaysSub", "សុពលភាពជាថ្ងៃ")}</span>
                       </div>
 
                       <div>
                         <input
                           className="text-input w-full"
                           type="number"
-                          value={form.sortOrder}
+                          aria-label={t("packages.sortOrder", "sortOrder")}
+                        value={form.sortOrder}
                           onChange={(e) => setField("sortOrder", e.target.value)}
                           placeholder="0"
                         />
-                        <span className="text-[10px] text-slate-400 mt-1 block">{t("packages.sortOrderSub", "លេខលំដាប់បង្ហាញ (Sort Order)")}</span>
+                        <span className="text-[10px] text-slate-600 mt-1 block dark:text-zinc-400">{t("packages.sortOrderSub", "លេខលំដាប់បង្ហាញ (Sort Order)")}</span>
                       </div>
                     </div>
                   </div>
@@ -1325,7 +1341,7 @@ export default function AdminPackagesPage() {
               {activeTab === "quotas" && (
                 <div className="space-y-4 animate-in fade-in duration-150">
                   <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-center gap-2.5 mb-2">
-                    <Info className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                    <Info className="h-4 w-4 shrink-0 text-amber-800 dark:text-amber-400" />
                     <span>
                       {t("packages.quotaBanner", "កំណត់កូតា និងទំហំផ្ទុកសម្រាប់គណនី User ដែលប្រើប្រាស់កញ្ចប់នេះ។")}
                     </span>
@@ -1335,22 +1351,23 @@ export default function AdminPackagesPage() {
                     <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/40">
                       <div className="flex items-center gap-2 mb-2">
                         <Mail className="h-4 w-4 text-amber-500" />
-                        <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
+                        <label htmlFor="package-maxInvitations" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
                           {t("packages.quotaMaxInvites", "ចំនួនធៀបការអតិបរមា")}
                         </label>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
+                      <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
                         {t("packages.quotaMaxInvitesSub", "ចំនួនធៀបការមង្គលការដែល User អាចបង្កើតបាន")}
                       </p>
                       <div className="relative">
                         <input
                           className="text-input w-full pr-12 font-semibold"
                           type="number"
+                          id="package-maxInvitations"
                           value={form.maxInvitations}
                           onChange={(e) => setField("maxInvitations", e.target.value)}
                           placeholder={lang === "en" ? "e.g. 1, 10, 50" : "ឧ. 1, 10, 50"}
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs dark:text-zinc-400">
                           {t("packages.invitationsCount", "ធៀប")}
                         </span>
                       </div>
@@ -1359,22 +1376,23 @@ export default function AdminPackagesPage() {
                     <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/40">
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
-                        <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
+                        <label htmlFor="package-maxGuests" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
                           {t("packages.quotaMaxGuests", "ចំនួនភ្ញៀវអតិបរមា")}
                         </label>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
+                      <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
                         {t("packages.quotaMaxGuestsSub", "ចំនួនភ្ញៀវសរុបទាំងអស់ដែលគណនីអាចផ្ទុកបាន")}
                       </p>
                       <div className="relative">
                         <input
                           className="text-input w-full pr-12 font-semibold"
                           type="number"
+                          id="package-maxGuests"
                           value={form.maxGuests}
                           onChange={(e) => setField("maxGuests", e.target.value)}
                           placeholder={lang === "en" ? "e.g. 100, 500, 2000" : "ឧ. 100, 500, 2000"}
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs dark:text-zinc-400">
                           {t("packages.guestsCount", "នាក់")}
                         </span>
                       </div>
@@ -1383,22 +1401,23 @@ export default function AdminPackagesPage() {
                     <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/40">
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
-                        <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
+                        <label htmlFor="package-maxGuestsPerInvitation" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
                           {t("packages.quotaPerInvite", "ភ្ញៀវក្នុង១ធៀបការ")}
                         </label>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
+                      <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
                         {t("packages.quotaPerInviteSub", "ចំនួនភ្ញៀវអតិបរមាក្នុងធៀបនីមួយៗ")}
                       </p>
                       <div className="relative">
                         <input
                           className="text-input w-full pr-12 font-semibold"
                           type="number"
+                          id="package-maxGuestsPerInvitation"
                           value={form.maxGuestsPerInvitation}
                           onChange={(e) => setField("maxGuestsPerInvitation", e.target.value)}
                           placeholder={lang === "en" ? "e.g. 40" : "ឧ. 40"}
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs dark:text-zinc-400">
                           {t("packages.guestsCount", "នាក់")}
                         </span>
                       </div>
@@ -1407,22 +1426,23 @@ export default function AdminPackagesPage() {
                     <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/40">
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
-                        <label className="text-xs font-bold text-slate-800 dark:text-zinc-200">
+                        <label htmlFor="package-maxTeamMembers" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
                           {t("packages.quotaTeam", "សមាជិកក្រុមជំនួយការ")}
                         </label>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 mb-2">
+                      <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
                         {t("packages.quotaTeamSub", "ចំនួន Team members អាចសហការគ្នាបាន")}
                       </p>
                       <div className="relative">
                         <input
                           className="text-input w-full pr-12 font-semibold"
                           type="number"
+                          id="package-maxTeamMembers"
                           value={form.maxTeamMembers}
                           onChange={(e) => setField("maxTeamMembers", e.target.value)}
                           placeholder={lang === "en" ? "e.g. 1, 5" : "ឧ. 1, 5"}
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs dark:text-zinc-400">
                           {lang === "en" ? "members" : "នាក់"}
                         </span>
                       </div>
@@ -1449,7 +1469,7 @@ export default function AdminPackagesPage() {
                     />
                   </div>
 
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500 px-1 pt-1">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 px-1 pt-1">
                     {t("packages.featureSwitches", "សិទ្ធិប្រើប្រាស់មុខងារនីមួយៗ (Feature Switches)")}
                   </p>
 
@@ -1471,7 +1491,7 @@ export default function AdminPackagesPage() {
 
             {/* Modal Footer Actions */}
             <div className="px-6 py-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-900/30 shrink-0">
-              <div className="flex items-center gap-1.5 text-xs text-slate-400">
+              <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-zinc-400">
                 <span>{t("packages.stepLabel", "ជំហាន:")}</span>
                 <span className="font-semibold text-slate-700 dark:text-zinc-300">
                   {activeTab === "basic" ? t("packages.basicInfoSec", "១. ព័ត៌មានទូទៅ") : activeTab === "quotas" ? t("packages.quotasSec", "២. កូតាកំណត់") : t("packages.featuresSec", "៣. មុខងារពិសេស")}
@@ -1497,7 +1517,7 @@ export default function AdminPackagesPage() {
               </div>
             </div>
           </div>
-        </div>
+        </AdminDialog>
       )}
 
       <Toast toast={toast} onClose={clear} />

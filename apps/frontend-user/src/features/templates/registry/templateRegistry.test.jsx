@@ -1,4 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import LegacyTemplateBlock from "../blocks/LegacyTemplateBlock";
 import {
   templateRegistry,
   getDedicatedTemplateComponent,
@@ -8,6 +11,10 @@ const DigitalYesLayout = templateRegistry["the-digital-yes-wedding"];
 const EmeraldLuxeLayout = templateRegistry["emerald-canva-luxe-wedding"];
 const KhmerCelestialLayout = templateRegistry["khmer-celestial"];
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
+  it("loads the deferred fallback when a legacy CMS block has an unknown layout", async () => {
+    render(<MemoryRouter><LegacyTemplateBlock templateId="unknown-historical-layout" content={{ groomName: "Fallback groom fixture", brideName: "Fallback bride fixture", preview: true, enabledSections: { rsvp: false } }} /></MemoryRouter>);
+    expect(await screen.findByRole("heading", { name: /Fallback groom fixture.*Fallback bride fixture/ })).toBeInTheDocument();
+  });
   it("maps Khmer Celestial by slug and admin preset", () => {
     expect(templateRegistry["khmer-celestial"]).toBe(KhmerCelestialLayout);
     expect(templateRegistry.KHMER_CELESTIAL).toBe(KhmerCelestialLayout);

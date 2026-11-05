@@ -53,6 +53,36 @@ class InvitationDeliveryServiceTests {
         verify(fixture.guestRepository).save(guest);
     }
 
+    @Test
+    void repeatedPreparationPreservesSentAndFailedOutcomesAndDoesNotDuplicateEvents() {
+        Fixture fixture = fixture(InvitationStatus.PUBLISHED);
+        Guest sent = guest(fixture, 21L, "SENT");
+        Guest failed = guest(fixture, 22L, "FAILED");
+        failed.setLastSendError("Original delivery error");
+        Guest pending = guest(fixture, 23L, "PENDING");
+        when(fixture.guestRepository.findByInvitationIdOrderByCreatedAtDesc(10L))
+                .thenReturn(java.util.List.of(sent, failed, pending));
+        fixture.service.prepare(fixture.authentication, 10L);
+        fixture.service.prepare(fixture.authentication, 10L);
+        assertEquals("SENT", sent.getSendStatus());
+        assertEquals("FAILED", failed.getSendStatus());
+        assertEquals("Original delivery error", failed.getLastSendError());
+        assertEquals("LINK_GENERATED", pending.getSendStatus());
+        verify(fixture.eventRepository, org.mockito.Mockito.times(1)).save(org.mockito.ArgumentMatchers.any());
+    }
+
+    private Guest guest(Fixture fixture, Long id, String status) {
+        Guest guest = new Guest();
+        guest.setId(id);
+        guest.setInvitation(fixture.invitation);
+        guest.setGuestName("Fictional guest");
+        guest.setPhone("012345678");
+        guest.setInviteToken("fixture-" + id);
+        guest.setQrCodeUrl("https://invite.example/i/my-event?token=fixture-" + id);
+        guest.setSendStatus(status);
+        return guest;
+    }
+
     @SuppressWarnings("unchecked")
     private Fixture fixture(InvitationStatus status) {
         InvitationService invitationService = mock(InvitationService.class);
@@ -76,14 +106,15 @@ class InvitationDeliveryServiceTests {
                 mailSenderProvider,
                 "https://invite.example/"
         );
-        return new Fixture(service, guestRepository, authentication, invitation);
+        return new Fixture(service, guestRepository, authentication, invitation, eventRepository);
     }
 
     private record Fixture(
             InvitationDeliveryService service,
             GuestRepository guestRepository,
             Authentication authentication,
-            UserInvitation invitation
+            UserInvitation invitation,
+            InvitationDeliveryEventRepository eventRepository
     ) {
     }
 }

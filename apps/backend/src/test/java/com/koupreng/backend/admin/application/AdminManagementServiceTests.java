@@ -52,6 +52,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class AdminManagementServiceTests {
 
     @Test
+    void existingTemplateRegistryIdentityCannotBeReassigned() {
+        InvitationTemplateRepository templates = mock(InvitationTemplateRepository.class);
+        var template = new com.koupreng.backend.template.domain.InvitationTemplate();
+        template.setId(30L); template.setCode("event-essential");
+        when(templates.findById(30L)).thenReturn(java.util.Optional.of(template));
+        AdminManagementService service = new AdminManagementService(mock(AppUserRepository.class),
+                mock(UserInvitationRepository.class), templates, mock(TemplatePaymentOrderRepository.class),
+                mock(SubscriptionRepository.class), mock(RsvpRepository.class), mock(GuestRepository.class),
+                mock(GuestCheckInRepository.class), mock(NotificationRepository.class), mock(SystemAuditLogRepository.class),
+                mock(AuditLogService.class), mock(UserAuthCacheService.class), mock(PasswordEncoder.class));
+        var body = new com.koupreng.backend.admin.api.dto.AdminTemplateRequest();
+        body.setCode("khmer-celestial");
+        assertEquals(org.springframework.http.HttpStatus.CONFLICT,
+                assertThrows(ApiException.class, () -> service.updateTemplate(null, 30L, body, null)).getStatus());
+        assertEquals("event-essential", template.getCode());
+        org.mockito.Mockito.verify(templates, org.mockito.Mockito.never()).save(any());
+    }
+
+    @Test
     void createUserHashesPasswordAndPersistsAdminAccount() {
         AppUserRepository userRepository = mock(AppUserRepository.class);
         UserInvitationRepository invitationRepository = mock(UserInvitationRepository.class);

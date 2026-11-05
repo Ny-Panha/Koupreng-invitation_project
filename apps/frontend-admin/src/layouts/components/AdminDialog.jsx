@@ -3,11 +3,11 @@ import { createPortal } from "react-dom";
 
 // Native modal dialogs provide browser-managed inertness and a keyboard focus loop.
 // Keeping closed dialogs unmounted also removes their links from the Tab order.
-export default function AdminDialog({ children, label, className = "", onClose, initialFocusRef, id }) {
+export default function AdminDialog({ children, label, className = "", onClose, initialFocusRef, returnFocusRef, id }) {
   const dialogRef = useRef(null);
   useEffect(() => {
     const dialog = dialogRef.current;
-    const previousFocus = document.activeElement;
+    const previousFocus = returnFocusRef?.current || document.activeElement;
     const previousOverflow = document.body.style.overflow;
     dialog.showModal();
     document.body.style.overflow = "hidden";
@@ -29,8 +29,12 @@ export default function AdminDialog({ children, label, className = "", onClose, 
       dialog.close();
       document.body.style.overflow = previousOverflow;
       if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+      // Safari can restore its pre-dialog focus after close(); finish after that native step.
+      requestAnimationFrame(() => {
+        if (previousFocus?.isConnected && !document.querySelector("dialog[open]")) previousFocus.focus({ preventScroll: true });
+      });
     };
-  }, [initialFocusRef]);
+  }, [initialFocusRef, returnFocusRef]);
 
   return createPortal(
     <dialog

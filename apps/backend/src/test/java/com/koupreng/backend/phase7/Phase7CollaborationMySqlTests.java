@@ -46,6 +46,7 @@ class Phase7CollaborationMySqlTests {
     @Autowired org.springframework.jdbc.core.JdbcTemplate jdbc;
     @Autowired com.koupreng.backend.template.infrastructure.persistence.InvitationTemplateRepository templates;
     @Autowired com.koupreng.backend.payment.infrastructure.persistence.UserTemplateAccessRepository purchases;
+    @Autowired com.koupreng.backend.media.infrastructure.persistence.MediaFileRepository mediaFiles;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
 
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
@@ -579,6 +580,41 @@ class Phase7CollaborationMySqlTests {
         subscription.setAmount(plan.getPrice()); subscription.setCurrency(plan.getCurrency());
         subscription.setOrderCode("P14-" + UUID.randomUUID()); subscription.setStartDate(Instant.now().minusSeconds(60)); subscription.setEndDate(Instant.now().plusSeconds(3600));
         subscriptions.saveAndFlush(subscription);
+    }
+
+    @Test void batch12GuestViewNeverDisclosesOtherGuestsPrivateMessagesOrProtectedMedia() throws Exception {
+        Fixture f = fixture(3, 5);
+        var body = eventBody("Batch12 private guest data " + UUID.randomUUID(), null);
+        body.put("visibility", "PUBLIC");
+        assertEquals(200, call("PUT", eventPath(f), f.owner, body).status);
+        assertEquals(200, call("PATCH", eventPath(f) + "/publish", f.owner, null).status);
+        String slug = call("GET", eventPath(f), f.owner, null).data().path("slug").asText();
+        Reply first = call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Guest A"));
+        Reply second = call("POST", eventPath(f) + "/guests", f.owner, Map.of("guestName", "Guest B"));
+        assertEquals(201, first.status); assertEquals(201, second.status);
+        String token = second.data().path("inviteToken").asText();
+        assertEquals(201, call("POST", "/api/v1/public/invitations/" + slug + "/guests/" + token + "/rsvp", null,
+                Map.of("responseStatus", "ATTENDING", "attendeeCount", 1, "message", "Fictional private family message")).status);
+        for (var type : List.of(com.koupreng.backend.media.domain.MediaType.COVER_IMAGE,
+                com.koupreng.backend.media.domain.MediaType.TICKET_IMAGE, com.koupreng.backend.media.domain.MediaType.PRE_WEDDING_VIDEO)) {
+            var media = new com.koupreng.backend.media.domain.MediaFile();
+            media.setInvitation(jdbcInvitation(f.eventId)); media.setMediaType(type);
+            media.setFileUrl("/uploads/fixture-" + type.name()); media.setMimeType("image/png");
+            mediaFiles.saveAndFlush(media);
+        }
+        Reply view = call("GET", "/api/v1/public/invitations/" + slug + "/guest-view?token=" + first.data().path("inviteToken").asText(), null, null);
+        assertEquals(200, view.status);
+        assertFalse(view.body.contains("Fictional private family message"), "Another guest's private message must never enter public guest-view");
+        assertEquals(0, view.data().path("wishes").size());
+        assertEquals(1, view.data().path("media").path("all").size());
+        assertEquals("COVER_IMAGE", view.data().path("media").path("all").get(0).path("mediaType").asText());
+        Reply ownerWishes = call("GET", eventPath(f) + "/wishes", f.owner, null);
+        assertEquals(200, ownerWishes.status);
+        assertTrue(ownerWishes.body.contains("Fictional private family message"));
+    }
+
+    private com.koupreng.backend.invitation.domain.UserInvitation jdbcInvitation(long id) {
+        var invitation = new com.koupreng.backend.invitation.domain.UserInvitation(); invitation.setId(id); return invitation;
     }
 
     @Test void batch11PublishedGuestJourneyReconcilesRsvpCheckInAndAdminReporting() throws Exception {

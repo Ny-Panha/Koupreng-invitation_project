@@ -5,7 +5,7 @@ Do not deploy until `production_readiness_report.md` has no release blockers.
 ## Repository and CI
 
 - [ ] Intended release commit is reviewed and `git status --short` is clean.
-- [ ] All ten CI jobs pass on that exact commit.
+- [ ] All required CI jobs (currently eleven) pass on that exact commit, including the final three-engine browser contracts.
 - [ ] Gitleaks current-tree scan passes and historical credential remediation is complete.
 - [ ] Java, Node, and Python vulnerability audits have successful reports.
 - [ ] Backend coverage/static analysis and fresh-MySQL migration jobs pass.

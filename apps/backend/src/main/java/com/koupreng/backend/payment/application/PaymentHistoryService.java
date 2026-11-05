@@ -8,6 +8,8 @@ import com.koupreng.backend.payment.api.dto.PaymentConfirmResponse;
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
 import com.koupreng.backend.payment.domain.TemplatePaymentOrder;
 import com.koupreng.backend.subscription.domain.Subscription;
+import com.koupreng.backend.subscription.application.PackageSnapshot;
+import com.koupreng.backend.payment.domain.PaymentStatus;
 import com.koupreng.backend.user.domain.AppUser;
 import com.koupreng.backend.user.domain.Role;
 import com.koupreng.backend.payment.infrastructure.persistence.TemplatePaymentOrderRepository;
@@ -48,7 +50,8 @@ public class PaymentHistoryService {
                 .map(PaymentHistoryResponse::from)
                 .toList();
         List<PaymentHistoryResponse> subscriptions = subscriptionRepository.findByUserIdOrderByCreatedAtDesc(user.getId()).stream()
-                .map(PaymentHistoryResponse::from)
+                .filter(sub -> !"NOT_REQUIRED".equals(sub.getPaymentStatus()))
+                .map(this::subscriptionHistory)
                 .toList();
 
         List<PaymentHistoryResponse> combined = new java.util.ArrayList<>();
@@ -87,7 +90,8 @@ public class PaymentHistoryService {
                     && (sub.getUser() == null || !Objects.equals(sub.getUser().getId(), user.getId()))) {
                 throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this payment order");
             }
-            return PaymentHistoryResponse.from(sub);
+            if ("NOT_REQUIRED".equals(sub.getPaymentStatus())) throw new ApiException(HttpStatus.CONFLICT, "This grant is not a payment order");
+            return subscriptionHistory(sub);
         }
 
         throw new ApiException(HttpStatus.NOT_FOUND, "Payment order not found");
@@ -105,6 +109,7 @@ public class PaymentHistoryService {
                     && (order.getUser() == null || !Objects.equals(order.getUser().getId(), user.getId()))) {
                 throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this payment order");
             }
+            requirePaid(order.getStatus());
             return PaymentReceiptResponse.from(order);
         }
 
@@ -115,7 +120,11 @@ public class PaymentHistoryService {
                     && (sub.getUser() == null || !Objects.equals(sub.getUser().getId(), user.getId()))) {
                 throw new ApiException(HttpStatus.FORBIDDEN, "You do not have access to this payment order");
             }
-            return PaymentReceiptResponse.from(sub);
+            requirePaid(PaymentHistoryResponse.from(sub).getStatus());
+            PaymentReceiptResponse receipt = PaymentReceiptResponse.from(sub);
+            var plan = PackageSnapshot.resolve(sub);
+            if (plan != null) { receipt.setItemName(plan.getPackageName()); receipt.setPackageName(plan.getPackageName()); }
+            return receipt;
         }
 
         throw new ApiException(HttpStatus.NOT_FOUND, "Payment order not found");
@@ -127,7 +136,8 @@ public class PaymentHistoryService {
                 .map(PaymentHistoryResponse::from)
                 .toList();
         List<PaymentHistoryResponse> subscriptions = subscriptionRepository.findAll().stream()
-                .map(PaymentHistoryResponse::from)
+                .filter(sub -> !"NOT_REQUIRED".equals(sub.getPaymentStatus()))
+                .map(this::subscriptionHistory)
                 .toList();
 
         List<PaymentHistoryResponse> combined = new java.util.ArrayList<>();
@@ -170,6 +180,17 @@ public class PaymentHistoryService {
         }
 
         throw new ApiException(HttpStatus.NOT_FOUND, "Payment order not found");
+    }
+
+    private PaymentHistoryResponse subscriptionHistory(Subscription sub) {
+        PaymentHistoryResponse response = PaymentHistoryResponse.from(sub);
+        var plan = PackageSnapshot.resolve(sub);
+        if (plan != null) response.setPackageName(plan.getPackageName());
+        return response;
+    }
+
+    private void requirePaid(PaymentStatus status) {
+        if (status != PaymentStatus.PAID) throw new ApiException(HttpStatus.CONFLICT, "A receipt is available after payment is confirmed");
     }
 
     private String normalizeOrderCode(String orderCode) {

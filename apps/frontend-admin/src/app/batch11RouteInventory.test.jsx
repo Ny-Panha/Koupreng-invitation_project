@@ -17,3 +17,12 @@ it("reconciles admin routes including fullscreen editor guards and aliases", () 
       .toEqual(rows.map(({ pattern, index, access }) => ({ pattern, index, access })));
   }
 });
+
+it("reconciles final leaf smoke contracts with every declared pattern and access guard", () => {
+  const rows = inventoryRoutes(App(), "final route factory");
+  const matrix = JSON.parse(readFileSync("../../docs/qa/batch12/route-matrix.json", "utf8"));
+  const contracts = matrix.routes.filter(row => row.application === "frontend-admin");
+  expect(contracts.map(row => ({ pattern: row.pattern, access: row.accessRequirement })))
+    .toEqual(rows.map(({ pattern, access }) => ({ pattern, access })));
+  expect(contracts.every(row => row.concreteUrl && row.expectedPathname && row.readinessContract)).toBe(true);
+});

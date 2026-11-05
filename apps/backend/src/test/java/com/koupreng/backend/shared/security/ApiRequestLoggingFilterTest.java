@@ -15,6 +15,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -129,6 +130,39 @@ class ApiRequestLoggingFilterTest {
         assertTrue(event.target().contains("token=[REDACTED]"), "Secret token query parameter must be redacted");
         assertTrue(event.target().contains("code=[REDACTED]"), "Code query parameter must be redacted");
         assertTrue(event.target().contains("email=test@koupreng.com"), "Non-secret parameter preserved");
+    }
+
+    @Test
+    void redactsGuestCredentialsFromBothMonitorPathAndTarget() throws Exception {
+        var request = new MockHttpServletRequest("POST", "/api/v1/public/invitations/fixture/guests/fictional-bearer/rsvp");
+        filter.doFilter(request, new MockHttpServletResponse(), (req, res) -> { });
+        var event = apiMonitorService.getEvents(10, null, null, null, null).getFirst();
+        assertFalse(event.path().contains("fictional-bearer"));
+        assertFalse(event.target().contains("fictional-bearer"));
+        assertTrue(event.path().contains("/guests/[REDACTED]/rsvp"));
+    }
+
+    @Test
+    void redactsEncodedGuestRoutePrefixesWithoutChangingRoutingInput() throws Exception {
+        String raw = "/api/v1/%70ublic/invitations/fixture/%67uests/fictional-bearer/rsvp";
+        var request = new MockHttpServletRequest("POST", raw);
+        filter.doFilter(request, new MockHttpServletResponse(), (req, res) -> assertEquals(raw, request.getRequestURI()));
+        var event = apiMonitorService.getEvents(10, null, null, null, null).getFirst();
+        assertFalse(event.path().contains("fictional-bearer"));
+        assertFalse(event.target().contains("fictional-bearer"));
+        assertTrue(event.path().contains("/guests/[REDACTED]/rsvp"));
+    }
+
+    @Test
+    void redactsEncodedSecretKeysWithoutDestroyingSafeFilters() throws Exception {
+        loggingProperties.setIncludeQueryString(true);
+        var request = new MockHttpServletRequest("GET", "/api/v1/invitations/42/guests/501");
+        request.setQueryString("%74oken=fictional-private&GuestToken=fictional-guest&paymentReference=fictional-bank&page=2");
+        filter.doFilter(request, new MockHttpServletResponse(), (req, res) -> { });
+        var event = apiMonitorService.getEvents(10, null, null, null, null).getFirst();
+        assertFalse(event.target().contains("fictional-"));
+        assertTrue(event.target().contains("page=2"));
+        assertEquals("/api/v1/invitations/42/guests/501", event.path());
     }
 
     @Test

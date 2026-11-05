@@ -1,0 +1,11 @@
+{
+  "java": "25.0.1 (Surefire/native benchmark)",
+  "memoryGiB": 15.7,
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12700H",
+  "node": "v26.12.1",
+  "os": "Microsoft Windows NT 10.0.26300.0",
+  "python": "3.14.9 (worker venv)",
+  "mysql": "8.0.39 (native fixture benchmark)",
+  "physicalDeviceTests": false,
+  "logicalProcessors": 20
+}

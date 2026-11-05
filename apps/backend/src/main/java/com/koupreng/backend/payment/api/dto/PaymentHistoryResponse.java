@@ -53,14 +53,7 @@ public class PaymentHistoryResponse {
     }
 
     public static PaymentHistoryResponse from(com.koupreng.backend.subscription.domain.Subscription sub) {
-        PaymentStatus status = PaymentStatus.PENDING;
-        if ("ACTIVE".equalsIgnoreCase(sub.getStatus()) || "COMPLETED".equalsIgnoreCase(sub.getStatus()) || "PAID".equalsIgnoreCase(sub.getStatus()) || sub.isActive()) {
-            status = PaymentStatus.PAID;
-        } else if ("FAILED".equalsIgnoreCase(sub.getStatus())) {
-            status = PaymentStatus.FAILED;
-        } else if ("CANCELLED".equalsIgnoreCase(sub.getStatus())) {
-            status = PaymentStatus.CANCELLED;
-        }
+        PaymentStatus status = subscriptionPaymentStatus(sub);
 
         return PaymentHistoryResponse.builder()
                 .orderCode(sub.getOrderCode())
@@ -68,7 +61,7 @@ public class PaymentHistoryResponse {
                 .templateName(null)
                 .packageName(sub.getSubscriptionPackage() != null ? sub.getSubscriptionPackage().getPackageName() : "Subscription Package")
                 .amount(sub.getAmount())
-                .paidAmount(sub.getPaidAmount() == null ? BigDecimal.ZERO : sub.getPaidAmount())
+                .paidAmount(sub.getPaidAmount())
                 .currency(sub.getCurrency())
                 .status(status)
                 .provider(sub.getProvider())
@@ -80,4 +73,14 @@ public class PaymentHistoryResponse {
                 .itemType("SUBSCRIPTION")
                 .build();
     }
+    static PaymentStatus subscriptionPaymentStatus(com.koupreng.backend.subscription.domain.Subscription sub) {
+        String paymentStatus = sub.getPaymentStatus() == null ? null : sub.getPaymentStatus().trim().toUpperCase(java.util.Locale.ROOT);
+        if ("PENDING".equals(paymentStatus) && "REVIEW_REQUIRED".equalsIgnoreCase(sub.getStatus())) {
+            return PaymentStatus.PAID_PENDING_REVIEW;
+        }
+        if (paymentStatus == null) return PaymentStatus.PENDING;
+        try { return PaymentStatus.valueOf(paymentStatus); }
+        catch (IllegalArgumentException unknown) { return PaymentStatus.PENDING; }
+    }
+
 }

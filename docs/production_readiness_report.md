@@ -1,3 +1,9 @@
+# Current release assessment - Batch 12
+
+2026-11-05: **NO-GO** for production. The modernization initiative closes after Batch12; no deployment is authorized. Current Java audit data and historical credential revocation proof remain blocking. The public asset budget fails; actual-target/provider/device acceptance remains pending. See [final matrix](qa/batch12/RELEASE_READINESS_MATRIX.md), [commands and limitations](qa/batch12/FINAL_TEST_RESULTS.md) and [operating procedure](qa/batch12/RELEASE_OPERATIONS.md).
+
+## Historical V2 baseline (preserved)
+
 # Architecture V2 Production Readiness Report
 
 Assessment date: 2026-09-15. Branch: `refactor/architecture-v2`.

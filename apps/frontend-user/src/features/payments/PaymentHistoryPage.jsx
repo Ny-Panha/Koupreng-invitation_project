@@ -70,7 +70,7 @@ export default function PaymentHistoryPage() {
                                             <div className="enterprise-muted">{payment.itemType || payment.packageName}</div>
                                         </td>
                                         <td><StatusBadge status={payment.status} /></td>
-                                        <td>{money(payment.paidAmount || payment.amount, payment.currency, uiCopy("km", "en"))}</td>
+                                        <td>{money(payment.paidAmount ?? payment.amount, payment.currency, uiCopy("km", "en"))}</td>
                                         <td>{dateTime(payment.createdAt, uiCopy("km", "en"))}</td>
                                         <td><Link className="enterprise-btn secondary" to={`/dashboard/payments/${payment.orderCode}`}>{uiCopy("បង្កាន់ដៃ", "Receipt")}</Link></td>
                                     </tr>

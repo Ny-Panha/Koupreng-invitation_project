@@ -1,0 +1,231 @@
+{
+  "scope": "Synthetic transaction-scoped service calls on disposable MySQL8.0.39; concurrency1; warmup10; three rounds of30 alternated retained-legacy/current calls per fixture. Not HTTP, production load, or Batch12 before/after.",
+  "dialect": "org.hibernate.dialect.MySQLDialect",
+  "javaVersion": "25.0.1",
+  "jvmDialectProperty": "org.hibernate.dialect.MySQLDialect",
+  "harnessExitCode": 0,
+  "tests": [
+    {
+      "name": "com.koupreng.backend.rsvp.application.RsvpSummaryPerformanceMySqlTests",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "222.63"
+    }
+  ],
+  "schemaCleanup": "Harness confirmed owned disposable database removed",
+  "scenarios": [
+    {
+      "guests": 0,
+      "retainedLegacy": {
+        "statementsPerCall": 7.0,
+        "p50RoundMs": [
+          10.5546,
+          12.502,
+          4.9536
+        ],
+        "p95RoundMs": [
+          17.4851,
+          16.3183,
+          7.5437
+        ],
+        "p99RoundMs": [
+          18.5208,
+          16.3208,
+          8.0638
+        ],
+        "medianRoundP95Ms": 16.3183
+      },
+      "current": {
+        "statementsPerCall": 4.0,
+        "p50RoundMs": [
+          7.8349,
+          7.7731,
+          3.7609
+        ],
+        "p95RoundMs": [
+          12.2831,
+          10.1044,
+          5.3848
+        ],
+        "p99RoundMs": [
+          20.838,
+          11.6509,
+          6.2152
+        ],
+        "medianRoundP95Ms": 10.1044
+      }
+    },
+    {
+      "guests": 100,
+      "retainedLegacy": {
+        "statementsPerCall": 7.0,
+        "p50RoundMs": [
+          9.0323,
+          8.8058,
+          5.4016
+        ],
+        "p95RoundMs": [
+          14.3015,
+          12.3711,
+          8.2744
+        ],
+        "p99RoundMs": [
+          14.6927,
+          13.59,
+          8.8243
+        ],
+        "medianRoundP95Ms": 12.3711
+      },
+      "current": {
+        "statementsPerCall": 4.0,
+        "p50RoundMs": [
+          6.6919,
+          6.1313,
+          3.5519
+        ],
+        "p95RoundMs": [
+          8.8607,
+          8.705,
+          6.0354
+        ],
+        "p99RoundMs": [
+          9.7648,
+          9.1026,
+          6.6699
+        ],
+        "medianRoundP95Ms": 8.705
+      }
+    },
+    {
+      "guests": 1000,
+      "retainedLegacy": {
+        "statementsPerCall": 7.0,
+        "p50RoundMs": [
+          11.2754,
+          10.9117,
+          10.1933
+        ],
+        "p95RoundMs": [
+          14.0889,
+          19.0049,
+          13.5615
+        ],
+        "p99RoundMs": [
+          17.4516,
+          19.0283,
+          17.4613
+        ],
+        "medianRoundP95Ms": 14.0889
+      },
+      "current": {
+        "statementsPerCall": 4.0,
+        "p50RoundMs": [
+          5.6687,
+          5.9792,
+          5.3424
+        ],
+        "p95RoundMs": [
+          8.6089,
+          8.1303,
+          7.9649
+        ],
+        "p99RoundMs": [
+          8.6472,
+          8.9457,
+          8.6497
+        ],
+        "medianRoundP95Ms": 8.1303
+      }
+    },
+    {
+      "guests": 10000,
+      "retainedLegacy": {
+        "statementsPerCall": 7.0,
+        "p50RoundMs": [
+          91.6875,
+          91.8098,
+          90.7987
+        ],
+        "p95RoundMs": [
+          117.2809,
+          139.5591,
+          99.4065
+        ],
+        "p99RoundMs": [
+          155.3043,
+          153.3783,
+          102.2378
+        ],
+        "medianRoundP95Ms": 117.2809
+      },
+      "current": {
+        "statementsPerCall": 4.0,
+        "p50RoundMs": [
+          55.7944,
+          56.197,
+          55.7754
+        ],
+        "p95RoundMs": [
+          62.2791,
+          97.9097,
+          62.5704
+        ],
+        "p99RoundMs": [
+          64.1449,
+          99.1263,
+          63.5531
+        ],
+        "medianRoundP95Ms": 62.5704
+      }
+    },
+    {
+      "guests": 100000,
+      "retainedLegacy": {
+        "statementsPerCall": 7.0,
+        "p50RoundMs": [
+          754.0126,
+          783.1061,
+          952.2286
+        ],
+        "p95RoundMs": [
+          1017.5606,
+          912.2245,
+          1198.2412
+        ],
+        "p99RoundMs": [
+          1032.5582,
+          963.9108,
+          1205.1768
+        ],
+        "medianRoundP95Ms": 1017.5606
+      },
+      "current": {
+        "statementsPerCall": 4.0,
+        "p50RoundMs": [
+          523.9819,
+          477.4319,
+          574.1963
+        ],
+        "p95RoundMs": [
+          640.4441,
+          579.49,
+          682.7686
+        ],
+        "p99RoundMs": [
+          646.1303,
+          608.4166,
+          703.1958
+        ],
+        "medianRoundP95Ms": 640.4441
+      }
+    }
+  ],
+  "artifacts": {
+    "nativeMetrics": "rsvp-performance-native.json",
+    "nativePlans": "rsvp-performance-native.json.plans.json",
+    "nativeLog": "batch12-rsvp-performance-native.log",
+    "firstRunLimitation": "First complete pass inherited MariaDBDialect despite real MySQL server; artifacts retained with mariadb-dialect-limitation suffix."
+  }
+}

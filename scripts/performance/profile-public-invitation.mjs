@@ -75,7 +75,7 @@ try {
       sample.run = run;
       sample.errors = errors;
       if (errors.length) throw new Error(errors.join('\n'));
-      assert.equal(await page.locator('.sh-cover').getByRole('heading', { level: 1 }).textContent(), 'Wedding invitation');
+      assert.equal(await page.locator('.sh-cover').getByRole('heading', { level: 1 }).textContent(), invitation.title);
       if (run === 0) await page.screenshot({ path: `${screenshots}/${label}-${viewport.width}.png`, animations: 'disabled' });
       await page.getByRole('button', { name: 'Open invitation' }).click();
       await page.locator('.sh-hero').waitFor();

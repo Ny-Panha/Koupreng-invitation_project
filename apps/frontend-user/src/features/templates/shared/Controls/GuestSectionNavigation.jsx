@@ -30,7 +30,7 @@ export default function GuestSectionNavigation({ rootRef, visible, english, sect
   if (!visible || !sections.length) return null;
   return <nav className="guest-section-navigation" aria-label={english ? 'Invitation sections' : 'ផ្នែកក្នុងធៀប'}>{sections.map(key => {
     const [km, en, Icon] = labels[key];
-    return <button key={key} type="button" aria-current={active === key ? 'location' : undefined} onClick={() => {
+    return <button key={key} type="button" aria-label={english ? en : km} aria-current={active === key ? 'location' : undefined} onClick={() => {
       const target = nodes.current.get(key);
       target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
       if (target) { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }

@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-05",
+  "startingSha": "e38fa6c33886591cc499a0c6b14e15f9afbd5724",
+  "frontendUnitPasses": {
+    "user": 1324,
+    "admin": 191
+  },
+  "backendVerify": {
+    "discovered": 680,
+    "passed": 598,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 82,
+    "coverage": {
+      "line": {
+        "covered": 9316,
+        "missed": 3173,
+        "percent": 74.59
+      },
+      "branch": {
+        "covered": 3961,
+        "missed": 2906,
+        "percent": 57.68
+      }
+    },
+    "spotbugs": "PASS HIGH threshold",
+    "pmd": "PASS"
+  },
+  "browser": {
+    "passed": 174,
+    "retry": 0,
+    "skipped": 0,
+    "fullInventoryEngine": "Chromium"
+  },
+  "python": {
+    "passed": 74,
+    "warnings": 1,
+    "runtimeAuditPackages": 18,
+    "developmentAuditPackages": 51,
+    "installedAuditPackages": 54,
+    "advisories": 0
+  },
+  "npm": {
+    "user": {
+      "exit": 1,
+      "moderate": 4,
+      "high": 0,
+      "critical": 0
+    },
+    "admin": {
+      "exit": 1,
+      "moderate": 4,
+      "high": 0,
+      "critical": 0
+    }
+  },
+  "javaAudit": "BLOCKED, no current report; policy unchanged",
+  "publicBudget": "FAIL unchanged1000000JS/480000CSS",
+  "commands": [
+    "npm --prefix apps/frontend-user run lint",
+    "npm --prefix apps/frontend-admin run lint",
+    "npm --prefix apps/frontend-user run test -- --maxWorkers=2",
+    "npm --prefix apps/frontend-admin run test -- --maxWorkers=2",
+    "npm --prefix apps/frontend-user run build",
+    "npm --prefix apps/frontend-admin run build",
+    "npm --prefix apps/frontend-user run analyze:knip",
+    "npm --prefix apps/frontend-admin run analyze:knip",
+    "npm --prefix apps/frontend-user run analyze:deps",
+    "npm --prefix apps/frontend-admin run analyze:deps",
+    "apps/backend/mvnw.cmd -f apps/backend/pom.xml -B verify",
+    "apps/backend/mvnw.cmd -f apps/backend/pom.xml -B dependency:analyze",
+    "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.batch12.config.js",
+    "python scripts/qa/run-studio-access-mysql.py --tests MigrationUpgradeMySqlTests,TicketMigrationMySqlTests,SilkHeritageMigrationMySqlTests,KhmerFloralGoldMigrationMySqlTests,AuthIntegrityMySqlTests,SubscriptionIntegrityMySqlTests,PaymentEvidenceIntegrityMySqlTests,EntitlementIntegrityMySqlTests,GuestMutationIntegrityMySqlTests,GuestBatchMySqlTests,ReportingIntegrityMySqlTests,MediaIntegrityMySqlTests,ManualGiftMySqlTests,SeatingLayoutMySqlTests,RoyalGardenCatalogMySqlTests,RoyalGardenMapMySqlTests,Phase6DemoMySqlTests,Phase7CollaborationMySqlTests,Phase9MediaMySqlTests --label batch12-final-integrity --browser",
+    "python scripts/qa/run-studio-access-mysql.py --tests Phase9MediaMySqlTests --label batch12-media-final",
+    "node --test scripts/qa/*.test.mjs",
+    "node scripts/sync-design-tokens.cjs --check",
+    "python scripts/validate-agent-routing.py",
+    "docker compose config --quiet",
+    "node scripts/performance/batch12-browser.mjs before",
+    "node scripts/performance/batch12-browser.mjs after",
+    "node scripts/performance/profile-public-invitation.mjs batch12-final --check-budget",
+    "npm --prefix apps/frontend-user run test:e2e -- --workers=2 tests/e2e/critical-routes.spec.js tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/batch11-route-coverage.spec.js tests/e2e/batch11-auth-boundaries.spec.js tests/e2e/batch11-admin-integration.spec.js tests/e2e/batch11-legacy-redirects.spec.js tests/e2e/batch11-payment-journey.spec.js"
+  ],
+  "retainedBrowser": {
+    "passed": 87,
+    "skipped": 1,
+    "reason": "One mobile duplicate viewport test; dedicated desktop and Batch12 width checks cover it",
+    "initialInvocation": "Two app-local jsQR path failures from root cwd; corrected npm app-directory invocation passes"
+  },
+  "additionalTicketRerun": {
+    "passed": 14
+  },
+  "verificationPublicOrigin": "VITE_USER_APP_URL=http://127.0.0.1:4173 supplied to admin build; .env unchanged",
+  "ciYaml": {
+    "parsed": true,
+    "jobs": 11
+  },
+  "sourcesScannedWithoutFindings": 8432,
+  "axiomaticScope": "Fixture-backed leaf coverage, real owned MySQL tests and provider prerequisites are separate; no production certification"
+}

@@ -1,5 +1,13 @@
 # UI modernization roadmap
 
+## Final closure - Batch 12 (2026-11-05)
+
+The twelve-batch modernization initiative is formally closed after Batch 12. There is no Batch 13. Batches 1-9 modernized public/customer/guest/invitation and core admin surfaces; Batch 10 delivered reporting/observability; Batch 11 integrated journeys/boundaries; Batch 12 closes confirmed privacy, integrity and accessibility defects and delivers final measured QA.
+
+Production release is **NO-GO**: current Java audit and historical credential obligations remain blocking; the public asset budget fails and external target/provider/device acceptance is pending. This does not reopen modernization. See [final assessment](../qa/batch12/FINAL_EXECUTIVE_SUMMARY.md), [matrix](../qa/batch12/RELEASE_READINESS_MATRIX.md) and [remaining obligations](../qa/batch12/EXTERNAL_DEPENDENCIES.md). Earlier progress/counts below are historical records, not current release certification.
+
+## Historical kickoff and batch records
+
 Started 2026-11-04. Full-project scope remains open. Discovery began on an isolated branch; user subsequently explicitly requested `main` and pushing `main`. Existing screens, data, grants and API behavior stay authoritative. First batch establishes shared foundation and real component changes, not a completed migration.
 
 ## Batch gates
@@ -19,8 +27,8 @@ For each batch: inspect source/current state; record baseline; make focused chan
 | 8 | Invitation delivery, QR management, event check-in desk, ticket designer & guest wishes | Real components in frontend-user; truthful delivery semantics, general/guest QR segregation, camera scanner lifecycle, duplicate check-in warnings, instant celebration modal, safe wishes deletion, 37 Vitest tests passed, 10 Playwright E2E passed with 0 Axe violations across desktop and mobile | Batch 8 verified: Delivery workspace with 6 KPI cards, recipient search & truthful share status; QR Code management with print layout; Check-in Desk with live camera, duplicate warnings & guest roster; Ticket Designer live preview; Guest Wishes management. All unit tests & Playwright e2e verified |
 | 9 | Admin login/shell/dashboard/users/detail/templates/studio/packages/payments | Every page/modal; privileged action confirmation; dense data and responsive alternatives, pending/error/empty | Batch 9 verified: Bilingual Login with safe redirect & password toggle; Dashboard with isolated LiveClockCapsule, dynamic health loading & table regions; User Management with Staff/Admin/User tabs & protected account invariants; Manual Payment Verification Modal with authoritative pricing & transaction audit; 156 frontend-admin tests passed, Playwright e2e 8/8 passed, 0 Axe critical/serious violations |
 | 10 | Admin reports/notifications/logs/API monitor/internal tools | Every report section/drawer/print/export; stream cleanup/offline truth, diagnostic authorization | Batch 10 verified: Admin reports with snapshot correlation & formula-safe exports; notifications with broadcast modal & URL validation; system logs with secret redaction & inspect drawer; API monitor with verified clear semantics & CSV formula defense. 175 frontend-admin tests passed, Playwright e2e 8/8 passed, 0 Axe critical/serious violations |
-| 11 | Alias/fallback coverage and integrated journeys | All declared patterns and guards; discover/create/publish/deliver/RSVP/check-in/report with controlled provider fixtures | NOT IMPLEMENTED |
-| 12 | Performance/accessibility/cross-browser release assessment | Actual before/after bundle/runtime data, current screenshots, appropriate full suites and explicit manual-device limits | NOT IMPLEMENTED |
+| 11 | Alias/fallback coverage and integrated journeys | All declared patterns and guards; discover/create/publish/deliver/RSVP/check-in/report with controlled provider fixtures | COMPLETE - scoped integration evidence |
+| 12 | Performance/accessibility/cross-browser release assessment | Actual before/after bundle/runtime data, current screenshots, appropriate full suites and explicit manual-device limits | COMPLETE - final assessment; production NO-GO |
 
 ## Exact continuation
 
@@ -58,4 +66,4 @@ The current continuation supersedes the earlier Batch 10 active-work list. Batch
 
 Verified gates: 1,322 customer and 189 admin unit/component tests; 104 fixture browser regressions plus two fallback checks; 35 disposable MySQL integrity tests; one live browser journey within a separate 21-test real MySQL run; frontend lint/build/token/routing checks. The full default backend suite passed 669 tests with 78 explicit environment-gated skips. Historical route modernization status was not promoted by shared shell/guard tests.
 
-Continue with **Batch 12: Performance, Security, Accessibility, Cross-Browser QA and Release-Readiness Assessment**. Prioritize [the remaining authenticated leaf audits and external/device gaps](../qa/batch11/remaining-gaps.md). No full-platform or production-ready completion is claimed.
+Historical transition (fulfilled; see final closure above): **Batch 12: Performance, Security, Accessibility, Cross-Browser QA and Release-Readiness Assessment**. Prioritize [the remaining authenticated leaf audits and external/device gaps](../qa/batch11/remaining-gaps.md). No full-platform or production-ready completion is claimed.

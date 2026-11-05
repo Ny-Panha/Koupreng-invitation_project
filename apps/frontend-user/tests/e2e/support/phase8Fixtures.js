@@ -1,4 +1,4 @@
-import { installIdentityFixtures } from './templateIdentityFixtures';
+import { installIdentityFixtures } from './templateIdentityFixtures.js';
 
 export const phase8Content = {
   futureExtension: { preserve: 'authored metadata' }, eventTimezone: 'Asia/Phnom_Penh', calendarUid: 'phase8-fictional-event',

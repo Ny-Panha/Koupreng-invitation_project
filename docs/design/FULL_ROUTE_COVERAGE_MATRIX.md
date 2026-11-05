@@ -1,5 +1,13 @@
 # Full route and component coverage matrix
 
+## Final Batch 12 evidence overlay (2026-11-05)
+
+Current inventory remains111 customer +24 admin =135 patterns. All 135 now have passing route-specific read/render contracts and explicit destinations, including84 authenticated customer and22 admin patterns. [Final machine matrix](../qa/batch12/route-matrix.json) and [coverage limits](../qa/batch12/ROUTE_COVERAGE_FINAL.md) supersede the earlier105-leaf gap. Full leaf inventory runs in Chromium; selected behavioral/security/a11y flows run in three engines.
+
+Historical modernization labels below are preserved; read/render smoke does not certify exhaustive CRUD, all visual states, every template or production readiness. Batch 12formally closes the initiative, with operational obligations and a production NO-GO verdict documented in [release readiness](../qa/batch12/RELEASE_READINESS_MATRIX.md). There is no subsequent modernization batch.
+
+## Historical coverage records below
+
 Discovery: 2026-11-04. Route authority is the checked-out route factories; runtime parameters are patterns, not one row per possible event/user. Expanded user routes: **111**. Expanded admin routes: **24**. Each alias, conditional legacy route, index and wildcard has its own row. Complete inventory of declared patterns does not imply completed visual or functional verification.
 
 `NOT IMPLEMENTED` means this modernization has not completed and verified that row. It does **not** mean the product screen is absent. Baseline is existing source. Shared token/audio/admin-shell improvements are partial foundation changes; they do not certify every dependent route or template. Refer to current batch evidence in UI_MODERNIZATION_VERIFICATION.md.

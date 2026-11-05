@@ -44,6 +44,7 @@ class AuthIntegrityMySqlTests {
     @Autowired private UserExternalIdentityRepository identities;
     @Autowired private SystemAuditLogRepository auditLogs;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private org.springframework.transaction.PlatformTransactionManager transactionManager;
     @Autowired private com.koupreng.backend.admin.application.AdminManagementService adminManagement;
     @Autowired private com.koupreng.backend.auth.infrastructure.security.AppJwtAuthenticationConverter jwtConverter;
 
@@ -71,6 +72,46 @@ class AuthIntegrityMySqlTests {
         assertTrue(logs.getFirst().getMetadataJson().contains("BAD_CREDENTIALS"));
         assertFalse(logs.getFirst().getMetadataJson().contains(rejectedPassword));
         assertFalse(logs.getFirst().getDescription().contains(user.getEmail()));
+    }
+
+    @Test
+    void staleProfileUpdateCannotUndoACommittedPasswordReset() throws Exception {
+        AppUser user = user();
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken reset = new PasswordResetToken();
+        reset.setUser(user);
+        reset.setTokenHash(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
+                .digest(token.getBytes(StandardCharsets.UTF_8))));
+        reset.setExpiresAt(Instant.now().plusSeconds(600));
+        resetTokens.saveAndFlush(reset);
+        CountDownLatch profileLoaded = new CountDownLatch(1);
+        CountDownLatch resetCommitted = new CountDownLatch(1);
+        try (var executor = Executors.newSingleThreadExecutor()) {
+            var profile = executor.submit(() -> new org.springframework.transaction.support.TransactionTemplate(transactionManager)
+                    .executeWithoutResult(status -> {
+                        AppUser stale = users.findById(user.getId()).orElseThrow();
+                        stale.setFullName("Updated profile");
+                        profileLoaded.countDown();
+                        try {
+                            if (!resetCommitted.await(15, TimeUnit.SECONDS)) throw new IllegalStateException("Reset timed out");
+                        } catch (InterruptedException interrupted) {
+                            Thread.currentThread().interrupt();
+                            throw new IllegalStateException(interrupted);
+                        }
+                        users.flush();
+                    }));
+            try {
+                assertTrue(profileLoaded.await(5, TimeUnit.SECONDS));
+                accountService.resetPassword(new ResetPasswordRequest(token, "NewPasswordAfterReset123"));
+            } finally {
+                resetCommitted.countDown();
+            }
+            profile.get(20, TimeUnit.SECONDS);
+        }
+        AppUser current = users.findById(user.getId()).orElseThrow();
+        assertEquals("Updated profile", current.getFullName());
+        assertEquals(1, current.getTokenVersion(), "An unrelated profile flush must not resurrect revoked sessions");
+        assertTrue(passwordEncoder.matches("NewPasswordAfterReset123", current.getPasswordHash()));
     }
 
     @Test

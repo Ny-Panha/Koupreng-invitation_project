@@ -1,0 +1,42 @@
+{
+  "status": "BLOCKED_CURRENT_AUDIT_NOT_OBTAINED",
+  "configuredVersion": "13.0.0",
+  "configuredVersionResult": "Known upstream blank-key bug prevents anonymous NVD refresh; exit 1",
+  "upstreamIssue": "https://github.com/dependency-check/DependencyCheck/issues/8715",
+  "upstreamFix": "https://github.com/dependency-check/DependencyCheck/pull/8716",
+  "publishedLatestAtCheck": "13.0.0",
+  "unreleasedFixMilestone": "13.0.1",
+  "verifiedReport": "No fresh complete report",
+  "staleCachedScan": {
+    "engine": "13.0.0",
+    "dependencies": 104,
+    "unsuppressedFindings": 0,
+    "existingScopedFalsePositiveSuppressions": 1,
+    "nvdLastChecked": "2026-10-30T06:57:36Z",
+    "notCurrentEvidence": true
+  },
+  "fallbackAttempt": {
+    "engine": "12.2.2",
+    "exitCode": 1,
+    "elapsedSeconds": 203.51,
+    "lastLog": "Anonymous NVD update warning; no download progress or completion footer",
+    "currentReportAvailable": false,
+    "terminationCause": "Unrecoverable from captured log; failed/incomplete"
+  },
+  "mavenSlotOwner": "root",
+  "newMavenRunStartedAfterHandoff": false,
+  "scannerPomDowngradeAppliedByThisAgent": false,
+  "thresholdOrFreshnessRelaxed": false,
+  "invocationFailures": [
+    {
+      "attempt": 1,
+      "reason": "Global format property also configured PMD; corrected to plural formats",
+      "elapsedSeconds": 37.019
+    },
+    {
+      "attempt": 2,
+      "reason": "Two PMD UnnecessaryFullyQualifiedName violations; root informed and centrally fixed",
+      "elapsedSeconds": 48.102
+    }
+  ]
+}
