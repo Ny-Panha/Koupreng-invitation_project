@@ -61,3 +61,4 @@ describe('StudioUploadField', () => {
     expect(onRestoreDefault).toHaveBeenCalledOnce();
   });
 });
+

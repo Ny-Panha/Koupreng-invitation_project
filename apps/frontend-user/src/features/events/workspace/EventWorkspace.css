@@ -14,9 +14,9 @@
 .event-switcher-arrow { position: absolute; right: 11px; top: 16px; pointer-events: none; color: var(--ws-muted); }
 .event-context-details { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; color: var(--ws-muted); font-size: 13px; line-height: 1.8; }
 .event-status-pill { display: inline-flex; padding: 2px 9px; border-radius: 99px; font-size: 13px; font-weight: 650; line-height: 1.8; }
-.badge-published { background: #dcfce7; color: #166534; }
-.badge-draft { background: #fef3c7; color: #92400e; }
-.badge-unpublished, .badge-unknown { background: #eceeed; color: #4b5563; }
+.badge-published { background: #eef8f2; color: #0d6338; border: 1px solid #b8dec8; }
+.badge-draft { background: #fdf8ee; color: #925808; border: 1px solid #fae4be; }
+.badge-unpublished, .badge-unknown { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; }
 .event-navigation-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-gutter: stable; padding: 12px 10px 16px; scroll-padding-block: 8px; }
 .event-workspace-nav { display: flex; flex-direction: column; gap: 8px; }
 .event-primary-links, .event-nav-group-items { display: grid; gap: 3px; }
@@ -26,7 +26,7 @@
 .event-nav-tab-text { min-width: 0; overflow-wrap: break-word; }
 .event-nav-tab-icon { flex: 0 0 20px; }
 .event-nav-tab:hover { background: var(--ws-surface-subtle); color: var(--ws-ink); }
-.event-nav-tab.active { background: #e7f0ea; color: #1e503a; font-weight: 650; }
+.event-nav-tab.active { background: #edf5f0; color: #1a4f36; font-weight: 650; box-shadow: inset 3.5px 0 0 #245740; }
 .event-nav-group-toggle { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 40px; border: 0; padding: 6px 11px; border-radius: 8px; color: var(--ws-muted); background: none; font: inherit; font-size: 12px; font-weight: 600; line-height: 1.8; cursor: pointer; }
 .event-nav-group-toggle:hover { color: var(--ws-ink); background: var(--ws-surface-subtle); }
 .event-nav-group-toggle svg { flex-shrink: 0; transition: transform var(--ui-duration-feedback); }

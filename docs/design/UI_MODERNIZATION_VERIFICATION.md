@@ -132,6 +132,30 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npx playwright test tests/e2e/invitation-styles-v2.spec.js` (customer cwd) | **44 tests passed** across desktop and mobile Chromium; 2.2m; exit 0 |
 | `npx playwright test tests/e2e/next-studio-ux.spec.js` (customer cwd) | **7 tests passed**, 1 skipped across desktop and mobile Chromium; Axe accessibility check: **0 violations**; 27.0s; exit 0 |
 
+## Batch 4 — Event Workspace, Onboarding & Analytics Modernization (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/features/events/onboarding/EventCreatePage.css` | Comprehensive luxury Khmer styling for event creation: elevated event type cards with gold border, pressed state gradient, Kantumruy Pro typography, 48-50px inputs with focus rings, 16:9 template cards, 44px touch targets, sticky summary card, and responsive reflow across 320px-1440px with zero horizontal scroll |
+| `apps/frontend-user/src/features/events/onboarding/EventDetails.css` | Modernized settings tabs navigation with 44px pill links, card-based fieldset sections with subtle ivory tint and 16px radius, frosted blur sticky bottom bar with save status pills and luxury buttons |
+| `apps/frontend-user/src/features/events/workspace/EventWorkspace.css` | Elevated active navigation tab with left emerald accent (`box-shadow: inset 3.5px 0 0 #245740`), luxury status pills with subtle borders (`badge-published`, `badge-draft`, `badge-unpublished`), refined header bar |
+| `apps/frontend-user/src/features/events/workspace/AttendanceAnalytics.css` | Elevated range form, metrics totals cards with hover lift, daily bar chart with gold-to-amber luxury gradient and rounded tops, accessible data table with hover rows |
+| `apps/frontend-user/src/features/events/workspace/EventTeamPanel.test.jsx` | 3 unit tests covering event team panel rendering, owner eligibility check, non-owner restrictions, and team select options |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npx vitest run src/features/events/` (customer cwd) | **9 test files passed**, **71 tests passed**; 3.27s; exit 0 |
+| `npx vitest run src/features/dashboard/` (customer cwd) | **1 test file passed**, **3 tests passed**; 528ms; exit 0 |
+| `npm run lint` (customer cwd) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (customer cwd) | Production build passed in 1.40s with **0 errors**; exit 0 |
+| `npx playwright test tests/e2e/event-workspaces.spec.js --workers=1` (customer cwd) | **6 tests passed** across all 7 viewports (320, 375, 390, 430, 768, 1024, 1440) on desktop and mobile Chromium; 1.4m; exit 0 |
+| `npx playwright test tests/e2e/event-overview-design.spec.js --workers=1` (customer cwd) | **1 test passed**, 1 skipped; Axe accessibility check: **0 violations**; 18.5s; exit 0 |
+| `npx playwright test tests/e2e/premium-workspace.spec.js --workers=1` (customer cwd) | **20 tests passed** across desktop and mobile Chromium; 34.3s; exit 0 |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
