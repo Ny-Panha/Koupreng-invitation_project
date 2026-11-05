@@ -14,12 +14,12 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px 18px;
+    gap: 14px;
+    padding: 14px 20px;
     background: #ffffff;
-    border: 1px solid rgba(185, 139, 66, 0.2);
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eadfce;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(93, 67, 32, 0.05);
 }
 
 .sfp-toolbar__left {
@@ -34,19 +34,21 @@
     align-items: center;
     gap: 8px;
     font-size: 1rem;
-    font-weight: 700;
-    color: #2c2523;
+    font-weight: 750;
+    color: #2a1f10;
 }
 
 .sfp-badge-dirty {
     display: inline-flex;
     align-items: center;
-    padding: 3px 8px;
+    padding: 4px 10px;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 750;
     border-radius: 999px;
     background: #fef3c7;
-    color: #b45309;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    box-shadow: 0 1px 3px rgba(180, 83, 9, 0.1);
 }
 
 .sfp-toolbar__actions {

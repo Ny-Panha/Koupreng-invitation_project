@@ -156,6 +156,28 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npx playwright test tests/e2e/event-overview-design.spec.js --workers=1` (customer cwd) | **1 test passed**, 1 skipped; Axe accessibility check: **0 violations**; 18.5s; exit 0 |
 | `npx playwright test tests/e2e/premium-workspace.spec.js --workers=1` (customer cwd) | **20 tests passed** across desktop and mobile Chromium; 34.3s; exit 0 |
 
+## Batch 5 — Guest Management, RSVP & Seating Modernization (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/features/guests/GuestWorkspace.css` | Comprehensive luxury Khmer styling for guest workspace: elevated summary metric cards (`.pe-summary-card`) with hover lift and gold border, segmented pill status filters with count badges, luxury search bar and filter selects with Koupreng gold focus rings, ivory/gold gradient table headers (`.guest-table thead`), smooth row hover transitions, circular avatar gradients, high-contrast badges, 44px min-height action buttons, and responsive mobile card reflow |
+| `apps/frontend-user/src/features/guests/components/GuestImportModal.css` | Multi-step guest CSV import modal with gold step indicators, dashed upload dropzone with hover transitions, sample template actions, responsive map rows, and 44px action buttons |
+| `apps/frontend-user/src/features/rsvp/RsvpDashboardPage.css` | Modernized RSVP dashboard with 4 luxury KPI cards featuring status top accent borders (emerald attending, rose declined, amber pending, gold wishes), bold 32px tabular-nums counts, responsive table with gradient headers, and parchment-style wishes wall cards with left gold accent borders |
+| `apps/frontend-user/src/features/seating/SeatingPage.css` | Modernized seating operations workspace with luxury summary metric cards, rounded 18px table cards with styled capacity meters, 48px touch targets for unassigned guest selector, and responsive mobile panel switching |
+| `apps/frontend-user/src/features/seating/components/SeatingFloorPlan.css` | Elevated interactive floor plan toolbar with gold borders, amber dirty badge glow (`.sfp-badge-dirty`), and smooth pan/zoom controls |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npx vitest run src/features/guests/ src/features/rsvp/ src/features/seating/` (customer cwd) | **15 test files passed**, **86 tests passed**; 22.43s; exit 0 |
+| `npm run lint` (customer cwd) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (customer cwd) | Production build passed in 12.22s with **0 errors**; exit 0 |
+| `npx playwright test tests/e2e/guest-workspace.spec.js --workers=1` (customer cwd) | **23 tests passed**, 1 skipped across desktop and mobile Chromium; 1.1m; exit 0 |
+| `npx playwright test tests/e2e/phase5-seating.spec.js --workers=1` (customer cwd) | **2 tests passed** across desktop and mobile Chromium; 21.5s; exit 0 |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).
