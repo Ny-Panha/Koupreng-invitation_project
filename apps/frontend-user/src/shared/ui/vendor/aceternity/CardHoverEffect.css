@@ -1,0 +1,85 @@
+/* Aceternity UI Card Hover Effect styling with Koupreng gold tokens */
+
+.aceternity-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.aceternity-card-wrapper {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.aceternity-card-hover-pill {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(185, 139, 66, 0.08) 100%);
+  border: 1px solid rgba(185, 139, 66, 0.3);
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.aceternity-card-inner {
+  position: relative;
+  z-index: 2;
+  border-radius: 16px;
+  height: 100%;
+  width: 100%;
+  padding: 24px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #eadfce;
+  box-shadow: 0 2px 8px rgba(93, 67, 32, 0.04);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.aceternity-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fdf5e8;
+  border: 1px solid rgba(185, 139, 66, 0.25);
+  color: #8c6328;
+  margin-bottom: 16px;
+}
+
+.aceternity-card-title {
+  color: #2a1f10;
+  font-weight: 750;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.aceternity-card-description {
+  color: #6d5432;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.aceternity-card-link-wrap {
+  margin-top: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aceternity-card-hover-pill {
+    transition: none !important;
+  }
+}

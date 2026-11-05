@@ -178,6 +178,39 @@ Admin entry JS is smaller, while scoped accessible-shell CSS grows; combined gzi
 | `npx playwright test tests/e2e/guest-workspace.spec.js --workers=1` (customer cwd) | **23 tests passed**, 1 skipped across desktop and mobile Chromium; 1.1m; exit 0 |
 | `npx playwright test tests/e2e/phase5-seating.spec.js --workers=1` (customer cwd) | **2 tests passed** across desktop and mobile Chromium; 21.5s; exit 0 |
 
+## Batch 6 — Premium Marketing, Template Marketplace & Real Third-Party UI Code Integration (2026-11-05)
+
+### Implemented source files
+
+| Files (paths relative to repository root) | Change |
+|---|---|
+| `apps/frontend-user/src/shared/ui/vendor/index.js` | Central barrel export for all vendored UI components |
+| `apps/frontend-user/src/shared/ui/vendor/shadcn/Accordion.jsx` & `Accordion.css` & `Accordion.test.jsx` | Real upstream shadcn/ui Accordion implementation adapted to React 19 JSX with Koupreng ivory & gold aesthetic, accessible `button`/`region` ARIA attributes, Chevron rotation animation, and isolated unit test suite (3 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/untitledui/EmptyState.jsx` & `EmptyState.css` & `EmptyState.test.jsx` | Real upstream Untitled UI EmptyState component adapted to React 19 JSX with Koupreng gold theme tokens, centered/left variants, flexible action buttons, and isolated unit test suite (2 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/magicui/NumberTicker.jsx` & `NumberTicker.test.jsx` | Real upstream Magic UI NumberTicker component adapted to React 19 JSX with `useInView`, `usePrefersReducedMotion`, tabular numbers formatting, customizable decimal places, prefix, and suffix, and unit test suite (1 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/kokonutui/BentoCard.jsx` & `BentoCard.css` & `BentoCard.test.jsx` | Real upstream Kokonut UI BentoCard component adapted to React 19 JSX with luxury gold borders, icon badge slots, Kantumruy Pro typography, and unit test suite (1 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/animateui/AnimatedTabs.jsx` & `AnimatedTabs.css` & `AnimatedTabs.test.jsx` | Real upstream Animate UI AnimatedTabs component with Framer Motion spring layoutId pill transition, full keyboard accessibility, and unit test suite (1 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/reactbits/FadeContent.jsx` & `FadeContent.test.jsx` | Real upstream React Bits FadeContent component adapted with zero external GSAP dependencies, reduced-motion bypass, customizable blur/duration, and unit test suite (1 passed) |
+| `apps/frontend-user/src/shared/ui/vendor/aceternity/CardHoverEffect.jsx` & `CardHoverEffect.css` & `CardHoverEffect.test.jsx` | Real upstream Aceternity UI CardHoverEffect component with Framer Motion animated hover highlight overlay, responsive card grid, and unit test suite (2 passed) |
+| `apps/frontend-user/src/features/marketing/components/LandingHero.jsx` | Integrated `FadeContent` from React Bits for hero title and call-to-action animations |
+| `apps/frontend-user/src/features/marketing/components/LandingStory.jsx` | Integrated `NumberTicker` from Magic UI into `.kp-metrics-ribbon` with live animated statistics (30+ Artisan designs, 100% Khmer ready, 7 Adaptive viewports) |
+| `apps/frontend-user/src/features/marketing/components/PricingFactors.jsx` | Modernized pricing factors to use `BentoCard` from Kokonut UI for design and package steps |
+| `apps/frontend-user/src/features/marketing/PricingFeature.jsx` | Modernized FAQ section with real shadcn/ui `Accordion` component, preserving currency formatting, package limits, and login recovery |
+| `apps/frontend-user/src/features/marketing/VenuesFeature.jsx` | Integrated `EmptyState` from Untitled UI for zero-result search states and resolved search grid container layout |
+| `apps/frontend-user/src/features/templates/components/TemplateGrid.jsx` | Integrated `EmptyState` from Untitled UI for zero-result filter states while preserving offline retry behavior and live catalog contracts |
+| `apps/frontend-user/src/features/marketing/MarketingFeature.css` | Styled luxury metrics ribbon, metric cards, and responsive metric values |
+
+### Executed checks
+
+| Command | Actual result |
+|---|---|
+| `npx vitest run src/shared/ui/vendor/` (customer cwd) | **7 test files passed**, **11 tests passed**; exit 0 |
+| `npx vitest run src/features/marketing/` (customer cwd) | **5 test files passed**, **35 tests passed**; 1.63s; exit 0 |
+| `npx vitest run src/features/templates/` (customer cwd) | **47 test files passed**, **601 tests passed**; 11.03s; exit 0 |
+| `npm run lint` (customer cwd) | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm run build` (customer cwd) | Production build passed in 7.51s with **0 errors**; exit 0 |
+| `npx playwright test tests/e2e/marketing-landing.spec.js tests/e2e/marketing-pages.spec.js --workers=1` (customer cwd) | **72 tests passed** across desktop and mobile Chromium; 2.3m; exit 0 |
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).

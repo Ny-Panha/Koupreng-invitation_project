@@ -1,11 +1,12 @@
 import { CardGridSkeleton } from '@/shared/ui/LoadingState';
 import { Link } from "react-router-dom";
-import { Check, Minus, ArrowUpRight, Plus } from "lucide-react";
+import { Check, Minus, ArrowUpRight } from "lucide-react";
 import { useAuth } from "../auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import PricingFactors from "./components/PricingFactors";
 import { packagePrice, packageLimit } from "./model/packagePresentation";
 import { usePackageCatalog } from "./model/usePackageCatalog";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/shared/ui/vendor";
 import "./MarketingPages.css";
 
 export default function PricingFeature() {
@@ -100,17 +101,17 @@ export default function PricingFeature() {
           {plans.map((plan, index) => {
             const price = packagePrice(plan, lang);
             return (
-              <article className="kp-plan-card" key={plan.id || index}>
-                <h2>{plan.packageName || plan.code}</h2>
-                <p className={`kp-plan-price${price === null ? " kp-plan-price--missing" : price.length > 12 ? " kp-plan-price--long" : ""}`}>
-                  {price ?? copy("តម្លៃមិនទាន់មាន", "Price unavailable")}
-                </p>
-                {price !== null && (
-                  <p className="kp-plan-term">
-                    {plan.currency}{Number.isInteger(plan.durationDays) && plan.durationDays >= 0 ? ` · ${packageLimit(plan.durationDays, lang)} ${copy("ថ្ងៃ", "days")}` : ""}
-                  </p>
-                )}
-                <p className="kp-plan-description">{plan.description}</p>
+              <article key={plan.id || index} className="kp-plan-card">
+                <div>
+                  <div className="kp-plan-card-top">
+                    <h3>{plan.packageName || plan.code}</h3>
+                    {plan.code === "STANDARD" && (
+                      <span className="kp-plan-badge">{copy("ពេញនិយម", "Popular choice")}</span>
+                    )}
+                  </div>
+                  <p className={`kp-plan-price${price === null ? " kp-plan-price--missing" : ""}`}>{price ?? copy("តម្លៃមិនទាន់មាន", "Price unavailable")}</p>
+                  <p className="kp-plan-lead">{plan.description}</p>
+                </div>
                 <dl>
                   {rows.filter(([key, , boolean]) => boolean ? plan[key] === true : plan[key] != null).map(([key, label, boolean]) => (
                     <div key={key}>
@@ -160,7 +161,7 @@ export default function PricingFeature() {
         <div className="kp-compare-mobile">
           {plans.map((plan, index) => (
             <details key={plan.id || index}>
-              <summary>{plan.packageName || plan.code}<Plus size={18} aria-hidden="true" /></summary>
+              <summary>{plan.packageName || plan.code}</summary>
               <dl>
                 {rows.map(([key, label, boolean]) => (
                   <div key={key}>
@@ -184,12 +185,14 @@ export default function PricingFeature() {
         <p>{copy("រចនាបទសន្លឹកការ និងកញ្ចប់សេវាកម្មមានព័ត៌មានសិទ្ធិរបស់វា។ ពិនិត្យព័ត៌មានក្នុងគណនី មុនបង្កើត ឬបញ្ជាក់ការទូទាត់។", "Invitation designs and service packages have their own access details. Review your account information before creating an invitation or confirming a payment.")}</p>
       </div>
       <div className="kp-page-faq">
-        {questions.map(([question, answer]) => (
-          <details key={question}>
-            <summary>{question}<Plus size={18} aria-hidden="true" /></summary>
-            <p>{answer}</p>
-          </details>
-        ))}
+        <Accordion type="single" collapsible defaultValue="item-0">
+          {questions.map(([question, answer], idx) => (
+            <AccordionItem key={question} value={`item-${idx}`}>
+              <AccordionTrigger>{question}</AccordionTrigger>
+              <AccordionContent>{answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
 

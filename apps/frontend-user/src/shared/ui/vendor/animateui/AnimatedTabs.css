@@ -1,0 +1,80 @@
+/* Animate UI Animated Tabs styling with Koupreng tokens */
+
+.animate-ui-tabs {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  background: #f7f1e7;
+  border: 1px solid #eadfce;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 3px rgba(93, 67, 32, 0.06);
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.animate-ui-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #6d5432;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+  z-index: 1;
+}
+
+.animate-ui-tab:focus-visible {
+  outline: 2px solid #b98b42;
+  outline-offset: 2px;
+}
+
+.animate-ui-tab.is-active {
+  color: #2a1f10;
+  font-weight: 750;
+}
+
+.animate-ui-tab__pill {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(93, 67, 32, 0.12);
+  z-index: -1;
+  border: 1px solid rgba(185, 139, 66, 0.2);
+}
+
+.animate-ui-tab__label {
+  position: relative;
+  z-index: 2;
+}
+
+.animate-ui-tab__count {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #f0ebe1;
+  color: #7d6443;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ui-tab__pill {
+    transition: none !important;
+  }
+}

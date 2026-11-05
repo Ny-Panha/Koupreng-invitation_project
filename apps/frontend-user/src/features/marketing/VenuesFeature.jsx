@@ -3,6 +3,8 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
+import { EmptyState } from "@/shared/ui/vendor";
 
 // Import Background ដូច Homepage
 import heroBg from "../../assets/icons/background.png";
@@ -154,7 +156,25 @@ const VenuesPage = () => {
             </div>
           </ScrollReveal>
 
-          <div className="venues-grid">
+          {filteredVenues.length === 0 ? (
+            <EmptyState
+              icon={Search}
+              headline={t("noVenuesFound") || (lang === "en" ? "No venues found" : "រកមិនឃើញទីតាំងមង្គលទេ")}
+              description={lang === "en" ? "Try searching for another city, province or venue name." : "សូមសាកល្បងស្វែងរកឈ្មោះខេត្ត ក្រុង ឬឈ្មោះសាលផ្សេងទៀត។"}
+              primaryAction={
+                searchTerm ? (
+                  <button
+                    type="button"
+                    className="kp-button"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    {lang === "en" ? "Clear search" : "សម្អាតការស្វែងរក"}
+                  </button>
+                ) : undefined
+              }
+            />
+          ) : (
+            <div className="venues-grid">
             {filteredVenues.map((venue, i) => (
               <ScrollReveal key={venue.id} delay={i * 0.1}>
                 <motion.div whileHover={{ y: -10 }} className="venue-card">
@@ -203,6 +223,7 @@ const VenuesPage = () => {
               </ScrollReveal>
             ))}
           </div>
+          )}
         </div>
 
         {/* Venue Detail Modal */}

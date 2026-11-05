@@ -1,0 +1,106 @@
+/* Kokonut UI Bento Card styling with Koupreng gold illumination */
+
+.kokonut-bento-card {
+  position: relative;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdfbf7 100%);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(93, 67, 32, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.kokonut-bento-card:hover {
+  transform: translateY(-2px);
+  border-color: #d4af37;
+  box-shadow: 0 8px 24px rgba(93, 67, 32, 0.08);
+}
+
+.kokonut-bento-card__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.kokonut-bento-card__inner {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.kokonut-bento-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kokonut-bento-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fdf8ee 0%, #f6efe4 100%);
+  border: 1px solid rgba(185, 139, 66, 0.25);
+  box-shadow: 0 2px 6px rgba(185, 139, 66, 0.08);
+}
+
+.kokonut-bento-card__icon {
+  color: #8c6328;
+}
+
+.kokonut-bento-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #fdf5e8;
+  color: #7d6443;
+  border: 1px solid #eadfce;
+}
+
+.kokonut-bento-card__content {
+  flex: 1;
+}
+
+.kokonut-bento-card__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.4;
+  color: #2a1f10;
+}
+
+.kokonut-bento-card__description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #6d5432;
+}
+
+.kokonut-bento-card__action {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kokonut-bento-card {
+    transition: none !important;
+    transform: none !important;
+  }
+  .kokonut-bento-card__glow {
+    display: none !important;
+  }
+}

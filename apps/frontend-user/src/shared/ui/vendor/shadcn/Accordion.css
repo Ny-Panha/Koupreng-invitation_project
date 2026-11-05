@@ -1,0 +1,111 @@
+/* shadcn/ui Accordion styling with Koupreng luxury tokens */
+
+.shadcn-accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shadcn-accordion-item {
+  border: 1px solid #eadfce;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdfbf7 100%);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shadcn-accordion-item:hover:not(.is-disabled) {
+  border-color: #d4af37;
+  box-shadow: 0 4px 14px rgba(93, 67, 32, 0.05);
+}
+
+.shadcn-accordion-item.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.shadcn-accordion-header {
+  margin: 0;
+  padding: 0;
+}
+
+.shadcn-accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
+  padding: 16px 20px;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2a1f10;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.shadcn-accordion-trigger:focus-visible {
+  outline: 2px solid #b98b42;
+  outline-offset: -2px;
+}
+
+.shadcn-accordion-trigger:hover:not(:disabled) {
+  color: #8c6328;
+}
+
+.shadcn-accordion-trigger.is-open {
+  color: #8c6328;
+}
+
+.shadcn-accordion-trigger-text {
+  flex: 1;
+  padding-right: 12px;
+  line-height: 1.5;
+}
+
+.shadcn-accordion-chevron {
+  flex-shrink: 0;
+  color: #7d6443;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shadcn-accordion-chevron.is-open {
+  transform: rotate(180deg);
+  color: #b98b42;
+}
+
+.shadcn-accordion-content {
+  border-top: 1px solid #f6efe4;
+  background: #ffffff;
+  animation: shadcnAccordionDown 0.2s ease-out;
+}
+
+.shadcn-accordion-content-inner {
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #60584e;
+}
+
+@keyframes shadcnAccordionDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shadcn-accordion-chevron,
+  .shadcn-accordion-content {
+    animation: none !important;
+    transition: none !important;
+  }
+}
