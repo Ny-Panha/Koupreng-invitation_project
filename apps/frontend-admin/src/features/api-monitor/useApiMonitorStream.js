@@ -226,19 +226,24 @@ export function useApiMonitorStream() {
     const headers = { "Content-Type": "application/json" };
     if (token) headers.Authorization = `Bearer ${token}`;
 
-    try {
-      await fetch(`${baseUrl}/v1/admin/dev-monitor/clear`, {
-        method: "POST",
-        headers,
-        credentials: "include",
-      });
-      setEvents([]);
-      lastEventIdRef.current = null;
-    } catch {
-      // Clear local state anyway
-      setEvents([]);
-      lastEventIdRef.current = null;
+    const response = await fetch(`${baseUrl}/v1/admin/dev-monitor/clear`, {
+      method: "POST",
+      headers,
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to clear server monitor history: HTTP ${response.status} ${response.statusText}`);
     }
+
+    setEvents([]);
+    lastEventIdRef.current = null;
+    return { success: true };
+  }, []);
+
+  const clearLocalBuffer = useCallback(() => {
+    setEvents([]);
+    lastEventIdRef.current = null;
   }, []);
 
   return {
@@ -251,6 +256,7 @@ export function useApiMonitorStream() {
     setSelectedEvent,
     togglePause,
     clearHistory,
+    clearLocalBuffer,
     reconnect: connectStream,
   };
 }

@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef } from "react";
+import { sanitizeCsvCell } from "../../shared/utils/csvExport";
+import { sanitizePath } from "../../shared/utils/auditSanitizer";
 
 export function useQaSessionRecorder() {
   const [isRecording, setIsRecording] = useState(false);
@@ -53,7 +55,7 @@ export function useQaSessionRecorder() {
       requestId: e.requestId,
       actionId: e.actionId || "",
       method: e.method,
-      path: e.path,
+      path: sanitizePath(e.path),
       status: e.status,
       durationMs: e.durationMs,
       clientDurationMs: e.clientDurationMs || 0,
@@ -94,10 +96,11 @@ export function useQaSessionRecorder() {
         "errorCode",
         "timestamp",
       ];
+      const headerLine = headers.map(sanitizeCsvCell).join(",");
       const rows = sanitizedEvents.map((e) =>
-        headers.map((h) => JSON.stringify(e[h] ?? "")).join(",")
+        headers.map((h) => sanitizeCsvCell(e[h] ?? "")).join(",")
       );
-      const csvContent = [headers.join(","), ...rows].join("\n");
+      const csvContent = "\uFEFF" + [headerLine, ...rows].join("\r\n");
       blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       extension = "csv";
     } else {

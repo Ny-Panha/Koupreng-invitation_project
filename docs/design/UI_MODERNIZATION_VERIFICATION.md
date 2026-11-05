@@ -366,6 +366,55 @@ pm run test:e2e tests/e2e/phase9-tickets.spec.js (frontend-user) | **4 tests pas
 - `admin-users-list-1440.png`: User management page with All/Admins/Staff/Users filter tabs and protected account badges.
 - `admin-payment-verify-modal-1440.png`: Manual Payment Verification Modal showing authoritative amount, transaction reference input, and audit warning.
 
+## Batch 10 Verification: Admin Reports, Notifications, System Logs & API Monitor
+
+Completed 2026-11-05. Modernized the administrative observability, governance, and developer diagnostics surfaces in `apps/frontend-admin`. Reconciled documentation matrices, eliminated privileged operation vulnerabilities, enforced audit immutability, and verified real-time telemetry diagnostics.
+
+### Modified & Created Production Files
+
+| File | Purpose |
+|---|---|
+| `apps/frontend-admin/src/features/notifications/AdminNotificationsFeature.jsx` | Segmented Audience Mode selector (`USER` vs `BROADCAST`), recipient validation, broadcast confirmation modal, `javascript:` URL blocking, double-submission protection, delivery status filtering |
+| `apps/frontend-admin/src/features/notifications/AdminNotificationsFeature.test.jsx` | Vitest suite for notification recipient validation, broadcast modal confirmation, URL safety, and status filters (5/5 passed) |
+| `apps/frontend-admin/src/features/system-logs/AdminSystemLogsFeature.jsx` | Multi-dimensional action & resource filtering, automatic secret redaction, audit inspect drawer with formatted JSON, immutable ledger |
+| `apps/frontend-admin/src/features/system-logs/AdminSystemLogsFeature.test.jsx` | Vitest suite for log filtering, secret redaction, inspect drawer metadata rendering, and audit immutability (5/5 passed) |
+| `apps/frontend-admin/src/shared/utils/auditSanitizer.js` | Reusable secret redactor neutralizing Bearer tokens, inline credentials, JSON token values, and URL query secrets |
+| `apps/frontend-admin/src/shared/utils/auditSanitizer.test.js` | Unit test suite for credential and path redaction (4/4 passed) |
+| `apps/frontend-admin/src/features/api-monitor/useApiMonitorStream.js` | Fixed `clearHistory()` to check `response.ok` before resetting state; added `clearLocalBuffer()` for client-only view clearing |
+| `apps/frontend-admin/src/features/api-monitor/useApiMonitorStream.test.js` | Unit test suite for API monitor stream clear operations, HTTP error rejection, and CSV formula defense (5/5 passed) |
+| `apps/frontend-admin/src/features/api-monitor/RequestDetailsDrawer.jsx` | Integrated path sanitization for cURL commands and headers to prevent query secret exposure |
+| `apps/frontend-admin/src/features/api-monitor/useQaSessionRecorder.js` | Integrated `sanitizeCsvCell` for formula injection defense and path sanitization in telemetry exports |
+| `apps/frontend-admin/src/features/api-monitor/ApiMonitorFeature.jsx` | Added Clear Telemetry confirmation modal distinguishing shared server purge vs local buffer view clear |
+| `apps/frontend-admin/src/app/providers/AdminLanguageProvider.jsx` | Complete Khmer and English localization keys for notification broadcast modals, log inspection, and telemetry controls |
+| `apps/frontend-user/tests/e2e/batch10-admin-observability.spec.js` | Comprehensive Playwright E2E suite covering reports, notifications, system logs, and API monitor across desktop and mobile Chromium with Axe audits (8/8 passed) |
+| `docs/design/FULL_ROUTE_COVERAGE_MATRIX.md` | Reconciled Batch 9 routes and updated `/reports`, `/notifications`, `/system-logs`, `/dev/api-monitor` to `VERIFIED COMPLETE` |
+| `docs/design/UI_MODERNIZATION_ROADMAP.md` | Updated Batch 10 gate to verified status |
+
+### Executed Checks & Results
+
+| Command | Actual Result |
+|---|---|
+| `npm --prefix apps/frontend-admin test -- --maxWorkers=2` | **30 test files passed**, **175 tests passed (100%)**; exit 0 |
+| `npm --prefix apps/frontend-admin run lint` | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm --prefix apps/frontend-admin run build` | Production build passed in 619ms with **0 errors**; exit 0 |
+| `npm --prefix apps/frontend-user run lint` | Pass, **0 errors, 0 warnings**; exit 0 |
+| `npm --prefix apps/frontend-user run test:e2e -- tests/e2e/batch10-admin-observability.spec.js` | **8 tests passed (100%)** across desktop and mobile Chromium; 13.1s; exit 0; Axe 0 critical/serious violations |
+| `node scripts/sync-design-tokens.cjs --check` | Pass, **Verified 2 application token exports**; exit 0 |
+| `python scripts/validate-agent-routing.py` | Pass, **58 valid skills, 0 errors**; exit 0 |
+
+### Visual Evidence Captured (`docs/design/evidence/batch10/`)
+
+- `admin-reports-1440.png`: Executive overview with KPI cards, bilingual navigation, date preset controls, and snapshot metadata disclosure.
+- `admin-notifications-1440.png`: Notification workspace with Single User vs Broadcast selector, broadcast confirmation modal, and delivery status badges.
+- `admin-system-logs-1440.png`: Audit log table with action/resource filters, automatic secret redaction, and inspect drawer trigger.
+- `admin-api-monitor-320.png`: API telemetry monitor on 320px mobile viewport without horizontal overflow.
+- `admin-api-monitor-375.png`: API telemetry monitor on 375px mobile viewport.
+- `admin-api-monitor-390.png`: API telemetry monitor on 390px mobile viewport (Pixel 7 / iPhone standard).
+- `admin-api-monitor-430.png`: API telemetry monitor on 430px mobile viewport (iPhone Max).
+- `admin-api-monitor-768.png`: API telemetry monitor on 768px tablet viewport with stats cards and waterfall.
+- `admin-api-monitor-1024.png`: API telemetry monitor on 1024px desktop viewport with QA session recorder bar.
+- `admin-api-monitor-1440.png`: API telemetry monitor on 1440px wide desktop viewport with full live diagnostics table.
+
 ## Remaining scope
 
 Every canonical route's complete state matrix and end-to-end live-provider behavior remain open. This batch verifies shared foundation contracts, not the entire dashboard, invitations, studios, guest operations, admin tables or financial workflows. Next: customer HostShell/HostNav, event list/cards/workspace navigation; then marketing/catalog, account, builder, all invitation renderers and remaining admin screens in the [roadmap](UI_MODERNIZATION_ROADMAP.md).

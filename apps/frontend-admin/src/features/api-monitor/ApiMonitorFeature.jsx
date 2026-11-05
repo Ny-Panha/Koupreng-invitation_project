@@ -37,6 +37,7 @@ export default function ApiMonitorFeature() {
     setSelectedEvent,
     togglePause,
     clearHistory,
+    clearLocalBuffer,
     reconnect,
   } = useApiMonitorStream();
 
@@ -52,6 +53,27 @@ export default function ApiMonitorFeature() {
   // View state: 'table' | 'waterfall' | 'errors' | 'sql' | 'both'
   const [viewMode, setViewMode] = useState("table");
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const [clearError, setClearError] = useState(null);
+  const [clearBusy, setClearBusy] = useState(false);
+
+  const handleConfirmServerClear = async () => {
+    setClearBusy(true);
+    setClearError(null);
+    try {
+      await clearHistory();
+      setIsClearModalOpen(false);
+    } catch (err) {
+      setClearError(err?.message || "Failed to clear server telemetry history");
+    } finally {
+      setClearBusy(false);
+    }
+  };
+
+  const handleLocalClear = () => {
+    clearLocalBuffer();
+    setIsClearModalOpen(false);
+  };
 
   // Filters state
   const [search, setSearch] = useState("");
@@ -251,7 +273,7 @@ export default function ApiMonitorFeature() {
         isPaused={isPaused}
         onTogglePause={togglePause}
         onReconnect={reconnect}
-        onClear={clearHistory}
+        onClear={() => setIsClearModalOpen(true)}
         t={t}
         lang={lang}
       />
@@ -414,7 +436,7 @@ export default function ApiMonitorFeature() {
         onClose={setIsPaletteOpen}
         isPaused={isPaused}
         onTogglePause={togglePause}
-        onClear={clearHistory}
+        onClear={() => setIsClearModalOpen(true)}
         onSelectViewMode={setViewMode}
         onSetAppFilter={setAppFilter}
         onSetStatusFilter={setStatusFilter}
@@ -424,6 +446,88 @@ export default function ApiMonitorFeature() {
         onExport={(fmt) => exportSanitizedData(events, fmt)}
         lang={lang}
       />
+
+      {/* Clear Telemetry Confirmation Modal */}
+      {isClearModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="clear-telemetry-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+        >
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 shadow-xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                <ShieldAlert className="h-5 w-5" />
+              </div>
+              <div>
+                <h4
+                  id="clear-telemetry-title"
+                  className="text-base font-bold text-slate-900 dark:text-zinc-100"
+                >
+                  {lang === "km" ? "សម្អាតប្រវត្តិទិន្នន័យ API" : "Clear API Telemetry History"}
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                  {lang === "km"
+                    ? "ជ្រើសរើសជម្រើសសម្អាតទិន្នន័យ Telemetry"
+                    : "Select server purge or local buffer reset"}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
+              {lang === "km"
+                ? "ការសម្អាតប្រវត្តិលើ Server នឹងលុបទិន្នន័យ API telemetry សម្រាប់គ្រប់ Admin session ទាំងអស់។ អ្នកក៏អាចជ្រើសរើសសម្អាតតែផ្ទាំងទិដ្ឋភាពក្នុង browser របស់អ្នកបានផងដែរ។"
+                : "Clearing server history will permanently purge API telemetry for all active admin sessions on the server. Alternatively, you can clear only your local browser view."}
+            </p>
+
+            {clearError && (
+              <div
+                role="alert"
+                className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-xs text-rose-700 dark:text-rose-300"
+              >
+                {clearError}
+              </div>
+            )}
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-end gap-2">
+              <button
+                type="button"
+                className="btn btn-ghost text-xs w-full sm:w-auto"
+                disabled={clearBusy}
+                onClick={() => setIsClearModalOpen(false)}
+              >
+                {lang === "en" ? "Cancel" : "បោះបង់"}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-ghost border border-slate-200 dark:border-zinc-700 text-xs text-slate-700 dark:text-zinc-300 w-full sm:w-auto"
+                disabled={clearBusy}
+                onClick={handleLocalClear}
+              >
+                {lang === "en" ? "Clear Local View Only" : "សម្អាតតែក្នុង Browser"}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-primary bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold w-full sm:w-auto"
+                disabled={clearBusy}
+                onClick={handleConfirmServerClear}
+              >
+                {clearBusy ? (
+                  <>
+                    <span className="animate-spin text-xs">⟳</span>
+                    {lang === "en" ? "Clearing..." : "កំពុងសម្អាត..."}
+                  </>
+                ) : (
+                  lang === "en" ? "Clear Server History" : "សម្អាតលើ Server"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

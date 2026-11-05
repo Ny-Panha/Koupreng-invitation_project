@@ -14,6 +14,7 @@ import {
   Info,
 } from "lucide-react";
 import { validateApiContract } from "./apiContractValidator";
+import { sanitizePath } from "../../shared/utils/auditSanitizer";
 
 export function RequestDetailsDrawer({
   event,
@@ -56,7 +57,8 @@ export function RequestDetailsDrawer({
   const serverDuration = event.durationMs;
   const networkDeltaMs = Math.max(0, clientDuration - serverDuration);
 
-  const curlCommand = `curl -X ${event.method} "${window.location.origin}${event.path}" -H "X-Request-Id: ${event.requestId}"`;
+  const sanitizedPath = sanitizePath(event.path);
+  const curlCommand = `curl -X ${event.method} "${window.location.origin}${sanitizedPath}" -H "X-Request-Id: ${event.requestId}"`;
 
   const tabs = [
     { id: "overview", label: lang === "km" ? "ទិដ្ឋភាពទូទៅ" : "Overview" },
@@ -92,9 +94,9 @@ export function RequestDetailsDrawer({
           <span
             id="drawer-title"
             className="truncate font-mono text-xs font-semibold text-slate-700 dark:text-zinc-200"
-            title={event.path}
+            title={sanitizedPath}
           >
-            {event.path}
+            {sanitizedPath}
           </span>
         </div>
 
