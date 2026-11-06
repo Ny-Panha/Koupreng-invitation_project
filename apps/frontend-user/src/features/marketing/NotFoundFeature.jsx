@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import { useLanguageStore } from '@/stores/useLanguageStore';
+import BrandLogo from '@/shared/branding/BrandLogo';
 
 const NotFoundPage = () => {
   const en = useLanguageStore(state => state.lang) === 'en';
   return (
     <div role="main"
       style={{
-        padding: 80,
+        padding: "64px 24px",
         textAlign: "center",
         minHeight: "calc(100vh - 200px)",
       }}
     >
+      <BrandLogo variant="welcome" priority />
       <h1
         style={{
           fontFamily: "var(--ui-font)",

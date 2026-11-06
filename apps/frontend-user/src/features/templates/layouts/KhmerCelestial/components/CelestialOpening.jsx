@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BrandLogo from '@/shared/branding/BrandLogo';
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
@@ -134,13 +135,7 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
                 </h1>
               </div>
             ) : (
-              <img
-                className="kc-opening__brand"
-                src={KHMER_CELESTIAL_ASSETS.brandMark}
-                alt={logoAlt}
-                width="768"
-                height="512"
-              />
+              <BrandLogo variant="hero" priority />
             )}
             <span className="kc-opening__brand-highlight" aria-hidden="true" />
           </motion.div>

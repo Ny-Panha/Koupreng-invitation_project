@@ -1,0 +1,274 @@
+- generic [ref=f2e8]:
+  - generic:
+    - generic [ref=f2e9]:
+      - generic [ref=f2e15]: ភាសាធៀប
+      - combobox "ភាសាធៀប" [ref=f2e16]:
+        - option "ខ្មែរ" [selected]
+        - option "English"
+    - button "ផ្អាកតន្ត្រី" [pressed] [ref=f2e39] [cursor=pointer]
+  - generic "ព័ត៌មានធៀបអញ្ជើញ" [ref=f2e44]:
+    - link "គំរូសន្លឹកការ" [ref=f2e45] [cursor=pointer]:
+      - /url: /templates/browse
+    - main [active] [ref=f2e48]:
+      - generic [ref=f2e49]:
+        - heading "Sample wedding · ពិធីមង្គលការគំរូ" [level=2] [ref=f2e51]
+        - paragraph [ref=f2e52]: គ្រួសារទាំងសងខាង
+        - generic [ref=f2e53]:
+          - generic [ref=f2e54]:
+            - generic [ref=f2e55]: ខាងកូនប្រុស
+            - paragraph [ref=f2e56]:
+              - strong [ref=f2e57]: លោក ឃុន ស៊ីវខេង
+            - paragraph [ref=f2e58]:
+              - strong [ref=f2e59]: លោកស្រី គុយ ដាលី
+          - generic [ref=f2e60]:
+            - generic [ref=f2e61]: ខាងកូនស្រី
+            - paragraph [ref=f2e62]:
+              - strong [ref=f2e63]: លោក ឡាំ គីមឡុង
+            - paragraph [ref=f2e64]:
+              - strong [ref=f2e65]: លោកស្រី ឡេង យ៉ុងស៊ី
+      - generic [ref=f2e66]:
+        - heading "មានកិត្តិយសសូមគោរពអញ្ជើញ" [level=2] [ref=f2e68]
+        - paragraph [ref=f2e69]: ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។
+        - generic [ref=f2e71]:
+          - generic [ref=f2e72]:
+            - generic [ref=f2e73]: កូនប្រុសនាម
+            - strong [ref=f2e74]: កឿង វីរៈ
+          - emphasis [aria-hidden] [ref=f2e75]: "&"
+          - generic [ref=f2e76]:
+            - generic [ref=f2e77]: កូនស្រីនាម
+            - strong [ref=f2e78]: ឡុង សុម៉ាលី
+        - generic [ref=f2e79]:
+          - paragraph [ref=f2e80]: ខែធ្នូ
+          - generic [ref=f2e81]:
+            - generic [ref=f2e82]: ថ្ងៃព្រហស្បតិ៍
+            - strong [ref=f2e83]: ៣១
+            - generic [ref=f2e84]: ៥:០០ ល្ងាច
+          - paragraph [ref=f2e85]: ២០២៦
+        - paragraph [ref=f2e86]: សាលាឈូកគំរូ · Example Lotus Hallទីតាំងគំរូ · Illustrative location
+      - generic [ref=f2e88]:
+        - text: ✧
+        - generic [ref=f2e89]:
+          - generic [ref=f2e90]: ថ្ងៃដ៏មានអត្ថន័យ
+          - heading "កំណត់ថ្ងៃមង្គល" [level=2] [ref=f2e91]
+        - paragraph [ref=f2e93]:
+          - time [ref=f2e94]: ថ្ងៃព្រហស្បតិ៍ ទី៣១ ខែធ្នូ ឆ្នាំ២០២៦
+        - paragraph [ref=f2e95]: ៥:០០ ល្ងាច
+        - timer "ពេលវេលារហូតដល់កម្មវិធី" [ref=f2e96]:
+          - generic [ref=f2e97]:
+            - strong [ref=f2e98]: ៥៥
+            - generic [ref=f2e99]: ថ្ងៃ
+          - generic [ref=f2e100]:
+            - strong [ref=f2e101]: ០៧
+            - generic [ref=f2e102]: ម៉ោង
+          - generic [ref=f2e103]:
+            - strong [ref=f2e104]: ៣៥
+            - generic [ref=f2e105]: នាទី
+          - generic [ref=f2e106]:
+            - strong [ref=f2e107]: ១៩
+            - generic [ref=f2e108]: វិនាទី
+        - generic [ref=f2e109]:
+          - generic [ref=f2e110]:
+            - button "ខែមុន" [ref=f2e111] [cursor=pointer]
+            - heading "ខែធ្នូ ឆ្នាំ២០២៦" [level=3] [ref=f2e114]
+            - button "ខែបន្ទាប់" [ref=f2e115] [cursor=pointer]
+          - table "ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e118]:
+            - rowgroup [ref=f2e119]:
+              - row [ref=f2e120]:
+                - columnheader "អា" [ref=f2e121]
+                - columnheader "ច" [ref=f2e122]
+                - columnheader "អ" [ref=f2e123]
+                - columnheader "ពុ" [ref=f2e124]
+                - columnheader "ព្រ" [ref=f2e125]
+                - columnheader "សុ" [ref=f2e126]
+                - columnheader "ស" [ref=f2e127]
+            - rowgroup [ref=f2e128]:
+              - row [ref=f2e129]:
+                - cell [ref=f2e130]
+                - cell [ref=f2e131]
+                - cell [ref=f2e132]:
+                  - button "ទី១ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e133] [cursor=pointer]:
+                    - time [ref=f2e134]: ១
+                - cell [ref=f2e135]:
+                  - button "ទី២ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e136] [cursor=pointer]:
+                    - time [ref=f2e137]: ២
+                - cell [ref=f2e138]:
+                  - button "ទី៣ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e139] [cursor=pointer]:
+                    - time [ref=f2e140]: ៣
+                - cell [ref=f2e141]:
+                  - button "ទី៤ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e142] [cursor=pointer]:
+                    - time [ref=f2e143]: ៤
+                - cell [ref=f2e144]:
+                  - button "ទី៥ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e145] [cursor=pointer]:
+                    - time [ref=f2e146]: ៥
+              - row [ref=f2e147]:
+                - cell [ref=f2e148]:
+                  - button "ទី៦ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e149] [cursor=pointer]:
+                    - time [ref=f2e150]: ៦
+                - cell [ref=f2e151]:
+                  - button "ទី៧ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e152] [cursor=pointer]:
+                    - time [ref=f2e153]: ៧
+                - cell [ref=f2e154]:
+                  - button "ទី៨ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e155] [cursor=pointer]:
+                    - time [ref=f2e156]: ៨
+                - cell [ref=f2e157]:
+                  - button "ទី៩ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e158] [cursor=pointer]:
+                    - time [ref=f2e159]: ៩
+                - cell [ref=f2e160]:
+                  - button "ទី១០ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e161] [cursor=pointer]:
+                    - time [ref=f2e162]: ១០
+                - cell [ref=f2e163]:
+                  - button "ទី១១ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e164] [cursor=pointer]:
+                    - time [ref=f2e165]: ១១
+                - cell [ref=f2e166]:
+                  - button "ទី១២ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e167] [cursor=pointer]:
+                    - time [ref=f2e168]: ១២
+              - row [ref=f2e169]:
+                - cell [ref=f2e170]:
+                  - button "ទី១៣ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e171] [cursor=pointer]:
+                    - time [ref=f2e172]: ១៣
+                - cell [ref=f2e173]:
+                  - button "ទី១៤ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e174] [cursor=pointer]:
+                    - time [ref=f2e175]: ១៤
+                - cell [ref=f2e176]:
+                  - button "ទី១៥ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e177] [cursor=pointer]:
+                    - time [ref=f2e178]: ១៥
+                - cell [ref=f2e179]:
+                  - button "ទី១៦ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e180] [cursor=pointer]:
+                    - time [ref=f2e181]: ១៦
+                - cell [ref=f2e182]:
+                  - button "ទី១៧ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e183] [cursor=pointer]:
+                    - time [ref=f2e184]: ១៧
+                - cell [ref=f2e185]:
+                  - button "ទី១៨ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e186] [cursor=pointer]:
+                    - time [ref=f2e187]: ១៨
+                - cell [ref=f2e188]:
+                  - button "ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e189] [cursor=pointer]:
+                    - time [ref=f2e190]: ១៩
+              - row [ref=f2e191]:
+                - cell [ref=f2e192]:
+                  - button "ទី២០ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e193] [cursor=pointer]:
+                    - time [ref=f2e194]: ២០
+                - cell [ref=f2e195]:
+                  - button "ទី២១ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e196] [cursor=pointer]:
+                    - time [ref=f2e197]: ២១
+                - cell [ref=f2e198]:
+                  - button "ទី២២ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e199] [cursor=pointer]:
+                    - time [ref=f2e200]: ២២
+                - cell [ref=f2e201]:
+                  - button "ទី២៣ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e202] [cursor=pointer]:
+                    - time [ref=f2e203]: ២៣
+                - cell [ref=f2e204]:
+                  - button "ទី២៤ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e205] [cursor=pointer]:
+                    - time [ref=f2e206]: ២៤
+                - cell [ref=f2e207]:
+                  - button "ទី២៥ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e208] [cursor=pointer]:
+                    - time [ref=f2e209]: ២៥
+                - cell [ref=f2e210]:
+                  - button "ទី២៦ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e211] [cursor=pointer]:
+                    - time [ref=f2e212]: ២៦
+              - row [ref=f2e213]:
+                - cell [ref=f2e214]:
+                  - button "ទី២៧ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e215] [cursor=pointer]:
+                    - time [ref=f2e216]: ២៧
+                - cell [ref=f2e217]:
+                  - button "ទី២៨ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e218] [cursor=pointer]:
+                    - time [ref=f2e219]: ២៨
+                - cell [ref=f2e220]:
+                  - button "ទី២៩ ខែធ្នូ ឆ្នាំ២០២៦" [ref=f2e221] [cursor=pointer]:
+                    - time [ref=f2e222]: ២៩
+                - cell [ref=f2e223]:
+                  - button "ទី៣០ ខែធ្នូ ឆ្នាំ២០២៦ ពិធីមង្គលការ" [ref=f2e224] [cursor=pointer]:
+                    - time [ref=f2e225]: ៣០
+                    - generic [aria-hidden] [ref=f2e226]: ●
+                - cell [ref=f2e227]:
+                  - button "ទី៣១ ខែធ្នូ ឆ្នាំ២០២៦ ពិធីចម្បង ពិធីមង្គលការ" [pressed] [ref=f2e228] [cursor=pointer]:
+                    - time [ref=f2e229]: ៣១
+                    - generic [aria-hidden] [ref=f2e230]: ◆
+                - cell [ref=f2e231]
+                - cell [ref=f2e232]
+      - generic [ref=f2e233]:
+        - heading "កម្មវិធីមង្គលការ" [level=2] [ref=f2e235]
+        - generic [ref=f2e238]:
+          - generic [ref=f2e239]:
+            - heading "ពិធីសូត្រមន្ត ថ្ងៃពុធ ទី៣០ ខែធ្នូ ឆ្នាំ២០២៦ Family blessings" [level=3] [ref=f2e240]:
+              - text: ពិធីសូត្រមន្ត
+              - time [ref=f2e241]: ថ្ងៃពុធ ទី៣០ ខែធ្នូ ឆ្នាំ២០២៦
+              - generic [ref=f2e242]: Family blessings
+            - list [ref=f2e243]:
+              - listitem [ref=f2e244]:
+                - generic [ref=f2e245]: ៤:០០ រសៀល
+                - generic [ref=f2e250]:
+                  - heading "ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត" [level=4] [ref=f2e251]
+                  - paragraph [ref=f2e252]: Monk blessing ceremony
+          - generic [ref=f2e253]:
+            - heading "ពិធីមង្គលការ ថ្ងៃព្រហស្បតិ៍ ទី៣១ ខែធ្នូ ឆ្នាំ២០២៦ Wedding celebration" [level=3] [ref=f2e254]:
+              - text: ពិធីមង្គលការ
+              - time [ref=f2e255]: ថ្ងៃព្រហស្បតិ៍ ទី៣១ ខែធ្នូ ឆ្នាំ២០២៦
+              - generic [ref=f2e256]: Wedding celebration
+            - list [ref=f2e257]:
+              - listitem [ref=f2e258]:
+                - generic [ref=f2e259]: ៧:០០ ព្រឹក
+                - generic [ref=f2e264]:
+                  - heading "ពិធីហែជំនូន" [level=4] [ref=f2e265]
+                  - paragraph [ref=f2e266]: Traditional procession
+              - listitem [ref=f2e267]:
+                - generic [ref=f2e268]: ៩:០០ ព្រឹក
+                - generic [ref=f2e273]:
+                  - heading "ពិធីសំពះផ្ទឹម" [level=4] [ref=f2e274]
+                  - paragraph [ref=f2e275]: Wedding blessings
+              - listitem [ref=f2e276]:
+                - generic [ref=f2e277]: ៥:០០ ល្ងាច
+                - generic [ref=f2e282]:
+                  - heading "ពិធីពិសាភោជនាហារ" [level=4] [ref=f2e283]
+                  - paragraph [ref=f2e284]: Wedding reception
+        - paragraph [ref=f2e285]: ចប់កម្មវិធី សូមអរគុណ!
+      - generic [ref=f2e286]:
+        - heading "ទីតាំងកម្មវិធី" [level=2] [ref=f2e288]
+        - paragraph [ref=f2e290]: សាលាឈូកគំរូ · Example Lotus Hallទីតាំងគំរូ · Illustrative location
+        - figure [ref=f2e291]:
+          - img "ផែនទីគំរូ មិនមែនទីតាំងពិតទេ។ សូមកែសម្រួលផ្លូវ និងស្លាកមុនប្រើប្រាស់។" [ref=f2e292]:
+            - generic "ទីតាំងមង្គលការគំរូ" [ref=f2e294]
+            - generic "វត្តគំរូ" [ref=f2e299]
+            - generic "ចំណតគំរូ" [ref=f2e304]
+            - generic "ផ្លូវគំរូ" [ref=f2e311]
+          - generic [ref=f2e314]:
+            - text: ផែនទីទីតាំងជាគំនូរ
+            - paragraph [ref=f2e315]: ផែនទីគំរូ មិនមែនទីតាំងពិតទេ។ សូមកែសម្រួលផ្លូវ និងស្លាកមុនប្រើប្រាស់។
+            - list "ស្លាកលើគំនូរ" [ref=f2e316]:
+              - listitem [ref=f2e317]: ទីតាំងមង្គលការគំរូ
+              - listitem [ref=f2e318]: វត្តគំរូ
+              - listitem [ref=f2e319]: ចំណតគំរូ
+            - button "មើលផែនទីធំ" [ref=f2e321] [cursor=pointer]
+      - generic [ref=f2e322]:
+        - heading "កម្រងរូបភាព" [level=2] [ref=f2e324]
+        - region "រូបភាពមង្គលការ" [ref=f2e326]:
+          - generic [ref=f2e327]:
+            - button "ពង្រីករូបភាព" [ref=f2e329] [cursor=pointer]:
+              - img "Licensed demonstration wedding portrait" [ref=f2e330]
+            - button "រូបភាពមុន" [ref=f2e332] [cursor=pointer]
+            - button "រូបភាពបន្ទាប់" [ref=f2e335] [cursor=pointer]
+          - paragraph [ref=f2e338]: 1 / 2
+      - generic [ref=f2e339]:
+        - heading "សារជូនពរ" [level=2] [ref=f2e341]
+        - paragraph [ref=f2e343]: សូមផ្ញើពាក្យជូនពរជាមួយការបញ្ជាក់វត្តមានខាងក្រោម។ សារជូនពររបស់ភ្ញៀវជាព័ត៌មានឯកជន។
+      - generic [ref=f2e344]:
+        - heading "សូមបញ្ជាក់វត្តមាន" [level=2] [ref=f2e346]
+        - paragraph [ref=f2e348]: ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយធៀបការ។
+      - generic [ref=f2e349]:
+        - article [ref=f2e350]:
+          - heading "សេចក្តីថ្លែងអំណរគុណ" [level=2] [ref=f2e352]
+          - paragraph [ref=f2e354]: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះការអញ្ជើញចូលរួម ជាភ្ញៀវកិត្តិយសក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ។ សូមគោរពជូនពរដល់ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា និងភ្ញៀវកិត្តិយសទាំងអស់ សូមប្រកបតែភាពសុខដុមចម្រើន និងសុភមង្គល ក្នុងក្រុមគ្រួសារជានិច្ចនិរន្តរ៍។
+        - article [ref=f2e355]:
+          - heading "លិខិតសូមអភ័យទោស" [level=2] [ref=f2e357]
+          - paragraph [ref=f2e359]: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។
+        - paragraph [ref=f2e360]: កឿង វីរៈ & ឡុង សុម៉ាលី
+    - contentinfo [ref=f2e361]:
+      - img "គូព្រេង · Koupreng" [ref=f2e364]
+    - navigation "ផ្នែកធៀប" [ref=f2e365]:
+      - button "កាលបរិច្ឆេទ" [ref=f2e366] [cursor=pointer]
+      - button "ទីតាំង" [ref=f2e370] [cursor=pointer]
+      - button "រូបភាព" [ref=f2e374] [cursor=pointer]
+      - button "សារជូនពរ" [ref=f2e381] [cursor=pointer]
+      - button "កម្មវិធី" [ref=f2e386] [cursor=pointer]
+    - link "ប្រើគំរូនេះ" [ref=f2e391] [cursor=pointer]:
+      - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Droyal-garden-cinematic

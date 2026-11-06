@@ -5,6 +5,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import "./MarketingChrome.css";
 import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
+import BrandLogo from '@/shared/branding/BrandLogo';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -70,8 +71,8 @@ export default function Header() {
       <a className="kp-skip" href="#marketing-content">{copy("ទៅកាន់មាតិកា", "Skip to content")}</a>
       <header className={`kp-header${scrolled ? " kp-header--scrolled" : ""}`}>
         <div className="kp-header-inner">
-          <Link to="/" className="kp-brand" title={copy("ទំព័រដើម", "Home")}>
-            <img src="/branding/koupreng-mark.png" alt="" width="152" height="101" /><span>Koupreng{" "}<span className="kp-brand-note">{copy("ការអញ្ជើញ និងភ្ញៀវ", "Invitations & guests")}</span></span>
+          <Link to="/" className="kp-brand" aria-label={copy("គូព្រេង · ទំព័រដើម", "Koupreng · Home")}>
+            <BrandLogo priority decorative />
           </Link>
           <nav className="kp-desktop-nav" aria-label={copy("ម៉ឺនុយចម្បង", "Main navigation")}>
             {items.map(([path, label]) => <Link key={path} to={path} className="kp-nav-link" aria-current={active(path) ? "page" : undefined}>{label}</Link>)}
@@ -84,7 +85,7 @@ export default function Header() {
       {/* Native modality, Escape and focus return; explicit Tab wrap stays inside. */}
       <dialog ref={dialog} id="public-mobile-navigation" className="kp-mobile-dialog" aria-labelledby="kp-menu-title" onKeyDown={containMenuFocus} onClose={() => setMenuOpen(false)} onClick={(event) => { if (event.target === dialog.current) closeMenu(); }}>
         <div className="kp-mobile-inner">
-          <div className="kp-mobile-head"><h2 id="kp-menu-title">{copy("ម៉ឺនុយ", "Navigation")}</h2><button type="button" className="kp-menu-close" aria-label={copy("បិទម៉ឺនុយ", "Close navigation menu")} onClick={closeMenu} autoFocus><X aria-hidden="true" /></button></div>
+          <div className="kp-mobile-head"><h2 id="kp-menu-title" aria-label={copy("ម៉ឺនុយគូព្រេង", "Koupreng navigation")}><BrandLogo variant="compact" decorative /></h2><button type="button" className="kp-menu-close" aria-label={copy("បិទម៉ឺនុយ", "Close navigation menu")} onClick={closeMenu} autoFocus><X aria-hidden="true" /></button></div>
           <nav aria-label={copy("ម៉ឺនុយទូរស័ព្ទ", "Mobile navigation")}>{items.map(([path, label]) => <Link key={path} to={path} aria-current={active(path) ? "page" : undefined} onClick={closeMenu}>{label}<ArrowUpRight size={20} aria-hidden="true" /></Link>)}</nav>
           {languageControl}<div className="kp-mobile-account">{account}</div>
         </div>

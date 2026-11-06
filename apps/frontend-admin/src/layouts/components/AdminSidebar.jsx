@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Search, X, Sparkles, Plus } from "lucide-react";
+import { Search, X, Plus } from "lucide-react";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import AdminDialog from "./AdminDialog";
 import { adminNavigation, filterAdminNavigation } from "./adminNavigation";
+import BrandLogo from "../../shared/branding/BrandLogo";
 
 export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
   const { lang } = useAdminLanguage();
@@ -21,7 +22,7 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
     </aside>
     {isMobileOpen && <AdminDialog id="admin-mobile-navigation" label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"} className="admin-navigation-dialog" onClose={onNavigate}>
       <div className="admin-navigation-panel">
-        <div className="admin-dialog-heading"><div className="admin-drawer-brand"><Sparkles size={22} aria-hidden="true" /><span>គូព្រេង <small>KOUPRENG</small></span></div><button type="button" className="admin-icon-button" onClick={onNavigate} aria-label={en ? "Close navigation" : "បិទម៉ឺនុយ"}><X size={21} aria-hidden="true" /></button></div>
+        <div className="admin-dialog-heading"><div className="admin-drawer-brand"><BrandLogo variant="compact" priority /></div><button type="button" className="admin-icon-button" onClick={onNavigate} aria-label={en ? "Close navigation" : "បិទម៉ឺនុយ"}><X size={21} aria-hidden="true" /></button></div>
         <label className="admin-search-label" htmlFor="admin-mobile-page-search">{en ? "Find a page" : "ស្វែងរកទំព័រ"}</label>
         <div className="admin-search-field"><Search size={18} aria-hidden="true" /><input id="admin-mobile-page-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder={en ? "Page name" : "ឈ្មោះទំព័រ"} /></div>
         <nav className="admin-mobile-links" aria-label={en ? "Workspace pages" : "ទំព័រកន្លែងធ្វើការ"}>

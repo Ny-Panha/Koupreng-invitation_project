@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
-import logo from "../../assets/logo.png";
+import BrandLogo from "../branding/BrandLogo";
 import "./siteAnimations.css";
 
 const REVEAL_SELECTORS = [
@@ -79,8 +79,7 @@ function LogoPreloader({ disabled = false }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img src={logo} alt="" />
-            <span>Koupreng</span>
+            <BrandLogo variant="welcome" priority decorative />
           </motion.div>
           <motion.div
             className="kp-site-preloader__line"

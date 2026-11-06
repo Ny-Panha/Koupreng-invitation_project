@@ -8,6 +8,7 @@ import SaveTheDate from '../../shared/SaveTheDate';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import GalleryGrid from "../../shared/Gallery/GalleryGrid";
 import RsvpContainer from "../../shared/RSVP/RsvpContainer";
+import InvitationBranding from "../../shared/InvitationBranding";
 import ScheduleList from "../../shared/EventSchedule/ScheduleList";
 import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/preview/previewMessaging";
 
@@ -129,6 +130,7 @@ export default function DefaultTemplateLayout({
           <h3 style={{ fontSize: "1.2rem", fontWeight: "600", color: "#1f2937", marginBottom: "0.5rem" }}><InvitationLabel value={"ឆ្លើយតបការចូលរួម (RSVP)"} /></h3>
           <RsvpContainer children={children} />
         </div>
+        <InvitationBranding content={tpl} />
       </main>
 
       {/* Sticky Bottom Actions Bar */}

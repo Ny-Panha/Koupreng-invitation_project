@@ -1,0 +1,111 @@
+{
+  "source": "apps/frontend-user/public/branding/png/koupreng-logo-original-transparent.png",
+  "source_dimensions": [
+    1968,
+    724
+  ],
+  "symbol_crop": [
+    300,
+    0,
+    720,
+    300
+  ],
+  "symbol_mask": "Envelope isolated at the original ribbon occlusion edge; original colors preserved.",
+  "files": [
+    {
+      "path": "webp/koupreng-logo-128w.webp",
+      "bytes": 7138,
+      "sha256": "e4f40af4d59a7e77b8c324dbf656acab86e58ff3af1f9025f12d3f68e3dc634c"
+    },
+    {
+      "path": "webp/koupreng-logo-160w.webp",
+      "bytes": 10050,
+      "sha256": "151c38cdf7659863311c8b1cf715e1685a3ee0e7c56d51175c34e91e6c0edf20"
+    },
+    {
+      "path": "webp/koupreng-logo-192w.webp",
+      "bytes": 13046,
+      "sha256": "919b990c3d2ab86253a96821985dfe06885bae72a5685c7e8e963dc53badbbcc"
+    },
+    {
+      "path": "webp/koupreng-logo-256w.webp",
+      "bytes": 19870,
+      "sha256": "2a844c7ee849f9cc970412c79be9c520ae29e8b7977932528d80c0725c5f627f"
+    },
+    {
+      "path": "webp/koupreng-logo-320w.webp",
+      "bytes": 27394,
+      "sha256": "b18c45f25eb1b8444467c6ca6ef546efb06d07125fa23e3fd1495fdb2e7853ee"
+    },
+    {
+      "path": "webp/koupreng-logo-384w.webp",
+      "bytes": 35674,
+      "sha256": "28c13f221ebf631d8f645177e160161703fdb700b9e527592d22439fa4e48cec"
+    },
+    {
+      "path": "webp/koupreng-logo-480w.webp",
+      "bytes": 48906,
+      "sha256": "b7b89d6b62c9b1fa9e1b45feffbc69fead34f51f99571a11ad8ea6ac1e46ac14"
+    },
+    {
+      "path": "webp/koupreng-logo-640w.webp",
+      "bytes": 74998,
+      "sha256": "1702424db0388672df9e07772cc1daedca59fe6fe93a445418c91b4eb50a6ab6"
+    },
+    {
+      "path": "png/koupreng-logo-192w-transparent.png",
+      "bytes": 26204,
+      "sha256": "6a11c0fc43bc249c84ba36fbf507bc5710e2603919020e21d10692caa20c09dc"
+    },
+    {
+      "path": "png/koupreng-logo-384w-transparent.png",
+      "bytes": 81917,
+      "sha256": "5548d04dc11ece54c0a3a7e0a1fe16be273c6f925d4c268d86bf9dfe72219255"
+    },
+    {
+      "path": "png/koupreng-logo-640w-transparent.png",
+      "bytes": 193199,
+      "sha256": "d38afab7d67a868e66d97f294851598d2ed731a4e83bde4c6f97baee11a41cd1"
+    },
+    {
+      "path": "icons/favicon.ico",
+      "bytes": 5785,
+      "sha256": "46695f81b9379e4af00288dc2c9ea572d4eb68a86bac1b68cc64275d520976c5"
+    },
+    {
+      "path": "icons/icon-16.png",
+      "bytes": 617,
+      "sha256": "55525d30492f3b28141543c46993d239425b5f2181a31e41eb400cab24180e0b"
+    },
+    {
+      "path": "icons/icon-180.png",
+      "bytes": 26514,
+      "sha256": "a9946b28d5dd9986b743d536230d9b3e352df4f3992a7e23ad769e9b23660780"
+    },
+    {
+      "path": "icons/icon-192.png",
+      "bytes": 29544,
+      "sha256": "07f513cecf1208f37bf061c4c0de44d8c22939e12817438d6c518f893832d7b9"
+    },
+    {
+      "path": "icons/icon-32.png",
+      "bytes": 1733,
+      "sha256": "2eb675ba50a5a284cbac0198feff7a2ed545ff01e68e4af79f78a8037418d417"
+    },
+    {
+      "path": "icons/icon-48.png",
+      "bytes": 3191,
+      "sha256": "a9d8f9e870993a0b0ef7ffc5283cfd159056eb74991d644d1027bcda88dc7137"
+    },
+    {
+      "path": "icons/icon-512.png",
+      "bytes": 133381,
+      "sha256": "87aa2baaaa5d0e2e6b076ae5ea6cf4387af8e23170483f18b52776f2a7957507"
+    },
+    {
+      "path": "social-card.jpg",
+      "bytes": 83213,
+      "sha256": "81bdaaae051b6448eda0191a284363eb833ca49d61dd03b24618d20a46fb2384"
+    }
+  ]
+}

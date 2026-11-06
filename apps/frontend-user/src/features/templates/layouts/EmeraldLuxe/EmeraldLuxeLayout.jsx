@@ -2,6 +2,7 @@ import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import AuthoredClosing from '../../shared/AuthoredClosing';
+import InvitationBranding from '../../shared/InvitationBranding';
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -338,6 +339,7 @@ export default function EmeraldLuxeLayout({
       )}
 
       {/* Bottom Sticky Action */}
+      <InvitationBranding content={tpl} />
       {!preview && useTemplateLink && (
         <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#061510", borderTop: "1px solid var(--el-border-gold)", padding: "0.75rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 80 }}>
           <span style={{ fontSize: "0.85rem", color: "var(--el-gold-primary)", fontFamily: "Cinzel, serif" }}>

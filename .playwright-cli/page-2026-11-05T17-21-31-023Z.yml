@@ -1,0 +1,333 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - link "ទៅកាន់មាតិកា" [ref=e5] [cursor=pointer]:
+      - /url: "#marketing-content"
+    - banner [ref=e6]:
+      - generic [ref=e7]:
+        - link "គូព្រេង · ទំព័រដើម" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e12]:
+          - switch "ប្រើភាសាអង់គ្លេស" [ref=e13] [cursor=pointer]:
+            - generic [aria-hidden] [ref=e18]:
+              - generic [ref=e19]: ខ្មែរ
+              - generic [ref=e20]: EN
+          - button "ប្ដូរទៅផ្ទាំងងងឹត" [ref=e21] [cursor=pointer]
+        - button "បើកម៉ឺនុយ" [ref=e24] [cursor=pointer]
+    - main [ref=e26]:
+      - generic [ref=e27]:
+        - region [ref=e28]:
+          - generic [ref=e29]:
+            - paragraph [ref=e30]: ធៀបការមង្គលការឌីជីថល
+            - heading "ធៀបការដែលបង្ហាញ រឿងរ៉ាវរបស់អ្នក។" [level=1] [ref=e31]:
+              - generic [ref=e32]: ធៀបការដែលបង្ហាញ
+              - generic [ref=e33]: រឿងរ៉ាវរបស់អ្នក។
+            - paragraph [ref=e34]: ជ្រើសរើសគំរូដែលពេញចិត្ត បញ្ចូលព័ត៌មានមង្គលការ និងផ្ញើតំណភ្ជាប់ទៅកាន់ភ្ញៀវដោយទំនុកចិត្ត។ គ្រប់គ្រងការឆ្លើយតបយ៉ាងងាយស្រួលនៅកន្លែងតែមួយ។
+            - generic [ref=e35]:
+              - link "បង្កើតសន្លឹកការ" [ref=e36] [cursor=pointer]:
+                - /url: /app/events/new
+              - link "មើលគំរូធៀបការ" [ref=e40] [cursor=pointer]:
+                - /url: /templates
+            - paragraph [ref=e44]: មើលគំរូភ្លាមៗ ដោយមិនបាច់ចុះឈ្មោះ
+          - generic [ref=e48]:
+            - button "សាកប្រើធៀបការគំរូ" [ref=e49] [cursor=pointer]
+            - figure "Phone preview" [ref=e51]:
+              - generic [ref=e54]:
+                - generic [ref=e56]: 9:41
+                - generic [ref=e67]:
+                  - img "រូបថតគូស្នេហ៍សម្រាប់គំរូបង្ហាញសូត្រមង្គល" [ref=e68]
+                  - generic [ref=e69]:
+                    - paragraph [ref=e70]: សិរីសួស្តីអាពាហ៍ពិពាហ៍
+                    - strong [ref=e71]:
+                      - text: ឡាំ គីមឡុង
+                      - generic [ref=e72]: "&"
+                      - text: ឡេង យ៉ុងស៊ី
+                    - paragraph [ref=e73]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+              - generic [ref=e74]:
+                - generic [ref=e75]: សូត្រមង្គល ជាគំរូបង្ហាញ
+                - generic [ref=e76]:
+                  - link "មើលគំរូពេញលេញ" [ref=e77] [cursor=pointer]:
+                    - /url: /templates/silk-heritage
+                  - button "មើលត្រង់" [ref=e81] [cursor=pointer]
+            - paragraph [ref=e82]: គំរូបង្ហាញ មិនបង្កើតកម្មវិធី ឬផ្ញើទៅភ្ញៀវទេ។
+        - region [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - paragraph [ref=e86]: គំរូសន្លឹកការប្រណីត
+              - heading "ជ្រើសរើសគំរូដែលសាកសមនឹងថ្ងៃពិសេស" [level=2] [ref=e87]
+            - link "មើលគំរូទាំងអស់" [ref=e88] [cursor=pointer]:
+              - /url: /templates
+          - generic [ref=e92]:
+            - article [ref=e93]:
+              - link "មើលគំរូ Royal Garden Cinematic" [ref=e94] [cursor=pointer]:
+                - /url: /templates/royal-garden-cinematic
+                - img "Royal Garden Cinematic" [ref=e95]
+                - generic [ref=e96]: មើលគំរូ
+              - generic [ref=e100]:
+                - paragraph [ref=e101]: ប្រពៃណីខ្មែរ
+                - heading "Royal Garden Cinematic" [level=3] [ref=e102]
+                - paragraph [ref=e103]: ក្បាច់ខ្មែរពណ៌មាសលើផ្ទៃពណ៌ខៀវ ជាមួយកម្មវិធីមង្គលការ។
+                - paragraph [ref=e104]: ប្រណីត · រួមបញ្ចូលក្នុងគម្រោង Premium
+                - generic [ref=e105]:
+                  - link "ប្រើគំរូនេះ" [ref=e106] [cursor=pointer]:
+                    - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Droyal-garden-cinematic
+                  - link "មើលគំរូ" [ref=e110] [cursor=pointer]:
+                    - /url: /templates/royal-garden-cinematic
+            - article [ref=e111]:
+              - link "មើលគំរូ សូត្រមង្គល / Silk Heritage" [ref=e112] [cursor=pointer]:
+                - /url: /templates/silk-heritage
+                - img "សូត្រមង្គល / Silk Heritage" [ref=e113]
+                - generic [ref=e114]: មើលគំរូ
+              - generic [ref=e118]:
+                - paragraph [ref=e119]: ប្រពៃណីខ្មែរ
+                - heading "សូត្រមង្គល / Silk Heritage" [level=3] [ref=e120]
+                - paragraph [ref=e121]: សន្លឹកការបែបសូត្រប្រណីត ពណ៌ក្រហមទុំ ក្រដាសភ្លុក និងមាសសាំប៉ាញ ជាមួយព័ត៌មានគ្រួសារ កម្មវិធីមង្គលការ និងការអញ្ជើញដ៏ថ្លៃថ្នូរ។
+                - paragraph [ref=e122]: គំរូឥតគិតថ្លៃ
+                - generic [ref=e123]:
+                  - link "ប្រើគំរូនេះ" [ref=e124] [cursor=pointer]:
+                    - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Dsilk-heritage
+                  - link "មើលគំរូ" [ref=e128] [cursor=pointer]:
+                    - /url: /templates/silk-heritage
+            - article [ref=e129]:
+              - link "មើលគំរូ ខ្មែរចន្ទតារា" [ref=e130] [cursor=pointer]:
+                - /url: /templates/khmer-celestial
+                - img "ខ្មែរចន្ទតារា" [ref=e131]
+                - generic [ref=e132]: មើលគំរូ
+              - generic [ref=e136]:
+                - paragraph [ref=e137]: ប្រពៃណីខ្មែរ
+                - heading "ខ្មែរចន្ទតារា" [level=3] [ref=e138]
+                - paragraph [ref=e139]: គំរូអាពាហ៍ពិពាហ៍ខ្មែរបែបសួនផ្កាប្រណិត ជាមួយផ្កាពណ៌ស ស្លឹកបៃតង ក្រដាសភ្លុក និងមាសសាំប៉ាញ។
+                - paragraph [ref=e140]: គំរូឥតគិតថ្លៃ
+                - generic [ref=e141]:
+                  - link "ប្រើគំរូនេះ" [ref=e142] [cursor=pointer]:
+                    - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Dkhmer-celestial
+                  - link "មើលគំរូ" [ref=e146] [cursor=pointer]:
+                    - /url: /templates/khmer-celestial
+        - region [ref=e147]:
+          - group "គំរូបង្ហាញសូត្រមង្គល" [ref=e148]:
+            - generic [ref=e150]:
+              - paragraph [ref=e151]: សូត្រមង្គល
+              - paragraph [ref=e152]: ដោយក្តីរីករាយ
+              - generic [ref=e156]:
+                - strong [ref=e157]: កម្មវិធីពិធី
+                - paragraph [ref=e158]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+                - paragraph [ref=e159]: ១៧:០០ — ពិធីជប់លៀង
+              - generic [ref=e164]:
+                - strong [ref=e165]: ទីតាំងគំរូ
+                - paragraph [ref=e166]: សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ
+              - generic [ref=e170]:
+                - strong [ref=e171]: RSVP
+                - paragraph [ref=e172]: ឆ្លើយតបតាមតំណភ្ជាប់សន្លឹកការពិត
+              - generic [ref=e173]: គំរូបង្ហាញប៉ុណ្ណោះ
+            - paragraph [ref=e174]: រូបភាពគំរូ · មើលមុខងារពិតក្នុងគំរូពេញលេញ
+          - generic [ref=e175]:
+            - paragraph [ref=e176]: ពីការអញ្ជើញ ដល់ការជួបជុំ
+            - heading "ព័ត៌មានពិធីច្បាស់លាស់ សម្រាប់ភ្ញៀវរបស់អ្នក។" [level=2] [ref=e177]
+            - group "ជ្រើសរើសផ្នែកគំរូ" [ref=e178]:
+              - button "ការអញ្ជើញ" [ref=e179] [cursor=pointer]
+              - button "រឿងរ៉ាវរបស់អ្នក" [ref=e180] [cursor=pointer]
+              - button "ព័ត៌មានសម្រាប់ភ្ញៀវ" [pressed] [ref=e181] [cursor=pointer]
+            - generic [ref=e184]:
+              - heading "ព័ត៌មានច្បាស់លាស់ សម្រាប់ភ្ញៀវគ្រប់រូប។" [level=3] [ref=e185]
+              - paragraph [ref=e186]: ភ្ញៀវមើលកម្មវិធី ទីតាំង និងឆ្លើយតប RSVP នៅលើសន្លឹកការដែលបានផ្សព្វផ្សាយ។
+            - link "មើលគំរូពេញលេញ" [ref=e187] [cursor=pointer]:
+              - /url: /templates/silk-heritage
+        - region [ref=e191]:
+          - generic [ref=e192]:
+            - paragraph [ref=e193]: សម្រាប់ការរៀបចំថ្ងៃពិសេស
+            - heading "សន្លឹកការ និងភ្ញៀវ នៅកន្លែងតែមួយ។" [level=2] [ref=e194]
+            - paragraph [ref=e195]: រៀបចំព័ត៌មានពិធី ចែករំលែកតំណភ្ជាប់ និងតាមដានការឆ្លើយតបភ្ញៀវក្នុងគណនីរបស់អ្នក។
+            - list [ref=e196]:
+              - listitem [ref=e197]:
+                - generic [ref=e201]:
+                  - strong [ref=e202]: ការអញ្ជើញផ្ទាល់ខ្លួន
+                  - paragraph [ref=e203]: ព័ត៌មានគ្រួសារ កម្មវិធី និងទីតាំង សម្រាប់ភ្ញៀវរបស់អ្នក។
+              - listitem [ref=e204]:
+                - generic [ref=e207]:
+                  - strong [ref=e208]: ដឹងថាអ្នកណានឹងចូលរួម
+                  - paragraph [ref=e209]: មើលចម្លើយ និងចំនួនអ្នកចូលរួម ដើម្បីត្រៀមទទួលភ្ញៀវ។
+            - link "ចាប់ផ្តើមបង្កើត" [ref=e210] [cursor=pointer]:
+              - /url: /templates/browse
+          - group "គំរូការគ្រប់គ្រងចម្លើយភ្ញៀវ" [ref=e214]:
+            - generic [ref=e215]:
+              - generic [ref=e216]: ចម្លើយភ្ញៀវ
+              - generic [ref=e221]: គំរូបង្ហាញ
+            - generic [ref=e222]:
+              - heading "រៀបចំបញ្ជីភ្ញៀវរបស់អ្នក" [level=3] [ref=e223]
+              - paragraph [ref=e224]: ឈ្មោះ និងចម្លើយខាងក្រោមគឺជាទិន្នន័យគំរូ។
+              - group "សាកមើលចម្លើយគំរូ" [ref=e225]:
+                - button "ទាំងអស់" [pressed] [ref=e226] [cursor=pointer]
+                - button "ចូលរួម" [ref=e227] [cursor=pointer]
+                - button "រង់ចាំ" [ref=e228] [cursor=pointer]
+              - table [ref=e229]:
+                - caption [ref=e230]: ទិន្នន័យគំរូនៃចម្លើយភ្ញៀវ
+                - rowgroup [ref=e231]:
+                  - row [ref=e232]:
+                    - columnheader "ភ្ញៀវ" [ref=e233]
+                    - columnheader "ស្ថានភាព" [ref=e234]
+                    - columnheader "ចំនួន" [ref=e235]
+                - rowgroup [ref=e236]:
+                  - row [ref=e237]:
+                    - rowheader "ដារ៉ា" [ref=e238]
+                    - cell "ចូលរួម" [ref=e239]
+                    - cell "2" [ref=e241]
+                  - row [ref=e242]:
+                    - rowheader "ស្រីនិត" [ref=e243]
+                    - cell "រង់ចាំ" [ref=e244]
+                    - cell "1" [ref=e246]
+                  - row [ref=e247]:
+                    - rowheader "វិសាល" [ref=e248]
+                    - cell "មិនចូលរួម" [ref=e249]
+                    - cell "2" [ref=e251]
+            - paragraph [ref=e252]: ភ្ញៀវឆ្លើយតបនៅលើសន្លឹកការដែលបានផ្សព្វផ្សាយ។ នេះជាគំរូបង្ហាញមុខងារ។
+        - region [ref=e253]:
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - paragraph [ref=e256]: ពីគំនិត ទៅកាន់ការអញ្ជើញ
+              - heading "បីជំហាន។ ថ្ងៃពិសេសមួយ។" [level=2] [ref=e257]
+            - paragraph [ref=e258]: ចាប់ផ្តើមពីរចនាបទដែលអ្នកពេញចិត្ត រួចរៀបចំព័ត៌មានឱ្យភ្ញៀវ។
+          - region "ស្ថិតិនៃការរចនា" [ref=e259]:
+            - article [ref=e260]:
+              - strong [ref=e261]: "0"
+              - generic [ref=e262]: គំរូរចនាប្រណីត
+            - article [ref=e263]:
+              - strong [ref=e264]: 0%
+              - generic [ref=e265]: គាំទ្រអក្សរខ្មែរ ១០០%
+            - article [ref=e266]:
+              - strong [ref=e267]: "0"
+              - generic [ref=e268]: ទម្រង់អេក្រង់ឆ្លើយតប
+          - list [ref=e269]:
+            - listitem [ref=e270]:
+              - generic [aria-hidden] [ref=e272]: "01"
+              - heading [level=3] [ref=e277]:
+                - link "ជ្រើសគំរូ" [ref=e278] [cursor=pointer]:
+                  - /url: /templates
+              - paragraph [ref=e282]: មើលគំរូពេញលេញ ហើយជ្រើសរើសរចនាបទសម្រាប់ពិធីរបស់អ្នក។
+            - listitem [ref=e283]:
+              - generic [aria-hidden] [ref=e285]: "02"
+              - heading [level=3] [ref=e289]:
+                - link "កែសម្រួលព័ត៌មាន" [ref=e290] [cursor=pointer]:
+                  - /url: /templates/browse
+              - paragraph [ref=e294]: ចូលគណនី រួចបញ្ចូលឈ្មោះ រូបភាព កម្មវិធី និងទីតាំងពិធី។
+            - listitem [ref=e295]:
+              - generic [aria-hidden] [ref=e297]: "03"
+              - heading [level=3] [ref=e301]:
+                - link "ចែករំលែក និងទទួលចម្លើយ" [ref=e302] [cursor=pointer]:
+                  - /url: /templates/browse
+              - paragraph [ref=e306]: ពិនិត្យសន្លឹកការ រួចផ្សព្វផ្សាយ និងផ្ញើតំណភ្ជាប់ទៅភ្ញៀវ។ តាមដានចម្លើយក្នុងគណនីរបស់អ្នក។
+        - region [ref=e307]:
+          - generic [ref=e308]:
+            - generic [ref=e309]:
+              - paragraph [ref=e310]: ស្វែងយល់មុនជ្រើសរើស
+              - heading "គំរូដែលអ្នកពេញចិត្ត។ កញ្ចប់ដែលអ្នកត្រូវការ។" [level=2] [ref=e311]
+            - paragraph [ref=e312]: ស្វែងយល់ពីគំរូ និងកញ្ចប់សេវាកម្ម។ ពិនិត្យព័ត៌មានកញ្ចប់បច្ចុប្បន្ន និងសិទ្ធិរបស់អ្នកមុនបញ្ជាក់។
+          - generic "កញ្ចប់បច្ចុប្បន្ន" [ref=e313]:
+            - article [ref=e314]:
+              - generic [ref=e315]:
+                - heading "Basic" [level=3] [ref=e316]
+                - paragraph [ref=e317]: US$0.01
+                - paragraph [ref=e318]: USD / 365 ថ្ងៃ
+              - list [ref=e319]:
+                - listitem [ref=e320]: "សន្លឹកការ: 1"
+                - listitem [ref=e323]: "ភ្ញៀវក្នុងមួយសន្លឹកការ: 3"
+              - link "មើលព័ត៌មានកញ្ចប់" [ref=e326] [cursor=pointer]:
+                - /url: /pricing
+            - article [ref=e327]:
+              - generic [ref=e328]:
+                - heading "Pro" [level=3] [ref=e329]
+                - paragraph [ref=e330]: US$199.00
+                - paragraph [ref=e331]: USD / 365 ថ្ងៃ
+              - list [ref=e332]:
+                - listitem [ref=e333]: "សន្លឹកការ: 20"
+                - listitem [ref=e336]: "ភ្ញៀវក្នុងមួយសន្លឹកការ: 500"
+                - listitem [ref=e339]: រួមបញ្ចូលសិទ្ធិគំរូប្រណិត
+                - listitem [ref=e342]: រួមបញ្ចូលការរៀបចំកន្លែងអង្គុយ
+                - listitem [ref=e345]: រួមបញ្ចូលការស្កេនចូលពិធី
+              - link "មើលព័ត៌មានកញ្ចប់" [ref=e348] [cursor=pointer]:
+                - /url: /pricing
+            - article [ref=e349]:
+              - generic [ref=e350]:
+                - heading "Premium" [level=3] [ref=e351]
+                - paragraph [ref=e352]: US$499.00
+                - paragraph [ref=e353]: USD / 365 ថ្ងៃ
+              - list [ref=e354]:
+                - listitem [ref=e355]: "សន្លឹកការ: 999"
+                - listitem [ref=e358]: "ភ្ញៀវក្នុងមួយសន្លឹកការ: 5,000"
+                - listitem [ref=e361]: រួមបញ្ចូលសិទ្ធិគំរូប្រណិត
+                - listitem [ref=e364]: រួមបញ្ចូលការរៀបចំកន្លែងអង្គុយ
+                - listitem [ref=e367]: រួមបញ្ចូលការស្កេនចូលពិធី
+              - link "មើលព័ត៌មានកញ្ចប់" [ref=e370] [cursor=pointer]:
+                - /url: /pricing
+          - generic [ref=e371]:
+            - generic [ref=e373]:
+              - generic [ref=e374]: ជំហាន ១
+              - generic [ref=e381]:
+                - heading "គំរូសន្លឹកការរបស់អ្នក" [level=3] [ref=e382]
+                - paragraph [ref=e383]: គំរូកំណត់រចនាបទសន្លឹកការ។ មើលគំរូជាមុនបាន។ គំរូប្រណិតនីមួយៗមានព័ត៌មានតម្លៃ និងសិទ្ធិប្រើប្រាស់ដែលត្រូវពិនិត្យពេលជ្រើសរើស។
+            - generic [ref=e385]:
+              - generic [ref=e386]: ជំហាន ២
+              - generic [ref=e392]:
+                - heading "កញ្ចប់សេវាកម្មរបស់អ្នក" [level=3] [ref=e393]
+                - paragraph [ref=e394]: កញ្ចប់កំណត់ចំនួនសន្លឹកការ កម្រិតភ្ញៀវ រយៈពេល និងមុខងារដែលរួមបញ្ចូល។ ចូលគណនីដើម្បីមើលព័ត៌មានបច្ចុប្បន្ន រួមទាំងសិទ្ធិគំរូប្រណិត។
+          - generic [ref=e395]:
+            - paragraph [ref=e396]: ជ្រើសរើសគំរូ ចូលគណនី រួចពិនិត្យតម្លៃ និងសិទ្ធិមុនបង្កើត។ ការមើលគំរូមិនបើកសិទ្ធិប្រណិតទេ។
+            - generic [ref=e397]:
+              - link "ស្វែងយល់ពីកញ្ចប់ និងសិទ្ធិ" [ref=e398] [cursor=pointer]:
+                - /url: /pricing
+              - link "សួរអំពីកញ្ចប់" [ref=e402] [cursor=pointer]:
+                - /url: /contact
+        - region [ref=e403]:
+          - generic [ref=e404]:
+            - paragraph [ref=e405]: ព័ត៌មានមុនចាប់ផ្តើម
+            - heading "សំណួររបស់អ្នក។ ចម្លើយច្បាស់លាស់។" [level=2] [ref=e406]
+          - generic [ref=e407]:
+            - group [ref=e408]:
+              - generic "អាចមើលគំរូដោយមិនចូលគណនីបានទេ?" [ref=e409] [cursor=pointer]
+            - group [ref=e411]:
+              - generic "តើអាចកែសម្រួលអ្វីខ្លះ?" [ref=e412] [cursor=pointer]
+            - group [ref=e414]:
+              - generic "ភ្ញៀវឆ្លើយតបនៅឯណា?" [ref=e415] [cursor=pointer]
+            - group [ref=e417]:
+              - generic "ការមើលគំរូបើកសិទ្ធិប្រើគំរូប្រណិតទេ?" [ref=e418] [cursor=pointer]
+            - group [ref=e420]:
+              - generic "តើការទូទាត់ត្រូវបានបញ្ជាក់ដោយរបៀបណា?" [ref=e421] [cursor=pointer]
+        - region [ref=e423]:
+          - generic [ref=e427]:
+            - heading "ចង់បានការណែនាំបន្ថែម?" [level=2] [ref=e428]
+            - paragraph [ref=e429]: សួរអំពីគំរូ កញ្ចប់ ឬរបៀបរៀបចំសន្លឹកការរបស់អ្នក។ ក្រុមការងាររីករាយស្វែងយល់ពីតម្រូវការរបស់អ្នក។
+          - link "ទាក់ទងក្រុមការងារ" [ref=e430] [cursor=pointer]:
+            - /url: /contact
+        - region [ref=e434]:
+          - heading "ចាប់ផ្តើមថ្ងៃពិសេសរបស់អ្នក ដោយការអញ្ជើញដ៏មានន័យ។" [level=2] [ref=e435]
+          - paragraph [ref=e436]: ជ្រើសរើសគំរូដែលអ្នកពេញចិត្ត ហើយបញ្ចូលរឿងរ៉ាវរបស់អ្នក។
+          - generic [ref=e437]:
+            - link "មើលគំរូសន្លឹកការ" [ref=e438] [cursor=pointer]:
+              - /url: /templates
+            - link "ចាប់ផ្តើមបង្កើត" [ref=e442] [cursor=pointer]:
+              - /url: /app/events/new
+    - contentinfo [ref=e446]:
+      - generic [ref=e447]:
+        - generic [ref=e448]:
+          - link "គូព្រេង · ទំព័រដើម" [ref=e449] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e452]: សន្លឹកការឌីជីថល និងការគ្រប់គ្រងភ្ញៀវ សម្រាប់ថ្ងៃពិសេសរបស់អ្នក។
+        - navigation "ស្វែងរក" [ref=e453]:
+          - paragraph [ref=e454]: ស្វែងរក
+          - link "គំរូសន្លឹកការ" [ref=e455] [cursor=pointer]:
+            - /url: /templates
+          - link "កញ្ចប់ និងសិទ្ធិ" [ref=e456] [cursor=pointer]:
+            - /url: /pricing
+          - link "ទីកន្លែង" [ref=e457] [cursor=pointer]:
+            - /url: /venues
+        - navigation "ជំនួយ" [ref=e458]:
+          - paragraph [ref=e459]: នៅជាមួយអ្នក
+          - link "ទាក់ទងយើង" [ref=e460] [cursor=pointer]:
+            - /url: /contact
+          - link "ជំនួយ" [ref=e461] [cursor=pointer]:
+            - /url: /contact
+          - link "ចូលគណនី" [ref=e462] [cursor=pointer]:
+            - /url: /login
+      - generic [ref=e463]:
+        - generic [ref=e464]: © 2026 Koupreng. រក្សាសិទ្ធិគ្រប់យ៉ាង។
+        - generic [ref=e465]: រចនាជាមួយក្តីស្រលាញ់ សម្រាប់គូស្វាមីភរិយាខ្មែរ
+  - complementary [ref=e466]:
+    - button "បើកការជជែកជំនួយ" [ref=e467] [cursor=pointer]

@@ -1,0 +1,111 @@
+- generic [ref=f1e4]:
+  - generic [ref=f1e7]:
+    - main [ref=f1e32]:
+      - region [ref=f1e33]:
+        - generic [ref=f1e34]:
+          - paragraph [ref=f1e38]: TOGETHER WITH OUR FAMILIES
+          - heading "Dara Sophea" [active] [level=1] [ref=f1e39]:
+            - generic [ref=f1e40]: Dara
+            - generic [aria-hidden] [ref=f1e41]: "&"
+            - generic [ref=f1e42]: Sophea
+          - paragraph [ref=f1e43]: Saturday, 20 February 2027
+          - paragraph [ref=f1e44]: 17:30
+          - paragraph [ref=f1e45]: Garden House
+          - link "An invitation, with love" [ref=f1e46] [cursor=pointer]:
+            - /url: "#sh-formal"
+            - text: An invitation, with love
+            - generic [aria-hidden] [ref=f1e47]: ↓
+        - figure [ref=f1e48]:
+          - img "The couple's portrait" [ref=f1e49]
+          - generic [aria-hidden] [ref=f1e50]: D & S
+      - region [ref=f1e51]:
+        - heading "You are warmly invited" [level=2] [ref=f1e56]
+        - paragraph [ref=f1e57]: Dara & Sophea
+        - generic [ref=f1e58]:
+          - generic [ref=f1e59]: Dara
+          - generic [aria-hidden] [ref=f1e60]: "&"
+          - generic [ref=f1e61]: Sophea
+        - paragraph [ref=f1e62]: Saturday, 20 February 2027
+      - generic [ref=f1e63]:
+        - paragraph [ref=f1e64]: COUNTING THE DAYS TO OUR CELEBRATION
+        - generic [ref=f1e65]:
+          - heading "Save the date" [level=2] [ref=f1e66]
+          - paragraph [ref=f1e67]:
+            - time [ref=f1e68]: Saturday, 20 February 2027
+          - paragraph [ref=f1e69]: 17:30 · Asia/Phnom_Penh
+          - timer "Time until the celebration" [ref=f1e70]:
+            - generic [ref=f1e71]:
+              - strong [ref=f1e72]: "106"
+              - generic [ref=f1e73]: Days
+            - generic [ref=f1e74]:
+              - strong [ref=f1e75]: "17"
+              - generic [ref=f1e76]: Hours
+            - generic [ref=f1e77]:
+              - strong [ref=f1e78]: "08"
+              - generic [ref=f1e79]: Minutes
+            - generic [ref=f1e80]:
+              - strong [ref=f1e81]: "10"
+              - generic [ref=f1e82]: Seconds
+      - region [ref=f1e83]:
+        - generic [ref=f1e84]:
+          - paragraph [ref=f1e88]: MEET US WHERE THE MEMORIES BEGIN
+          - heading "A place to celebrate" [level=2] [ref=f1e89]
+        - generic [ref=f1e90]:
+          - heading "Garden House" [level=3] [ref=f1e91]
+          - paragraph
+          - paragraph [ref=f1e92]: Saturday, 20 February 2027 · 17:30
+          - link "Open Google Maps" [ref=f1e93] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Garden%20House
+            - text: Open Google Maps
+            - generic [aria-hidden] [ref=f1e94]: ↗
+      - region [ref=f1e95]:
+        - heading "Gifts and blessings" [level=2] [ref=f1e100]
+        - paragraph [ref=f1e101]: Your presence and blessings are our greatest gifts. This preview contains no real payment details.
+      - region [ref=f1e102]:
+        - generic [ref=f1e103]:
+          - paragraph [ref=f1e107]: A SEAT SAVED WITH LOVE
+          - heading "We would love to see you" [level=2] [ref=f1e108]
+        - generic [ref=f1e110]:
+          - generic [ref=f1e112]:
+            - paragraph [ref=f1e113]: RSVP
+            - heading "Will you attend?" [level=2] [ref=f1e114]
+          - generic [ref=f1e115]:
+            - generic [ref=f1e116]:
+              - text: Guest name
+              - textbox "Guest name" [ref=f1e117]
+            - generic [ref=f1e118]:
+              - text: Phone
+              - textbox "Phone" [ref=f1e119]
+          - generic [ref=f1e120]:
+            - generic [ref=f1e121]:
+              - text: Response
+              - combobox "Response" [ref=f1e122]:
+                - option "Attending" [selected]
+                - option "Not attending"
+                - option "Maybe"
+            - generic [ref=f1e123]:
+              - text: Attendee count
+              - spinbutton "Attendee count" [ref=f1e124]: "1"
+          - generic [ref=f1e125]:
+            - text: Message
+            - textbox "Message" [ref=f1e126]
+          - button "Submit RSVP" [ref=f1e127] [cursor=pointer]
+      - generic [ref=f1e128]:
+        - paragraph [ref=f1e132]: WITH LOVE, FROM OUR FAMILIES
+        - heading "With love and gratitude" [level=2] [ref=f1e133]
+        - paragraph [ref=f1e134]: Your presence means so much to us.
+        - paragraph [ref=f1e135]: Dara & Sophea
+        - navigation "Wedding details" [ref=f1e136]:
+          - link "Venue" [ref=f1e137] [cursor=pointer]:
+            - /url: "#sh-venue"
+          - link "RSVP" [ref=f1e138] [cursor=pointer]:
+            - /url: "#sh-rsvp"
+          - button "View cover" [ref=f1e139] [cursor=pointer]
+        - img "គូព្រេង · Koupreng" [ref=f1e142]
+    - navigation "Invitation sections" [ref=f1e143]:
+      - button "Couple" [ref=f1e144] [cursor=pointer]
+      - button "Date" [ref=f1e148] [cursor=pointer]
+      - button "Map" [ref=f1e152] [cursor=pointer]
+      - button "Gift QR" [ref=f1e157] [cursor=pointer]
+      - button "RSVP" [ref=f1e165] [cursor=pointer]
+  - button "កាតអញ្ជើញ · Invitation ticket" [ref=f1e31]

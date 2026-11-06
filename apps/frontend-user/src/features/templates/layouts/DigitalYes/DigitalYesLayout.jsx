@@ -3,6 +3,7 @@ import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
 import AuthoredClosing from '../../shared/AuthoredClosing';
+import InvitationBranding from '../../shared/InvitationBranding';
 import { authoredHeadingStyle, isLocalTemplateFont } from '../../shared/templateTypography';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import { useState, useRef, useEffect, useMemo } from "react";
@@ -597,6 +598,7 @@ export default function DigitalYesLayout({
               <p className="text-[10px] text-amber-400/50 mt-1 uppercase tracking-widest tdy-font-cinzel font-semibold">
                 WITH LOVE &amp; GRATITUDE
               </p>
+              <InvitationBranding content={tpl} />
             </div>
           </div>
         </div>

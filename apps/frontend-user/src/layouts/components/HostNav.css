@@ -89,16 +89,7 @@
   outline-offset: 4px;
 }
 
-.host-logo-box img {
-  height: 80px;
-  width: auto;
-  object-fit: contain;
-  transition: filter var(--ui-duration-feedback) ease;
-}
-
-.host-logo-box:hover img {
-  filter: drop-shadow(0 4px 14px rgba(176, 146, 106, 0.45));
-}
+.host-logo-box { min-height: 44px; }
 
 .host-logo-tip {
   position: absolute;
@@ -651,9 +642,6 @@
     border: 1px solid rgba(176, 146, 106, 0.25);
     box-shadow: 0 2px 8px rgba(42, 31, 16, 0.05);
   }
-  .host-logo-box img {
-    height: 52px;
-  }
 }
 
 @media (max-width: 420px) {
@@ -670,6 +658,10 @@
   }
 }
 
+@media (max-width: 359px) {
+  /* The account remains available in the mobile drawer. */
+  .host-profile-selector { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .host-header-wrapper,
   .host-header-container,

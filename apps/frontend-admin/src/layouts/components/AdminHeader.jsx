@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, Sun, Moon, LogOut, User, Shield, Bell, Sparkles, Search } from "lucide-react";
+import { Menu, Sun, Moon, LogOut, User, Shield, Bell, Search } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
+import BrandLogo from "../../shared/branding/BrandLogo";
 
 export default function AdminHeader({ onShowSidebar, isMobileOpen, isDark, onToggleTheme, onSearch }) {
   const { user, logout } = useAuth();
@@ -42,7 +43,7 @@ export default function AdminHeader({ onShowSidebar, isMobileOpen, isDark, onTog
   return <header className="admin-header">
     <div className="admin-header-brand">
       <button type="button" className="admin-icon-button admin-mobile-toggle" onClick={onShowSidebar} aria-label={en ? "Open navigation" : "បើកម៉ឺនុយ"} aria-expanded={isMobileOpen} aria-controls={isMobileOpen ? "admin-mobile-navigation" : undefined}><Menu size={22} aria-hidden="true" /></button>
-      <NavLink to="/dashboard" className="admin-brand-link" aria-label={en ? "Koupreng dashboard" : "ផ្ទាំងគ្រប់គ្រងគូព្រេង"}><span className="admin-brand-mark"><Sparkles size={20} aria-hidden="true" /></span><span className="admin-brand-wordmark">គូព្រេង<small>KOUPRENG</small></span></NavLink>
+      <NavLink to="/dashboard" className="admin-brand-link" aria-label={en ? "Koupreng dashboard" : "ផ្ទាំងគ្រប់គ្រងគូព្រេង"}><BrandLogo variant="compact" responsiveIcon priority decorative /></NavLink>
     </div>
     <button type="button" className="admin-search-trigger" onClick={onSearch} aria-haspopup="dialog"><Search size={18} aria-hidden="true" /><span>{en ? "Find a page in your workspace" : "ស្វែងរកទំព័រនៅក្នុងកន្លែងធ្វើការ"}</span></button>
     <div className="admin-header-actions">

@@ -1,0 +1,249 @@
+{
+  "brand": "គូព្រេង",
+  "revision": "No red backing shape",
+  "source": "glossy_golden_khmer_logo_with_floral_flourishes.png",
+  "source_dimensions": [
+    2172,
+    724
+  ],
+  "cropped_dimensions": [
+    1968,
+    724
+  ],
+  "alpha": true,
+  "upscaled_4k_from_raster": true,
+  "files": [
+    {
+      "path": "png/koupreng-logo-original-transparent.png",
+      "width": 1968,
+      "height": 724,
+      "bytes": 1347686,
+      "type": "original-png",
+      "sha256": "b47fc088aa3fa4a33ba090b7c6c7b669e9ecbae44cd0d90b25a851bb98412819"
+    },
+    {
+      "path": "png/koupreng-logo-1024w-transparent.png",
+      "width": 1024,
+      "height": 377,
+      "bytes": 434381,
+      "type": "png",
+      "sha256": "97a3e281c84ea5a2b4af266cea154c4cc89cde438dc01b6cd2b7fc3ecc60a71e"
+    },
+    {
+      "path": "png/koupreng-logo-2048w-transparent.png",
+      "width": 2048,
+      "height": 753,
+      "bytes": 1465750,
+      "type": "png",
+      "sha256": "11d19b01f1881de6a28b664cd95a5c9bf15d4e8816caee37dc0299462efd6cce"
+    },
+    {
+      "path": "png/koupreng-logo-4096w-transparent.png",
+      "width": 4096,
+      "height": 1507,
+      "bytes": 4299898,
+      "type": "png",
+      "sha256": "b8b1aaa1115b8424f1d4fcba5d3f52f3d7a1aead56c3a9642ff58931c4a13534"
+    },
+    {
+      "path": "webp/koupreng-logo-64w.webp",
+      "width": 64,
+      "height": 24,
+      "bytes": 2620,
+      "type": "webp",
+      "sha256": "4e75b777ab939e5c59e2db691a3c3b6d30755dae674148ea3e81973fec07345e"
+    },
+    {
+      "path": "webp/koupreng-logo-96w.webp",
+      "width": 96,
+      "height": 35,
+      "bytes": 4678,
+      "type": "webp",
+      "sha256": "de0228914d42b5518c0cf2bca2ab254748e12332fe2db89e3ba526d52c32d168"
+    },
+    {
+      "path": "webp/koupreng-logo-128w.webp",
+      "width": 128,
+      "height": 47,
+      "bytes": 7138,
+      "type": "webp",
+      "sha256": "e4f40af4d59a7e77b8c324dbf656acab86e58ff3af1f9025f12d3f68e3dc634c"
+    },
+    {
+      "path": "webp/koupreng-logo-160w.webp",
+      "width": 160,
+      "height": 59,
+      "bytes": 10050,
+      "type": "webp",
+      "sha256": "151c38cdf7659863311c8b1cf715e1685a3ee0e7c56d51175c34e91e6c0edf20"
+    },
+    {
+      "path": "webp/koupreng-logo-192w.webp",
+      "width": 192,
+      "height": 71,
+      "bytes": 13046,
+      "type": "webp",
+      "sha256": "919b990c3d2ab86253a96821985dfe06885bae72a5685c7e8e963dc53badbbcc"
+    },
+    {
+      "path": "webp/koupreng-logo-256w.webp",
+      "width": 256,
+      "height": 94,
+      "bytes": 19870,
+      "type": "webp",
+      "sha256": "2a844c7ee849f9cc970412c79be9c520ae29e8b7977932528d80c0725c5f627f"
+    },
+    {
+      "path": "webp/koupreng-logo-320w.webp",
+      "width": 320,
+      "height": 118,
+      "bytes": 27394,
+      "type": "webp",
+      "sha256": "b18c45f25eb1b8444467c6ca6ef546efb06d07125fa23e3fd1495fdb2e7853ee"
+    },
+    {
+      "path": "webp/koupreng-logo-384w.webp",
+      "width": 384,
+      "height": 141,
+      "bytes": 35674,
+      "type": "webp",
+      "sha256": "28c13f221ebf631d8f645177e160161703fdb700b9e527592d22439fa4e48cec"
+    },
+    {
+      "path": "webp/koupreng-logo-480w.webp",
+      "width": 480,
+      "height": 177,
+      "bytes": 48906,
+      "type": "webp",
+      "sha256": "b7b89d6b62c9b1fa9e1b45feffbc69fead34f51f99571a11ad8ea6ac1e46ac14"
+    },
+    {
+      "path": "webp/koupreng-logo-512w.webp",
+      "width": 512,
+      "height": 188,
+      "bytes": 53626,
+      "type": "webp",
+      "sha256": "5ebd54027c03f5500ec1239347617c82f525cc232ee9cb718c1ba6ad4fce737d"
+    },
+    {
+      "path": "webp/koupreng-logo-640w.webp",
+      "width": 640,
+      "height": 235,
+      "bytes": 74998,
+      "type": "webp",
+      "sha256": "1702424db0388672df9e07772cc1daedca59fe6fe93a445418c91b4eb50a6ab6"
+    },
+    {
+      "path": "webp/koupreng-logo-768w.webp",
+      "width": 768,
+      "height": 283,
+      "bytes": 99052,
+      "type": "webp",
+      "sha256": "60a922d706db652851986369cbe502e6076b86d77f8955445cab85e019ecd697"
+    },
+    {
+      "path": "webp/koupreng-logo-960w.webp",
+      "width": 960,
+      "height": 353,
+      "bytes": 138450,
+      "type": "webp",
+      "sha256": "0480c6fbbc30707cc36cd6bb8cce91986444c2c33ba75efc39ffe556097b1886"
+    },
+    {
+      "path": "webp/koupreng-logo-1024w.webp",
+      "width": 1024,
+      "height": 377,
+      "bytes": 153044,
+      "type": "webp",
+      "sha256": "ab7f7f8ee6601062d8520835f1c39bf39ac3f07e4882fde4265f6eb74d8b4d68"
+    },
+    {
+      "path": "webp/koupreng-logo-1280w.webp",
+      "width": 1280,
+      "height": 471,
+      "bytes": 219814,
+      "type": "webp",
+      "sha256": "fb64db93bcf8aa11c8dcc1135a61d285a0232c97fb025f56ac2a0d582ae65f29"
+    },
+    {
+      "path": "webp/koupreng-logo-1536w.webp",
+      "width": 1536,
+      "height": 565,
+      "bytes": 286448,
+      "type": "webp",
+      "sha256": "fc95ceb88d0bc7b2e520af3379b86af189164d85c5112a2c8770fa44ac822698"
+    },
+    {
+      "path": "webp/koupreng-logo-1920w.webp",
+      "width": 1920,
+      "height": 706,
+      "bytes": 402122,
+      "type": "webp",
+      "sha256": "33118053e39f1e9a8755c397c5370bf8c5e0fc7d2d0175836d55e58b7cd1fb12"
+    },
+    {
+      "path": "webp/koupreng-logo-2048w.webp",
+      "width": 2048,
+      "height": 753,
+      "bytes": 442688,
+      "type": "webp",
+      "sha256": "aa205a0d2bab7d490884e2173a20d16de0dcef6f89fec68e3a02ed072fc667aa"
+    },
+    {
+      "path": "webp/koupreng-logo-2560w.webp",
+      "width": 2560,
+      "height": 942,
+      "bytes": 613604,
+      "type": "webp",
+      "sha256": "96af03d18e766c05f603b75d5ff837352fa28911bcc31148d1823cceb59c184f"
+    },
+    {
+      "path": "webp/koupreng-logo-3072w.webp",
+      "width": 3072,
+      "height": 1130,
+      "bytes": 794506,
+      "type": "webp",
+      "sha256": "165ed33401b54058e07ebd2d3c01fa4c842c0bd69084ccc5fd3dfe51623ea8a0"
+    },
+    {
+      "path": "webp/koupreng-logo-4096w.webp",
+      "width": 4096,
+      "height": 1507,
+      "bytes": 1186460,
+      "type": "webp",
+      "sha256": "167c0b575e4570ed90e4a96d5b7403d8b63caac4155c2a722892d0116c88f503"
+    },
+    {
+      "path": "webp-lossless/koupreng-logo-512w-lossless.webp",
+      "width": 512,
+      "height": 188,
+      "bytes": 110632,
+      "type": "webp-lossless",
+      "sha256": "b2a17d55befb02fdfbf8c37098c5edaff666fb7b0ae221ca17922e28ed62b9fa"
+    },
+    {
+      "path": "webp-lossless/koupreng-logo-1024w-lossless.webp",
+      "width": 1024,
+      "height": 377,
+      "bytes": 355344,
+      "type": "webp-lossless",
+      "sha256": "f24458dd33d800514674bb2902efc1c617d0f908dca8ed6eb0c7a170c26bf019"
+    },
+    {
+      "path": "webp-lossless/koupreng-logo-2048w-lossless.webp",
+      "width": 2048,
+      "height": 753,
+      "bytes": 1181898,
+      "type": "webp-lossless",
+      "sha256": "374883425ba6e1cd6c99b8b1b5898ed0f772585af11e48aef4a0f668a0ee23c1"
+    },
+    {
+      "path": "webp-lossless/koupreng-logo-4096w-lossless.webp",
+      "width": 4096,
+      "height": 1507,
+      "bytes": 3254312,
+      "type": "webp-lossless",
+      "sha256": "46598382f54fba451d6203200e81a594db718550c1a5c6c13fb18fffdb59d3e1"
+    }
+  ]
+}

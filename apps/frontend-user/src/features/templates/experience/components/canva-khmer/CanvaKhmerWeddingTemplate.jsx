@@ -1,4 +1,5 @@
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import InvitationBranding from '../../../shared/InvitationBranding';
 import FamilyNames from '@/features/templates/shared/FamilyNames';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
@@ -670,6 +671,7 @@ function CanvaKhmerFooter({ content }) {
                     {contact.email && <a href={`mailto:${contact.email}`} aria-label={contact.email}><IoMailOutline /></a>}
                     {contact.facebook && <a href={contact.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><IoLogoFacebook /></a>}
                 </nav>
+                <InvitationBranding content={content} />
             </div>
         </footer>
     );

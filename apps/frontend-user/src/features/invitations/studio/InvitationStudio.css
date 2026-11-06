@@ -125,7 +125,10 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
 .studio-toolbar { display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 8px 4px; color: var(--ws-ink, #292c28); }
 .studio-back, .studio-action, .studio-more summary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--ws-border-strong, #d5c5ad); background: white; border-radius: 9px; color: inherit; font: 600 14px/1.8 var(--font-sans, sans-serif); cursor: pointer; text-decoration: none; }
 .studio-back { flex-shrink: 0; padding: 10px; }
-.studio-document { min-width: 0; flex: 1; }
+.studio-document { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.studio-document-copy { min-width: 0; }
+.studio-brand { flex-shrink: 0; }
+@media (max-width: 767px) { .studio-brand { display: none; } }
 .studio-document h1 { margin: 0; font: 700 18px/1.8 var(--font-sans, sans-serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .studio-template-button { display: inline-flex; gap: 6px; align-items: center; max-width: 100%; border: 0; padding: 0; background: transparent; color: var(--ws-gold-dark, #76572d); cursor: pointer; font: 500 13px/1.8 var(--font-sans, sans-serif); }
 .studio-toolbar .pe-template-tag { border: 0; border-radius: 0; padding: 0; background: none; color: inherit; font: inherit; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

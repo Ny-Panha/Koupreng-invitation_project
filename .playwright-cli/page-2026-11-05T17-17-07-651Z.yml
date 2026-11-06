@@ -1,0 +1,244 @@
+- generic [ref=f2e8]:
+  - navigation "គំរូសន្លឹកការ / Template navigation" [ref=f2e9]:
+    - link "ត្រឡប់ក្រោយ" [ref=f2e10] [cursor=pointer]:
+      - /url: /templates/browse
+    - link "ប្រើគំរូនេះ" [ref=f2e11] [cursor=pointer]:
+      - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Dsilk-heritage
+  - main [ref=f2e34]:
+    - region [ref=f2e35]:
+      - generic [ref=f2e36]:
+        - paragraph [ref=f2e40]: សិរីមង្គលអាពាហ៍ពិពាហ៍ / TOGETHER WITH OUR FAMILIES
+        - heading "ឡាំ គីមឡុង ឡេង យ៉ុងស៊ី" [active] [level=1] [ref=f2e41]:
+          - generic [ref=f2e42]: ឡាំ គីមឡុង
+          - generic [aria-hidden] [ref=f2e43]: "&"
+          - generic [ref=f2e44]: ឡេង យ៉ុងស៊ី
+        - paragraph [ref=f2e45]: Lam Kimlong & Leng Yongsy
+        - paragraph [ref=f2e46]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+        - paragraph [ref=f2e47]: វេលាម៉ោង ៥:០០ ល្ងាច
+        - paragraph [ref=f2e48]: សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ
+        - link "ដោយក្តីរីករាយ សូមអញ្ជើញ / An invitation, with love" [ref=f2e49] [cursor=pointer]:
+          - /url: "#sh-formal"
+          - text: ដោយក្តីរីករាយ សូមអញ្ជើញ / An invitation, with love
+          - generic [aria-hidden] [ref=f2e50]: ↓
+      - figure "រូបភាពសម្រាប់គំរូបង្ហាញ / Demo photography" [ref=f2e51]:
+        - img "រូបគូស្វាមីភរិយា / The couple's portrait" [ref=f2e52]
+        - generic [aria-hidden] [ref=f2e54]: L & L
+    - region [ref=f2e55]:
+      - generic [ref=f2e56]:
+        - paragraph [ref=f2e60]:
+          - text: គ្រួសារទាំងសងខាង
+          - generic [ref=f2e61]: OUR TWO FAMILIES
+        - heading "មានកិត្តិយសសូមគោរពអញ្ជើញ មានកិត្តិយសសូមគោរពអញ្ជើញ" [level=2] [ref=f2e62]:
+          - text: មានកិត្តិយសសូមគោរពអញ្ជើញ
+          - generic [ref=f2e63]: មានកិត្តិយសសូមគោរពអញ្ជើញ
+      - generic [ref=f2e64]:
+        - article [ref=f2e65]:
+          - paragraph [ref=f2e66]: ខាងកូនប្រុស / The groom's family
+          - paragraph [ref=f2e67]: លោក ឃុន ស៊ីវខេង និង លោកស្រី គុយ ដាលី
+          - paragraph [ref=f2e68]: កូនប្រុសនាម / The groom
+          - heading "ឡាំ គីមឡុង" [level=3] [ref=f2e69]
+        - article [ref=f2e70]:
+          - paragraph [ref=f2e71]: ខាងកូនស្រី / The bride's family
+          - paragraph [ref=f2e72]: លោក កឿង វីរៈ និង លោកស្រី ឡុង សុម៉ាលី
+          - paragraph [ref=f2e73]: កូនស្រីនាម / The bride
+          - heading "ឡេង យ៉ុងស៊ី" [level=3] [ref=f2e74]
+      - paragraph [ref=f2e75]:
+        - text: ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។
+        - generic [ref=f2e76]: Our families warmly invite you to celebrate the wedding of our children, and to share your blessings as they begin their life together.
+      - generic [ref=f2e77]:
+        - generic [ref=f2e78]: ឡាំ គីមឡុង
+        - generic [aria-hidden] [ref=f2e79]: "&"
+        - generic [ref=f2e80]: ឡេង យ៉ុងស៊ី
+      - paragraph [ref=f2e81]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+    - generic [ref=f2e82]:
+      - paragraph [ref=f2e83]: រង់ចាំថ្ងៃមង្គល / COUNTING THE DAYS TO OUR CELEBRATION
+      - generic [ref=f2e84]:
+        - heading "កំណត់ថ្ងៃមង្គល" [level=2] [ref=f2e85]
+        - paragraph [ref=f2e86]:
+          - time [ref=f2e87]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+        - paragraph [ref=f2e88]: ១៧:០០ · Asia/Phnom_Penh
+        - timer "ពេលវេលារហូតដល់កម្មវិធី" [ref=f2e89]:
+          - generic [ref=f2e90]:
+            - strong [ref=f2e91]: ៤៤
+            - generic [ref=f2e92]: ថ្ងៃ
+          - generic [ref=f2e93]:
+            - strong [ref=f2e94]: ១៦
+            - generic [ref=f2e95]: ម៉ោង
+          - generic [ref=f2e96]:
+            - strong [ref=f2e97]: ៤២
+            - generic [ref=f2e98]: នាទី
+          - generic [ref=f2e99]:
+            - strong [ref=f2e100]: ៥៣
+            - generic [ref=f2e101]: វិនាទី
+    - region [ref=f2e102]:
+      - generic [ref=f2e103]:
+        - paragraph [ref=f2e107]: ថ្ងៃពិសេសរបស់យើង / THE DAY, BEAUTIFULLY TOGETHER
+        - heading "កម្មវិធីមង្គលការ The wedding program" [level=2] [ref=f2e108]:
+          - text: កម្មវិធីមង្គលការ
+          - generic [ref=f2e109]: The wedding program
+        - paragraph [ref=f2e110]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+      - list [ref=f2e111]:
+        - listitem [ref=f2e112]:
+          - generic [ref=f2e113]:
+            - text: ៥:០០ ព្រឹក
+            - time [ref=f2e115]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e116]: "01"
+          - generic [ref=f2e117]:
+            - heading "ពិធីក្រុងពាលី" [level=3] [ref=f2e118]
+            - paragraph [ref=f2e119]: Blessing ceremony
+        - listitem [ref=f2e120]:
+          - generic [ref=f2e121]:
+            - text: ៦:៣០ ព្រឹក
+            - time [ref=f2e123]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e124]: "02"
+          - generic [ref=f2e125]:
+            - heading "ជួបជុំភ្ញៀវកិត្តិយស ដើម្បីរៀបចំហែជំនូន" [level=3] [ref=f2e126]
+            - paragraph [ref=f2e127]: Family and guest gathering
+        - listitem [ref=f2e128]:
+          - generic [ref=f2e129]:
+            - text: ៧:០០ ព្រឹក
+            - time [ref=f2e131]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e132]: "03"
+          - generic [ref=f2e133]:
+            - heading "ហែជំនូនចូលរោងជ័យ និងនិយាយជើងការ និងរៀបរាប់ផ្លែឈើ ៣៦ មុខ" [level=3] [ref=f2e134]
+            - paragraph [ref=f2e135]: Traditional gift procession
+        - listitem [ref=f2e136]:
+          - generic [ref=f2e137]:
+            - text: ៨:០០ ព្រឹក
+            - time [ref=f2e139]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e140]: "04"
+          - generic [ref=f2e141]:
+            - heading "ពិធីបំពាក់ចិញ្ចៀន" [level=3] [ref=f2e142]
+            - paragraph [ref=f2e143]: Ring ceremony
+        - listitem [ref=f2e144]:
+          - generic [ref=f2e145]:
+            - text: ៩:០០ ព្រឹក
+            - time [ref=f2e147]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e148]: "05"
+          - generic [ref=f2e149]:
+            - heading "ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត" [level=3] [ref=f2e150]
+            - paragraph [ref=f2e151]: Buddhist blessing
+        - listitem [ref=f2e152]:
+          - generic [ref=f2e153]:
+            - text: ៩:៣០ - ១០:៣០ ព្រឹក
+            - time [ref=f2e155]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e156]: "06"
+          - generic [ref=f2e157]:
+            - heading "ពិធីកាត់សក់បង្កក់សិរី ចម្រើនកេសា" [level=3] [ref=f2e158]
+            - paragraph [ref=f2e159]: Hair-cutting ceremony
+        - listitem [ref=f2e160]:
+          - generic [ref=f2e161]:
+            - text: ១១:០០ ព្រឹក
+            - time [ref=f2e163]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e164]: "07"
+          - generic [ref=f2e165]:
+            - heading "ពិធីសំពះផ្ទឹម បង្វិលពពិល … និងចងដៃ" [level=3] [ref=f2e166]
+            - paragraph [ref=f2e167]: Sompeas Ptem and wrist blessing
+        - listitem [ref=f2e168]:
+          - generic [ref=f2e169]:
+            - text: ១១:៣០ ថ្ងៃត្រង់
+            - time [ref=f2e171]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e172]: "08"
+          - generic [ref=f2e173]:
+            - heading "អញ្ជើញភ្ញៀវពិសាអាហារថ្ងៃត្រង់" [level=3] [ref=f2e174]
+            - paragraph [ref=f2e175]: Lunch with our guests
+        - listitem [ref=f2e176]:
+          - generic [ref=f2e177]:
+            - text: ៥:០០ ល្ងាច
+            - time [ref=f2e179]: 2026-12-20
+          - generic [aria-hidden] [ref=f2e180]: "09"
+          - generic [ref=f2e181]:
+            - heading "អញ្ជើញភ្ញៀវពិសាភោជនាហារពេលល្ងាច" [level=3] [ref=f2e182]
+            - paragraph [ref=f2e183]: Wedding reception dinner
+      - paragraph [ref=f2e184]:
+        - text: ចប់កម្មវិធី សូមអរគុណ!
+        - generic [ref=f2e185]: With gratitude, we look forward to celebrating with you.
+    - region [ref=f2e186]:
+      - generic [ref=f2e187]:
+        - paragraph [ref=f2e188]: អនុស្សាវរីយ៍នៃសេចក្តីស្រឡាញ់ / LITTLE MOMENTS, LASTING MEMORIES
+        - heading "អនុស្សាវរីយ៍របស់យើង Moments to keep" [level=2] [ref=f2e189]:
+          - text: អនុស្សាវរីយ៍របស់យើង
+          - generic [ref=f2e190]: Moments to keep
+      - generic [ref=f2e194]:
+        - figure "សេចក្តីស្រឡាញ់ក្រោមពន្លឺថ្ងៃ / Outdoor celebration" [ref=f2e195]:
+          - 'button "មើលរូបភាព / View photo: ពិធីមង្គលការនៅសួនផ្កា" [ref=f2e196] [cursor=pointer]':
+            - img "ពិធីមង្គលការនៅសួនផ្កា" [ref=f2e197]
+        - figure "ពេលវេលានៃភាពត្រេកអរ / Confetti celebration" [ref=f2e199]:
+          - 'button "មើលរូបភាព / View photo: ភាពរីករាយនៃថ្ងៃជ័យមង្គល" [ref=f2e200] [cursor=pointer]':
+            - img "ភាពរីករាយនៃថ្ងៃជ័យមង្គល" [ref=f2e201]
+        - figure "ផ្អែមល្ហែមដូចនំមង្គល / Studio memories" [ref=f2e203]:
+          - 'button "មើលរូបភាព / View photo: អនុស្សាវរីយ៍ស្ទូឌីយោ" [ref=f2e204] [cursor=pointer]':
+            - img "អនុស្សាវរីយ៍ស្ទូឌីយោ" [ref=f2e205]
+        - figure "កូនក្រមុំនិងកូនកំលោះ / Formal bridal portrait" [ref=f2e207]:
+          - 'button "មើលរូបភាព / View photo: រូបថតផ្លូវការស្ទូឌីយោ" [ref=f2e208] [cursor=pointer]':
+            - img "រូបថតផ្លូវការស្ទូឌីយោ" [ref=f2e209]
+        - figure "រាត្រីដ៏អស្ចារ្យ / Luxury evening banquet" [ref=f2e211]:
+          - 'button "មើលរូបភាព / View photo: ពិធីជប់លៀងពេលរាត្រី" [ref=f2e212] [cursor=pointer]':
+            - img "ពិធីជប់លៀងពេលរាត្រី" [ref=f2e213]
+        - figure "សន្យាមួយជីវិត / Ring of promise" [ref=f2e215]:
+          - 'button "មើលរូបភាព / View photo: ពិធីបំពាក់ចិញ្ចៀន" [ref=f2e216] [cursor=pointer]':
+            - img "ពិធីបំពាក់ចិញ្ចៀន" [ref=f2e217]
+        - figure "ស្នាមញញឹមដ៏កក់ក្តៅ / Warm bridal bouquet" [ref=f2e219]:
+          - 'button "មើលរូបភាព / View photo: បាច់ផ្កាមង្គល" [ref=f2e220] [cursor=pointer]':
+            - img "បាច់ផ្កាមង្គល" [ref=f2e221]
+        - figure "រួមដំណើរសាងអនាគត / Walking together" [ref=f2e223]:
+          - 'button "មើលរូបភាព / View photo: ដំណើរជាមួយគ្នា" [ref=f2e224] [cursor=pointer]':
+            - img "ដំណើរជាមួយគ្នា" [ref=f2e225]
+        - figure "សុភមង្គលជារៀងរហូត / Forever romance" [ref=f2e227]:
+          - 'button "មើលរូបភាព / View photo: ភាពកក់ក្តៅនៃគូស្វាមីភរិយា" [ref=f2e228] [cursor=pointer]':
+            - img "ភាពកក់ក្តៅនៃគូស្វាមីភរិយា" [ref=f2e229]
+    - region [ref=f2e231]:
+      - generic [ref=f2e232]:
+        - paragraph [ref=f2e236]: រួមគ្នា នៅថ្ងៃមង្គល / MEET US WHERE THE MEMORIES BEGIN
+        - heading "ជួបគ្នានៅថ្ងៃមង្គល A place to celebrate" [level=2] [ref=f2e237]:
+          - text: ជួបគ្នានៅថ្ងៃមង្គល
+          - generic [ref=f2e238]: A place to celebrate
+      - generic [ref=f2e239]:
+        - heading "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ" [level=3] [ref=f2e240]
+        - paragraph [ref=f2e241]: វិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ
+        - paragraph [ref=f2e242]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦ · វេលាម៉ោង ៥:០០ ល្ងាច
+        - link "បើកផែនទី / Open Google Maps" [ref=f2e243] [cursor=pointer]:
+          - /url: https://www.google.com/maps/search/?api=1&query=Himawari%20Hotel%20Apartments%20Phnom%20Penh%20Cambodia
+          - text: បើកផែនទី / Open Google Maps
+          - generic [aria-hidden] [ref=f2e244]: ↗
+    - region [ref=f2e245]:
+      - generic [ref=f2e246]:
+        - paragraph [ref=f2e250]: រីករាយនឹងវត្តមានលោកអ្នក / A SEAT SAVED WITH LOVE
+        - heading "រីករាយនឹងវត្តមានលោកអ្នក We would love to see you" [level=2] [ref=f2e251]:
+          - text: រីករាយនឹងវត្តមានលោកអ្នក
+          - generic [ref=f2e252]: We would love to see you
+      - paragraph [ref=f2e253]: នេះជាគំរូបង្ហាញ។ ការឆ្លើយតប RSVP អាចធ្វើបានតាមសន្លឹកការដែលបានផ្សព្វផ្សាយ។ / This is a preview. RSVP is available on the published invitation.
+    - region [ref=f2e254]:
+      - generic [ref=f2e255]:
+        - paragraph [ref=f2e259]: ដោយមេត្រីភាព និងក្តីគោរព / WITH WARMTH AND RESPECT
+        - heading "លិខិតសូមអភ័យទោស A heartfelt invitation" [level=2] [ref=f2e260]:
+          - text: លិខិតសូមអភ័យទោស
+          - generic [ref=f2e261]: A heartfelt invitation
+        - paragraph [ref=f2e262]:
+          - text: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។
+          - generic [ref=f2e263]: Please accept our apologies if we could not deliver this invitation in person. We warmly invite you and your family to join our wedding celebration.
+    - generic [ref=f2e264]:
+      - paragraph [ref=f2e268]: ដោយក្តីស្រលាញ់ ពីគ្រួសារយើងខ្ញុំ / WITH LOVE, FROM OUR FAMILIES
+      - heading "សេចក្តីថ្លែងអំណរគុណ With love and gratitude" [level=2] [ref=f2e269]:
+        - text: សេចក្តីថ្លែងអំណរគុណ
+        - generic [ref=f2e270]: With love and gratitude
+      - paragraph [ref=f2e271]:
+        - text: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះការអញ្ជើញចូលរួម ជាភ្ញៀវកិត្តិយសក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ។ សូមគោរពជូនពរដល់ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា និងភ្ញៀវកិត្តិយសទាំងអស់ សូមប្រកបតែភាពសុខដុមចម្រើន និងសុភមង្គល ក្នុងក្រុមគ្រួសារជានិច្ចនិរន្តរ៍។
+        - generic [ref=f2e272]: Our parents and families thank you for joining us on this special day. Your presence and blessings mean so much to us. We wish you and your family lasting happiness and harmony.
+      - paragraph [ref=f2e273]: ឡាំ គីមឡុង & ឡេង យ៉ុងស៊ី
+      - navigation "ព័ត៌មានពិធី / Wedding details" [ref=f2e274]:
+        - link "កម្មវិធី / Program" [ref=f2e275] [cursor=pointer]:
+          - /url: "#sh-program"
+        - link "ទីតាំង / Venue" [ref=f2e276] [cursor=pointer]:
+          - /url: "#sh-venue"
+        - link "RSVP" [ref=f2e277] [cursor=pointer]:
+          - /url: "#sh-rsvp"
+        - button "មើលគម្របវិញ / View cover" [ref=f2e278] [cursor=pointer]
+      - img "គូព្រេង · Koupreng" [ref=f2e281]
+  - navigation "ផ្នែកក្នុងធៀប" [ref=f2e282]:
+    - button "គូស្វាមីភរិយា" [ref=f2e283] [cursor=pointer]
+    - button "កាលបរិច្ឆេទ" [ref=f2e287] [cursor=pointer]
+    - button "កម្មវិធី" [ref=f2e291] [cursor=pointer]
+    - button "រូបថត" [ref=f2e295] [cursor=pointer]
+    - button "ទីតាំង" [ref=f2e302] [cursor=pointer]
+    - button "ឆ្លើយតប" [ref=f2e307] [cursor=pointer]

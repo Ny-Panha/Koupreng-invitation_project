@@ -272,13 +272,9 @@
 }
 @media(max-width:500px) {
   .dash-wrapper .host-header-container { padding-inline: 10px; gap: 8px; }
-  .dash-wrapper .host-logo-box { flex: 0 0 64px; min-width: 0; }
-  .dash-wrapper .host-logo-box img { width: 64px; max-width: 64px; height: 42px; object-fit: contain; }
   .dash-wrapper .host-user-actions { gap: 6px; }
   .dash-wrapper .host-profile-pill,.dash-wrapper .host-hamburger-btn { min-width: 44px; min-height: 44px; }
   .kp-brand { min-width: 0; }
-  .kp-brand>span { display: none; }
-  .kp-brand img { width: 60px; height: 44px; object-fit: contain; }
   .kp-mobile-preferences .app-language-control select { width: 64px; }
   .inv-preview-header { flex-wrap: wrap; padding: 10px 12px; gap: 10px; }
   .inv-preview-header__right { flex-wrap: wrap; width: 100%; justify-content: space-between; gap: 8px; }
@@ -307,6 +303,4 @@
   .app-preferences.is-compact .app-language-options { padding: 0; background: transparent; }
   .app-preferences.is-compact .app-language-options > span { min-width: 0; padding: 2px 3px; }
   .app-preferences.is-compact .app-language-options > span[data-active=false] { display: none; }
-  .dash-wrapper .host-logo-box { flex-basis: 48px; }
-  .dash-wrapper .host-logo-box img { width: 48px; max-width: 48px; }
 }

@@ -1,4 +1,5 @@
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import InvitationBranding from '../../shared/InvitationBranding';
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Clock,
@@ -433,7 +434,7 @@ export default function TemplateBoilerplateLayout({
             {/* Footer */}
             <div className="text-center pt-8 space-y-2 text-zinc-500 text-[11px]">
               <p>សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម</p>
-              <p className="font-mono text-[10px]">KOUPRENG DIGITAL INVITATION</p>
+              <InvitationBranding content={effectiveContent} />
             </div>
           </div>
         )}

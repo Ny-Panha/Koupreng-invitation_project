@@ -1,6 +1,7 @@
 import IllustratedMap from '../shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import ProgramTimeline from '../shared/ProgramTimeline';
+import InvitationBranding from '../shared/InvitationBranding';
 import { Link } from "react-router-dom";
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 import { EVENT_TYPES } from "@/features/events/onboarding/eventFields";
@@ -27,6 +28,7 @@ export default function EventEssentialLayout({ tpl = {}, preview = false, backLi
       {(details.contact?.name || details.contact?.phone || details.contact?.email) && <section><h2>{copy("ទំនាក់ទំនង", "Contact")}</h2><p>{[details.contact.name, details.contact.phone, details.contact.email].filter(Boolean).join(" · ")}</p></section>}
       {children}
       {showActions && !preview && <Link to="/app/events/new">{copy("បង្កើតកម្មវិធី", "Create event")}</Link>}
+      <InvitationBranding content={{ ...tpl, ...details }} language={language} />
     </article>
   </main>;
 }

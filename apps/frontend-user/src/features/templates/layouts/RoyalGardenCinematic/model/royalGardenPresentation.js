@@ -13,7 +13,6 @@ export const ROYAL_ASSETS = Object.freeze({
   monogram: `${REFINEMENT}/monogram-256.webp`, monogramSmall: `${REFINEMENT}/monogram-128.webp`, monogramLarge: `${REFINEMENT}/monogram-512.webp`,
   videoCalligraphy: `${REFINEMENT}/video-calligraphy-480.webp`, videoCalligraphyLarge: `${REFINEMENT}/video-calligraphy-960.webp`,
   openButton: `${REFINEMENT}/open-button-480.webp`, openButtonLarge: `${REFINEMENT}/open-button-960.webp`,
-  brand: '/branding/koupreng-mark.png',
   archTiny: `${REFINEMENT}/opening-frame-480.webp`, demoPortraitTiny: `${REFINEMENT}/demo-portrait-480.webp`,
   calligraphyTiny: `${REFINEMENT}/opening-calligraphy-320.webp`, calligraphyMedium: `${REFINEMENT}/opening-calligraphy-800.webp`, guestSmall: `${REFINEMENT}/guest-frame-480.webp`,
 });

@@ -1,6 +1,7 @@
 import { IoCallOutline, IoLogoFacebook, IoPaperPlane } from "react-icons/io5";
 
 import TemplateReveal from "../shared/TemplateReveal";
+import InvitationBranding from "../../../shared/InvitationBranding";
 
 /**
  * TemplateFooter — elegant closing / thank-you.
@@ -71,7 +72,7 @@ export default function TemplateFooter({ content }) {
                 )}
 
                 <TemplateReveal delay={0.24}>
-                    <p className="tx-footer__brand">Powered by Koupreng</p>
+                    <InvitationBranding content={content} />
                 </TemplateReveal>
             </div>
         </footer>

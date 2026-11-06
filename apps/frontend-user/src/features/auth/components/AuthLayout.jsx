@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLanguageStore } from "../../../stores/useLanguageStore";
 import "../AuthPage.css";
+import BrandLogo from "@/shared/branding/BrandLogo";
 
 export default function AuthLayout({ children }) {
   const { lang, setLang } = useLanguageStore();
@@ -42,6 +43,7 @@ export default function AuthLayout({ children }) {
         </div>
 
         <div className="auth-card-wrap">
+          <Link to="/" className="auth-brand" aria-label={copy("គូព្រេង · ទំព័រដើម", "Koupreng · Home")}><BrandLogo variant="auth" priority decorative /></Link>
           {children}
         </div>
       </div>

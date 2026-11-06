@@ -2,6 +2,7 @@ import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import AuthoredClosing from '../shared/AuthoredClosing';
+import InvitationBranding from '../shared/InvitationBranding';
 import AuthoredFamilies from '../shared/AuthoredFamilies';
 import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
@@ -325,6 +326,7 @@ export default function BlissEditorialLayout({
             ប្រើគំរូ Bliss Editorial នេះ
           </Link>
         )}
+        <InvitationBranding content={effectiveContent} />
       </footer>
 
       {/* Slide-out RSVP Drawer */}

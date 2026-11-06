@@ -15,7 +15,7 @@ import {
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { useLanguageStore } from "../../stores/useLanguageStore";
-import logo from "../../assets/logo.png";
+import BrandLogo from "@/shared/branding/BrandLogo";
 import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
 import "./HostNav.css";
 
@@ -230,11 +230,11 @@ export default function HostNav() {
           <Link
             to="/"
             className="host-logo-box"
-            aria-label={`Koupreng — ${navText("backToDashboard") || (language === "en" ? "Back to dashboard" : "ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង")}`}
+            aria-label={language === "en" ? "Koupreng · Home" : "គូព្រេង · ទំព័រដើម"}
           >
-            <img src={logo} alt="Koupreng" />
+            <BrandLogo variant="compact" priority decorative />
             <span className="host-logo-tip" role="tooltip">
-              {navText("backToDashboard") || (language === "en" ? "Back to dashboard" : "ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង")}
+              {language === "en" ? "Home" : "ទំព័រដើម"}
             </span>
           </Link>
 

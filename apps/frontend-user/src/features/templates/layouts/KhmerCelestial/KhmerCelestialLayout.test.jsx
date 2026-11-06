@@ -448,7 +448,10 @@ describe("KhmerCelestialLayout integration", () => {
       "src",
       "/invitations/khmer-celestial/burgundy-bokeh.mp4"
     );
-    expect(screen.getAllByAltText("ស្លាកឈ្មោះ វិរៈ និង សុភ័ក្រ្តា")).toHaveLength(3);
+    expect(screen.getAllByAltText("ស្លាកឈ្មោះ វិរៈ និង សុភ័ក្រ្តា")).toHaveLength(1);
+    expect(document.querySelector(".kc-hero__brand")).toHaveAttribute("src", "/invitations/khmer-celestial/koupreng-gold-mark.webp");
+    expect(document.querySelector(".invitation-branding__custom")).toHaveAttribute("src", "/invitations/khmer-celestial/koupreng-gold-mark.webp");
+    expect(document.querySelector('[data-branding="koupreng"]')).not.toBeInTheDocument();
     expect(document.querySelector(".kc-opening__brand")).toHaveAttribute(
       "src",
       "/invitations/khmer-celestial/koupreng-gold-mark.webp"

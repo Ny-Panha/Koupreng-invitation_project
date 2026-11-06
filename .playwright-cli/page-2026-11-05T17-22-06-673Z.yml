@@ -1,0 +1,254 @@
+- generic [ref=f15e2]:
+  - generic [ref=f15e4]:
+    - link "Skip to content" [ref=f15e5] [cursor=pointer]:
+      - /url: "#marketing-content"
+    - banner [ref=f15e6]:
+      - generic [ref=f15e7]:
+        - link "Koupreng · Home" [ref=f15e8] [cursor=pointer]:
+          - /url: /
+        - generic [ref=f15e12]:
+          - switch "English interface" [checked] [ref=f15e13] [cursor=pointer]:
+            - generic [ref=f15e19]: EN
+          - button "Switch to dark mode" [ref=f15e20] [cursor=pointer]
+        - button "Open navigation menu" [ref=f15e23] [cursor=pointer]
+    - main [ref=f15e25]:
+      - generic [ref=f15e26]:
+        - region [ref=f15e27]:
+          - generic [ref=f15e28]:
+            - paragraph [ref=f15e29]: Digital wedding invitations
+            - heading "Invitations crafted around your story." [level=1] [ref=f15e30]:
+              - generic [ref=f15e31]: Invitations crafted
+              - generic [ref=f15e32]: around your story.
+            - paragraph [ref=f15e33]: Choose a design, add your celebration details, and share one invitation. Keep your guests and their replies together.
+            - generic [ref=f15e34]:
+              - link "Create invitation" [ref=f15e35] [cursor=pointer]:
+                - /url: /app/events/new
+              - link "Explore templates" [ref=f15e39] [cursor=pointer]:
+                - /url: /templates
+            - paragraph [ref=f15e43]: Explore a real invitation before signing up
+          - generic [ref=f15e47]:
+            - button "Try the invitation" [ref=f15e48] [cursor=pointer]
+            - figure "Phone preview" [ref=f15e50]:
+              - generic [ref=f15e53]:
+                - generic [ref=f15e55]: 9:41
+                - generic [ref=f15e66]:
+                  - img "Sample wedding portrait for Silk Heritage" [ref=f15e67]
+                  - generic [ref=f15e68]:
+                    - paragraph [ref=f15e69]: Together with our families
+                    - strong [ref=f15e70]:
+                      - text: Lam Kimlong
+                      - generic [ref=f15e71]: "&"
+                      - text: Leng Yongsy
+                    - paragraph [ref=f15e72]: Sunday, 20 December 2026
+              - generic [ref=f15e73]:
+                - generic [ref=f15e74]: A Silk Heritage sample invitation
+                - link "View the full demo" [ref=f15e76] [cursor=pointer]:
+                  - /url: /templates/silk-heritage
+            - paragraph [ref=f15e80]: Sample event. Exploring it does not create an event or send invitations.
+        - region [ref=f15e81]:
+          - generic [ref=f15e82]:
+            - generic [ref=f15e83]:
+              - paragraph [ref=f15e84]: Curated invitation designs
+              - heading "Curated designs for your wedding day" [level=2] [ref=f15e85]
+            - link "Explore the collection" [ref=f15e86] [cursor=pointer]:
+              - /url: /templates
+          - status [ref=f15e90]:
+            - generic [ref=f15e97]:
+              - heading "There are no designs in the collection yet." [level=3] [ref=f15e98]
+              - paragraph [ref=f15e99]: Please check back later for new wedding themes.
+        - region [ref=f15e100]:
+          - group "Silk Heritage sample illustration" [ref=f15e101]:
+            - generic [ref=f15e103]:
+              - paragraph [ref=f15e104]: Silk Heritage
+              - paragraph [ref=f15e105]: With joy, we invite you
+              - generic [ref=f15e109]:
+                - strong [ref=f15e110]: The celebration
+                - paragraph [ref=f15e111]: Sunday, 20 December 2026
+                - paragraph [ref=f15e112]: 17:00 — Wedding reception
+              - generic [ref=f15e117]:
+                - strong [ref=f15e118]: Sample venue
+                - paragraph [ref=f15e119]: Himawari Hotel, Phnom Penh
+              - generic [ref=f15e123]:
+                - strong [ref=f15e124]: RSVP
+                - paragraph [ref=f15e125]: Replies belong on your published invitation
+              - generic [ref=f15e126]: Illustration only
+            - paragraph [ref=f15e127]: Sample illustration · Explore the working design in the full demo
+          - generic [ref=f15e128]:
+            - paragraph [ref=f15e129]: From a link to a beautiful gathering
+            - heading "The details they need. The welcome you imagined." [level=2] [ref=f15e130]
+            - group "Choose a preview stage" [ref=f15e131]:
+              - button "The arrival" [ref=f15e132] [cursor=pointer]
+              - button "Your story" [ref=f15e133] [cursor=pointer]
+              - button "The details" [pressed] [ref=f15e134] [cursor=pointer]
+            - generic [ref=f15e137]:
+              - heading "Everything your guests need, together." [level=3] [ref=f15e138]
+              - paragraph [ref=f15e139]: Guests find the program and venue, then RSVP on the published invitation. This sample does not collect responses.
+            - link "View full interactive demo" [ref=f15e140] [cursor=pointer]:
+              - /url: /templates/silk-heritage
+        - region [ref=f15e144]:
+          - generic [ref=f15e145]:
+            - paragraph [ref=f15e146]: Made for the whole celebration
+            - heading "Your invitation. Your guests. Together." [level=2] [ref=f15e147]
+            - paragraph [ref=f15e148]: Create your event details, share guest links and follow their RSVP replies in your account.
+            - list [ref=f15e149]:
+              - listitem [ref=f15e150]:
+                - generic [ref=f15e154]:
+                  - strong [ref=f15e155]: A personal invitation
+                  - paragraph [ref=f15e156]: Family details, a celebration program and directions for your guests.
+              - listitem [ref=f15e157]:
+                - generic [ref=f15e160]:
+                  - strong [ref=f15e161]: Know who is coming
+                  - paragraph [ref=f15e162]: Review responses and party sizes as you prepare for the day.
+            - link "Start creating" [ref=f15e163] [cursor=pointer]:
+              - /url: /templates/browse
+          - group "Guest response management demo" [ref=f15e167]:
+            - generic [ref=f15e168]:
+              - generic [ref=f15e169]: Guest replies
+              - generic [ref=f15e174]: Demo
+            - generic [ref=f15e175]:
+              - heading "Keep your guest list in view" [level=3] [ref=f15e176]
+              - paragraph [ref=f15e177]: The names and responses below are sample data.
+              - group "Filter sample replies" [ref=f15e178]:
+                - button "All replies" [pressed] [ref=f15e179] [cursor=pointer]
+                - button "Attending" [ref=f15e180] [cursor=pointer]
+                - button "Pending" [ref=f15e181] [cursor=pointer]
+              - table [ref=f15e182]:
+                - caption [ref=f15e183]: Illustrative guest response data
+                - rowgroup [ref=f15e184]:
+                  - row [ref=f15e185]:
+                    - columnheader "Guest" [ref=f15e186]
+                    - columnheader "Response" [ref=f15e187]
+                    - columnheader "Party" [ref=f15e188]
+                - rowgroup [ref=f15e189]:
+                  - row [ref=f15e190]:
+                    - rowheader "Dara" [ref=f15e191]
+                    - cell "Attending" [ref=f15e192]
+                    - cell "2" [ref=f15e194]
+                  - row [ref=f15e195]:
+                    - rowheader "Sreynit" [ref=f15e196]
+                    - cell "Pending" [ref=f15e197]
+                    - cell "1" [ref=f15e199]
+                  - row [ref=f15e200]:
+                    - rowheader "Visal" [ref=f15e201]
+                    - cell "Declined" [ref=f15e202]
+                    - cell "2" [ref=f15e204]
+            - paragraph [ref=f15e205]: Guests respond on the published invitation. This is a demonstration of the workflow.
+        - region [ref=f15e206]:
+          - generic [ref=f15e207]:
+            - generic [ref=f15e208]:
+              - paragraph [ref=f15e209]: From an idea to an invitation
+              - heading "Three steps. One special day." [level=2] [ref=f15e210]
+            - paragraph [ref=f15e211]: Start with a design you love, then bring the details together for your guests.
+          - region "Design metrics" [ref=f15e212]:
+            - article [ref=f15e213]:
+              - strong [ref=f15e214]: "10"
+              - generic [ref=f15e215]: Artisan wedding themes
+            - article [ref=f15e216]:
+              - strong [ref=f15e217]: 100%
+              - generic [ref=f15e218]: Khmer & English ready
+            - article [ref=f15e219]:
+              - strong [ref=f15e220]: "7"
+              - generic [ref=f15e221]: Adaptive viewports
+          - list [ref=f15e222]:
+            - listitem [ref=f15e223]:
+              - generic [aria-hidden] [ref=f15e225]: "01"
+              - heading [level=3] [ref=f15e230]:
+                - link "Choose a design" [ref=f15e231] [cursor=pointer]:
+                  - /url: /templates
+              - paragraph [ref=f15e235]: Explore the complete demos and choose a design for your event.
+            - listitem [ref=f15e236]:
+              - generic [aria-hidden] [ref=f15e238]: "02"
+              - heading [level=3] [ref=f15e242]:
+                - link "Make it yours" [ref=f15e243] [cursor=pointer]:
+                  - /url: /templates/browse
+              - paragraph [ref=f15e247]: Sign in, then add your names, photos, program and venue.
+            - listitem [ref=f15e248]:
+              - generic [aria-hidden] [ref=f15e250]: "03"
+              - heading [level=3] [ref=f15e254]:
+                - link "Share & follow replies" [ref=f15e255] [cursor=pointer]:
+                  - /url: /templates/browse
+              - paragraph [ref=f15e259]: Review, publish and share your guest links. Follow the replies in your account.
+        - region [ref=f15e260]:
+          - generic [ref=f15e261]:
+            - generic [ref=f15e262]:
+              - paragraph [ref=f15e263]: Before you choose
+              - heading "The design you love. The package you need." [level=2] [ref=f15e264]
+            - paragraph [ref=f15e265]: Understand designs and service packages. Review current package details and your eligibility before checkout.
+          - status [ref=f15e266]:
+            - paragraph [ref=f15e267]: No packages are currently available. Explore designs or contact the team.
+            - link "Contact the team" [ref=f15e268] [cursor=pointer]:
+              - /url: /contact
+          - generic [ref=f15e269]:
+            - generic [ref=f15e271]:
+              - generic [ref=f15e272]: Step 1
+              - generic [ref=f15e279]:
+                - heading "Your invitation design" [level=3] [ref=f15e280]
+                - paragraph [ref=f15e281]: A design sets the look of your invitation. Preview it first. Individual premium designs have their own price and access checks when you choose.
+            - generic [ref=f15e283]:
+              - generic [ref=f15e284]: Step 2
+              - generic [ref=f15e290]:
+                - heading "Your service package" [level=3] [ref=f15e291]
+                - paragraph [ref=f15e292]: A package sets invitation and guest limits, duration and included tools. Sign in to compare the current details, including any premium design access.
+          - generic [ref=f15e293]:
+            - paragraph [ref=f15e294]: Choose a design, sign in, then review its price and your access before creating. A preview does not unlock premium access.
+            - generic [ref=f15e295]:
+              - link "Understand packages & access" [ref=f15e296] [cursor=pointer]:
+                - /url: /pricing
+              - link "Ask about packages" [ref=f15e300] [cursor=pointer]:
+                - /url: /contact
+        - region [ref=f15e301]:
+          - generic [ref=f15e302]:
+            - paragraph [ref=f15e303]: Before you begin
+            - heading "Your questions, clearly answered." [level=2] [ref=f15e304]
+          - generic [ref=f15e305]:
+            - group [ref=f15e306]:
+              - generic "Can I preview a design without an account?" [ref=f15e307] [cursor=pointer]
+            - group [ref=f15e309]:
+              - generic "What can I personalize?" [ref=f15e310] [cursor=pointer]
+            - group [ref=f15e312]:
+              - generic "Where do my guests RSVP?" [ref=f15e313] [cursor=pointer]
+            - group [ref=f15e315]:
+              - generic "Does previewing unlock a premium design?" [ref=f15e316] [cursor=pointer]
+            - group [ref=f15e318]:
+              - generic "How is payment confirmed?" [ref=f15e319] [cursor=pointer]
+        - region [ref=f15e321]:
+          - generic [ref=f15e325]:
+            - heading "A little guidance goes a long way." [level=2] [ref=f15e326]
+            - paragraph [ref=f15e327]: Ask about designs, packages or setting up your invitation. Tell our team what you’re planning.
+          - link "Contact the team" [ref=f15e328] [cursor=pointer]:
+            - /url: /contact
+        - region [ref=f15e332]:
+          - heading "Begin your celebration with a thoughtful invitation." [level=2] [ref=f15e333]
+          - paragraph [ref=f15e334]: Choose a design you love and make it part of your story.
+          - generic [ref=f15e335]:
+            - link "Explore templates" [ref=f15e336] [cursor=pointer]:
+              - /url: /templates
+            - link "Start creating" [ref=f15e340] [cursor=pointer]:
+              - /url: /app/events/new
+    - contentinfo [ref=f15e344]:
+      - generic [ref=f15e345]:
+        - generic [ref=f15e346]:
+          - link "Koupreng · Home" [ref=f15e347] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=f15e350]: Thoughtful invitations and guest management for your celebration.
+        - navigation "Explore" [ref=f15e351]:
+          - paragraph [ref=f15e352]: Explore
+          - link "Invitation designs" [ref=f15e353] [cursor=pointer]:
+            - /url: /templates
+          - link "Packages & access" [ref=f15e354] [cursor=pointer]:
+            - /url: /pricing
+          - link "Venues" [ref=f15e355] [cursor=pointer]:
+            - /url: /venues
+        - navigation "Support" [ref=f15e356]:
+          - paragraph [ref=f15e357]: Here for you
+          - link "Contact us" [ref=f15e358] [cursor=pointer]:
+            - /url: /contact
+          - link "Help with your invitation" [ref=f15e359] [cursor=pointer]:
+            - /url: /contact
+          - link "Log in" [ref=f15e360] [cursor=pointer]:
+            - /url: /login
+      - generic [ref=f15e361]:
+        - generic [ref=f15e362]: © 2026 Koupreng. All rights reserved.
+        - generic [ref=f15e363]: Made with care for Cambodian celebrations
+  - complementary [ref=f15e364]:
+    - button "Open support chat" [ref=f15e365] [cursor=pointer]

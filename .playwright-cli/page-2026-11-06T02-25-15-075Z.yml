@@ -1,0 +1,271 @@
+- generic [ref=f3e8]:
+  - navigation "Invitation controls":
+    - link "ត្រឡប់ក្រោយ" [ref=f3e29] [cursor=pointer]:
+      - /url: /templates/browse
+    - button "បើកគម្របម្តងទៀត" [ref=f3e32] [cursor=pointer]
+  - main [active] [ref=f3e36]:
+    - region [ref=f3e37]:
+      - generic [ref=f3e40]:
+        - paragraph [ref=f3e41]: Khmer Celestial
+        - heading "គ្រួសារទាំងសងខាង" [level=1] [ref=f3e42]
+        - generic [aria-hidden] [ref=f3e43]: ◆
+        - paragraph [ref=f3e46]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+        - paragraph [ref=f3e47]: វេលាម៉ោង ៥:០០ ល្ងាច
+        - paragraph [ref=f3e48]: សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ
+      - button "រំកិលទៅព័ត៌មានគ្រួសារ" [ref=f3e49] [cursor=pointer]:
+        - generic [ref=f3e50]: សូមអញ្ជើញ
+    - region [ref=f3e53]:
+      - generic [ref=f3e54]:
+        - generic [ref=f3e55]:
+          - paragraph [ref=f3e56]: FAMILY
+          - heading "គ្រួសារទាំងសងខាង" [level=2] [ref=f3e57]
+          - paragraph [ref=f3e58]: Together with our families
+        - generic [ref=f3e70]:
+          - article [ref=f3e71]:
+            - paragraph [ref=f3e72]: ខាងកូនប្រុស
+            - generic [ref=f3e73]:
+              - paragraph [ref=f3e74]: លោក ឃុន ស៊ីវខេង
+              - paragraph [ref=f3e75]: លោកស្រី គុយ ដាលី
+            - paragraph [ref=f3e82]: កូនប្រុសនាម
+            - heading "កឿង វីរៈ" [level=3] [ref=f3e83]
+          - article [ref=f3e84]:
+            - paragraph [ref=f3e85]: ខាងកូនស្រី
+            - generic [ref=f3e86]:
+              - paragraph [ref=f3e87]: លោក ឡាំ គីមឡុង
+              - paragraph [ref=f3e88]: លោកស្រី ឡេង យ៉ុងស៊ី
+            - paragraph [ref=f3e95]: កូនស្រីនាម
+            - heading "ឡុង សុម៉ាលី" [level=3] [ref=f3e96]
+    - region [ref=f3e97]:
+      - generic [ref=f3e99]:
+        - img "រូបភាពអាពាហ៍ពិពាហ៍ កឿង វីរៈ និង ឡុង សុម៉ាលី" [ref=f3e101]
+        - generic [ref=f3e102]:
+          - generic [ref=f3e103]:
+            - paragraph [ref=f3e104]: THE INVITATION
+            - heading "មានកិត្តិយសសូមគោរពអញ្ជើញ" [level=2] [ref=f3e105]
+            - paragraph [ref=f3e106]: មានកិត្តិយសសូមគោរពអញ្ជើញ
+          - generic [ref=f3e118]:
+            - generic [ref=f3e119]: សូមគោរពអញ្ជើញ
+            - strong [ref=f3e120]: លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ
+          - paragraph [ref=f3e121]: ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។
+    - region [ref=f3e122]:
+      - generic [ref=f3e123]:
+        - generic [ref=f3e124]:
+          - paragraph [ref=f3e125]: SAVE THE DATE
+          - heading "រាប់ថយក្រោយដល់ថ្ងៃមង្គល" [level=2] [ref=f3e126]
+          - paragraph [ref=f3e127]: Until the wedding day
+        - generic [ref=f3e139]:
+          - generic [ref=f3e140]:
+            - strong [ref=f3e141]: "44"
+            - generic [ref=f3e142]: ថ្ងៃ
+            - generic [ref=f3e143]: DAYS
+          - generic [ref=f3e144]:
+            - strong [ref=f3e145]: "07"
+            - generic [ref=f3e146]: ម៉ោង
+            - generic [ref=f3e147]: HOURS
+          - generic [ref=f3e148]:
+            - strong [ref=f3e149]: "34"
+            - generic [ref=f3e150]: នាទី
+            - generic [ref=f3e151]: MINUTES
+          - generic [ref=f3e152]:
+            - strong [ref=f3e153]: "46"
+            - generic [ref=f3e154]: វិនាទី
+            - generic [ref=f3e155]: SECONDS
+        - generic [ref=f3e156]:
+          - paragraph [ref=f3e157]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+          - paragraph [ref=f3e160]: វេលាម៉ោង ៥:០០ ល្ងាច
+          - link "Add to calendar" [ref=f3e164] [cursor=pointer]:
+            - /url: https://calendar.google.com/calendar/render?action=TEMPLATE&text=WEDDING+INVITATION&dates=20261220T100000Z%2F20261220T120000Z&details=%E1%9E%AF%E1%9E%80%E1%9E%A7%E1%9E%8F%E1%9F%92%E1%9E%8F%E1%9E%98+%E1%9E%9B%E1%9F%84%E1%9E%80%E1%9E%87%E1%9F%86%E1%9E%91%E1%9E%B6%E1%9E%9C+%E1%9E%9B%E1%9F%84%E1%9E%80+%E1%9E%9B%E1%9F%84%E1%9E%80%E1%9E%9F%E1%9F%92%E1%9E%9A%E1%9E%B8+%E1%9E%A2%E1%9F%92%E1%9E%93%E1%9E%80%E1%9E%93%E1%9E%B6%E1%9E%84%E1%9E%80%E1%9E%89%E1%9F%92%E1%9E%89%E1%9E%B6+%E1%9E%96%E1%9F%92%E1%9E%9A%E1%9E%98%E1%9E%91%E1%9E%B6%E1%9F%86%E1%9E%84%E1%9E%89%E1%9E%B6%E1%9E%8F%E1%9E%B7%E1%9E%98%E1%9E%B7%E1%9E%8F%E1%9F%92%E1%9E%8F%E1%9E%9A%E1%9E%B6%E1%9E%94%E1%9F%8B%E1%9E%A2%E1%9E%B6%E1%9E%93%E1%9E%91%E1%9E%B6%E1%9F%86%E1%9E%84%E1%9E%A1%E1%9E%B6%E1%9E%99+%E1%9E%9F%E1%9E%BC%E1%9E%98%E1%9E%A2%E1%9E%89%E1%9F%92%E1%9E%87%E1%9E%BE%E1%9E%89%E1%9E%85%E1%9E%BC%E1%9E%9B%E1%9E%9A%E1%9E%BD%E1%9E%98%E1%9E%87%E1%9E%B6%E1%9E%97%E1%9F%92%E1%9E%89%E1%9F%80%E1%9E%9C%E1%9E%80%E1%9E%B7%E1%9E%8F%E1%9F%92%E1%9E%8F%E1%9E%B7%E1%9E%99%E1%9E%9F+%E1%9E%8A%E1%9E%BE%E1%9E%98%E1%9F%92%E1%9E%94%E1%9E%B8%E1%9E%94%E1%9F%92%E1%9E%9A%E1%9E%9F%E1%9E%B7%E1%9E%91%E1%9F%92%E1%9E%92%E1%9E%96%E1%9E%9A%E1%9E%87%E1%9F%90%E1%9E%99%E1%9E%87%E1%9E%BC%E1%9E%93%E1%9E%80%E1%9E%BC%E1%9E%93%E1%9E%94%E1%9F%92%E1%9E%9A%E1%9E%BB%E1%9E%9F%E1%9E%80%E1%9E%BC%E1%9E%93%E1%9E%9F%E1%9F%92%E1%9E%9A%E1%9E%B8%E1%9E%99%E1%9E%BE%E1%9E%84%E1%9E%81%E1%9F%92%E1%9E%89%E1%9E%BB%E1%9F%86+%E1%9E%80%E1%9F%92%E1%9E%93%E1%9E%BB%E1%9E%84%E1%9E%80%E1%9E%98%E1%9F%92%E1%9E%98%E1%9E%9C%E1%9E%B7%E1%9E%92%E1%9E%B8%E1%9E%98%E1%9E%84%E1%9F%92%E1%9E%82%E1%9E%9B%E1%9E%A2%E1%9E%B6%E1%9E%96%E1%9E%B6%E1%9E%A0%E1%9F%8D%E1%9E%96%E1%9E%B7%E1%9E%96%E1%9E%B6%E1%9E%A0%E1%9F%8D+%E1%9E%8A%E1%9F%82%E1%9E%9B%E1%9E%9A%E1%9F%80%E1%9E%94%E1%9E%85%E1%9F%86%E1%9E%A1%E1%9E%BE%E1%9E%84%E1%9E%8A%E1%9F%84%E1%9E%99%E1%9E%80%E1%9F%92%E1%9E%8F%E1%9E%B8%E1%9E%9A%E1%9E%B8%E1%9E%80%E1%9E%9A%E1%9E%B6%E1%9E%99%E1%9F%94&location=%E1%9E%9F%E1%9E%8E%E1%9F%92%E1%9E%8B%E1%9E%B6%E1%9E%82%E1%9E%B6%E1%9E%9A+%E1%9E%A0%E1%9F%8A%E1%9E%B8%E1%9E%98%E1%9F%89%E1%9E%B6%E1%9E%9C%E1%9F%89%E1%9E%B6%E1%9E%9A%E1%9E%B8+%E1%9E%97%E1%9F%92%E1%9E%93%E1%9F%86%E1%9E%96%E1%9F%81%E1%9E%89%2C+%E1%9E%9C%E1%9E%B7%E1%9E%90%E1%9E%B8%E1%9E%96%E1%9F%92%E1%9E%9A%E1%9F%87%E1%9E%9F%E1%9F%8A%E1%9E%B8%E1%9E%9F%E1%9E%BB%E1%9E%9C%E1%9E%8F%E1%9F%92%E1%9E%90%E1%9E%B7+%E1%9E%9A%E1%9E%B6%E1%9E%87%E1%9E%92%E1%9E%B6%E1%9E%93%E1%9E%B8%E1%9E%97%E1%9F%92%E1%9E%93%E1%9F%86%E1%9E%96%E1%9F%81%E1%9E%89
+    - region [ref=f3e167]:
+      - generic [ref=f3e168]:
+        - generic [ref=f3e169]:
+          - paragraph [ref=f3e170]: MEMORIES
+          - heading "ដំណើរនៃក្ដីស្រឡាញ់" [level=2] [ref=f3e171]
+          - paragraph [ref=f3e172]: Our story
+        - article [ref=f3e185]:
+          - generic [ref=f3e186]:
+            - img "ដំណើររបស់យើង"
+          - generic [ref=f3e187]:
+            - paragraph [ref=f3e188]: រឿងរ៉ាវស្នេហា
+            - heading "ដំណើររបស់យើង" [level=3] [ref=f3e189]
+            - time [ref=f3e190]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+            - generic [ref=f3e191]: ពីការជួបគ្នាដំបូង រហូតដល់ពេលដែលយើងសម្រេចចិត្តរួមដំណើរជីវិត សេចក្តីស្រឡាញ់របស់យើងបានរីកចម្រើនតាមរយៈការគោរព ការយល់ចិត្ត និងភាពកក់ក្តៅពីក្រុមគ្រួសារ។
+    - region [ref=f3e192]:
+      - generic [ref=f3e193]:
+        - generic [ref=f3e194]:
+          - paragraph [ref=f3e195]: CEREMONY
+          - heading "កម្មវិធីមង្គលការ" [level=2] [ref=f3e196]
+          - paragraph [ref=f3e197]: The wedding programme
+        - paragraph [ref=f3e209]: ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦
+        - generic [ref=f3e210]:
+          - article [ref=f3e211]:
+            - generic [ref=f3e212]:
+              - text: ៥:០០ ព្រឹក
+              - time [ref=f3e214]: 2026-12-20
+            - heading "ពិធីក្រុងពាលី" [level=3] [ref=f3e220]
+          - article [ref=f3e221]:
+            - generic [ref=f3e222]:
+              - text: ៦:៣០ ព្រឹក
+              - time [ref=f3e224]: 2026-12-20
+            - heading "ជួបជុំភ្ញៀវកិត្តិយស ដើម្បីរៀបចំហែជំនូន" [level=3] [ref=f3e231]
+          - article [ref=f3e232]:
+            - generic [ref=f3e233]:
+              - text: ៧:០០ ព្រឹក
+              - time [ref=f3e235]: 2026-12-20
+            - heading "ហែជំនូនចូលរោងជ័យ និងនិយាយជើងការ និងរៀបរាប់ផ្លែឈើ ៣៦ មុខ" [level=3] [ref=f3e242]
+          - article [ref=f3e243]:
+            - generic [ref=f3e244]:
+              - text: ៨:០០ ព្រឹក
+              - time [ref=f3e246]: 2026-12-20
+            - heading "ពិធីបំពាក់ចិញ្ចៀន" [level=3] [ref=f3e252]
+          - article [ref=f3e253]:
+            - generic [ref=f3e254]:
+              - text: ៩:០០ ព្រឹក
+              - time [ref=f3e256]: 2026-12-20
+            - heading "ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត" [level=3] [ref=f3e261]
+          - article [ref=f3e262]:
+            - generic [ref=f3e263]:
+              - text: ៩:៣០ - ១០:៣០ ព្រឹក
+              - time [ref=f3e265]: 2026-12-20
+            - heading "ពិធីកាត់សក់បង្កក់សិរី ចម្រើនកេសា" [level=3] [ref=f3e274]
+          - article [ref=f3e275]:
+            - generic [ref=f3e276]:
+              - text: ១១:០០ ព្រឹក
+              - time [ref=f3e278]: 2026-12-20
+            - heading "ពិធីសំពះផ្ទឹម បង្វិលពពិល … និងចងដៃ" [level=3] [ref=f3e286]
+          - article [ref=f3e287]:
+            - generic [ref=f3e288]:
+              - text: ១១:៣០ ថ្ងៃត្រង់
+              - time [ref=f3e290]: 2026-12-20
+            - heading "អញ្ជើញភ្ញៀវពិសាអាហារថ្ងៃត្រង់" [level=3] [ref=f3e299]
+          - article [ref=f3e300]:
+            - generic [ref=f3e301]:
+              - text: ៥:០០ ល្ងាច
+              - time [ref=f3e303]: 2026-12-20
+            - heading "អញ្ជើញភ្ញៀវពិសាភោជនាហារពេលល្ងាច" [level=3] [ref=f3e311]
+        - paragraph [ref=f3e312]: ចប់កម្មវិធី សូមអរគុណ!
+    - region [ref=f3e313]:
+      - generic [ref=f3e315]:
+        - generic [ref=f3e316]:
+          - img "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ"
+        - generic [ref=f3e321]:
+          - generic [ref=f3e322]:
+            - paragraph [ref=f3e323]: LOCATION
+            - heading "ទីតាំងប្រារព្ធពិធី" [level=2] [ref=f3e324]
+            - paragraph [ref=f3e325]: The celebration venue
+          - generic [ref=f3e337]:
+            - heading "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញ" [level=3] [ref=f3e338]
+            - paragraph [ref=f3e339]: វិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ
+            - link "បើកផែនទី" [ref=f3e340] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=Himawari%20Hotel%20Apartments%20Phnom%20Penh%20Cambodia
+    - region [ref=f3e348]:
+      - generic [ref=f3e350]:
+        - paragraph [ref=f3e351]: THE GALLERY
+        - heading "កម្រងអនុស្សាវរីយ៍" [level=2] [ref=f3e352]
+        - paragraph [ref=f3e353]: A portrait of our story
+      - generic [ref=f3e366]:
+        - button "មើលរូបភាពទី 1" [ref=f3e367]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 1" [ref=f3e368]
+          - generic [aria-hidden] [ref=f3e369]: "01"
+        - button "មើលរូបភាពទី 2" [ref=f3e370]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 2" [ref=f3e371]
+          - generic [aria-hidden] [ref=f3e372]: "02"
+        - button "មើលរូបភាពទី 3" [ref=f3e373]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 3" [ref=f3e374]
+          - generic [aria-hidden] [ref=f3e375]: "03"
+        - button "មើលរូបភាពទី 4" [ref=f3e376]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 4" [ref=f3e377]
+          - generic [aria-hidden] [ref=f3e378]: "04"
+        - button "មើលរូបភាពទី 5" [ref=f3e379]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 5" [ref=f3e380]
+          - generic [aria-hidden] [ref=f3e381]: "05"
+        - button "មើលរូបភាពទី 6" [ref=f3e382]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 6" [ref=f3e383]
+          - generic [aria-hidden] [ref=f3e384]: "06"
+        - button "មើលរូបភាពទី 7" [ref=f3e385]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 7" [ref=f3e386]
+          - generic [aria-hidden] [ref=f3e387]: "07"
+        - button "មើលរូបភាពទី 8" [ref=f3e388]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 8" [ref=f3e389]
+          - generic [aria-hidden] [ref=f3e390]: "08"
+        - button "មើលរូបភាពទី 9" [ref=f3e391]:
+          - img "អនុស្សាវរីយ៍អាពាហ៍ពិពាហ៍ ទី 9" [ref=f3e392]
+          - generic [aria-hidden] [ref=f3e393]: "09"
+    - region [ref=f3e394]:
+      - generic [ref=f3e395]:
+        - generic [ref=f3e396]:
+          - paragraph [ref=f3e397]: DRESS CODE
+          - heading "សម្លៀកបំពាក់" [level=2] [ref=f3e398]
+          - paragraph [ref=f3e399]: Ceremonial palette
+        - generic [ref=f3e411]:
+          - heading "ខ្មែរប្រណិត / Formal Khmer" [level=3] [ref=f3e412]
+          - paragraph [ref=f3e413]: Botanical ceremonial elegance
+          - generic [ref=f3e414]:
+            - generic [ref=f3e415]: បៃតងចាស់
+            - generic [ref=f3e418]: បៃតងស្លឹក
+            - generic [ref=f3e421]: មាស
+            - generic [ref=f3e424]: ភ្លុក
+          - paragraph [ref=f3e427]: សូមជ្រើសរើសពណ៌បៃតងចាស់ បៃតងស្រាល សាំប៉ាញ ភ្លុក ឬមាសស្រាល ដើម្បីសមនឹងបរិយាកាសពិធី។
+    - region [ref=f3e428]:
+      - generic [ref=f3e429]:
+        - generic [ref=f3e430]:
+          - paragraph [ref=f3e431]: RSVP
+          - heading "សូមបញ្ជាក់ការចូលរួម" [level=2] [ref=f3e432]
+          - paragraph [ref=f3e433]: We hope you can join us
+        - region "តើអ្នកនឹងចូលរួមដែរឬទេ?" [ref=f3e446]:
+          - form "គំរូ RSVP — មិនផ្ញើការឆ្លើយតប" [ref=f3e449]:
+            - generic [ref=f3e450]:
+              - generic [ref=f3e451]: ឈ្មោះ
+              - textbox "ឈ្មោះ" [ref=f3e452]:
+                - /placeholder: ឈ្មោះរបស់អ្នក
+            - generic [ref=f3e453]:
+              - generic [ref=f3e454]: លេខទូរស័ព្ទ
+              - textbox "លេខទូរស័ព្ទ" [ref=f3e455]:
+                - /placeholder: 012 345 678
+            - generic [ref=f3e456]:
+              - generic [ref=f3e457]:
+                - generic [ref=f3e458]: ការចូលរួម
+                - combobox "ការចូលរួម" [ref=f3e459]:
+                  - option "ចូលរួម" [selected]
+                  - option "មិនអាចចូលរួម"
+              - generic [ref=f3e460]:
+                - generic [ref=f3e461]: ចំនួនភ្ញៀវ
+                - combobox "ចំនួនភ្ញៀវ" [ref=f3e462]:
+                  - option "1" [selected]
+                  - option "2"
+                  - option "3"
+                  - option "4"
+                  - option "5"
+            - generic [ref=f3e463]:
+              - generic [ref=f3e464]: សារជូនពរ
+              - textbox "សារជូនពរ" [ref=f3e465]:
+                - /placeholder: ពាក្យជូនពរដល់គូស្នេហ៍...
+            - link "បង្កើតជាមួយគំរូនេះ" [ref=f3e466] [cursor=pointer]:
+              - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Dkhmer-celestial
+    - region "Closing messages" [ref=f3e470]:
+      - generic [ref=f3e472]:
+        - article [ref=f3e473]:
+          - heading "សេចក្តីថ្លែងអំណរគុណ" [level=2] [ref=f3e479]
+          - paragraph [ref=f3e480]: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះការអញ្ជើញចូលរួម ជាភ្ញៀវកិត្តិយសក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ។ សូមគោរពជូនពរដល់ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា និងភ្ញៀវកិត្តិយសទាំងអស់ សូមប្រកបតែភាពសុខដុមចម្រើន និងសុភមង្គល ក្នុងក្រុមគ្រួសារជានិច្ចនិរន្តរ៍។
+        - article [ref=f3e481]:
+          - heading "លិខិតសូមអភ័យទោស" [level=2] [ref=f3e487]
+          - paragraph [ref=f3e488]: យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។
+    - generic [ref=f3e491]:
+      - paragraph [ref=f3e492]: សូមអរគុណដោយក្តីគោរព
+      - heading [level=2] [ref=f3e493]:
+        - text: កឿង វីរៈ
+        - emphasis [ref=f3e494]: "&"
+        - text: ឡុង សុម៉ាលី
+      - img "គូព្រេង · Koupreng" [ref=f3e497]
+    - generic [ref=f3e498]:
+      - link "ប្រើគំរូនេះ" [ref=f3e499] [cursor=pointer]:
+        - /url: /login?next=%2Fapp%2Fevents%2Fnew%3Ftemplate%3Dkhmer-celestial
+      - link "ត្រឡប់ក្រោយ" [ref=f3e500] [cursor=pointer]:
+        - /url: /templates/browse
+  - navigation "ផ្នែកក្នុងធៀប" [ref=f3e501]:
+    - button "កាលបរិច្ឆេទ" [ref=f3e502] [cursor=pointer]
+    - button "កម្មវិធី" [ref=f3e506] [cursor=pointer]
+    - button "ទីតាំង" [ref=f3e510] [cursor=pointer]
+    - button "រូបថត" [ref=f3e515] [cursor=pointer]
+    - button "ឆ្លើយតប" [ref=f3e522] [cursor=pointer]
+  - button "ផ្អាកតន្ត្រី" [pressed] [ref=f3e526] [cursor=pointer]:
+    - generic [ref=f3e530]: Wedding music

@@ -4,6 +4,7 @@
 
 /* ── Page wrapper ── */
 .auth-shell { font-family: var(--ui-font); color: var(--ui-ink); }
+.auth-brand { display: flex; justify-content: center; width: fit-content; max-width: 100%; min-height: 44px; margin: 0 auto 24px; border-radius: 4px; }
 .auth-shell :where(input, button, select, textarea) { font-family: inherit; }
 .auth-page {
     min-height: 100vh;

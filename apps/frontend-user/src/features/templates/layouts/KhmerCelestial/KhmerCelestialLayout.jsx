@@ -1,5 +1,6 @@
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import FamilyNames from '@/features/templates/shared/FamilyNames';
+import InvitationBranding from '../../shared/InvitationBranding';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import GuestSectionNavigation from "../../shared/Controls/GuestSectionNavigation";
@@ -193,9 +194,6 @@ export default function KhmerCelestialLayout({
   const transitionEnabled = !reducedMotion && !saveData;
   const names = [content.groom, content.bride].filter(Boolean);
   const hasCoupleNames = names.length > 0;
-  const logoAlt = hasCoupleNames
-    ? `ស្លាកឈ្មោះ ${names.join(" និង ")}`
-    : "ស្លាកឈ្មោះគូស្វាមីភរិយា";
   const heroAlt = hasCoupleNames
     ? `រូបភាពអាពាហ៍ពិពាហ៍ ${names.join(" និង ")}`
     : (content.title || "រូបភាពអាពាហ៍ពិពាហ៍");
@@ -415,7 +413,7 @@ export default function KhmerCelestialLayout({
             transition={{ duration: reducedMotion ? 0 : 0.88, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : 0.15 }}
           >
             <p className="kc-hero__eyebrow" style={celestialElementFont(content, "subtitle")}>{content.title || "សិរីសួស្តីអាពាហ៍ពិពាហ៍"}</p>
-            <img className="kc-hero__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} width="768" height="512" />
+            {content.showBrandMark !== false && content.brandMark && <img className="kc-hero__brand" src={content.brandMark} alt={languageMode === "en" ? "Custom invitation mark" : "រូបសញ្ញាផ្ទាល់ខ្លួន"} loading="lazy" decoding="async" />}
             <h1 id="kc-hero-title">{content.familyHeading || "គ្រួសារទាំងសងខាង"}</h1>
             <span className="kc-hero__divider" aria-hidden="true"><i />◆<i /></span>
             {content.dateText ? <p className="kc-hero__date" style={celestialElementFont(content, "date")}>{content.dateText}</p> : null}
@@ -674,10 +672,9 @@ export default function KhmerCelestialLayout({
         <footer className="kc-footer">
           <img className="kc-footer__botanical" src={KHMER_CELESTIAL_ASSETS.botanicalFrame} alt="" aria-hidden="true" width="999" height="1575" loading="lazy" decoding="async" />
           <CelestialReveal>
-            <img className="kc-footer__brand" src={KHMER_CELESTIAL_ASSETS.brandMark} alt={logoAlt} loading="lazy" decoding="async" width="768" height="512" />
             <p className="kc-footer__khmer"><InvitationLabel value={"សូមអរគុណដោយក្តីគោរព"} /></p>
             {hasCoupleNames ? <h2>{content.groom} <em>&amp;</em> {content.bride}</h2> : <h2>{content.title}</h2>}
-            <small>Koupreng · Khmer Celestial</small>
+            <InvitationBranding content={content} language={languageMode} />
           </CelestialReveal>
         </footer>
 

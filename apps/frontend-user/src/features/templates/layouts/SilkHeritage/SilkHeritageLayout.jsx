@@ -1,4 +1,6 @@
 import FamilyNames from '@/features/templates/shared/FamilyNames';
+import InvitationBranding from '../../shared/InvitationBranding';
+import BrandLogo from '@/shared/branding/BrandLogo';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import GuestSectionNavigation from "../../shared/Controls/GuestSectionNavigation";
@@ -228,7 +230,7 @@ export default function SilkHeritageLayout({
       <CoverBackground content={vm} templateDefault={manifest.cover} />
       <div className="sh-folio-leaf sh-folio-leaf-left" aria-hidden="true" /><div className="sh-folio-leaf sh-folio-leaf-right" aria-hidden="true" />
       <div className="sh-cover-content">
-        <p className="sh-brand" lang="en">Koupreng</p><SilkOrnament />
+        {vm.showBrandMark !== false && !vm.brandMark && !vm.brandMarkUrl && <BrandLogo variant="compact" priority />}<SilkOrnament />
         <h1>{vm.hasHostContent && vm.title ? vm.title : language === "en" ? "Wedding invitation" : vm.title || "សិរីមង្គលអាពាហ៍ពិពាហ៍"}</h1>
         {vm.hasHostContent && vm.subtitle && <p>{vm.subtitle}</p>}
         {vm.title && <p className="sh-kicker" style={{ overflowWrap: "anywhere" }}>{vm.title}</p>}
@@ -263,6 +265,7 @@ export default function SilkHeritageLayout({
         <p>{passage(vm.thankYouText || copy("វត្តមានរបស់លោកអ្នក ជាកិត្តិយសដ៏ថ្លៃថ្លាសម្រាប់យើងខ្ញុំ។", "Your presence will mean so much to us."), vm.thankYouTextEn)}</p>
         <p className="sh-closing-names">{[groom, bride].filter(Boolean).join(" & ")}</p>
         <nav aria-label={copy("ព័ត៌មានពិធី", "Wedding details")}>{sections.schedule && <a href="#sh-program">{copy("កម្មវិធី", "Program")}</a>}{sections.map && <a href="#sh-venue">{copy("ទីតាំង", "Venue")}</a>}{sections.rsvp && <a href="#sh-rsvp">RSVP</a>}<button type="button" onClick={closeCover}>{copy("មើលគម្របវិញ", "View cover")}</button></nav>
+        <InvitationBranding content={vm} language={language} />
       </footer>
     </main>
     <GuestSectionNavigation rootRef={root} visible={opened && !playback.active} english={language === "en"} sectionKeys={order.join(',')} />

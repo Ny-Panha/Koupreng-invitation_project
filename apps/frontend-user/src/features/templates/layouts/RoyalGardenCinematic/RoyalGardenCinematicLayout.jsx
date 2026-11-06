@@ -8,6 +8,7 @@ import { guestLocale } from '../../shared/localizedContent';
 import ProgramTimeline from '../../shared/ProgramTimeline';
 import { programDayAnchor, visibleProgramDays } from '../../shared/program';
 import FamilyNames from '../../shared/FamilyNames';
+import InvitationBranding from '../../shared/InvitationBranding';
 import IllustratedMap from '../../shared/IllustratedMap';
 import { safeDirections, usesFamilyLayout } from '../../shared/invitationFeatures';
 import { formatEventDate, formatEventTime, formatNumerals, resolveEvent } from '../../shared/eventDateTime';
@@ -221,7 +222,7 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
       {informationVisible && <>
       {showBack && !preview && !hosted && <Link className="rg-back-link" to={backTo}><ArrowLeft size={16} />{t('គំរូសន្លឹកការ', 'All templates')}</Link>}
       <main ref={body} tabIndex={-1}>{order.map(render)}</main>
-      <footer className="rg-footer">{presentation.information.brandStyle === 'logo' && <img src={ROYAL_ASSETS.brand} alt="" width="36" height="24" loading="lazy" />}<span>{t('បង្កើតដោយ Koupreng', 'Made with Koupreng')}</span>{preview && <button type="button" onClick={() => { stopVideo(); restart(); }}><RotateCcw size={16} />{t('មើលការបើកធៀប', 'Replay intro')}</button>}</footer>
+      <footer className="rg-footer"><InvitationBranding content={base} textOnly={presentation.information.brandStyle === 'text'} language={english ? 'en' : 'km'} />{preview && <button type="button" onClick={() => { stopVideo(); restart(); }}><RotateCcw size={16} />{t('មើលការបើកធៀប', 'Replay intro')}</button>}</footer>
       <nav className="rg-bottom-nav" aria-label={t('ផ្នែកធៀប', 'Invitation sections')}>{nav.filter(([key]) => visible(key)).map(([key, Icon, km, en]) => <button key={key} type="button" aria-current={active === key ? 'location' : undefined} onClick={() => { if (videoActive) skip(); setActive(key); requestAnimationFrame(() => document.getElementById(`rg-${key}`)?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })); }}><Icon aria-hidden="true" /><span>{t(km, en)}</span></button>)}</nav>
       {showActions && useTemplateLink && !preview && !hosted && <Link className="rg-use-template" to={useTemplateLink}>{primaryCtaLabel}</Link>}
       </>}

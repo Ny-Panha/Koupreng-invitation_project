@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import { Sparkles, Lock, Mail, ArrowRight, Loader2, ShieldCheck, Eye, EyeOff, AlertCircle, Globe } from "lucide-react";
+import { Lock, Mail, ArrowRight, Loader2, ShieldCheck, Eye, EyeOff, AlertCircle, Globe } from "lucide-react";
+import BrandLogo from "../../shared/branding/BrandLogo";
 
 function safeNext(searchParams) {
   const next = searchParams.get("next");
@@ -97,12 +98,8 @@ export default function LoginPage() {
         <div className="rounded-3xl border border-zinc-800 bg-[#121215]/90 p-8 sm:p-10 shadow-2xl backdrop-blur-xl transition-all">
           {/* Brand Header */}
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 mb-4">
-              <Sparkles className="h-7 w-7" />
-            </div>
-            <h1 className="text-2xl font-bold tracking-tight text-white font-moul">
-              គូព្រេង
-            </h1>
+            <BrandLogo variant="auth" priority />
+            <h1 className="sr-only">{isKm ? "ចូលគណនីអ្នកគ្រប់គ្រងគូព្រេង" : "Koupreng administrator sign in"}</h1>
             <p className="text-xs text-zinc-400 mt-1">
               {isKm
                 ? "ចូលប្រើប្រាស់ផ្ទាំងគ្រប់គ្រងសម្រាប់អ្នកគ្រប់គ្រងប្រព័ន្ធ"

@@ -4,6 +4,7 @@ import { useEventWorkspace } from "../../events/workspace/EventContext";
 import { feedback } from '@/shared/feedback/feedback';
 import { StudioActionBar } from './StudioFields';
 import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
+import BrandLogo from '@/shared/branding/BrandLogo';
 
 export default function StudioToolbar({ title, templateName, english, studio, saving, publishing, published, canPublish, canEdit = true, onTemplate, onPreview, previewOpen, onPublish, onBack }) {
   const workspace = useEventWorkspace();
@@ -49,10 +50,13 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     <button type="button" className="studio-back" onClick={onBack} aria-label={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"} title={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"}><ArrowLeft size={20} /></button>
     {workspace?.openNavigation && <button type="button" ref={node => workspace.registerNavigationTrigger?.(node)} className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
     <div className="studio-document">
-      <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
-      <button type="button" className="studio-template-button" disabled={!canEdit} onClick={onTemplate} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
-        <Palette size={14} aria-hidden="true" /><span className="pe-template-tag">{templateName}</span>
-      </button>
+      <BrandLogo variant="icon" className="studio-brand" priority />
+      <div className="studio-document-copy">
+        <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
+        <button type="button" className="studio-template-button" disabled={!canEdit} onClick={onTemplate} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
+          <Palette size={14} aria-hidden="true" /><span className="pe-template-tag">{templateName}</span>
+        </button>
+      </div>
     </div>
     <div className="studio-navbar-preferences"><DisplayPreferences compact /></div>
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} className={studio.phase === "saving" ? "animate-spin" : undefined} aria-hidden="true" />{labels[studio.phase]}</span>
