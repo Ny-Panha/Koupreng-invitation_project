@@ -23,16 +23,30 @@ export const MOTION_STYLES = entries([
   ['none', 'គ្មានចលនា', 'None'], ['subtle', 'តិចៗ', 'Subtle'], ['romantic', 'រ៉ូមែនទិក', 'Romantic'],
   ['elegant', 'ស្រទន់', 'Elegant'], ['cinematic', 'ភាពយន្ត', 'Cinematic'],
 ]);
+export const MONOGRAM_FRAMES = entries([
+  ['regal-scroll-gold', 'ស៊ុមមាសរាជសិរី', 'Regal Scroll Gold'],
+  ['ornate', 'ក្បាច់មាស', 'Ornate'], ['oval', 'ពងក្រពើ', 'Oval'],
+  ['diamond', 'ពេជ្រ', 'Diamond'], ['minimal', 'សាមញ្ញ', 'Minimal'],
+]);
 const pick = (value, options, fallback) => options.some(item => item.id === value) ? value : fallback;
 const bounded = (value, min, max, fallback) => Number.isFinite(Number(value)) && value !== null ? Math.min(max, Math.max(min, Number(value))) : fallback;
 export function invitationStyles(content = {}) {
   const raw = content.invitationStyleV1 || {};
+  const floral = [content.code, content.variant, content.templateId, content.presetId].some(id => ['khmer-floral-gold', 'KHMER_FLORAL_GOLD'].includes(id));
   return {
     version: 1,
     date: pick(raw.date, DATE_STYLES, 'traditional'), program: pick(raw.program, PROGRAM_STYLES, 'classic'),
     guestFrame: pick(raw.guestFrame, GUEST_FRAMES, 'khmer'), motion: pick(raw.motion, MOTION_STYLES, 'elegant'),
-    monogram: ['ornate', 'oval', 'diamond', 'minimal'].includes(raw.monogram) ? raw.monogram : 'ornate',
-    monogramMode: raw.monogramMode === 'image' ? 'image' : 'text', monogramImage: safeIntroMedia(raw.monogramImage),
+    monogram: pick(raw.monogram, MONOGRAM_FRAMES, floral ? 'regal-scroll-gold' : 'ornate'),
+    monogramMode: ['auto', 'text', 'names', 'image'].includes(raw.monogramMode) ? raw.monogramMode : 'text', monogramImage: safeIntroMedia(raw.monogramImage),
+    monogramSize: bounded(raw.monogramSize, .8, 1.15, 1),
+    monogramTextSize: bounded(raw.monogramTextSize, 16, 48, 36),
+    monogramTextColor: /^#[a-f\d]{6}$/i.test(raw.monogramTextColor || '') ? raw.monogramTextColor : '#876326',
+    monogramAlign: ['left', 'center', 'right'].includes(raw.monogramAlign) ? raw.monogramAlign : 'center',
+    monogramTreatment: raw.monogramTreatment === 'champagne' ? 'champagne' : 'original',
+    monogramTextLayout: raw.monogramTextLayout === 'staircase' ? 'staircase' : 'centered',
+    monogramOpacity: bounded(raw.monogramOpacity, .5, 1, 1),
+    monogramOffset: bounded(raw.monogramOffset, -12, 12, 0),
     headingMode: raw.headingMode === 'image' ? 'image' : 'text', headingImage: safeIntroMedia(raw.headingImage),
     headingSize: bounded(raw.headingSize, 20, 40, 30),
     headingAlign: ['left', 'center', 'right'].includes(raw.headingAlign) ? raw.headingAlign : 'center',

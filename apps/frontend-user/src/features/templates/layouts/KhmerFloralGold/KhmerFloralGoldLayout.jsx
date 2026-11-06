@@ -20,10 +20,12 @@ import DatePresentation from '../../shared/DatePresentation';
 import CoverBackground from '../../shared/Openings/CoverBackground';
 import GuestSectionNavigation from '../../shared/Controls/GuestSectionNavigation';
 import { useTemplateMusicController } from '../../experience/hooks/useTemplateMusicController';
-import { floralColor, floralContent, floralInitials, floralLocales, floralPhotos, floralSections } from './floralModel';
+import { floralColor, floralContent, floralInitials, floralMonogramText, floralMusic, floralLocales, floralPhotos, floralSections } from './floralModel';
 import { BotanicalLinework, FloralDivider, FloralMonogram, FloralPhoto, GoldFlourish, GoldPlaque } from './FloralArtwork';
 import FloralGallery from './FloralGallery';
+import FloralAmbience from './FloralAmbience';
 import useFloralEnvironment from './useFloralEnvironment';
+import useFloralScrollReveal from './useFloralScrollReveal';
 import './khmer-floral-gold.css';
 
 function DemoRsvp({ english }) {
@@ -57,7 +59,7 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
   const en = locale === 'en', t = (km, english) => en ? english : km;
   const [phase, setPhase] = useState(preview && !previewStartClosed ? 'content' : 'closed');
   const opened = phase === 'content';
-  const style = invitationStyles(vm), palette = vm.studioStyle || {};
+  const style = invitationStyles({ ...vm, code: 'khmer-floral-gold' }), palette = vm.studioStyle || {};
   const motionPreset = String(vm.invitationStyleV1?.motion ? style.motion : palette.motion === 'minimal' ? 'none' : palette.motion || style.motion);
   const openRef = useRef(opened), bodyRef = useRef(null), rootRef = useRef(null);
   const openingTimer = useRef(null), welcomeRef = useRef(null);
@@ -67,11 +69,12 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
   const [galleryOpen, setGalleryOpen] = useState(false);
   const reduced = usePrefersReducedMotion();
   const environment = useFloralEnvironment();
+  useFloralScrollReveal(rootRef, opened && !reduced && !environment.saveData && motionPreset !== 'none');
   const event = resolveEvent(vm), numerals = vm.saveTheDate?.numerals || (en ? 'latin' : 'khmer');
   const days = visibleProgramDays(vm);
   const programContent = { ...vm, invitationStyleV1: { program: 'gold-curve', ...vm.invitationStyleV1 } };
   const photos = floralPhotos(vm, en);
-  const musicSource = raw.enabledSections?.music !== false ? safeIntroMedia(raw.musicUrl || raw.music) : '';
+  const musicSource = floralMusic(liveData ? { ...liveData, enabledSections: raw.enabledSections } : raw);
   const [audioRef, music] = useTemplateMusicController(musicSource);
   const { play, pause } = music;
   const channel = useMemo(() => previewChannel || readEmbeddedPreviewChannel(), [previewChannel]);
@@ -145,18 +148,18 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
   };
   return <InvitationLocaleContext value={locale}><div ref={rootRef} className={`kfg-invitation${preview ? ' kfg-preview' : ''}${opened ? ' is-open' : ''}${phase === 'opening' ? ' is-opening' : ''}`} lang={locale} data-template-renderer="khmer-floral-gold" data-reduced-motion={reduced} data-motion={motionPreset} data-low-power={environment.saveData} data-page-hidden={environment.hidden} data-florals={style.florals} data-portrait-frame={style.portraitFrame} data-map-style={style.map}
     style={{ '--kfg-gold': floralColor(palette.primary || palette.accent || vm.frontColor || vm.primaryColor), '--kfg-paper': floralColor(palette.background || vm.backgroundColor), '--kfg-ink': floralColor(palette.text), '--kfg-highlight': floralColor(palette.accent || palette.border), '--kfg-frame-color': floralColor(palette.border), '--kfg-body': palette.bodyFont ? `${JSON.stringify(palette.bodyFont)}, KfgBody, sans-serif` : undefined, '--kfg-message-align': ['left', 'center', 'right'].includes(palette.align) ? palette.align : undefined, '--kfg-message-scale': ({ small: .9, normal: 1, large: 1.12 })[palette.messageSize] || 1, '--kfg-portrait-y': `${palette.portraitY ?? 50}%`, '--kfg-heading-font': vm.fontKhmer ? `${JSON.stringify(vm.fontKhmer)}, var(--kfg-display)` : undefined, '--kfg-latin-font': vm.fontLatin ? `${JSON.stringify(vm.fontLatin)}, serif` : undefined }}>
-    <div className="kfg-paper-art" aria-hidden="true" /><BotanicalLinework /><div className="kfg-petals" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i} style={{ '--petal': i }} />)}</div>
+    <div className="kfg-paper-art" aria-hidden="true" /><BotanicalLinework /><FloralAmbience enabled={style.florals && !reduced && !environment.saveData && motionPreset !== 'none'} motion={motionPreset} />
     {wanted === 'en' && !locales.includes('en') && <p className="kfg-locale-notice" role="status" lang="en">English is not published for this invitation. Showing Khmer.</p>}
     <div className="kfg-toolbar"><label className="kfg-language"><Globe2 size={16} aria-hidden="true" /><span className="kfg-sr-only">{t('ភាសាធៀប', 'Invitation language')}</span><select value={locale} onChange={event => language(event.target.value)}>{locales.includes('km') && <option value="km">ខ្មែរ</option>}{locales.includes('en') && <option value="en">English</option>}</select><ChevronDown size={14} aria-hidden="true" /></label>
       {phase === 'welcome' && <button type="button" className="kfg-skip-welcome" onClick={skipOpening}>{t('រំលង', 'Skip introduction')}</button>}
-      {musicSource && <button type="button" className="kfg-music" onClick={music.toggle} aria-pressed={music.playing} aria-label={music.playing ? t('ផ្អាកភ្លេង', 'Pause music') : t('ចាក់ភ្លេង', 'Play music')}>{music.playing ? <Pause size={18} aria-hidden="true" /> : <Music2 size={18} aria-hidden="true" />}</button>}</div>
+      {musicSource && <button type="button" className="kfg-music" onClick={music.toggle} data-music-status={music.status} aria-pressed={music.playing} aria-label={music.playing ? t('ផ្អាកភ្លេង', 'Pause music') : t('ចាក់ភ្លេង', 'Play music')}>{music.playing ? <Pause size={18} aria-hidden="true" /> : <Music2 size={18} aria-hidden="true" />}</button>}</div>
     {musicSource && <audio ref={audioRef} src={musicSource} loop preload="none" />}{music.status === 'error' && <p className="kfg-audio-error" role="status">{t('មិនអាចចាក់ភ្លេងបានទេ។ សូមចុចរូបតន្ត្រីដើម្បីសាកម្ដងទៀត។', 'Music could not play. Use the music button to try again.')}</p>}
     {phase === 'welcome' ? <section ref={welcomeRef} tabIndex={-1} className="kfg-welcome-scene" data-section-key="invitation" aria-label={t('សារអញ្ជើញ', 'Invitation welcome')}>
       {renderSection('invitation')}
       <button className="kfg-continue" type="button" onClick={skipOpening}>{t('បន្តទៅព័ត៌មានមង្គលការ', 'Continue to wedding details')}</button>
     </section> : !opened ? <section className="kfg-opening" aria-label={t('សំបុត្រអញ្ជើញ', 'Wedding invitation cover')}>
       <div className="kfg-cover-background" aria-hidden="true" style={{ '--kfg-cover-fit': style.backgroundFit, '--kfg-cover-position': `${style.backgroundX}% ${style.backgroundY}%`, filter: `blur(${style.backgroundBlur}px)`, opacity: 1 - style.backgroundOverlay }}><CoverBackground content={{ coverBackgroundImage: safeIntroMedia(vm.coverBackgroundImage), openingVideoUrl: vm.openingVideoEnabled === false ? '' : safeIntroMedia(vm.openingVideoUrl || vm.videoUrl || vm.openingVideo?.url || vm.openingVideo), videoPoster: safeIntroMedia(vm.videoPoster) }} /></div>
-      {style.monogramMode === 'image' && style.monogramImage ? <FloralPhoto className="kfg-monogram-logo" src={style.monogramImage} alt={floralInitials(vm) || t('រូបតំណាងគូស្វាមីភរិយា', 'Couple logo')} priority /> : <FloralMonogram text={floralInitials(vm)} variant={style.monogram} />}
+      {style.monogram === 'regal-scroll-gold' ? <FloralMonogram text={floralMonogramText(vm, style.monogramMode)} variant={style.monogram} settings={style}>{style.monogramMode === 'image' && style.monogramImage ? <FloralPhoto className="kfg-monogram-logo" src={style.monogramImage} alt={floralInitials(vm) || t('រូបតំណាងគូស្វាមីភរិយា', 'Couple logo')} priority /> : null}</FloralMonogram> : style.monogramMode === 'image' && style.monogramImage ? <FloralPhoto className="kfg-monogram-logo" src={style.monogramImage} alt={floralInitials(vm) || t('រូបតំណាងគូស្វាមីភរិយា', 'Couple logo')} priority /> : <FloralMonogram text={floralMonogramText(vm, style.monogramMode)} variant={style.monogram} />}
       <h1 style={{ fontSize: style.headingSize, textAlign: style.headingAlign }}>{style.headingMode === 'image' && style.headingImage ? <FloralPhoto className="kfg-heading-art" src={style.headingImage} alt={vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')} priority /> : vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')}</h1>
       <div className="kfg-guest"><p>{vm.subtitle || t('សូមគោរពអញ្ជើញ', 'Warmly inviting')}</p><div className={`kfg-guest-frame kfg-guest-frame--${style.guestFrame}`}><GoldFlourish /><span>{vm.isPersonalizedGuest ? vm.guestName : t('លោកអ្នក និងក្រុមគ្រួសារ', 'You and your family')}</span><GoldFlourish className="kfg-flourish-bottom" /></div></div><button type="button" className="kfg-gold-button kfg-open" disabled={phase === 'opening'} onClick={() => open(true)}><GoldPlaque /><span>{t('សូមចុចដើម្បីបើកសំបុត្រ', 'Open our invitation')}</span></button>{phase === 'opening' && <button className="kfg-skip-opening" type="button" onClick={skipOpening}>{t('រំលង', 'Skip opening')}</button>}</section>
       : <main ref={bodyRef} className="kfg-content" tabIndex={-1} aria-label={t('ព័ត៌មានអាពាហ៍ពិពាហ៍', 'Wedding details')}><h1 className="kfg-sr-only">{vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')}</h1>{floralSections(vm).filter(key => key !== 'invitation').map(key => <section key={key} className={`kfg-section kfg-${key}`} data-section-key={key} data-tx-section={key === 'map' ? 'venue' : key}>{renderSection(key)}</section>)}<footer className="kfg-footer"><FloralDivider /><span>{vm.groom} &amp; {vm.bride}</span><InvitationBranding content={vm} language={en ? 'en' : 'km'} />{!hosted && <small>{t('រូបភាពសម្រាប់គំរូបង្ហាញ៖ Jin Wedding / Pexels', 'Demo stock models and photography: Jin Wedding / Pexels')}</small>}</footer></main>}

@@ -24,7 +24,7 @@ export const KHMER_FLORAL_GOLD_TEMPLATE = {
   name: 'Khmer Floral Gold', nameKm: 'សិរីមង្គលផ្កាមាស', style: 'Khmer Floral Gold', category: 'TRADITIONAL',
   premium: false, isPremium: false, price: 0, currency: 'USD', languageMode: 'KH',
   supportedEventTypes: ['WEDDING'], supportedLanguages: ['KH', 'EN', 'BOTH'],
-  image: `${root}/preview.svg`, mainImage: `${root}/couple-960.webp`, phoneCoverImage: `${root}/couple-960.webp`,
+  image: `${root}/cover-preview-640.webp`, mainImage: `${root}/couple-960.webp`, phoneCoverImage: `${root}/couple-960.webp`,
   groom: km.groomName, bride: km.brideName, groomEn: en.groomName, brideEn: en.brideName,
   invitationImage: `${root}/groom.webp`, invitationImage2: `${root}/bride.webp`, backgroundImage: `${root}/couple-960.webp`,
   monogramText: 'ដ ស', guestName: 'លោកអ្នក និងក្រុមគ្រួសារ',
@@ -41,5 +41,5 @@ export const KHMER_FLORAL_GOLD_TEMPLATE = {
   localizedContentV1: { version: 1, defaultLocale: 'km', enabledLocales: ['km', 'en'], km, en },
   enabledSections: { family: true, invitation: true, couplePhoto: true, countdown: true, schedule: true, map: true, gallery: true, closing: true, rsvp: true, music: true, story: false, faq: false, gift: false, dressCode: false, party: false },
   design: { presetId: 'KHMER_FLORAL_GOLD', theme: 'KHMER_FLORAL_GOLD', openingStyle: 'floral-paper', primaryColor: '#876326', secondaryColor: '#d5b77a', backgroundColor: '#fffdf8' },
-  music: null,
+  music: '/music/Noly%20Record%20-%20wedding-Song.mp3',
 };

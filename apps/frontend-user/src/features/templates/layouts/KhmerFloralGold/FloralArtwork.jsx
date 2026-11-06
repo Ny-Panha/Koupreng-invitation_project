@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { safeIntroMedia } from '../../shared/cinematicIntro';
 
 export function FloralPhoto({ src, alt, priority = false, className = '' }) {
@@ -17,7 +17,37 @@ export function FloralPhoto({ src, alt, priority = false, className = '' }) {
 export function FloralDivider() {
   return <svg className="kfg-divider" viewBox="0 0 240 28" fill="none" aria-hidden="true"><path d="M8 14H92m56 0h84M120 6l8 8-8 8-8-8Z" stroke="currentColor"/><path d="M101 14c-12-16-21 8-8 3m46-3c12-16 21 8 8 3" stroke="currentColor"/><circle cx="120" cy="14" r="2" fill="currentColor"/></svg>;
 }
-export function FloralMonogram({ text, variant = 'ornate' }) {
+function RegalCenterText({ text, size, mode, layout }) {
+  const box = useRef(null);
+  useLayoutEffect(() => {
+    const node = box.current;
+    if (!node) return undefined;
+    let active = true;
+    const fit = () => {
+      if (!active) return;
+      node.style.fontSize = '';
+      let pixels = parseFloat(getComputedStyle(node).fontSize);
+      const inner = node.firstElementChild;
+      while (pixels > 8 && (inner.scrollWidth > node.clientWidth + 1 || inner.scrollHeight > node.clientHeight + 1)) {
+        pixels -= 1;
+        node.style.fontSize = `${pixels}px`;
+      }
+    };
+    fit();
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(fit) : null;
+    observer?.observe(node);
+    document.fonts?.ready.then(fit);
+    return () => { active = false; observer?.disconnect(); };
+  }, [text, size, mode, layout]);
+  const lines = layout === 'staircase' ? String(text || '').split(/\n|\s*&\s*/).map(line => line.trim()).filter(Boolean) : [];
+  return <span ref={box} lang={/[\u1780-\u17ff]/.test(text || '') ? 'km' : 'en'} className={Array.from(text || '').length > 12 ? 'kfg-monogram-long-text' : undefined}><span className={lines.length === 2 ? 'kfg-monogram-staircase' : undefined}>{lines.length === 2 ? <><span>{lines[0]}</span><span>&amp;</span><span>{lines[1]}</span></> : text}</span></span>;
+}
+export function FloralMonogram({ text, variant = 'ornate', settings = {}, children }) {
+  if (variant === 'regal-scroll-gold') return <div className="kfg-monogram kfg-monogram--regal-scroll-gold" data-frame={variant} data-text-mode={settings.monogramMode} data-gold-treatment={settings.monogramTreatment}
+    style={{ '--kfg-monogram-size': settings.monogramSize, '--kfg-monogram-text-size': `${settings.monogramTextSize || 36}px`, '--kfg-monogram-text-color': settings.monogramTextColor, '--kfg-monogram-align': settings.monogramAlign, '--kfg-monogram-opacity': settings.monogramOpacity, '--kfg-monogram-offset': `${settings.monogramOffset || 0}px` }}>
+    <img className="kfg-monogram-art" src="/templates/khmer-floral-gold/regal-scroll-gold.webp" srcSet="/templates/khmer-floral-gold/regal-scroll-gold-480.webp 480w, /templates/khmer-floral-gold/regal-scroll-gold.webp 960w" sizes="(max-width: 430px) 80vw, 310px" alt="" aria-hidden="true" width="960" height="960" decoding="async" fetchPriority="high" draggable={false} />
+    {children || <RegalCenterText text={text} size={settings.monogramTextSize} mode={settings.monogramMode} layout={settings.monogramTextLayout} />}
+  </div>;
   if (variant !== 'ornate') return <div className={`kfg-monogram kfg-monogram--${variant}`}><svg viewBox="0 0 240 310" fill="none" aria-hidden="true">{variant === 'oval' ? <><ellipse cx="120" cy="155" rx="94" ry="136" /><ellipse cx="120" cy="155" rx="85" ry="126" strokeWidth=".6" /><path d="m120 7 9 12-9 12-9-12Zm0 272 9 12-9 12-9-12Z" /></> : variant === 'diamond' ? <><path d="m120 10 108 145-108 145L12 155Zm0 16 96 129-96 129-96-129Z" /><path d="M84 10h72M84 300h72" /></> : <><rect x="29" y="30" width="182" height="250" rx="90" /><path d="M86 17h68M86 293h68" /></>}</svg><span>{text}</span></div>;
   return <div className="kfg-monogram"><svg viewBox="0 0 240 310" fill="none" aria-hidden="true">
     <path d="M120 12c13 25 43 7 55 28 7 13-6 22 7 35 27-2 39 20 27 42-8 14 6 32-5 48 12 25-7 34-4 61 7 29-23 37-45 38-10 19-24 10-35 34-11-24-25-15-35-34-22-1-52-9-45-38 3-27-16-36-4-61-11-16 3-34-5-48C19 95 31 73 58 75c13-13 0-22 7-35 12-21 42-3 55-28Z"/>

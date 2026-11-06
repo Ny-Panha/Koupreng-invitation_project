@@ -1,0 +1,1195 @@
+{
+  "date": "2026-11-06",
+  "note": "Executed sequential runs at the scopes stated; repeated cases are not additional unique coverage. Responsive visual export separately passed 2 Chromium scenarios in 15.1 seconds.",
+  "runs": [
+    {
+      "scope": "Regression matrix before final lotus/border artwork",
+      "stats": {
+        "startTime": "2026-11-06T09:07:53.218Z",
+        "duration": 493858.25,
+        "expected": 128,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "data-saving guests get immediate details with static decoration and usable forms",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "a keyboard-selected Studio song survives save and reopen",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "data-saving guests get immediate details with static decoration and usable forms",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "a keyboard-selected Studio song survives save and reopen",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "data-saving guests get immediate details with static decoration and usable forms",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "a keyboard-selected Studio song survives save and reopen",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "data-saving guests get immediate details with static decoration and usable forms",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "a keyboard-selected Studio song survives save and reopen",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": [
+            {
+              "type": "codec limitation",
+              "description": "Bundled Windows WebKit rejected the MP4 fixture; error recovery and continuing MP3 verified."
+            }
+          ]
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 360px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 390px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 430px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 512px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 768px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1024px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1440px",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "owner music starts after a gesture, pauses and stops after navigating away",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "missing host media never becomes demo people, map, agenda or a sample date",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "FREE can edit, persist, refresh and publish floral without checkout",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PRO can edit, persist, refresh and publish floral without checkout",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 360px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 390px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 430px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 512px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 768px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1024px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1440px",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "owner music starts after a gesture, pauses and stops after navigating away",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "missing host media never becomes demo people, map, agenda or a sample date",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "FREE can edit, persist, refresh and publish floral without checkout",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PRO can edit, persist, refresh and publish floral without checkout",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 360px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 390px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 430px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 512px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 768px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1024px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1440px",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "owner music starts after a gesture, pauses and stops after navigating away",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": [
+            {
+              "type": "codec limitation",
+              "description": "Bundled WebKit rejected the PCM WAV fixture after explicit retry; readable fallback and route cleanup verified, audio playback not verified."
+            }
+          ]
+        },
+        {
+          "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "missing host media never becomes demo people, map, agenda or a sample date",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "FREE can edit, persist, refresh and publish floral without checkout",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PRO can edit, persist, refresh and publish floral without checkout",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 360px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 390px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 430px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 512px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 768px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1024px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reference scenes fit 1440px",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "owner music starts after a gesture, pauses and stops after navigating away",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "missing host media never becomes demo people, map, agenda or a sample date",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "FREE can edit, persist, refresh and publish floral without checkout",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PRO can edit, persist, refresh and publish floral without checkout",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        }
+      ]
+    },
+    {
+      "scope": "Final assets before viewport-position adjustment",
+      "stats": {
+        "startTime": "2026-11-06T09:26:58.379Z",
+        "duration": 147593.36800000002,
+        "expected": 48,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": [
+            {
+              "type": "codec limitation",
+              "description": "Bundled Windows WebKit rejected the MP4 fixture; error recovery and continuing MP3 verified."
+            }
+          ]
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors No Music",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors missing owner song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "published invitation honors owner song",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "blocked music can be retried without blocking wedding details",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "Premium film remains muted while one selected wedding song continues",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "long Khmer names fit the transparent center on a narrow cover",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "reduced motion, data saving and hidden documents suppress decorative work",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        }
+      ]
+    },
+    {
+      "scope": "Final fixed-background checks, four profiles",
+      "stats": {
+        "startTime": "2026-11-06T09:29:58.435Z",
+        "duration": 35543.523,
+        "expected": 8,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "firefox",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "webkit",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "details sections fade into view on scroll and stay revealed on return",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "mobile-chromium",
+          "status": "passed",
+          "annotations": []
+        }
+      ]
+    },
+    {
+      "scope": "Final built-app preview, Chromium",
+      "stats": {
+        "startTime": "2026-11-06T09:31:44.388Z",
+        "duration": 14110.115,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        },
+        {
+          "title": "downloaded raster effects span the full background and persist through every scene",
+          "project": "chromium",
+          "status": "passed",
+          "annotations": []
+        }
+      ]
+    }
+  ]
+}

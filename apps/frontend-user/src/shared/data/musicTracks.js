@@ -25,6 +25,12 @@ export const MUSIC_TRACKS = [
         url: instrumentalWedding,
     },
     {
+        id: "noly-wedding",
+        name: "Noly Record - Wedding Song",
+        description: "Wedding song",
+        url: "/music/Noly%20Record%20-%20wedding-Song.mp3",
+    },
+    {
         id: "none",
         name: "មិនប្រើតន្ត្រី",
         description: "បិទតន្ត្រី background",

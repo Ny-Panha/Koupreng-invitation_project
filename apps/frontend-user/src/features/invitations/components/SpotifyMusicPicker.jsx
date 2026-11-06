@@ -15,6 +15,12 @@ import { MUSIC_TRACKS } from "../../../shared/data/musicTracks";
 import "./SpotifyMusicPicker.css";
 
 const TRACK_METADATA = {
+    "noly-wedding": {
+        artist: "Noly Record",
+        sub: "Wedding Song • 3:34",
+        coverClass: "cover-2",
+        icon: IoMusicalNotes,
+    },
     "waiting-day": {
         artist: "VannDa",
         sub: "មនោសញ្ចេតនាពិធីការ • 4:48",

@@ -46,3 +46,13 @@ export function floralInitials(content) {
     : Array.from(value || '')[0] || '';
   return [first(content.groom), first(content.bride)].filter(Boolean).join(' ');
 }
+export function floralMonogramText(content, mode) {
+  if (mode === 'names') return [content.groom, content.bride].filter(Boolean).join('\n&\n');
+  return floralInitials(mode === 'auto' ? { ...content, monogramText: '' } : content);
+}
+export function floralMusic(content) {
+  if (content.enabledSections?.music === false || content.musicTrackId === 'none') return '';
+  // Missing owner music stays silent; the marketing song never fills that gap.
+  const value = Object.hasOwn(content, 'musicUrl') ? content.musicUrl : content.music;
+  return safeIntroMedia(typeof value === 'string' ? value : value?.url || '');
+}

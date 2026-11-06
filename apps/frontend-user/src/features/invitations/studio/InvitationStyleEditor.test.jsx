@@ -39,6 +39,20 @@ describe('InvitationStyleEditor', () => {
     programStyles: true,
   };
 
+  it('selects the real Regal preset without replacing custom text or logo', () => {
+    const update = vi.fn();
+    const form = { ...defaultForm, invitationStyleV1: { ...defaultForm.invitationStyleV1, monogramImage: '/uploads/saved-logo.webp' } };
+    const view = render(<InvitationStyleEditor form={form} update={update} capabilities={capabilities} english eventId="101" />);
+    expect(view.container.querySelector('.kfg-monogram-art')).toHaveAttribute('src', '/templates/khmer-floral-gold/regal-scroll-gold.webp');
+    fireEvent.click(screen.getByRole('radio', { name: 'Regal Scroll Gold' }));
+    expect(update).toHaveBeenCalledWith('invitationStyleV1', expect.objectContaining({ monogram: 'regal-scroll-gold', monogramImage: '/uploads/saved-logo.webp' }));
+    expect(update).not.toHaveBeenCalledWith('monogramText', expect.anything());
+    view.rerender(<InvitationStyleEditor form={{ ...form, invitationStyleV1: { ...form.invitationStyleV1, monogram: 'regal-scroll-gold' } }} update={update} capabilities={capabilities} english eventId="101" />);
+    fireEvent.change(screen.getByLabelText('Frame size'), { target: { value: '1.1' } });
+    expect(update).toHaveBeenCalledWith('invitationStyleV1', expect.objectContaining({ monogramSize: 1.1 }));
+    expect(screen.getByRole('combobox', { name: 'Couple initials / logo' })).toHaveValue('text');
+  });
+
   it('renders date styles and handles style selection', () => {
     const update = vi.fn();
     render(

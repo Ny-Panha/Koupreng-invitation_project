@@ -18,7 +18,7 @@
 .kfg-language{position:relative;display:flex;align-items:center;gap:7px;padding:0 12px;min-height:44px;border:1px solid var(--kfg-highlight);border-radius:25px;background:#fffdf8ed;color:var(--kfg-gold);pointer-events:auto;font-size:14px;box-shadow:0 2px 9px #886d3010}
 .kfg-language select{appearance:none;border:0;color:inherit;background:transparent;min-height:44px;padding:7px 0;font:inherit;max-width:100px}.kfg-language svg{flex-shrink:0}
 .kfg-music{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #d5b77a88;background:#fffdf8ed;color:var(--kfg-gold);pointer-events:auto}.kfg-music[aria-pressed=true]{border-color:var(--kfg-gold)}
-.kfg-audio-error{position:relative;z-index:5;padding:70px 24px 8px;background:var(--kfg-paper);font-size:14px}
+.kfg-audio-error{position:relative;z-index:3;padding:70px 24px 8px;background:var(--kfg-paper);font-size:14px}
 .kfg-opening{min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:94px 26px 40px;position:relative}
 .kfg-monogram{width:174px;aspect-ratio:240/310;position:relative;color:var(--kfg-highlight)}.kfg-monogram svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.2;filter:drop-shadow(0 2px 1px #c3a76a18)}.kfg-monogram>span{position:absolute;inset:28% 22%;display:grid;place-items:center;white-space:pre-line;font:400 clamp(30px,8vw,44px)/1.8 var(--kfg-display);color:var(--kfg-gold);text-align:center;overflow-wrap:anywhere}
 .kfg-opening h1{margin:22px -5px 70px}.kfg-guest{width:100%;max-width:440px;margin-top:auto}.kfg-guest>p{color:var(--kfg-gold);font-weight:600;margin-bottom:24px}.kfg-guest>div{position:relative;display:grid;place-items:center;min-height:66px;padding:14px 20px;border:1px solid var(--kfg-highlight);outline:1px solid #d5b77a66;outline-offset:4px;border-radius:7px;color:var(--kfg-ink);font-weight:600}
@@ -163,4 +163,126 @@
 }
 @media (prefers-reduced-motion: reduce), (update: slow) {
   .kfg-lightbox *, .kfg-lightbox img[data-image-state] { animation: none !important; transition: none !important; }
+}
+
+/* Owner-supplied Regal Scroll Gold #8: the square canvas preserves every jewel. */
+.kfg-monogram--regal-scroll-gold {
+  width: min(100%, calc(clamp(240px, 72vw, 310px) * var(--kfg-monogram-size, 1)));
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  margin-top: var(--kfg-monogram-offset, 0px);
+  filter: drop-shadow(0 3px 4px #85672c18);
+}
+.kfg-monogram-art { display: block; width: 100%; height: 100%; object-fit: contain; opacity: var(--kfg-monogram-opacity, 1); }
+.kfg-monogram--regal-scroll-gold[data-gold-treatment=champagne] .kfg-monogram-art { filter: saturate(.72) brightness(1.04); }
+.kfg-monogram--regal-scroll-gold > span {
+  inset: 24% 29% 26%;
+  display: grid;
+  place-items: center;
+  font-size: var(--kfg-monogram-text-size, 36px);
+  line-height: 1.85;
+  color: var(--kfg-monogram-text-color, var(--kfg-gold));
+  text-align: var(--kfg-monogram-align, center);
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-wrap: balance;
+}
+.kfg-monogram--regal-scroll-gold > span > span { display: block; width: 100%; min-width: 0; }
+.kfg-monogram--regal-scroll-gold > span > .kfg-monogram-staircase { width: 88%; line-height: 1.55; }
+.kfg-monogram-staircase > span { display: block; text-align: left; }
+.kfg-monogram-staircase > span:nth-child(2) { text-align: center; font: .8em/1 var(--kfg-latin, Georgia, serif); margin-block: -3px; }
+.kfg-monogram-staircase > span:nth-child(3) { text-align: right; }
+.kfg-monogram--regal-scroll-gold > span[lang=en] { font-family: var(--kfg-latin-font, var(--kfg-latin)); }
+.kfg-monogram--regal-scroll-gold > .kfg-monogram-long-text,
+.kfg-monogram--regal-scroll-gold[data-text-mode=names] > span { font-size: min(var(--kfg-monogram-text-size, 36px), 18px); line-height: 1.7; }
+.kfg-monogram--regal-scroll-gold > span:has(.kfg-monogram-staircase) { font-size: min(var(--kfg-monogram-text-size, 36px), 26px); }
+.kfg-monogram--regal-scroll-gold > .kfg-monogram-logo { position: absolute; inset: 26% 29%; width: 42%; height: 48%; object-fit: contain; }
+.kfg-opening:has(.kfg-monogram--regal-scroll-gold) h1 { margin-top: 18px; margin-bottom: 38px; }
+.kfg-opening:has(.kfg-monogram--regal-scroll-gold) .kfg-open { margin-top: 38px; }
+.kfg-invitation[data-motion=subtle] { --kfg-opening-duration: 350ms; }
+.kfg-invitation[data-motion=romantic] { --kfg-opening-duration: 1000ms; }
+.kfg-invitation[data-motion=cinematic] { --kfg-opening-duration: 1300ms; }
+.is-opening .kfg-monogram--regal-scroll-gold { animation: kfg-regal-unseal var(--kfg-opening-duration, 800ms) ease both; }
+.is-opening .kfg-monogram--regal-scroll-gold > span { animation: kfg-regal-initials calc(var(--kfg-opening-duration, 800ms) * .8) ease both; }
+.is-opening .kfg-monogram--regal-scroll-gold::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, #fff8dc99 49%, transparent 63%) -340px 0 / 650px 100% no-repeat;
+  mask: url('/templates/khmer-floral-gold/regal-scroll-gold-480.webp') center / contain no-repeat;
+  animation: kfg-regal-highlight calc(var(--kfg-opening-duration, 800ms) * .875) ease-out both;
+}
+@keyframes kfg-regal-unseal { 0% { transform: scale(1); opacity: 1; } 35% { transform: scale(1.025); opacity: 1; } 100% { transform: scale(1.05); opacity: 0; } }
+@keyframes kfg-regal-initials { to { opacity: 0; } }
+@keyframes kfg-regal-highlight { to { background-position: 340px 0; } }
+.kfg-invitation[data-page-hidden=true] .kfg-monogram--regal-scroll-gold::after { animation-play-state: paused !important; }
+.kfg-invitation[data-low-power=true] .kfg-monogram--regal-scroll-gold::after,
+.kfg-invitation[data-motion=none] .kfg-monogram--regal-scroll-gold::after { animation: none !important; display: none; }
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-monogram--regal-scroll-gold::after { animation: none !important; display: none; }
+}
+
+/* Details-page entrance follows scrolling; no delays or repeat flashes on return. */
+.kfg-content > :is(.kfg-section,.kfg-footer)[data-scroll-reveal] { animation: none; transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.65,.25,1); }
+.kfg-content > :is(.kfg-section,.kfg-footer)[data-scroll-reveal=pending] { opacity: 0; transform: translateY(16px); }
+.kfg-content > :is(.kfg-section,.kfg-footer)[data-scroll-reveal=visible] { opacity: 1; transform: none; }
+.kfg-invitation[data-page-hidden=true] .kfg-section[data-scroll-reveal] { transition: none; }
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-content > :is(.kfg-section,.kfg-footer)[data-scroll-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Downloaded CC0 raster ambience spans every scene, behind the live content. */
+.kfg-invitation .kfg-ambience { display: block; z-index: 0; contain: paint; }
+.kfg-opening,.kfg-welcome-scene,.kfg-content,.kfg-demo-actions { z-index: 1; }
+.kfg-ambient-particle { position: absolute; top: var(--ambient-top); left: var(--ambient-x); width: 18px; height: 20px; opacity: 0; animation: kfg-flower-dance var(--ambient-duration,22s) ease-in-out var(--ambient-delay,0s) infinite; }
+.kfg-ambient-particle > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.kfg-ambient-particle[data-zone=center] > img { opacity: .3; }
+.kfg-ambient-heart { width: 16px; height: 16px; animation-name: kfg-heart-dance; animation-duration: 24s; }
+.kfg-ambient-star { top: var(--ambient-top); width: 21px; height: 21px; animation: kfg-star-breathe 4.8s ease-in-out var(--ambient-delay) infinite; }
+.kfg-ambient-butterfly { width: 34px; height: 27px; animation: kfg-butterfly-glide var(--ambient-duration,20s) ease-in-out var(--ambient-delay) infinite; }
+.kfg-ambient-butterfly[data-zone=center] > img { opacity: .75; }
+.kfg-ambient-butterfly > img { animation: kfg-butterfly-wings 1.4s ease-in-out var(--ambient-delay) infinite alternate; }
+.kfg-ambience[data-intensity=elegant] { opacity: .85; }
+.kfg-ambience[data-intensity=subtle] .kfg-ambient-particle:nth-child(n+5) { display: none; }
+.kfg-invitation .kfg-ambience[hidden],.kfg-invitation[data-motion=none] .kfg-ambience,.kfg-invitation[data-low-power=true] .kfg-ambience { display: none !important; }
+@keyframes kfg-flower-dance { 0%,100% { opacity: .3; transform: translate3d(0,0,0) rotate(-15deg); } 35% { opacity: .5; transform: translate3d(18px,-8vh,0) rotate(18deg); } 70% { opacity: .4; transform: translate3d(-12px,6vh,0) rotate(38deg); } }
+@keyframes kfg-heart-dance { 0%,100% { opacity: .25; transform: translate3d(0,0,0) rotate(-8deg) scale(.85); } 35% { opacity: .45; transform: translate3d(-18px,-12vh,0) rotate(12deg) scale(1); } 70% { opacity: .35; transform: translate3d(14px,-5vh,0) rotate(-5deg) scale(.9); } }
+@keyframes kfg-star-breathe { 0%,100% { opacity: .12; transform: scale(.7); } 50% { opacity: .6; transform: scale(1); } }
+@keyframes kfg-butterfly-glide { 0%,100% { opacity: .5; transform: translate3d(0,0,0) rotate(-12deg); } 25% { opacity: .7; transform: translate3d(calc(18px * var(--flight-direction)),8vh,0) rotate(10deg); } 50% { opacity: .65; transform: translate3d(calc(-12px * var(--flight-direction)),21vh,0) rotate(-6deg); } 75% { opacity: .7; transform: translate3d(calc(24px * var(--flight-direction)),10vh,0) rotate(14deg); } }
+@keyframes kfg-butterfly-wings { from { transform: perspective(100px) rotateY(-12deg); } to { transform: perspective(100px) rotateY(48deg); } }
+
+/* A measured entrance for each content type; one reveal, rather than tick loops. */
+.kfg-section[data-scroll-reveal=visible] > h2 { animation: kfg-heading-arrive 900ms ease both; }
+.kfg-section[data-scroll-reveal=visible] > .kfg-divider { animation: kfg-divider-arrive 1000ms ease both; }
+.kfg-couplePhoto[data-scroll-reveal=visible] .kfg-couple-photograph > img { animation: kfg-photo-settle 1600ms cubic-bezier(.2,.65,.25,1) both; }
+.kfg-countdown[data-scroll-reveal=visible] .kp-countdown-unit { animation: kfg-countdown-arrive 850ms ease both; }
+.kfg-countdown[data-scroll-reveal=visible] .kp-countdown-unit:nth-child(2) { animation-delay: 100ms; }
+.kfg-countdown[data-scroll-reveal=visible] .kp-countdown-unit:nth-child(3) { animation-delay: 200ms; }
+.kfg-countdown[data-scroll-reveal=visible] .kp-countdown-unit:nth-child(4) { animation-delay: 300ms; }
+.kfg-map[data-scroll-reveal=visible] > figure { animation: kfg-heading-arrive 1100ms ease both; }
+.kfg-slide > img,.kfg-lightbox-stage > img { animation-duration: 650ms; }
+.kfg-music[aria-pressed=true] { animation: kfg-music-breathe 3.8s ease-in-out infinite; }
+@keyframes kfg-heading-arrive { from { opacity: .25; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes kfg-divider-arrive { from { opacity: .3; transform: scaleX(.72); } to { opacity: 1; transform: none; } }
+@keyframes kfg-photo-settle { from { transform: scale(1.025); } to { transform: scale(1); } }
+@keyframes kfg-countdown-arrive { from { opacity: .2; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes kfg-music-breathe { 0%,100% { box-shadow: 0 0 0 0 #d5b77a00; } 50% { box-shadow: 0 0 0 5px #d5b77a21; } }
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-invitation .kfg-ambience { display: none !important; }
+}
+
+/* Seven photographed lotus petals fall independently in fixed horizontal lanes. */
+.kfg-paper-art { position: fixed; inset: 0 auto 0 50%; width: min(100%,560px); height: auto; transform: translateX(-50%); }
+.kfg-lotus-rain { position: absolute; inset: 0; overflow: hidden; }
+.kfg-lotus-petal { position: absolute; top: -35px; left: var(--petal-x); width: var(--petal-size); height: calc(var(--petal-size) * 1.7); object-fit: contain; opacity: 0; animation: kfg-lotus-rainfall var(--petal-duration,26s) linear var(--petal-delay) infinite; }
+.kfg-ambience[data-intensity=subtle] .kfg-lotus-rain { opacity: .55; }
+.kfg-paper-art::before { top: -20px; right: -3%; width: 106%; height: 180px; background-image: url('/templates/khmer-floral-gold/effects/blush-floral-border-top.webp'); background-position: center top; opacity: .45; animation: kfg-corner-wind 12s ease-in-out infinite alternate; transform-origin: center top; }
+.kfg-paper-art::after { left: -3%; bottom: -12px; width: 106%; height: 150px; background-image: url('/templates/khmer-floral-gold/effects/blush-floral-border-bottom.webp'); background-position: center bottom; transform: none; opacity: .3; transform-origin: center bottom; animation: kfg-garden-wind 14s ease-in-out infinite alternate; }
+@keyframes kfg-lotus-rainfall { 0% { opacity: 0; transform: translate3d(0,-5vh,0) rotate(-12deg); } 12%,85% { opacity: .35; } 50% { transform: translate3d(0,50vh,0) rotate(12deg); } 100% { opacity: 0; transform: translate3d(0,112vh,0) rotate(-8deg); } }
+@keyframes kfg-corner-wind { from { transform: rotate(-1deg) translate3d(0,0,0); } to { transform: rotate(1deg) translate3d(4px,2px,0); } }
+@keyframes kfg-garden-wind { from { transform: rotate(-1.4deg) translateX(-4px); } to { transform: rotate(1.4deg) translateX(4px); } }
+.kfg-invitation[data-page-hidden=true] .kfg-paper-art::before,.kfg-invitation[data-page-hidden=true] .kfg-paper-art::after { animation-play-state: paused !important; }
+.kfg-invitation[data-motion=none] .kfg-paper-art::before,.kfg-invitation[data-motion=none] .kfg-paper-art::after,
+.kfg-invitation[data-low-power=true] .kfg-paper-art::before,.kfg-invitation[data-low-power=true] .kfg-paper-art::after { animation: none !important; }
+.kfg-invitation[data-low-power=true] .kfg-paper-art::after { background-image: none; }
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-paper-art::before,.kfg-paper-art::after { animation: none !important; }
 }

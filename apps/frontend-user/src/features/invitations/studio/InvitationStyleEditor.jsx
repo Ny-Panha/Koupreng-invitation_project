@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { DATE_STYLES, PROGRAM_STYLES, GUEST_FRAMES, MOTION_STYLES, invitationStyles } from '../../templates/shared/invitationStyles';
+import { DATE_STYLES, PROGRAM_STYLES, GUEST_FRAMES, MOTION_STYLES, MONOGRAM_FRAMES, invitationStyles } from '../../templates/shared/invitationStyles';
 import DatePresentation from '../../templates/shared/DatePresentation';
 import { EventCalendar } from '../../templates/shared/SaveTheDate';
 import ProgramTimeline from '../../templates/shared/ProgramTimeline';
@@ -13,7 +13,7 @@ import '../../templates/layouts/KhmerFloralGold/khmer-floral-gold.css';
 import './invitation-style-editor.css';
 
 export default function InvitationStyleEditor({ form, update, capabilities, english, eventId }) {
-  const style = invitationStyles({ ...form, invitationStyleV1: { ...(capabilities.coverStyles ? { program: 'gold-curve' } : {}), ...form.invitationStyleV1 } }), latest = useRef({ form, update, eventId });
+  const style = invitationStyles({ ...form, ...(capabilities.coverStyles ? { code: 'khmer-floral-gold' } : {}), invitationStyleV1: { ...(capabilities.coverStyles ? { program: 'gold-curve' } : {}), ...form.invitationStyleV1 } }), latest = useRef({ form, update, eventId });
   latest.current = { form, update, eventId };
   const [busy, setBusy] = useState(''), [error, setError] = useState('');
   const text = (en, km) => english ? en : km;
@@ -53,8 +53,16 @@ export default function InvitationStyleEditor({ form, update, capabilities, engl
     {capabilities.coverStyles && <>
       {select('headingMode', text('Cover heading', 'ចំណងជើងក្រប'), [['text', 'Live text', 'អក្សរផ្ទាល់'], ['image', 'Uploaded artwork', 'រូបអក្សរ']])}
       {style.headingMode === 'text' ? <><label className="pe-label">{text('Heading text', 'អក្សរចំណងជើង')}<input className="pe-input" value={form.title || ''} onChange={e => update('title', e.target.value)} /></label><label className="pe-label">{text('Heading size', 'ទំហំចំណងជើង')}<input type="range" min="20" max="40" value={style.headingSize} onChange={e => set('headingSize', Number(e.target.value))} /></label>{select('headingAlign', text('Heading alignment', 'តម្រឹមចំណងជើង'), [['left', 'Left', 'ឆ្វេង'], ['center', 'Center', 'កណ្ដាល'], ['right', 'Right', 'ស្ដាំ']])}</> : imageField('headingImage', text('Heading artwork', 'រូបចំណងជើង'), style.headingImage)}
-      {select('monogramMode', text('Couple initials / logo', 'អក្សរកាត់ ឬរូបតំណាង'), [['text', 'Initials', 'អក្សរកាត់'], ['image', 'Uploaded logo', 'រូបតំណាង']])}
-      {style.monogramMode === 'image' ? imageField('monogramImage', text('Couple logo', 'រូបតំណាងគូស្វាមីភរិយា'), style.monogramImage) : <><label className="pe-label">{text('Initials', 'អក្សរកាត់')}<input className="pe-input" maxLength={24} value={form.monogramText || ''} onChange={e => update('monogramText', e.target.value)} /></label>{picker(text('Monogram frame', 'ស៊ុមអក្សរកាត់'), 'monogram', ['ornate', 'oval', 'diamond', 'minimal'].map(id => ({ id, km: ({ ornate: 'ក្បាច់មាស', oval: 'ពងក្រពើ', diamond: 'ពេជ្រ', minimal: 'សាមញ្ញ' })[id], en: ({ ornate: 'Ornate', oval: 'Oval', diamond: 'Diamond', minimal: 'Minimal' })[id] })), id => <FloralMonogram text={form.monogramText || 'ក ខ'} variant={id} />)}</>}
+      {select('monogramMode', text('Couple initials / logo', 'អក្សរកាត់ ឬរូបតំណាង'), [['auto', 'Automatic initials', 'អក្សរកាត់ស្វ័យប្រវត្តិ'], ['text', 'Custom initials', 'អក្សរកាត់ផ្ទាល់ខ្លួន'], ['names', 'Couple names', 'ឈ្មោះគូស្វាមីភរិយា'], ['image', 'Uploaded logo', 'រូបតំណាង']])}
+      {style.monogramMode === 'image' ? imageField('monogramImage', text('Couple logo', 'រូបតំណាងគូស្វាមីភរិយា'), style.monogramImage) : style.monogramMode === 'text' && <label className="pe-label">{text('Initials', 'អក្សរកាត់')}<input className="pe-input" maxLength={24} value={form.monogramText || ''} onChange={e => update('monogramText', e.target.value)} /></label>}
+      {picker(text('Monogram frame', 'ស៊ុមអក្សរកាត់'), 'monogram', MONOGRAM_FRAMES, id => <FloralMonogram text={form.monogramText || 'ក ខ'} variant={id} />)}
+      {style.monogram === 'regal-scroll-gold' && <>
+        {[['monogramSize', 'Frame size', 'ទំហំស៊ុម', .8, 1.15, .05], ['monogramTextSize', 'Center text size', 'ទំហំអក្សរកណ្ដាល', 16, 48, 1], ['monogramOpacity', 'Frame opacity', 'ភាពស្រអាប់ស៊ុម', .5, 1, .05], ['monogramOffset', 'Frame vertical offset', 'ទីតាំងបញ្ឈរស៊ុម', -12, 12, 1]].map(([key, en, km, min, max, step]) => <label className="pe-label" key={key}>{text(en, km)}<input type="range" min={min} max={max} step={step} value={style[key]} onChange={e => set(key, Number(e.target.value))} /></label>)}
+        <label className="pe-label">{text('Center text color', 'ពណ៌អក្សរកណ្ដាល')}<input type="color" value={style.monogramTextColor} onChange={e => set('monogramTextColor', e.target.value)} /></label>
+        {select('monogramAlign', text('Center text alignment', 'តម្រឹមអក្សរកណ្ដាល'), [['left', 'Left', 'ឆ្វេង'], ['center', 'Center', 'កណ្ដាល'], ['right', 'Right', 'ស្ដាំ']])}
+        {select('monogramTextLayout', text('Center text layout', 'ប្លង់អក្សរកណ្ដាល'), [['centered', 'Centered', 'កណ្ដាល'], ['staircase', 'Staircase', 'លំដាប់ជណ្ដើរ']])}
+        {select('monogramTreatment', text('Gold treatment', 'ពណ៌មាស'), [['original', 'Original gold', 'មាសដើម'], ['champagne', 'Soft champagne', 'មាសសាំប៉ាញ']])}
+      </>}
       {picker(text('Guest frame', 'ស៊ុមឈ្មោះភ្ញៀវ'), 'guestFrame', GUEST_FRAMES, id => <div className={`kfg-guest-frame kfg-guest-frame--${id}`}><span>{text('You and your family', 'លោកអ្នក និងក្រុមគ្រួសារ')}</span></div>)}
       {imageField('coverBackgroundImage', text('Cover background image', 'រូបផ្ទៃក្រប'), form.coverBackgroundImage)}
       {select('backgroundFit', text('Background fit', 'ទំហំរូបផ្ទៃក្រោយ'), [['cover', 'Fill cover', 'បំពេញក្រប'], ['contain', 'Show whole image', 'បង្ហាញរូបពេញ']])}

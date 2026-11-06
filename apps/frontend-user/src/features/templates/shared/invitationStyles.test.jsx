@@ -44,7 +44,7 @@ describe('canonical presentation styles', () => {
     expect(KHMER_FLORAL_GOLD_TEMPLATE.family).toEqual(KHMER_CELESTIAL_TEMPLATE.family);
     expect(KHMER_FLORAL_GOLD_TEMPLATE.family).not.toBe(KHMER_CELESTIAL_TEMPLATE.family);
     expect(KHMER_FLORAL_GOLD_TEMPLATE.backgroundImage).toContain('khmer-floral-gold');
-    expect(KHMER_FLORAL_GOLD_TEMPLATE.music).toBeNull();
+    expect(KHMER_FLORAL_GOLD_TEMPLATE.music).toBe('/music/Noly%20Record%20-%20wedding-Song.mp3');
   });
   it.each(TEMPLATES)('exposes style capabilities separately from template price: $id', template => {
     const caps = templateCapabilities(template);

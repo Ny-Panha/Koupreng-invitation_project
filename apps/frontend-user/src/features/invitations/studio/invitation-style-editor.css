@@ -120,6 +120,9 @@
   width: 95px;
 }
 
+.studio-style-mini > .kfg-monogram--regal-scroll-gold { width: 138px; margin: 8px auto; }
+.studio-style-mini .kfg-monogram--regal-scroll-gold > span { font-size: 22px; }
+
 .studio-style-mini > .kfg-guest-frame {
   margin: 55px 12px 0;
   min-height: 50px;

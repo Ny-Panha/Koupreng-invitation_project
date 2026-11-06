@@ -242,6 +242,11 @@ export function draftToTemplate(draft, gallery = []) {
         // Host-authored rich sections. Passed straight through so the content
         // builder can prefer them over its demo fallbacks (see hostContent).
         hostContent: {
+            ...(baseTpl.code === 'khmer-floral-gold' ? {
+                monogramText: draft.monogramText ?? draft.design?.monogramText ?? '',
+                musicTrackId: draft.musicTrackId,
+                musicUrl: draft.musicTrackId === 'none' ? '' : (draft.musicUrl ?? (typeof draft.music === 'string' ? draft.music : draft.music?.url) ?? ''),
+            } : {}),
             localizedContentV1: draft.localizedContentV1,
             studioStyle: draft.studioStyle || draft.design?.studioStyle || {},
             ...eventPresentationFields(draft),

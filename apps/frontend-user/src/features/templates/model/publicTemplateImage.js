@@ -1,6 +1,12 @@
 // Exact local source URLs only. Uploaded/server images retain their original URL;
 // no assumed CDN transformations or template-ID-based artwork substitution.
+const floralCover = {
+  name: 'cover-preview', directory: '/templates/khmer-floral-gold', widths: [320, 640, 960],
+  sizes: '(max-width: 600px) 85vw, 300px', compactSizes: '(max-width: 600px) 85vw, 300px',
+};
 const derivatives = {
+  '/templates/khmer-floral-gold/preview.svg': floralCover,
+  '/templates/khmer-floral-gold/cover-preview-640.webp': floralCover,
   "/images/marketing/catalog/royal-garden-cinematic-640.webp": {
     name: "royal-garden-cinematic", widths: [320, 640, 960],
     sizes: "(max-width: 600px) 85vw, 300px",
@@ -31,7 +37,7 @@ const derivatives = {
 export function publicTemplateImage(source, compact = false) {
   const asset = Object.hasOwn(derivatives, source) ? derivatives[source] : null;
   if (!asset) return { src: source };
-  const path = (width) => `/images/marketing/catalog/${asset.name}-${width}.webp`;
+  const path = (width) => `${asset.directory || '/images/marketing/catalog'}/${asset.name}-${width}.webp`;
   return {
     src: path(asset.widths[1]),
     srcSet: asset.widths.map((width) => `${path(width)} ${width}w`).join(", "),

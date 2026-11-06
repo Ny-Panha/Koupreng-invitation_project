@@ -2,7 +2,7 @@ import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import TemplateExperience from "../experience/TemplateExperience";
-import { DB_TEMPLATE_ID_MAP, getTemplateById, TEMPLATES, templateFromCatalogItem } from "../data/templatesData";
+import { DB_TEMPLATE_ID_MAP, getTemplateById, KHMER_FLORAL_GOLD_TEMPLATE, TEMPLATES, templateFromCatalogItem } from "../data/templatesData";
 import { templateService } from "../api/templateService";
 import {
     resolveVariant,
@@ -99,6 +99,11 @@ export default function TemplateDemoPage({ backLink, backLabel, primaryCtaLabel 
             },
             badge: parsedConfig.badgeText || baseTpl.badge,
             amp: parsedConfig.ampSymbol || baseTpl.amp,
+            // This public marketing route may use the cleared demonstration track.
+            // Owner presets/public adapters continue to start with no selected song.
+            music: remoteTpl.code === 'khmer-floral-gold'
+                ? (parsedConfig.bgMusicUrl ?? KHMER_FLORAL_GOLD_TEMPLATE.music)
+                : baseTpl.music,
         };
     }, [remoteTpl, targetId, lang]);
 

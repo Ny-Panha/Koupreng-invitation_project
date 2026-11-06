@@ -1,0 +1,71 @@
+{
+  "downloaded": [
+    {
+      "file": "butterfly-source.png",
+      "url": "https://www.publicdomainpictures.net/pictures/440000/velka/butterfly-bright-colored.png",
+      "sha256": "62cf6c724feb705f4389069603e9ce0f330e9c7d493ba2338ba51182ef776a6b"
+    },
+    {
+      "file": "kenney-particles.zip",
+      "url": "https://opengameart.org/sites/default/files/kenney_particlePack.zip",
+      "sha256": "163b839ba7f62f8a420da93a62beaa80013588d5d6b1eb30841e1a553635ad70"
+    },
+    {
+      "file": "watercolor-border-source.jpg",
+      "url": "https://www.publicdomainpictures.net/pictures/280000/velka/floral-watercolor-flowers-border.jpg",
+      "sha256": "3dd176fa0e35ce15375566a8c8977c1418cca1189f086b92b14f955c60f6c5c8"
+    },
+    {
+      "file": "lotus-isolated-source.jpg",
+      "url": "https://c.pxhere.com/photos/ac/0d/cutout_lotus_country_white_background_isolated_flower-560219.jpg!d",
+      "sha256": "de154ef94f460de0321d66f8eea051d3788a7d0f0aeff6b132dc36143ba14185"
+    }
+  ],
+  "runtime": [
+    {
+      "file": "blue-butterfly.webp",
+      "bytes": 8444,
+      "sha256": "011499bb2ee73463d8f7c9b3eb0a86b0db952e73e6517cebda1a95f27eff4673"
+    },
+    {
+      "file": "blush-floral-border-bottom.webp",
+      "bytes": 157418,
+      "sha256": "4d6c7283434d82ca91a59f71846a4ba7b62bc5f1d9d2f6c8ec982d633812b9a6"
+    },
+    {
+      "file": "blush-floral-border-top.webp",
+      "bytes": 155680,
+      "sha256": "d9e56b31096bc7219ec8082eb3f22382561b9d124f3c842c34096f0b7782bce4"
+    },
+    {
+      "file": "blush-heart.webp",
+      "bytes": 1654,
+      "sha256": "944a8219556b497342edb9250af70db78b0b03fb573a80ac586c2f17802f51d6"
+    },
+    {
+      "file": "gold-star.webp",
+      "bytes": 2424,
+      "sha256": "727531633b729910b2a7b7ce659e68bccfaed1daa55af44aa463336e112f0e4c"
+    },
+    {
+      "file": "golden-butterfly.webp",
+      "bytes": 8150,
+      "sha256": "166a69ab4af7371fbc6a7c73f25c00649bfc21842a4c8357f60d4db7dce759fd"
+    },
+    {
+      "file": "lotus-petal.webp",
+      "bytes": 3472,
+      "sha256": "f2bfe6a0db11a742e0363fe6b6d0094d2da18ee8ac51d0df84a877d1ebbaa639"
+    },
+    {
+      "file": "pink-butterfly.webp",
+      "bytes": 6694,
+      "sha256": "edb49f0af665d11094897a9bfea7dd68e76053bf7599fa9b15e543097a345294"
+    },
+    {
+      "file": "violet-butterfly.webp",
+      "bytes": 8498,
+      "sha256": "6521be038c338efe3d2b47909fbe59bef7ab1d6073b92e7a2b7037cc0efbf7b9"
+    }
+  ]
+}

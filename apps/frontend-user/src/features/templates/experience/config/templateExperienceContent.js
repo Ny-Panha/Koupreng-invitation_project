@@ -803,7 +803,9 @@ export function buildTemplateContent(tpl = {}, variant = DEFAULT_CONTENT_VARIANT
         opening,
         gateStyle: tpl.gateStyle || tpl.design?.gateStyle || tpl.openingStyle || design.openingStyle,
         openingStyle: tpl.openingStyle || tpl.design?.openingStyle || tpl.gateStyle || design.openingStyle,
-        music: (['royal-garden-cinematic', 'khmer-floral-gold'].includes(tpl.code) || ['ROYAL_GARDEN_CINEMATIC', 'KHMER_FLORAL_GOLD'].includes(tpl.presetId))
+        music: floralGold && hasHostContent
+            ? (host.musicTrackId === 'none' ? '' : (host.musicUrl ?? (typeof host.music === 'string' ? host.music : host.music?.url) ?? ''))
+            : (['royal-garden-cinematic', 'khmer-floral-gold'].includes(tpl.code) || ['ROYAL_GARDEN_CINEMATIC', 'KHMER_FLORAL_GOLD'].includes(tpl.presetId))
             ? (typeof tpl.music === 'string' ? tpl.music : tpl.music?.url || '') : (typeof tpl.music === "string" && tpl.music)
             ? tpl.music
             : (tpl.music?.url || (hasHostContent ? "" : defaultMusicUrl)),

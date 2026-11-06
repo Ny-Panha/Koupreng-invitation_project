@@ -19,7 +19,8 @@ export function floralDemoFromCelestial(source) {
   };
   const englishProgram = ['Krong Peali blessing', 'Gathering of guests', 'Groom’s procession', 'Ring ceremony', 'Monk blessing', 'Hair-cutting ceremony', 'Sompeas Ptem and blessings', 'Lunch', 'Reception and dinner'];
   return { ...artwork, ...km, groom: source.groom, bride: source.bride, groomEn: source.groomEn, brideEn: source.brideEn,
-    family: structuredClone(source.family), monogramText: [source.groom, source.bride].map(name => Array.from(name.split(' ').at(-1))[0]).join(' '),
+    family: structuredClone(source.family), monogramText: 'វីរៈ\n&\nសុមាលី',
+    invitationStyleV1: { version: 1, monogramTextLayout: 'staircase' },
     dateText: source.dateText, dateTextEn: source.dateTextEn, eventDate: date, eventTime: '17:00', targetDate: source.machineEventDate,
     schedule: source.schedule.map((item, index) => ({ ...item, titleKm: item.title, titleEn: englishProgram[index] || item.title })),
     googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(source.mapQuery)}`,
