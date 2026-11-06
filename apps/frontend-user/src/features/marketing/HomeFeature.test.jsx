@@ -35,12 +35,12 @@ it("defers the real invitation frame until requested and closes the mobile dialo
   const open = screen.getByRole("button", { name: "Try the invitation" });
   expect(open).toHaveAttribute("aria-expanded", "false");
   fireEvent.click(open);
-  const dialog = screen.getByRole("dialog", { name: "Explore Silk Heritage" });
-  expect(dialog.querySelector("iframe")).toHaveAttribute("src", "/templates/silk-heritage?embed=demo");
+  const dialog = screen.getByRole("dialog", { name: "Explore Khmer Floral Gold" });
+  expect(dialog.querySelector("iframe")).toHaveAttribute("src", "/templates/khmer-floral-gold?embed=demo&lang=en");
   expect(document.querySelectorAll("iframe")).toHaveLength(1);
   fireEvent.keyDown(document, { key: "Escape" });
   expect(document.querySelector("iframe")).toBeNull();
-  expect(screen.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/silk-heritage");
+  expect(screen.getByRole("link", { name: "View the full demo" })).toHaveAttribute("href", "/templates/khmer-floral-gold");
   await waitFor(() => expect(screen.getByText(/Premium · Included with Premium access/)).toBeInTheDocument());
 });
 it("labels offline fallback as demo and retries the actual service", async () => {

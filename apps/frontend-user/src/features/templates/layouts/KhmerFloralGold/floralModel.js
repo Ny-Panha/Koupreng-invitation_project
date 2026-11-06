@@ -47,6 +47,11 @@ export function floralInitials(content) {
   return [first(content.groom), first(content.bride)].filter(Boolean).join(' ');
 }
 export function floralMonogramText(content, mode) {
+  if (mode === 'short-names') {
+    const settings = content.invitationStyleV1 || {}, english = String(content.languageMode).toLowerCase() === 'en';
+    const short = person => (english ? settings[`${person}ShortNameEn`]?.trim() : '') || settings[`${person}ShortName`]?.trim() || content[person];
+    return [short('groom'), short('bride')].filter(Boolean).join('\n&\n');
+  }
   if (mode === 'names') return [content.groom, content.bride].filter(Boolean).join('\n&\n');
   return floralInitials(mode === 'auto' ? { ...content, monogramText: '' } : content);
 }

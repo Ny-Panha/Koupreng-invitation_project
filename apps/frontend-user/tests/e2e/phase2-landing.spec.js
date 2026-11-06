@@ -13,7 +13,7 @@ test('public sample is opt-in, uses the real renderer and releases the frame on 
   await open.click();
   const frame = page.locator('iframe.public-demo-iframe');
   await expect(frame).toHaveCount(1);
-  await expect(page.frameLocator('iframe.public-demo-iframe').locator('[data-template-renderer="silk-heritage"]')).toBeAttached({ timeout: 25000 });
+  await expect(page.frameLocator('iframe.public-demo-iframe').locator('.kfg-invitation[data-template-renderer="khmer-floral-gold"]')).toBeAttached({ timeout: 25000 });
   await expect(frame).toHaveClass(/is-ready/);
   expect(await frame.evaluate(e => ({ width: e.offsetWidth, height: e.offsetHeight }))).toEqual({ width: 440, height: 860 });
   expect(await frame.evaluate(e => ({ width: e.parentElement.offsetWidth, height: e.parentElement.offsetHeight }))).toEqual({ width: 440, height: 860 });
@@ -27,12 +27,12 @@ test('public sample is opt-in, uses the real renderer and releases the frame on 
 
 test('sample timeout provides retry and a full-demo escape route', async ({ page }) => {
   await installPhase2Fixtures(page, { anonymous: true });
-  await page.route('**/templates/silk-heritage?embed=demo', route => route.fulfill({ contentType: 'text/html', body: '<p>Fixture: renderer unavailable</p>' }));
+  await page.route('**/templates/khmer-floral-gold?embed=demo*', route => route.fulfill({ contentType: 'text/html', body: '<p>Fixture: renderer unavailable</p>' }));
   await page.goto('/');
   await page.getByRole('button', { name: 'Try the invitation', exact: true }).click();
   await expect(page.getByRole('alert').filter({ hasText: 'The sample could not open here' })).toBeVisible({ timeout: 25000 });
   const region = page.viewportSize().width < 768 ? page.getByRole('dialog') : page.locator('.public-invitation-demo');
-  await expect(region.getByRole('link', { name: 'View the full demo' })).toHaveAttribute('href', '/templates/silk-heritage');
+  await expect(region.getByRole('link', { name: 'View the full demo' })).toHaveAttribute('href', '/templates/khmer-floral-gold');
   await region.getByRole('button', { name: 'Try again', exact: true }).click();
   await expect(region.getByRole('status')).toHaveText('Opening the invitation…');
 });

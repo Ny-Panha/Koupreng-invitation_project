@@ -1,5 +1,7 @@
 # Khmer Floral Gold V5 delivery
 
+Latest follow-up: [Mobile layout, Studio controls and home demo](MOBILE_STUDIO_DELIVERY.md).
+
 Historical V5 baseline. The latest source-inspired artwork and motion are described
 in [Realistic effects delivery](REALISTIC_EFFECTS_DELIVERY.md).
 

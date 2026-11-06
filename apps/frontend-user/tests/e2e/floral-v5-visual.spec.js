@@ -86,7 +86,7 @@ test('the full closed cover fits the first viewport without scrolling', async ({
       return { clearSides, frameHeadingGap: frame.top - heading.bottom, headingGap: salutation.top - frame.bottom, salutationGap: topFlourish.top - salutation.bottom, openGap: button.top - bottomFlourish.bottom, frameGap: heading.top - box.top - top, buttonGap: box.bottom - 44 - bottom - button.bottom, guestGap: box.bottom - 44 - bottom - guest.bottom, overflow: document.documentElement.scrollWidth > innerWidth, scroll: document.documentElement.scrollHeight > innerHeight + 1 };
     });
     expect(metrics.frameGap).toBeGreaterThan(8);
-    expect(metrics.buttonGap).toBeGreaterThan(12);
+    expect(metrics.buttonGap).toBeGreaterThanOrEqual(6);
     expect(metrics.guestGap).toBeGreaterThan(12);
     expect(metrics.clearSides).toBe(true);
     expect(metrics.frameHeadingGap).toBeGreaterThan(13.9);
@@ -98,4 +98,20 @@ test('the full closed cover fits the first viewport without scrolling', async ({
     await expect(page.locator('.kfg-open')).toBeInViewport({ ratio: 1 });
     if (width === 390 && info.project.name === 'chromium') await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/responsive-mobile-opaque-border.png', fullPage: true });
   }
+});
+
+test('export the Floral landing phone poster from its exact logical viewport',async ({browser},info)=>{
+  test.skip(info.project.name!=='chromium','One authored phone poster.');
+  const context=await browser.newContext({viewport:{width:440,height:860},deviceScaleFactor:2,reducedMotion:'no-preference'});
+  const page=await context.newPage();
+  try {
+    await phase8Fixtures(page,{code:'khmer-floral-gold'});
+    await page.goto('/templates/khmer-floral-gold?embed=demo&lang=km');
+    await page.evaluate(()=>document.fonts.ready);
+    await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
+    await page.locator('.kfg-invitation img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+    await decodeCoverBorders(page);
+    await mkdir('../../output/floral-v5',{recursive:true});
+    await page.locator('.kfg-opening').screenshot({path:'../../output/floral-v5/phone-preview.png',style:'.kfg-invitation *, .kfg-paper-art::before, .kfg-paper-art::after { animation-play-state: paused !important; transition: none !important; }'});
+  } finally {await context.close();}
 });

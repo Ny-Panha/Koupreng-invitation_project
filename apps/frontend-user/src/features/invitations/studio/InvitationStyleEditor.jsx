@@ -9,6 +9,7 @@ import { mediaService } from '../api/mediaApi';
 import { validateLibraryFile } from '../mediaLibraryModel';
 import { stylePreviewContent } from './stylePreviewContent';
 import { normalizeStudioImage } from './studioMedia';
+import FloralPresentationEditor from './FloralPresentationEditor';
 import '../../templates/layouts/KhmerFloralGold/khmer-floral-gold.css';
 import './invitation-style-editor.css';
 
@@ -53,7 +54,9 @@ export default function InvitationStyleEditor({ form, update, capabilities, engl
     {capabilities.coverStyles && <>
       {select('headingMode', text('Cover heading', 'ចំណងជើងក្រប'), [['text', 'Live text', 'អក្សរផ្ទាល់'], ['image', 'Uploaded artwork', 'រូបអក្សរ']])}
       {style.headingMode === 'text' ? <><label className="pe-label">{text('Heading text', 'អក្សរចំណងជើង')}<input className="pe-input" value={form.title || ''} onChange={e => update('title', e.target.value)} /></label><label className="pe-label">{text('Heading size', 'ទំហំចំណងជើង')}<input type="range" min="20" max="40" value={style.headingSize} onChange={e => set('headingSize', Number(e.target.value))} /></label>{select('headingAlign', text('Heading alignment', 'តម្រឹមចំណងជើង'), [['left', 'Left', 'ឆ្វេង'], ['center', 'Center', 'កណ្ដាល'], ['right', 'Right', 'ស្ដាំ']])}</> : imageField('headingImage', text('Heading artwork', 'រូបចំណងជើង'), style.headingImage)}
-      {select('monogramMode', text('Couple initials / logo', 'អក្សរកាត់ ឬរូបតំណាង'), [['auto', 'Automatic initials', 'អក្សរកាត់ស្វ័យប្រវត្តិ'], ['text', 'Custom initials', 'អក្សរកាត់ផ្ទាល់ខ្លួន'], ['names', 'Couple names', 'ឈ្មោះគូស្វាមីភរិយា'], ['image', 'Uploaded logo', 'រូបតំណាង']])}
+      {select('monogramMode', text('Couple initials / logo', 'អក្សរកាត់ ឬរូបតំណាង'), [['auto', 'Automatic initials', 'អក្សរកាត់ស្វ័យប្រវត្តិ'], ['text', 'Custom initials', 'អក្សរកាត់ផ្ទាល់ខ្លួន'], ['names', 'Couple names', 'ឈ្មោះគូស្វាមីភរិយា'], ['short-names', 'Short couple names', 'ឈ្មោះខ្លីគូស្វាមីភរិយា'], ['image', 'Uploaded logo', 'រូបតំណាង']])}
+      {select('headingShape',text('Heading shape','ទម្រង់ចំណងជើង'),[['arched','Gentle arch','កោងស្រទន់'],['straight','Straight','ត្រង់']])}
+      {style.monogramMode === 'short-names' && <fieldset className="studio-floral-settings-body"><legend>{text('Short names for the cover only', 'ឈ្មោះខ្លីសម្រាប់ក្របប៉ុណ្ណោះ')}</legend><p className="studio-style-example">{text('Use familiar short names when full names are long. Full names in the wedding details stay unchanged. Leave a short name empty to use the full name.', 'ប្រើឈ្មោះខ្លីនៅពេលឈ្មោះពេញវែង។ ឈ្មោះពេញនៅព័ត៌មានមង្គលការរក្សាដដែល។ ទុកឈ្មោះខ្លីទទេដើម្បីប្រើឈ្មោះពេញ។')}</p>{[['groomShortName','Groom short name (Khmer)','ឈ្មោះខ្លីកូនកំលោះ (ខ្មែរ)'],['brideShortName','Bride short name (Khmer)','ឈ្មោះខ្លីកូនក្រមុំ (ខ្មែរ)'],['groomShortNameEn','Groom short name (English)','ឈ្មោះខ្លីកូនកំលោះ (អង់គ្លេស)'],['brideShortNameEn','Bride short name (English)','ឈ្មោះខ្លីកូនក្រមុំ (អង់គ្លេស)']].map(([key,en,km]) => <label className="pe-label" key={key}>{text(en,km)}<input className="pe-input" maxLength={40} value={style[key]} onChange={event => set(key,event.target.value)} /></label>)}</fieldset>}
       {style.monogramMode === 'image' ? imageField('monogramImage', text('Couple logo', 'រូបតំណាងគូស្វាមីភរិយា'), style.monogramImage) : style.monogramMode === 'text' && <label className="pe-label">{text('Initials', 'អក្សរកាត់')}<input className="pe-input" maxLength={24} value={form.monogramText || ''} onChange={e => update('monogramText', e.target.value)} /></label>}
       {picker(text('Monogram frame', 'ស៊ុមអក្សរកាត់'), 'monogram', MONOGRAM_FRAMES, id => <FloralMonogram text={form.monogramText || 'ក ខ'} variant={id} />)}
       {style.monogram === 'regal-scroll-gold' && <>
@@ -64,6 +67,7 @@ export default function InvitationStyleEditor({ form, update, capabilities, engl
         {select('monogramTreatment', text('Gold treatment', 'ពណ៌មាស'), [['original', 'Original gold', 'មាសដើម'], ['champagne', 'Soft champagne', 'មាសសាំប៉ាញ']])}
       </>}
       {picker(text('Guest frame', 'ស៊ុមឈ្មោះភ្ញៀវ'), 'guestFrame', GUEST_FRAMES, id => <div className={`kfg-guest-frame kfg-guest-frame--${id}`}><span>{text('You and your family', 'លោកអ្នក និងក្រុមគ្រួសារ')}</span></div>)}
+      <FloralPresentationEditor style={style} set={set} english={english} />
       {imageField('coverBackgroundImage', text('Cover background image', 'រូបផ្ទៃក្រប'), form.coverBackgroundImage)}
       {select('backgroundFit', text('Background fit', 'ទំហំរូបផ្ទៃក្រោយ'), [['cover', 'Fill cover', 'បំពេញក្រប'], ['contain', 'Show whole image', 'បង្ហាញរូបពេញ']])}
       {[['backgroundX', 'Horizontal focus', 'ទីតាំងផ្ដេក', 0, 100, 1], ['backgroundY', 'Vertical focus', 'ទីតាំងបញ្ឈរ', 0, 100, 1], ['backgroundOverlay', 'Paper overlay', 'ស្រទាប់ក្រដាស', 0, 1, .05], ['backgroundBlur', 'Background softness', 'ភាពស្រទន់ផ្ទៃក្រោយ', 0, 12, 1]].map(([key, en, km, min, max, step]) => <label className="pe-label" key={key}>{text(en, km)}<input type="range" min={min} max={max} step={step} value={style[key]} onChange={e => set(key, Number(e.target.value))} /></label>)}

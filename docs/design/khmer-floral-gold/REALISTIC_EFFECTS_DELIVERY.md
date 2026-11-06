@@ -1,5 +1,7 @@
 # Khmer Floral Gold: final guest experience
 
+Latest responsive cover/calendar, Studio controls and landing phone demo: [Mobile and Studio delivery](MOBILE_STUDIO_DELIVERY.md). The delivery below records the earlier artwork baseline.
+
 Updated 2026-11-06. This continues Floral V5 and includes the latest copy, cover ordering, personalized guest-name presentation and original Rumduol/Khmer-kbach artwork.
 
 ## Delivered behavior

@@ -5,14 +5,12 @@ import PhoneFrame from "../../../shared/ui/PhoneFrame";
 import Modal from "../../../shared/ui/Modal";
 import { PHONE_PREVIEW } from "../../../shared/preview/previewDevices";
 import { usePrefersReducedMotion } from "../../../shared/hooks/usePrefersReducedMotion";
-import { SILK_HERITAGE_TEMPLATE as silk } from "../../templates/data/templatesData";
 import LandingPhoto from "./LandingPhoto";
 import "./InvitationDemo.css";
 
 function SamplePoster({ copy }) {
   return <div className="public-demo-poster">
-    <LandingPhoto src={silk.mainImage} srcSet="/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w" sizes="(max-width: 767px) 300px, 360px" priority alt={copy("រូបថតគូស្នេហ៍សម្រាប់គំរូបង្ហាញសូត្រមង្គល", "Sample wedding portrait for Silk Heritage")} />
-    <div className="public-demo-letter"><img src="/templates/silk-heritage/woven-ornament.svg" width="360" height="80" alt="" /><p>{copy("សិរីសួស្តីអាពាហ៍ពិពាហ៍", "Together with our families")}</p><strong>{copy(silk.groom, silk.groomEn)}<span>&</span>{copy(silk.bride, silk.brideEn)}</strong><p>{copy(silk.dateText, silk.dateTextEn)}</p></div>
+    <LandingPhoto src="/templates/khmer-floral-gold/phone-preview-440.webp" srcSet="/templates/khmer-floral-gold/phone-preview-440.webp 440w, /templates/khmer-floral-gold/phone-preview-880.webp 880w" sizes="(max-width: 767px) 300px, 360px" priority alt={copy("ក្របសន្លឹកការគំរូផ្កាមាសខ្មែរ", "Khmer Floral Gold invitation cover")} />
   </div>;
 }
 
@@ -44,7 +42,7 @@ function DemoDevice({ copy, interactive = false, onClose, deviceName, large = fa
       try {
         const doc = iframe.current?.contentDocument;
         if (doc && doc !== frameDocument) { frameDocument?.removeEventListener("keydown", escape); frameDocument = doc; doc.addEventListener("keydown", escape); }
-        if (doc?.querySelector('[data-template-renderer="silk-heritage"]')) {
+        if (doc?.querySelector('.kfg-invitation[data-template-renderer="khmer-floral-gold"]')) {
           stopped = true; window.clearTimeout(timeout); window.clearInterval(poll); setReady(true);
           requestAnimationFrame(() => { if (document.activeElement === focusOwner) iframe.current?.focus({ preventScroll: true }); });
         }
@@ -62,14 +60,14 @@ function DemoDevice({ copy, interactive = false, onClose, deviceName, large = fa
       <div className="public-demo-stage" style={{ width: PHONE_PREVIEW.width * scale, height: PHONE_PREVIEW.height * scale }}>
         <PhoneFrame logicalViewport style={{ transform: `scale(${scale})` }}>
           {(!interactive || !ready || failed) && <SamplePoster copy={copy} />}
-          {interactive && !failed && <iframe key={attempt} ref={iframe} src="/templates/silk-heritage?embed=demo" title={copy("គំរូសូត្រមង្គលដែលអាចសាកប្រើបាន", "Interactive Silk Heritage invitation sample")} width={PHONE_PREVIEW.contentWidth} height={PHONE_PREVIEW.contentHeight} className={`public-demo-iframe${ready ? " is-ready" : ""}`} aria-hidden={!ready} tabIndex={ready ? 0 : -1} inert={!ready} onError={() => setFailed(true)} />}
+          {interactive && !failed && <iframe key={attempt} ref={iframe} src={`/templates/khmer-floral-gold?embed=demo&lang=${copy('km','en')}`} title={copy("គំរូផ្កាមាសខ្មែរដែលអាចសាកប្រើបាន", "Interactive Khmer Floral Gold invitation sample")} width={PHONE_PREVIEW.contentWidth} height={PHONE_PREVIEW.contentHeight} className={`public-demo-iframe${ready ? " is-ready" : ""}`} aria-hidden={!ready} tabIndex={ready ? 0 : -1} inert={!ready} onError={() => setFailed(true)} />}
           {interactive && !ready && !failed && <div className="public-demo-state" role="status">{copy("កំពុងបើកគំរូអញ្ជើញ…", "Opening the invitation…")}</div>}
           {failed && <div className="public-demo-state public-demo-state--error" role="alert"><p>{copy("មិនអាចបើកគំរូនៅទីនេះបានទេ។ សាកម្ដងទៀត ឬបើកគំរូពេញលេញ។", "The sample could not open here. Try again or open the full demo.")}</p><button type="button" onClick={() => { setFailed(false); setAttempt(value => value + 1); }}><RotateCcw size={18} aria-hidden="true" />{copy("សាកម្ដងទៀត", "Try again")}</button></div>}
         </PhoneFrame>
       </div>
     </div>
-    <figcaption className="public-demo-caption"><span>{copy("សូត្រមង្គល ជាគំរូបង្ហាញ", "A Silk Heritage sample invitation")}</span><div>
-      <Link to="/templates/silk-heritage">{copy("មើលគំរូពេញលេញ", "View the full demo")}<ArrowUpRight size={16} aria-hidden="true" /></Link>
+    <figcaption className="public-demo-caption"><span>{copy("ផ្កាមាសខ្មែរ ជាគំរូបង្ហាញ", "A Khmer Floral Gold sample invitation")}</span><div>
+      <Link to="/templates/khmer-floral-gold">{copy("មើលគំរូពេញលេញ", "View the full demo")}<ArrowUpRight size={16} aria-hidden="true" /></Link>
       {!interactive && !reduced && <button type="button" aria-pressed={straight} onClick={() => setStraight(value => !value)}>{straight ? copy("មើលបែបផ្អៀង", "Perspective view") : copy("មើលត្រង់", "View straight")}</button>}
       {interactive && !large && document.fullscreenEnabled && <button type="button" onClick={fullscreen}><Maximize2 size={16} aria-hidden="true" />{copy("ពេញអេក្រង់", "Fullscreen")}</button>}
       {interactive && <button type="button" className="public-demo-fullscreen-close" onClick={onClose}><X size={18} aria-hidden="true" />{copy("បិទគំរូ", "Close demo")}</button>}
@@ -95,6 +93,6 @@ export default function InvitationDemo({ copy, deviceName = PHONE_PREVIEW.name }
     <button ref={opener} className="kp-button public-demo-launch" type="button" aria-controls={!compact ? regionId : undefined} aria-haspopup={compact ? "dialog" : undefined} aria-expanded={active} onClick={() => active ? close() : setActive(true)}>{active ? copy("បិទគំរូ", "Close demo") : copy("សាកប្រើធៀបការគំរូ", "Try the invitation")}</button>
     <div id={regionId}><DemoDevice copy={copy} deviceName={deviceName} interactive={active && !compact} onClose={close} /></div>
     <p className="public-demo-note">{copy("គំរូបង្ហាញ មិនបង្កើតកម្មវិធី ឬផ្ញើទៅភ្ញៀវទេ។", "Sample event. Exploring it does not create an event or send invitations.")}</p>
-    {compact && active && <Modal isOpen onClose={close} size="full" title={copy("សាកប្រើសូត្រមង្គល", "Explore Silk Heritage")} closeLabel={copy("បិទគំរូ", "Close demo")} className="public-demo-modal"><DemoDevice copy={copy} deviceName={deviceName} interactive onClose={close} large /></Modal>}
+    {compact && active && <Modal isOpen onClose={close} size="full" title={copy("សាកប្រើគំរូផ្កាមាសខ្មែរ", "Explore Khmer Floral Gold")} closeLabel={copy("បិទគំរូ", "Close demo")} className="public-demo-modal"><DemoDevice copy={copy} deviceName={deviceName} interactive onClose={close} large /></Modal>}
   </div>;
 }

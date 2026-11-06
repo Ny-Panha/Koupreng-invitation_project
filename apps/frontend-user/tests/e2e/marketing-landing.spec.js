@@ -24,6 +24,7 @@ async function fixture(page, { signedIn = false, paid = [], offline = false } = 
   }, { token, user });
   await page.route("**/api/**", (route) => {
     const url = new URL(route.request().url());
+    if (!url.pathname.startsWith('/api/')) return route.fallback();
     if (url.pathname === "/api/auth/login") { authenticated = true; return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ accessToken: token, tokenType: "Bearer", user }) }); }
     if (url.pathname === "/api/auth/me") return authenticated ? json(route, user) : json(route, "No session", 401);
     if (url.pathname === "/api/v1/templates/recommendations") return json(route, catalog.map(template => ({template, styleMatch:true})));
@@ -81,9 +82,9 @@ test("real invitation opens on demand and keyboard FAQ works with reduced motion
   const open=page.getByRole('button',{name:'Try the invitation',exact:true});
   await open.focus();await page.keyboard.press('Enter');
   const frame=page.frameLocator('iframe.public-demo-iframe');
-  await expect(frame.locator('[data-template-renderer="silk-heritage"]')).toBeAttached();
-  await frame.getByRole('button',{name:/Skip opening/}).click();
-  await expect(frame.locator('.sh-hero')).toBeVisible();
+  await expect(frame.locator('.kfg-invitation[data-template-renderer="khmer-floral-gold"]')).toBeAttached();
+  await frame.locator('.kfg-open').click();
+  await expect(frame.locator('.kfg-content')).toBeVisible();
   await page.locator('iframe.public-demo-iframe').focus();await page.keyboard.press('Escape');
   await expect(open).toBeFocused();await expect(page.locator('iframe')).toHaveCount(0);
   const faq=page.locator('.kp-faq summary').first();await faq.focus();await page.keyboard.press('Enter');

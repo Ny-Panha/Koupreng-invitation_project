@@ -25,3 +25,12 @@ for width in [360, 390, 430, 512, 768, 1024, 1440]:
         x += image.width
     sheet.save(screenshots / f'before-after-{width}.jpg', quality=88)
 print('Saved seven comparison sheets from the actual before/after captures.')
+
+phone_source = root / 'output/floral-v5/phone-preview.png'
+if phone_source.exists():
+    phone = Image.open(phone_source).convert('RGB')
+    for width in [440, 880]:
+        image = phone.resize((width, round(phone.height * width / phone.width)), Image.Resampling.LANCZOS)
+        path = assets / f'phone-preview-{width}.webp'
+        image.save(path, 'WEBP', quality=92, method=6)
+        print(f'{path.name}: {image.width}x{image.height}, {path.stat().st_size} bytes')

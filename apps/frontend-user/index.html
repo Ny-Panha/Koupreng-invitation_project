@@ -21,9 +21,9 @@
         document.head.appendChild(fontHint);
         if (location.pathname === "/") {
           const portraitHint = document.createElement("link");
-          portraitHint.rel = "preload"; portraitHint.as = "image"; portraitHint.href = "/templates/silk-heritage/portrait.webp"; portraitHint.fetchPriority = "high";
-          portraitHint.imageSrcset = "/images/marketing/silk-portrait-480.webp 480w, /images/marketing/silk-portrait-768.webp 768w, /templates/silk-heritage/portrait.webp 960w";
-          portraitHint.imageSizes = "(max-width: 767px) calc(82vw - 33px), (max-width: 900px) 430px, 440px";
+          portraitHint.rel = "preload"; portraitHint.as = "image"; portraitHint.href = "/templates/khmer-floral-gold/phone-preview-440.webp"; portraitHint.fetchPriority = "high";
+          portraitHint.imageSrcset = "/templates/khmer-floral-gold/phone-preview-440.webp 440w, /templates/khmer-floral-gold/phone-preview-880.webp 880w";
+          portraitHint.imageSizes = "(max-width: 767px) 300px, 360px";
           document.head.appendChild(portraitHint);
         }
       }

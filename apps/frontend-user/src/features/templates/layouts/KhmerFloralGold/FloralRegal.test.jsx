@@ -21,6 +21,13 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe('Regal Scroll Gold canonical cover', () => {
+  it('uses separate short names only on the cover, with full-name and locale fallbacks', () => {
+    const content = { groom: 'សុវណ្ណវិសាល សិរីមង្គល', bride: 'សុភមង្គល បុប្ផារាជសិរី', invitationStyleV1: { groomShortName: 'វិសាល', brideShortName: 'សុភា', groomShortNameEn: 'Visal', brideShortNameEn: 'Sophea' } };
+    expect(floralMonogramText(content,'short-names')).toBe('វិសាល\n&\nសុភា');
+    expect(floralMonogramText({ ...content, languageMode: 'EN' },'short-names')).toBe('Visal\n&\nSophea');
+    expect(floralMonogramText({ ...content, invitationStyleV1: {} },'short-names')).toBe(`${content.groom}\n&\n${content.bride}`);
+    expect(floralMonogramText(content,'names')).toContain(content.groom);
+  });
   it('groups the marketing agenda into two dated days while retaining owner-authored schedules', () => {
     const demo = buildTemplateContent(KHMER_FLORAL_GOLD_TEMPLATE, 'khmer-floral-gold');
     const days = visibleProgramDays(demo);

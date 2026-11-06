@@ -16,6 +16,11 @@ function roundTrip(settings) {
   return buildTemplateContent({ ...KHMER_FLORAL_GOLD_TEMPLATE, hostContent: { ...JSON.parse(payload.contentJson), ...reopened } }, event.templateId);
 }
 describe('canonical presentation styles', () => {
+  it('retains phone presentation, bilingual wording and separate short cover names through save and public projection', () => {
+    const settings = { monogramMode: 'short-names', groomShortName: 'វិសាល', brideShortName: 'សុភា', groomShortNameEn: 'Visal', brideShortNameEn: 'Sophea', openButtonPadding: 5, openButtonTextSize: 15, guestTextSize: 18, openButtonLabelKm: 'សូមអញ្ជើញ', openButtonLabelEn: 'Join us', genericGuestNameEn: 'Our dear friends', familyHeadingEn: 'With joy', familyIntroEn: 'Please celebrate with our families.', welcomeSeconds: 9, petalCount: 15, butterflyCount: 10, sideFlorals: false, sceneBranches: false, sceneBackground: false };
+    expect(invitationStyles(roundTrip(settings))).toMatchObject(settings);
+    expect(invitationStyles({ invitationStyleV1: { guestTextSize: 200, openButtonPadding: -50, welcomeSeconds: 100, petalCount: -20, butterflyCount: 1000 } })).toMatchObject({ guestTextSize: 20, openButtonPadding: 4, welcomeSeconds: 10, petalCount: 0, butterflyCount: 15 });
+  });
   it.each(DATE_STYLES)('round trips and renders date style $id using the saved leap date', ({ id }) => {
     const content = roundTrip({ date: id });
     expect(content.invitationStyleV1.date).toBe(id);

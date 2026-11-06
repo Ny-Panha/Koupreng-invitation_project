@@ -30,6 +30,15 @@ export const MONOGRAM_FRAMES = entries([
 ]);
 const pick = (value, options, fallback) => options.some(item => item.id === value) ? value : fallback;
 const bounded = (value, min, max, fallback) => Number.isFinite(Number(value)) && value !== null ? Math.min(max, Math.max(min, Number(value))) : fallback;
+const copy = (value, fallback, limit = 300) => typeof value === 'string' && value.trim() ? value.trim().slice(0, limit) : fallback;
+export const FLORAL_COPY = {
+  openButtonLabelKm: 'សូមគោរពអញ្ចើញ', openButtonLabelEn: 'Open our invitation',
+  guestSalutationKm: 'សូមគោរពអញ្ជើញ', guestSalutationEn: 'Warmly inviting',
+  genericGuestNameKm: 'លោកអ្នក និងក្រុមគ្រួសារ', genericGuestNameEn: 'You and your family',
+  familyHeadingKm: 'យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ', familyHeadingEn: 'Together with our families',
+  familyIntroKm: 'ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។',
+  familyIntroEn: 'We warmly invite our honored guests, relatives and friends to join our joyful wedding celebration and bless our son and daughter.',
+};
 export function invitationStyles(content = {}) {
   const raw = content.invitationStyleV1 || {};
   const floral = [content.code, content.variant, content.templateId, content.presetId].some(id => ['khmer-floral-gold', 'KHMER_FLORAL_GOLD'].includes(id));
@@ -38,7 +47,22 @@ export function invitationStyles(content = {}) {
     date: pick(raw.date, DATE_STYLES, 'traditional'), program: pick(raw.program, PROGRAM_STYLES, 'classic'),
     guestFrame: pick(raw.guestFrame, GUEST_FRAMES, 'khmer'), motion: pick(raw.motion, MOTION_STYLES, 'elegant'),
     monogram: pick(raw.monogram, MONOGRAM_FRAMES, floral ? 'regal-scroll-gold' : 'ornate'),
-    monogramMode: ['auto', 'text', 'names', 'image'].includes(raw.monogramMode) ? raw.monogramMode : 'text', monogramImage: safeIntroMedia(raw.monogramImage),
+    monogramMode: ['auto', 'text', 'names', 'short-names', 'image'].includes(raw.monogramMode) ? raw.monogramMode : 'text', monogramImage: safeIntroMedia(raw.monogramImage),
+    ...Object.fromEntries(['groomShortName', 'brideShortName', 'groomShortNameEn', 'brideShortNameEn'].map(key => [key, copy(raw[key], '', 40)])),
+    ...Object.fromEntries(Object.entries(FLORAL_COPY).map(([key, fallback]) => [key, copy(raw[key], fallback, key.startsWith('familyIntro') ? 1500 : key.startsWith('openButton') ? 80 : 300)])),
+    openButtonPadding: bounded(raw.openButtonPadding, 4, 20, 8),
+    openButtonTextSize: bounded(raw.openButtonTextSize, 14, 20, 16),
+    guestTextSize: bounded(raw.guestTextSize, 14, 20, 16),
+    welcomeSeconds: bounded(raw.welcomeSeconds, 5, 10, 7),
+    petalCount: Math.round(bounded(raw.petalCount, 0, 15, 12)),
+    butterflyCount: Math.round(bounded(raw.butterflyCount, 0, 15, 12)),
+    sideFlorals: raw.sideFlorals !== false,
+    sceneBranches: raw.sceneBranches !== false,
+    sceneBackground: raw.sceneBackground !== false,
+    showCoverDate: raw.showCoverDate !== false,
+    showCoverVenue: raw.showCoverVenue !== false,
+    showWelcomeContinue: raw.showWelcomeContinue === true,
+    headingShape: raw.headingShape === 'straight' ? 'straight' : 'arched',
     monogramSize: bounded(raw.monogramSize, .8, 1.15, 1),
     monogramTextSize: bounded(raw.monogramTextSize, 16, 48, 36),
     monogramTextColor: /^#[a-f\d]{6}$/i.test(raw.monogramTextColor || '') ? raw.monogramTextColor : '#876326',

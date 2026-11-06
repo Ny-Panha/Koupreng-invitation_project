@@ -1,0 +1,43 @@
+{
+  "origin": "http://localhost:5173",
+  "checkedAt": "2026-11-06T17:22:18.896Z",
+  "mutations": "none; anonymous read-only demos",
+  "covers": [
+    {
+      "width": 440,
+      "height": 956,
+      "scrollHeight": 956,
+      "horizontalOverflow": false,
+      "guest": "លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ",
+      "date": "2026-12-20",
+      "venue": "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញវិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ"
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "scrollHeight": 390,
+      "horizontalOverflow": false,
+      "guest": "លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ",
+      "date": "2026-12-20",
+      "venue": "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញវិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ"
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "scrollHeight": 667,
+      "horizontalOverflow": false,
+      "guest": "លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ",
+      "date": "2026-12-20",
+      "venue": "សណ្ឋាគារ ហ៊ីម៉ាវ៉ារី ភ្នំពេញវិថីព្រះស៊ីសុវត្ថិ រាជធានីភ្នំពេញ"
+    }
+  ],
+  "calendar": {
+    "days": 31,
+    "highlightedDate": "2026-12-20",
+    "extraContinue": 0
+  },
+  "homePoster": "/templates/khmer-floral-gold/phone-preview-440.webp",
+  "homeFrame": "/templates/khmer-floral-gold?embed=demo&lang=km",
+  "errors": [],
+  "status": "passed"
+}

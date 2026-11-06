@@ -39,10 +39,10 @@ export default function useFloralMotion(rootRef, phase, enabled, preset) {
         run('.kfg-cover-emblem', { y: [12, 0], scale: [.96, 1] }, { duration: 1.05 });
         run('.kfg-monogram-staircase > span', { y: [4, 0] }, { delay: stagger(.1, { startDelay: .1 }), duration: .7 });
         run('.kfg-opening > h1', { y: [8, 0] }, { delay: .1 });
-        run('.kfg-guest', { y: [6, 0] }, { delay: .18 });
+        run('.kfg-guest,.kfg-cover-details', { y: [6, 0] }, { delay: stagger(.08,{startDelay:.18}) });
         run('.kfg-open', { y: [4, 0], scale: [.99, 1] }, { delay: .26, duration: .7 });
       } else if (phase === 'welcome') {
-        run('.kfg-welcome-scene > :is(h2,p,.kfg-divider,.kp-date-presentation,.kfg-welcome-compact-date,.kfg-continue)', { opacity: [.95, 1], y: [6, 0] }, { delay: stagger(.06), duration: .7 });
+        run('.kfg-welcome-scene > :is(h2,p,.kfg-divider,.kp-date-presentation,.kfg-continue)', { opacity: [.95, 1], y: [6, 0] }, { delay: stagger(.06), duration: .7 });
       }
     }
     const reveal = () => root.querySelectorAll('.kfg-content > [data-scroll-reveal=visible]').forEach(section => {

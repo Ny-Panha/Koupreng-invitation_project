@@ -17,12 +17,26 @@ export function FloralPhoto({ src, alt, priority = false, className = '' }) {
 export function FloralDivider() {
   return <svg className="kfg-divider" viewBox="0 0 240 28" fill="none" aria-hidden="true"><path d="M8 14H92m56 0h84M120 6l8 8-8 8-8-8Z" stroke="currentColor"/><path d="M101 14c-12-16-21 8-8 3m46-3c12-16 21 8 8 3" stroke="currentColor"/><circle cx="120" cy="14" r="2" fill="currentColor"/></svg>;
 }
+export function FloralArchedHeading({ text }) {
+  const pieces = typeof Intl.Segmenter === 'function' ? [...new Intl.Segmenter('km',{granularity:'grapheme'}).segment(text)].map(item=>item.segment) : Array.from(text);
+  const clusters=[];
+  for(const piece of pieces) {
+    // Keep Khmer subscript consonants with their base, preserving shaping.
+    if(clusters.length && (/\u17d2[\u200c\u200d]?$/.test(clusters.at(-1)) || /^\p{M}/u.test(piece))) clusters[clusters.length-1]+=piece;
+    else clusters.push(piece);
+  }
+  if(clusters.length>40) return text;
+  return <span className="kfg-arched-title" aria-hidden="true">{clusters.map((cluster,index)=>{
+    const position=clusters.length>1?index/(clusters.length-1)*2-1:0;
+    return <span key={index} style={{transform:`translateY(${.24-.55*(1-position*position)}em) rotate(${position*10}deg)`}}>{cluster}</span>;
+  })}</span>;
+}
 function RegalCenterText({ text, size, mode, layout }) {
   const box = useRef(null);
   useLayoutEffect(() => {
     const node = box.current;
     if (!node) return undefined;
-    let active = true;
+    let active = true, frame;
     const fit = () => {
       if (!active) return;
       node.style.fontSize = '';
@@ -34,10 +48,11 @@ function RegalCenterText({ text, size, mode, layout }) {
       }
     };
     fit();
-    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(fit) : null;
+    const schedule = () => { if(active) { cancelAnimationFrame(frame); frame=requestAnimationFrame(fit); } };
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(schedule) : null;
     observer?.observe(node);
-    document.fonts?.ready.then(fit);
-    return () => { active = false; observer?.disconnect(); };
+    document.fonts?.ready.then(schedule);
+    return () => { active = false; cancelAnimationFrame(frame); observer?.disconnect(); };
   }, [text, size, mode, layout]);
   const lines = layout === 'staircase' ? String(text || '').split(/\n|\s*&\s*/).map(line => line.trim()).filter(Boolean) : [];
   return <span ref={box} lang={/[\u1780-\u17ff]/.test(text || '') ? 'km' : 'en'} className={Array.from(text || '').length > 12 ? 'kfg-monogram-long-text' : undefined}><span className={lines.length === 2 ? 'kfg-monogram-staircase' : undefined}>{lines.length === 2 ? <><span>{lines[0]}</span><span>&amp;</span><span>{lines[1]}</span></> : text}</span></span>;
@@ -48,7 +63,7 @@ export function FloralMonogram({ text, variant = 'ornate', settings = {}, childr
     <img className="kfg-monogram-art" src="/templates/khmer-floral-gold/regal-scroll-gold.webp" srcSet="/templates/khmer-floral-gold/regal-scroll-gold-480.webp 480w, /templates/khmer-floral-gold/regal-scroll-gold.webp 960w" sizes="(max-width: 430px) 80vw, 310px" alt="" aria-hidden="true" width="960" height="960" decoding="async" fetchPriority="high" draggable={false} />
     {children || <RegalCenterText text={text} size={settings.monogramTextSize} mode={settings.monogramMode} layout={settings.monogramTextLayout} />}
   </div>;
-  if (variant !== 'ornate') return <div className={`kfg-monogram kfg-monogram--${variant}`}><svg viewBox="0 0 240 310" fill="none" aria-hidden="true">{variant === 'oval' ? <><ellipse cx="120" cy="155" rx="94" ry="136" /><ellipse cx="120" cy="155" rx="85" ry="126" strokeWidth=".6" /><path d="m120 7 9 12-9 12-9-12Zm0 272 9 12-9 12-9-12Z" /></> : variant === 'diamond' ? <><path d="m120 10 108 145-108 145L12 155Zm0 16 96 129-96 129-96-129Z" /><path d="M84 10h72M84 300h72" /></> : <><rect x="29" y="30" width="182" height="250" rx="90" /><path d="M86 17h68M86 293h68" /></>}</svg><span>{text}</span></div>;
+  if (variant !== 'ornate') return <div className={`kfg-monogram kfg-monogram--${variant}`}><svg viewBox="0 0 240 310" fill="none" aria-hidden="true">{variant === 'oval' ? <><ellipse cx="120" cy="155" rx="94" ry="136" /><ellipse cx="120" cy="155" rx="85" ry="126" strokeWidth=".6" /><path d="m120 7 9 12-9 12-9-12Zm0 272 9 12-9 12-9-12Z" /></> : variant === 'diamond' ? <><path d="m120 10 108 145-108 145L12 155Zm0 16 96 129-96 129-96-129Z" /><path d="M84 10h72M84 300h72" /></> : <><rect x="29" y="30" width="182" height="250" rx="90" /><path d="M86 17h68M86 293h68" /></>}</svg><RegalCenterText text={text} size={settings.monogramTextSize} mode={settings.monogramMode} layout={settings.monogramTextLayout} /></div>;
   return <div className="kfg-monogram"><svg viewBox="0 0 240 310" fill="none" aria-hidden="true">
     <path d="M120 12c13 25 43 7 55 28 7 13-6 22 7 35 27-2 39 20 27 42-8 14 6 32-5 48 12 25-7 34-4 61 7 29-23 37-45 38-10 19-24 10-35 34-11-24-25-15-35-34-22-1-52-9-45-38 3-27-16-36-4-61-11-16 3-34-5-48C19 95 31 73 58 75c13-13 0-22 7-35 12-21 42-3 55-28Z"/>
     <path d="M120 30c18 22 38 4 43 23s-4 29 20 36c22 8 4 34 10 51-9 23 1 35-8 59 7 35-1 45-38 52-14 13-17 6-27 28-10-22-13-15-27-28-37-7-45-17-38-52-9-24 1-36-8-59 6-17-12-43 10-51 24-7 15-17 20-36s25-1 43-23Z" strokeWidth=".6"/>
@@ -58,7 +73,7 @@ export function FloralMonogram({ text, variant = 'ornate', settings = {}, childr
       <path d="M51 77C15 104 27 137 31 157S19 201 44 238M47 80q-16 6-16 20 12-2 16-20M32 118q-14 4-10 18 10-7 10-18M29 158q-15 8-7 22 9-10 7-22M31 199q-12 10-1 23 6-12 1-23M45 236q-15-1-19 12 13 3 19-12" />
       {[55, 253].map(y => <g key={y} transform={`translate(61 ${y})`}><path d="M0 0C-13-16-22-4-7 3-22 10-11 21 0 7 10 22 22 10 7 3 23-5 12-16 0 0Z" /><circle cy="3" r="2" fill="currentColor" fillOpacity=".4" /></g>)}
     </g>)}
-  </svg><span>{text.trim().split(/\s+/).length === 2 ? text.trim().split(/\s+/).join('\n') : text}</span></div>;
+  </svg><RegalCenterText text={text.trim().split(/\s+/).length === 2 ? text.trim().split(/\s+/).join('\n') : text} size={settings.monogramTextSize} mode={settings.monogramMode} layout={settings.monogramTextLayout} /></div>;
 }
 
 export function GoldFlourish({ className = '' }) {

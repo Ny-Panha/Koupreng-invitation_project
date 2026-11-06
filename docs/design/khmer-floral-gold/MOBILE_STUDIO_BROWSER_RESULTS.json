@@ -1,0 +1,1461 @@
+{
+  "checkedAt": "2026-11-07 Asia/Bangkok",
+  "scope": "Frontend Floral mobile layouts, saved Studio presentation and landing phone demo",
+  "fixtures": "Browser API writes are synthetic; live localhost:5173 check was anonymous and read-only.",
+  "runs": [
+    {
+      "label": "initial_browser_matrix",
+      "stats": {
+        "startTime": "2026-11-06T16:55:16.393Z",
+        "duration": 332637.916,
+        "expected": 23,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 16346
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 70230
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 24517
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 40467
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 60781
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 33183
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 23770
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 27490
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "webkit",
+          "status": "unexpected",
+          "attempts": [
+            {
+              "status": "failed",
+              "durationMs": 19861
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 42127
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 11991
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 26013
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 12225
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 30299
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 9761
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13436
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5852
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 45929
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 17735
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 27952
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7988
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 43706
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5816
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22992
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "webkit_observer_fix",
+      "stats": {
+        "startTime": "2026-11-06T17:02:11.444Z",
+        "duration": 16379.163,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 15779
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "final_cover_studio_visual_matrix",
+      "stats": {
+        "startTime": "2026-11-06T17:04:51.412Z",
+        "duration": 130354.859,
+        "expected": 18,
+        "skipped": 6,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13709
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 10553
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22780
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 19158
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13956
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22496
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22232
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 11019
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 27403
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 12310
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 9293
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13495
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5713
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 11656
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7237
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-regal.spec.js",
+          "title": "cover content stays visible during entrance motion and an interrupted reload",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4836
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "Regal cover at all seven requested widths",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 15619
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "export the actual opening cover for the catalog preview",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4334
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "Regal cover at all seven requested widths",
+          "browser": "firefox",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 418
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "export the actual opening cover for the catalog preview",
+          "browser": "firefox",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 1
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "Regal cover at all seven requested widths",
+          "browser": "webkit",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 259
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "export the actual opening cover for the catalog preview",
+          "browser": "webkit",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 0
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "Regal cover at all seven requested widths",
+          "browser": "mobile-chromium",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 132
+            }
+          ]
+        },
+        {
+          "file": "floral-v5-visual.spec.js",
+          "title": "export the actual opening cover for the catalog preview",
+          "browser": "mobile-chromium",
+          "status": "skipped",
+          "attempts": [
+            {
+              "status": "skipped",
+              "durationMs": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "home_before_fixture_fix",
+      "stats": {
+        "startTime": "2026-11-06T17:16:45.713Z",
+        "duration": 134559.69799999997,
+        "expected": 12,
+        "skipped": 0,
+        "unexpected": 4,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7809
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13975
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 13183
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7540
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "chromium",
+          "status": "unexpected",
+          "attempts": [
+            {
+              "status": "failed",
+              "durationMs": 16300
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "firefox",
+          "status": "unexpected",
+          "attempts": [
+            {
+              "status": "failed",
+              "durationMs": 17335
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "webkit",
+          "status": "unexpected",
+          "attempts": [
+            {
+              "status": "failed",
+              "durationMs": 16371
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "mobile-chromium",
+          "status": "unexpected",
+          "attempts": [
+            {
+              "status": "failed",
+              "durationMs": 16170
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5499
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "sample timeout provides retry and a full-demo escape route",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22002
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 11692
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "sample timeout provides retry and a full-demo escape route",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 23496
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5319
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "sample timeout provides retry and a full-demo escape route",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 22901
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4591
+            }
+          ]
+        },
+        {
+          "file": "phase2-landing.spec.js",
+          "title": "sample timeout provides retry and a full-demo escape route",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 21486
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "home_keyboard_fixture_recheck",
+      "stats": {
+        "startTime": "2026-11-06T17:19:41.199Z",
+        "duration": 15198.861,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4531
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "firefox",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7746
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "webkit",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 6779
+            }
+          ]
+        },
+        {
+          "file": "marketing-landing.spec.js",
+          "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+          "browser": "mobile-chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3463
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "final_production_build_smoke",
+      "stats": {
+        "startTime": "2026-11-06T17:21:30.858Z",
+        "duration": 29305.62,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "cases": [
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4123
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4797
+            }
+          ]
+        },
+        {
+          "file": "floral-mobile-studio.spec.js",
+          "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+          "browser": "chromium",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 19845
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "latestCaseStatuses": [
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 19845
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 33183
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 42127
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the complete welcome calendar fits phones, tablets and a six-week month",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 30299
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 45929
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 27952
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 43706
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22992
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22232
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4797
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 10553
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22780
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 19158
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 13956
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22496
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 11019
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 27403
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "mobile and tablet covers preserve the desktop composition and a compact Open button",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 12310
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "long personalized guests and every couple frame fit narrow phones with separate short cover names",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 9293
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "Studio saves and publishes short names, phone sizing, wording and scene controls",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 13495
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 5713
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 11656
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 7237
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-regal.spec.js",
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4836
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-visual.spec.js",
+      "title": "Regal cover at all seven requested widths",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 15619
+        }
+      ]
+    },
+    {
+      "file": "floral-v5-visual.spec.js",
+      "title": "export the actual opening cover for the catalog preview",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4334
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4123
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 13975
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 13183
+        }
+      ]
+    },
+    {
+      "file": "floral-mobile-studio.spec.js",
+      "title": "the landing phone previews Floral and opens the same invitation on desktop and mobile",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 7540
+        }
+      ]
+    },
+    {
+      "file": "marketing-landing.spec.js",
+      "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4531
+        }
+      ]
+    },
+    {
+      "file": "marketing-landing.spec.js",
+      "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 7746
+        }
+      ]
+    },
+    {
+      "file": "marketing-landing.spec.js",
+      "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 6779
+        }
+      ]
+    },
+    {
+      "file": "marketing-landing.spec.js",
+      "title": "real invitation opens on demand and keyboard FAQ works with reduced motion",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 3463
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 5499
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "sample timeout provides retry and a full-demo escape route",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22002
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 11692
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "sample timeout provides retry and a full-demo escape route",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 23496
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 5319
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "sample timeout provides retry and a full-demo escape route",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 22901
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "public sample is opt-in, uses the real renderer and releases the frame on close",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 4591
+        }
+      ]
+    },
+    {
+      "file": "phase2-landing.spec.js",
+      "title": "sample timeout provides retry and a full-demo escape route",
+      "browser": "mobile-chromium",
+      "status": "expected",
+      "attempts": [
+        {
+          "status": "passed",
+          "durationMs": 21486
+        }
+      ]
+    }
+  ],
+  "latestStatusCounts": {
+    "expected": 42,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "note": "Counts combine the latest result for each distinct case/browser across separate runs, not a claim of one combined execution. Six visual export duplicates intentionally skip non-Chromium profiles."
+}

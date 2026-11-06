@@ -76,6 +76,20 @@ describe('InvitationStyleEditor', () => {
     }));
   });
 
+  it('edits short names, mobile sizing, wording and scene choices without dropping saved fields', () => {
+    const update = vi.fn();
+    const form = { ...defaultForm, invitationStyleV1: { ...defaultForm.invitationStyleV1, monogramMode: 'short-names', monogram: 'regal-scroll-gold', futureOption: 'preserve' } };
+    render(<InvitationStyleEditor form={form} update={update} capabilities={capabilities} english eventId="101" />);
+    for (const [label,value,key] of [['Groom short name (Khmer)','វិសាល','groomShortName'],['Bride short name (English)','Sophea','brideShortNameEn'],['Open button label (English)','Join us','openButtonLabelEn'],['Wedding invitation wording (English)','Our celebration','familyIntroEn']]) {
+      fireEvent.change(screen.getByLabelText(label), { target: { value } });
+      expect(update).toHaveBeenLastCalledWith('invitationStyleV1',expect.objectContaining({ [key]: value, futureOption: 'preserve' }));
+    }
+    fireEvent.change(screen.getByLabelText('Button side spacing'), { target: { value: '5' } });
+    expect(update).toHaveBeenLastCalledWith('invitationStyleV1',expect.objectContaining({ openButtonPadding: 5 }));
+    fireEvent.click(screen.getByLabelText('Side flower borders'));
+    expect(update).toHaveBeenLastCalledWith('invitationStyleV1',expect.objectContaining({ sideFlorals: false }));
+  });
+
   it('renders program styles and handles program selection', () => {
     const update = vi.fn();
     render(

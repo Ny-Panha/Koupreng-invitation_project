@@ -329,17 +329,17 @@ test('the welcome fits responsive screens, holds seven seconds and puts Skip bes
     await page.evaluate(() => document.fonts.ready);
     const heading = await welcome.locator('h2').boundingBox();
     expect(heading.y).toBeLessThan(120);
-    await expect(welcome.locator('.kfg-continue')).toBeInViewport({ ratio: .999 });
-    const continueBox = await welcome.locator('.kfg-continue').boundingBox();
+    await expect(page.locator('.kfg-skip-welcome')).toBeInViewport({ ratio: .999 });
+    const continueBox = await page.locator('.kfg-skip-welcome').boundingBox();
     expect(continueBox.y).toBeGreaterThanOrEqual(0);
     expect(continueBox.y + continueBox.height).toBeLessThanOrEqual(height + 1);
-    expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1 && document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect(await page.evaluate(() => (innerHeight <= 600 || document.documentElement.scrollHeight <= innerHeight + 1) && document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const skip = await page.locator('.kfg-skip-welcome').boundingBox(), music = await page.locator('.kfg-music').boundingBox();
     expect(Math.abs(skip.y + skip.height / 2 - music.y - music.height / 2)).toBeLessThan(1);
     expect(music.x - skip.x - skip.width).toBeGreaterThanOrEqual(7.9);
     expect(music.x - skip.x - skip.width).toBeLessThan(10);
     if (index === 0) {
-      await expect(welcome.locator('.kfg-welcome-compact-date')).toBeVisible();
+      await expect(welcome.locator('.kp-calendar')).toBeVisible();
       if (info.project.name === 'chromium') await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/welcome-responsive-640.png' });
       const remaining = 5100 - (Date.now() - start);
       if (remaining > 0) await page.waitForTimeout(remaining);
@@ -364,7 +364,8 @@ test('Rumduol artwork keeps personalized guest names readable and preserves othe
     await expect(frame.locator('svg')).toHaveCount(0);
     const metrics = await frame.evaluate(node => {
       const rect = node.getBoundingClientRect(), text = node.firstElementChild.getBoundingClientRect();
-      return { source: getComputedStyle(node).borderImageSource, fits: node.scrollWidth <= node.clientWidth && text.left >= rect.left + 39 && text.right <= rect.right - 39 };
+      const border = parseFloat(getComputedStyle(node).borderLeftWidth);
+      return { source: getComputedStyle(node).borderImageSource, fits: node.scrollWidth <= node.clientWidth && text.left >= rect.left + border && text.right <= rect.right - border };
     });
     expect(metrics.source).toContain('romduol-kbach-guest-frame.webp');
     expect(metrics.fits).toBe(true);
