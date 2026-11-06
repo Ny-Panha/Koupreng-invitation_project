@@ -111,3 +111,5 @@ client_secret*.json
 
 # Local reference-video frames, stock downloads, disposable database metadata and raw QA logs.
 /output/floral-v2/
+/output/floral-v4/
+/output/playwright/floral-v4*/

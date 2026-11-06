@@ -1,0 +1,228 @@
+import { test, expect } from '@playwright/test';
+import { randomBytes } from 'node:crypto';
+import { Buffer } from 'node:buffer';
+import { readFile, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import process from 'node:process';
+import { chooseStudioSection } from './support/studioNavigationActions';
+import { localeContent, translationReadiness } from '../../src/features/templates/shared/localizedContent';
+
+test('real disposable backend: register, Free Floral authoring, persistence, publication and RSVP', async ({ page, browser }, info) => {
+  test.skip(process.env.FLORAL_V4_LIVE !== '1' || info.project.name !== 'chromium', 'Explicit opt-in against the owned development runtime only.');
+  test.setTimeout(240000);
+  const runtime = JSON.parse(await readFile('../../.cache/floral-v4/runtime.json', 'utf8'));
+  expect(runtime).toMatchObject({ owner: 'floral-v4-disposable', port: 3420, database: 'floral_v4_live' });
+  const checks = [];
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.addInitScript(() => localStorage.setItem('koupreng.lang', 'en'));
+  await page.goto('/register');
+  await page.locator('.auth-form input[type="text"]').fill('Fictional V4 host');
+  await page.locator('.auth-form input[type="tel"]').fill(`012${Date.now().toString().slice(-7)}`);
+  const password = `V4${randomBytes(12).toString('hex')}`;
+  await page.locator('.auth-form input[type="password"]').nth(0).fill(password);
+  await page.locator('.auth-form input[type="password"]').nth(1).fill(password);
+  const registration = page.waitForResponse(r => r.url().endsWith('/auth/register') && r.request().method() === 'POST');
+  await page.locator('.auth-form button[type="submit"]').click();
+  const registered = await registration;
+  expect(registered.status()).toBe(200);
+  const auth = await registered.json();
+  const headers = { Authorization: `Bearer ${auth.accessToken}` };
+  checks.push('Registered through actual browser form and server-issued JWT');
+  await expect(page).toHaveURL(/\/app\/events/);
+  await page.goto('/templates');
+  await expect(page.getByText('Khmer Floral Gold', { exact: true }).first()).toBeVisible();
+  await page.goto('/app/events/new');
+  await page.getByRole('button', { name: 'Wedding', exact: true }).click();
+  await page.getByLabel('Event title', { exact: false }).fill('Dara & Sophea · V4 live review');
+  await page.getByLabel('Groom name', { exact: false }).fill('Dara');
+  await page.getByLabel('Bride name', { exact: false }).fill('Sophea');
+  await page.getByLabel('Event date', { exact: false }).fill('2027-12-05');
+  await page.getByLabel('Event time', { exact: false }).fill('17:30');
+  await page.getByRole('textbox', { name: 'Venue', exact: true }).fill('Fictional Garden House');
+  await page.getByLabel('Address (optional)').fill('Fictional Phnom Penh address');
+  await page.getByRole('button', { name: /^Select .*Khmer Floral Gold$/ }).click();
+  await page.getByRole('button', { name: 'Create event', exact: true }).click();
+  await expect(page).toHaveURL(/\/app\/events\/\d+\/invitation/);
+  const eventId = Number(page.url().match(/events\/(\d+)/)[1]);
+  const eventPath = `/api/v1/invitations/${eventId}`;
+  const initial = (await (await page.request.get(eventPath, { headers })).json()).data;
+  expect(initial.templateCode).toBe('khmer-floral-gold');
+  checks.push('Selected an actual ACTIVE catalog record and created the base template on Free');
+  const film = await readFile('../../.cache/floral-v4/sample.mp4');
+  const refused = await page.request.post(`${eventPath}/media/pre-wedding-video`, { headers, multipart: { file: { name: 'review.mp4', mimeType: 'video/mp4', buffer: film } } });
+  expect(refused.status()).toBe(403);
+  checks.push('Free Premium-film upload refused by the actual backend');
+
+  // A task-owned development grant; this is not a purchase or a production account.
+  expect(Number.isInteger(auth.user.id)).toBe(true);
+  execFileSync('C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe', ['--no-defaults', '--host=127.0.0.1', '--port=3420', '--user=root', '--database=floral_v4_live',
+    '--execute', `INSERT INTO subscriptions(user_id,package_id,start_date,end_date,status,is_active,payment_status,confirm_source,currency,created_at,updated_at) SELECT ${auth.user.id},package_id,UTC_TIMESTAMP()-INTERVAL 1 MINUTE,UTC_TIMESTAMP()+INTERVAL 1 DAY,'ACTIVE',1,'NOT_REQUIRED','DEMO_ADMIN_GRANT','USD',UTC_TIMESTAMP(),UTC_TIMESTAMP() FROM packages WHERE code='PREMIUM'`]);
+  await page.reload();
+  const section = async (tab, key) => {
+    await chooseStudioSection(page, tab);
+    const target = page.locator(`[data-studio-section="${key}"]`);
+    const panel = target.locator('details').first();
+    if (await panel.getAttribute('open') === null) await panel.locator('summary').first().click();
+    return target;
+  };
+  const family = await section('eventInformation', 'family');
+  const parents = ['Fictional father Dara', 'Fictional mother Dara', 'Fictional father Sophea', 'Fictional mother Sophea'];
+  for (const [index, name] of parents.entries()) await family.locator('.pe-section-card input[type="text"]').nth(index).fill(name);
+  const agenda = await section('scheduleVenue', 'schedule');
+  await agenda.getByRole('combobox', { name: 'Program preset', exact: true }).selectOption('reception');
+  await agenda.getByRole('button', { name: 'Apply preset', exact: true }).click();
+  await agenda.getByRole('button', { name: 'Add ceremony', exact: true }).click();
+  for (const [index, title] of ['Family blessing', 'Wedding reception'].entries()) {
+    const ceremony = agenda.locator('.studio-program-row').nth(index);
+    await ceremony.getByLabel('Ceremony / Khmer', { exact: true }).fill(index ? 'ពិធីទទួលភ្ញៀវ' : 'ពិធីសូត្រមន្ត');
+    await ceremony.getByLabel('Ceremony in English', { exact: true }).fill(title);
+    await ceremony.getByLabel('Start time', { exact: false }).fill(index ? '17:30' : '09:00');
+  }
+  const portraits = await section('mediaOpening', 'couplePhoto');
+  await portraits.locator('input[type="file"]').nth(0).setInputFiles('public/templates/khmer-floral-gold/groom.webp');
+  await portraits.locator('input[type="file"]').nth(1).setInputFiles('public/templates/khmer-floral-gold/bride.webp');
+  const map = await section('scheduleVenue', 'venue');
+  await map.locator('input[type="file"]').setInputFiles('../../.cache/floral-v4/venue.png');
+  const gallery = await section('mediaOpening', 'gallery');
+  await gallery.locator('input[type="file"][multiple]').setInputFiles([
+    'public/templates/khmer-floral-gold/romantic-01.webp',
+    'public/templates/khmer-floral-gold/romantic-02.webp',
+    'public/templates/khmer-floral-gold/romantic-03.webp',
+  ]);
+  const music = await section('mediaOpening', 'music');
+  await music.locator('.spotify-change-btn').click();
+  const track = music.getByRole('button', { name: /Instrumental Wedding \(VioSounds\)/ });
+  await track.focus(); await track.press('Enter');
+  await chooseStudioSection(page, 'designCover', 'Invitation styles');
+  const editor = page.locator('.studio-invitation-styles');
+  await editor.getByLabel('Initials', { exact: true }).fill('D S');
+  await editor.getByRole('radio', { name: 'Royal', exact: true }).check();
+  await editor.getByRole('radio', { name: 'Tear-off date', exact: true }).check();
+  await editor.getByRole('radio', { name: 'Alternating timeline', exact: true }).check();
+  await editor.getByRole('combobox', { name: 'Motion', exact: true }).selectOption('none');
+  await editor.getByRole('combobox', { name: 'Cover heading', exact: true }).selectOption('image');
+  await editor.getByLabel('Heading artwork', { exact: true }).setInputFiles('public/templates/royal-garden/v3-1/opening-calligraphy-320.webp');
+  await expect(editor.locator('.studio-style-image img')).toHaveCount(1);
+  await editor.getByRole('combobox', { name: 'Couple initials / logo', exact: true }).selectOption('image');
+  await editor.getByLabel('Couple logo', { exact: true }).setInputFiles('public/templates/royal-garden/v3-1/monogram-256.webp');
+  await expect(editor.locator('.studio-style-image img')).toHaveCount(2);
+  await editor.getByLabel('Cover background image', { exact: true }).setInputFiles('public/templates/khmer-floral-gold/couple-480.webp');
+  await expect(editor.locator('.studio-style-image img')).toHaveCount(3);
+  const filmEditor = await section('mediaOpening', 'preWeddingVideo');
+  const uploadFilm = filmEditor.locator('input[type="file"]');
+  const oversized = info.outputPath('too-large.mp4');
+  await writeFile(oversized, Buffer.alloc(51 * 1024 * 1024));
+  await uploadFilm.setInputFiles(oversized);
+  await expect(filmEditor.getByRole('alert')).toContainText('50 MB');
+  await uploadFilm.setInputFiles('../../.cache/floral-v4/sample.mp4');
+  const filmSelect = filmEditor.getByRole('combobox', { name: 'Pre-wedding video', exact: true });
+  await expect(filmSelect).not.toHaveValue('');
+  const filmId = Number(await filmSelect.inputValue());
+  const poster = filmEditor.getByRole('combobox', { name: 'Poster / thumbnail', exact: true });
+  await poster.selectOption(await poster.locator('option').nth(1).getAttribute('value'));
+  await filmEditor.getByLabel('Enable pre-wedding video', { exact: true }).check();
+  await filmEditor.getByRole('button', { name: 'Preview video', exact: true }).click();
+  await expect.poll(() => filmEditor.locator('video').evaluateAll(nodes => nodes.some(node => node.readyState >= 2))).toBe(true);
+  expect(await filmEditor.locator('video').evaluate(video => video.muted)).toBe(true);
+  await filmEditor.getByRole('button', { name: 'Close video preview', exact: true }).click();
+  const webm = await page.request.post(`${eventPath}/media/pre-wedding-video`, { headers, multipart: { file: { name: 'review.webm', mimeType: 'video/webm', buffer: await readFile('../../.cache/floral-v4/sample.webm') } } });
+  expect(webm.status()).toBe(201);
+  const webmId = (await webm.json()).data.id;
+  expect((await page.request.get(`${eventPath}/media/${webmId}/cinematic-content`, { headers })).status()).toBe(200);
+  const language = await section('eventInformation', 'languageMode');
+  await language.locator('select').selectOption('BILINGUAL');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect.poll(async () => JSON.parse((await (await page.request.get(eventPath, { headers })).json()).data.contentJson || '{}').invitationStyleV1?.date).toBe('tear-off');
+  await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved', { timeout: 30000 });
+  await page.reload();
+  await chooseStudioSection(page, 'designCover', 'Invitation styles');
+  await expect(editor.getByRole('radio', { name: 'Tear-off date', exact: true })).toBeChecked();
+  await expect(editor.getByRole('radio', { name: 'Royal', exact: true })).toBeChecked();
+  const saved = (await (await page.request.get(eventPath, { headers })).json()).data;
+  const savedContent = JSON.parse(saved.contentJson);
+  expect(savedContent.groomFather).toBe(parents[0]);
+  expect(savedContent.brideMother).toBe(parents[3]);
+  expect(savedContent.schedule).toHaveLength(2);
+  expect(savedContent.gallery).toHaveLength(3);
+  expect(JSON.parse(saved.designJson).musicUrl).toContain('Instrumental');
+  expect(savedContent.preWeddingVideo).toMatchObject({ enabled: true, videoMediaId: filmId });
+  expect(savedContent.invitationStyleV1.headingImage).toContain('/uploads/');
+  expect(savedContent.invitationStyleV1.monogramImage).toContain('/uploads/');
+  expect(savedContent.coverBackgroundImage).toContain('/uploads/');
+  expect(savedContent.invitationImage).toContain('/uploads/');
+  expect(savedContent.invitationImage2).toContain('/uploads/');
+  expect(savedContent.sketchMapImage).toContain('/uploads/');
+  checks.push('Families, independent portraits, owned diagram/gallery, cover artwork/logo/background, date/program/motion saved through HTTP and survived refresh/reopen');
+
+  // Approve fictional bilingual review copy through the real owner's API. The UI
+  // authored content and uploads above stay intact; no API response is intercepted.
+  const localized = localeContent(savedContent);
+  const km = localized.km;
+  const englishCopy = { ...km, title: 'Dara & Sophea wedding', subtitle: 'Together with our families', messageTitle: 'You are warmly invited', messageText: 'Please join our families to celebrate our wedding.', thankYouTitle: 'Thank you', thankYouText: 'Thank you for sharing our celebration.', apologyTitle: 'With our respects', apologyText: 'Please accept this invitation with our warmest wishes.', groomHonorific: 'Groom', brideHonorific: 'Bride' };
+  const bilingual = { ...savedContent,
+    programDays: savedContent.programDays.map(day => ({ ...day, titleEn: day.titleEn || 'Wedding day' })),
+    localizedContentV1: { ...localized, en: englishCopy, enabledLocales: ['km', 'en'] },
+  };
+  expect(translationReadiness({ ...JSON.parse(saved.designJson), ...bilingual }).missing).toEqual([]);
+  const fields = ['title','eventType','eventDate','eventTime','venueName','venueAddress','googleMapUrl','hostName','partnerName','groomName','brideName','storyText','visibility','rsvpDeadline','templateId','designJson','enabledSections'];
+  const approved = await page.request.put(eventPath, { headers, data: { ...Object.fromEntries(fields.map(key => [key, saved[key]])), languageMode: 'BILINGUAL', expectedUpdatedAt: saved.updatedAt, contentJson: JSON.stringify(bilingual) } });
+  expect(approved.status()).toBe(200);
+  await page.reload();
+  await chooseStudioSection(page, 'designCover', 'Invitation styles');
+
+  const guestResponse = await page.request.post(`${eventPath}/guests`, { headers, data: { guestName: 'Fictional V4 guest', seatCount: 2 } });
+  expect(guestResponse.status()).toBe(201);
+  const guest = (await guestResponse.json()).data;
+  await page.getByRole('button', { name: 'Publish', exact: true }).click();
+  const confirmation = page.getByRole('button', { name: 'Confirm publication', exact: true });
+  if (await confirmation.isVisible()) await confirmation.click();
+  await expect.poll(async () => (await (await page.request.get(eventPath, { headers })).json()).data.status).toBe('PUBLISHED');
+  const published = (await (await page.request.get(eventPath, { headers })).json()).data;
+  const context = await browser.newContext({ reducedMotion: 'no-preference' });
+  try {
+    const guestPage = await context.newPage();
+    guestPage.on('pageerror', error => pageErrors.push(error.message));
+    await guestPage.goto(`http://127.0.0.1:4384/i/${published.slug}?token=${encodeURIComponent(guest.inviteToken)}&lang=en`);
+    await guestPage.locator('.kfg-open').click();
+    const movie = guestPage.locator('.cinematic-stage-dialog');
+    await expect.poll(() => movie.locator('video').evaluateAll(nodes => nodes.some(node => node.readyState >= 2))).toBe(true);
+    expect(await movie.locator('video').evaluate(video => video.muted)).toBe(true);
+    await expect(movie.locator('video')).toHaveAttribute('poster', /\/uploads\//);
+    expect(await guestPage.locator('audio').count()).toBe(1);
+    await guestPage.keyboard.press('Escape');
+    await expect(movie).toHaveCount(0);
+    await guestPage.locator('.kfg-replay-video').click();
+    await expect(movie).toBeVisible();
+    await guestPage.keyboard.press('Escape');
+    await expect(guestPage.locator('[data-date-style="tear-off"]')).toBeVisible();
+    await expect(guestPage.locator('.kfg-content')).toContainText('Dara');
+    const rsvp = guestPage.waitForResponse(r => r.url().includes(`/guests/${guest.inviteToken}/rsvp`) && r.request().method() === 'POST');
+    await guestPage.getByRole('button', { name: 'Submit RSVP', exact: true }).click();
+    expect((await rsvp).status()).toBe(201);
+    const rows = (await (await page.request.get(`${eventPath}/rsvps`, { headers })).json()).data;
+    expect(rows).toEqual(expect.arrayContaining([expect.objectContaining({ guestName: 'Fictional V4 guest', responseStatus: 'ATTENDING' })]));
+    await guestPage.getByRole('button', { name: /Edit response/ }).click();
+    const repeated = guestPage.waitForResponse(r => r.url().includes(`/guests/${guest.inviteToken}/rsvp`) && r.request().method() === 'POST');
+    await guestPage.getByRole('button', { name: 'Submit RSVP', exact: true }).click();
+    expect((await repeated).status()).toBe(201);
+    const updatedRows = (await (await page.request.get(`${eventPath}/rsvps`, { headers })).json()).data;
+    expect(updatedRows.filter(row => row.guestName === 'Fictional V4 guest')).toHaveLength(1);
+    await guestPage.locator('.kfg-language select').selectOption('km');
+    await expect(guestPage.locator('.kfg-content')).toContainText('ពិធីទទួលភ្ញៀវ');
+    await guestPage.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v4/live-guest.png' });
+    const selectedFilm = await section('mediaOpening', 'preWeddingVideo');
+    await selectedFilm.getByRole('combobox', { name: 'Pre-wedding video', exact: true }).selectOption(String(webmId));
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
+    await guestPage.goto(`http://127.0.0.1:4384/i/${published.slug}?token=${encodeURIComponent(guest.inviteToken)}&lang=en`);
+    await guestPage.locator('.kfg-open').click();
+    await expect.poll(() => movie.locator('video').evaluateAll(nodes => nodes.some(node => node.readyState >= 2))).toBe(true);
+    await movie.locator('video').evaluate(video => video.dispatchEvent(new Event('error')));
+    await expect(movie).toHaveCount(0);
+    await expect(guestPage.locator('.kfg-content')).toBeVisible();
+    expect(pageErrors).toEqual([]);
+    checks.push('MP4 and WebM uploaded/decoded through actual protected public playback; saved media IDs/poster, oversize rejection, Skip/replay/error recovery, silent film/single song, bilingual guest view and idempotent persisted RSVP verified; no uncaught page errors');
+  } finally { await context.close(); }
+  await writeFile('../../.cache/floral-v4/live-results.json', JSON.stringify({ eventId, catalogCode: initial.templateCode, checks }, null, 2));
+});

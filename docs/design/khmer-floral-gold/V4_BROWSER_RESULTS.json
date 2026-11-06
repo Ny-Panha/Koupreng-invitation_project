@@ -1,0 +1,3600 @@
+{
+  "note": "Latest result per file/title/browser after focused fixes. Repeated attempts are not counted as additional unique scenarios. Full corpus was not run.",
+  "runs": [
+    {
+      "report": "regression-results.json",
+      "startTime": "2026-11-06T03:18:16.884Z",
+      "duration": 2006526.1030000001,
+      "expected": 371,
+      "skipped": 16,
+      "unexpected": 29,
+      "flaky": 0
+    },
+    {
+      "report": "rerun-results.json",
+      "startTime": "2026-11-06T03:34:50.706Z",
+      "duration": 954722.645,
+      "expected": 102,
+      "skipped": 0,
+      "unexpected": 14,
+      "flaky": 0
+    },
+    {
+      "report": "failed-rerun-results.json",
+      "startTime": "2026-11-06T03:51:56.215Z",
+      "duration": 238688.136,
+      "expected": 13,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    {
+      "report": "webkit-final-results.json",
+      "startTime": "2026-11-06T03:52:42.655Z",
+      "duration": 75438.84400000001,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    {
+      "report": "webp-final-results.json",
+      "startTime": "2026-11-06T03:56:01.582Z",
+      "duration": 45561.693,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    {
+      "report": "acceptance-results.json",
+      "startTime": "2026-11-06T03:57:02.516Z",
+      "duration": 83964.958,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  ],
+  "latestCounts": {
+    "expected": 404,
+    "skipped": 16
+  },
+  "cases": [
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 360px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 390px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 430px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 512px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 768px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1024px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1440px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "English venue keeps owner map and native directions, and plain/compact frames remain distinct",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 360px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 390px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 430px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 512px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 768px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1024px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1440px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "English venue keeps owner map and native directions, and plain/compact frames remain distinct",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 360px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 390px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 430px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 512px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 768px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1024px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1440px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "English venue keeps owner map and native directions, and plain/compact frames remain distinct",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 360px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 390px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 430px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 512px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 768px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1024px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "reference agenda and map composition at 1440px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-agenda-map-v2.spec.js",
+      "title": "English venue keeps owner map and native directions, and plain/compact frames remain distinct",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "records opening, natural scroll and keyboard gallery interaction with frame timing",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "Premium Floral plays protected bytes muted, skips, replays and recovers on media error",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "records opening, natural scroll and keyboard gallery interaction with frame timing",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "Premium Floral plays protected bytes muted, skips, replays and recovers on media error",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "records opening, natural scroll and keyboard gallery interaction with frame timing",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "Premium Floral plays protected bytes muted, skips, replays and recovers on media error",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [
+        {
+          "type": "codec limitation",
+          "description": "Bundled WebKit cannot decode this MP4 fixture; usable invitation recovery verified, MP4 playback not verified."
+        }
+      ],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "records opening, natural scroll and keyboard gallery interaction with frame timing",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "Premium Floral plays protected bytes muted, skips, replays and recovers on media error",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 360px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 390px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 430px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 512px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 768px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1024px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1440px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 360px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 390px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 430px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 512px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 768px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1024px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1440px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 360px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 390px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 430px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 512px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 768px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1024px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1440px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 360px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 390px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 430px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 512px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 768px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1024px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-motion-v2.spec.js",
+      "title": "welcome fades and reaches family details at 1440px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "data-saving guests get immediate details with static decoration and usable forms",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "data-saving guests get immediate details with static decoration and usable forms",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "data-saving guests get immediate details with static decoration and usable forms",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "fullscreen swipes, keyboard, thumbnails and focus return preserve the photo collection",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "data-saving guests get immediate details with static decoration and usable forms",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-floral-gold",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-celestial",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published royal-khmer-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published silk-heritage",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published the-digital-yes-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published emerald-canva-luxe-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published withjoy-modern-portal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published bliss-editorial-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-golden-canva-inspired-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published cover-khmer-golden-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published event-essential",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published koupreng-demo-wedding",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the traditional / classic / khmer combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the minimal / gold-curve / floral-gold combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the gold-calendar / alternating / engraved combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the watercolor / ceremonial / double-gold combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the tear-off / editorial / vintage combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the typographic / numbered / royal combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the horizontal / floral-list / minimal combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the floral / multi-day / champagne combination",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral style gallery saves, reopens, previews and publishes actual choices",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral heading art, couple logo and background upload, publish and remove without demo fallback",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-floral-gold",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-celestial",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published royal-khmer-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published silk-heritage",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published the-digital-yes-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published emerald-canva-luxe-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published withjoy-modern-portal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published bliss-editorial-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-golden-canva-inspired-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published cover-khmer-golden-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published event-essential",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published koupreng-demo-wedding",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the traditional / classic / khmer combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the minimal / gold-curve / floral-gold combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the gold-calendar / alternating / engraved combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the watercolor / ceremonial / double-gold combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the tear-off / editorial / vintage combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the typographic / numbered / royal combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the horizontal / floral-list / minimal combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the floral / multi-day / champagne combination",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral style gallery saves, reopens, previews and publishes actual choices",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral heading art, couple logo and background upload, publish and remove without demo fallback",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-floral-gold",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-celestial",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published royal-khmer-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published silk-heritage",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published the-digital-yes-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published emerald-canva-luxe-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published withjoy-modern-portal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published bliss-editorial-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-golden-canva-inspired-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published cover-khmer-golden-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published event-essential",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published koupreng-demo-wedding",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the traditional / classic / khmer combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the minimal / gold-curve / floral-gold combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the gold-calendar / alternating / engraved combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the watercolor / ceremonial / double-gold combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the tear-off / editorial / vintage combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the typographic / numbered / royal combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the horizontal / floral-list / minimal combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the floral / multi-day / champagne combination",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral style gallery saves, reopens, previews and publishes actual choices",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral heading art, couple logo and background upload, publish and remove without demo fallback",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "webp-final-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-floral-gold",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-celestial",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published royal-khmer-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published silk-heritage",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published the-digital-yes-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published emerald-canva-luxe-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published withjoy-modern-portal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published bliss-editorial-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published khmer-golden-canva-inspired-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published cover-khmer-golden-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published event-essential",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "saved presentation reaches published koupreng-demo-wedding",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the traditional / classic / khmer combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the minimal / gold-curve / floral-gold combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the gold-calendar / alternating / engraved combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the watercolor / ceremonial / double-gold combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the tear-off / editorial / vintage combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the typographic / numbered / royal combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the horizontal / floral-list / minimal combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral renders the floral / multi-day / champagne combination",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral style gallery saves, reopens, previews and publishes actual choices",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "invitation-styles-v2.spec.js",
+      "title": "Floral heading art, couple logo and background upload, publish and remove without demo fallback",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 360px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 390px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 430px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 512px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 768px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1024px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1440px",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "owner music starts after a gesture, pauses and stops after navigating away",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "missing host media never becomes demo people, map, agenda or a sample date",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "FREE can edit, persist, refresh and publish floral without checkout",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PRO can edit, persist, refresh and publish floral without checkout",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 360px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 390px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 430px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 512px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 768px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1024px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1440px",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "owner music starts after a gesture, pauses and stops after navigating away",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "missing host media never becomes demo people, map, agenda or a sample date",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "FREE can edit, persist, refresh and publish floral without checkout",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PRO can edit, persist, refresh and publish floral without checkout",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 360px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 390px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 430px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 512px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 768px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1024px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1440px",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "owner music starts after a gesture, pauses and stops after navigating away",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [
+        {
+          "type": "codec limitation",
+          "description": "Bundled WebKit rejected the PCM WAV fixture after explicit retry; readable fallback and route cleanup verified, audio playback not verified."
+        }
+      ],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "missing host media never becomes demo people, map, agenda or a sample date",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "FREE can edit, persist, refresh and publish floral without checkout",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PRO can edit, persist, refresh and publish floral without checkout",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 360px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 390px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 430px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 512px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 768px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1024px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "reference scenes fit 1440px",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "English, calendar download, lightbox keyboard/focus and nonpersistent demo form",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "owner music starts after a gesture, pauses and stops after navigating away",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "published guest RSVP waits for server confirmation and retains credentials across languages",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "missing host media never becomes demo people, map, agenda or a sample date",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "visitor browses, previews, signs in, creates, edits, publishes and receives a guest RSVP",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "FREE can edit, persist, refresh and publish floral without checkout",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "failed-rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "BASIC can edit, persist, refresh and publish floral without checkout",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PRO can edit, persist, refresh and publish floral without checkout",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "PREMIUM can edit, persist, refresh and publish floral without checkout",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-gold.spec.js",
+      "title": "CUSTOM can edit, persist, refresh and publish floral without checkout",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "rerun-results.json"
+    },
+    {
+      "file": "khmer-floral-media.spec.js",
+      "title": "Free studio uploads portraits and a venue diagram and restores durable URLs after refresh",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "khmer-floral-media.spec.js",
+      "title": "Free studio uploads portraits and a venue diagram and restores durable URLs after refresh",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "khmer-floral-media.spec.js",
+      "title": "Free studio uploads portraits and a venue diagram and restores durable URLs after refresh",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "webp-final-results.json"
+    },
+    {
+      "file": "khmer-floral-media.spec.js",
+      "title": "Free studio uploads portraits and a venue diagram and restores durable URLs after refresh",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential approved bilingual current catalogue and eight widths",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential approved bilingual current catalogue and eight widths",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "webkit-final-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential approved bilingual current catalogue and eight widths",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "silk-heritage approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-garden-cinematic approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-celestial approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-royal-lotus approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "the-digital-yes-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "emerald-canva-luxe-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "withjoy-modern-portal approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "bliss-editorial-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "garden-royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Retired by V50; inactive exclusion is tested separately",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase12-matrix.spec.js",
+            "line": 31,
+            "column": 8
+          }
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "royal-khmer-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "cover-khmer-golden-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "khmer-golden-canva-inspired-wedding approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential Khmer only with draft suppression current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase12-matrix.spec.js",
+      "title": "event-essential approved bilingual current catalogue and eight widths",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-floral-gold and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-celestial and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves silk-heritage and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves the-digital-yes-wedding and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves emerald-canva-luxe-wedding and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-golden-canva-inspired-wedding and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves withjoy-modern-portal and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves bliss-editorial-wedding and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves event-essential and permits immediate keyboard dismissal",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "real browser video is muted, supports sound, ended/error recovery and scoped axe checks",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "reduced motion bypasses cinematic media entirely",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-floral-gold and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-celestial and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves silk-heritage and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves the-digital-yes-wedding and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves emerald-canva-luxe-wedding and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-golden-canva-inspired-wedding and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves withjoy-modern-portal and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves bliss-editorial-wedding and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves event-essential and permits immediate keyboard dismissal",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "real browser video is muted, supports sound, ended/error recovery and scoped axe checks",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "reduced motion bypasses cinematic media entirely",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-floral-gold and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-celestial and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves silk-heritage and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves the-digital-yes-wedding and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves emerald-canva-luxe-wedding and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-golden-canva-inspired-wedding and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves withjoy-modern-portal and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves bliss-editorial-wedding and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves event-essential and permits immediate keyboard dismissal",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "real browser video is muted, supports sound, ended/error recovery and scoped axe checks",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [
+        {
+          "type": "codec limitation",
+          "description": "Bundled WebKit reported an unsupported/undecodable MP4; normal invitation recovery verified. MP4 playback was not verified in this engine."
+        }
+      ],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "reduced motion bypasses cinematic media entirely",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-floral-gold and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-celestial and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves silk-heritage and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves the-digital-yes-wedding and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves emerald-canva-luxe-wedding and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves khmer-golden-canva-inspired-wedding and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves withjoy-modern-portal and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves bliss-editorial-wedding and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "optional cinematic stage preserves event-essential and permits immediate keyboard dismissal",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "real browser video is muted, supports sound, ended/error recovery and scoped axe checks",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "phase9-video.spec.js",
+      "title": "reduced motion bypasses cinematic media entirely",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "cold catalog, refresh, stale draft and public preview keep exact Celestial identity",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "switching events remounts controls and uses Digital Yes renderer",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "template switch persists the actual association and preserves event details",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "premium denial leaves the assigned template untouched",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "unregistered template does not fall back through a colliding ID",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "invalid assigned template blocks editing rather than selecting a fallback",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "empty catalog blocks editing instead of reusing historical database IDs",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "missing template image reports a recovery state without substituting designs",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "cold catalog, refresh, stale draft and public preview keep exact Celestial identity",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "switching events remounts controls and uses Digital Yes renderer",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "template switch persists the actual association and preserves event details",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "premium denial leaves the assigned template untouched",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "unregistered template does not fall back through a colliding ID",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "invalid assigned template blocks editing rather than selecting a fallback",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "empty catalog blocks editing instead of reusing historical database IDs",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "missing template image reports a recovery state without substituting designs",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "cold catalog, refresh, stale draft and public preview keep exact Celestial identity",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "switching events remounts controls and uses Digital Yes renderer",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "template switch persists the actual association and preserves event details",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "premium denial leaves the assigned template untouched",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "unregistered template does not fall back through a colliding ID",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "invalid assigned template blocks editing rather than selecting a fallback",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "empty catalog blocks editing instead of reusing historical database IDs",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "missing template image reports a recovery state without substituting designs",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "cold catalog, refresh, stale draft and public preview keep exact Celestial identity",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "switching events remounts controls and uses Digital Yes renderer",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "template switch persists the actual association and preserves event details",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "premium denial leaves the assigned template untouched",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "unregistered template does not fall back through a colliding ID",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "invalid assigned template blocks editing rather than selecting a fallback",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "empty catalog blocks editing instead of reusing historical database IDs",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "template-identity.spec.js",
+      "title": "missing template image reports a recovery state without substituting designs",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "regression-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "a keyboard-selected Studio song survives save and reopen",
+      "browser": "chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "a keyboard-selected Studio song survives save and reopen",
+      "browser": "firefox",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "a keyboard-selected Studio song survives save and reopen",
+      "browser": "webkit",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    },
+    {
+      "file": "floral-v4-interactions.spec.js",
+      "title": "a keyboard-selected Studio song survives save and reopen",
+      "browser": "mobile-chromium",
+      "outcome": "expected",
+      "annotations": [],
+      "lastRun": "acceptance-results.json"
+    }
+  ]
+}

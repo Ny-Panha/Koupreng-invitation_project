@@ -1,4 +1,5 @@
 export async function chooseStudioSection(page, tab, section) {
+  await page.locator('.studio-guide-modes, [data-studio-tab], .studio-section-select select').filter({ visible: true }).first().waitFor();
   const tabButton = page.locator(`[data-studio-tab="${tab}"]`);
   const selector = page.locator('.studio-section-select select');
   if (!await tabButton.isVisible() && !await selector.isVisible()) {

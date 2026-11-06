@@ -1,0 +1,18 @@
+{
+  "opening": {
+    "samples": 261,
+    "medianMs": 16.699999999999818,
+    "p95Ms": 16.799999999999272,
+    "maxMs": 100.09999999999945,
+    "longTasksMs": [
+      73
+    ]
+  },
+  "idle": {
+    "samples": 119,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.799999999999272,
+    "maxMs": 33.399999999999636
+  },
+  "context": "Headless Chromium 512x896; same interval sampling method as V2. Includes welcome screenshot cost. Not physical-device FPS."
+}
