@@ -38,7 +38,7 @@ import StudioAppearance from "./studio/StudioAppearance";
 const InvitationStyleEditor = lazy(() => import('./studio/InvitationStyleEditor'));
 import CinematicIntroEditor from './studio/CinematicIntroEditor';
 import { useStudioPersistence } from "./studio/useStudioPersistence";
-import { replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
+import { normalizeStudioImage, replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
 import "./studio/StudioChrome.css";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -905,11 +905,12 @@ export default function InvitationForm({ invitation }) {
         update(field, items);
     };
 
-    const handleFileUpload = (e, callback) => {
-        const file = e.target.files?.[0];
+    const handleFileUpload = async (e, callback) => {
+        let file = e.target.files?.[0];
         if (!file) return;
-
-        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
+        let invalid = false;
+        try { file = await normalizeStudioImage(file); } catch { invalid = true; }
+        if (invalid || !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
             toast(uiCopy("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "Choose JPEG, PNG or WebP images under 5 MB."), "warning");
             return;
         }
@@ -987,10 +988,12 @@ export default function InvitationForm({ invitation }) {
         update("photos", nextPhotos);
     };
 
-    const handleBatchGalleryUpload = (e) => {
-        const files = Array.from(e.target.files || []);
+    const handleBatchGalleryUpload = async (e) => {
+        let files = Array.from(e.target.files || []);
         if (!files.length) return;
-        if (files.some(file => !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024)) {
+        let invalid = false;
+        try { files = await Promise.all(files.map(normalizeStudioImage)); } catch { invalid = true; }
+        if (invalid || files.some(file => !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024)) {
             toast(uiCopy("សូមជ្រើសរូប JPEG, PNG ឬ WebP ក្រោម 5 MB។", "Choose JPEG, PNG or WebP images under 5 MB."), "warning"); return;
         }
 
@@ -1282,6 +1285,8 @@ export default function InvitationForm({ invitation }) {
                 ...eventPresentationFields(form),
                 ...invitationFeatureFields(form),
                 ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
+                musicTrackId: form.musicTrackId,
+                musicUrl: form.musicUrl,
                 eventDate: finalDate,
                 eventTime: finalTime,
                 monogramText: form.monogramText || '',
@@ -1434,9 +1439,13 @@ export default function InvitationForm({ invitation }) {
                 ];
                 if (galleryUploads.length) {
                     try {
-                        const uploadedGallery = await mediaService.uploadGallery(backendId, galleryUploads.map((item) => item.file));
+                      // Portraits and venue diagrams share this endpoint with gallery photos.
+                      // Keep mixed saves within the server's five-file request limit.
+                      for (let offset = 0; offset < galleryUploads.length; offset += 5) {
+                        const batch = galleryUploads.slice(offset, offset + 5);
+                        const uploadedGallery = await mediaService.uploadGallery(backendId, batch.map((item) => item.file));
                         const uploadedItems = Array.isArray(uploadedGallery) ? uploadedGallery : uploadedGallery?.items || uploadedGallery?.data || [];
-                        for (const [uploadIndex, upload] of galleryUploads.entries()) {
+                        for (const [uploadIndex, upload] of batch.entries()) {
                             const fileUrl = uploadedItems[uploadIndex]?.fileUrl;
                             if (!fileUrl) continue;
                             if (upload.purpose === "photo") {
@@ -1454,6 +1463,7 @@ export default function InvitationForm({ invitation }) {
                                 update('sketchMapImage', fileUrl);
                             }
                         }
+                      }
                     } catch (uploadError) {
                         mediaSyncError ||= uploadError?.message || "Gallery upload failed";
                     }

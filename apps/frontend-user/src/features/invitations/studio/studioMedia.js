@@ -1,4 +1,11 @@
 import { dataUrlToFile } from "../invitationPayloadUtils";
+import { normalizeIntroUpload } from '../../templates/shared/cinematicIntro';
+
+// Safari/Windows may report an empty or generic MIME for a valid WebP file.
+// Reuse the existing byte-signature check; server validation remains authoritative.
+export async function normalizeStudioImage(file) {
+  return ['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ? file : normalizeIntroUpload(file);
+}
 
 export function replaceMediaReferences(value, replacements) {
   if (typeof value === "string") return replacements.get(value) || value;

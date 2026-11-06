@@ -39,3 +39,13 @@ it('keeps uploads unavailable without server-reported Premium and handles a new 
   expect(screen.queryByLabelText(/Upload or replace/)).toBeNull();
   expect(mocks.list).not.toHaveBeenCalled();
 });
+it('offers poster images uploaded in another Studio panel before the film upload', async () => {
+  const film = { id: 10, mediaType: 'PRE_WEDDING_VIDEO', originalFilename: 'film.mp4' };
+  const poster = { id: 11, fileUrl: '/uploads/poster.webp', mimeType: 'image/webp', originalFilename: 'poster.webp' };
+  mocks.list.mockResolvedValueOnce(empty).mockResolvedValueOnce({ all: [film, poster], galleryImages: [poster] });
+  mocks.upload.mockResolvedValue(film);
+  render(<PreWeddingVideoEditor eventId={1} english onChange={vi.fn()} />);
+  await act(async () => {});
+  fireEvent.change(screen.getByLabelText(/Upload or replace/), { target: { files: [new File(['video'], 'film.mp4', { type: 'video/mp4' })] } });
+  expect(await screen.findByRole('option', { name: 'poster.webp' })).toBeInTheDocument();
+});

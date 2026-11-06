@@ -1,7 +1,14 @@
 import { describe, expect, it, vi } from "vitest";
-import { replaceMediaReferences, uploadInlineReferences } from "./studioMedia";
+import { normalizeStudioImage, replaceMediaReferences, uploadInlineReferences } from "./studioMedia";
 
 describe("studio image references", () => {
+  it('recognizes generic browser WebP MIME from its signature and rejects other bytes', async () => {
+    const webp = new File(['RIFF0000WEBP'], 'portrait.webp', { type: 'application/octet-stream' });
+    const normalized = await normalizeStudioImage(webp);
+    expect(normalized.type).toBe('image/webp');
+    expect(normalized.name).toBe('portrait.webp');
+    await expect(normalizeStudioImage(new File(['<svg/>'], 'portrait.webp', { type: '' }))).rejects.toThrow('JPEG');
+  });
   it("uploads nested story, gift, brand and gallery references once and preserves their structure", async () => {
     const inline = "data:image/png;base64,aGVsbG8=";
     const value = { photos: [{ url: inline }], storyChapters: [{ image: inline }], khqrDollar: { qrUrl: inline }, brandMarkUrl: inline, text: "Keep this wording" };

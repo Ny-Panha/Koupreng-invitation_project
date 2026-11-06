@@ -163,6 +163,13 @@ describe("invitation draft adapters", () => {
         expect(normalized.openingVideo.url).toBe("https://cdn.example/video.mp4");
     });
 
+    it("retains a Studio song saved in design JSON and respects a later explicit empty selection", () => {
+        const invitation = { designJson: JSON.stringify({ musicUrl: '/music/owner-song.mp3' }), contentJson: '{}' };
+        expect(publicInvitationToDraft(invitation, {}).music).toBe('/music/owner-song.mp3');
+        expect(publicInvitationToDraft({ ...invitation, contentJson: JSON.stringify({ musicUrl: '' }) }, {}).music).toBeNull();
+        expect(publicInvitationToDraft(invitation, { backgroundMusic: { fileUrl: '/uploads/owner-song.mp3' } }).music.url).toBe('/uploads/owner-song.mp3');
+    });
+
     it("uses generic guest data when the public response has no secure guest match", () => {
         const reconstructed = publicInvitationToDraft({
             slug: "wedding",

@@ -36,7 +36,11 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
     try {
       const uploaded = await mediaService.uploadPreWeddingVideo(eventId, file, event => { if (event.total) setProgress(Math.round(event.loaded / event.total * 100)); });
       if (currentEvent.current !== eventId) return;
-      setLibrary(current => ({ ...current, all: [...(current?.all || []), uploaded] }));
+      // Other Studio panels can upload poster images while this hidden panel is
+      // mounted. Reconcile its library after the film upload before offering posters.
+      const refreshed = await mediaService.list(eventId).catch(() => null);
+      if (currentEvent.current !== eventId) return;
+      setLibrary(current => refreshed || { ...current, all: [...(current?.all || []), uploaded] });
       onChange({ ...config, videoMediaId: uploaded.id });
     } catch (err) { setError(err.message || text('Upload failed. Try again.', 'មិនអាចបញ្ចូលបាន។ សូមព្យាយាមម្ដងទៀត។')); feedback.explain(err, { event:workspace,feature:'PRE_WEDDING_VIDEO',permission:'MANAGE_INVITATION' }); }
     finally { setBusy(false); }

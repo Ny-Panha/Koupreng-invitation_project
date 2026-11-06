@@ -24,6 +24,8 @@
   line-height: 1.6;
 }
 
+.studio-style-example { margin: 0 0 12px; color: var(--ui-muted, #655c50); font-size: 13px; line-height: 1.8; }
+
 .studio-style-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

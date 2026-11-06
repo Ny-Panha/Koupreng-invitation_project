@@ -11,7 +11,7 @@
 }
 
 /* Toggle Button */
-.chatbot-wrapper--workspace:not(.is-open) { position: static; align-items: center; padding: 16px 16px 32px; background: #fbf6ee; }
+.chatbot-wrapper--workspace:not(.is-open) { position: static; z-index: auto; align-items: center; padding: 16px 16px 32px; background: #fbf6ee; }
 .chatbot-wrapper--workspace:not(.is-open) .chat-toggle-btn { width: auto; min-width: 160px; height: 44px; gap: 10px; padding: 10px 16px; border: 1px solid #d5c5ad; border-radius: 12px; background: #fff; color: #76572d; box-shadow: none; font-size: 14px; line-height: 1.7; }
 .chatbot-wrapper--workspace:not(.is-open) .chat-toggle-btn:hover { background: #f5efdf; }
 .workspace-support-label { order: 1; }

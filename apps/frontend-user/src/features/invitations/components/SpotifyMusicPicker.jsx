@@ -146,8 +146,6 @@ export function SpotifyMusicPicker({ value, onChange }) {
             <div
                 className={`spotify-selected-banner ${isOpen ? "is-open" : ""}`}
                 onClick={() => setIsOpen((prev) => !prev)}
-                role="button"
-                tabIndex={0}
             >
                 {/* Album Artwork with Play button */}
                 <div className={`spotify-album-art ${selectedMeta.coverClass}`}>
@@ -186,12 +184,14 @@ export function SpotifyMusicPicker({ value, onChange }) {
                 <button
                     type="button"
                     className="spotify-change-btn"
+                    aria-label={uiCopy("ប្ដូរបទចម្រៀង", "Change track")}
+                    aria-expanded={isOpen}
                     onClick={(e) => {
                         e.stopPropagation();
                         setIsOpen((prev) => !prev);
                     }}
                 >
-                    <span>{isOpen ? uiCopy("បិទ", "Close") : "ប្តូរបទ"}</span>
+                    <span>{isOpen ? uiCopy("បិទ", "Close") : uiCopy("ប្តូរបទ", "Change track")}</span>
                     <IoChevronDown
                         style={{
                             transform: isOpen ? "rotate(180deg)" : "none",
@@ -210,6 +210,7 @@ export function SpotifyMusicPicker({ value, onChange }) {
                         <input
                             type="text"
                             className="spotify-search-input"
+                            aria-label={uiCopy("ស្វែងរកបទចម្រៀង ឬអ្នកច្រៀង", "Search songs or artists")}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder={uiCopy("ស្វែងរកបទចម្រៀង ឬអ្នកច្រៀង...", "Search songs or artists...")}
@@ -233,12 +234,6 @@ export function SpotifyMusicPicker({ value, onChange }) {
                             <div
                                 key={track.id}
                                 className={`spotify-track-item ${isSelected ? "is-selected" : ""}`}
-                                onClick={() => {
-                                    onChange(track.id, track.url);
-                                    setIsOpen(false); // Auto-close on selection!
-                                }}
-                                role="button"
-                                tabIndex={0}
                             >
                                 {/* Album Artwork with Play button */}
                                 <div className={`spotify-album-art ${meta.coverClass}`}>
@@ -256,12 +251,13 @@ export function SpotifyMusicPicker({ value, onChange }) {
                                 </div>
 
                                 {/* Track Details */}
-                                <div className="spotify-track-info">
-                                    <div className="spotify-track-title">{track.name}</div>
-                                    <div className="spotify-track-artist">
+                                <button type="button" className="spotify-track-info spotify-select-track" aria-pressed={isSelected}
+                                    onClick={() => { onChange(track.id, track.url); setIsOpen(false); containerRef.current?.querySelector('.spotify-change-btn')?.focus(); }}>
+                                    <span className="spotify-track-title">{track.name}</span>
+                                    <span className="spotify-track-artist">
                                         {meta.artist} • {meta.sub}
-                                    </div>
-                                </div>
+                                    </span>
+                                </button>
 
                                 {/* Animated Equalizer Wave (when this song is currently playing) */}
                                 {isCurrentPreview && (

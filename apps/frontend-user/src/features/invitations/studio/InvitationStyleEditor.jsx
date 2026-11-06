@@ -7,6 +7,8 @@ import { resolveEvent } from '../../templates/shared/eventDateTime';
 import { FloralMonogram } from '../../templates/layouts/KhmerFloralGold/FloralArtwork';
 import { mediaService } from '../api/mediaApi';
 import { validateLibraryFile } from '../mediaLibraryModel';
+import { stylePreviewContent } from './stylePreviewContent';
+import { normalizeStudioImage } from './studioMedia';
 import '../../templates/layouts/KhmerFloralGold/khmer-floral-gold.css';
 import './invitation-style-editor.css';
 
@@ -16,16 +18,19 @@ export default function InvitationStyleEditor({ form, update, capabilities, engl
   const [busy, setBusy] = useState(''), [error, setError] = useState('');
   const text = (en, km) => english ? en : km;
   const set = (key, value) => update('invitationStyleV1', { ...form.invitationStyleV1, version: 1, [key]: value });
-  const event = resolveEvent(form);
-  const picker = (title, field, options, preview) => <fieldset className="studio-style-picker"><legend>{title}</legend><div className="studio-style-options">{options.map(option => <label key={option.id} className="studio-style-option">
+  const examples = stylePreviewContent(form, english);
+  const event = resolveEvent(examples.date);
+  const picker = (title, field, options, preview, sample = false) => <fieldset className="studio-style-picker"><legend>{title}</legend>{sample && <p className="studio-style-example">{text('Sample preview. Add your date and program to see your own details here.', 'ឧទាហរណ៍សម្រាប់មើលជាមុន។ បន្ថែមកាលបរិច្ឆេទ និងកម្មវិធី ដើម្បីមើលព័ត៌មានរបស់អ្នកនៅទីនេះ។')}</p>}<div className="studio-style-options">{options.map(option => <label key={option.id} className="studio-style-option">
     <input type="radio" name={`invitation-style-${field}`} value={option.id} checked={style[field] === option.id} onChange={() => set(field, option.id)} />
     <span className="studio-style-label">{english ? option.en : option.km}</span>
     <span className="studio-style-mini" aria-hidden="true" inert>{preview(option.id)}</span>
   </label>)}</div></fieldset>;
   async function upload(event, key) {
-    const file = event.target.files?.[0]; event.target.value = '';
+    let file = event.target.files?.[0]; event.target.value = '';
     if (!file) return;
-    if (validateLibraryFile(file, 'gallery')) {
+    let invalid = false;
+    try { file = await normalizeStudioImage(file); } catch { invalid = true; }
+    if (invalid || validateLibraryFile(file, 'gallery')) {
       setError(text('Choose a JPG, PNG or WebP image up to 5 MB.', 'សូមជ្រើសរើសរូប JPG PNG ឬ WebP មិនលើស 5 MB។')); return;
     }
     setBusy(key); setError('');
@@ -60,7 +65,7 @@ export default function InvitationStyleEditor({ form, update, capabilities, engl
       {select('motion', text('Motion', 'ចលនា'), MOTION_STYLES.map(item => [item.id, item.en, item.km]))}
       <label className="pe-label studio-inline-check"><input type="checkbox" checked={style.florals} onChange={e => set('florals', e.target.checked)} />{text('Botanical decorations', 'លម្អផ្កា')}</label>
     </>}
-    {capabilities.dateStyles && picker(text('Date / calendar', 'កាលបរិច្ឆេទ / ប្រតិទិន'), 'date', DATE_STYLES, id => <DatePresentation content={{ ...form, invitationStyleV1: { ...style, date: id } }} english={english} calendar={<EventCalendar date={event.date} english={english} numerals={english ? 'latin' : 'khmer'} />} />)}
-    {capabilities.programStyles && picker(text('Wedding program', 'កម្មវិធីមង្គលការ'), 'program', PROGRAM_STYLES, id => <ProgramTimeline content={{ ...form, invitationStyleV1: { ...style, program: id } }} english={english} naturalTime />)}
+    {capabilities.dateStyles && picker(text('Date / calendar', 'កាលបរិច្ឆេទ / ប្រតិទិន'), 'date', DATE_STYLES, id => <DatePresentation content={{ ...examples.date, invitationStyleV1: { ...style, date: id } }} english={english} calendar={<EventCalendar date={event.date} english={english} numerals={english ? 'latin' : 'khmer'} />} />, examples.dateIsSample)}
+    {capabilities.programStyles && picker(text('Wedding program', 'កម្មវិធីមង្គលការ'), 'program', PROGRAM_STYLES, id => <ProgramTimeline content={{ ...examples.program, invitationStyleV1: { ...style, program: id } }} english={english} naturalTime />, examples.programIsSample)}
   </section>;
 }

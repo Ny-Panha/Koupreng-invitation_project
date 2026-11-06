@@ -254,7 +254,7 @@ export function publicInvitationToDraft(invitation, media) {
       : (Array.isArray(content.gallery)
         ? content.gallery.map(normalizeGalleryItem).filter(Boolean)
         : savedGallery),
-    music: mediaMusic || content.music || null,
+    music: mediaMusic || (content.musicUrl ?? content.music ?? design.musicUrl) || null,
     openingVideo: reconstructedOpeningVideo,
     openingVideoEnabled,
     rsvp: {

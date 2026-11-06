@@ -85,7 +85,7 @@ export default function Header() {
       {/* Native modality, Escape and focus return; explicit Tab wrap stays inside. */}
       <dialog ref={dialog} id="public-mobile-navigation" className="kp-mobile-dialog" aria-labelledby="kp-menu-title" onKeyDown={containMenuFocus} onClose={() => setMenuOpen(false)} onClick={(event) => { if (event.target === dialog.current) closeMenu(); }}>
         <div className="kp-mobile-inner">
-          <div className="kp-mobile-head"><h2 id="kp-menu-title" aria-label={copy("ម៉ឺនុយគូព្រេង", "Koupreng navigation")}><BrandLogo variant="compact" decorative /></h2><button type="button" className="kp-menu-close" aria-label={copy("បិទម៉ឺនុយ", "Close navigation menu")} onClick={closeMenu} autoFocus><X aria-hidden="true" /></button></div>
+          <div className="kp-mobile-head"><h2 id="kp-menu-title" aria-label={copy("ម៉ឺនុយ", "Navigation")}><BrandLogo variant="compact" decorative /></h2><button type="button" className="kp-menu-close" aria-label={copy("បិទម៉ឺនុយ", "Close navigation menu")} onClick={closeMenu} autoFocus><X aria-hidden="true" /></button></div>
           <nav aria-label={copy("ម៉ឺនុយទូរស័ព្ទ", "Mobile navigation")}>{items.map(([path, label]) => <Link key={path} to={path} aria-current={active(path) ? "page" : undefined} onClick={closeMenu}>{label}<ArrowUpRight size={20} aria-hidden="true" /></Link>)}</nav>
           {languageControl}<div className="kp-mobile-account">{account}</div>
         </div>
