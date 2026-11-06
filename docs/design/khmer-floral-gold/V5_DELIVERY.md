@@ -128,5 +128,10 @@ browser corpus and a full WCAG certification are outside this change.
 - Existing owner draft/content mapping and music library metadata.
 - Focused Vitest/browser checks, preparation scripts, provenance and screenshots.
 
-Implementation commit and verified remote SHA are recorded after the final Git
-review and push. Push uses `origin/main` without force; no deployment command runs.
+Implementation commit:
+[`f902169ddbcec07c302acbdddbcfd7f3ad1492f3`](https://github.com/Ny-Panha/Koupreng-invitation_project/commit/f902169ddbcec07c302acbdddbcfd7f3ad1492f3).
+The post-commit `git fetch origin main` found one local commit ahead and zero
+behind, with no remote team changes requiring integration. This evidence update
+is a separate documentation commit. The normal push is `git push origin main`;
+the final branch SHA is checked using `git ls-remote origin refs/heads/main` and
+reported in the delivery response. No deployment command was run.
