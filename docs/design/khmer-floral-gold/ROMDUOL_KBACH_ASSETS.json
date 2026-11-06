@@ -1,0 +1,49 @@
+{
+  "mode": "built-in imagegen, original transparent raster artwork",
+  "assets": [
+    {
+      "master": "assets/khmer-floral-gold/romduol-kbach/guest-frame.png",
+      "source_dimensions": [
+        2172,
+        724
+      ],
+      "crop": [
+        7,
+        95,
+        2165,
+        586
+      ],
+      "runtime": "apps/frontend-user/public/templates/khmer-floral-gold/romduol-kbach-guest-frame.webp",
+      "dimensions": [
+        2158,
+        491
+      ],
+      "bytes": 529718,
+      "sha256": "521edcf97491b2c6c4a5da7cd9cdff6b7bf73e9b70e89046084df2065d105ac0",
+      "center_alpha": 0,
+      "lossless": true
+    },
+    {
+      "master": "assets/khmer-floral-gold/romduol-kbach/open-button.png",
+      "source_dimensions": [
+        2172,
+        724
+      ],
+      "crop": [
+        12,
+        170,
+        2160,
+        530
+      ],
+      "runtime": "apps/frontend-user/public/templates/khmer-floral-gold/romduol-kbach-open-button.webp",
+      "dimensions": [
+        2148,
+        360
+      ],
+      "bytes": 499062,
+      "sha256": "468104bdebb5f3106eb8133c350e1c2a3e4226daea3e73997ab0bc3c29f0a877",
+      "center_alpha": 253,
+      "lossless": true
+    }
+  ]
+}

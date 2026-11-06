@@ -46,12 +46,12 @@
 @keyframes kfg-section-enter{from{opacity:.3;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .kfg-locale-notice{padding:72px 24px 12px;font-size:14px;background:var(--kfg-paper)}
-.kfg-welcome-scene{position:relative;min-height:100svh;padding:clamp(92px,12vh,130px) 28px 40px;text-align:center;animation:kfg-welcome-story 3.2s ease-in-out both}
+.kfg-welcome-scene{position:relative;min-height:100svh;padding:clamp(92px,12vh,130px) 28px 40px;text-align:center;animation:kfg-welcome-story var(--kfg-welcome-duration,7000ms) ease-in-out both}
 .kfg-welcome-scene>h2{margin-bottom:25px}.kfg-welcome-scene>p{max-width:440px;margin:20px auto;white-space:pre-line;line-height:2.1}.kfg-welcome-scene .kp-calendar{margin-top:24px}.kfg-welcome-scene .kp-date-presentation{margin-top:12px}.kfg-welcome-scene .kfg-divider{margin-bottom:30px}
 .kfg-continue{display:block;min-height:44px;padding:8px 18px;margin:22px auto 0;border:1px solid var(--kfg-frame-color,#b79a5f);border-radius:25px;background:#fffaf2d9;color:var(--kfg-gold);font-size:14px;cursor:pointer}
 .kfg-skip-welcome{pointer-events:auto;min-height:44px;padding:8px 14px;border:1px solid var(--kfg-frame-color,#b79a5f);border-radius:24px;background:#fffaf2ed;color:var(--kfg-gold);font-size:13px}.kfg-welcome-scene:focus{outline:none}
 .kfg-preview .kfg-welcome-scene{animation:none}
-@keyframes kfg-welcome-story{0%{opacity:0;transform:translateY(12px)}20%,76%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-10px)}}
+@keyframes kfg-welcome-story{0%{opacity:0;transform:translateY(12px)}8%,94%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-10px)}}
 @media(max-height:850px){.kfg-welcome-scene{padding-top:80px;font-size:15px}.kfg-welcome-scene>p{margin:12px auto}.kfg-welcome-scene .kfg-divider{margin-block:10px 18px}.kfg-welcome-scene .kp-calendar{padding:14px}.kfg-welcome-scene .kp-calendar td{height:29px}}
 
 /* Original stationery composition: botanical corners belong to individual scenes. */
@@ -107,7 +107,7 @@
 [data-motion=none] .kfg-petals,[data-motion=subtle] .kfg-petals,[data-motion=elegant] .kfg-petals{display:none}
 [data-motion=romantic] .kfg-petals i{animation-duration:22s}[data-motion=cinematic] .kfg-content{animation-duration:1.1s}
 @media(prefers-reduced-motion:reduce),(update:slow){.kfg-invitation *{animation:none!important}.kfg-petals{display:none}}
-@media(max-width:390px){.kfg-opening h1{font-size:24px!important}.kfg-opening{padding-top:88px}.kfg-monogram{width:158px}.kfg-guest>div{min-height:70px}}
+@media(max-width:390px){.kfg-opening{padding-top:88px}.kfg-monogram{width:158px}.kfg-guest>div{min-height:70px}}
 
 .kfg-welcome-scene>p,.kfg-closing>p{text-align:var(--kfg-message-align,center);font-size:calc(1em * var(--kfg-message-scale,1))}.kfg-portraits figcaption>strong,.kfg-monogram>span{font-family:var(--kfg-heading-font,var(--kfg-display))}
 
@@ -229,25 +229,11 @@
   .kfg-content > :is(.kfg-section,.kfg-footer)[data-scroll-reveal] { opacity: 1; transform: none; transition: none; }
 }
 
-/* Downloaded CC0 raster ambience spans every scene, behind the live content. */
+/* Raster ambience spans every scene, behind the live content. */
 .kfg-invitation .kfg-ambience { display: block; z-index: 0; contain: paint; }
 .kfg-opening,.kfg-welcome-scene,.kfg-content,.kfg-demo-actions { z-index: 1; }
-.kfg-ambient-particle { position: absolute; top: var(--ambient-top); left: var(--ambient-x); width: 18px; height: 20px; opacity: 0; animation: kfg-flower-dance var(--ambient-duration,22s) ease-in-out var(--ambient-delay,0s) infinite; }
-.kfg-ambient-particle > img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.kfg-ambient-particle[data-zone=center] > img { opacity: .3; }
-.kfg-ambient-heart { width: 16px; height: 16px; animation-name: kfg-heart-dance; animation-duration: 24s; }
-.kfg-ambient-star { top: var(--ambient-top); width: 21px; height: 21px; animation: kfg-star-breathe 4.8s ease-in-out var(--ambient-delay) infinite; }
-.kfg-ambient-butterfly { width: 34px; height: 27px; animation: kfg-butterfly-glide var(--ambient-duration,20s) ease-in-out var(--ambient-delay) infinite; }
-.kfg-ambient-butterfly[data-zone=center] > img { opacity: .75; }
-.kfg-ambient-butterfly > img { animation: kfg-butterfly-wings 1.4s ease-in-out var(--ambient-delay) infinite alternate; }
-.kfg-ambience[data-intensity=elegant] { opacity: .85; }
-.kfg-ambience[data-intensity=subtle] .kfg-ambient-particle:nth-child(n+5) { display: none; }
+.kfg-ambience[data-intensity=elegant] { opacity: 1; }
 .kfg-invitation .kfg-ambience[hidden],.kfg-invitation[data-motion=none] .kfg-ambience,.kfg-invitation[data-low-power=true] .kfg-ambience { display: none !important; }
-@keyframes kfg-flower-dance { 0%,100% { opacity: .3; transform: translate3d(0,0,0) rotate(-15deg); } 35% { opacity: .5; transform: translate3d(18px,-8vh,0) rotate(18deg); } 70% { opacity: .4; transform: translate3d(-12px,6vh,0) rotate(38deg); } }
-@keyframes kfg-heart-dance { 0%,100% { opacity: .25; transform: translate3d(0,0,0) rotate(-8deg) scale(.85); } 35% { opacity: .45; transform: translate3d(-18px,-12vh,0) rotate(12deg) scale(1); } 70% { opacity: .35; transform: translate3d(14px,-5vh,0) rotate(-5deg) scale(.9); } }
-@keyframes kfg-star-breathe { 0%,100% { opacity: .12; transform: scale(.7); } 50% { opacity: .6; transform: scale(1); } }
-@keyframes kfg-butterfly-glide { 0%,100% { opacity: .5; transform: translate3d(0,0,0) rotate(-12deg); } 25% { opacity: .7; transform: translate3d(calc(18px * var(--flight-direction)),8vh,0) rotate(10deg); } 50% { opacity: .65; transform: translate3d(calc(-12px * var(--flight-direction)),21vh,0) rotate(-6deg); } 75% { opacity: .7; transform: translate3d(calc(24px * var(--flight-direction)),10vh,0) rotate(14deg); } }
-@keyframes kfg-butterfly-wings { from { transform: perspective(100px) rotateY(-12deg); } to { transform: perspective(100px) rotateY(48deg); } }
 
 /* A measured entrance for each content type; one reveal, rather than tick loops. */
 .kfg-section[data-scroll-reveal=visible] > h2 { animation: kfg-heading-arrive 900ms ease both; }
@@ -269,14 +255,19 @@
   .kfg-invitation .kfg-ambience { display: none !important; }
 }
 
-/* Seven photographed lotus petals fall independently in fixed horizontal lanes. */
-.kfg-paper-art { position: fixed; inset: 0 auto 0 50%; width: min(100%,560px); height: auto; transform: translateX(-50%); }
-.kfg-lotus-rain { position: absolute; inset: 0; overflow: hidden; }
-.kfg-lotus-petal { position: absolute; top: -35px; left: var(--petal-x); width: var(--petal-size); height: calc(var(--petal-size) * 1.7); object-fit: contain; opacity: 0; animation: kfg-lotus-rainfall var(--petal-duration,26s) linear var(--petal-delay) infinite; }
-.kfg-ambience[data-intensity=subtle] .kfg-lotus-rain { opacity: .55; }
-.kfg-paper-art::before { top: -20px; right: -3%; width: 106%; height: 180px; background-image: url('/templates/khmer-floral-gold/effects/blush-floral-border-top.webp'); background-position: center top; opacity: .45; animation: kfg-corner-wind 12s ease-in-out infinite alternate; transform-origin: center top; }
-.kfg-paper-art::after { left: -3%; bottom: -12px; width: 106%; height: 150px; background-image: url('/templates/khmer-floral-gold/effects/blush-floral-border-bottom.webp'); background-position: center bottom; transform: none; opacity: .3; transform-origin: center bottom; animation: kfg-garden-wind 14s ease-in-out infinite alternate; }
-@keyframes kfg-lotus-rainfall { 0% { opacity: 0; transform: translate3d(0,-5vh,0) rotate(-12deg); } 12%,85% { opacity: .35; } 50% { transform: translate3d(0,50vh,0) rotate(12deg); } 100% { opacity: 0; transform: translate3d(0,112vh,0) rotate(-8deg); } }
+/* The credited background photo frames each viewport throughout the invitation. */
+.kfg-paper-art { position: absolute; inset: 0; width: 100%; height: 100%; transform: none; }
+.kfg-paper-art::before { top: 0; right: -1%; width: 102%; height: calc(min(100vw,560px) / 3 + 8px); background-image: url('/templates/khmer-floral-gold/effects/realistic/white-green-border-top.webp'); background-size: 100% auto; background-position: center top; opacity: 1; filter: none; mask-image: none; animation: kfg-corner-wind 12s ease-in-out infinite alternate; transform-origin: center top; }
+.kfg-paper-art::after { left: -1%; bottom: -5px; width: 102%; height: calc(min(100vw,560px) / 3 + 8px); background-image: url('/templates/khmer-floral-gold/effects/realistic/white-green-border-bottom.webp'); background-size: 100% auto; background-position: center bottom; transform: none; opacity: 1; filter: none; mask-image: none; transform-origin: center bottom; animation: kfg-garden-wind 14s ease-in-out infinite alternate; }
+.kfg-opening { padding-top: max(105px,calc(min(100vw,560px) / 3 + 20px)); padding-bottom: calc(min(100vw,560px) / 3 + 28px); }
+.kfg-welcome-scene,.kfg-content { padding-top: max(94px,calc(min(100vw,560px) / 3 + 24px)); padding-bottom: calc(min(100vw,560px) / 3 + 28px); }
+.kfg-content { padding-top: max(100px,calc(min(100vw,560px) * .24)); }
+.kfg-content > .kfg-section:first-of-type:not(.kfg-couplePhoto) { padding-top: 12px; }
+.kfg-smooth-program { position: relative; }
+.kfg-program-road { position: absolute; top: 0; bottom: 0; left: calc(50% - 26px); width: 52px; height: 100%; pointer-events: none; stroke: var(--kfg-gold); stroke-width: 1.25; opacity: .55; }
+.kfg-smooth-program .kp-program-curve { display: none !important; animation: none !important; }
+.kfg-smooth-program .kp-program-day + .kp-program-day { margin-top: 32px; }
+.kfg-opening .kfg-guest-frame { background-color: var(--kfg-paper); }
 @keyframes kfg-corner-wind { from { transform: rotate(-1deg) translate3d(0,0,0); } to { transform: rotate(1deg) translate3d(4px,2px,0); } }
 @keyframes kfg-garden-wind { from { transform: rotate(-1.4deg) translateX(-4px); } to { transform: rotate(1.4deg) translateX(4px); } }
 .kfg-invitation[data-page-hidden=true] .kfg-paper-art::before,.kfg-invitation[data-page-hidden=true] .kfg-paper-art::after { animation-play-state: paused !important; }
@@ -285,4 +276,111 @@
 .kfg-invitation[data-low-power=true] .kfg-paper-art::after { background-image: none; }
 @media (prefers-reduced-motion: reduce), (update: slow) {
   .kfg-paper-art::before,.kfg-paper-art::after { animation: none !important; }
+}
+
+/* Three original HD raster effects inspired by the supplied footage. */
+.kfg-scene-blossoms { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; }
+.kfg-scene-blossoms[hidden] { display: none; }
+.kfg-scene-backdrop { position: fixed; inset: 0 auto 0 50%; width: min(100vw,560px); transform: translateX(-50%); overflow: clip; z-index: -1; pointer-events: none; opacity: .28; mix-blend-mode: multiply; }
+.kfg-scene-backdrop > img { position: absolute; top: 50%; left: 50%; width: 100svh; height: min(100vw,560px); max-width: none; object-fit: cover; transform: translate(-50%,-50%) rotate(90deg); }
+.kfg-blossom-corner { position: absolute; width: 34%; max-width: 190px; transform: var(--corner-flip); }
+.kfg-blossom-corner > img { display: block; width: 100%; height: auto; transform-origin: top right; animation: kfg-realistic-wind 6.4s ease-in-out infinite alternate; }
+.kfg-blossom-corner--top-left { top: -4px; left: -8px; --corner-flip: scaleX(-1); }
+.kfg-blossom-corner--top-right { top: -4px; right: -8px; --corner-flip: none; }
+.kfg-blossom-corner--bottom-left { bottom: -4px; left: -8px; --corner-flip: scale(-1,-1); }
+.kfg-blossom-corner--bottom-right { bottom: -4px; right: -8px; --corner-flip: scaleY(-1); }
+.kfg-invitation:not(:has(> .kfg-opening)) .kfg-paper-art::before,.kfg-invitation:not(:has(> .kfg-opening)) .kfg-paper-art::after,.kfg-section::before { display: none; }
+.kfg-invitation[data-motion=none] .kfg-blossom-corner > img,.kfg-invitation[data-low-power=true] .kfg-blossom-corner > img { animation: none; }
+.kfg-realistic-petals,.kfg-realistic-butterflies { position: absolute; inset: 0; }
+.kfg-realistic-petal { position: absolute; top: -30px; left: var(--petal-x); width: var(--petal-size); height: auto; opacity: 1; animation: kfg-realistic-rain var(--petal-duration,17.2s) linear var(--petal-delay) infinite; }
+.kfg-realistic-flight { position: absolute; top: 0; left: -45px; width: var(--butterfly-size); aspect-ratio: 1.45; animation: kfg-realistic-flight 16.08s cubic-bezier(.35,.05,.65,.95) var(--flight-delay) infinite var(--flight-direction); }
+.kfg-realistic-wing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: center; }
+.kfg-realistic-wing--left { clip-path: inset(0 50% 0 0); animation: kfg-realistic-wing-left 380ms ease-in-out var(--wing-delay) infinite alternate; }
+.kfg-realistic-wing--right { clip-path: inset(0 0 0 50%); animation: kfg-realistic-wing-right 380ms ease-in-out var(--wing-delay) infinite alternate; }
+.kfg-realistic-wing--body { clip-path: inset(0 48% 0 48%); }
+.kfg-ambience[data-intensity=subtle] .kfg-realistic-butterflies { opacity: .5; }
+.kfg-ambience[data-source-paused=true] * { animation-play-state: paused !important; }
+@keyframes kfg-realistic-wind { from { transform: rotate(-1deg); } to { transform: rotate(1deg) translateY(2px); } }
+@keyframes kfg-realistic-wing-left { from { transform: perspective(180px) rotateY(-6deg); } to { transform: perspective(180px) rotateY(-68deg); } }
+@keyframes kfg-realistic-wing-right { from { transform: perspective(180px) rotateY(6deg); } to { transform: perspective(180px) rotateY(68deg); } }
+@keyframes kfg-realistic-rain { 0% { transform: translate3d(0,-4vh,0) rotate(-18deg) rotateY(0); } 50% { transform: translate3d(0,50vh,0) rotate(12deg) rotateY(55deg); } 100% { transform: translate3d(0,112vh,0) rotate(32deg) rotateY(-20deg); } }
+@keyframes kfg-realistic-flight {
+  0% { opacity: 0; transform: translate3d(-20px,calc(var(--flight-y) * 1vh),0) rotate(-12deg); }
+  12% { opacity: .8; }
+  30% { opacity: .65; transform: translate3d(calc(min(100vw,560px) * .28),calc((var(--flight-y) - 9) * 1vh),0) rotate(12deg); }
+  52% { opacity: .28; transform: translate3d(calc(min(100vw,560px) * .55),calc((var(--flight-y) + 4) * 1vh),0) rotate(-8deg); }
+  78% { opacity: .7; transform: translate3d(calc(min(100vw,560px) * .84),calc((var(--flight-y) - 6) * 1vh),0) rotate(9deg); }
+  100% { opacity: 0; transform: translate3d(calc(min(100vw,560px) + 90px),calc(var(--flight-y) * 1vh),0) rotate(-12deg); }
+}
+
+/* The closed invitation is one screen, including its compact marketing links. */
+.kfg-invitation:has(> .kfg-opening) { --kfg-cover-top-art: clamp(58px,12svh,120px); --kfg-cover-bottom-art: clamp(48px,9svh,84px); --kfg-cover-side-art: clamp(16px,4vw,24px); --kfg-cover-clearance: max(clamp(68px,19vw,96px),calc(var(--kfg-garden-length) / 6 + var(--kfg-garden-inset) + 18px)); --kfg-garden-inset: clamp(8px,2.6vw,16px); --kfg-garden-length: calc((100svh - var(--kfg-cover-top-art) - var(--kfg-cover-bottom-art) - 44px) / 2 + 16px); }
+.kfg-invitation:has(> .kfg-opening) .kfg-paper-art::before { height: var(--kfg-cover-top-art); background-size: auto 100%; background-repeat: repeat-x; }
+.kfg-invitation:has(> .kfg-opening) .kfg-paper-art::after { height: var(--kfg-cover-bottom-art); bottom: 44px; background-size: auto 100%; background-repeat: repeat-x; }
+.kfg-cover-emblem { position: relative; width: 100%; height: 100%; min-height: 0; display: grid; place-items: center; container-type: size; isolation: isolate; }
+.kfg-cover-side { position: absolute; top: calc(var(--kfg-cover-top-art) + var(--kfg-garden-length) / 2 - 8px); width: var(--kfg-garden-length); height: auto; max-width: none; z-index: -1; pointer-events: none; transform: translate(-50%,-50%) rotate(var(--garden-angle,-90deg)); animation: kfg-side-wind 12s ease-in-out infinite alternate; }
+.kfg-cover-side--left { left: var(--kfg-garden-inset); }
+.kfg-cover-side--right { left: calc(100% - var(--kfg-garden-inset)); }
+.kfg-cover-side--lower { top: calc(100% - var(--kfg-cover-bottom-art) - 44px - var(--kfg-garden-length) / 2 + 8px); --garden-angle: 90deg; }
+.kfg-invitation > .kfg-opening { display: grid; grid-template-rows: auto minmax(0,1fr) auto auto; align-content: stretch; justify-items: center; row-gap: clamp(16px,2.8svh,26px); height: 100svh; min-height: 100svh; max-height: 100svh; padding: calc(var(--kfg-cover-top-art) + 12px) calc(var(--kfg-cover-side-art) + 18px) calc(var(--kfg-cover-bottom-art) + 58px); }
+@keyframes kfg-side-wind { from { transform: translate(-50%,-50%) rotate(calc(var(--garden-angle,-90deg) - 1deg)); } to { transform: translate(-50%,-50%) rotate(calc(var(--garden-angle,-90deg) + 1deg)); } }
+.kfg-opening .kfg-monogram--regal-scroll-gold { width: auto; height: 100%; max-width: calc(min(100vw,560px) - 2 * var(--kfg-cover-clearance)); max-height: min(calc(30svh * var(--kfg-monogram-size,1)),270px,calc(min(100vw,560px) - 2 * var(--kfg-cover-clearance))); aspect-ratio: 1; margin: 0; align-self: center; container-type: inline-size; }
+.kfg-opening .kfg-monogram--regal-scroll-gold > span:has(.kfg-monogram-staircase) { font-size: min(var(--kfg-monogram-text-size,36px),11cqi,26px); }
+.kfg-opening:has(.kfg-monogram--regal-scroll-gold) h1 { margin: 0; line-height: 1.65; width: min(100%,calc(min(100vw,560px) - 2 * var(--kfg-cover-clearance))); }
+.kfg-opening .kfg-guest { margin: 0; width: min(100%,calc(min(100vw,560px) - 2 * var(--kfg-cover-clearance))); }
+.kfg-opening .kfg-guest > p { font-size: clamp(14px,2.3svh,18px); line-height: 1.8; margin-bottom: 36px; }
+.kfg-opening .kfg-guest > div { min-height: 52px; padding: 8px 14px; font-size: clamp(14px,2.2svh,18px); line-height: 1.8; }
+.kfg-opening .kfg-guest:has(.kfg-guest-frame--khmer) > p { margin-bottom: 16px; }
+.kfg-opening .kfg-guest > .kfg-guest-frame--khmer { min-height: 68px; padding: 8px 4px; border: solid transparent; border-width: 10px 40px 8px; border-image: url('/templates/khmer-floral-gold/romduol-kbach-guest-frame.webp') 70 390 52 fill / 10px 40px 8px / 0 stretch; border-radius: 0; outline: none; background: var(--kfg-paper); background-clip: padding-box; box-shadow: none; }
+.kfg-guest-frame--khmer > span { min-width: 0; overflow-wrap: anywhere; text-wrap: balance; }
+.kfg-family > h2 { margin-bottom: 8px; }
+.kfg-family > .kfg-honored-guest { max-width: 100%; margin: 0 auto 20px; padding: 8px 10px; font-size: clamp(16px,4.2vw,20px); font-weight: 600; line-height: 1.9; color: var(--kfg-gold); text-align: center; overflow-wrap: anywhere; text-wrap: balance; }
+.kfg-honored-guest > span { display: inline-block; padding: 0 8px 10px; border-bottom: 1px solid #d5b77a88; }
+.kfg-invitation .kfg-opening > button.kfg-open { border: solid transparent; border-width: 9px 36px 8px; border-image: url('/templates/khmer-floral-gold/romduol-kbach-open-button.webp') 70 400 50 fill / 9px 36px 8px / 0 stretch; background: #7e5b26; background-clip: padding-box; padding: 6px 0; border-radius: 0; color: #fffdf8; }
+.kfg-invitation .kfg-opening > .kfg-open:hover { background-color: #7e5b26; background-clip: padding-box; box-shadow: none; }
+.kfg-opening > .kfg-open > span { text-wrap: balance; }
+.kfg-opening:has(.kfg-monogram--regal-scroll-gold) .kfg-open { width: min(320px,calc(min(100vw,560px) - 2 * var(--kfg-cover-clearance))); margin: 24px 0 0; min-height: 48px; padding: 8px 18px; font-size: clamp(14px,2.2svh,18px); }
+.kfg-invitation:has(> .kfg-opening) > .kfg-demo-actions { position: absolute; inset: auto 0 0; height: 44px; padding: 0 16px; border: 0; flex-wrap: nowrap; align-items: center; gap: 10px; font-size: 12px; }
+@media (max-height: 600px) {
+  .kfg-invitation > .kfg-opening { row-gap: 14px; }
+  .kfg-opening .kfg-monogram--regal-scroll-gold { max-height: min(27svh,190px); }
+  .kfg-opening .kfg-guest > p { margin-bottom: 32px; }
+  .kfg-opening .kfg-guest > div { min-height: 48px; padding-block: 6px; }
+  .kfg-opening:has(.kfg-monogram--regal-scroll-gold) .kfg-open { min-height: 44px; margin-top: 18px; }
+}
+.kfg-invitation:is([data-motion=none],[data-low-power=true]) .kfg-paper-art::before,.kfg-invitation:is([data-motion=none],[data-low-power=true]) .kfg-paper-art::after,.kfg-invitation:is([data-motion=none],[data-low-power=true]) .kfg-cover-side { animation: none !important; }
+[data-florals=false] .kfg-cover-side { display: none; }
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-paper-art::before,.kfg-paper-art::after,.kfg-cover-side,.kfg-blossom-corner > img { animation: none !important; }
+}
+
+/* A readable seven-second welcome; compact date on short mobile viewports. */
+.kfg-invitation:not(.is-opening) > .kfg-opening :is(h1,.kfg-cover-emblem,.kfg-monogram-staircase > span,.kfg-guest,.kfg-open),.kfg-paper-art { opacity: 1 !important; }
+.kfg-toolbar-actions { display: flex; align-items: center; gap: 8px; pointer-events: auto; }
+.kfg-toolbar-actions .kfg-skip-welcome { padding-inline: 12px; white-space: nowrap; }
+.kfg-welcome-scene { display: flex; flex-direction: column; align-items: center; gap: clamp(8px,1.2svh,12px); padding: clamp(78px,10svh,92px) clamp(20px,5vw,28px) clamp(56px,8svh,78px); font-size: clamp(14px,1.8svh,16px); }
+.kfg-invitation:has(> .kfg-demo-actions) > .kfg-welcome-scene { min-height: calc(100svh - 44px); }
+.kfg-welcome-scene > h2 { width: 100%; margin: 0; font-size: clamp(20px,2.8svh,26px); }
+.kfg-welcome-scene > p { margin: 0; line-height: 1.8; }
+.kfg-welcome-scene > .kfg-divider { height: 20px; width: 150px; margin: 0; }
+.kfg-welcome-scene .kp-date-presentation { width: 100%; margin: 0; }
+.kfg-welcome-scene .kp-calendar { max-width: 330px; margin: 0 auto; padding: 10px 12px; }
+.kfg-welcome-scene .kp-calendar-nav h3 { margin-bottom: 8px; font-size: 17px; }
+.kfg-welcome-scene .kp-calendar table { font-size: 13px; }
+.kfg-welcome-scene .kp-calendar th { padding-block: 3px; font-size: 12px; }
+.kfg-welcome-scene .kp-calendar td { height: 24px; }
+.kfg-welcome-scene .kp-calendar time { width: 24px; min-height: 24px; }
+.kfg-welcome-scene .kp-calendar .kp-calendar-event { position: relative; isolation: isolate; border-radius: 0; background: transparent; outline: none; color: white; }
+.kfg-welcome-scene .kp-calendar .kp-calendar-event::before { content: ''; position: absolute; top: 50%; left: 50%; width: 32px; height: 28px; transform: translate(-50%,-50%); z-index: -1; background: #a54e69; clip-path: path('M16 27 C12 23 1 16 1 9 C1 -1 12 -2 16 5 C20 -2 31 -1 31 9 C31 16 20 23 16 27 Z'); }
+.kfg-welcome-scene .kfg-continue { flex-shrink: 0; margin: 6px 0 0; }
+.kfg-welcome-compact-date { display: none; }
+.kfg-invitation:has(> .kfg-welcome-scene) > .kfg-demo-actions { min-height: 44px; height: 44px; padding: 0 16px; border: 0; flex-wrap: nowrap; font-size: 12px; }
+@media (max-width: 480px) and (max-height: 780px) {
+  .kfg-welcome-scene { gap: 8px; padding-top: 78px; padding-bottom: 70px; font-size: 14px; }
+  .kfg-welcome-scene > h2 { font-size: 20px; }
+  .kfg-welcome-scene .kp-date-presentation { display: none; }
+  .kfg-welcome-compact-date { display: grid; place-items: center; width: 100%; max-width: 330px; padding: 8px 12px; border: 1px solid #d5b77a66; border-radius: 14px; background: var(--kfg-paper); color: var(--kfg-gold); font-size: 14px; line-height: 1.8; }
+}
+@media (max-height: 600px) {
+  .kfg-welcome-scene { padding-top: 72px; padding-bottom: 56px; }
 }

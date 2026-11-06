@@ -6,6 +6,29 @@ import { chooseStudioSection } from './support/studioNavigationActions';
 
 const song = '/music/Noly%20Record%20-%20wedding-Song.mp3';
 
+test('cover content stays visible during entrance motion and an interrupted reload', async ({ page }) => {
+  await phase8Fixtures(page, { code: 'khmer-floral-gold' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const contentVisible = () => page.locator('.kfg-opening').evaluate(root => ['.kfg-monogram','h1','.kfg-guest','.kfg-open'].every(selector => {
+    const node = root.querySelector(selector), box = node.getBoundingClientRect();
+    let opacity = 1, parent = node;
+    while (parent instanceof Element) { opacity *= Number(getComputedStyle(parent).opacity); parent = parent.parentElement; }
+    return box.width > 0 && box.height > 0 && opacity >= .99;
+  }));
+  await page.goto('/templates/khmer-floral-gold/demo?lang=km');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-effects','10');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','false');
+  expect(await contentVisible()).toBe(true);
+  await page.reload();
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-effects','10');
+  expect(await contentVisible()).toBe(true);
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
+  expect(await contentVisible()).toBe(true);
+  expect(errors).toEqual([]);
+});
+
 test('actual transparent ornament and MP3 play only on the opening gesture and survive scenes', async ({ page }) => {
   await phase8Fixtures(page, { code: 'khmer-floral-gold' });
   const trackResponse = await page.request.get(song);
@@ -20,13 +43,18 @@ test('actual transparent ornament and MP3 play only on the opening gesture and s
   const frame = page.locator('.kfg-monogram-art');
   await frame.evaluate(node => node.decode());
   await page.evaluate(() => document.fonts.ready);
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-stage','closed');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
   expect(await frame.evaluate(node => {
     const canvas = document.createElement('canvas'); canvas.width = node.naturalWidth; canvas.height = node.naturalHeight;
     const context = canvas.getContext('2d'); context.drawImage(node, 0, 0);
     return { center: context.getImageData(canvas.width / 2, canvas.height / 2, 1, 1).data[3], corner: context.getImageData(0, 0, 1, 1).data[3], square: node.naturalWidth === node.naturalHeight };
   })).toEqual({ center: 0, corner: 0, square: true });
   const stairs = page.locator('.kfg-monogram-staircase > span');
-  await expect(stairs).toHaveText(['វីរៈ', '&', 'សុមាលី']);
+  await expect(stairs).toHaveCount(3);
+  await expect(stairs.nth(0)).toHaveText(/\S/);
+  await expect(stairs.nth(1)).toHaveText('&');
+  await expect(stairs.nth(2)).toHaveText(/\S/);
   const rows = await stairs.evaluateAll(nodes => nodes.map(node => {
     const range = document.createRange(); range.selectNodeContents(node);
     const rect = range.getBoundingClientRect(); return { x: rect.x + rect.width / 2, y: rect.y };
@@ -241,64 +269,232 @@ test('details sections fade into view on scroll and stay revealed on return', as
   await expect(map).toHaveAttribute('data-scroll-reveal', 'visible');
 });
 
-test('downloaded raster effects span the full background and persist through every scene', async ({ page }, info) => {
+test('details start higher and the two-day agenda keeps a continuous road through every ceremony', async ({ page }, info) => {
+  await phase8Fixtures(page, { code: 'khmer-floral-gold' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/templates/khmer-floral-gold/demo?lang=en');
+  await page.locator('.kfg-open').click();
+  const content = page.locator('.kfg-content');
+  await expect(content).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  const heading = await content.locator('.kfg-section h2').first().boundingBox();
+  expect(heading.y).toBeGreaterThan(80);
+  expect(heading.y).toBeLessThan(160);
+  const agenda = page.locator('.kfg-smooth-program');
+  await expect(agenda.locator('.kp-program-day-title').first()).toContainText('Day 1');
+  await expect(agenda.locator('.kp-program-day-title').nth(1)).toContainText('Day 2');
+  await expect(agenda.locator('.kfg-program-road path')).toHaveCount(2);
+  const roadError = () => agenda.evaluate(root => {
+    const svg = root.querySelector('.kfg-program-road'), matrix = svg.getScreenCTM();
+    let error = 0;
+    root.querySelectorAll('.kp-program-day').forEach((day, index) => {
+      const path = svg.querySelectorAll('path')[index], length = path.getTotalLength();
+      day.querySelectorAll('.kp-curve-dot').forEach(dot => {
+        const box = dot.getBoundingClientRect(), x = box.left + box.width / 2, y = box.top + box.height / 2;
+        let nearest = Infinity;
+        for (let sample = 0; sample <= 1000; sample++) {
+          const point = path.getPointAtLength(length * sample / 1000).matrixTransform(matrix);
+          nearest = Math.min(nearest, Math.hypot(point.x - x, point.y - y));
+        }
+        error = Math.max(error, nearest);
+      });
+    });
+    return error;
+  });
+  await expect.poll(roadError).toBeLessThan(2);
+  await page.locator('.kfg-language select').selectOption('km');
+  await page.setViewportSize({ width: 360, height: 720 });
+  await page.evaluate(() => document.fonts.ready);
+  await expect.poll(roadError).toBeLessThan(2);
+  if (info.project.name === 'chromium') {
+    await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/details-compact-top.png' });
+    await agenda.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/agenda-two-days.png', style: '.kfg-toolbar,.guest-section-navigation { visibility: hidden !important; }' });
+  }
+});
+
+test('the welcome fits responsive screens, holds seven seconds and puts Skip beside music', async ({ page }, info) => {
+  await phase8Fixtures(page, { code: 'khmer-floral-gold' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  for (const [index, [width,height]] of [[360,640],[390,844],[1440,720],[320,568]].entries()) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/templates/khmer-floral-gold/demo?lang=km');
+    await page.locator('.kfg-open').click();
+    const welcome = page.locator('.kfg-welcome-scene');
+    await expect(welcome).toBeVisible();
+    const start = Date.now();
+    await expect(welcome).toHaveCSS('opacity','1');
+    await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-stage','welcome');
+    await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
+    await page.evaluate(() => document.fonts.ready);
+    const heading = await welcome.locator('h2').boundingBox();
+    expect(heading.y).toBeLessThan(120);
+    await expect(welcome.locator('.kfg-continue')).toBeInViewport({ ratio: .999 });
+    const continueBox = await welcome.locator('.kfg-continue').boundingBox();
+    expect(continueBox.y).toBeGreaterThanOrEqual(0);
+    expect(continueBox.y + continueBox.height).toBeLessThanOrEqual(height + 1);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1 && document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const skip = await page.locator('.kfg-skip-welcome').boundingBox(), music = await page.locator('.kfg-music').boundingBox();
+    expect(Math.abs(skip.y + skip.height / 2 - music.y - music.height / 2)).toBeLessThan(1);
+    expect(music.x - skip.x - skip.width).toBeGreaterThanOrEqual(7.9);
+    expect(music.x - skip.x - skip.width).toBeLessThan(10);
+    if (index === 0) {
+      await expect(welcome.locator('.kfg-welcome-compact-date')).toBeVisible();
+      if (info.project.name === 'chromium') await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/welcome-responsive-640.png' });
+      const remaining = 5100 - (Date.now() - start);
+      if (remaining > 0) await page.waitForTimeout(remaining);
+      await expect(welcome).toBeVisible();
+      await expect(page.locator('.kfg-content')).toBeVisible();
+      expect(Date.now() - start).toBeGreaterThanOrEqual(6500);
+      expect(Date.now() - start).toBeLessThan(10000);
+    }
+  }
+});
+
+test('Rumduol artwork keeps personalized guest names readable and preserves other owner frame choices', async ({ page }, info) => {
+  const guestName = 'លោក សុវណ្ណវិសាល និងលោកស្រី សុភមង្គល';
+  const content = { ...phase8Content, guestName, invitationStyleV1: { motion: 'none', guestFrame: 'khmer' } };
+  const state = await phase8Fixtures(page, { code: 'khmer-floral-gold', lang: 'kh', content });
+  for (const width of [320,390,560]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/i/review-celestial');
+    await page.evaluate(() => document.fonts.ready);
+    const frame = page.locator('.kfg-guest-frame');
+    await expect(frame).toHaveText(guestName);
+    await expect(frame.locator('svg')).toHaveCount(0);
+    const metrics = await frame.evaluate(node => {
+      const rect = node.getBoundingClientRect(), text = node.firstElementChild.getBoundingClientRect();
+      return { source: getComputedStyle(node).borderImageSource, fits: node.scrollWidth <= node.clientWidth && text.left >= rect.left + 39 && text.right <= rect.right - 39 };
+    });
+    expect(metrics.source).toContain('romduol-kbach-guest-frame.webp');
+    expect(metrics.fits).toBe(true);
+    await expect(page.getByRole('button', { name: 'សូមគោរពអញ្ចើញ', exact: true })).toBeInViewport({ ratio: .999 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth && document.documentElement.scrollHeight <= innerHeight + 1)).toBe(true);
+  }
+  const artwork = await page.evaluate(async () => Promise.all(['guest-frame','open-button'].map(async name => {
+    const image = new Image(); image.src = `/templates/khmer-floral-gold/romduol-kbach-${name}.webp`; await image.decode();
+    const canvas = document.createElement('canvas'); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d'); context.drawImage(image,0,0);
+    return { width: image.naturalWidth, center: context.getImageData(canvas.width / 2,canvas.height / 2,1,1).data[3] };
+  })));
+  expect(artwork[0].center).toBe(0); expect(artwork[1].center).toBeGreaterThanOrEqual(250);
+  expect(artwork.every(asset => asset.width >= 2000)).toBe(true);
+  if (info.project.name === 'chromium') await page.locator('.kfg-opening').screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/romduol-personalized-guest.png' });
+  await page.locator('.kfg-open').click();
+  await expect(page.locator('.kfg-family > h2 + .kfg-honored-guest')).toHaveText(guestName);
+  await expect(page.locator('.kfg-family-intro')).toHaveText('ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ព្រមទាំងញាតិមិត្តរាប់អានទាំងឡាយ សូមអញ្ជើញចូលរួមជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យជូនកូនប្រុសកូនស្រីយើងខ្ញុំ ក្នុងកម្មវិធីមង្គលអាពាហ៍ពិពាហ៍ ដែលរៀបចំឡើងដោយក្តីរីករាយ។');
+  state.events.set(101, { ...state.events.get(101), contentJson: JSON.stringify({ ...content, invitationStyleV1: { motion: 'none', guestFrame: 'minimal' } }) });
+  await page.reload();
+  await expect(page.locator('.kfg-guest-frame')).toHaveClass(/kfg-guest-frame--minimal/);
+  await expect(page.locator('.kfg-guest-frame')).toHaveText(guestName);
+  expect(await page.locator('.kfg-guest-frame').evaluate(node => getComputedStyle(node).borderImageSource)).toBe('none');
+});
+
+test('the saved wedding date uses a rose heart and native lossless petals remain fully opaque', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  const state = await phase8Fixtures(page, { code: 'khmer-floral-gold', content: { ...phase8Content, invitationStyleV1: { motion: 'elegant' } } });
+  state.events.set(101, { ...state.events.get(101), eventDate: '2027-12-09' });
+  await page.goto('/i/review-celestial');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
+  const petals = page.locator('.kfg-realistic-petal');
+  await expect(petals).toHaveCount(12);
+  await petals.evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  expect(await petals.evaluateAll(images => images.every(image => {
+    let opacity = 1, node = image;
+    while (node instanceof Element) { opacity *= Number(getComputedStyle(node).opacity); node = node.parentElement; }
+    return opacity === 1 && image.naturalWidth >= 200;
+  }))).toBe(true);
+  const source = await petals.first().getAttribute('src'), response = await page.request.get(source);
+  expect(String.fromCharCode(...(await response.body()).subarray(12,16))).toBe('VP8L');
+  await page.locator('.kfg-open').click();
+  const selected = page.locator('.kfg-welcome-scene .kp-calendar-event');
+  await expect(selected).toBeVisible();
+  await expect(selected).toHaveAttribute('datetime','2027-12-09');
+  const marker = await selected.evaluate(node => ({ color: getComputedStyle(node,'::before').backgroundColor, shape: getComputedStyle(node,'::before').clipPath, outline: getComputedStyle(node).outlineStyle }));
+  expect(marker.color).toBe('rgb(165, 78, 105)');
+  expect(marker.shape).toContain('path(');
+  expect(marker.outline).toBe('none');
+});
+
+test('realistic HD effects and floral borders frame scenes without crossing the content layer', async ({ page }, info) => {
   await phase8Fixtures(page, { code: 'khmer-floral-gold' });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/templates/khmer-floral-gold/demo?lang=en');
-  const layer = page.locator('.kfg-ambience');
-  const paper = page.locator('.kfg-paper-art');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-effects','10');
+  await expect(page.locator('.kfg-invitation')).toHaveAttribute('data-motion-settled','true');
+  const layer = page.locator('.kfg-ambience'), paper = page.locator('.kfg-paper-art');
   const expectBorderInViewport = async () => {
-    await expect(paper).toHaveCSS('position', 'fixed');
-    const bounds = await paper.boundingBox();
-    expect(Math.abs(bounds.y)).toBeLessThan(1);
-    expect(Math.abs(bounds.height - page.viewportSize().height)).toBeLessThan(1);
+    await expect(paper).toHaveCSS('position', 'absolute');
+    const difference = await paper.evaluate(node => {
+      const root = node.closest('.kfg-invitation').getBoundingClientRect(), bounds = node.getBoundingClientRect();
+      return { y: Math.abs(bounds.y - root.y), height: Math.abs(bounds.height - root.height) };
+    });
+    expect(difference.y).toBeLessThan(1);
+    expect(difference.height).toBeLessThan(1);
   };
   await expectBorderInViewport();
-  await expect(layer).toBeVisible();
   await expect(layer).toHaveCSS('pointer-events', 'none');
   await expect(layer).toHaveAttribute('aria-hidden', 'true');
-  await expect(layer.locator('img')).toHaveCount(17);
-  await expect(layer.locator('.kfg-ambient-butterfly')).toHaveCount(4);
-  await expect(layer.locator('.kfg-lotus-rain')).toHaveAttribute('data-petal-count', '7');
-  await expect(layer.locator('.kfg-lotus-petal')).toHaveCount(7);
-  await expect(layer.locator('.kfg-lotus-petal').first()).toHaveCSS('animation-name', 'kfg-lotus-rainfall');
-  const flight = await layer.locator('.kfg-lotus-petal').first().evaluate(node => {
+  await expect(layer.locator('[data-effect]')).toHaveCount(2);
+  await expect(page.locator('.kfg-botanical-lines')).toHaveCount(0);
+  await expect(page.locator('.kfg-scene-blossoms')).toHaveCount(0);
+  await expect(page.locator('.kfg-cover-side')).toHaveCount(4);
+  await expect(layer.locator('.kfg-realistic-flight')).toHaveCount(12);
+  await expect(layer.locator('.kfg-realistic-petal')).toHaveCount(12);
+  await expect(layer.locator('img')).toHaveCount(48);
+  await expect(layer.locator('svg,canvas,video')).toHaveCount(0);
+  await layer.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  expect(await layer.locator('.kfg-realistic-wing--body').evaluateAll(images => images.every(image => image.naturalWidth >= 600))).toBe(true);
+  await expect(layer.locator('.kfg-realistic-flight').first()).toHaveCSS('animation-duration', '16.08s');
+  expect(await paper.evaluate(node => getComputedStyle(node, '::before').backgroundImage)).toContain('realistic/white-green-border-top.webp');
+  expect(await paper.evaluate(node => getComputedStyle(node, '::after').backgroundImage)).toContain('realistic/white-green-border-bottom.webp');
+  expect(await paper.evaluate(node => ['::before','::after'].every(part => { const style = getComputedStyle(node, part); return style.opacity === '1' && style.filter === 'none' && style.maskImage === 'none'; }))).toBe(true);
+  const petals = await layer.locator('.kfg-realistic-petal').first().evaluate(node => {
     const animation = node.getAnimations()[0];
     animation.pause(); animation.currentTime = 5000;
     const start = node.getBoundingClientRect();
-    animation.currentTime = 16000;
-    const end = node.getBoundingClientRect();
-    animation.play();
+    animation.currentTime = 12000;
+    const end = node.getBoundingClientRect(); animation.play();
     return { dx: end.x + end.width / 2 - start.x - start.width / 2, dy: end.y - start.y };
   });
-  expect(Math.abs(flight.dx)).toBeLessThan(1); expect(flight.dy).toBeGreaterThan(200);
-  expect(await page.locator('.kfg-paper-art').evaluate(node => getComputedStyle(node, '::before').backgroundImage)).toContain('blush-floral-border-top.webp');
-  expect(await page.locator('.kfg-paper-art').evaluate(node => getComputedStyle(node, '::after').backgroundImage)).toContain('blush-floral-border-bottom.webp');
-  expect(await layer.locator('.kfg-ambient-butterfly img').evaluateAll(images => images.map(image => image.src.split('/').at(-1)).sort())).toEqual(['blue-butterfly.webp', 'golden-butterfly.webp', 'pink-butterfly.webp', 'violet-butterfly.webp']);
-  await expect(layer.locator('svg,canvas')).toHaveCount(0);
-  await layer.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
-  const spread = await layer.locator('.kfg-ambient-particle').evaluateAll(nodes => nodes.map(node => parseFloat(node.style.getPropertyValue('--ambient-x'))));
-  expect(Math.min(...spread)).toBeLessThan(15); expect(Math.max(...spread)).toBeGreaterThan(85);
-  expect(spread.some(x => x > 40 && x < 60)).toBe(true);
-  await expect(layer.locator('[data-zone=center] > img').first()).toHaveCSS('opacity', '0.3');
+  expect(Math.abs(petals.dx)).toBeLessThan(1); expect(petals.dy).toBeGreaterThan(150);
   expect(await layer.evaluate(node => Number(getComputedStyle(node).zIndex) < Number(getComputedStyle(document.querySelector('.kfg-opening')).zIndex))).toBe(true);
   await layer.evaluate(node => { window.floralV5Ambience = node; });
   if (info.project.name === 'chromium') await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/animated-cover.png' });
   await page.locator('.kfg-open').click();
   await expect(page.locator('.kfg-welcome-scene')).toBeVisible();
+  await expect(page.locator('.kfg-welcome-scene')).toHaveCSS('transform', 'none');
   await expectBorderInViewport();
+  await page.locator('.kfg-scene-backdrop img').evaluate(image => image.decode());
+  expect(await page.locator('.kfg-scene-backdrop img').evaluate(image => image.naturalWidth)).toBe(1600);
+  await expect(page.locator('.kfg-blossom-corner')).toHaveCount(4);
+  const expectBottomCornersAboveActions = async () => {
+    const actions = await page.locator('.kfg-demo-actions').boundingBox();
+    for (const corner of await page.locator('.kfg-blossom-corner--bottom-left,.kfg-blossom-corner--bottom-right').all()) {
+      const bounds = await corner.boundingBox();
+      expect(bounds.y + bounds.height).toBeLessThanOrEqual(actions.y + 5);
+      expect(bounds.y + bounds.height).toBeGreaterThan(actions.y - 5);
+    }
+  };
+  await expectBottomCornersAboveActions();
+  await page.locator('.kfg-scene-blossoms img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  expect(await page.locator('.kfg-scene-blossoms img').evaluateAll(images => images.every(image => image.naturalWidth === 1536))).toBe(true);
+  expect(await page.locator('.kfg-blossom-corner').evaluateAll(corners => corners.map(corner => getComputedStyle(corner).getPropertyValue('--corner-flip').trim()))).toEqual(['scaleX(-1)','none','scale(-1,-1)','scaleY(-1)']);
   if (info.project.name === 'chromium') {
     await expect(page.locator('.kfg-welcome-scene')).toHaveCSS('opacity', '1');
-    await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/welcome-background.png' });
+    await page.screenshot({ path: '../../docs/design/khmer-floral-gold/screenshots/v5/welcome-background.png', fullPage: true });
   }
-  expect(await layer.evaluate(node => node === window.floralV5Ambience)).toBe(true);
   await expect(page.locator('.kfg-content')).toBeVisible();
+  await expect.poll(() => page.locator('.kfg-content').evaluate(node => Math.abs(new DOMMatrix(getComputedStyle(node).transform).m42))).toBeLessThan(.01);
+  await expect(page.locator('.kfg-blossom-corner')).toHaveCount(4);
+  await expectBottomCornersAboveActions();
   await page.locator('.kfg-footer').evaluate(node => node.scrollIntoView({ behavior: 'instant' }));
   await expectBorderInViewport();
-  await expect(layer).toBeVisible();
   expect(await layer.evaluate(node => node === window.floralV5Ambience)).toBe(true);
   await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: true }); document.dispatchEvent(new Event('visibilitychange')); });
-  await expect(layer.locator('.kfg-ambient-butterfly').first()).toHaveCSS('animation-play-state', 'paused');
+  await expect(layer.locator('.kfg-realistic-flight').first()).toHaveCSS('animation-play-state', 'paused');
+  await expect(layer.locator('.kfg-realistic-petal').first()).toHaveCSS('animation-play-state', 'paused');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(layer).toBeHidden();
   await expect(layer.locator('img')).toHaveCount(0);

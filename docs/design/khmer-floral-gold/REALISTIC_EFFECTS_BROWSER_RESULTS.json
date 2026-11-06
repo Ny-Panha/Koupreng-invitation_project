@@ -1,0 +1,1050 @@
+{
+  "command": "npx playwright test --config playwright.floral-v5.config.js floral-v5-regal.spec.js floral-v5-visual.spec.js",
+  "stats": {
+    "startTime": "2026-11-06T15:54:10.229Z",
+    "duration": 401215.927,
+    "expected": 74,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7584
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14767
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1990
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 27899
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors No Music",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4461
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors missing owner song",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5215
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors owner song",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4239
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "blocked music can be retried without blocking wedding details",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4257
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Premium film remains muted while one selected wedding song continues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 13979
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "long Khmer names fit the transparent center on a narrow cover",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4521
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "reduced motion, data saving and hidden documents suppress decorative work",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8547
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details sections fade into view on scroll and stay revealed on return",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 15064
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details start higher and the two-day agenda keeps a continuous road through every ceremony",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6240
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 29129
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Rumduol artwork keeps personalized guest names readable and preserves other owner frame choices",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9196
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the saved wedding date uses a rose heart and native lossless petals remain fully opaque",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4318
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "realistic HD effects and floral borders frame scenes without crossing the content layer",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 13307
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 15909
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 18106
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1829
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 20017
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors No Music",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4297
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors missing owner song",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3649
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors owner song",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3217
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "blocked music can be retried without blocking wedding details",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3416
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Premium film remains muted while one selected wedding song continues",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12108
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "long Khmer names fit the transparent center on a narrow cover",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3009
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "reduced motion, data saving and hidden documents suppress decorative work",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5215
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details sections fade into view on scroll and stay revealed on return",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 13021
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details start higher and the two-day agenda keeps a continuous road through every ceremony",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4336
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 26862
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Rumduol artwork keeps personalized guest names readable and preserves other owner frame choices",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9325
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the saved wedding date uses a rose heart and native lossless petals remain fully opaque",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5075
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "realistic HD effects and floral borders frame scenes without crossing the content layer",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14271
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 8805
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 18585
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1734
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22974
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors No Music",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3592
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors missing owner song",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3370
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors owner song",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3830
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "blocked music can be retried without blocking wedding details",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3966
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Premium film remains muted while one selected wedding song continues",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14047
+        }
+      ],
+      "annotations": [
+        {
+          "type": "codec limitation",
+          "description": "Bundled Windows WebKit rejected the MP4 fixture; error recovery and continuing MP3 verified."
+        }
+      ]
+    },
+    {
+      "title": "long Khmer names fit the transparent center on a narrow cover",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3410
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "reduced motion, data saving and hidden documents suppress decorative work",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6880
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details sections fade into view on scroll and stay revealed on return",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14796
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details start higher and the two-day agenda keeps a continuous road through every ceremony",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5628
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 33668
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Rumduol artwork keeps personalized guest names readable and preserves other owner frame choices",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 10267
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the saved wedding date uses a rose heart and native lossless petals remain fully opaque",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6346
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "realistic HD effects and floral borders frame scenes without crossing the content layer",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 14702
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "cover content stays visible during entrance motion and an interrupted reload",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 6372
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "actual transparent ornament and MP3 play only on the opening gesture and survive scenes",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 13957
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the template listing shows the actual opening cover instead of the old SVG mockup",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 1305
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Studio saves, refreshes, previews and publishes Regal settings and the chosen library song",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12438
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors No Music",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2743
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors missing owner song",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2930
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "published invitation honors owner song",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3018
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "blocked music can be retried without blocking wedding details",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2916
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Premium film remains muted while one selected wedding song continues",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 11270
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "long Khmer names fit the transparent center on a narrow cover",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 2714
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "reduced motion, data saving and hidden documents suppress decorative work",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 4170
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details sections fade into view on scroll and stay revealed on return",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 11768
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "details start higher and the two-day agenda keeps a continuous road through every ceremony",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 3640
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the welcome fits responsive screens, holds seven seconds and puts Skip beside music",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 25726
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Rumduol artwork keeps personalized guest names readable and preserves other owner frame choices",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 9100
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the saved wedding date uses a rose heart and native lossless petals remain fully opaque",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 5010
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "realistic HD effects and floral borders frame scenes without crossing the content layer",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 12671
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Regal cover at all seven requested widths",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 24141
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "export the actual opening cover for the catalog preview",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 7144
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "the full closed cover fits the first viewport without scrolling",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 28198
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Regal cover at all seven requested widths",
+      "project": "firefox",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 1512
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One deterministic visual set.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 12,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "export the actual opening cover for the catalog preview",
+      "project": "firefox",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 1
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One authored preview asset.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 42,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "the full closed cover fits the first viewport without scrolling",
+      "project": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 30159
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Regal cover at all seven requested widths",
+      "project": "webkit",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 362
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One deterministic visual set.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 12,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "export the actual opening cover for the catalog preview",
+      "project": "webkit",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 1
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One authored preview asset.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 42,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "the full closed cover fits the first viewport without scrolling",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 22357
+        }
+      ],
+      "annotations": []
+    },
+    {
+      "title": "Regal cover at all seven requested widths",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 125
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One deterministic visual set.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 12,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "export the actual opening cover for the catalog preview",
+      "project": "mobile-chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration_ms": 0
+        }
+      ],
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "One authored preview asset.",
+          "location": {
+            "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\floral-v5-visual.spec.js",
+            "line": 42,
+            "column": 8
+          }
+        }
+      ]
+    },
+    {
+      "title": "the full closed cover fits the first viewport without scrolling",
+      "project": "mobile-chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration_ms": 16901
+        }
+      ],
+      "annotations": []
+    }
+  ],
+  "built_app_smoke": {
+    "base_url": "http://127.0.0.1:4395",
+    "command": "FLORAL_V4_BASE_URL=http://127.0.0.1:4395 npx playwright test --config playwright.floral-v5.config.js floral-v5-regal.spec.js --project=chromium --grep 'cover content|actual transparent|template listing|Rumduol artwork|saved wedding'",
+    "stats": {
+      "startTime": "2026-11-06T16:02:55.347Z",
+      "duration": 24564.968999999997,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}

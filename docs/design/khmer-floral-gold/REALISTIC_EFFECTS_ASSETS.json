@@ -1,0 +1,253 @@
+{
+  "mode": "Three original photorealistic transparent effects plus a faithful HD restoration of the newly selected white/green border; built-in imagegen. Not extracted video frames.",
+  "masters": [
+    {
+      "file": "assets/khmer-floral-gold/realistic-effects/blossom-branch.webp",
+      "bytes": 778884,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "60eae52ffe38339cc235475138c6bfd23f3850ac88841c6301900b8d4ccbe75a"
+    },
+    {
+      "file": "assets/khmer-floral-gold/realistic-effects/butterflies.webp",
+      "bytes": 1474768,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "c487ad21f49a7fda5c36dd89a0ec660b1db1a651e7c92be7706cfc519d3d7d0e"
+    },
+    {
+      "file": "assets/khmer-floral-gold/realistic-effects/petals.webp",
+      "bytes": 1038840,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "8a0bfddba6c34c60b987cbecc62212078eb8d9249b8e1a1c50ac4f059f778af9"
+    },
+    {
+      "file": "assets/khmer-floral-gold/realistic-effects/white-blossom-paper.jpg",
+      "bytes": 132011,
+      "dimensions": [
+        1600,
+        1067
+      ],
+      "sha256": "5a1f42498f0b154ba60caa981cc76db6c9b700cafdb1fde3f55d853137e57729"
+    },
+    {
+      "file": "assets/khmer-floral-gold/realistic-effects/white-green-border-hd.webp",
+      "bytes": 2002958,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "448a9dfaaeb6fcf6cbf34595e08f9c0ce0c53fbab029f77b5fa145d4d7b69f86"
+    }
+  ],
+  "runtime": [
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/blossom-branch.webp",
+      "bytes": 311354,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sha256": "93ac50d83882be8a190555456cffc312f8ea46dff7e6edb8c8b7a09ab994af7f"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-amber.webp",
+      "bytes": 143352,
+      "dimensions": [
+        707,
+        453
+      ],
+      "sha256": "4fe1affaf884e4bfce7b3e8279765a01a83e574a23a749c2240f71b6dd3ad77d"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-blue.webp",
+      "bytes": 153070,
+      "dimensions": [
+        685,
+        456
+      ],
+      "sha256": "06c1cf682250cb7d5622e27452fb565ae20ace2ba0176a75f1022e5fd4b04784"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-ivory.webp",
+      "bytes": 132842,
+      "dimensions": [
+        668,
+        476
+      ],
+      "sha256": "6635fb42d2761a2cad6bd97ee578404b326f5274f0060cdd5ea18a7ec0ba566d"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-violet.webp",
+      "bytes": 138388,
+      "dimensions": [
+        656,
+        452
+      ],
+      "sha256": "836a9aa8a98fc2fdbceb9c8139690efbaec4dcd82fe97f6c9f1e980bfcd7cf6d"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-1.webp",
+      "bytes": 168998,
+      "dimensions": [
+        459,
+        417
+      ],
+      "sha256": "6275c41999552181f4517e30f88e94419df54cec1b60445a3a95ccf8527cba89"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-2.webp",
+      "bytes": 187322,
+      "dimensions": [
+        442,
+        464
+      ],
+      "sha256": "83856270eb4484aac09404a41a1425b99b9cc400ff1e9a51adca2ab0ffc90bab"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-3.webp",
+      "bytes": 154794,
+      "dimensions": [
+        466,
+        426
+      ],
+      "sha256": "0a1b3ec72bde99db21ea6aaeffb2595a41870fcebeedee01c4523ee997a767ad"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-4.webp",
+      "bytes": 196100,
+      "dimensions": [
+        478,
+        430
+      ],
+      "sha256": "c7157aaee545b504cf2a3cbb5ed2b36274b81e6af0e74e984fe6af436ce198e3"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-5.webp",
+      "bytes": 154696,
+      "dimensions": [
+        429,
+        445
+      ],
+      "sha256": "b8f5799cbffd6e60046535a34a85a91d0dbfebab6fc48feffaee4e8b4564f290"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-6.webp",
+      "bytes": 181048,
+      "dimensions": [
+        477,
+        407
+      ],
+      "sha256": "8f8ef05d86fc4a0743bfc5c16aef5ccfc2f137296a15e8431b53b440ae3d9185"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-blossom-paper.jpg",
+      "bytes": 132011,
+      "dimensions": [
+        1600,
+        1067
+      ],
+      "sha256": "5a1f42498f0b154ba60caa981cc76db6c9b700cafdb1fde3f55d853137e57729"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-green-border-bottom.webp",
+      "bytes": 385256,
+      "dimensions": [
+        1536,
+        512
+      ],
+      "sha256": "8872ce12b94241e9e1ed0e8fd8b9adb741f181fe7c3bd347821947f81d7d125d"
+    },
+    {
+      "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-green-border-top.webp",
+      "bytes": 391742,
+      "dimensions": [
+        1536,
+        512
+      ],
+      "sha256": "c71ea2967b24f9d2ea3c42f523070cfacbc523c0d447cf6242b905578002da77"
+    }
+  ],
+  "background_photo": {
+    "title": "White Flowers on White Background",
+    "photographer": "Eva Bronzini",
+    "page": "https://www.pexels.com/photo/white-flowers-on-white-background-7965228/",
+    "download": "https://images.pexels.com/photos/7965228/pexels-photo-7965228.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "license": "https://www.pexels.com/license/",
+    "original_dimensions": [
+      5568,
+      3712
+    ],
+    "runtime_dimensions": [
+      1600,
+      1067
+    ],
+    "note": "Downloaded photo, not generated. Static backdrop for welcome/details; CSS turns the photograph to portrait and applies 28% opacity without blur. Clear paper center preserves reading contrast."
+  },
+  "inspiration": [
+    {
+      "file": "assets/butterfly_effect.MP4",
+      "sha256": "75cb8878d5cc54951ba2bac02a21bcfb413dc37fde13b7ca4cace1a44e57d45d"
+    },
+    {
+      "file": "assets/flower_animation.mp4",
+      "sha256": "27907eb3e66d7f1eb35c2cdc9651f76233a963cd55ce229f17610b2550807143"
+    },
+    {
+      "file": "assets/flowereffect.mp4",
+      "sha256": "bc88011e8e0403968bd701dda7353b2a3c378a5341caddeda947e581db894793"
+    }
+  ],
+  "background": {
+    "source": "assets/ritilsa_ssspin.io_1793970094.jpg",
+    "source_dimensions": [
+      675,
+      1200
+    ],
+    "source_sha256": "6f30d8912c05db1056d3197e82c0264084f94291ec72fc4e41f41ee36e44b0e4",
+    "restoration_atlas_dimensions": [
+      1536,
+      1024
+    ],
+    "edge_dimensions": [
+      1536,
+      512
+    ],
+    "css_opacity": 1,
+    "filter": "none",
+    "fade_mask": "none",
+    "note": "AI-assisted HD restoration/extraction preserving the chosen floral arrangement; not native 4K."
+  },
+  "motion": {
+    "butterfly_flight_seconds": 16.08,
+    "petal_fall_seconds": [
+      16.8,
+      17.2,
+      18
+    ],
+    "petal_css_opacity": 1,
+    "petal_encoding": "lossless WebP, native crop pixels and alpha preserved",
+    "wind_seconds": 6.4,
+    "butterfly_count": 12,
+    "petal_count": 12,
+    "wing_half_beat_ms": 380,
+    "welcome_seconds": 7,
+    "motion_library": "existing framer-motion",
+    "entrance_effects": 10,
+    "scene_corner_flips": {
+      "top_left": "horizontal",
+      "top_right": "original",
+      "bottom_left": "horizontal and vertical",
+      "bottom_right": "vertical"
+    },
+    "layout": "Cover: original top/bottom borders plus four native-proportion floral panels rotated along both sides, with inward-facing natural silhouettes and responsive clearance around the frame, heading, guest panel and Open button. Welcome/details: mirrored branches in four scene corners above the demo links. No botanical linework SVG.",
+    "timing_note": "Source-inspired motion created for portrait stationery; original source files untouched."
+  }
+}

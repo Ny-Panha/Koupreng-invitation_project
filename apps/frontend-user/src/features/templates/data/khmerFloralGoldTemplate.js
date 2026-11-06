@@ -27,7 +27,7 @@ export const KHMER_FLORAL_GOLD_TEMPLATE = {
   image: `${root}/cover-preview-640.webp`, mainImage: `${root}/couple-960.webp`, phoneCoverImage: `${root}/couple-960.webp`,
   groom: km.groomName, bride: km.brideName, groomEn: en.groomName, brideEn: en.brideName,
   invitationImage: `${root}/groom.webp`, invitationImage2: `${root}/bride.webp`, backgroundImage: `${root}/couple-960.webp`,
-  monogramText: 'ដ ស', guestName: 'លោកអ្នក និងក្រុមគ្រួសារ',
+  monogramText: 'ដ ស', guestName: 'លោក រ៉ាន់ ណារ៉ាត់ ព្រមទាំងគ្រួសារ',
   dateText: ['weekday', 'day', 'month', 'year'].map(part => new Intl.DateTimeFormat('km-KH', { [part]: ['day', 'year'].includes(part) ? 'numeric' : 'long', timeZone: 'UTC', numberingSystem: 'khmr' }).format(new Date('2027-02-14T12:00:00Z'))).join(' '),
   dateTextEn: 'Sunday, 14 February 2027',
   eventDate: '2027-02-14', eventTime: '17:00', eventTimezone: 'Asia/Phnom_Penh', targetDate: '2027-02-14T17:00:00+07:00',

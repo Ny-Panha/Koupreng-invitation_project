@@ -1,5 +1,8 @@
 # Khmer Floral Gold V5 delivery
 
+Historical V5 baseline. The latest source-inspired artwork and motion are described
+in [Realistic effects delivery](REALISTIC_EFFECTS_DELIVERY.md).
+
 2026-11-06. Based on `b122e505` on `main`. No production deployment was performed.
 
 ## Result

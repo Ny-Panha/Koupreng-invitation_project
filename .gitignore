@@ -116,5 +116,7 @@ client_secret*.json
 
 # Regal #8 owner master and local image-processing/QA intermediates.
 /output/floral-v5/
+/output/floral-source-effects/
+/output/playwright/floral-source-effects/
 /output/playwright/floral-v5*/
 /apps/frontend-user/public/templates/khmer-floral-gold/regal_scroll_frame_08_4k.webp

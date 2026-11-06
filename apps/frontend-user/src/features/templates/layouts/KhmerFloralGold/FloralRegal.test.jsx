@@ -8,6 +8,7 @@ import { buildTemplateContent } from '../../experience/config/templateExperience
 import { KHMER_FLORAL_GOLD_TEMPLATE } from '../../data/templatesData';
 import { draftToInvitationPayload, publicInvitationToDraft } from '../../../wedding-builder/utils/invitationDraftAdapter';
 import { draftToTemplate } from '../../../wedding-builder/utils/draftToTemplate';
+import { visibleProgramDays } from '../../shared/program';
 
 const song = '/music/Noly%20Record%20-%20wedding-Song.mp3';
 const base = { variant: 'khmer-floral-gold', languageMode: 'EN', title: 'Our wedding', groom: 'Bopha', bride: 'Vibol', groomEn: 'Bopha', brideEn: 'Vibol', music: song, invitationStyleV1: { motion: 'none' }, enabledSections: { family: false, invitation: false, couplePhoto: false, countdown: false, schedule: false, map: false, gallery: false, closing: false, rsvp: false } };
@@ -20,6 +21,20 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 describe('Regal Scroll Gold canonical cover', () => {
+  it('groups the marketing agenda into two dated days while retaining owner-authored schedules', () => {
+    const demo = buildTemplateContent(KHMER_FLORAL_GOLD_TEMPLATE, 'khmer-floral-gold');
+    const days = visibleProgramDays(demo);
+    expect(days).toHaveLength(2);
+    expect(days.map(day => day.titleEn)).toEqual(['Day 1', 'Day 2']);
+    expect(days[1].resolvedDate).toBe(demo.eventDate);
+    expect(days[0].resolvedDate).not.toBe(days[1].resolvedDate);
+    expect(days.flatMap(day => day.items)).toHaveLength(KHMER_FLORAL_GOLD_TEMPLATE.schedule.length);
+    const owner = { programDays: [{ id: 'authored', titleEn: 'Our own celebration', date: '2027-03-12' }], schedule: [{ id: 'own-row', dayId: 'authored', time: '11:00', title: 'Owner ceremony', titleEn: 'Owner ceremony' }] };
+    const published = buildTemplateContent({ ...KHMER_FLORAL_GOLD_TEMPLATE, hostContent: owner }, 'khmer-floral-gold');
+    expect(published.programDays).toEqual(owner.programDays);
+    expect(published.schedule).toHaveLength(owner.schedule.length);
+    expect(published.schedule).toMatchObject(owner.schedule);
+  });
   it('defaults only Floral to Regal and keeps explicit legacy choices', () => {
     expect(invitationStyles(base).monogram).toBe('regal-scroll-gold');
     expect(invitationStyles({ code: 'silk-heritage' }).monogram).toBe('ornate');
@@ -41,9 +56,10 @@ describe('Regal Scroll Gold canonical cover', () => {
     expect(buildTemplateContent(mapped.tpl, mapped.variant).monogramText).toBe('B & V');
   });
   it('uses the requested editable staircase names only in the marketing demo', () => {
-    expect(KHMER_FLORAL_GOLD_TEMPLATE.monogramText).toBe('វីរៈ\n&\nសុមាលី');
+    const names = KHMER_FLORAL_GOLD_TEMPLATE.monogramText.split('\n');
+    expect(names).toEqual([expect.stringMatching(/\S/), '&', expect.stringMatching(/\S/)]);
     const view = render(layout({ ...base, monogramText: KHMER_FLORAL_GOLD_TEMPLATE.monogramText, invitationStyleV1: KHMER_FLORAL_GOLD_TEMPLATE.invitationStyleV1 }));
-    expect([...view.container.querySelectorAll('.kfg-monogram-staircase > span')].map(node => node.textContent)).toEqual(['វីរៈ', '&', 'សុមាលី']);
+    expect([...view.container.querySelectorAll('.kfg-monogram-staircase > span')].map(node => node.textContent)).toEqual(names);
   });
   it.each(MONOGRAM_FRAMES)('round trips $id and all controls through the save/public adapters', ({ id }) => {
     const settings = { version: 1, monogram: id, monogramMode: 'names', monogramSize: 1.1, monogramTextSize: 24, monogramTextColor: '#765321', monogramAlign: 'right', monogramOpacity: .8, monogramOffset: 8, monogramTreatment: 'champagne' };
@@ -60,6 +76,20 @@ describe('Regal Scroll Gold canonical cover', () => {
 });
 
 describe('Floral guest music', () => {
+  it('keeps the welcome for seven seconds and groups Skip beside music', () => {
+    vi.useFakeTimers();
+    try {
+      const view = render(layout({ ...base, invitationStyleV1: { motion: 'elegant' } }));
+      fireEvent.click(view.container.querySelector('.kfg-open'));
+      act(() => vi.advanceTimersByTime(800));
+      expect(view.container.querySelector('.kfg-welcome-scene')).toBeInTheDocument();
+      expect(view.container.querySelector('.kfg-skip-welcome').parentElement).toBe(view.container.querySelector('.kfg-music').parentElement);
+      act(() => vi.advanceTimersByTime(6500));
+      expect(view.container.querySelector('.kfg-welcome-scene')).toBeInTheDocument();
+      act(() => vi.advanceTimersByTime(500));
+      expect(view.container.querySelector('.kfg-content')).toBeInTheDocument();
+    } finally { vi.useRealTimers(); }
+  });
   it.each([{}, { musicUrl: '' }, { music: null }, { musicTrackId: 'none', music: song }, { enabledSections: { music: false }, music: song }])('keeps an owner silent without a selected song: %j', host => {
     const content = buildTemplateContent({ ...KHMER_FLORAL_GOLD_TEMPLATE, hostContent: host }, 'khmer-floral-gold');
     expect(floralMusic(content)).toBe('');

@@ -1,20 +1,26 @@
-const root = '/templates/khmer-floral-gold/effects';
-// Downloaded CC0 raster sources; see V5_ASSETS.md and V5_EFFECT_SOURCES.json.
-const textures = { heart: 'blush-heart.webp', star: 'gold-star.webp' };
-const petalLanes = [[9,24,3], [24,29,17], [37,26,8], [52,31,23], [65,25,14], [79,28,5], [92,27,20]];
-const particles = [
-  ['butterfly', 12, 12, 'golden-butterfly.webp'], ['heart', 50, 58], ['star', 8, 72],
-  ['butterfly', 34, 31, 'pink-butterfly.webp'], ['star', 70, 18], ['heart', 84, 42],
-  ['butterfly', 61, 54, 'blue-butterfly.webp'], ['star', 92, 45], ['heart', 69, 20],
-  ['butterfly', 83, 6, 'violet-butterfly.webp'],
-];
+const root = '/templates/khmer-floral-gold/effects/realistic';
+const butterflies = ['amber', 'blue', 'violet', 'ivory'];
+const petals = [[5,17.2,2], [13,16.8,9], [22,17.2,14], [30,18,5], [39,17.2,11], [47,16.8,3], [55,18,15], [64,17.2,7], [72,16.8,12], [80,18,1], [89,17.2,10], [97,16.8,6]];
+const flights = [8,24,46,67,84,17,37,59,76,12,51,91];
 
-export default function FloralAmbience({ enabled, motion = 'elegant' }) {
-  return <div className="kfg-petals kfg-ambience" aria-hidden="true" inert hidden={!enabled} data-intensity={motion}>
-    {enabled && <div className="kfg-lotus-rain" data-petal-count="7">{petalLanes.map(([x, duration, delay], index) => <img key={index} className="kfg-lotus-petal" src={`${root}/lotus-petal.webp`} alt="" width="44" height="128" decoding="async" draggable={false} style={{ '--petal-x': `${x}%`, '--petal-duration': `${duration}s`, '--petal-delay': `${-delay}s`, '--petal-size': `${14 + index % 4 * 2}px` }} />)}</div>}
-    {enabled && particles.map(([kind, x, y, texture], index) => <span key={index} className={`kfg-ambient-particle kfg-ambient-${kind}`} data-zone={x > 28 && x < 72 ? 'center' : 'outer'}
-      style={{ '--ambient-x': `${x}%`, '--ambient-delay': `${-index * 2.7}s`, '--ambient-duration': `${18 + index % 4 * 3}s`, '--ambient-top': `${y}%`, '--flight-direction': index % 2 ? -1 : 1 }}>
-      <img src={`${root}/${texture || textures[kind]}`} alt="" width={kind === 'butterfly' ? 160 : 96} height={kind === 'butterfly' ? 120 : 96} decoding="async" draggable={false} />
-    </span>)}
+export function FloralSceneBackdrop({ enabled }) {
+  return enabled ? <div className="kfg-scene-backdrop" aria-hidden="true" inert><img src={`${root}/white-blossom-paper.jpg`} width="1600" height="1067" alt="" decoding="async" draggable={false} /></div> : null;
+}
+
+export function FloralSceneCorners({ enabled }) {
+  return <div className="kfg-scene-blossoms" data-effect="blossom-wind" aria-hidden="true" inert hidden={!enabled}>
+    {enabled && ['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(corner => <div key={corner} className={`kfg-blossom-corner kfg-blossom-corner--${corner}`}><img src={`${root}/blossom-branch.webp`} width="1536" height="1024" alt="" decoding="async" draggable={false} /></div>)}
+  </div>;
+}
+
+/** Three source-inspired, photorealistic raster effects; no decoded-video loop. */
+export default function FloralAmbience({ enabled, paused = false, motion = 'elegant' }) {
+  return <div className="kfg-petals kfg-ambience" aria-hidden="true" inert hidden={!enabled} data-intensity={motion} data-source-effects="realistic" data-source-paused={paused}>
+    {enabled && <>
+      <div className="kfg-realistic-petals" data-effect="petal-rain">{petals.map(([x, duration, delay], index) => <img key={index} className="kfg-realistic-petal" src={`${root}/petal-${index % 6 + 1}.webp`} width="512" height="512" alt="" decoding="async" draggable={false} style={{ '--petal-x': `${x}%`, '--petal-duration': `${duration}s`, '--petal-delay': `${-delay}s`, '--petal-size': `${22 + index % 3 * 4}px` }} />)}</div>
+      <div className="kfg-realistic-butterflies" data-effect="butterfly-flight">{flights.map((y, index) => <div className="kfg-realistic-flight" key={index} data-side={index % 2 ? 'right' : 'left'} data-butterfly={butterflies[index % 4]} style={{ '--flight-y': y, '--flight-delay': `${-index * 1.34}s`, '--wing-delay': `${-index * .09}s`, '--flight-direction': index % 2 ? 'reverse' : 'normal', '--butterfly-size': `${26 + index % 4 * 3}px` }}>
+        {['left', 'right', 'body'].map(part => <img key={part} className={`kfg-realistic-wing kfg-realistic-wing--${part}`} src={`${root}/butterfly-${butterflies[index % 4]}.webp`} width="768" height="512" alt="" decoding="async" draggable={false} />)}
+      </div>)}</div>
+    </>}
   </div>;
 }
