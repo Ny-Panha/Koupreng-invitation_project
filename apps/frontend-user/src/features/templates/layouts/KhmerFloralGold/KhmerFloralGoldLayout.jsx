@@ -1,6 +1,6 @@
 import { Children, cloneElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ChevronDown, Globe2, Heart, Music2, Pause, X } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Globe2, Music2, Pause, X } from 'lucide-react';
 import { usePrefersReducedMotion } from '@/shared/hooks/usePrefersReducedMotion';
 import Modal from '@/shared/ui/Modal';
 import { isTrustedPreviewMessage, postPreviewMessage, readEmbeddedPreviewChannel } from '@/shared/preview/previewMessaging';
@@ -23,6 +23,7 @@ import { useTemplateMusicController } from '../../experience/hooks/useTemplateMu
 import { floralColor, floralContent, floralInitials, floralLocales, floralPhotos, floralSections } from './floralModel';
 import { BotanicalLinework, FloralDivider, FloralMonogram, FloralPhoto, GoldFlourish, GoldPlaque } from './FloralArtwork';
 import FloralGallery from './FloralGallery';
+import useFloralEnvironment from './useFloralEnvironment';
 import './khmer-floral-gold.css';
 
 function DemoRsvp({ english }) {
@@ -65,6 +66,7 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
   const [mapOpen, setMapOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const environment = useFloralEnvironment();
   const event = resolveEvent(vm), numerals = vm.saveTheDate?.numerals || (en ? 'latin' : 'khmer');
   const days = visibleProgramDays(vm);
   const programContent = { ...vm, invitationStyleV1: { program: 'gold-curve', ...vm.invitationStyleV1 } };
@@ -76,13 +78,13 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
   const open = useCallback((gesture = false) => {
     if (gesture && openRef.current) return;
     openRef.current = true;
-    const duration = gesture && !reduced && motionPreset !== 'none' ? ({ subtle: 350, romantic: 1000, elegant: 800, cinematic: 1300 })[motionPreset] : 0;
+    const duration = gesture && !reduced && !environment.saveData && motionPreset !== 'none' ? ({ subtle: 350, romantic: 1000, elegant: 800, cinematic: 1300 })[motionPreset] : 0;
     setPhase(duration ? 'opening' : 'content');
     if (gesture && musicSource) void play();
     clearTimeout(openingTimer.current);
     if (duration) openingTimer.current = window.setTimeout(() => { setPhase('welcome'); }, duration);
     else { if (gesture) startCinematic(); requestAnimationFrame(() => bodyRef.current?.focus({ preventScroll: true })); }
-  }, [play, musicSource, reduced, motionPreset, startCinematic]);
+  }, [play, musicSource, reduced, environment.saveData, motionPreset, startCinematic]);
   const skipOpening = () => { clearTimeout(openingTimer.current); playback.stop(); setPhase('content'); requestAnimationFrame(() => bodyRef.current?.focus({ preventScroll: true })); };
   useEffect(() => () => clearTimeout(openingTimer.current), []);
   useEffect(() => {
@@ -135,13 +137,13 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
       case 'countdown': return <><h2>{vm.saveTheDate?.heading || headings.countdown}</h2>{vm.saveTheDate?.subtitle && <p>{vm.saveTheDate.subtitle}</p>}{vm.saveTheDate?.showCountdown === false ? null : event.instant !== null ? <WeddingCountdown instant={event.instant} english={en} numerals={numerals} /> : <p className="kfg-muted">{t('ម៉ោងកម្មវិធីនឹងត្រូវបានបញ្ជាក់។', 'The event time will be confirmed.')}</p>}{event.validDate && vm.saveTheDate?.showAddToCalendar !== false && <div className="kfg-calendar-action"><GoldPlaque /><AddToCalendar content={vm} english={en} /></div>}</>;
       case 'schedule': return <><h2>{headings.schedule}</h2>{programContent.invitationStyleV1.program !== 'gold-curve' && <FloralDivider />}{days.length ? <ProgramTimeline content={programContent} english={en} days={days} naturalTime /> : <p className="kfg-muted">{t('កម្មវិធីលម្អិតនឹងត្រូវបានបញ្ជាក់។', 'The program will be announced soon.')}</p>}</>;
       case 'map': return <><h2>{headings.map}</h2><p className="kfg-venue-name">{venue || t('ទីតាំងនឹងត្រូវបានបញ្ជាក់។', 'Venue to be confirmed.')}</p>{address && <p>{address}</p>}{vm.sketchMapImage && <figure className="kfg-map"><button type="button" onClick={() => setMapOpen(true)} aria-label={t('មើលផែនទីធំ', 'View larger venue map')}><FloralPhoto src={vm.sketchMapImage} alt={t('គំនូសប្លង់ទីតាំងកម្មវិធី', 'Illustrative venue diagram')} /></button><figcaption>{t('គំនូសប្លង់ទីតាំងកម្មវិធី', 'Illustrative venue diagram')}</figcaption></figure>}{directions && <a className="kfg-gold-button kfg-map-directions" href={directions} target="_blank" rel="noopener noreferrer"><GoldPlaque /><span>{t('មើលទីតាំងក្នុង Google Maps', 'View in Google Maps')}</span></a>}</>;
-      case 'gallery': return <><h2>{headings.gallery}</h2><FloralDivider /><FloralGallery photos={photos} english={en} layout={style.gallery} onExpandedChange={setGalleryOpen} /></>;
+      case 'gallery': return <><h2>{headings.gallery}</h2><FloralDivider /><FloralGallery photos={photos} english={en} layout={style.gallery} motion={environment.saveData ? 'none' : motionPreset} onExpandedChange={setGalleryOpen} /></>;
       case 'closing': return <><h2>{vm.thankYouTitle || t('សូមថ្លែងអំណរគុណ', 'With our sincere thanks')}</h2><p>{vm.thankYouText || t('វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយសសម្រាប់យើងខ្ញុំ។', 'Your presence would be an honor to us.')}</p>{vm.apologyText && <div className="kfg-apology"><FloralDivider /><h3>{vm.apologyTitle || t('លិខិតសូមអភ័យទោស', 'A personal invitation')}</h3><p>{vm.apologyText}</p></div>}</>;
       case 'rsvp': return <><h2>{headings.rsvp}</h2><FloralDivider />{children ? Children.map(children, child => isValidElement(child) ? cloneElement(child, { languageMode: en ? 'EN' : 'KH', appearance: 'floral' }) : child) : hosted ? <p className="kfg-muted">{t('សូមទាក់ទងម្ចាស់កម្មវិធី ដើម្បីបញ្ជាក់ការចូលរួម។', 'Please contact your hosts to confirm your attendance.')}</p> : <DemoRsvp english={en} />}</>;
       default: return null;
     }
   };
-  return <InvitationLocaleContext value={locale}><div ref={rootRef} className={`kfg-invitation${preview ? ' kfg-preview' : ''}${opened ? ' is-open' : ''}${phase === 'opening' ? ' is-opening' : ''}`} lang={locale} data-template-renderer="khmer-floral-gold" data-reduced-motion={reduced} data-motion={motionPreset} data-florals={style.florals} data-portrait-frame={style.portraitFrame} data-map-style={style.map}
+  return <InvitationLocaleContext value={locale}><div ref={rootRef} className={`kfg-invitation${preview ? ' kfg-preview' : ''}${opened ? ' is-open' : ''}${phase === 'opening' ? ' is-opening' : ''}`} lang={locale} data-template-renderer="khmer-floral-gold" data-reduced-motion={reduced} data-motion={motionPreset} data-low-power={environment.saveData} data-page-hidden={environment.hidden} data-florals={style.florals} data-portrait-frame={style.portraitFrame} data-map-style={style.map}
     style={{ '--kfg-gold': floralColor(palette.primary || palette.accent || vm.frontColor || vm.primaryColor), '--kfg-paper': floralColor(palette.background || vm.backgroundColor), '--kfg-ink': floralColor(palette.text), '--kfg-highlight': floralColor(palette.accent || palette.border), '--kfg-frame-color': floralColor(palette.border), '--kfg-body': palette.bodyFont ? `${JSON.stringify(palette.bodyFont)}, KfgBody, sans-serif` : undefined, '--kfg-message-align': ['left', 'center', 'right'].includes(palette.align) ? palette.align : undefined, '--kfg-message-scale': ({ small: .9, normal: 1, large: 1.12 })[palette.messageSize] || 1, '--kfg-portrait-y': `${palette.portraitY ?? 50}%`, '--kfg-heading-font': vm.fontKhmer ? `${JSON.stringify(vm.fontKhmer)}, var(--kfg-display)` : undefined, '--kfg-latin-font': vm.fontLatin ? `${JSON.stringify(vm.fontLatin)}, serif` : undefined }}>
     <div className="kfg-paper-art" aria-hidden="true" /><BotanicalLinework /><div className="kfg-petals" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i} style={{ '--petal': i }} />)}</div>
     {wanted === 'en' && !locales.includes('en') && <p className="kfg-locale-notice" role="status" lang="en">English is not published for this invitation. Showing Khmer.</p>}
@@ -156,7 +158,7 @@ export default function KhmerFloralGoldLayout({ content = {}, liveData, preview 
       <div className="kfg-cover-background" aria-hidden="true" style={{ '--kfg-cover-fit': style.backgroundFit, '--kfg-cover-position': `${style.backgroundX}% ${style.backgroundY}%`, filter: `blur(${style.backgroundBlur}px)`, opacity: 1 - style.backgroundOverlay }}><CoverBackground content={{ coverBackgroundImage: safeIntroMedia(vm.coverBackgroundImage), openingVideoUrl: vm.openingVideoEnabled === false ? '' : safeIntroMedia(vm.openingVideoUrl || vm.videoUrl || vm.openingVideo?.url || vm.openingVideo), videoPoster: safeIntroMedia(vm.videoPoster) }} /></div>
       {style.monogramMode === 'image' && style.monogramImage ? <FloralPhoto className="kfg-monogram-logo" src={style.monogramImage} alt={floralInitials(vm) || t('រូបតំណាងគូស្វាមីភរិយា', 'Couple logo')} priority /> : <FloralMonogram text={floralInitials(vm)} variant={style.monogram} />}
       <h1 style={{ fontSize: style.headingSize, textAlign: style.headingAlign }}>{style.headingMode === 'image' && style.headingImage ? <FloralPhoto className="kfg-heading-art" src={style.headingImage} alt={vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')} priority /> : vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')}</h1>
-      <div className="kfg-guest"><p>{vm.subtitle || t('សូមគោរពអញ្ជើញ', 'Warmly inviting')}</p><div className={`kfg-guest-frame kfg-guest-frame--${style.guestFrame}`}><GoldFlourish /><span>{vm.isPersonalizedGuest ? vm.guestName : t('លោកអ្នក និងក្រុមគ្រួសារ', 'You and your family')}</span><GoldFlourish className="kfg-flourish-bottom" /></div></div><button type="button" className="kfg-gold-button kfg-open" disabled={phase === 'opening'} onClick={() => open(true)}><Heart size={17} aria-hidden="true" />{t('សូមចុចដើម្បីបើកសំបុត្រ', 'Open our invitation')}</button>{phase === 'opening' && <button className="kfg-skip-opening" type="button" onClick={skipOpening}>{t('រំលង', 'Skip opening')}</button>}</section>
+      <div className="kfg-guest"><p>{vm.subtitle || t('សូមគោរពអញ្ជើញ', 'Warmly inviting')}</p><div className={`kfg-guest-frame kfg-guest-frame--${style.guestFrame}`}><GoldFlourish /><span>{vm.isPersonalizedGuest ? vm.guestName : t('លោកអ្នក និងក្រុមគ្រួសារ', 'You and your family')}</span><GoldFlourish className="kfg-flourish-bottom" /></div></div><button type="button" className="kfg-gold-button kfg-open" disabled={phase === 'opening'} onClick={() => open(true)}><GoldPlaque /><span>{t('សូមចុចដើម្បីបើកសំបុត្រ', 'Open our invitation')}</span></button>{phase === 'opening' && <button className="kfg-skip-opening" type="button" onClick={skipOpening}>{t('រំលង', 'Skip opening')}</button>}</section>
       : <main ref={bodyRef} className="kfg-content" tabIndex={-1} aria-label={t('ព័ត៌មានអាពាហ៍ពិពាហ៍', 'Wedding details')}><h1 className="kfg-sr-only">{vm.title || t('សិរីមង្គលអាពាហ៍ពិពាហ៍', 'Wedding invitation')}</h1>{floralSections(vm).filter(key => key !== 'invitation').map(key => <section key={key} className={`kfg-section kfg-${key}`} data-section-key={key} data-tx-section={key === 'map' ? 'venue' : key}>{renderSection(key)}</section>)}<footer className="kfg-footer"><FloralDivider /><span>{vm.groom} &amp; {vm.bride}</span><InvitationBranding content={vm} language={en ? 'en' : 'km'} />{!hosted && <small>{t('រូបភាពសម្រាប់គំរូបង្ហាញ៖ Jin Wedding / Pexels', 'Demo stock models and photography: Jin Wedding / Pexels')}</small>}</footer></main>}
     {!hosted && showActions && <div className="kfg-demo-actions">{showBack && <Link to={backTo}><ArrowLeft size={16} aria-hidden="true" />{t('ត្រឡប់ទៅគំរូ', 'Back to templates')}</Link>}{useTemplateLink && <Link to={useTemplateLink}>{t('ប្រើគំរូឥតគិតថ្លៃនេះ', 'Use this free template')}</Link>}</div>}
     <Modal isOpen={mapOpen} onClose={() => setMapOpen(false)} showHeader={false} size="lg" className="kfg-map-dialog" ariaLabel={t('គំនូសប្លង់ទីតាំង', 'Venue diagram')}><button type="button" className="kfg-map-close" onClick={() => setMapOpen(false)} aria-label={t('បិទផែនទី', 'Close map')}><X aria-hidden="true" /></button><FloralPhoto src={vm.sketchMapImage} alt={t('គំនូសប្លង់ទីតាំងកម្មវិធី', 'Illustrative venue diagram')} /></Modal>

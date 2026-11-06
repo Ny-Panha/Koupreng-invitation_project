@@ -24,7 +24,7 @@
 .kfg-opening h1{margin:22px -5px 70px}.kfg-guest{width:100%;max-width:440px;margin-top:auto}.kfg-guest>p{color:var(--kfg-gold);font-weight:600;margin-bottom:24px}.kfg-guest>div{position:relative;display:grid;place-items:center;min-height:66px;padding:14px 20px;border:1px solid var(--kfg-highlight);outline:1px solid #d5b77a66;outline-offset:4px;border-radius:7px;color:var(--kfg-ink);font-weight:600}
 .kfg-guest>div::before,.kfg-guest>div::after{content:'';position:absolute;left:50%;width:66px;height:9px;border:1px solid var(--kfg-highlight);border-radius:50%;background:var(--kfg-paper);transform:translateX(-50%)}.kfg-guest>div::before{top:-6px}.kfg-guest>div::after{bottom:-6px}
 .kfg-invitation .kfg-gold-button,.kfg-invitation .kp-add-calendar{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;width:min(100%,360px);padding:12px 23px;border:1px solid #a4874b;border-radius:28px;background:linear-gradient(110deg,#876326,#927039 50%,#876326);color:#fffdf8;font-size:16px;font-weight:600;line-height:1.75;text-align:center;box-shadow:0 4px 8px #7e60372a;transition:box-shadow 180ms ease,transform 180ms ease}
-.kfg-gold-button::before,.kfg-invitation .kp-add-calendar::before{content:'';position:absolute;inset:4px;border:1px solid #ead7ae77;border-radius:24px;pointer-events:none}.kfg-invitation .kfg-gold-button:hover,.kfg-invitation .kp-add-calendar:hover{transform:translateY(-1px);box-shadow:0 6px 12px #7e60373d}.kfg-opening .kfg-open{margin:68px 0 0;width:92%}
+.kfg-gold-button::before,.kfg-invitation .kp-add-calendar::before{content:'';position:absolute;inset:4px;border:1px solid #ead7ae77;border-radius:24px;pointer-events:none}.kfg-invitation .kfg-gold-button:hover,.kfg-invitation .kp-add-calendar:hover{transform:translateY(-1px);box-shadow:0 6px 12px #7e60373d}.kfg-opening .kfg-open{margin:56px 0 0;width:min(92%,360px);min-height:54px;background:transparent;border:0;border-radius:0;box-shadow:none;isolation:isolate}.kfg-opening .kfg-open::before{display:none}.kfg-open>span{position:relative;z-index:1}
 .kfg-content{position:relative;padding-top:94px;outline:none;animation:kfg-reveal 550ms ease both}.kfg-section{position:relative;padding:42px 28px;text-align:center;scroll-margin-top:28px}.kfg-section>h2{margin-bottom:20px}.kfg-section>p{max-width:440px;margin:16px auto;white-space:pre-line}.kfg-divider{display:block;width:190px;height:28px;margin:16px auto 28px;color:var(--kfg-highlight)}.kfg-welcome{color:var(--kfg-gold);font-weight:600}.kfg-muted{font-size:15px;color:var(--kfg-muted)}
 .kfg-invitation .kp-calendar{width:100%;max-width:380px;margin:34px auto 8px;padding:23px 19px;border:1px solid #d5b77a2b;border-radius:16px;background:#fffdfa;box-shadow:0 7px 26px #9980570d;color:var(--kfg-ink)}.kfg-invitation .kp-calendar-nav h3{font-size:18px;margin:0 auto 16px}.kfg-invitation .kp-calendar table{width:100%;table-layout:fixed;font:400 14px/1.8 var(--kfg-body);border-collapse:collapse}.kfg-invitation .kp-calendar th{font-weight:500;font-size:13px;padding:5px 0;color:var(--kfg-muted)}.kfg-invitation .kp-calendar th abbr{text-decoration:none}.kfg-invitation .kp-calendar td{height:36px;padding:0}.kfg-invitation .kp-calendar time{display:grid;place-items:center;margin:auto;width:29px;min-height:29px;border-radius:50%}.kfg-invitation .kp-calendar .kp-calendar-event{background:#a54e69;color:white;outline:1px solid #b9858b;outline-offset:3px}
 .kfg-family .kp-family-names{padding:0;background:none;border:0;box-shadow:none}.kfg-family .kp-family-names__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;text-align:left}.kfg-family .kp-family-names__grid article:nth-child(2){text-align:right}.kfg-family .kp-family-names__grid p{color:var(--kfg-gold);font-size:15px}.kfg-family .kp-family-names h3{display:none}.kfg-family-intro{font-size:15px}.kfg-portraits{display:flex;flex-direction:column;margin:42px 0 0;position:relative}.kfg-portraits figure{width:56%;position:relative}.kfg-portraits figure>img,.kfg-portraits .kfg-photo-empty{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:drop-shadow(0 3px 4px #7e6f4222);clip-path:polygon(0 1%,7% 0,15% 1%,24% 0,33% 1%,42% 0,51% 1%,63% 0,73% 1%,86% 0,100% 1%,99% 15%,100% 29%,99% 44%,100% 63%,99% 79%,100% 99%,88% 100%,75% 99%,61% 100%,43% 99%,27% 100%,13% 99%,0 100%,1% 83%,0 65%,1% 50%,0 30%,1% 14%)}
@@ -82,8 +82,8 @@
 .kfg-cover-background{position:absolute;inset:0;z-index:-1;background-repeat:no-repeat;pointer-events:none}
 .kfg-cover-background .cover-bg-media{object-fit:var(--kfg-cover-fit,cover);object-position:var(--kfg-cover-position,50% 50%)}.kfg-cover-background .cover-bg-scrim{display:none}
 .kfg-monogram-logo{width:174px;height:225px;object-fit:contain}.kfg-heading-art{width:100%;max-height:115px;object-fit:contain}
-.kfg-opening .kfg-open{border-radius:8px 30px;box-shadow:0 5px 7px #80602730,inset 0 1px 1px #f1dcaf88}
-.kfg-opening .kfg-open::before{border-radius:5px 26px}.kfg-open:active{transform:scale(.97)}
+
+.kfg-open:active{transform:scale(.97)}
 .kfg-skip-opening{position:absolute;right:20px;top:70px;min-height:44px;padding:8px 14px;border:1px solid var(--kfg-frame-color,#b79a5f);background:#fffaf2;color:#765b27;border-radius:24px;z-index:5}
 .is-opening .kfg-monogram,.is-opening .kfg-monogram-logo,.is-opening .kfg-opening h1{animation:kfg-unseal-top .8s cubic-bezier(.2,.65,.25,1) both}
 .is-opening .kfg-guest,.is-opening .kfg-open{animation:kfg-unseal-bottom .8s cubic-bezier(.2,.65,.25,1) both}
@@ -134,3 +134,33 @@
 .kfg-invitation[data-map-style=plain] figure.kfg-map>button{border:0;box-shadow:none;border-radius:0;background:transparent}
 .kfg-invitation[data-map-style=compact] figure.kfg-map{max-width:260px;margin-inline:auto!important}
 @media(max-width:390px){.kfg-map>figure.kfg-map{margin:34px 0 24px!important}.kfg-map>.kfg-venue-name,.kfg-map>p:not(.kfg-venue-name){font-size:15px}}
+
+/* V4 stationery refinement: the photo dissolves into the countdown's paper. */
+.kfg-attendance input { inset: 0; margin: 0; width: 100%; height: 100%; cursor: pointer; }
+.kfg-invitation .guest-section-navigation button { flex-shrink: 0; }
+@media (max-width:390px) {
+  .kfg-invitation .guest-section-navigation { gap: 2px; }
+  .kfg-invitation .guest-section-navigation button { min-width: 44px; padding-inline: 6px; }
+}
+.kfg-opening .kfg-open:hover { background: transparent; box-shadow: none; }
+.kfg-couple-photograph { overflow: clip; }
+.kfg-couple-photograph::after { background: linear-gradient(var(--kfg-paper), transparent 12%, transparent 73%, var(--kfg-paper)); }
+.kfg-couplePhoto + .kfg-countdown { margin-top: -190px; padding-top: 32px; }
+.kfg-countdown > h2 { position: relative; text-shadow: 0 1px 6px var(--kfg-paper), 0 0 18px var(--kfg-paper); }
+.kfg-slide > img, .kfg-lightbox-stage > img { animation: kfg-photo-enter 280ms ease-out both; }
+.kfg-invitation img[data-image-state], .kfg-lightbox img[data-image-state] { transition: opacity 220ms ease; }
+.kfg-invitation img[data-image-state=loading], .kfg-lightbox img[data-image-state=loading] { opacity: .35; }
+.kfg-lightbox-stage { touch-action: pan-y; }
+.kfg-invitation[data-page-hidden=true] *, .kfg-invitation[data-page-hidden=true]::before { animation-play-state: paused !important; }
+.kfg-invitation[data-low-power=true] * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+.kfg-invitation[data-low-power=true] .kfg-petals { display: none; }
+@keyframes kfg-photo-enter { from { opacity: .45; transform: scale(1.015); } to { opacity: 1; transform: none; } }
+@keyframes kfg-portrait-enter { from { opacity: .4; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes kfg-thread-draw { from { stroke-dashoffset: 140; } to { stroke-dashoffset: 0; } }
+@supports (animation-timeline: view()) {
+  .kfg-portraits figure { animation: kfg-portrait-enter linear both; animation-timeline: view(); animation-range: entry 0% entry 30%; }
+  .kfg-schedule .kp-program-curve path { stroke-dasharray: 140; animation: kfg-thread-draw linear both; animation-timeline: view(); animation-range: entry 0% entry 65%; }
+}
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .kfg-lightbox *, .kfg-lightbox img[data-image-state] { animation: none !important; transition: none !important; }
+}
