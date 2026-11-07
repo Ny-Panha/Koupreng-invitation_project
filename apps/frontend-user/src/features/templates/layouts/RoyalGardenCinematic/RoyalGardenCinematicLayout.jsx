@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
+import { cloneElement, isValidElement, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, ClipboardList, Globe2, HeartHandshake, Images, MapPin, MessageCircleHeart, Music2, RotateCcw, VolumeX, CircleAlert, LoaderCircle } from 'lucide-react';
 import { usePrefersReducedMotion } from '@/shared/hooks/usePrefersReducedMotion';
@@ -25,12 +25,14 @@ import RoyalGallery from './components/RoyalGallery';
 import RoyalGardenWeddingCalendar from './components/RoyalGardenWeddingCalendar';
 import RoyalGardenDressCode from './components/RoyalGardenDressCode';
 import RoyalGardenGifts from './components/RoyalGardenGifts';
+import RoyalGardenArtworkPalette from './components/RoyalGardenArtworkPalette';
 import { hasRoyalDressCode, royalGiftItems } from './model/royalGardenGuestPresentation';
 import useIntroSequence from './hooks/useIntroSequence';
 import './royal-garden-cinematic.css';
 import './royal-garden-scenes.css';
 import './royal-garden-guest.css';
 import './royal-garden-v33.css';
+import './royal-garden-v4.css';
 
 const ORDER = ['family', 'invitation', 'countdown', 'schedule', 'venue', 'dressCode', 'gallery', 'wishes', 'gift', 'rsvp', 'closing'];
 const DEMO_PHOTOS = ['/templates/silk-heritage/portrait.webp', '/templates/silk-heritage/together.webp'];
@@ -38,7 +40,7 @@ const text = (...values) => values.find(value => typeof value === 'string') ?? '
 const color = value => /^#[a-f\d]{6}$/i.test(value || '') ? value : undefined;
 const initial = value => typeof Intl.Segmenter === 'function' ? [...new Intl.Segmenter('km', { granularity: 'grapheme' }).segment(value.trim())][0]?.segment || '' : Array.from(value.trim())[0] || '';
 function galleryOf(source) {
-  return (Array.isArray(source) ? source : []).map((photo, index) => ({ id: photo?.id || `photo-${index}`, src: safeIntroMedia(typeof photo === 'string' ? photo : photo?.src || photo?.url || photo?.preview), alt: photo?.alt || `Wedding memory ${index + 1}` })).filter(photo => photo.src);
+  return (Array.isArray(source) ? source : []).map((photo, index) => ({ id: photo?.id || `photo-${index}`, src: safeIntroMedia(typeof photo === 'string' ? photo : photo?.src || photo?.url || photo?.preview), thumbnail: safeIntroMedia(photo?.thumbnailUrl || photo?.thumbnail), width: photo?.width, height: photo?.height, alt: photo?.alt || `Wedding memory ${index + 1}` })).filter(photo => photo.src);
 }
 function Heading({ children }) { return <div className="rg-heading"><h2 lang={/[\u1780-\u17ff]/.test(String(children)) ? 'km' : undefined} style={/[\u1780-\u17ff]/.test(String(children)) ? { fontFamily: 'var(--rg-khmer-heading)' } : undefined}>{children}</h2><span className="rg-divider" aria-hidden="true" /></div>; }
 
@@ -59,11 +61,21 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
   const intro = useMemo(() => normalizeIntro(base.cinematicIntro), [base.cinematicIntro]);
   const presentation = useMemo(() => royalGardenPresentation(base, { hosted }), [base, hosted]);
   const gallery = useMemo(() => galleryOf(base.photos ?? base.galleryImages ?? base.gallery ?? (hosted ? [] : DEMO_PHOTOS)), [base.photos, base.galleryImages, base.gallery, hosted]);
-  const slides = useMemo(() => introSlides(intro, gallery), [intro, gallery]);
-  const sequence = useIntroSequence({ preview, previewStartClosed, enabled: intro.enabled, reduced: reduced || intro.reducedMotion || navigator.connection?.saveData, duration: intro.duration, slideCount: slides.length });
+  const slides = useMemo(() => intro.montageEnabled === false ? [] : introSlides(intro, gallery), [intro, gallery]);
+  const sequence = useIntroSequence({ preview, previewStartClosed, enabled: intro.enabled, reduced: reduced || intro.reducedMotion || navigator.connection?.saveData, duration: intro.duration, slideCount: slides.length, royal: presentation.royal, curtainEnabled: presentation.entrance.curtainEnabled, curtainSpeed: presentation.entrance.curtainSpeed });
   const { finish, restart } = sequence;
   const videoOpening = useCinematicOpening();
   const { active: videoActive, stop: stopVideo } = useCinematicPlayback();
+  const paletteId = `rg-palette-${useId().replace(/:/g, '')}`;
+  const mediaRun = useRef(null);
+  const { prepareVideo, videoPlaying, exitVideo, afterVideo, beginPhotos } = sequence;
+  useEffect(() => {
+    if (!presentation.royal || sequence.stage !== 'CINEMATIC_MEDIA' || sequence.hidden || mediaRun.current === sequence.run) return;
+    mediaRun.current = sequence.run;
+    const token = sequence.run;
+    if (videoOpening?.(null, 0, { replay: true, presentation: { ...presentation.video, royal: true }, onStart: () => videoPlaying(token), onExit: () => exitVideo(token), onFinish: () => afterVideo(presentation.video.followUpPhotos, token) })) prepareVideo();
+    else beginPhotos();
+  }, [presentation, sequence.stage, sequence.run, sequence.hidden, videoOpening, prepareVideo, videoPlaying, exitVideo, afterVideo, beginPhotos]);
   const audio = useRef(null), body = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [musicState, setMusicState] = useState('idle');
@@ -119,12 +131,16 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
   const play = () => { if (!music || !audio.current) return; if (!audio.current.paused || musicState === 'loading') { musicAttempt.current++; audio.current.pause(); setPlaying(false); setMusicState('idle'); } else startMusic(); };
   const open = (replay = false) => {
     if (replay !== true && intro.music) startMusic();
+    if (presentation.royal) {
+      if (replay === true) stopVideo();
+      sequence.start(replay === true); return;
+    }
     if (!(reduced || intro.reducedMotion || navigator.connection?.saveData)) {
       if (videoOpening?.(null, replay === true || !presentation.royal ? 0 : 900, { replay: replay === true || preview, presentation: { ...presentation.video, royal: true }, onStart: sequence.videoPlaying, onExit: sequence.exitVideo, onFinish: () => sequence.afterVideo(presentation.video.followUpPhotos) })) {
         sequence.prepareVideo(); return;
       }
     }
-    if (presentation.royal) finish(); else sequence.start();
+    sequence.start();
   };
   const skip = () => { stopVideo(); finish(); };
   const shellVisible = videoActive || ['VIDEO_PREPARING', 'PRE_WEDDING_VIDEO', 'VIDEO_EXITING', 'CONTENT'].includes(sequence.stage);
@@ -167,7 +183,7 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
   const illustratedVisible = ['auto','illustrated'].includes(mapMode) && base.illustratedMap?.enabled && base.illustratedMap?.nodes?.length > 0;
   const style = base.studioStyle || {};
   const font = (key, fallback) => base.elementFonts?.[key] ? { fontFamily: `${JSON.stringify(base.elementFonts[key])}, var(--rg-heading-font)` } : fallback;
-  const palette = { '--rg-gold': color(style.accent || base.secondaryColor), '--rg-gold-dark': color(style.primary), '--rg-ink': color(style.text), '--rg-bg': color(style.background || base.backgroundColor), '--rg-border': color(style.border),
+  const palette = { '--rg-artwork-filter': presentation.theme === 'burgundy-heritage' ? `url(#${paletteId})` : 'none', '--rg-gold': color(style.accent || base.secondaryColor), '--rg-gold-dark': color(style.primary), '--rg-ink': color(style.text), '--rg-bg': color(style.background || base.backgroundColor), '--rg-border': color(style.border),
     '--rg-khmer-heading': base.fontKhmer ? `${JSON.stringify(base.fontKhmer)}, serif` : '"Moul", serif',
     '--rg-royal-gold': color(style.accent), '--rg-royal-white': color(style.text), '--rg-royal-muted': color(style.text), '--rg-royal-panel': color(style.background), '--rg-royal-border': color(style.border),
     '--rg-heading-font': (english ? base.fontLatin : base.fontKhmer) ? `${JSON.stringify(english ? base.fontLatin : base.fontKhmer)}, serif` : english ? '"Cormorant Garamond", Georgia, serif' : undefined, '--rg-body-font': style.bodyFont ? `${JSON.stringify(style.bodyFont)}, Battambang, serif` : undefined,
@@ -193,12 +209,13 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
       case 'venue': section = <><Heading>{t('ទីតាំងកម្មវិធី', 'Venue & directions')}</Heading><p className="rg-copy">{venueName}<br />{address}</p>
         {illustratedVisible ? <IllustratedMap content={{ ...base, languageMode: english ? 'EN' : 'KH' }} /> : ['auto', 'sketch'].includes(mapMode) && mapImage ? <img className="rg-map-image" src={mapImage} alt={t('ផែនទីទីតាំងមង្គលការ', 'Wedding venue sketch map')} loading="lazy" /> : ['auto', 'embed'].includes(mapMode) && directions && (venueName || address) ? <iframe className="rg-map-image" title={t('ផែនទីទីតាំងកម្មវិធី', 'Wedding venue map')} loading="lazy" referrerPolicy="no-referrer" src={`https://maps.google.com/maps?q=${encodeURIComponent([venueName, address].filter(Boolean).join(' '))}&output=embed`} /> : !venueName && <p className="rg-muted"><MapPin aria-hidden="true" />{t('ទីតាំងនឹងត្រូវបានបញ្ជាក់។', 'Venue details will be confirmed.')}</p>}
         {directions && !illustratedVisible && <a className="rg-button" href={directions} target="_blank" rel="noopener noreferrer">{t('មើលទីតាំង Google Map', 'Open Google Maps')}</a>}</>; break;
-      case 'gallery': section = <><Heading>{t('កម្រងរូបភាព', 'Our memories')}</Heading><RoyalGallery photos={gallery} english={english} /></>; break;
+      case 'gallery': section = <><Heading>{t('កម្រងរូបភាព', 'Our memories')}</Heading><RoyalGallery photos={gallery} english={english} presentation={presentation.gallery} /></>; break;
       case 'dressCode': section = <><Heading>{t('សម្លៀកបំពាក់ចូលរួមពិធី', 'Dress code')}</Heading><RoyalGardenDressCode content={base} english={english} /></>; break;
-      case 'wishes': section = <><Heading>{t('សារជូនពរ', 'Wedding wishes')}</Heading><p className="rg-muted">{t('សូមផ្ញើពាក្យជូនពរជាមួយការបញ្ជាក់វត្តមានខាងក្រោម។ សារជូនពររបស់ភ្ញៀវជាព័ត៌មានឯកជន។', 'Send a personal wish with your RSVP below. Guest messages are private.')}</p></>; break;
+      case 'wishes': section = <><Heading>{t('សារជូនពរ', 'Wedding wishes')}</Heading><p className="rg-muted">{t('សូមផ្ញើពាក្យជូនពរជាមួយការបញ្ជាក់វត្តមាន។ សារជូនពររបស់ភ្ញៀវជាព័ត៌មានឯកជន។', 'Send a personal wish with your RSVP. Guest messages are private.')}</p></>; break;
       case 'gift': section = <><Heading>{t('ចំណងដៃសិរីមង្គល', 'Wedding gifts')}</Heading><RoyalGardenGifts items={gift} english={english} /></>; break;
-      case 'rsvp': section = <><Heading>{t('សូមបញ្ជាក់វត្តមាន', 'RSVP')}</Heading>{children ? isValidElement(children) && typeof children.type !== 'string' ? cloneElement(children, { languageMode: english ? 'EN' : 'KH', showPublicWishes: false }) : children : <p className="rg-muted">{t('ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយធៀបការ។', 'RSVP will be available on your published invitation.')}</p>}</>; break;
+      case 'rsvp': section = <><Heading>{t('សូមបញ្ជាក់វត្តមាន', 'RSVP')}</Heading>{children ? isValidElement(children) && typeof children.type !== 'string' ? cloneElement(children, { languageMode: english ? 'EN' : 'KH', appearance: 'royal', showPublicWishes: false }) : children : <p className="rg-muted">{t('ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយធៀបការ។', 'RSVP will be available on your published invitation.')}</p>}</>; break;
       case 'closing': section = <>
+        <HeartHandshake className="rg-closing-motif" aria-hidden="true" />
         <RoyalGardenCeremonialLetter variant="thanks" title={text(english && !hosted ? base.thankYouTitleEn || undefined : undefined, base.thankYouTitle)} body={text(english && !hosted ? base.thankYouTextEn || undefined : undefined, base.thankYouText)} />
         <RoyalGardenCeremonialLetter variant="apology" title={text(english && !hosted ? base.apologyTitleEn || undefined : undefined, base.apologyTitle)} body={text(english && !hosted ? base.apologyTextEn || undefined : undefined, base.apologyText)} />
         <p className="rg-closing-names">{names}</p></>; break;
@@ -207,13 +224,16 @@ export default function RoyalGardenCinematicLayout({ tpl = {}, content = {}, liv
     return <section id={`rg-${key}`} data-section-key={key} className={`rg-section rg-section--${key}`} key={key}>{section}</section>;
   };
   const nav = [['countdown', CalendarDays, 'កាលបរិច្ឆេទ', 'Date'], ['venue', HeartHandshake, 'ទីតាំង', 'Venue'], ['gallery', Images, 'រូបភាព', 'Photos'], ['wishes', MessageCircleHeart, 'សារជូនពរ', 'Wishes'], ['schedule', ClipboardList, 'កម្មវិធី', 'Program']];
-  return <InvitationLocaleContext.Provider value={english ? 'EN' : 'KH'}><div className="tpl-royal-garden" style={palette} data-stage={sequence.stage} data-video-active={videoActive} data-royal={presentation.royal || presentation.information.enabled || videoActive} data-motion={style.motion} data-decoration-paused={sequence.hidden || reduced || intro.reducedMotion || navigator.connection?.saveData || undefined} lang={english ? 'en' : 'km'}>
+  const royalTransition = presentation.royal && ['COVER_EXITING', 'CURTAIN_PREPARING', 'CURTAIN_OPENING', 'CINEMATIC_MEDIA', 'PHOTO_SLIDESHOW', 'INVITATION_REVEAL'].includes(sequence.stage);
+  return <InvitationLocaleContext.Provider value={english ? 'EN' : 'KH'}><div className="tpl-royal-garden" style={palette} data-theme={presentation.theme} data-stage={sequence.stage} data-video-active={videoActive} data-royal={presentation.royal || presentation.information.enabled || videoActive} data-motion={style.motion} data-decoration-paused={sequence.hidden || reduced || intro.reducedMotion || navigator.connection?.saveData || undefined} lang={english ? 'en' : 'km'}>
+    <RoyalGardenArtworkPalette id={paletteId} />
     <div className="rg-environment" aria-hidden="true" />
     {music && <audio ref={audio} src={music} loop preload="none" onPlaying={() => { setPlaying(true); setMusicState('playing'); }} onPause={() => { setPlaying(false); setMusicState('idle'); }} onError={() => { setPlaying(false); setMusicState('blocked'); }} />}
     <div className="rg-top-controls"><label className="rg-language"><Globe2 size={16} aria-hidden="true" /><span className="rg-sr-only">{t('ភាសាធៀប', 'Invitation language')}</span><select value={english ? 'en' : 'km'} onChange={e => setSearch(current => { current.set('lang', e.target.value); return current; }, { replace: true, preventScrollReset: true })}><option value="km">ខ្មែរ</option><option value="en" disabled={!englishAvailable}>English</option></select></label>
       {music && <button type="button" className="rg-music" data-playing={playing} data-state={musicState} onClick={play} aria-label={playing ? t('ផ្អាកតន្ត្រី', 'Pause music') : t('ចាក់តន្ត្រី', 'Play music')} title={playing ? t('ផ្អាកតន្ត្រី', 'Pause music') : t('ចាក់តន្ត្រី', 'Play music')} aria-pressed={playing} aria-busy={musicState === 'loading'}>{musicState === 'blocked' ? <CircleAlert aria-hidden="true" /> : musicState === 'loading' ? <LoaderCircle aria-hidden="true" /> : playing ? <Music2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}</button>}</div>
     {musicState === 'blocked' && <p className="rg-music-status rg-sr-only" role="status">{t('សូមចុចរូបតន្ត្រី ដើម្បីសាកល្បងចាក់ម្តងទៀត។', 'Tap Play music to try playback again.')}</p>}
-    {(!shellVisible || sequence.stage === 'VIDEO_PREPARING') && (presentation.royal && !['PHOTO_SLIDESHOW', 'INVITATION_REVEAL'].includes(sequence.stage)
+    {royalTransition && <RoyalGardenIntro sequence={sequence} intro={intro} slides={slides} content={base} title={title} names={names} date={date} english={english} onOpen={open} reducedMotion={reduced} presentation={presentation} monogram={monogram} />}
+    {(!shellVisible || sequence.stage === 'VIDEO_PREPARING') && (!royalTransition || sequence.stage === 'COVER_EXITING') && (presentation.royal
       ? <RoyalGardenEntranceScene sequence={sequence} intro={intro} presentation={presentation} content={base} title={title} names={names} date={date} english={english} onOpen={open} onSkip={skip} reduced={reduced || intro.reducedMotion || navigator.connection?.saveData} />
       : <RoyalGardenIntro sequence={sequence} intro={intro} slides={slides} content={base} title={title} names={names} date={date} english={english} onOpen={open} reducedMotion={reduced || intro.reducedMotion || navigator.connection?.saveData} />)}
     {shellVisible && <RoyalGardenInformationScene presentation={presentation} reduced={reduced || intro.reducedMotion} active={informationVisible}>

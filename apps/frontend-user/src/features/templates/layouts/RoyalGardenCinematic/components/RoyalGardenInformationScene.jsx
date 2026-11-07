@@ -6,6 +6,7 @@ import { useInvitationLocale } from '../../../shared/invitationLocaleContext';
 
 export default function RoyalGardenInformationScene({ presentation, reduced, active = true, children }) {
   const root = useRef(null), scroll = useRef(null), info = presentation.information;
+  const heritage = info.background === ROYAL_ASSETS.heritageFrame;
   const locale = useInvitationLocale();
   useEffect(() => {
     if (!active || !info.enabled || reduced || info.reveal === 'none' || typeof IntersectionObserver === 'undefined') return;
@@ -20,8 +21,8 @@ export default function RoyalGardenInformationScene({ presentation, reduced, act
   }, [active, info.enabled, info.reveal, reduced]);
   return <div ref={root} className="rg-paper" data-royal={info.enabled} data-fixed={info.fixed} data-view={active ? 'information' : 'video'} data-reveal={info.reveal} data-spacing={info.spacing} style={{ '--rg-information-overlay': info.overlay, '--rg-panel-opacity': info.panelOpacity }}>
     {info.enabled && <>
-      {info.background && info.background !== ROYAL_ASSETS.information && <img className="rg-information-custom-background" src={info.background} alt="" style={{ objectPosition: info.position }} />}
-      <RoyalGardenArtworkFrame source={info.background ? ROYAL_ASSETS.information : ''} smallSource={ROYAL_ASSETS.informationSmall} variant="information" className="rg-information-background" fill={info.background === ROYAL_ASSETS.information} />
+      {info.background && !heritage && info.background !== ROYAL_ASSETS.information && <img className="rg-information-custom-background" src={info.background} alt="" style={{ objectPosition: info.position }} />}
+      <RoyalGardenArtworkFrame source={info.background ? (heritage ? ROYAL_ASSETS.heritageFrame : ROYAL_ASSETS.information) : ''} smallSource={heritage ? ROYAL_ASSETS.heritageFrameSmall : ROYAL_ASSETS.informationSmall} variant="information" className="rg-information-background" fill={info.background === ROYAL_ASSETS.information} />
       {active && <RoyalGardenMotionLayer settings={presentation.motion} reduced={reduced} />}
     </>}
     {info.enabled ? <div ref={scroll} className="rg-content-scroll" tabIndex={active ? 0 : -1} aria-label={locale === 'EN' ? 'Invitation content' : 'ព័ត៌មានធៀបអញ្ជើញ'}>{children}</div> : children}

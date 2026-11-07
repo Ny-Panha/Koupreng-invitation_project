@@ -3,6 +3,7 @@ import { safeIntroMedia } from '../../../shared/cinematicIntro';
 const ROOT = '/templates/royal-garden/v3';
 const REFINEMENT = '/templates/royal-garden/v3-1';
 export const ROYAL_ASSETS = Object.freeze({
+  heritageFrame: '/templates/royal-garden/v4/heritage-frame.webp', heritageFrameSmall: '/templates/royal-garden/v4/heritage-frame-640.webp',
   arch: `${REFINEMENT}/opening-frame-1200.webp`, archSmall: `${REFINEMENT}/opening-frame-640.webp`,
   calligraphy: `${ROOT}/opening/calligraphy.webp`, calligraphySmall: `${ROOT}/opening/calligraphy-640.webp`,
   guest: `${ROOT}/ornaments/guest-frame.webp`, footer: `${ROOT}/video/footer.webp`,
@@ -27,12 +28,16 @@ const asset = (value, fallback) => value === undefined ? fallback : safeIntroMed
 export function royalGardenPresentation(content = {}, { hosted = content.hasHostContent === true } = {}) {
   const intro = record(content.cinematicIntro), information = record(content.informationScene);
   const royal = intro.style === 'royal-arch';
+  const theme = pick(information.colorPreset, ['royal-blue', 'burgundy-heritage'], 'royal-blue');
+  const heritage = theme === 'burgundy-heritage';
   const video = record(information.video), effects = record(information.effects);
   const monogram = record(information.monogram), monogramMode = pick(monogram.mode, ['auto', 'artwork', 'custom', 'initials', 'hidden'], 'auto');
   return {
     royal,
+    theme,
+    gallery: pick(information.galleryPresentation, ['collage', 'carousel'], royal ? 'collage' : 'carousel'),
     entrance: {
-      frame: asset(intro.entranceFrame === `${ROOT}/opening/arch.webp` ? undefined : intro.entranceFrame, ROYAL_ASSETS.arch), frameEnabled: intro.entranceFrameEnabled !== false,
+      frame: asset(intro.entranceFrame === `${ROOT}/opening/arch.webp` ? undefined : intro.entranceFrame, heritage ? ROYAL_ASSETS.heritageFrame : ROYAL_ASSETS.arch), frameEnabled: intro.entranceFrameEnabled !== false,
       frameScale: bounded(intro.entranceFrameScale, .85, 1.1, 1),
       framePosition: pick(intro.entranceFramePosition, ['upper', 'center', 'lower'], 'center'),
       guestFrameEnabled: intro.guestFrameEnabled !== false,
@@ -42,6 +47,8 @@ export function royalGardenPresentation(content = {}, { hosted = content.hasHost
       openButtonText: typeof intro.openButtonText === 'string' ? intro.openButtonText.slice(0, 100) : undefined,
       buttonArtwork: intro.buttonArtwork !== false,
       buttonStyle: pick(intro.buttonStyle, ['artwork', 'circle', 'text'], intro.buttonArtwork === false ? 'circle' : 'artwork'),
+      curtainEnabled: intro.curtainEnabled !== false,
+      curtainSpeed: pick(intro.curtainSpeed, ['standard', 'gentle'], 'standard'),
     },
     monogram: {
       mode: monogramMode, hidden: monogramMode === 'hidden',
@@ -50,7 +57,7 @@ export function royalGardenPresentation(content = {}, { hosted = content.hasHost
     },
     information: {
       enabled: information.enabled === undefined ? royal : information.enabled === true,
-      background: asset(information.backgroundAsset, ROYAL_ASSETS.information),
+      background: asset(information.backgroundAsset, heritage ? ROYAL_ASSETS.heritageFrame : ROYAL_ASSETS.information),
       fixed: information.fixedBackground !== false,
       position: pick(information.backgroundPosition, ['center', 'top', 'bottom'], 'center'),
       overlay: bounded(information.contentOverlay, 0, .8, .2),

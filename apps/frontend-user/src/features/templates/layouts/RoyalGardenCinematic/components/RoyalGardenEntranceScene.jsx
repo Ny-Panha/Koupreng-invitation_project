@@ -20,11 +20,11 @@ export default function RoyalGardenEntranceScene({ content, intro, presentation,
   }, [sequence.hidden, sequence.stage]);
   // CoverBackground remains the single resolver for owner cover image/video precedence.
   const photograph = safeIntroMedia(content.couplePhoto || content.coverImage || (!content.hasHostContent && content.mainImage));
-  const defaultCover = { type: 'image', src: photograph || ROYAL_ASSETS.informationSmall,
+  const defaultCover = { type: 'image', src: photograph || (presentation.theme === 'burgundy-heritage' ? '' : ROYAL_ASSETS.informationSmall),
     ...(photograph === ROYAL_ASSETS.demoPortrait ? { srcSet: `${ROYAL_ASSETS.demoPortraitTiny} 480w, ${ROYAL_ASSETS.demoPortraitSmall} 640w, ${photograph} 960w`, sizes: ROYAL_CANVAS_SIZES } : {}) };
   const entrance = presentation.entrance;
   const label = entrance.openButtonText ?? (english ? 'Open invitation' : 'បើកធៀបអញ្ជើញ');
-  return <section ref={root} className="rg-intro rg-royal-entrance" data-scene={sequence.stage} data-style="royal-arch" data-animation={intro.animationPreset} data-reduced={reduced || undefined} data-paused={sequence.paused || sequence.hidden || sequence.stage === 'PRE_WEDDING_VIDEO'} aria-label={english ? 'Invitation opening' : 'ការបើកធៀបអញ្ជើញ'}>
+  return <section ref={root} inert={sequence.stage === 'COVER_EXITING' || undefined} aria-hidden={sequence.stage === 'COVER_EXITING' || undefined} className="rg-intro rg-royal-entrance" data-scene={sequence.stage} data-style="royal-arch" data-animation={intro.animationPreset} data-reduced={reduced || undefined} data-paused={sequence.paused || sequence.hidden || sequence.stage === 'PRE_WEDDING_VIDEO'} aria-label={english ? 'Invitation opening' : 'ការបើកធៀបអញ្ជើញ'}>
     <div className="rg-entrance-stage" data-title-mode={hasArtwork ? 'artwork' : 'text'} data-title-placement={entrance.titlePlacement} data-frame-position={entrance.framePosition} style={{ '--rg-cover-x': `${entrance.coverX}%`, '--rg-cover-y': `${entrance.coverY}%`, '--rg-cover-pan-y': `${(40 - entrance.coverY) * .22}%`, '--rg-cover-zoom': entrance.coverZoom, '--rg-frame-scale': entrance.frameScale }}>
       <div className="rg-entrance-photo" data-frame-ready={!entrance.frameEnabled || !entrance.frame || readyFrame === entrance.frame} data-default-photo={!content.hasHostContent && !content.coverBackgroundImage && !content.coverVideoUrl && photograph === ROYAL_ASSETS.demoPortrait}><CoverBackground content={content} templateDefault={defaultCover} priority /></div>
       <RoyalGardenRoyalArch entrance={entrance} onReady={() => setReadyFrame(entrance.frame)} />
@@ -40,7 +40,7 @@ export default function RoyalGardenEntranceScene({ content, intro, presentation,
       </button></div></div>
       <RoyalGardenMotionLayer settings={presentation.motion} reduced={reduced} paused={sequence.paused || sequence.stage === 'PRE_WEDDING_VIDEO'} />
     </div>
-    {!opening && <button className="rg-entrance-skip" type="button" onClick={onSkip}>{english ? 'Skip intro' : 'រំលង'}</button>}
+    {!opening && sequence.stage !== 'COVER_EXITING' && <button className="rg-entrance-skip" type="button" onClick={onSkip}>{english ? 'Skip intro' : 'រំលង'}</button>}
   </section>;
 }
 

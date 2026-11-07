@@ -8,7 +8,7 @@ const code = 'royal-garden-cinematic', base = '/templates/royal-garden/v3';
 const portrait = '/templates/silk-heritage/portrait.webp';
 const evidence = process.env.ROYAL_EVIDENCE_DIR || '../../docs/design/royal-garden-v3-1/evidence/browser';
 const intro = { style: 'royal-arch', titleMode: 'text', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
-const information = { enabled: true, fixedBackground: true, motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
+const information = { enabled: true, fixedBackground: true, galleryPresentation: 'carousel', motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
 const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
 async function setup(page, { authorized = false, premium = true, content = {}, guest = null } = {}) {
   const state = await phase9Fixtures(page, { code, premium, content: { cinematicIntro: intro, informationScene: information, coverBackgroundImage: portrait, messageText: 'Please join our fictional celebration.', messageTitle: 'With our families',
@@ -97,7 +97,9 @@ test('unavailable video, absent photo, failed artwork, cleared lettering and lon
   let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content') || request.url().includes('pre-wedding-demo.mp4')) calls++; });
   await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toBeVisible(); await expect(page.locator('.rg-entrance-lettering h1')).toBeVisible();
   expect(await page.locator('.rg-entrance-lettering').evaluate(node => getComputedStyle(node, '::after').animationName)).toBe('none');
-  await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
+  await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=PHOTO_SLIDESHOW]')).toBeVisible();
+  await page.getByRole('button', { name: 'Skip intro', exact: true }).click();
+  await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });
 
@@ -186,9 +188,10 @@ test('Studio settings update the same iframe and survive save/reload/published r
 });
 
 test('refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame', async ({ page }, info) => {
-  await setup(page);
+  // This retains the original blue artwork contract; the catalog now previews Burgundy Heritage.
+  await setup(page, { authorized: true });
   for (const [width,height] of [[375,667],[390,844],[768,1024],[1440,900]]) {
-    await page.setViewportSize({width,height}); await page.goto(`/templates/${code}?lang=en`);
+    await page.setViewportSize({width,height}); await page.goto('/i/review-celestial?lang=en');
     const photo = page.locator('.rg-entrance-photo'), action=page.locator('.rg-open');
     await expect(photo).toHaveAttribute('data-frame-ready','true');
     await expect(page.locator('.rg-royal-arch img')).toHaveAttribute('src',/v3-1\/opening-frame-1200.webp$/);
@@ -257,9 +260,9 @@ test('refinement: lower film lettering, live date and two separated top controls
 });
 
 test('repair: short phones retain the complete artwork, safe portrait window and separate video footer', async ({ page }, info) => {
-  await setup(page);
+  await setup(page, { authorized: true });
   for (const [width, height] of [[320,568],[375,667],[390,844],[430,932],[512,910],[768,1024],[1440,960]]) {
-    await page.setViewportSize({ width, height }); await page.goto(`/templates/${code}?lang=en`);
+    await page.setViewportSize({ width, height }); await page.goto('/i/review-celestial?lang=en');
     await expect(page.locator('.rg-royal-arch img')).toBeVisible();
     const action = await page.locator('.rg-open').boundingBox(), guest = await page.locator('.rg-royal-guest').boundingBox();
     expect(action.y + action.height).toBeLessThanOrEqual(height);
@@ -270,10 +273,10 @@ test('repair: short phones retain the complete artwork, safe portrait window and
     expect((await page.locator('.rg-entrance-photo .cover-bg-root').boundingBox()).height).toBeGreaterThan(height * .75);
     await capture(page, `repair-cover-${width}x${height}`, info);
   }
-  await page.setViewportSize({ width: 375, height: 667 }); await page.goto(`/templates/${code}?lang=km`);
+  await page.setViewportSize({ width: 375, height: 667 }); await page.goto('/i/review-celestial?lang=km');
   await expect(page.locator('.rg-open')).toBeVisible();
   await capture(page, 'repair-cover-khmer-375', info);
-  await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=en`);
+  await page.setViewportSize({ width: 390, height: 844 }); await page.goto('/i/review-celestial?lang=en');
   await expect(page.locator('.rg-open')).toBeVisible();
   if (['chromium', 'mobile-chromium'].includes(info.project.name)) {
     await page.clock.install(); await page.clock.pauseAt(new Date(Date.now() + 1000));
@@ -344,7 +347,7 @@ test('critical: language changes preserve the active film, authorized guest data
 });
 
 test('critical: immersive media and one inner scroll preserve the complete frame and reachable ending', async ({ page }, info) => {
-  await setup(page); await page.setViewportSize({ width: 390, height: 844 }); await page.goto(`/templates/${code}?lang=km`, { waitUntil: 'domcontentloaded' });
+  await setup(page, { authorized: true }); await page.setViewportSize({ width: 390, height: 844 }); await page.goto('/i/review-celestial?lang=km', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.rg-open')).toBeVisible();
   const button = await page.locator('.rg-open').boundingBox(); expect(button.width / button.height).toBeCloseTo(3, 1); expect(button.height).toBeGreaterThanOrEqual(44);
   const band = await page.locator('.rg-guest-frame img').boundingBox(); expect(band.width / band.height).toBeCloseTo(3, 1);

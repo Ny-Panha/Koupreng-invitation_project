@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { QRCode } from "react-qr-code";
 import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -24,6 +24,8 @@ const englishLabels = {
     notAttending: "Not attending",
     maybe: "Maybe",
     attendeeCount: "Attendee count",
+    fewerGuests: "Fewer guests",
+    moreGuests: "More guests",
     message: "Message",
     submitting: "Submitting...",
     submit: "Submit RSVP",
@@ -52,6 +54,8 @@ const khmerLabels = {
     notAttending: "មិនអាចចូលរួម",
     maybe: "ប្រហែលជាចូលរួម",
     attendeeCount: "ចំនួនភ្ញៀវ",
+    fewerGuests: "បន្ថយចំនួនភ្ញៀវ",
+    moreGuests: "បន្ថែមចំនួនភ្ញៀវ",
     message: "សារជូនពរ",
     submitting: "កំពុងផ្ញើ...",
     submit: "ផ្ញើ RSVP",
@@ -83,6 +87,7 @@ export default function PublicRsvpForm({
         : englishLabels;
 
     const [form, setForm] = useState(initialForm);
+    const countId = useId();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [submitted, setSubmitted] = useState(null);
@@ -401,7 +406,7 @@ export default function PublicRsvpForm({
                         </div>
                     )}
                     <div className="inv-form-grid">
-                        {appearance === 'floral' ? <fieldset className="kfg-response-field"><legend>{labels.response}</legend><div className="kfg-attendance">{[['ATTENDING', labels.attending], ['NOT_ATTENDING', labels.notAttending]].map(([value, label]) => <label key={value}><input type="radio" name="responseStatus" value={value} checked={form.responseStatus === value} onChange={() => update('responseStatus', value)} /><span>{label}</span></label>)}</div></fieldset> : <label>
+                        {['floral', 'royal'].includes(appearance) ? <fieldset className={appearance === 'royal' ? 'rg-response-field' : 'kfg-response-field'}><legend>{labels.response}</legend><div className={appearance === 'royal' ? 'rg-attendance' : 'kfg-attendance'}>{[['ATTENDING', labels.attending], ['NOT_ATTENDING', labels.notAttending], ...(appearance === 'royal' ? [['MAYBE', labels.maybe]] : [])].map(([value, label]) => <label key={value}><input type="radio" name="responseStatus" value={value} checked={form.responseStatus === value} onChange={() => update('responseStatus', value)} /><span>{label}</span></label>)}</div></fieldset> : <label>
                             {labels.response}
                             <select
                                 value={form.responseStatus}
@@ -412,7 +417,11 @@ export default function PublicRsvpForm({
                                 <option value="MAYBE">{labels.maybe}</option>
                             </select>
                         </label>}
-                        <label>
+                        {appearance === 'royal' ? <div className="rg-guest-count"><label htmlFor={countId}>{labels.attendeeCount}</label><div>
+                            <button type="button" aria-label={labels.fewerGuests} disabled={Number(form.attendeeCount) <= 0} onClick={() => update('attendeeCount', Math.max(0, Number(form.attendeeCount) - 1))}>−</button>
+                            <input id={countId} type="number" min="0" value={form.attendeeCount} onChange={event => update('attendeeCount', event.target.value)} />
+                            <button type="button" aria-label={labels.moreGuests} onClick={() => update('attendeeCount', Number(form.attendeeCount) + 1)}>+</button>
+                        </div></div> : <label>
                             {labels.attendeeCount}
                             <input
                                 type="number"
@@ -420,7 +429,7 @@ export default function PublicRsvpForm({
                                 value={form.attendeeCount}
                                 onChange={(event) => update("attendeeCount", event.target.value)}
                             />
-                        </label>
+                        </label>}
                     </div>
                     <label>
                         {labels.message}

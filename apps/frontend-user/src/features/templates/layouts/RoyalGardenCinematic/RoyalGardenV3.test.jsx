@@ -97,6 +97,9 @@ describe('Royal Garden V3 presentation and compatibility', () => {
 });
 
 describe('royal entrance and video recovery', () => {
+  async function advanceRoyalOpening() {
+    for (const ms of [360, 420, 1800, 1]) await act(async () => vi.advanceTimersByTime(ms));
+  }
   it('retains the real photo, live names and safe text if decorative assets fail', () => {
     const content = { coverBackgroundImage: '/owner.webp', isPersonalizedGuest: true, guestName: '<script>guest</script>', cinematicIntro: { style: 'royal-arch', titleMode: 'artwork' } };
     const { container } = render(<RoyalGardenEntranceScene content={content} intro={normalizeIntro(content.cinematicIntro)} presentation={royalGardenPresentation(content)} sequence={{ stage: 'COVER' }} title="Our day" names="Owner & Partner" date="5 December" english onOpen={vi.fn()} />);
@@ -117,8 +120,8 @@ describe('royal entrance and video recovery', () => {
     expect(container.querySelector('.cover-bg-media')).toHaveAttribute('src', ROYAL_ASSETS.demoPortrait);
     expect(container.querySelector('.cover-bg-media')).toHaveAttribute('srcset', expect.stringContaining(ROYAL_ASSETS.demoPortraitSmall));
   });
-  function show({ loadVideo, reduced = false, followUpPhotos = false, endBehavior = 'collapse', sound = 'muted' } = {}) {
-    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', eventDate: '2028-02-29', eventTime: '17:30', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: 'royal-arch', reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos, endBehavior, sound, showTime: true } } };
+  function show({ loadVideo, reduced = false, followUpPhotos = false, endBehavior = 'collapse', sound = 'muted', introStyle = 'royal-arch' } = {}) {
+    const content = { hasHostContent: true, groomName: 'Owner', brideName: 'Partner', eventDate: '2028-02-29', eventTime: '17:30', languageMode: 'EN', musicUrl: '/music.mp3', cinematicIntro: { style: introStyle, reducedMotion: reduced, slides: [{ id: 'one', src: '/owner.webp' }] }, informationScene: { video: { followUpPhotos, endBehavior, sound, showTime: true } } };
     return render(<MemoryRouter><CinematicOpeningProvider configuration={{ enabled: true, videoMediaId: 42 }} loadVideo={loadVideo} demoVideo={loadVideo ? undefined : { src: '/sample.mp4' }} english>
       <RoyalGardenCinematicLayout content={content} />
     </CinematicOpeningProvider></MemoryRouter>);
@@ -126,8 +129,8 @@ describe('royal entrance and video recovery', () => {
   it.each(['skip', 'ended', 'error'])('enters content after %s, without a popup or competing audio', async path => {
     vi.useFakeTimers(); const { container } = show();
     fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    expect(container.querySelector('[data-stage=VIDEO_PREPARING]')).toBeInTheDocument();
-    await act(async () => vi.advanceTimersByTime(900));
+    expect(container.querySelector('[data-stage=COVER_EXITING]')).toBeInTheDocument();
+    await advanceRoyalOpening();
     const stage = screen.getByRole('region', { name: 'Pre-wedding video' });
     expect(screen.queryByRole('dialog')).toBeNull(); expect(stage.querySelector('form')).toBeNull();
     expect(container.querySelector('[data-stage=PRE_WEDDING_VIDEO]')).toBeInTheDocument();
@@ -162,14 +165,14 @@ describe('royal entrance and video recovery', () => {
   it('keeps the same information shell and offers a fresh replay after completion when configured', async () => {
     vi.useFakeTimers(); const { container } = show({ endBehavior: 'poster', sound: 'on' });
     fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    await act(async () => vi.advanceTimersByTime(900));
+    await advanceRoyalOpening();
     const background = container.querySelector('.rg-information-background');
     expect(container.querySelector('video').muted).toBe(true);
     fireEvent.ended(container.querySelector('video'));
     await act(async () => vi.advanceTimersByTime(750));
     expect(container.querySelector('.rg-information-background')).toBe(background);
     fireEvent.click(screen.getByRole('button', { name: 'Replay video' }));
-    await act(async () => vi.advanceTimersByTime(1));
+    await advanceRoyalOpening();
     expect(container.querySelector('video')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Skip video' }));
     await act(async () => vi.advanceTimersByTime(750));
@@ -177,9 +180,20 @@ describe('royal entrance and video recovery', () => {
   });
   it('uses the optional photo follow-up only when configured', async () => {
     vi.useFakeTimers(); const { container } = show({ followUpPhotos: true }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    await act(async () => vi.advanceTimersByTime(900)); fireEvent.ended(screen.getByRole('region', { name: 'Pre-wedding video' }).querySelector('video'));
+    await advanceRoyalOpening(); fireEvent.ended(screen.getByRole('region', { name: 'Pre-wedding video' }).querySelector('video'));
     await act(async () => vi.advanceTimersByTime(750));
     expect(container.querySelector('[data-stage=PHOTO_SLIDESHOW]')).toBeInTheDocument();
+  });
+  it('replays legacy calligraphy films through the same preparing and completion states', async () => {
+    vi.useFakeTimers(); const { container } = show({ introStyle:'golden-calligraphy', endBehavior:'poster' });
+    fireEvent.click(screen.getByRole('button',{name:'Open invitation'}));
+    await act(async()=>vi.advanceTimersByTime(1));
+    fireEvent.ended(container.querySelector('video')); await act(async()=>vi.advanceTimersByTime(750));
+    fireEvent.click(screen.getByRole('button',{name:'Replay video'}));
+    expect(container.querySelector('[data-stage=VIDEO_PREPARING]')).toBeInTheDocument();
+    await act(async()=>vi.advanceTimersByTime(1)); expect(container.querySelector('[data-stage=PRE_WEDDING_VIDEO]')).toBeInTheDocument();
+    fireEvent.ended(container.querySelector('video')); await act(async()=>vi.advanceTimersByTime(750));
+    expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
   it('does not request protected media when reduced motion bypasses the intro', () => {
     const loadVideo = vi.fn(); const { container } = show({ loadVideo, reduced: true }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
@@ -188,7 +202,7 @@ describe('royal entrance and video recovery', () => {
   it('falls back when protected playback rejects access', async () => {
     vi.useFakeTimers(); const loadVideo = vi.fn().mockRejectedValue(new Error('403'));
     const { container } = show({ loadVideo }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    await act(async () => vi.advanceTimersByTime(900));
+    await advanceRoyalOpening();
     await act(async () => vi.advanceTimersByTime(750));
     expect(loadVideo).toHaveBeenCalledTimes(1); expect(screen.queryByRole('dialog')).toBeNull(); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
@@ -196,7 +210,7 @@ describe('royal entrance and video recovery', () => {
     vi.useFakeTimers(); let signal;
     const loadVideo = vi.fn(value => { signal = value; return new Promise(() => {}); });
     const { container } = show({ loadVideo }); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
-    await act(async () => vi.advanceTimersByTime(900)); await act(async () => vi.advanceTimersByTime(15000));
+    await advanceRoyalOpening(); await act(async () => vi.advanceTimersByTime(15000));
     await act(async () => vi.advanceTimersByTime(750));
     expect(signal.aborted).toBe(true); expect(container.querySelector('[data-stage=CONTENT]')).toBeInTheDocument();
   });
@@ -205,6 +219,7 @@ describe('royal entrance and video recovery', () => {
     show(); fireEvent.click(screen.getByRole('button', { name: 'Open invitation' }));
     await act(async () => vi.advanceTimersByTime(900)); expect(HTMLMediaElement.prototype.play.mock.contexts.filter(node => node.tagName === 'VIDEO')).toHaveLength(0);
     hidden.mockReturnValue(false); act(() => document.dispatchEvent(new Event('visibilitychange')));
+    await advanceRoyalOpening();
     expect(HTMLMediaElement.prototype.play.mock.contexts.filter(node => node.tagName === 'VIDEO')).toHaveLength(1);
   });
 });

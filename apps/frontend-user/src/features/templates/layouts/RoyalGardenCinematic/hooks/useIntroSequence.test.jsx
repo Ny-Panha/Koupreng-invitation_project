@@ -36,3 +36,40 @@ it('bypasses animation with reduced motion and disabled intros', () => {
   const disabled = renderHook(() => useIntroSequence({ ...options, enabled: false }));
   expect(disabled.result.current.stage).toBe('CONTENT');
 });
+
+it('opens royal curtains once, pauses cloth timing, then hands off to media', () => {
+  const { result } = renderHook(() => useIntroSequence({ ...options, royal: true }));
+  act(() => { result.current.start(); result.current.start(); });
+  expect(result.current.stage).toBe('COVER_EXITING');
+  const token = result.current.run;
+  tick(360); expect(result.current.stage).toBe('CURTAIN_PREPARING');
+  tick(420); expect(result.current.stage).toBe('CURTAIN_OPENING');
+  tick(500); act(() => result.current.setPaused(true)); tick(5000);
+  expect(result.current.stage).toBe('CURTAIN_OPENING');
+  act(() => result.current.setPaused(false)); tick(1300);
+  expect(result.current.stage).toBe('CINEMATIC_MEDIA'); expect(result.current.run).toBe(token);
+  act(() => result.current.beginPhotos()); tick(2000); expect(result.current.slide).toBe(1);
+  tick(2000); tick(700); expect(result.current.stage).toBe('CONTENT');
+});
+it('cancels each royal stage and ignores stale and duplicate video completion', () => {
+  const { result } = renderHook(() => useIntroSequence({ ...options, royal: true }));
+  for (const waits of [[], [360], [360, 420], [360, 420, 1800]]) {
+    act(() => result.current.restart()); act(() => result.current.start());
+    waits.forEach(tick); act(() => result.current.finish()); tick(20000);
+    expect(result.current.stage).toBe('CONTENT');
+  }
+  act(() => result.current.restart()); act(() => result.current.start()); tick(360); tick(420); tick(1800);
+  const token = result.current.run;
+  act(() => result.current.prepareVideo()); act(() => result.current.videoPlaying(token));
+  act(() => result.current.afterVideo(false, token)); act(() => result.current.afterVideo(true, token));
+  expect(result.current.stage).toBe('CONTENT');
+  act(() => result.current.start(true)); act(() => result.current.afterVideo(false, token));
+  expect(result.current.stage).toBe('COVER_EXITING');
+});
+it('supports curtain opt-out, empty media and live reduced-motion changes', () => {
+  const { result, rerender, unmount } = renderHook(props => useIntroSequence(props), { initialProps: { ...options, royal: true, curtainEnabled: false, slideCount: 0 } });
+  act(() => result.current.start()); tick(360); expect(result.current.stage).toBe('CINEMATIC_MEDIA');
+  act(() => result.current.beginPhotos()); expect(result.current.stage).toBe('INVITATION_REVEAL');
+  rerender({ ...options, royal: true, reduced: true }); expect(result.current.stage).toBe('CONTENT');
+  unmount(); expect(vi.getTimerCount()).toBe(0);
+});

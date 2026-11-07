@@ -11,7 +11,10 @@ export function royalGardenDemoContent(existing = {}) {
   const time = /^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(event.time || '') ? event.time.slice(0, 5) : '17:00';
   return {
     isTemplateDemo: true,
-    title: 'Sample wedding · ពិធីមង្គលការគំរូ',
+    sectionOrder: ['family', 'invitation', 'venue', 'schedule', 'gallery', 'countdown', 'gift', 'rsvp', 'wishes', 'closing'],
+    cinematicIntro: { ...(existing.cinematicIntro || {}), style: 'royal-arch', titleMode: 'text', buttonStyle: 'circle', curtainEnabled: true, curtainSpeed: 'standard' },
+    informationScene: { ...(existing.informationScene || {}), colorPreset: 'burgundy-heritage', galleryPresentation: 'collage' },
+    title: 'សិរីសួស្តីអាពាហ៍ពិពាហ៍',
     groomName: 'កឿង វីរៈ', brideName: 'ឡុង សុម៉ាលី', groomEn: 'Sovann', brideEn: 'Dalin',
     eventDate: date, machineEventDate: date, targetDate: date, eventTime: time, eventTimezone: existing.eventTimezone || 'Asia/Phnom_Penh',
     event: { date, receptionTime: time, timezone: existing.eventTimezone || 'Asia/Phnom_Penh' },

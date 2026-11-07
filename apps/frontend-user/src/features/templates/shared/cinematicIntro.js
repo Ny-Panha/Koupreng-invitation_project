@@ -35,6 +35,9 @@ export function normalizeIntro(value = {}) {
     openButtonText: value => typeof value === 'string' ? value.slice(0, 100) : undefined,
     buttonArtwork: value => value !== false,
     buttonStyle: value => ['artwork', 'circle', 'text'].includes(value) ? value : 'artwork',
+    curtainEnabled: value => value !== false,
+    curtainSpeed: value => value === 'gentle' ? 'gentle' : 'standard',
+    montageEnabled: value => value !== false,
   };
   return { version: 1, enabled: input.enabled !== false, style: ['oval', 'minimal', 'golden-calligraphy', 'royal-arch'].includes(input.style) ? input.style : 'golden-calligraphy',
     ...Object.entries(entrance).filter(([key]) => Object.hasOwn(input, key)).map(([key, normalize]) => [key, normalize(input[key])]).reduce((fields, [key, value]) => ({ ...fields, [key]: value }), {}),

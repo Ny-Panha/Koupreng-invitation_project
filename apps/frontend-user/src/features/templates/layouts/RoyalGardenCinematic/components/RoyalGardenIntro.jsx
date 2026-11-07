@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import CoverBackground from '../../../shared/Openings/CoverBackground';
 import manifest from '../template.json';
 import { DEFAULT_INTRO_ARTWORK, introArtwork } from '../../../shared/cinematicIntro';
+import RoyalGardenCurtainReveal from './RoyalGardenCurtainReveal';
+import RoyalGardenMonogram from './RoyalGardenMonogram';
+import RoyalGardenArtworkFrame from './RoyalGardenArtworkFrame';
+import { ROYAL_ASSETS } from '../model/royalGardenPresentation';
 
 export function OrnamentalOval() {
   return <svg className="rg-oval-art" viewBox="0 0 300 410" aria-hidden="true" focusable="false">
@@ -16,11 +20,11 @@ export function OrnamentalOval() {
 }
 function Portrait({ slide, index, active, transition, duration }) {
   const [failed, setFailed] = useState(false);
-  if (failed) return null;
+  if (failed) return index === active ? <p className="rg-portrait-error" role="status">{slide.alt}</p> : null;
   return <img className="rg-intro-portrait" data-active={index === active} data-transition={transition} src={slide.src} alt={index === active ? slide.alt : ''}
     aria-hidden={index !== active} decoding="async" onError={() => setFailed(true)} style={{ objectPosition: `${slide.x}% ${slide.y}%`, '--rg-slide-duration': `${duration + 1}s` }} />;
 }
-export default function RoyalGardenIntro({ sequence, intro, slides, content, title, names, date, english, onOpen, reducedMotion }) {
+export default function RoyalGardenIntro({ sequence, intro, slides, content, title, names, date, english, onOpen, reducedMotion, presentation, monogram }) {
   const opening = sequence.stage === 'COVER';
   const slideshow = sequence.stage === 'PHOTO_SLIDESHOW';
   const portraitScene = slideshow || (sequence.stage === 'INVITATION_REVEAL' && slides.length > 0);
@@ -39,6 +43,17 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
     if (!source || opening || navigator.connection?.saveData) return;
     const img = new Image(); img.src = source; img.decode?.().catch(() => {});
   }, [slides, sequence.slide, slideshow, opening]);
+  if (presentation?.royal && !opening) return <section ref={root} className="rg-intro rg-royal-montage" data-scene={sequence.stage} data-paused={sequence.paused || sequence.hidden} aria-label={english ? 'Our wedding story' : 'រឿងរ៉ាវមង្គលការរបស់យើង'}>
+    <div className="rg-montage-stage">
+      <div className="rg-montage-portraits">{slides.map((slide, i) => i <= portraitIndex + 1 && i >= portraitIndex - 1 ? <Portrait key={`${slide.id}-${slide.src}`} slide={slide} index={i} active={portraitIndex} transition={intro.transition} duration={intro.duration} /> : null)}</div>
+      <div className="rg-montage-shade" style={{ '--rg-overlay': intro.overlay }} />
+      <RoyalGardenMonogram settings={presentation.monogram} initials={monogram} scene="video" />
+      <div className="rg-montage-lettering">{presentation.video.artworkEnabled && presentation.video.artwork && <img src={presentation.video.artwork} alt="" width="960" height="328" onError={event => { event.currentTarget.hidden = true; }} />}<h1 className="rg-sr-only">{names}</h1><p>{names}</p>{presentation.video.dateEnabled && <p>{date}</p>}</div>
+      {presentation.entrance.curtainEnabled && <RoyalGardenCurtainReveal stage={sequence.stage} speed={presentation.entrance.curtainSpeed} paused={sequence.paused || sequence.hidden} />}
+      <RoyalGardenArtworkFrame source={presentation.theme === 'burgundy-heritage' ? ROYAL_ASSETS.heritageFrame : ROYAL_ASSETS.information} smallSource={presentation.theme === 'burgundy-heritage' ? ROYAL_ASSETS.heritageFrameSmall : ROYAL_ASSETS.informationSmall} fill={false} className="rg-montage-frame" />
+      <div className="rg-intro-controls">{slideshow && <button type="button" aria-label={sequence.paused ? (english ? 'Resume slideshow' : 'បន្តបង្ហាញរូបភាព') : (english ? 'Pause slideshow' : 'ផ្អាកបង្ហាញរូបភាព')} aria-pressed={sequence.paused} onClick={() => sequence.setPaused(!sequence.paused)}>{sequence.paused ? <Play size={18} /> : <Pause size={18} />}</button>}<button type="button" onClick={sequence.finish}>{english ? 'Skip intro' : 'រំលង'}<SkipForward size={16} aria-hidden="true" /></button></div>
+    </div>
+  </section>;
   return <section ref={root} className="rg-intro" data-scene={sequence.stage} data-style={intro.style} data-palette={intro.palette} data-animation={intro.animationPreset} data-reduced={reducedMotion || undefined} data-paused={sequence.paused || sequence.hidden} aria-label={english ? 'Invitation opening' : 'ការបើកធៀបអញ្ជើញ'}>
     <CoverBackground content={content} templateDefault={manifest.cover} /><div className="rg-intro-wash" />
     {golden && <div className="rg-golden-backdrop" aria-hidden="true" />}

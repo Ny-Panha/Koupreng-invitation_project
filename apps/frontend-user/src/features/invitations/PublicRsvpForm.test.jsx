@@ -53,6 +53,18 @@ vi.mock("@/features/invitations/api/invitationApi", () => ({
 }));
 
 describe("PublicRsvpForm Feature", () => {
+    it('uses royal attendance controls and guest counts without changing the real submission contract', async () => {
+        const { rsvpService } = await import('@/features/rsvp/api/rsvpApi');
+        render(<PublicRsvpForm slug="royal-test" appearance="royal" languageMode="EN" showPublicWishes={false} />);
+        fireEvent.change(screen.getByLabelText('Guest name'), { target:{value:'Royal guest'} });
+        fireEvent.click(screen.getByRole('radio',{name:'Maybe'}));
+        fireEvent.click(screen.getByRole('button',{name:'More guests'}));
+        expect(screen.getByRole('spinbutton',{name:'Attendee count'})).toHaveValue(2);
+        fireEvent.click(screen.getByRole('button',{name:'Fewer guests'}));
+        expect(screen.getByRole('spinbutton',{name:'Attendee count'})).toHaveValue(1);
+        fireEvent.click(screen.getByRole('button',{name:'Submit RSVP'}));
+        await waitFor(() => expect(rsvpService.submitPublic).toHaveBeenCalledWith('royal-test',expect.objectContaining({guestName:'Royal guest',responseStatus:'MAYBE',attendeeCount:1}),expect.anything()));
+    });
     it("renders RSVP form when guest has not yet responded", async () => {
         render(<PublicRsvpForm slug="my-wedding" khmerLabels={true} />);
 
