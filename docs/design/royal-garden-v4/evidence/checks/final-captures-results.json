@@ -1,0 +1,664 @@
+{
+  "config": {
+    "argv": [
+      "C:\\nvm4w\\nodejs\\node.exe",
+      "D:\\Koupreng-invitation_project\\apps\\frontend-user\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.royal-garden-v4.config.js",
+      "royal-garden-v4.spec.js"
+    ],
+    "configFile": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\playwright.royal-garden-v4.config.js",
+    "rootDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Koupreng-invitation_project/.cache/royal-garden-v4/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v4.spec.js",
+          "royal-garden-v33.spec.js"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\.cache\\royal-garden-v4\\playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "royal-garden-v4.spec.js",
+          "royal-garden-v33.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4186",
+          "trace": "retain-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../.cache/royal-garden-v4/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": {
+      "command": "node ./node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4186 --strictPort",
+      "url": "http://127.0.0.1:4186",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "royal-garden-v4.spec.js",
+      "file": "royal-garden-v4.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reference comparison: cover and information baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Baseline is captured before implementation only.",
+                  "location": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\royal-garden-v4.spec.js",
+                    "line": 35,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:02:50.416Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Baseline is captured before implementation only.",
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\royal-garden-v4.spec.js",
+                        "line": 35,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-dafd844af1c8b16c5657",
+          "file": "royal-garden-v4.spec.js",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "curtains reveal owner portraits, Skip keeps content gated, and language preserves media",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:02:51.496Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-6673c6ffd455dcdea015",
+          "file": "royal-garden-v4.spec.js",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "collage and lightbox retain focus, keyboard, swipe, failures and scroll position",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:02:55.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-55d4ae6c0bacc5da95b9",
+          "file": "royal-garden-v4.spec.js",
+          "line": 71,
+          "column": 1
+        },
+        {
+          "title": "reference frame and native information scroll at 320x568",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:02:57.810Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-85e8a1740e820199a917",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 375x667",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1541,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:02:59.337Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-528e794bed65fc6798b2",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 390x844",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1615,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:00.886Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-edd514466eb1dd16fd2f",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 430x932",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:02.508Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-af351943b23c396500e2",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 768x1024",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:04.277Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-a31799896c35df8647c6",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 834x1194",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:06.251Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-0c5e01d006a4c4778ff5",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 1024x768",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1755,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:08.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-3d8ff4f53185482ca3c1",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 1440x900",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1888,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:09.959Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-37b3890d2607185fee62",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "reference frame and native information scroll at 1920x1080",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:11.856Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-bd1e8d5343a7fce1c96d",
+          "file": "royal-garden-v4.spec.js",
+          "line": 90,
+          "column": 3
+        },
+        {
+          "title": "Studio settings update the same preview and survive save and reload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4125,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:13.853Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-e0fbe495bf649d05e8ec",
+          "file": "royal-garden-v4.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "reference storyboard: formal document, venue, programme, calendar, gift, RSVP and closing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:17.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-27bcafeeb6cb38b5214a",
+          "file": "royal-garden-v4.spec.js",
+          "line": 118,
+          "column": 1
+        },
+        {
+          "title": "records local Chromium rendering and scroll measurements",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T03:03:21.814Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b1807ee360f380eae36d-e8e7e727c462df302402",
+          "file": "royal-garden-v4.spec.js",
+          "line": 130,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T03:02:48.812Z",
+    "duration": 35253.81,
+    "expected": 14,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

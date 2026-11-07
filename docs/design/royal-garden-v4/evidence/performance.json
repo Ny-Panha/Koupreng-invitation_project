@@ -1,0 +1,10 @@
+{
+  "profile": "Local Vite preview of production build; desktop Chromium; 390x844; reduced motion; no network or CPU throttling; API fixtures; single sample",
+  "lcpMs": 808,
+  "cls": 0.0006920468315442035,
+  "longTasksMs": 66,
+  "heapBytes": 11900000,
+  "scrollFrameP95Ms": 16.700000000000045,
+  "requests": 105,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36"
+}
