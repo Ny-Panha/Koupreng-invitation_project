@@ -1,5 +1,7 @@
 # Scene state machine
 
+Historical V4 baseline. The current opening starts the eligible film beneath the curtain during `COVER_EXITING`, then reveals it directly. See [the responsive refinement](11-direct-video-responsive-refinement.md).
+
 The existing `useIntroSequence` owns all Royal Garden scene stages. The existing `CinematicOpeningProvider` continues owning media eligibility, protected requests and video recovery. No second media loader or invitation renderer was introduced.
 
 ```mermaid

@@ -98,7 +98,7 @@ describe('Royal Garden V3 presentation and compatibility', () => {
 
 describe('royal entrance and video recovery', () => {
   async function advanceRoyalOpening() {
-    for (const ms of [360, 420, 1800, 1]) await act(async () => vi.advanceTimersByTime(ms));
+    for (const ms of [360, 420, 2600, 1]) await act(async () => vi.advanceTimersByTime(ms));
   }
   it('retains the real photo, live names and safe text if decorative assets fail', () => {
     const content = { coverBackgroundImage: '/owner.webp', isPersonalizedGuest: true, guestName: '<script>guest</script>', cinematicIntro: { style: 'royal-arch', titleMode: 'artwork' } };

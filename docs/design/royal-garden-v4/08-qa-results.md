@@ -1,5 +1,7 @@
 # QA results
 
+These results describe the initial V4 baseline. Checks for the later direct-film, Pich/Pisey, cover and information-spacing changes are recorded in [the responsive refinement](11-direct-video-responsive-refinement.md).
+
 Commands were run from the repository root on Windows, with the existing dependency installation. Test log copies and the final browser JSON summary are in `evidence/checks/`. No backend, database, authorization or payment settlement code changed.
 
 | Command | Final result |

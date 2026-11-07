@@ -1,11 +1,57 @@
 /* V4: reference-inspired cloth and burgundy are scoped to the existing portrait canvas. */
+:is(.tpl-royal-garden[data-royal=true],.public-royal-garden) { --rg-canvas-inset:0px; }
+.tpl-royal-garden .rg-paper[data-view=video] .rg-content-scroll { padding:0; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-bottom-nav { width:calc(var(--rg-canvas-width) - 20px); max-width:500px; overflow-x:auto; scrollbar-width:none; gap:4px; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-bottom-nav button { flex-shrink:0; }
+/* Navigation is a sibling of the scrolling document, never clipped by it. */
+.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true] .rg-bottom-nav { position:absolute; inset-inline:10px; left:10px; right:10px; bottom:max(8px,env(safe-area-inset-bottom)); transform:none; width:auto; max-width:none; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); justify-items:center; gap:0; overflow:visible; }
+.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true] .rg-bottom-nav button { width:min(100%,52px); max-width:none; min-width:44px; min-height:48px; }
+.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true] .rg-use-template { position:absolute; right:10px; bottom:calc(66px + env(safe-area-inset-bottom)); }
+.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true] .rg-back-link { position:absolute; }
+.tpl-royal-garden[data-royal=true][data-stage=CONTENT] .rg-top-controls { position:absolute; }
+.tpl-royal-garden[data-royal=true] .rg-language { position:relative; }
+.tpl-royal-garden[data-royal=true] .rg-language select { appearance:none; -webkit-appearance:none; border-radius:0; padding-right:16px; background:transparent; }
+.tpl-royal-garden[data-royal=true] .rg-language::after { content:''; position:absolute; right:11px; top:calc(50% - 5px); width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); pointer-events:none; }
+html:has(.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true]), body:has(.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true]) { height:100%; min-height:0; overflow:hidden; overscroll-behavior-y:none; }
+body:has(.tpl-royal-garden .rg-paper[data-royal=true][data-fixed=true]) { background:#420b2b; }
+.tpl-royal-garden:has(.rg-paper[data-royal=true][data-fixed=true]) { position:fixed; inset:0; height:var(--rg-viewport-height); min-height:0; overflow:hidden; }
+.tpl-royal-garden .rg-video-section .cinematic-playback--royal .cinematic-film-footer { bottom:calc(-1.45cqw - 1px); }
 .tpl-royal-garden .rg-palette-filter { position:absolute; pointer-events:none; }
+.tpl-royal-garden .rg-curtain-transition { position:absolute; inset:0; z-index:30; display:grid; place-items:center; pointer-events:none; }
+.tpl-royal-garden .rg-curtain-stage { position:relative; width:var(--rg-canvas-width); height:var(--rg-canvas-height); overflow:hidden; }
+.tpl-royal-garden .rg-curtain-skip { position:absolute; z-index:12; right:64px; top:max(8px,env(safe-area-inset-top)); bottom:auto; width:44px; height:44px; min-height:44px; padding:0; display:grid; place-items:center; pointer-events:auto; border:1px solid var(--rg-royal-gold); border-radius:50%; background:var(--rg-royal-deep); color:var(--rg-royal-gold); }
+.tpl-royal-garden .rg-video-section .cinematic-playback--royal { isolation:auto; }
+.tpl-royal-garden .rg-video-section .cinematic-playback--royal .cinematic-playback-actions { z-index:12; }
+.tpl-royal-garden[data-royal=true] .rg-video-preparing { position:absolute; inset:0; z-index:3; min-height:0; pointer-events:none; }
 .tpl-royal-garden .rg-artwork-frame[data-supplied=true] { filter:var(--rg-artwork-filter,none); }
 .tpl-royal-garden .rg-artwork-frame[data-heritage=true] { border-width:33cqw 7cqw 31.5cqw; border-image-slice:22% 7% 21%; }
+.tpl-royal-garden[data-royal=true] .rg-entrance-stage { box-shadow:none; }
+.tpl-royal-garden .rg-entrance-vignette { display:none; }
+.tpl-royal-garden .rg-entrance-lettering { background:none; }
+.tpl-royal-garden .rg-royal-entrance .rg-entrance-lettering::after { content:none; }
+.tpl-royal-garden .rg-entrance-lettering img { filter:none; }
+.tpl-royal-garden .rg-entrance-lettering h1:not(.rg-sr-only), .tpl-royal-garden .rg-entrance-names { text-shadow:none; }
+.tpl-royal-garden .rg-royal-entrance .rg-royal-open { box-shadow:none!important; }
 .tpl-royal-garden[data-theme=burgundy-heritage] :is(.rg-entrance-stage,.rg-paper[data-royal=true]) { background:radial-gradient(ellipse at 50% 30%,#5b153c88,transparent 70%),url('/templates/royal-garden/kbach-pattern.svg') center/58px 68px,#420b2b; }
-.tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-photo { clip-path:polygon(6% 19%,10% 15%,20% 13%,30% 10%,40% 8%,50% 7%,60% 8%,70% 10%,80% 13%,90% 15%,94% 19%,94% 82%,90% 87%,80% 90%,70% 92%,60% 93%,50% 94%,40% 93%,30% 92%,20% 90%,10% 87%,6% 82%); }
-.tpl-royal-garden[data-theme=burgundy-heritage] .rg-paper[data-royal=true] { --rg-safe-top:max(30cqw,76px); --rg-safe-bottom:max(30cqw,88px); }
-.tpl-royal-garden[data-theme=burgundy-heritage] .rg-information-background[data-heritage=true] { top:0; height:100%; }
+/* Follow the lower gold stem. Width-based offsets match the frame's nine-slice
+   scale at every canvas height, filling its aperture without leaking below it. */
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-photo {
+  clip-path:polygon(6% 19%,10% 15%,20% 13%,30% 10%,40% 8%,50% 7%,60% 8%,70% 10%,80% 13%,90% 15%,94% 19%,
+    94% calc(100% - 27cqw),92% calc(100% - 20cqw),90% calc(100% - 17cqw),88% calc(100% - 17.2cqw),
+    86% calc(100% - 16.7cqw),84% calc(100% - 16.1cqw),82% calc(100% - 16.1cqw),80% calc(100% - 14.75cqw),
+    78% calc(100% - 13.48cqw),76% calc(100% - 11.62cqw),74% calc(100% - 9.96cqw),72% calc(100% - 8.2cqw),
+    70% calc(100% - 6.45cqw),68% calc(100% - 5.66cqw),66% calc(100% - 4.88cqw),64% calc(100% - 4.59cqw),
+    62% calc(100% - 4.79cqw),60% calc(100% - 4.98cqw),58% calc(100% - 5.86cqw),56% calc(100% - 6.74cqw),
+    54% calc(100% - 7.03cqw),52% calc(100% - 6.74cqw),50% calc(100% - 6.45cqw),48% calc(100% - 6.74cqw),
+    46% calc(100% - 7.03cqw),44% calc(100% - 6.74cqw),42% calc(100% - 5.86cqw),40% calc(100% - 4.98cqw),
+    38% calc(100% - 4.79cqw),36% calc(100% - 4.59cqw),34% calc(100% - 4.88cqw),32% calc(100% - 5.66cqw),
+    30% calc(100% - 6.45cqw),28% calc(100% - 8.2cqw),26% calc(100% - 9.96cqw),24% calc(100% - 11.62cqw),
+    22% calc(100% - 13.48cqw),20% calc(100% - 14.75cqw),18% calc(100% - 16.1cqw),16% calc(100% - 16.1cqw),
+    14% calc(100% - 16.7cqw),12% calc(100% - 17.2cqw),10% calc(100% - 17cqw),8% calc(100% - 20cqw),6% calc(100% - 27cqw));
+}
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-paper[data-royal=true] { --rg-safe-top:clamp(76px,24cqw,150px); --rg-safe-bottom:max(clamp(62px,14cqw,90px),calc(64px + env(safe-area-inset-bottom))); }
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-information-background[data-heritage=true] { top:0; height:100%; left:-2%; right:-2%; width:104%; border-top-width:29cqw; border-bottom-width:25cqw; }
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-paper[data-view=information] .rg-content-scroll { inset-inline:6.5%; }
 .tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-composition { padding-top:30cqw; padding-bottom:30cqw; --rg-heading-band:25cqw; }
 .tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-lettering h1:not(.rg-sr-only) { font-size:clamp(19px,5.2cqw,28px); }
 .tpl-royal-garden .rg-royal-montage:not([data-scene=PHOTO_SLIDESHOW]) .rg-montage-portraits .rg-intro-portrait { animation:none; }
@@ -33,21 +79,24 @@
 .tpl-royal-garden .rg-montage-stage .rg-intro-controls button { min-width:44px; min-height:44px; color:var(--rg-royal-gold); border:1px solid #f2d69380; background:#260617b8; backdrop-filter:none; }
 .tpl-royal-garden .rg-portrait-error { position:absolute; inset:35% 15%; display:grid; place-content:center; text-align:center; }
 .tpl-royal-garden .rg-royal-montage[data-scene=INVITATION_REVEAL] .rg-montage-stage { animation:rg-v4-invitation-dissolve 700ms ease both; }
-.tpl-royal-garden .rg-curtains { position:absolute; inset:0; z-index:6; pointer-events:none; }
-.tpl-royal-garden .rg-curtain-panel { position:absolute; top:-3%; bottom:-4%; width:52%; background:repeating-linear-gradient(92deg,#230011 0%,#540622 7%,#870c35 12%,#5e0926 18%,#2f0216 23%,#69092d 29%); box-shadow:inset -12px 0 20px #15000bbf,0 7px 16px #13000ca6; transform-origin:top; border-inline-end:2px solid #d3b876; }
+.tpl-royal-garden .rg-curtains { position:absolute; inset:0; z-index:6; pointer-events:none; overflow:hidden; }
+.tpl-royal-garden .rg-curtain-panel { position:absolute; top:0; bottom:-4%; width:52%; background:repeating-linear-gradient(92deg,#230011 0%,#540622 7%,#870c35 12%,#5e0926 18%,#2f0216 23%,#69092d 29%); box-shadow:inset -12px 0 20px #15000bbf,0 7px 16px #13000ca6; transform-origin:top; border-inline-end:2px solid #d3b876; }
 .tpl-royal-garden .rg-curtain-panel::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg,#fff2 0,transparent 30% 60%,#0005 100%); }
 .tpl-royal-garden .rg-curtain-panel { background-image:url('/templates/royal-garden/v4/burgundy-velvet.webp'); background-size:100% 100%; background-color:#560822; }
-.tpl-royal-garden .rg-curtain-panel--left { left:-1%; border-radius:0 0 26% 0; }
-.tpl-royal-garden .rg-curtain-panel--right { right:-1%; transform:scaleX(-1); border-radius:0 0 26% 0; }
+.tpl-royal-garden .rg-curtain-panel--left { left:0; border-radius:0 0 26% 0; }
+.tpl-royal-garden .rg-curtain-panel--right { right:0; transform:scaleX(-1); border-radius:0 0 26% 0; }
 .tpl-royal-garden .rg-curtain-valance { position:absolute; top:-2%; inset-inline:0; height:17%; border-bottom:2px solid #c8a351; border-radius:0 0 50% 50%; background:repeating-linear-gradient(85deg,#3b011a,#790d30 9%,#310014 17%); box-shadow:0 6px 12px #21001180; }
-.tpl-royal-garden .rg-curtains[data-open=true] .rg-curtain-panel--left { animation:rg-v4-curtain-left var(--rg-curtain-duration) cubic-bezier(.22,.68,.22,1) both; }
-.tpl-royal-garden .rg-curtains[data-open=true] .rg-curtain-panel--right { animation:rg-v4-curtain-right var(--rg-curtain-duration) cubic-bezier(.22,.68,.22,1) both; }
+.tpl-royal-garden .rg-curtains[data-open=true] .rg-curtain-panel--left { animation:rg-v4-curtain-left var(--rg-curtain-duration) cubic-bezier(.25,.65,.3,1) both; }
+.tpl-royal-garden .rg-curtains[data-open=true] .rg-curtain-panel--right { animation:rg-v4-curtain-right var(--rg-curtain-duration) cubic-bezier(.25,.65,.3,1) both; }
 .tpl-royal-garden .rg-curtains[data-open=true] .rg-curtain-valance { animation:rg-v4-valance var(--rg-curtain-duration) ease both; }
+.tpl-royal-garden .rg-curtains[data-settled=true] .rg-curtain-panel--left { animation:none; transform:translateX(-62%) skewX(-20deg); }
+.tpl-royal-garden .rg-curtains[data-settled=true] .rg-curtain-panel--right { animation:none; transform:translateX(62%) skewX(20deg) scaleX(-1); }
+.tpl-royal-garden .rg-curtains[data-settled=true] .rg-curtain-valance { display:none; }
 .tpl-royal-garden :is(.rg-royal-montage,.rg-curtains)[data-paused=true] * { animation-play-state:paused!important; }
 @keyframes rg-v4-cover-out { to { opacity:0; transform:scale(1.015); } }
-@keyframes rg-v4-curtain-left { from { transform:translateX(0) skewX(0); } to { transform:translateX(-85%) skewX(-12deg); } }
-@keyframes rg-v4-curtain-right { from { transform:translateX(0) skewX(0) scaleX(-1); } to { transform:translateX(85%) skewX(12deg) scaleX(-1); } }
-@keyframes rg-v4-valance { to { transform:translateY(-85%); } }
+@keyframes rg-v4-curtain-left { 0% { transform:translateX(0) skewX(0); } 16% { transform:translateX(-3%) skewX(-1deg); } 70% { transform:translateX(-54%) skewX(-17deg); } 100% { transform:translateX(-62%) skewX(-20deg); } }
+@keyframes rg-v4-curtain-right { 0% { transform:translateX(0) skewX(0) scaleX(-1); } 16% { transform:translateX(3%) skewX(1deg) scaleX(-1); } 70% { transform:translateX(54%) skewX(17deg) scaleX(-1); } 100% { transform:translateX(62%) skewX(20deg) scaleX(-1); } }
+@keyframes rg-v4-valance { from { transform:translateY(0); } to { transform:translateY(-112%); } }
 @keyframes rg-v4-portrait { from { transform:scale(1); } to { transform:scale(1.055); } }
 @keyframes rg-v4-invitation-dissolve { to { opacity:0; } }
 /* Natural image heights, column flow and full-width landscape photos avoid empty collage slots. */
@@ -99,3 +148,23 @@
 .tpl-royal-garden .rg-closing-motif { display:block; width:40px; height:40px; margin:16px auto 22px; color:var(--rg-gold); stroke-width:1.2; }
 .tpl-royal-garden[data-theme=burgundy-heritage] .rg-paper[data-royal=true] .rg-section--closing { min-height:calc(var(--rg-canvas-height) - var(--rg-safe-top) - var(--rg-safe-bottom)); display:flex; flex-direction:column; justify-content:center; }
 @media(prefers-reduced-motion:reduce) { .tpl-royal-garden .rg-royal-montage *, .tpl-royal-garden .rg-curtains * { animation:none!important; transition:none!important; } }
+@media(max-height:600px) {
+  .tpl-royal-garden[data-royal=true][data-stage=COVER] { --rg-canvas-height:640px; }
+  .tpl-royal-garden[data-royal=true][data-stage=COVER] .rg-royal-entrance { height:var(--rg-canvas-height); }
+  .public-royal-garden:has(.tpl-royal-garden[data-stage=COVER]) { height:auto; overflow:visible; }
+}
+@media(max-height:480px) {
+  .tpl-royal-garden[data-royal=true] .rg-language svg { display:none; }
+  .tpl-royal-garden[data-royal=true] .rg-language { padding-inline:6px; }
+  .tpl-royal-garden[data-royal=true] .rg-language select { width:44px; max-width:44px; }
+  .tpl-royal-garden .rg-video-monogram { top:64px; width:64px; max-width:64px; }
+  .tpl-royal-garden .cinematic-playback--royal .cinematic-film-controls { top:calc(50% - 22px); left:calc(50% + 58px); }
+}
+@media(max-width:359px) and (min-height:481px) {
+  .tpl-royal-garden[data-royal=true] .rg-language svg { display:none; }
+  .tpl-royal-garden[data-royal=true] .rg-language { padding-inline:6px; }
+  .tpl-royal-garden[data-royal=true] .rg-language select { width:64px; max-width:64px; }
+}
+@media(max-width:359px) {
+  .tpl-royal-garden .rg-guest-frame:not([data-long=true]) span { font-size:clamp(10px,3.2cqw,12px); }
+}

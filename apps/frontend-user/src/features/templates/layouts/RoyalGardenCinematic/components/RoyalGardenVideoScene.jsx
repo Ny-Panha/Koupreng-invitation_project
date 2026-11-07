@@ -2,16 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import { useCinematicPlayback } from '../../../shared/Openings/cinematicOpeningContext';
 import { ROYAL_ASSETS } from '../model/royalGardenPresentation';
 import RoyalGardenMonogram from './RoyalGardenMonogram';
+import RoyalGardenCurtainReveal from './RoyalGardenCurtainReveal';
+import RoyalGardenMotionLayer from './RoyalGardenMotionLayer';
 
-export default function RoyalGardenVideoScene({ english, names, monogram, monogramSettings, presentation, date, dateTime, onReplay }) {
+export default function RoyalGardenVideoScene({ english, names, monogram, monogramSettings, presentation, date, dateTime, onReplay, gated = false, curtain, motion, reduced }) {
   const { active, stage, completed, poster } = useCinematicPlayback();
   const root = useRef(null);
   const [failedArtwork, setFailedArtwork] = useState('');
   useEffect(() => {
-    if (!active) return;
+    if (!active || gated) return;
     root.current?.focus({ preventScroll: true });
     root.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
-  }, [active]);
+  }, [active, gated]);
   if (!active && !(completed && presentation.endBehavior === 'poster')) return null;
   return <section ref={root} tabIndex={-1} className="rg-video-section cinematic-inline-stage" data-complete={!active} data-footer={presentation.footer !== false} aria-label={english ? 'Pre-wedding video' : 'វីដេអូមុនអាពាហ៍ពិពាហ៍'}>
     <h2 className="rg-sr-only">{names}</h2>
@@ -21,5 +23,7 @@ export default function RoyalGardenVideoScene({ english, names, monogram, monogr
       {presentation.dateEnabled && date && <time className="rg-video-date" dateTime={dateTime}>{date}</time>}
     </div>}
     {active ? stage : <div className="rg-video-keepsake">{poster && <img src={poster} alt={english ? 'Our pre-wedding film' : 'វីដេអូមុនអាពាហ៍ពិពាហ៍'} loading="lazy" />}{presentation.replay && <button type="button" className="rg-button" onClick={onReplay}>{english ? 'Replay video' : 'ចាក់វីដេអូឡើងវិញ'}</button>}</div>}
+    {active && !gated && curtain?.curtainEnabled && <RoyalGardenCurtainReveal stage="OPEN" settled />}
+    {active && !gated && motion && <RoyalGardenMotionLayer settings={motion} reduced={reduced} />}
   </section>;
 }

@@ -1,0 +1,135 @@
+> frontend-user@0.0.0 test:e2e
+> playwright test --config playwright.royal-garden-v4.config.js royal-garden-v4.spec.js royal-garden-video-footer.spec.js royal-garden-polish.spec.js --grep catalog uses|Pich-Pisey catalog|curtains directly|modern guest panel --workers=1
+
+node.exe : [WebServer] (node:11232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:21508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\royal-garden-polish.spec.js:6:1 › modern guest panel, motion, two-day calendar and gallery remain usable across sizes (10.4s)
+  x  2 [chromium] › tests\e2e\royal-garden-v4.spec.js:50:1 › curtains directly reveal the authorized film without an intermediate portrait page (1.0m)
+(node:4404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\royal-garden-video-footer.spec.js:64:1 › catalog uses the new footer and preserved original Khmer artwork (1.0m)
+(node:13516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [chromium] › tests\e2e\royal-garden-video-footer.spec.js:90:1 › Pich-Pisey catalog cover and information fit small phones, landscape, tablets and desktops (17.0s)
+
+
+  1) [chromium] › tests\e2e\royal-garden-v4.spec.js:50:1 › curtains directly reveal the authorized film without an intermediate portrait page
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.rg-open')
+        - locator resolved to <button type="button" title="Open invitation" data-button-style="circle" aria-label="Open invitation" class="rg-open rg-royal-open">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+          - waiting 100ms
+        109 × waiting for element to be visible, enabled and stable
+            - element is not stable
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      53 |   await page.goto('/i/review-celestial?lang=en'); await shot(page,'after-cover');
+      54 |   await page.clock.install({time:new Date('2030-01-01T00:00:00Z')}); await page.clock.pauseAt(new Date('2030-01-01T00:00:10Z'));
+    > 55 |   await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=COVER_EXITING]')).toBeVisible();
+         |                                  ^
+      56 |   await expect(page.locator('main,.rg-royal-montage,.rg-montage-frame')).toHaveCount(0);
+      57 |   await page.clock.runFor(360); await expect(page.locator('[data-stage=CURTAIN_PREPARING]')).toBeVisible(); await shot(page,'after-curtain-closed');
+      58 |   await page.clock.runFor(420); await expect(page.locator('[data-stage=CURTAIN_OPENING]')).toBeVisible();
+        at D:\Koupreng-invitation_project\apps\frontend-user\tests\e2e\royal-garden-v4.spec.js:55:34
+
+    Error Context: ..\..\.cache\royal-garden-v4\playwright\royal-garden-v4-curtains-d-ee44e--intermediate-portrait-page-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.cache\royal-garden-v4\playwright\royal-garden-v4-curtains-d-ee44e--intermediate-portrait-page-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.cache\royal-garden-v4\playwright\royal-garden-v4-curtains-d-ee44e--intermediate-portrait-page-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\royal-garden-video-footer.spec.js:64:1 › catalog uses the new footer and preserved original Khmer artwork
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Browser logs:
+
+    <launching> C:\Users\ASER Nitro\AppData\Local\ms-playwright\chromium_headless_shell-1248\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\ASERNI~1\AppData\Local\Temp\playwright_chromiumdev_profile-usvORM --remote-debugging-pipe --no-startup-window
+    <launched> pid=21496
+    [pid=21496][err] [1107/143254.841:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_set_header_color [object Object]", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.841:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_set_bottom_bar_color [object Object]", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.841:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_request_theme ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.841:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_request_viewport ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.841:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_request_safe_area ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_request_content_safe_area ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_ready ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:135] "[Telegram.WebView] > postEvent web_app_expand ", source: https://telegram.org/js/telegram-web-app.js (135)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:598] "[Telegram.WebApp] Closing confirmation is not supported in version 6.0", source: https://telegram.org/js/telegram-web-app.js (598)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:769] "[Telegram.WebApp] Header color is not supported in version 6.0", source: https://telegram.org/js/telegram-web-app.js (769)
+    [pid=21496][err] [1107/143254.842:INFO:CONSOLE:825] "[Telegram.WebApp] Background color is not supported in version 6.0", source: https://telegram.org/js/telegram-web-app.js (825)
+    [pid=21496][err] [1107/143257.849:INFO:CONSOLE:0] "The resource http://127.0.0.1:4186/templates/royal-garden/v3-1/demo-portrait-480.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: http://127.0.0.1:4186/templates/royal-garden-cinematic?lang=km (0)
+    [pid=21496][err] [1107/143257.849:INFO:CONSOLE:0] "The resource http://127.0.0.1:4186/templates/royal-garden/v3-1/opening-frame-480.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: http://127.0.0.1:4186/templates/royal-garden-cinematic?lang=km (0)
+    [pid=21496][err] [1107/143257.849:INFO:CONSOLE:0] "The resource http://127.0.0.1:4186/templates/royal-garden/v3-1/opening-calligraphy-320.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.", source: http://127.0.0.1:4186/templates/royal-garden-cinematic?lang=km (0)
+    [pid=21496] <gracefully close start>
+    Call log:
+      - waiting for locator('.rg-open')
+        - locator resolved to <button type="button" title="បើកធៀបអញ្ជើញ" aria-label="បើកធៀបអញ្ជើញ" data-button-style="circle" class="rg-open rg-royal-open">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+          - waiting 100ms
+        111 × waiting for element to be visible, enabled and stable
+            - element is not stable
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      69 |   await page.locator('.rg-entrance-photo img,.rg-guest-frame img,.rg-frame-source').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+      70 |   await page.screenshot({path:`${evidence}/pich-pisey-cover-390x844.png`,animations:'disabled'});
+    > 71 |   await page.locator('.rg-open').click(); await expect(page.locator('.rg-royal-montage,.rg-montage-frame')).toHaveCount(0);
+         |                                  ^
+      72 |   await expect(page.locator('[data-stage=CURTAIN_OPENING]')).toBeVisible();
+      73 |   const film=page.locator('.cinematic-inline-stage video'); await expect(film).toBeVisible();
+      74 |   await expect.poll(()=>film.evaluate(video=>video.currentTime)).toBeGreaterThan(0);
+        at D:\Koupreng-invitation_project\apps\frontend-user\tests\e2e\royal-garden-video-footer.spec.js:71:34
+
+    Error Context: ..\..\.cache\royal-garden-v4\playwright\royal-garden-video-footer--3bd09-rved-original-Khmer-artwork-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.cache\royal-garden-v4\playwright\royal-garden-video-footer--3bd09-rved-original-Khmer-artwork-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.cache\royal-garden-v4\playwright\royal-garden-video-footer--3bd09-rved-original-Khmer-artwork-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\royal-garden-v4.spec.js:50:1 › curtains directly reveal the authorized film without an intermediate portrait page
+    [chromium] › tests\e2e\royal-garden-video-footer.spec.js:64:1 › catalog uses the new footer and preserved original Khmer artwork
+  2 passed (2.5m)

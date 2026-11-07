@@ -30,7 +30,7 @@ describe("Royal Garden Cinematic layout", () => {
     expect(container.querySelector('.rg-language select')).toHaveValue('en');
     expect(container.querySelector('.rg-family-heading')).toHaveTextContent('គ្រួសារ');
     expect(container.querySelector('#rg-schedule')).toHaveTextContent('សូមអរគុណ');
-    expect(container.querySelector('#rg-schedule h2')).toHaveTextContent('Wedding programme');
+    expect(container.querySelector('#rg-schedule h2')).toHaveTextContent('Wedding agenda');
   });
   it('uses supplied English variants for owner family and programme wording', () => {
     const { container } = show({ isHostedInvitation: true, content: { languageMode: 'EN', familyHeading: 'គ្រួសារ', familyHeadingEn: 'Our families', scheduleEnding: 'សូមអរគុណ', scheduleEndingEn: 'Thank you for joining us' } });

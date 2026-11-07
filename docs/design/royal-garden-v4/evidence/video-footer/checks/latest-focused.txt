@@ -1,0 +1,14 @@
+> frontend-user@0.0.0 test
+> vitest run src/features/templates/layouts/RoyalGardenCinematic --maxWorkers=2
+
+
+ RUN  v5.0.5 D:/Koupreng-invitation_project/apps/frontend-user
+
+
+ Test Files  6 passed (6)
+      Tests  78 passed (78)
+   Start at  15:21:58
+   Duration  3.08s (environment 29%, tests 27%, import 19%, setup 13%, transform 11%)
+
+    Isolate  6 workers spawned · ~356ms startup each (spawn + environment, per file)
+             at least ~713ms faster with isolate: false — reuses workers across files instead of one per file

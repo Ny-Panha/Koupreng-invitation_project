@@ -10,6 +10,10 @@ const evidence = process.env.ROYAL_EVIDENCE_DIR || '../../docs/design/royal-gard
 const intro = { style: 'royal-arch', titleMode: 'text', duration: 2, slides: [{ id: 'portrait', src: portrait, alt: 'Owner portrait', x: 50, y: 40 }] };
 const information = { enabled: true, fixedBackground: true, galleryPresentation: 'carousel', motionPreset: 'balanced', effects: { butterfly: true }, video: { footer: true, replay: true } };
 const windowsWebKit = info => info.project.name === 'webkit' && process.platform === 'win32';
+function expectFooterAtEdge(footer, video) {
+  const inset=footer.y+footer.height-video.y-video.height;
+  expect(inset).toBeGreaterThanOrEqual(-1); expect(inset).toBeLessThanOrEqual(video.width*.02+2);
+}
 async function setup(page, { authorized = false, premium = true, content = {}, guest = null } = {}) {
   const state = await phase9Fixtures(page, { code, premium, content: { cinematicIntro: intro, informationScene: information, coverBackgroundImage: portrait, messageText: 'Please join our fictional celebration.', messageTitle: 'With our families',
     gallery: [{ id: 'one', preview: portrait }], schedule: [{ id: 'one', time: '07:00', title: 'Family ceremony', titleEn: 'Family ceremony' }], saveTheDate: { enabled: true, showCountdown: true, showCalendar: true, showAddToCalendar: true },
@@ -34,15 +38,18 @@ async function capture(page, name, info) {
     await page.screenshot({ path: `${evidence}/${info.project.name}-${name}.jpg`, type: 'jpeg', quality: 90, animations: 'disabled', scale: 'device' });
   }
 }
-async function openVideo(page) { await page.locator('.rg-open').click(); await expect(page.locator('.cinematic-inline-stage')).toBeVisible(); }
+async function openVideo(page) {
+  await page.locator('.rg-open').click(); await expect(page.locator('.cinematic-inline-stage')).toBeVisible();
+  await expect(page.locator('[data-stage=PRE_WEDDING_VIDEO]')).toBeVisible();
+}
 async function skip(page) { await page.locator('.cinematic-inline-stage').getByRole('button', { name: 'Skip video', exact: true }).click(); await expect(page.locator('.tpl-royal-garden[data-stage=CONTENT]')).toBeVisible(); }
 
 test('catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information', async ({ page }, info) => {
   await setup(page); const requests = []; page.on('request', request => { if (request.url().includes('pre-wedding-demo.mp4')) requests.push(request.url()); });
   await page.goto(`/templates/${code}?lang=en`); await expect(page.locator('[data-stage=COVER]')).toBeVisible();
   await expect.poll(() => page.locator('.rg-royal-arch img').evaluate(node => node.naturalWidth)).toBeGreaterThan(0);
-  await expect(page.locator('.rg-entrance-photo img')).toHaveAttribute('src', portrait);
-  if (info.project.name === 'chromium') await expect.poll(() => page.locator('.rg-entrance-photo img').evaluate(node => node.currentSrc)).toContain('demo-portrait-480.webp');
+  await expect(page.locator('.rg-entrance-photo img')).toHaveAttribute('src', '/templates/royal-garden/v4/pich-pisey/photo-03-1280.webp');
+  if (info.project.name === 'chromium') await expect.poll(() => page.locator('.rg-entrance-photo img').evaluate(node => node.currentSrc)).toContain('pich-pisey/photo-03-640.webp');
   expect(requests).toHaveLength(0); await capture(page, 'entrance', info);
   await openVideo(page); await expect(page.getByRole('dialog')).toHaveCount(0); await expect(page.locator('.cinematic-inline-stage form')).toHaveCount(0);
   const video = page.locator('.cinematic-inline-stage video'); await expect(video).toHaveAttribute('src', `${base}/video/pre-wedding-demo.mp4`);
@@ -52,7 +59,7 @@ test('catalog: supplied film loads after click, plays inline without a dialog/fo
   await expect(page.locator('#rg-family')).toHaveCount(0);
   expect(await page.locator('[data-cinematic-content]').getAttribute('hidden')).toBeNull();
   const filmBounds = await video.boundingBox(), footerBounds = await page.locator('.cinematic-film-footer').boundingBox();
-  expect(Math.abs(footerBounds.y + footerBounds.height - filmBounds.y - filmBounds.height)).toBeLessThanOrEqual(1);
+  expectFooterAtEdge(footerBounds, filmBounds);
   const bgNode = await page.locator('.rg-information-background').elementHandle();
   await capture(page, 'inline-video', info);
   await expect(video).toHaveJSProperty('muted', true);
@@ -62,7 +69,7 @@ test('catalog: supplied film loads after click, plays inline without a dialog/fo
   await skip(page); expect(await bgNode.evaluate(node => node.isConnected)).toBe(true); await capture(page, 'information', info);
   const background = page.locator('.rg-information-background'); const before = await background.boundingBox();
   await page.locator('.rg-content-scroll').evaluate(node => node.scrollTo({ top: 850, behavior: 'instant' })); const after = await background.boundingBox(); expect(after.y).toBe(before.y);
-  expect(await page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBeGreaterThan(0); expect(await page.evaluate(() => window.scrollY)).toBe(0); await expect(background).toHaveCSS('border-image-repeat', 'stretch repeat'); await expect(page.locator('#rg-schedule .kp-timeline li')).toHaveCount(4);
+  expect(await page.locator('.rg-content-scroll').evaluate(node => node.scrollTop)).toBeGreaterThan(0); expect(await page.evaluate(() => window.scrollY)).toBe(0); await expect(background).toHaveCSS('border-image-repeat', 'stretch repeat'); await expect(page.locator('#rg-schedule .kp-timeline li')).toHaveCount(10);
 });
 
 test('hosted: authorized protected film completes, errors recover, and guest text stays live', async ({ page }, info) => {
@@ -97,8 +104,7 @@ test('unavailable video, absent photo, failed artwork, cleared lettering and lon
   let calls = 0; page.on('request', request => { if (request.url().includes('cinematic-content') || request.url().includes('pre-wedding-demo.mp4')) calls++; });
   await page.goto('/i/review-celestial'); await expect(page.locator('.rg-open')).toBeVisible(); await expect(page.locator('.rg-entrance-lettering h1')).toBeVisible();
   expect(await page.locator('.rg-entrance-lettering').evaluate(node => getComputedStyle(node, '::after').animationName)).toBe('none');
-  await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=PHOTO_SLIDESHOW]')).toBeVisible();
-  await page.getByRole('button', { name: 'Skip intro', exact: true }).click();
+  await page.locator('.rg-open').click();
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible(); expect(calls).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });
@@ -250,7 +256,8 @@ test('refinement: lower film lettering, live date and two separated top controls
     const crestTop=footer.y+footer.width*(602/3840), artworkGoldBottom=art.y+art.height*(1138/1313);
     const fontSize=await page.locator('.rg-video-date').evaluate(n=>parseFloat(getComputedStyle(n).fontSize));
     expect(date.y+fontSize*.4-artworkGoldBottom).toBeGreaterThan(2);
-    expect(crestTop-date.y-date.height).toBeCloseTo(4,0);
+    // The lettering stays fixed while the footer now sits 1.45cqw + 1px lower.
+    expect(crestTop-date.y-date.height).toBeCloseTo(4+footer.width*.0145+1,0);
     const node=await film.elementHandle(), song=await audio.elementHandle();
     await page.locator('.rg-language select').selectOption('en'); await expect(page.locator('.rg-video-date')).toContainText('31 December 2026');
     expect(await node.evaluate(n=>n===document.querySelector('.cinematic-inline-stage video'))).toBe(true); expect(await song.evaluate(n=>n===document.querySelector('audio'))).toBe(true);
@@ -287,7 +294,7 @@ test('repair: short phones retain the complete artwork, safe portrait window and
   await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await film.evaluate(node => { node.currentTime = .5; });
   await capture(page, 'repair-video-beginning', info);
   const footer = page.locator('.cinematic-film-footer'); await footer.evaluate(node => window.scrollTo({ top: node.getBoundingClientRect().bottom + scrollY - innerHeight + 110, behavior: 'instant' })); await capture(page, 'repair-video-footer', info);
-  const fb = await footer.boundingBox(), vb = await film.boundingBox(); expect(Math.abs(fb.y + fb.height - vb.y - vb.height)).toBeLessThanOrEqual(1);
+  const fb = await footer.boundingBox(), vb = await film.boundingBox(); expectFooterAtEdge(fb, vb);
   await page.getByRole('button', { name: 'Skip video', exact: true }).click();
   await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
   for (const key of ['family','invitation','schedule','venue','gallery','rsvp','closing']) {
@@ -356,7 +363,7 @@ test('critical: immersive media and one inner scroll preserve the complete frame
   await openVideo(page); const film = page.locator('.cinematic-inline-stage video'); await expect.poll(() => film.evaluate(node => node.currentTime)).toBeGreaterThan(0);
   const painted = await film.evaluate(node => { const r = node.getBoundingClientRect(), scale = Math.min(r.width / node.videoWidth, r.height / node.videoHeight); return { width: node.videoWidth * scale, height: node.videoHeight * scale }; });
   expect(painted.width).toBeGreaterThanOrEqual(390 * .9); expect(painted.height).toBeGreaterThanOrEqual(844 * .75);
-  const mediaBounds = await film.boundingBox(), footer = await page.locator('.cinematic-film-footer').boundingBox(); expect(Math.abs(footer.y + footer.height - mediaBounds.y - mediaBounds.height)).toBeLessThanOrEqual(1); expect(footer.width / footer.height).toBeCloseTo(3, 1);
+  const mediaBounds = await film.boundingBox(), footer = await page.locator('.cinematic-film-footer').boundingBox(); expectFooterAtEdge(footer, mediaBounds); expect(footer.width / footer.height).toBeCloseTo(3, 1);
   for (const box of await page.locator('.cinematic-playback-actions button,.cinematic-film-controls button').all()) { const r = await box.boundingBox(); expect(r.width).toBeGreaterThanOrEqual(44); expect(r.height).toBeGreaterThanOrEqual(44); expect(r.y + r.height).toBeLessThanOrEqual(footer.y); }
   await page.getByRole('button', { name: 'Pause video', exact: true }).click(); await capture(page, 'critical-video', info); await skip(page);
   const pane = page.locator('.rg-content-scroll'), frame = page.locator('.rg-information-background'); const before = await frame.boundingBox();
@@ -409,6 +416,8 @@ test('soundtrack: one real song continues through locked video, language, duplic
   await openVideo(page); const video = page.locator('.cinematic-inline-stage video'), film = await video.elementHandle();
   await expect.poll(() => song.evaluate(node => node.currentTime)).toBeGreaterThan(0);
   await expect(video).toHaveJSProperty('muted', true); await expect(song).toHaveJSProperty('paused', false);
+  // Freeze film content during the keyboard audit; the background song must continue.
+  await video.evaluate(node => node.pause());
   await video.evaluate(node => { node.muted = false; }); await expect(video).toHaveJSProperty('muted', true);
   await expect(page.getByRole('button', { name: 'Enable sound', exact: true })).toHaveCount(0);
   await expect(page.locator('.cinematic-film-progress')).toHaveCount(0);

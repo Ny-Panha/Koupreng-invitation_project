@@ -45,6 +45,7 @@ import "./studio-fonts.css";
 import { useStudioPreviewEditing } from '@/shared/preview/useStudioPreviewEditing';
 import { mediaService } from '@/features/invitations/api/mediaApi';
 import { ROYAL_ASSETS, royalGardenPresentation } from '../layouts/RoyalGardenCinematic/model/royalGardenPresentation';
+import { royalGardenDemoContent } from '../shared/royalGardenDemo';
 import { isLocalTemplateFont } from '../shared/templateTypography';
 
 const ensureGoogleFontLoaded = (fontFamily) => {
@@ -782,9 +783,10 @@ export default function TemplateExperience(props) {
     const previewConfiguration = previewContent?.previewVideoEntitled === true && /^[1-9]\d*$/.test(String(previewContent?.previewEventId)) ? previewContent.preWeddingVideo : null;
     const royal = [tpl?.code, tpl?.slug, tpl?.templateCode].includes('royal-garden-cinematic');
     const floral = [tpl?.code, tpl?.slug, tpl?.templateCode].includes('khmer-floral-gold');
-    const videoPresentation = useMemo(() => royal ? { ...royalGardenPresentation(previewContent || tpl?.hostContent || props.content || tpl).video, royal: true } : floral ? { alwaysMuted: true, fit: 'contain', replay: true } : undefined, [royal, floral, previewContent, tpl, props.content]);
+    const royalDemo = royal && !channel && !previewContent && !tpl?.hostContent && !props.isHostedInvitation && !props.content?.hasHostContent;
+    const videoPresentation = useMemo(() => royal ? { ...royalGardenPresentation(previewContent || tpl?.hostContent || props.content || (royalDemo ? { ...tpl, ...royalGardenDemoContent(tpl) } : tpl)).video, royal: true } : floral ? { alwaysMuted: true, fit: 'contain', replay: true } : undefined, [royal, floral, royalDemo, previewContent, tpl, props.content]);
     // A public catalog sample is never inherited by owner drafts or public invitations.
-    const demoVideo = royal && !channel && !previewContent && !tpl?.hostContent && !props.isHostedInvitation && !props.content?.hasHostContent
+    const demoVideo = royalDemo
         ? { src: ROYAL_ASSETS.demoVideo, poster: ROYAL_ASSETS.poster } : undefined;
     const renderer = resolveTemplateRenderer(tpl, props.variant);
     if (!renderer.available) return <TemplateUnavailable />;

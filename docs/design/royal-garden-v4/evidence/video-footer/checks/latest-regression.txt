@@ -1,0 +1,23 @@
+node.exe : [WebServer] (node:24236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+(node:11576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\royal-garden-v3.spec.js:47:1 › catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information (6.2s)
+  ok 2 [chromium] › tests\e2e\royal-garden-v3.spec.js:75:1 › hosted: authorized protected film completes, errors recover, and guest text stays live (12.0s)
+  ok 3 [chromium] › tests\e2e\royal-garden-v3.spec.js:102:1 › unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable (2.2s)
+  ok 4 [chromium] › tests\e2e\royal-garden-v3.spec.js:112:1 › legacy calligraphy covers also use the inline film rather than a popup (3.2s)
+  ok 5 [chromium] › tests\e2e\royal-garden-v3.spec.js:324:1 › critical: language changes preserve the active film, authorized guest data and private RSVP wording (5.8s)
+  ok 6 [chromium] › tests\e2e\royal-garden-v3.spec.js:356:1 › critical: immersive media and one inner scroll preserve the complete frame and reachable ending (6.8s)
+  ok 7 [chromium] › tests\e2e\royal-garden-v3.spec.js:414:1 › soundtrack: one real song continues through locked video, language, duplicate completion and information (5.9s)
+  ok 8 [chromium] › tests\e2e\royal-garden-v3.spec.js:458:1 › soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended (5.8s)
+
+  8 passed (50.1s)

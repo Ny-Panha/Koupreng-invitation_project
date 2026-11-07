@@ -1,0 +1,51 @@
+node.exe : [WebServer] (node:24944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:12856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [mobile-chromium] › tests\e2e\royal-garden-mobile-navigation.spec.js:7:1 › touch navigation stays visible and only information scrolls as the mobile viewport changes (5.7s)
+(node:13412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [mobile-webkit] › tests\e2e\royal-garden-mobile-navigation.spec.js:7:1 › touch navigation stays visible and only information scrolls as the mobile viewport changes (8.5s)
+
+
+  1) [mobile-webkit] › tests\e2e\royal-garden-mobile-navigation.spec.js:7:1 › touch navigation stays visible and only information scrolls as the mobile viewport changes
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   8.453125
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      28 |       await expect.poll(()=>page.locator(`#rg-${key}`).evaluate(node=>{
+      29 |         const parent=node.closest('.rg-content-scroll');return Math.abs(node.getBoundingClientRect().top-parent.getBoundingClientRect().top-8);
+    > 30 |       })).toBeLessThan(2);
+         |           ^
+      31 |       expect(await page.evaluate(()=>scrollY)).toBe(0);
+      32 |       expect((await nav.boundingBox()).y).toBeCloseTo(bar.y,0);
+      33 |     }
+        at D:\Koupreng-invitation_project\apps\frontend-user\tests\e2e\royal-garden-mobile-navigation.spec.js:30:11
+
+    Error Context: ..\..\.cache\royal-garden-mobile\playwright\royal-garden-mobile-naviga-1850b-the-mobile-viewport-changes-mobile-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.cache\royal-garden-mobile\playwright\royal-garden-mobile-naviga-1850b-the-mobile-viewport-changes-mobile-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.cache\royal-garden-mobile\playwright\royal-garden-mobile-naviga-1850b-the-mobile-viewport-changes-mobile-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-webkit] › tests\e2e\royal-garden-mobile-navigation.spec.js:7:1 › touch navigation stays visible and only information scrolls as the mobile viewport changes
+  1 passed (15.8s)

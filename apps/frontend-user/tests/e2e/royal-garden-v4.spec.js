@@ -47,25 +47,27 @@ test('reference comparison: cover and information baseline', async ({ page }) =>
   await page.screenshot({ path: `${evidence}/before-information.png` });
 });
 
-test('curtains reveal owner portraits, Skip keeps content gated, and language preserves media', async ({ page }) => {
-  await page.setViewportSize({ width:390,height:844 }); await setup(page);
+test('curtains directly reveal the authorized film without an intermediate portrait page', async ({ page }) => {
+  await page.setViewportSize({ width:390,height:844 }); await setup(page,{},true);
   const protectedRequests=[]; page.on('request',request => { if(request.url().includes('cinematic-content')) protectedRequests.push(request.url()); });
   await page.goto('/i/review-celestial?lang=en'); await shot(page,'after-cover');
-  await page.clock.install(); await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now())+100));
+  await page.clock.install({time:new Date('2030-01-01T00:00:00Z')}); await page.clock.pauseAt(new Date('2030-01-01T00:00:10Z'));
   await page.locator('.rg-open').click(); await expect(page.locator('[data-stage=COVER_EXITING]')).toBeVisible();
-  await expect(page.locator('main,.rg-content-scroll')).toHaveCount(0);
+  const curtainSkip=page.getByRole('button',{name:'Skip intro',exact:true}); await expect(curtainSkip).toBeVisible();
+  expect((await curtainSkip.boundingBox()).y).toBeLessThan(60);
+  await expect(page.locator('main,.rg-royal-montage,.rg-montage-frame')).toHaveCount(0);
   await page.clock.runFor(360); await expect(page.locator('[data-stage=CURTAIN_PREPARING]')).toBeVisible(); await shot(page,'after-curtain-closed');
   await page.clock.runFor(420); await expect(page.locator('[data-stage=CURTAIN_OPENING]')).toBeVisible();
   await page.evaluate(() => document.getAnimations().filter(a=>a.animationName?.startsWith('rg-v4-curtain') || a.animationName==='rg-v4-valance').forEach(a => { a.pause(); a.currentTime=850; }));
   await shot(page,'after-curtain-opening');
   await page.evaluate(() => document.getAnimations().filter(a=>a.animationName?.startsWith('rg-v4-curtain') || a.animationName==='rg-v4-valance').forEach(a => a.finish()));
-  await page.clock.runFor(1800); await expect(page.locator('[data-stage=PHOTO_SLIDESHOW]')).toBeVisible(); await shot(page,'after-portrait-first');
-  const mediaNode=await page.locator('.rg-intro-portrait[data-active=true]').elementHandle();
+  await page.clock.runFor(2600); await expect(page.locator('[data-stage=PRE_WEDDING_VIDEO]')).toBeVisible();
+  const film=page.locator('.cinematic-inline-stage video'); await expect(film).toBeVisible();
+  const mediaNode=await film.elementHandle();
   await page.locator('.rg-language select').selectOption('km');
-  expect(await mediaNode.evaluate(node=>node===document.querySelector('.rg-intro-portrait[data-active=true]'))).toBe(true);
-  await page.clock.runFor(2000); await expect(page.locator('.rg-intro-portrait[data-active=true]')).toHaveAttribute('src',second); await shot(page,'after-portrait-second');
-  await page.getByRole('button',{name:'រំលង',exact:true}).click(); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
-  expect(protectedRequests).toEqual([]); await page.clock.runFor(30000); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
+  expect(await mediaNode.evaluate(node=>node===document.querySelector('.cinematic-inline-stage video'))).toBe(true);
+  await page.getByRole('button',{name:'រំលងវីដេអូ',exact:true}).click(); await page.clock.runFor(750); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
+  expect(protectedRequests).toHaveLength(1); await page.clock.runFor(30000); await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
 });
 
 test('collage and lightbox retain focus, keyboard, swipe, failures and scroll position', async ({ page }) => {
@@ -80,8 +82,8 @@ test('collage and lightbox retain focus, keyboard, swipe, failures and scroll po
   const media=dialog.locator('.rg-lightbox');
   await media.evaluate(node=>{ const touch=(x,y)=>new Touch({identifier:1,target:node,clientX:x,clientY:y}); node.dispatchEvent(new TouchEvent('touchstart',{touches:[touch(290,300)],bubbles:true})); node.dispatchEvent(new TouchEvent('touchend',{changedTouches:[touch(80,310)],bubbles:true})); });
   await expect(dialog.locator('.rg-expanded-actions')).toContainText('3 / 3'); await shot(page,'after-lightbox-landscape');
-  await dialog.locator('img').evaluate(node=>node.dispatchEvent(new Event('error'))); await expect(dialog.getByRole('status')).toContainText('could not be loaded');
-  await page.keyboard.press('ArrowLeft'); await expect(dialog.locator('img')).toHaveAttribute('src',second);
+  await dialog.locator('.rg-expanded-photo').evaluate(node=>node.dispatchEvent(new Event('error'))); await expect(dialog.getByRole('status')).toContainText('could not be loaded');
+  await page.keyboard.press('ArrowLeft'); await expect(dialog.locator('.rg-expanded-photo')).toHaveAttribute('src',second);
   await page.keyboard.press('Escape'); await expect(dialog).toHaveCount(0); await expect(tile).toBeFocused();
   expect(await page.locator('.rg-content-scroll').evaluate(node=>node.scrollTop)).toBe(scrollTop);
 });

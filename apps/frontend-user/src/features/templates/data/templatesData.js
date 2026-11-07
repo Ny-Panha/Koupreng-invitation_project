@@ -2,6 +2,7 @@ import { isPublicCatalogTemplate, requiresTemplateAccess } from "../model/catalo
 import musicWaitingDay from "../../../assets/music/ថ្ងៃដែលរង់ចាំ.mp3";
 import musicInstrumental from "../../../assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { getMusicTrack } from '../../../shared/data/musicTracks';
+import { KHMER_CELESTIAL_PROGRAMME } from '../shared/khmerCelestialProgramme';
 import { floralDemoFromCelestial } from './floralDemoAdapter';
 
 export const KEEP_TEMPLATE_CODE = "silk-heritage";
@@ -172,17 +173,7 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
             { hex: "#FFFAF2", name: "ភ្លុក" },
         ],
     },
-    schedule: [
-        { id: "krong-peali", time: "៥:០០ ព្រឹក", title: "ពិធីក្រុងពាលី" },
-        { id: "guest-gathering", time: "៦:៣០ ព្រឹក", title: "ជួបជុំភ្ញៀវកិត្តិយស ដើម្បីរៀបចំហែជំនូន" },
-        { id: "procession", time: "៧:០០ ព្រឹក", title: "ហែជំនូនចូលរោងជ័យ និងនិយាយជើងការ និងរៀបរាប់ផ្លែឈើ ៣៦ មុខ" },
-        { id: "rings", time: "៨:០០ ព្រឹក", title: "ពិធីបំពាក់ចិញ្ចៀន" },
-        { id: "blessing", time: "៩:០០ ព្រឹក", title: "ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត" },
-        { id: "hair", time: "៩:៣០ - ១០:៣០ ព្រឹក", title: "ពិធីកាត់សក់បង្កក់សិរី ចម្រើនកេសា" },
-        { id: "sompeas-ptem", time: "១១:០០ ព្រឹក", title: "ពិធីសំពះផ្ទឹម បង្វិលពពិល … និងចងដៃ" },
-        { id: "lunch", time: "១១:៣០ ថ្ងៃត្រង់", title: "អញ្ជើញភ្ញៀវពិសាអាហារថ្ងៃត្រង់" },
-        { id: "dinner", time: "៥:០០ ល្ងាច", title: "អញ្ជើញភ្ញៀវពិសាភោជនាហារពេលល្ងាច" },
-    ],
+    schedule: KHMER_CELESTIAL_PROGRAMME.map(row => ({ id: row.id, time: row.timeKm, title: row.titleKm })),
     design: {
         presetId: "KHMER_CELESTIAL",
         theme: "KHMER_CELESTIAL",
@@ -644,7 +635,7 @@ export const ROYAL_GARDEN_CINEMATIC_TEMPLATE = {
     apologyTitle: 'លិខិតសូមអភ័យទោស',
     apologyText: 'យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូមអភ័យទោសក្នុងករណីពុំបានជូនសំបុត្រអញ្ជើញដោយផ្ទាល់។ សូមឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាង កញ្ញា អញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ ដោយមេត្រីភាព។',
     saveTheDate: { enabled: true, heading: 'រាប់ថយក្រោយដល់ថ្ងៃមង្គល', showCountdown: true, showAddToCalendar: true, showCalendar: false, showTime: false, countdownStyle: 'circles' },
-    cinematicIntro: { version: 1, style: 'royal-arch', titleMode: 'artwork', duration: 4.3 },
+    cinematicIntro: { version: 1, style: 'royal-arch', titleMode: 'artwork', artworkSrc: '/templates/royal-garden/golden-calligraphy.webp', duration: 4.3 },
     informationScene: { enabled: true, fixedBackground: true, motionPreset: 'subtle', effects: { sparkles: true, petals: true, goldDust: true, butterfly: true } },
     enabledSections: { story: false, party: false, faq: false, dressCode: false, gift: false, countdown: true, schedule: true, gallery: true, rsvp: true },
     design: { presetId: 'ROYAL_GARDEN_CINEMATIC', primaryColor: '#98703a', secondaryColor: '#c7984d', backgroundColor: '#f1ede6', openingStyle: 'royal-garden-oval' },

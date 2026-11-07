@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import RoyalGardenWeddingCalendar from './components/RoyalGardenWeddingCalendar';
@@ -25,16 +25,14 @@ function calendar(value = content, props = {}) { return render(<RoyalGardenWeddi
 
 describe('Royal Garden interactive wedding calendar', () => {
   it('marks the real main date, selects the correct ceremony and crosses the year', () => {
-    const go = vi.fn(); calendar(content, { onProgramDay: go });
+    calendar(content);
     expect(screen.getByRole('button', { name: /31 December 2026, main celebration, wedding ceremonies/ })).toHaveAttribute('data-main', 'true');
-    const summary = screen.getByRole('region', { name: 'Selected day' });
-    expect(summary).toHaveTextContent('Family day'); expect(summary).toHaveTextContent('Blessing'); expect(summary).not.toHaveTextContent('Reception');
+    expect(screen.queryByRole('region', { name: 'Selected day' })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
     expect(screen.getByRole('heading', { name: 'January 2027' })).toBeVisible();
     const second = screen.getByRole('button', { name: /1 January 2027, wedding ceremonies/ });
     expect(second).toHaveAttribute('data-ceremony', 'true'); expect(second).not.toHaveAttribute('data-main'); fireEvent.click(second);
-    expect(summary).toHaveTextContent('Wedding day'); expect(summary).toHaveTextContent('Reception'); expect(summary).not.toHaveTextContent('Blessing');
-    fireEvent.click(within(summary).getByRole('button', { name: 'View this day’s programme' })); expect(go).toHaveBeenCalledWith('day-two');
+    expect(second).toHaveAttribute('aria-pressed','true');
     fireEvent.click(screen.getByRole('button', { name: 'Previous month' })); expect(screen.getByRole('heading', { name: 'December 2026' })).toBeVisible();
   });
   it.each([['2028-02-29', 29, 2], ['2027-02-01', 28, 1], ['2027-04-01', 30, 4]])('renders the real length and offset of %s', (date, length, offset) => {
@@ -54,7 +52,7 @@ describe('Royal Garden interactive wedding calendar', () => {
     const next = { ...content, eventDate: '2028-02-29', programDays: [], schedule: [] };
     rerender(<RoyalGardenWeddingCalendar content={next} days={[]} english />);
     expect(screen.getByRole('heading', { name: 'February 2028' })).toBeVisible();
-    expect(screen.getByRole('region', { name: 'Selected day' })).toHaveTextContent('29 February 2028');
+    expect(screen.getByRole('button',{name:/29 February 2028, main celebration/})).toHaveAttribute('aria-pressed','true');
   });
   it('does not invent a date, calendar or countdown for missing/invalid event data', () => {
     const { container } = calendar({ eventDate: '2027-02-30', eventTime: '17:00', saveTheDate: { showCalendar: true } });
@@ -73,7 +71,7 @@ describe('Royal Garden interactive wedding calendar', () => {
   it('excludes disabled days and rows and keeps no-ceremony selection accessible', () => {
     const data = { ...content, programDays: content.programDays.map(day => ({ ...day, enabled: day.id !== 'day-two' })) };
     calendar(data); fireEvent.click(screen.getByRole('button', { name: /^30 December 2026$/ }));
-    expect(screen.getByRole('region', { name: 'Selected day' })).toHaveTextContent('No ceremonies scheduled');
+    expect(screen.getByRole('button',{name:/^30 December 2026$/})).toHaveAttribute('aria-pressed','true');
     fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
     expect(screen.getByRole('button', { name: /^1 January 2027$/ })).not.toHaveAttribute('data-ceremony');
   });

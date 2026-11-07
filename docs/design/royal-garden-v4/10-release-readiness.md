@@ -1,5 +1,7 @@
 # Release readiness
 
+Historical V4 delivery. The current direct-film opening and subsequent responsive refinements are documented in [the follow-up report](11-direct-video-responsive-refinement.md).
+
 Royal Garden now has an ornate cover → curtain → authorized video or portrait montage → formal document → venue/program → manually explored gallery → countdown/calendar → gift → RSVP → private wishes → closing journey. The existing section-order system controls authored information order; the reference order is the new marketing sample only.
 
 Reused: canonical wedding data, cover resolver, scene hook, protected-media provider, audio, shared Modal, calendar/ICS, program, illustrated map/designer, public RSVP and gift components. Added: a small curtain presentation component, optional palette filter, original velvet/gold assets, presentation settings, tests and evidence. Backend authorization, entitlements, guest scoping, USD/KHR gift separation, privacy and Flyway migrations were not changed.

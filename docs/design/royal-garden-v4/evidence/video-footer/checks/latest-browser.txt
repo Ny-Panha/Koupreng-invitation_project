@@ -1,0 +1,20 @@
+node.exe : [WebServer] (node:24068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:26648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\royal-garden-polish.spec.js:6:1 › modern guest panel, motion, two-day calendar and gallery remain usable across sizes (25.4s)
+  ok 2 [chromium] › tests\e2e\royal-garden-v4.spec.js:50:1 › curtains directly reveal the authorized film without an intermediate portrait page (3.1s)
+  ok 3 [chromium] › tests\e2e\royal-garden-video-footer.spec.js:21:1 › page two retains curtain, autoplay, original crest and lettering positions across viewports (1.3m)
+  ok 4 [chromium] › tests\e2e\royal-garden-video-footer.spec.js:72:1 › catalog uses the new footer and preserved original Khmer artwork (5.9s)
+  ok 5 [chromium] › tests\e2e\royal-garden-video-footer.spec.js:98:1 › Pich-Pisey catalog cover and information fit small phones, landscape, tablets and desktops (17.5s)
+
+  5 passed (2.3m)

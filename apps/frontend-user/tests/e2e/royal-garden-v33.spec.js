@@ -115,12 +115,12 @@ test('V33 calendar, map and designer visual coverage at all eight requested view
   }
 });
 
-test('V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls',async({page},info)=>{
+test('V33 public demo previews two ceremony days, map and a single calendar action',async({page},info)=>{
   test.setTimeout(90000);await setup(page);await page.emulateMedia({reducedMotion:'reduce'});const requested=[];page.on('request',request=>requested.push(request.url()));
   await page.goto('/templates/royal-garden-cinematic?lang=en');await expect(page.locator('.rg-demo-nav')).toHaveCount(0);await screenshot(page,`landing-cover-${info.project.name}`);await page.locator('.rg-open').click();await expect(page.locator('[data-stage=CONTENT]')).toBeVisible();
-  await page.locator('#rg-countdown').scrollIntoViewIfNeeded();await expect(page.locator('.rg-wedding-calendar')).toBeVisible();await expect(page.getByRole('button',{name:/Add to Calendar/})).toHaveCount(0);await expect(page.locator('.rg-selected-day')).toHaveCount(0);await expect(page.locator('.rg-calendar-export')).toHaveCount(0);
+  await page.locator('#rg-countdown').scrollIntoViewIfNeeded();await expect(page.locator('.rg-wedding-calendar')).toBeVisible();await expect(page.getByRole('button',{name:/Add to Calendar/})).toHaveCount(1);await expect(page.locator('.rg-selected-day')).toHaveCount(0);await expect(page.locator('.rg-calendar-export')).toHaveCount(1);
   await expect(page.locator('[data-ceremony=true]')).toHaveCount(2);await screenshot(page,`landing-calendar-${info.project.name}`);
-  await page.locator('#rg-venue').scrollIntoViewIfNeeded();await expect(page.locator('.kp-illustrated-map')).toBeVisible();await expect(page.locator('.kp-illustrated-map')).toContainText('Example');await screenshot(page,`landing-map-${info.project.name}`);
+  await page.locator('#rg-venue').scrollIntoViewIfNeeded();await expect(page.locator('.kp-illustrated-map')).toBeVisible();await expect(page.getByRole('link',{name:'Open Google Maps'})).toHaveAttribute('href','https://maps.app.goo.gl/GwpoP4BhtsvgtUph9');await screenshot(page,`landing-map-${info.project.name}`);
   expect(requested.filter(url=>/IllustratedMapDesignerModal|\.mp4(?:\?|$)/.test(url))).toEqual([]);
   await expect(page.getByRole('button',{name:'Save design',exact:true})).toHaveCount(0);
 });
@@ -143,7 +143,7 @@ test('V33 bilingual dark designer uses accessible theme tokens',async({page},inf
 test('V33 calendar export uses saved ceremony dates and respects the Studio visibility setting',async({page})=>{
   await setup(page);await page.goto('/i/review-celestial?lang=en');
   const pending=page.waitForEvent('download');await page.getByRole('button',{name:/Add to Calendar/}).click();const main=await pending;const mainText=await fs.readFile(await main.path(),'utf8');expect(mainText).toContain('DTSTART:20271231T100000Z');
-  await page.getByRole('button',{name:'Next month',exact:true}).click();await page.locator('[data-date="2028-01-01"]').click();await expect(page.getByRole('region',{name:'Selected day'})).toContainText('Wedding reception');
+  await page.getByRole('button',{name:'Next month',exact:true}).click();await page.locator('[data-date="2028-01-01"]').click();await expect(page.locator('[data-date="2028-01-01"]')).toHaveAttribute('aria-pressed','true');
   const allPending=page.waitForEvent('download');await page.getByRole('button',{name:'All wedding ceremonies',exact:true}).click();const all=await allPending;const text=await fs.readFile(await all.path(),'utf8');expect(text.match(/BEGIN:VEVENT/g)).toHaveLength(2);expect(text).toContain('DTSTART:20280101T100000Z');
   await setup(page,{initial:{...content,saveTheDate:{...content.saveTheDate,showAddToCalendar:false}}});await page.goto('/i/review-celestial?lang=en');await expect(page.getByRole('button',{name:/Add to Calendar/})).toHaveCount(0);
 });

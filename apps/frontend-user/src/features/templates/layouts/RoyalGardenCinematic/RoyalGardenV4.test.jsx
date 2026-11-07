@@ -31,6 +31,10 @@ it('uses thumbnail tiles, opens the original, and supports keyboard and close fo
   fireEvent.keyDown(document.activeElement,{key:'ArrowRight'});
   expect(dialog.querySelector('img')).toHaveAttribute('src','/owner-landscape.webp');
   expect(dialog.querySelector('.rg-expanded-actions')).toHaveTextContent('2 / 2');
+  fireEvent.click(screen.getByRole('button',{name:'View photo 1'}));
+  expect(dialog.querySelector('.rg-expanded-photo')).toHaveAttribute('src','/owner-portrait.webp');
+  expect(screen.getByRole('button',{name:'View photo 1'})).toHaveAttribute('aria-current','true');
+  fireEvent.keyDown(document.activeElement,{key:'ArrowRight'});
   fireEvent.error(dialog.querySelector('img'));
   expect(screen.getByText('This photo could not be loaded.')).toBeVisible();
   fireEvent.click(screen.getByRole('button',{name:'Close photo'})); expect(trigger).toHaveFocus();

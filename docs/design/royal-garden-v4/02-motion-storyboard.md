@@ -1,5 +1,7 @@
 # Motion storyboard
 
+Historical V4 baseline. The later user-requested direct-film opening replaces the portrait handoff below; see [the responsive refinement](11-direct-video-responsive-refinement.md).
+
 | Action / state | Duration | Visible composition |
 | --- | --- | --- |
 | Cover waiting | Guest controlled | Owner cover, gold frame, ceremonial title, real guest plaque, open control |

@@ -46,19 +46,19 @@ it('opens royal curtains once, pauses cloth timing, then hands off to media', ()
   tick(420); expect(result.current.stage).toBe('CURTAIN_OPENING');
   tick(500); act(() => result.current.setPaused(true)); tick(5000);
   expect(result.current.stage).toBe('CURTAIN_OPENING');
-  act(() => result.current.setPaused(false)); tick(1300);
+  act(() => result.current.setPaused(false)); tick(2100);
   expect(result.current.stage).toBe('CINEMATIC_MEDIA'); expect(result.current.run).toBe(token);
   act(() => result.current.beginPhotos()); tick(2000); expect(result.current.slide).toBe(1);
   tick(2000); tick(700); expect(result.current.stage).toBe('CONTENT');
 });
 it('cancels each royal stage and ignores stale and duplicate video completion', () => {
   const { result } = renderHook(() => useIntroSequence({ ...options, royal: true }));
-  for (const waits of [[], [360], [360, 420], [360, 420, 1800]]) {
+  for (const waits of [[], [360], [360, 420], [360, 420, 2600]]) {
     act(() => result.current.restart()); act(() => result.current.start());
     waits.forEach(tick); act(() => result.current.finish()); tick(20000);
     expect(result.current.stage).toBe('CONTENT');
   }
-  act(() => result.current.restart()); act(() => result.current.start()); tick(360); tick(420); tick(1800);
+  act(() => result.current.restart()); act(() => result.current.start()); tick(360); tick(420); tick(2600);
   const token = result.current.run;
   act(() => result.current.prepareVideo()); act(() => result.current.videoPlaying(token));
   act(() => result.current.afterVideo(false, token)); act(() => result.current.afterVideo(true, token));
@@ -72,4 +72,28 @@ it('supports curtain opt-out, empty media and live reduced-motion changes', () =
   act(() => result.current.beginPhotos()); expect(result.current.stage).toBe('INVITATION_REVEAL');
   rerender({ ...options, royal: true, reduced: true }); expect(result.current.stage).toBe('CONTENT');
   unmount(); expect(vi.getTimerCount()).toBe(0);
+});
+
+it('plays the film underneath the same curtain run and hands off without a photo stage', () => {
+  const {result}=renderHook(()=>useIntroSequence({...options,royal:true}));
+  act(()=>result.current.start()); const token=result.current.run;
+  act(()=>result.current.prepareVideo()); act(()=>result.current.videoPlaying(token));
+  expect(result.current.stage).toBe('COVER_EXITING'); expect(result.current.media).toBe('playing');
+  tick(360); expect(result.current.stage).toBe('CURTAIN_PREPARING');
+  tick(420); expect(result.current.stage).toBe('CURTAIN_OPENING');
+  tick(2600); expect(result.current.stage).toBe('PRE_WEDDING_VIDEO'); expect(result.current.run).toBe(token);
+});
+it('handles film completion while the curtain is still opening without a stale handoff', () => {
+  const {result}=renderHook(()=>useIntroSequence({...options,royal:true}));
+  act(()=>result.current.start()); const token=result.current.run;
+  act(()=>result.current.prepareVideo()); act(()=>result.current.videoPlaying(token)); tick(360); tick(420);
+  act(()=>result.current.afterVideo(false,token)); expect(result.current.stage).toBe('CONTENT');
+  tick(10000); expect(result.current.stage).toBe('CONTENT');
+});
+
+it('keeps the gentle cloth reveal open for its full smooth duration',()=>{
+  const {result}=renderHook(()=>useIntroSequence({...options,royal:true,curtainSpeed:'gentle'}));
+  act(()=>result.current.start()); tick(360); tick(420); tick(3399);
+  expect(result.current.stage).toBe('CURTAIN_OPENING'); tick(1);
+  expect(result.current.stage).toBe('CINEMATIC_MEDIA');
 });

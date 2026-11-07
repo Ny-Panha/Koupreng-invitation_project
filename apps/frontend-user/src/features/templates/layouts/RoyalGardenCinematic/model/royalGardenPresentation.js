@@ -3,7 +3,11 @@ import { safeIntroMedia } from '../../../shared/cinematicIntro';
 const ROOT = '/templates/royal-garden/v3';
 const REFINEMENT = '/templates/royal-garden/v3-1';
 export const ROYAL_ASSETS = Object.freeze({
+  pichPiseyCover: '/templates/royal-garden/v4/pich-pisey/photo-03-1280.webp', pichPiseyCoverSmall: '/templates/royal-garden/v4/pich-pisey/photo-03-640.webp',
+  heritageFooter: '/templates/royal-garden/v4/video-footer-1280.webp', heritageFooterSmall: '/templates/royal-garden/v4/video-footer-640.webp', heritageFooterLarge: '/templates/royal-garden/v4/video-footer-1920.webp',
   heritageFrame: '/templates/royal-garden/v4/heritage-frame.webp', heritageFrameSmall: '/templates/royal-garden/v4/heritage-frame-640.webp',
+  guestKbach:'/templates/royal-garden/v4/guest-kbach-1200.webp', guestKbachSmall:'/templates/royal-garden/v4/guest-kbach-600.webp',
+  ceremonialCalligraphy:'/templates/royal-garden/golden-calligraphy.webp',ceremonialCalligraphySmall:'/templates/royal-garden/v4/ceremonial-title-640.webp',ceremonialCalligraphyMedium:'/templates/royal-garden/v4/ceremonial-title-1100.webp',
   arch: `${REFINEMENT}/opening-frame-1200.webp`, archSmall: `${REFINEMENT}/opening-frame-640.webp`,
   calligraphy: `${ROOT}/opening/calligraphy.webp`, calligraphySmall: `${ROOT}/opening/calligraphy-640.webp`,
   guest: `${ROOT}/ornaments/guest-frame.webp`, footer: `${ROOT}/video/footer.webp`,
@@ -73,7 +77,9 @@ export function royalGardenPresentation(content = {}, { hosted = content.hasHost
       butterfly: effects.butterfly === true, goldDust: effects.goldDust !== false,
     },
     video: {
-      royal, fit: pick(video.fit, ['contain', 'cover'], 'cover'), footerSrc: ROYAL_ASSETS.footer,
+      royal, fit: pick(video.fit, ['contain', 'cover'], 'cover'), footerSrc: heritage ? ROYAL_ASSETS.heritageFooter : ROYAL_ASSETS.footer,
+      footerSrcSet: heritage ? `${ROYAL_ASSETS.heritageFooterSmall} 640w, ${ROYAL_ASSETS.heritageFooter} 1280w, ${ROYAL_ASSETS.heritageFooterLarge} 1920w` : undefined,
+      footerSizes: heritage ? ROYAL_CANVAS_SIZES : undefined,
       positionX: bounded(video.positionX, 0, 100, 50), positionY: bounded(video.positionY, 0, 100, 40),
       footer: video.footer !== false, replay: video.replay !== false,
       transition: pick(video.transition, ['fade', 'none'], 'fade'),
@@ -94,8 +100,10 @@ export function guestFrameText(content = {}, english = false) {
   return english ? 'You and your family' : 'លោកអ្នក និងក្រុមគ្រួសារ';
 }
 
+export const royalCurtainDuration = speed => speed === 'gentle' ? 3400 : 2600;
+
 export function motionBudget(preset, { reduced = false, saveData = false, mobile = false } = {}) {
   if (reduced || saveData || preset === 'off') return { particles: 0, butterflies: 0, duration: 0 };
   const count = { subtle: 6, balanced: 12, cinematic: mobile ? 16 : 18 }[preset] ?? 6;
-  return { particles: count, butterflies: 1, duration: preset === 'cinematic' ? 18 : 28 };
+  return { particles: count, butterflies: preset === 'cinematic' ? (mobile ? 4 : 5) : preset === 'balanced' ? 3 : 2, duration: preset === 'cinematic' ? 16 : 22 };
 }

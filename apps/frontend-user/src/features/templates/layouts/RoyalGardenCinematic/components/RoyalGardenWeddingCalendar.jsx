@@ -2,7 +2,7 @@ import { useId, useState } from 'react';
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { WeddingCountdown } from '../../../shared/SaveTheDate';
 import { calendarMonth, eventToday, formatEventDate, formatEventTime, formatNumerals, resolveEvent, shiftMonth } from '../../../shared/eventDateTime';
-import { programDayHeading, validProgramDate } from '../../../shared/program';
+import { validProgramDate } from '../../../shared/program';
 
 function CalendarExportActions({ content, english, mainAvailable, programAvailable }) {
   const [status, setStatus] = useState('');
@@ -23,16 +23,16 @@ function CalendarExportActions({ content, english, mainAvailable, programAvailab
     finally { setBusy(false); }
   };
   return <div className="rg-calendar-export" aria-busy={busy}>
-    {mainAvailable && <button type="button" className="rg-button rg-calendar-primary" disabled={busy} onClick={() => download('main')}><CalendarDays size={20} aria-hidden="true" /><span><strong>{english ? 'Add to Calendar' : 'បន្ថែមទៅប្រតិទិន'}</strong><small>{english ? 'Main celebration' : 'ពិធីមង្គលការចម្បង'}</small></span></button>}
+    {mainAvailable && <button type="button" className="rg-button rg-calendar-primary" disabled={busy} onClick={() => download('main')}><CalendarDays size={20} aria-hidden="true" /><span>{english ? 'Add to Calendar' : 'បន្ថែមទៅប្រតិទិន'}</span></button>}
     {programAvailable && <button type="button" className="rg-button rg-calendar-secondary" disabled={busy} onClick={() => download('ceremonies')}>{english ? 'All wedding ceremonies' : 'ពិធីមង្គលការទាំងអស់'}</button>}
     <p role="status">{status}</p>
   </div>;
 }
 
-export default function RoyalGardenWeddingCalendar({ content = {}, days = [], english = false, onProgramDay }) {
+export default function RoyalGardenWeddingCalendar({ content = {}, days = [], english = false }) {
   const settings = content.saveTheDate || {};
   const event = resolveEvent(content);
-  const numerals = settings.numerals || (english ? 'latin' : 'khmer');
+  const numerals = english ? 'latin' : (settings.numerals || 'khmer');
   const numeral = value => formatNumerals(value, numerals);
   const datedDays = days.filter(day => validProgramDate(day.resolvedDate));
   const anchor = event.validDate ? event.date : datedDays[0]?.resolvedDate || '';
@@ -42,7 +42,6 @@ export default function RoyalGardenWeddingCalendar({ content = {}, days = [], en
   const [selection, setSelection] = useState(null);
   const month = browsing?.signature === signature ? browsing.date : anchor;
   const selected = selection?.signature === signature ? selection.date : anchor;
-  const selectedDays = datedDays.filter(day => day.resolvedDate === selected);
   const cells = calendarMonth(month);
   const id = useId();
   const today = eventToday(event.timezone);
@@ -71,18 +70,9 @@ export default function RoyalGardenWeddingCalendar({ content = {}, days = [], en
             onClick={() => setSelection({ signature, date })}><time dateTime={date} className={main ? 'kp-calendar-event' : undefined}>{numeral(Number(date.slice(-2)))}</time>{(main || ceremony) && <span className="rg-date-marker" aria-hidden="true">{main ? '◆' : '●'}</span>}</button>}</td>;
         })}</tr>)}</tbody>
       </table>
-      {!content.isTemplateDemo && <p className="rg-calendar-legend"><span>◆ {english ? 'Main celebration' : 'ពិធីចម្បង'}</span><span>● {english ? 'Ceremonies' : 'ពិធីមង្គលការ'}</span></p>}
+      <p className="rg-calendar-legend"><span>◆ {english ? 'Main celebration' : 'ពិធីចម្បង'}</span><span>● {english ? 'Ceremonies' : 'ពិធីមង្គលការ'}</span></p>
       {month.slice(0, 7) !== anchor.slice(0, 7) && <button type="button" className="rg-calendar-return" onClick={() => setBrowsing(null)}>{english ? 'Return to wedding month' : 'ត្រឡប់ទៅខែមង្គលការ'}</button>}
-      {!content.isTemplateDemo && <div className="rg-selected-day" role="region" aria-label={english ? 'Selected day' : 'ថ្ងៃដែលបានជ្រើស'} aria-live="polite">
-        <p><time dateTime={selected}>{formatEventDate(selected, english, numerals, { weekday: 'long' })}</time></p>
-        {selectedDays.map(day => <div key={day.id}>
-          <h4>{programDayHeading(day, days.indexOf(day), english, numeral)}</h4>
-          <ul>{day.items.map(row => <li key={row.id}><span>{formatEventTime(row.time, english, numerals)}</span><span>{(english ? row.titleEn : row.titleKm) || row.title}</span></li>)}</ul>
-          {onProgramDay && <button type="button" className="rg-calendar-return" onClick={() => onProgramDay(day.id)}>{english ? 'View this day’s programme' : 'មើលកម្មវិធីថ្ងៃនេះ'}</button>}
-        </div>)}
-        {!selectedDays.length && <p>{selected === event.date ? (english ? 'Main wedding celebration' : 'ពិធីមង្គលការចម្បង') : (english ? 'No ceremonies scheduled for this date.' : 'មិនមានពិធីសម្រាប់ថ្ងៃនេះទេ។')}</p>}
-      </div>}
     </div>}
-    {!content.isTemplateDemo && settings.showAddToCalendar !== false && <CalendarExportActions content={content} english={english} mainAvailable={event.validDate && (event.allDay || event.instant !== null)} programAvailable={days.length > 0} />}
+    {settings.showAddToCalendar !== false && <CalendarExportActions content={content} english={english} mainAvailable={event.validDate && (event.allDay || event.instant !== null)} programAvailable={!content.isTemplateDemo && days.length > 0} />}
   </div>;
 }

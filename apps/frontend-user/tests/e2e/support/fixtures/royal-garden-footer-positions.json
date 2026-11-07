@@ -1,0 +1,132 @@
+{
+  "320x568": {
+    ".rg-video-monogram": {
+      "x": 119.9609375,
+      "y": 5.671875,
+      "width": 80.078125,
+      "height": 80.078125
+    },
+    ".rg-video-lettering": {
+      "x": 46.046875,
+      "y": 420.328125,
+      "width": 227.90625,
+      "height": 89.296875
+    },
+    ".rg-video-date": {
+      "x": 99.328125,
+      "y": 486.234375,
+      "width": 121.34375,
+      "height": 23.390625
+    },
+    ".cinematic-film-footer": {
+      "x": 6,
+      "y": 465.34375,
+      "width": 308,
+      "height": 102.65625
+    }
+  },
+  "390x844": {
+    ".rg-video-monogram": {
+      "x": 145.8671875,
+      "y": 8.4375,
+      "width": 98.265625,
+      "height": 98.265625
+    },
+    ".rg-video-lettering": {
+      "x": 36.2421875,
+      "y": 653.609375,
+      "width": 317.515625,
+      "height": 119.65625
+    },
+    ".rg-video-date": {
+      "x": 129.7578125,
+      "y": 748.09375,
+      "width": 130.484375,
+      "height": 25.171875
+    },
+    ".cinematic-film-footer": {
+      "x": 6,
+      "y": 718,
+      "width": 378,
+      "height": 126
+    }
+  },
+  "430x932": {
+    ".rg-video-monogram": {
+      "x": 160.6640625,
+      "y": 9.3125,
+      "width": 108.671875,
+      "height": 108.671875
+    },
+    ".rg-video-lettering": {
+      "x": 39.4453125,
+      "y": 720.40625,
+      "width": 351.109375,
+      "height": 133.796875
+    },
+    ".rg-video-date": {
+      "x": 142.8515625,
+      "y": 826.359375,
+      "width": 144.296875,
+      "height": 27.84375
+    },
+    ".cinematic-film-footer": {
+      "x": 6,
+      "y": 792.671875,
+      "width": 418,
+      "height": 139.328125
+    }
+  },
+  "768x1024": {
+    ".rg-video-monogram": {
+      "x": 328,
+      "y": 10.234375,
+      "width": 112,
+      "height": 112
+    },
+    ".rg-video-lettering": {
+      "x": 154,
+      "y": 729.078125,
+      "width": 460,
+      "height": 180.953125
+    },
+    ".rg-video-date": {
+      "x": 286,
+      "y": 872.234375,
+      "width": 196,
+      "height": 37.796875
+    },
+    ".cinematic-film-footer": {
+      "x": 72.5625,
+      "y": 816.375,
+      "width": 622.875,
+      "height": 207.625
+    }
+  },
+  "1440x900": {
+    ".rg-video-monogram": {
+      "x": 664,
+      "y": 28.59375,
+      "width": 112,
+      "height": 112
+    },
+    ".rg-video-lettering": {
+      "x": 501.1015625,
+      "y": 613.703125,
+      "width": 437.796875,
+      "height": 170.28125
+    },
+    ".rg-video-date": {
+      "x": 630.0234375,
+      "y": 749.28125,
+      "width": 179.953125,
+      "height": 34.703125
+    },
+    ".cinematic-film-footer": {
+      "x": 459.40625,
+      "y": 706.28125,
+      "width": 521.1875,
+      "height": 173.71875
+    }
+  }
+}

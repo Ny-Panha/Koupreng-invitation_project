@@ -1,5 +1,7 @@
 # Reference comparisons
 
+These comparison sheets describe the initial V4 baseline. Later user-supplied Pich/Pisey photos and the direct-film opening are shown in [the responsive refinement](11-direct-video-responsive-refinement.md).
+
 Actual video frames, pre-change Chromium captures, and final Chromium captures are retained together. `evidence/reference/` contains recording frames, including its phone shell for analysis only. `evidence/browser/` contains the application without a phone/status bar. All app screens use test wedding data and existing project photographs, never the reference couple's identity.
 
 ![Reference and application storyboard](evidence/comparison-storyboard.jpg)

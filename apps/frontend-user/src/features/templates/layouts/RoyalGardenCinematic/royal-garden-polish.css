@@ -1,0 +1,106 @@
+/* Generated Khmer kbach ornament with live, accessible guest text. */
+.tpl-royal-garden .rg-royal-guest--modern { width:76%; max-width:330px; margin:8px auto 5px; }
+.tpl-royal-garden .rg-guest-frame[data-modern=true] { position:relative; aspect-ratio:4/1; padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
+.tpl-royal-garden .rg-guest-frame[data-modern=true] img { width:100%; height:100%; object-fit:fill; }
+.tpl-royal-garden .rg-guest-frame[data-modern=true][data-long=true] { min-height:72px; }
+.tpl-royal-garden .rg-guest-caption { margin:0 0 5px; color:#ddbd81; font:400 11px/1.8 var(--rg-body-font); }
+.tpl-royal-garden .rg-guest-frame[data-modern=true] .rg-guest-name { position:absolute; inset:24% 15% 20%; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; align-content:center; overflow:hidden; white-space:normal; overflow-wrap:anywhere; font:400 clamp(11px,3.3cqw,17px)/1.65 var(--rg-heading-font); color:#420b2b; }
+.tpl-royal-garden .rg-guest-frame[data-modern=true][data-long=true] .rg-guest-name { font-size:clamp(11px,3.2cqw,16px); }
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-lettering .rg-kbach-title { display:grid; justify-items:center; align-content:center; gap:1px; margin:0; width:100%; color:#f6d58c; font-family:var(--rg-khmer-heading); line-height:1.7; text-shadow:none; }
+.tpl-royal-garden .rg-kbach-title-small { font-size:clamp(15px,4.6cqw,26px); }
+.tpl-royal-garden .rg-kbach-title-main { font-size:clamp(20px,6cqw,34px); }
+.tpl-royal-garden .rg-kbach-title-en { font-family:var(--rg-latin-font); font-size:clamp(25px,7cqw,42px); line-height:1.2; }
+.tpl-royal-garden .rg-entrance-action { gap:6px; }
+.tpl-royal-garden .rg-open-label { color:var(--rg-royal-gold); font:400 clamp(13px,3.5cqw,18px)/1.9 var(--rg-khmer-heading); }
+.tpl-royal-garden[lang=en] .rg-open-label { font-family:var(--rg-latin-font); font-size:clamp(16px,4.3cqw,22px); line-height:1.4; letter-spacing:.02em; }
+.tpl-royal-garden[data-theme=burgundy-heritage] .rg-entrance-stage[data-ceremonial-art=true] .rg-entrance-composition { padding-top:24cqw; --rg-heading-band:32cqw; }
+.tpl-royal-garden .rg-map-directions { display:flex; align-items:center; justify-content:center; gap:8px; margin:12px auto 0; box-shadow:none!important; }
+/* Stepped gold cartouches: the control itself carries the color, with no panel behind it. */
+.tpl-royal-garden .rg-paper[data-royal=true] :is(.rg-calendar-primary,.rg-map-directions) { position:relative; display:flex; align-items:center; justify-content:center; gap:9px; width:100%; max-width:400px; min-height:56px; margin-inline:auto; padding:12px 30px; border:0; border-radius:0; color:#fff5d7; background:linear-gradient(180deg,#9c763a,#80581f 55%,#704916); box-shadow:none; clip-path:polygon(0 50%,4% 12%,7% 12%,9% 0,91% 0,93% 12%,96% 12%,100% 50%,96% 88%,93% 88%,91% 100%,9% 100%,7% 88%,4% 88%); font:400 clamp(12px,3.7cqw,17px)/1.8 var(--rg-body-font); text-decoration:none; transition:filter .2s ease; }
+.tpl-royal-garden .rg-paper[data-royal=true] :is(.rg-calendar-primary,.rg-map-directions)::before { content:''; position:absolute; inset:3px; pointer-events:none; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 64' preserveAspectRatio='none'%3E%3Cpath d='M3 32 17 9h13l6-6h328l6 6h13l14 23-14 23h-13l-6 6H36l-6-6H17Z' fill='none' stroke='%23e6c786' stroke-width='1'/%3E%3Cpath d='M11 32 23 15h13l6-6h316l6 6h13l12 17-12 17h-13l-6 6H42l-6-6H23Z' fill='none' stroke='%23e6c786' stroke-opacity='.45' stroke-width='.8'/%3E%3C/svg%3E") center/100% 100% no-repeat; }
+.tpl-royal-garden .rg-paper[data-royal=true] :is(.rg-calendar-primary,.rg-map-directions):focus-visible { outline:2px solid #fff5d7!important; outline-offset:-8px; }
+.tpl-royal-garden .rg-agenda-heading-icon { display:block; width:27px; height:27px; margin:0 auto 7px; color:var(--rg-gold); stroke-width:1.4; }
+.tpl-royal-garden .rg-title-flourish { display:block; width:68%; height:16px; color:#e8bf69; }
+@supports(background-clip:text) {
+  .tpl-royal-garden .rg-kbach-title > span { color:transparent; background:linear-gradient(170deg,#fff0bd 5%,#d49b36 30%,#ffe1a1 50%,#b67d28 73%,#f9d889 93%); background-clip:text; -webkit-background-clip:text; }
+}
+
+/* The invitation control moves within its own space; no outside glow or shadow. */
+.tpl-royal-garden .rg-royal-entrance[data-scene=COVER] .rg-royal-open { position:relative; overflow:hidden; animation:rg-invitation-breathe 3.8s ease-in-out infinite; transition:transform .2s ease,background .2s ease; }
+.tpl-royal-garden .rg-royal-entrance[data-scene=COVER] .rg-royal-open:not([data-button-style=artwork]) { animation-name:rg-invitation-breathe; animation-duration:3.8s; }
+.tpl-royal-garden .rg-royal-open::after { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:linear-gradient(110deg,transparent 25%,#ffeab866 48%,transparent 70%); transform:translateX(-150%); animation:rg-invitation-sheen 4.8s 1s ease-in-out infinite; }
+.tpl-royal-garden .rg-royal-open svg { transition:transform .2s ease; animation:rg-invitation-icon 3.8s ease-in-out infinite; }
+.tpl-royal-garden .rg-royal-open:active { transform:scale(.95); }
+@keyframes rg-invitation-breathe { 0%,100% { border-color:#f2d693; } 50% { border-color:#fff5ce; } }
+@keyframes rg-invitation-icon { 0%,100% { transform:translateX(0) scale(1); } 50% { transform:translateX(1px) scale(1.12); } }
+@keyframes rg-invitation-sheen { 0%,65% { transform:translateX(-150%); } 90%,100% { transform:translateX(150%); } }
+
+/* Calendar, countdown and the two-day programme share one transparent canvas. */
+.tpl-royal-garden .rg-wedding-calendar { padding:0; border:0; border-radius:0; background:none; box-shadow:none; }
+.tpl-royal-garden .rg-wedding-calendar::before { content:none; }
+.tpl-royal-garden .rg-wedding-calendar .rg-calendar-date { margin:12px 0 4px; color:var(--rg-gold); font-size:clamp(15px,4.6cqw,21px); line-height:1.9; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; margin:22px 0; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit { border-color:#d9b66e90; background:none; box-shadow:none; color:var(--rg-ink); }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown--theme .kp-countdown-unit { border-radius:11px; aspect-ratio:auto; min-height:78px; padding:9px 3px; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit strong { color:var(--rg-gold); font-size:clamp(13px,calc(28cqi / var(--kp-countdown-digits,2)),32px); line-height:1.5; }
+.tpl-royal-garden .rg-wedding-calendar .kp-countdown-unit span { font:400 clamp(9px,3cqi,12px)/1.9 var(--rg-body-font); }
+.tpl-royal-garden .rg-wedding-calendar .rg-month-calendar { padding:12px 0; border-block:1px solid #cba45c70; border-inline:0; border-radius:0; background:none; box-shadow:none; }
+.tpl-royal-garden .rg-month-navigation h3 { font-size:clamp(15px,5cqi,21px); }
+.tpl-royal-garden .rg-month-navigation button { border-color:#d4ae6866; background:none; }
+.tpl-royal-garden .rg-month-calendar td button { border-radius:10px; transition:background .2s ease,color .2s ease; }
+.tpl-royal-garden .rg-month-calendar td button[data-main] { background:linear-gradient(135deg,#ffe5a6,#d4a957); color:#35091f; box-shadow:none; }
+.tpl-royal-garden .rg-month-calendar td button[aria-pressed=true] { outline-color:#ffedbc; }
+.tpl-royal-garden .rg-wedding-calendar .rg-selected-day { border-block:1px solid #cba45c55; border-inline:0; border-radius:0; padding:12px 0; background:none; box-shadow:none; }
+.tpl-royal-garden .rg-calendar-export .rg-button { border-radius:10px; }
+.tpl-royal-garden .rg-program .kp-program-day { padding:16px 2px 8px; border-block:1px solid #cba45c70; border-inline:0; border-radius:0; background:none; box-shadow:none; }
+.tpl-royal-garden .rg-program .kp-program-day + .kp-program-day { margin-top:16px; padding-top:16px; }
+.tpl-royal-garden .rg-program .kp-program-day-title { padding:0 0 12px; margin-bottom:17px; border-color:#cba45c44; font-size:clamp(17px,4.7cqw,25px); }
+.tpl-royal-garden .rg-program .kp-timeline > li { display:grid; grid-template-areas:'icon time' 'icon copy'; grid-template-columns:40px minmax(0,1fr); grid-template-rows:auto auto; gap:1px 12px; padding:0 0 14px; margin-bottom:14px; border-bottom:1px solid #cba45c33; }
+.tpl-royal-garden .rg-program .kp-timeline > li:last-child { padding-bottom:4px; margin-bottom:0; border-bottom:0; }
+.tpl-royal-garden .rg-program .kp-timeline-marker { grid-area:icon; align-self:center; display:grid; place-items:center; width:40px; height:40px; min-height:40px; padding:0; border:1px solid #d7b57377; border-radius:6px; color:#efd495; background:none; }
+.tpl-royal-garden .rg-program .kp-timeline-marker:empty { visibility:hidden; }
+.tpl-royal-garden .rg-program .kp-timeline-marker::before { display:none; }
+.tpl-royal-garden .rg-program .kp-timeline-copy { grid-area:copy; }
+.tpl-royal-garden .rg-program .kp-timeline-copy h4 { font-size:clamp(13px,3.6cqw,18px); line-height:1.9; }
+.tpl-royal-garden .rg-program .kp-timeline-time { grid-area:time; color:var(--rg-gold); font-size:clamp(11px,3.1cqw,14px); line-height:1.8; }
+.tpl-royal-garden .rg-program .kp-timeline-time > span { display:inline; margin-inline:4px; }
+
+/* Editorial photograph tiles retain the complete photograph and original lightbox. */
+.tpl-royal-garden .rg-gallery-note { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px; margin:4px 0 12px; color:var(--rg-muted); font:400 11px/1.8 var(--rg-body-font); }
+.tpl-royal-garden .rg-gallery-note span:last-child { display:flex; gap:6px; align-items:center; }
+.tpl-royal-garden .rg-photo-collage { column-gap:10px; }
+.tpl-royal-garden .rg-photo-tile { position:relative; padding:3px; margin-bottom:10px; border-color:#d5b47277; border-radius:10px; background:none; box-shadow:none; transition:border-color .2s ease,transform .25s ease; }
+.tpl-royal-garden .rg-photo-tile[data-landscape=true] { column-span:none; }
+.tpl-royal-garden .rg-photo-tile[data-featured=true] { column-span:all; }
+.tpl-royal-garden .rg-photo-tile img { border-radius:6px; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+.tpl-royal-garden .rg-photo-zoom { position:absolute; bottom:8px; right:8px; display:grid; place-items:center; width:27px; height:27px; border:1px solid #e5c78d77; border-radius:50%; color:#f7e4b6; background:#27081cb8; }
+.rg-gallery-dialog.k-modal-container { border-radius:18px; background:#250a1c; border-color:#d5b47280; }
+.rg-gallery-dialog .rg-lightbox-media { height:calc(100dvh - 238px); }
+.rg-gallery-dialog .rg-expanded-photo { animation:rg-photo-arrive .3s ease both; }
+.rg-gallery-dialog .rg-lightbox-strip { display:flex; align-items:center; gap:7px; overflow-x:auto; padding:5px 1px; scrollbar-width:thin; scrollbar-color:#b89b64 transparent; }
+.rg-gallery-dialog .rg-lightbox-strip button { flex:0 0 48px; width:48px; height:48px; padding:2px; border:1px solid #d6b77a55; border-radius:7px; background:#140710; }
+.rg-gallery-dialog .rg-lightbox-strip button[aria-current=true] { border-color:#ffe3a1; box-shadow:inset 0 0 0 1px #ffe3a1; }
+.rg-gallery-dialog .rg-lightbox-strip img { width:100%; height:100%; border-radius:4px; object-fit:cover; }
+@keyframes rg-photo-arrive { from { opacity:.5; transform:scale(.985); } to { opacity:1; transform:scale(1); } }
+
+/* All decoration stays in a clipped, pointer-free layer around the reading area. */
+.tpl-royal-garden .rg-motion-layer i[data-effect=petal] { width:9px; height:15px; background:linear-gradient(135deg,#f7deaa,#c58e8b 55%,#702543); opacity:.5; }
+.tpl-royal-garden .rg-butterfly-flight { left:var(--rg-x); right:auto; top:var(--rg-y); width:var(--rg-size); animation:rg-garden-butterfly var(--rg-flight) var(--rg-delay) ease-in-out infinite; }
+.tpl-royal-garden .rg-butterfly-flight img { transform-origin:center; animation:rg-butterfly-wings 1.5s ease-in-out infinite; }
+.tpl-royal-garden .rg-flower-drift { left:var(--rg-x); top:var(--rg-y); width:26px; height:26px; background:none; color:#d6a184; animation:rg-garden-blossom var(--rg-flight) var(--rg-delay) ease-in-out infinite; }
+.tpl-royal-garden .rg-flower-drift svg { display:block; width:100%; height:100%; }
+@keyframes rg-garden-butterfly { 0%,100% { transform:translate3d(0,12px,0) rotate(-9deg); } 30% { transform:translate3d(var(--rg-drift),-36px,0) rotate(12deg); } 65% { transform:translate3d(8px,-80px,0) rotate(-7deg); } }
+@keyframes rg-butterfly-wings { 0%,100% { transform:perspective(100px) rotateY(-23deg) scale(.97); } 50% { transform:perspective(100px) rotateY(23deg) scale(1); } }
+@keyframes rg-garden-blossom { 0%,100% { opacity:.3; transform:translate3d(0,0,0) rotate(-15deg) scale(.8); } 50% { opacity:.7; transform:translate3d(10px,-75px,0) rotate(40deg) scale(1); } }
+.tpl-royal-garden .rg-bottom-nav button { transition:background .2s ease,color .2s ease,transform .2s ease; }
+.tpl-royal-garden .rg-paper[data-royal=true] .rg-bottom-nav button[aria-current] { background:linear-gradient(135deg,#f0d390,#cca45d); color:#35091f; border-color:#ffe7ac; }
+@media(hover:hover) {
+  .tpl-royal-garden .rg-photo-tile:hover { border-color:#f2d693; transform:translateY(-2px); }
+  .tpl-royal-garden .rg-photo-tile:hover img { transform:scale(1.025); }
+  .tpl-royal-garden .rg-royal-open:hover svg { transform:translateX(2px); }
+}
+.tpl-royal-garden .rg-royal-entrance[data-reduced=true] .rg-royal-open, .tpl-royal-garden .rg-royal-entrance[data-reduced=true] .rg-royal-open::after, .tpl-royal-garden .rg-royal-entrance[data-reduced=true] .rg-royal-open svg { animation:none!important; }
+@media(prefers-reduced-motion:reduce) {
+  .tpl-royal-garden .rg-royal-open, .tpl-royal-garden .rg-royal-open::after, .tpl-royal-garden .rg-royal-open svg, .rg-gallery-dialog .rg-expanded-photo { animation:none!important; }
+  .tpl-royal-garden :is(.rg-photo-tile,.rg-photo-tile img,.rg-bottom-nav button) { transition:none; }
+}

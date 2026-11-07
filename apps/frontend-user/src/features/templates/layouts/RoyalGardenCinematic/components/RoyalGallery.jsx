@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, ImageOff, LoaderCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ImageOff, LoaderCircle, Expand } from 'lucide-react';
 import { Modal } from '@/shared/ui';
 
 function Photo({ photo, expanded, english }) {
@@ -7,7 +7,7 @@ function Photo({ photo, expanded, english }) {
   return <div className={expanded ? 'rg-lightbox-media' : 'rg-tile-media'} data-state={state} aria-busy={state === 'loading'}>
     {state === 'loading' && expanded && <span className="rg-photo-status" role="status"><LoaderCircle aria-hidden="true" />{english ? 'Loading photo…' : 'កំពុងបង្ហាញរូបភាព…'}</span>}
     {state === 'error' ? <span className="rg-photo-status" role="status"><ImageOff aria-hidden="true" />{english ? 'This photo could not be loaded.' : 'មិនអាចបង្ហាញរូបភាពនេះបានទេ។'}</span>
-      : <img className={expanded ? 'rg-expanded-photo' : undefined} src={expanded ? photo.src : photo.thumbnail || photo.src} alt={photo.alt} width={photo.width || undefined} height={photo.height || undefined} loading={expanded ? 'eager' : 'lazy'} decoding="async" onLoad={event => { setState('ready'); if (!expanded) event.currentTarget.closest('button')?.setAttribute('data-landscape', String(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight > 1.25)); }} onError={() => setState('error')} />}
+      : <img className={expanded ? 'rg-expanded-photo' : undefined} src={expanded ? photo.src : photo.thumbnail || photo.src} alt={photo.alt} width={photo.width || undefined} height={photo.height || undefined} loading={expanded ? 'eager' : 'lazy'} decoding="async" onLoad={event => { setState('ready'); if (!expanded) event.currentTarget.closest('button')?.setAttribute('data-landscape', String(photo.fullWidth || event.currentTarget.naturalWidth / event.currentTarget.naturalHeight > 1.25)); }} onError={() => setState('error')} />}
   </div>;
 }
 
@@ -40,7 +40,7 @@ export default function RoyalGallery({ photos, english, presentation = 'carousel
   const label = english ? 'Enlarge photo' : 'ពង្រីករូបភាព';
   if (!photos.length) return <p className="rg-muted">{english ? 'Your wedding memories will appear here.' : 'រូបភាពអនុស្សាវរីយ៍របស់អ្នកនឹងបង្ហាញនៅទីនេះ។'}</p>;
   return <div className="rg-photo-collection" role="region" aria-label={english ? 'Wedding photos' : 'រូបភាពមង្គលការ'}>
-    {presentation === 'collage' ? <div className="rg-photo-collage">{photos.map((photo, i) => <button key={photo.id || `${photo.src}-${i}`} className="rg-photo-tile" type="button" data-landscape={photo.width / photo.height > 1.25} onClick={() => { setIndex(i); setExpanded(true); }} aria-label={`${label} ${i + 1} / ${photos.length}`}><Photo key={photo.src} photo={photo} english={english} /></button>)}</div>
+    {presentation === 'collage' ? <><div className="rg-gallery-note"><span>{english ? `${photos.length} photographs` : `រូបថតអនុស្សាវរីយ៍ ${photos.length}`}</span><span><Expand size={14} aria-hidden="true" />{english ? 'Tap to explore' : 'ចុចមើលរូបធំ'}</span></div><div className="rg-photo-collage">{photos.map((photo, i) => <button key={photo.id || `${photo.src}-${i}`} className="rg-photo-tile" type="button" data-landscape={photo.fullWidth || photo.width / photo.height > 1.25} data-featured={photo.fullWidth || i%5 === 2 || i === photos.length-1} onClick={() => { setIndex(i); setExpanded(true); }} aria-label={`${label} ${i + 1} / ${photos.length}`}><Photo key={photo.src} photo={photo} english={english} /><span className="rg-photo-zoom" aria-hidden="true"><Expand size={14} /></span></button>)}</div></>
       : <div className="rg-carousel" aria-roledescription="carousel" tabIndex={0} onKeyDown={event => { if (!expanded && ['ArrowLeft', 'ArrowRight'].includes(event.key)) { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1); } }} {...swipe}>
         <div className="rg-gallery">
           {photos.length > 1 && <img className="rg-side-photo rg-side-photo--left" src={photos[(active + photos.length - 1) % photos.length].thumbnail || photos[(active + photos.length - 1) % photos.length].src} alt="" loading="lazy" aria-hidden="true" />}
@@ -52,6 +52,7 @@ export default function RoyalGallery({ photos, english, presentation = 'carousel
       <div className="rg-lightbox" {...swipe}>
         <Photo key={photos[active].src} photo={photos[active]} expanded english={english} />
         <div className="rg-expanded-actions">{photos.length > 1 && <button type="button" onClick={() => move(-1)} aria-label={english ? 'Previous photo' : 'រូបភាពមុន'}><ChevronLeft /></button>}<span aria-live="polite" aria-atomic="true">{active + 1} / {photos.length}</span>{photos.length > 1 && <button type="button" onClick={() => move(1)} aria-label={english ? 'Next photo' : 'រូបភាពបន្ទាប់'}><ChevronRight /></button>}</div>
+        {photos.length>1 && <div className="rg-lightbox-strip" role="group" aria-label={english ? 'Choose a photo' : 'ជ្រើសរើសរូបថត'}>{photos.map((photo,i)=><button type="button" key={photo.id || `${photo.src}-${i}`} aria-label={english ? `View photo ${i+1}` : `មើលរូបទី ${i+1}`} aria-current={i===active ? 'true' : undefined} onClick={()=>setIndex(i)}><img src={photo.thumbnail || photo.src} alt="" loading="lazy" width="48" height="48"/></button>)}</div>}
       </div>
     </Modal>
   </div>;
