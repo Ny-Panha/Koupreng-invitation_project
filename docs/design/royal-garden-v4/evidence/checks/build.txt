@@ -299,4 +299,3 @@ calls. To find their cost, profile the build with `node --cpu-prof`:
   - plugin vite:asset load (3 calls)
   - plugin @tailwindcss/vite:generate:build transform (102 calls)
 See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
-

@@ -419,4 +419,3 @@ s/html-iframe-element/HTMLIFrameElement.js:230:23)
 Environment  happy-dom was created 195 times · 213.03s total, 39% of tracked time
              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
              learn more: https://vitest.dev/guide/improving-performance#test-environments
-
