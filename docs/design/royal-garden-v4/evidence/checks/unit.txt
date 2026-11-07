@@ -1,0 +1,422 @@
+
+> frontend-user@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 D:/Koupreng-invitation_project/apps/frontend-user
+
+node.exe : DOMException [NotSupportedError]: Failed to load iframe page
+"http://localhost:3000/templates/khmer-floral-gold?embed=demo&lang=en". Iframe page loading is disabled.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (DOMException [N...ng is disabled.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load external stylesheet
+"https://fonts.googleapis.com/css2?family=Hanuman&display=swap". CSS file loading is disabled.
+    at #loadStyleSheet (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html
+-link-element/HTMLLinkElement.js:380:31)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-link-element/HTMLLinkElement.js:213:41)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLHeadElement.appendChild
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:314:48)
+    at ensureGoogleFontLoaded
+(D:/Koupreng-invitation_project/apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx:60:19)
+    at
+D:/Koupreng-invitation_project/apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx:423:36
+    at Set.forEach (<anonymous>)
+    at
+D:/Koupreng-invitation_project/apps/frontend-user/src/features/templates/experience/TemplateExperience.jsx:423:21
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://maps.google.com/maps?q=Phase10%20venue%20Phase10%20address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLDivElement.appendChild
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:314:48)
+DOMException [NotSupportedError]: Failed to load external stylesheet "https://telegram.org/css/font-roboto.css?1". CSS
+file loading is disabled.
+    at #loadStyleSheet (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html
+-link-element/HTMLLinkElement.js:380:31)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-link-element/HTMLLinkElement.js:213:41)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLParser.parseEndOfStartTag
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:492:65)
+    at HTMLParser.parse
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:213:34)
+    at HTMLDocument.write (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/d
+ocument/Document.js:1274:16)
+    at set content (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/detach
+ed-browser/DetachedBrowserFrame.js:60:30)
+    at file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/utilities/BrowserFr
+ameNavigator.js:261:31
+DOMException [NotSupportedError]: Failed to load external stylesheet "https://telegram.org/css/bootstrap.min.css?3".
+CSS file loading is disabled.
+    at #loadStyleSheet (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html
+-link-element/HTMLLinkElement.js:380:31)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-link-element/HTMLLinkElement.js:213:41)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLParser.parseEndOfStartTag
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:492:65)
+    at HTMLParser.parse
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:213:34)
+    at HTMLDocument.write (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/d
+ocument/Document.js:1274:16)
+    at set content (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/detach
+ed-browser/DetachedBrowserFrame.js:60:30)
+    at file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/utilities/BrowserFr
+ameNavigator.js:261:31
+DOMException [NotSupportedError]: Failed to load external stylesheet "https://telegram.org/css/telegram.css?256". CSS
+file loading is disabled.
+    at #loadStyleSheet (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html
+-link-element/HTMLLinkElement.js:380:31)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-link-element/HTMLLinkElement.js:213:41)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLParser.parseEndOfStartTag
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:492:65)
+    at HTMLParser.parse
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:213:34)
+    at HTMLDocument.write (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/d
+ocument/Document.js:1274:16)
+    at set content (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/detach
+ed-browser/DetachedBrowserFrame.js:60:30)
+    at file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/utilities/BrowserFr
+ameNavigator.js:261:31
+DOMException [NotSupportedError]: Failed to load script "https://telegram.org/js/tgwallpaper.min.js?3". JavaScript
+file loading is disabled.
+    at #loadScript (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-scr
+ipt-element/HTMLScriptElement.js:549:31)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-script-element/HTMLScriptElement.js:315:33)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1102:62)
+    at HTMLParser.parseRawTextElementContent
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:658:61)
+    at HTMLParser.parse
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/html-parser/HTMLParser.js:248:30)
+    at HTMLDocument.write (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/d
+ocument/Document.js:1274:16)
+    at set content (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/detach
+ed-browser/DetachedBrowserFrame.js:60:30)
+    at file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/browser/utilities/BrowserFr
+ameNavigator.js:261:31
+DOMException [NotSupportedError]: Failed to load iframe page "https://www.google.com/maps/embed?pb=!1m18". Iframe page
+loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [insertBefore]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:556:48)
+    at [insertBefore]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/element/Element.js:1118:63)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Phase10%20venue%20Phase10%20address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Phase10%20venue%20Phase10%20address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Venue%20Address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Venue%20Address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Venue%20Address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Venue%20Address&output=embed". Iframe page loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Fictional%20venue%20name%20Fictional%20venue%20address&output=embed". Iframe page
+loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [appendChild]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:421:45)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Fictional%20venue%20name%20Fictional%20venue%20address&output=embed". Iframe page
+loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Fictional%20venue%20name%20Fictional%20venue%20address&output=embed". Iframe page
+loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+DOMException [NotSupportedError]: Failed to load iframe page
+"https://www.google.com/maps?q=Fictional%20venue%20name%20Fictional%20venue%20address&output=embed". Iframe page
+loading is disabled.
+    at #loadPage (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/html-ifram
+e-element/HTMLIFrameElement.js:334:27)
+    at [connectedToDocument] (file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/node
+s/html-iframe-element/HTMLIFrameElement.js:230:23)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:801:53)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+    at [connectedToNode]
+(file:///D:/Koupreng-invitation_project/apps/frontend-user/node_modules/happy-dom/lib/nodes/node/Node.js:793:58)
+
+ Test Files  195 passed (195)
+      Tests  1387 passed (1387)
+   Start at  10:02:22
+   Duration  34.16s (environment 39%, tests 25%, setup 17%, import 16%, transform 2%)
+
+Environment  happy-dom was created 195 times · 213.03s total, 39% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

@@ -1,0 +1,43 @@
+
+> frontend-user@0.0.0 test:e2e
+> playwright test --config playwright.royal-garden-v4.config.js
+
+
+Running 23 tests using 2 workers
+
+node.exe : (node:24408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:24408) Wa... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   1 [chromium] › tests\e2e\royal-garden-v4.spec.js:31:1 › reference comparison: cover and information baseline
+  ok  3 [chromium] › tests\e2e\royal-garden-v4.spec.js:47:1 › curtains reveal owner portraits, Skip keeps content gated, and language preserves media (2.7s)
+  ok  4 [chromium] › tests\e2e\royal-garden-v4.spec.js:68:1 › collage and lightbox retain focus, keyboard, swipe, failures and scroll position (1.7s)
+  ok  5 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 320x568 (1.7s)
+  ok  6 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 375x667 (1.8s)
+  ok  7 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 390x844 (1.7s)
+  ok  2 [chromium] › tests\e2e\royal-garden-v33.spec.js:45:1 › V33 map modal: V1 editing, pointer/keyboard, history, exports and save/reload/public synchronization (10.8s)
+  ok  8 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 430x932 (1.6s)
+  ok 10 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 768x1024 (1.9s)
+  ok 11 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 834x1194 (1.9s)
+  ok  9 [chromium] › tests\e2e\royal-garden-v33.spec.js:82:1 › V33 preset replacement, undo/redo and unsaved modal confirmation (4.8s)
+  ok 12 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 1024x768 (1.7s)
+  ok 14 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 1440x900 (1.9s)
+  ok 15 [chromium] › tests\e2e\royal-garden-v4.spec.js:87:3 › reference frame and native information scroll at 1920x1080 (2.3s)
+  ok 13 [chromium] › tests\e2e\royal-garden-v33.spec.js:96:1 › V33 Free upgrade and unverified entitlement fail closed (5.9s)
+  -  17 [chromium] › tests\e2e\royal-garden-v33.spec.js:104:1 › V33 calendar, map and designer visual coverage at all eight requested viewport sizes
+  ok 18 [chromium] › tests\e2e\royal-garden-v33.spec.js:118:1 › V33 public demo navigation exposes sample calendar and map without the removed overlay, sample detail card or export controls (1.5s)
+  -  19 [chromium] › tests\e2e\royal-garden-v33.spec.js:128:1 › V33 locked entry and upgrade dialog remain usable at all eight viewport sizes
+  ok 16 [chromium] › tests\e2e\royal-garden-v4.spec.js:100:1 › Studio settings update the same preview and survive save and reload (4.3s)
+  ok 20 [chromium] › tests\e2e\royal-garden-v33.spec.js:137:1 › V33 bilingual dark designer uses accessible theme tokens (4.1s)
+  ok 21 [chromium] › tests\e2e\royal-garden-v4.spec.js:115:1 › reference storyboard: formal document, venue, programme, calendar, gift, RSVP and closing (3.5s)
+  ok 22 [chromium] › tests\e2e\royal-garden-v33.spec.js:143:1 › V33 calendar export uses saved ceremony dates and respects the Studio visibility setting (2.7s)
+  ok 23 [chromium] › tests\e2e\royal-garden-v4.spec.js:127:1 › records local Chromium rendering and scroll measurements (2.2s)
+
+  3 skipped
+  20 passed (31.9s)

@@ -1,0 +1,13 @@
+
+> frontend-user@0.0.0 test
+> vitest run src/features/templates/layouts/RoyalGardenCinematic/RoyalGardenV3.test.jsx src/features/templates/layouts/RoyalGardenCinematic/hooks/useIntroSequence.test.jsx
+
+
+ RUN  v5.0.5 D:/Koupreng-invitation_project/apps/frontend-user
+
+
+ Test Files  2 passed (2)
+      Tests  35 passed (35)
+   Start at  10:01:38
+   Duration  2.20s (tests 27%, environment 25%, import 20%, setup 17%, transform 10%)
+

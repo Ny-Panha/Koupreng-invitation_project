@@ -1,0 +1,33 @@
+
+> frontend-user@0.0.0 test:e2e
+> playwright test --config playwright.royal-garden-v4.config.js royal-garden-v4.spec.js
+
+
+Running 15 tests using 1 worker
+
+node.exe : (node:14500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:14500) Wa... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   1 [chromium] › tests\e2e\royal-garden-v4.spec.js:34:1 › reference comparison: cover and information baseline
+  ok  2 [chromium] › tests\e2e\royal-garden-v4.spec.js:50:1 › curtains reveal owner portraits, Skip keeps content gated, and language preserves media (4.4s)
+  ok  3 [chromium] › tests\e2e\royal-garden-v4.spec.js:71:1 › collage and lightbox retain focus, keyboard, swipe, failures and scroll position (1.9s)
+  ok  4 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 320x568 (1.5s)
+  ok  5 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 375x667 (1.5s)
+  ok  6 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 390x844 (1.6s)
+  ok  7 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 430x932 (1.8s)
+  ok  8 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 768x1024 (2.0s)
+  ok  9 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 834x1194 (1.9s)
+  ok 10 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 1024x768 (1.8s)
+  ok 11 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 1440x900 (1.9s)
+  ok 12 [chromium] › tests\e2e\royal-garden-v4.spec.js:90:3 › reference frame and native information scroll at 1920x1080 (2.0s)
+  ok 13 [chromium] › tests\e2e\royal-garden-v4.spec.js:103:1 › Studio settings update the same preview and survive save and reload (4.1s)
+  ok 14 [chromium] › tests\e2e\royal-garden-v4.spec.js:118:1 › reference storyboard: formal document, venue, programme, calendar, gift, RSVP and closing (3.8s)
+  ok 15 [chromium] › tests\e2e\royal-garden-v4.spec.js:130:1 › records local Chromium rendering and scroll measurements (2.1s)
+
+  1 skipped
+  14 passed (35.3s)

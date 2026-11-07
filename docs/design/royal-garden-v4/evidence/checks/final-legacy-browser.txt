@@ -1,0 +1,18 @@
+
+> frontend-user@0.0.0 test:e2e
+> playwright test --config playwright.royal-garden-v32.config.js --project=chromium --grep legacy calligraphy
+
+
+Running 1 test using 1 worker
+
+node.exe : (node:6212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:6212) War... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\royal-garden-v3.spec.js:106:1 › legacy calligraphy covers also use the inline film rather than a popup (4.3s)
+
+  1 passed (7.1s)

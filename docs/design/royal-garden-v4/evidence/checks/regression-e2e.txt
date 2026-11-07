@@ -1,0 +1,43 @@
+
+> frontend-user@0.0.0 test:e2e
+> playwright test --config playwright.royal-garden-v32.config.js --project=chromium
+
+
+Running 23 tests using 2 workers
+
+node.exe : (node:6772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:6772) War... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\royal-garden-v3.spec.js:40:1 › catalog: supplied film loads after click, plays inline without a dialog/form, then reveals fixed information (7.4s)
+  ok  3 [chromium] › tests\e2e\royal-garden-v3.spec.js:68:1 › hosted: authorized protected film completes, errors recover, and guest text stays live (13.8s)
+  ok  1 [chromium] › tests\e2e\royal-garden-v32.spec.js:40:1 › RG32-01–25: Studio edits canonical dates, two program days and dress code through preview, save, reload and publication (21.4s)
+  ok  4 [chromium] › tests\e2e\royal-garden-v3.spec.js:95:1 › unavailable video, absent photo, failed artwork, cleared lettering and long names stay usable (5.0s)
+  ok  5 [chromium] › tests\e2e\royal-garden-v32.spec.js:88:1 › RG32-09–14,19–20: selected days, program navigation, localized controls and export share the saved program (6.7s)
+  ok  6 [chromium] › tests\e2e\royal-garden-v3.spec.js:106:1 › legacy calligraphy covers also use the inline film rather than a popup (3.2s)
+  ok  8 [chromium] › tests\e2e\royal-garden-v3.spec.js:118:1 › reduced motion skips video, disables effects, and keeps keyboard access (1.8s)
+  ok  7 [chromium] › tests\e2e\royal-garden-v32.spec.js:107:1 › RG32-26–29: gift currency/enlargement and real RSVP form keep private wishes out of public content (8.8s)
+  -  10 [chromium] › tests\e2e\royal-garden-v32.spec.js:123:1 › RG32-30–34: fixed frame and all enabled sections fit nine responsive viewports; capture real browser evidence
+  ok 11 [chromium] › tests\e2e\royal-garden-v32.spec.js:143:1 › RG32: Khmer authored content and numerals remain readable with the same machine dates (6.4s)
+  ok  9 [chromium] › tests\e2e\royal-garden-v3.spec.js:126:1 › Studio settings update the same iframe and survive save/reload/published rendering (22.4s)
+  ok 12 [chromium] › tests\e2e\royal-garden-v32.spec.js:153:1 › RG32: new guest sections pass scoped WCAG checks and empty optional destinations stay out of navigation (13.5s)
+  ok 14 [chromium] › tests\e2e\royal-garden-v32.spec.js:163:1 › RG32-01: choosing Royal Garden from the Studio selector retains authored optional data (3.7s)
+  ok 13 [chromium] › tests\e2e\royal-garden-v3.spec.js:190:1 › refinement: new transparent foreground, shadow-free artwork control and larger inner scroll stay inside the frame (22.2s)
+  ok 15 [chromium] › tests\e2e\royal-garden-v3.spec.js:222:1 › responsive references and scoped accessibility (10.3s)
+  ok 16 [chromium] › tests\e2e\royal-garden-v3.spec.js:234:1 › refinement: lower film lettering, live date and two separated top controls across responsive canvases (18.6s)
+  ok 17 [chromium] › tests\e2e\royal-garden-v3.spec.js:262:1 › repair: short phones retain the complete artwork, safe portrait window and separate video footer (15.5s)
+  ok 18 [chromium] › tests\e2e\royal-garden-v3.spec.js:301:1 › repair: real public section contracts retain gift, private wishes and RSVP within the same shell (2.5s)
+  ok 19 [chromium] › tests\e2e\royal-garden-v3.spec.js:317:1 › critical: language changes preserve the active film, authorized guest data and private RSVP wording (5.5s)
+  ok 20 [chromium] › tests\e2e\royal-garden-v3.spec.js:349:1 › critical: immersive media and one inner scroll preserve the complete frame and reachable ending (6.0s)
+  ok 21 [chromium] › tests\e2e\royal-garden-v3.spec.js:373:1 › compatibility: saved fixed-frame opt-out keeps the hosted ending reachable (2.3s)
+  ok 22 [chromium] › tests\e2e\royal-garden-v3.spec.js:407:1 › soundtrack: one real song continues through locked video, language, duplicate completion and information (5.2s)
+  ok 23 [chromium] › tests\e2e\royal-garden-v3.spec.js:449:1 › soundtrack: denied playback is retryable during video and guest-paused music stays paused after ended (5.0s)
+
+  1 skipped
+  22 passed (2.5m)
