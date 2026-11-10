@@ -30,6 +30,216 @@
   transform: translateX(-2px);
 }
 
+/* ==========================================================================
+   Modern Accessible Multi-Step Progress Stepper
+   ========================================================================== */
+.event-wizard-stepper-wrap {
+  margin-bottom: 28px;
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-border);
+  border-radius: 18px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(31, 43, 36, 0.03);
+}
+
+.event-wizard-stepper-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.event-wizard-progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(185, 139, 66, 0.15);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.event-wizard-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #967037 0%, #245740 100%);
+  border-radius: 9999px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.event-wizard-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+
+.event-wizard-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ws-muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.event-wizard-step-btn:hover {
+  background: rgba(185, 139, 66, 0.08);
+  color: var(--ws-ink);
+}
+
+.event-wizard-step-btn.is-active {
+  background: #ffffff;
+  border-color: var(--ws-gold);
+  color: var(--ws-ink);
+  box-shadow: 0 2px 8px rgba(150, 112, 55, 0.15);
+}
+
+.event-wizard-step-btn.is-completed {
+  color: var(--ws-emerald);
+}
+
+.event-wizard-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--ws-muted);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.event-wizard-step-btn.is-active .event-wizard-step-num {
+  background: var(--ws-gold);
+  color: #ffffff;
+}
+
+.event-wizard-step-btn.is-completed .event-wizard-step-num {
+  background: rgba(36, 87, 64, 0.12);
+  color: var(--ws-emerald);
+}
+
+.event-wizard-step-label {
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Step Section Headers & Badges
+   ========================================================================== */
+.event-step-section {
+  scroll-margin-top: 100px;
+}
+
+.event-step-header {
+  margin-bottom: 20px;
+}
+
+.event-step-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.event-step-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(185, 139, 66, 0.12);
+  border: 1px solid rgba(185, 139, 66, 0.3);
+  border-radius: 9999px;
+  color: var(--ws-gold-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.event-step-indicator-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ws-muted);
+}
+
+.event-step-header h2 {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 700;
+  color: var(--ws-ink);
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+
+.event-step-header p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Step Navigation Footers
+   ========================================================================== */
+.event-step-nav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ws-border);
+}
+
+.event-step-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.event-step-nav-btn.next {
+  margin-left: auto;
+  background: linear-gradient(135deg, #245740 0%, #1a4230 100%);
+  border: 1px solid #1a4230;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(36, 87, 64, 0.2);
+}
+
+.event-step-nav-btn.next:hover {
+  background: linear-gradient(135deg, #2e6e51 0%, #245740 100%);
+  box-shadow: 0 4px 14px rgba(36, 87, 64, 0.28);
+  transform: translateY(-1px);
+}
+
+.event-step-nav-btn.prev {
+  background: #ffffff;
+  border: 1px solid var(--ws-border);
+  color: var(--ws-ink);
+}
+
+.event-step-nav-btn.prev:hover {
+  background: #f6f1e8;
+  border-color: var(--ws-gold);
+}
+
+/* Layout */
 .event-create-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
@@ -55,7 +265,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .event-type-option {
@@ -196,6 +406,10 @@
   margin-top: 20px;
 }
 
+.event-preferences-disclosure {
+  margin-bottom: 20px;
+}
+
 .event-preferences-disclosure summary {
   min-height: 44px;
   display: flex;
@@ -305,6 +519,11 @@
   margin-top: 4px;
 }
 
+.event-access-highlight {
+  color: var(--ws-emerald) !important;
+  font-weight: 600;
+}
+
 .event-template-actions {
   display: flex;
   flex-wrap: wrap;
@@ -354,8 +573,8 @@
 
 /* Additional Notes */
 .event-additional summary {
-  font-size: 18px;
-  font-weight: 650;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   min-height: 44px;
   display: flex;
@@ -363,7 +582,199 @@
 }
 
 .event-additional label {
-  margin-top: 20px;
+  margin-top: 16px;
+}
+
+/* ==========================================================================
+   Step 4 Review Card Styling
+   ========================================================================== */
+.event-review-card {
+  background: linear-gradient(170deg, #fdfaf4 0%, #ffffff 60%, #faf6ed 100%);
+  border: 1px solid var(--ws-border);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 18px rgba(31, 43, 36, 0.04);
+}
+
+.event-review-group {
+  background: #ffffff;
+  border: 1px solid var(--ws-border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(31, 43, 36, 0.02);
+}
+
+.event-review-group:last-child {
+  margin-bottom: 0;
+}
+
+.event-review-group-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.event-review-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(185, 139, 66, 0.12);
+  color: var(--ws-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.event-review-group-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-review-group-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ws-gold-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: block;
+}
+
+.event-review-group-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ws-ink);
+  margin: 2px 0 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.event-review-edit-btn {
+  background: none;
+  border: none;
+  color: var(--ws-emerald);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.event-review-edit-btn:hover {
+  background: rgba(36, 87, 64, 0.08);
+  color: var(--ws-gold-dark);
+}
+
+.event-review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(227, 222, 213, 0.6);
+}
+
+.event-review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.event-review-item--full {
+  grid-column: 1 / -1;
+}
+
+.event-review-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ws-muted);
+}
+
+.event-review-val {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ws-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.event-review-val svg {
+  color: var(--ws-gold);
+  flex-shrink: 0;
+}
+
+.event-review-val-text {
+  font-size: 14px;
+  color: var(--ws-ink);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.event-review-map-link {
+  font-size: 13px;
+  color: var(--ws-emerald);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.event-access-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.event-access-pill.success {
+  background: rgba(36, 87, 64, 0.12);
+  color: var(--ws-emerald);
+}
+
+.event-access-pill.premium {
+  background: rgba(185, 139, 66, 0.15);
+  color: var(--ws-gold-dark);
+}
+
+.event-access-pill.free {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--ws-ink);
+}
+
+.event-review-quote {
+  padding: 12px 16px;
+  background: rgba(247, 241, 229, 0.6);
+  border-left: 3px solid var(--ws-gold);
+  border-radius: 0 8px 8px 0;
+}
+
+.event-review-quote p {
+  margin: 6px 0 0;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ws-ink);
+  line-height: 1.6;
 }
 
 /* Actions Bar */
@@ -380,7 +791,7 @@
 }
 
 .event-create-actions .workspace-button {
-  min-height: 44px;
+  min-height: 48px;
   padding: 10px 24px;
   font-size: 15px;
   font-weight: 600;
@@ -406,7 +817,7 @@
   line-height: 1.6;
 }
 
-/* Sticky Summary Card */
+/* Sticky Summary Card (Desktop) */
 .event-create-summary {
   position: sticky;
   top: 120px;
@@ -459,7 +870,9 @@
   margin: 16px 0 0;
 }
 
-/* Responsive Viewports */
+/* ==========================================================================
+   Responsive Viewports (320px - 1440px)
+   ========================================================================== */
 @media (max-width: 1100px) {
   .event-create-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -476,6 +889,14 @@
   .event-preferences {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .event-wizard-stepper-wrap {
+    padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+  .event-wizard-step-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -483,6 +904,20 @@
   .event-preferences,
   .event-template-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .event-review-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .event-step-nav-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .event-step-nav-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .event-step-nav-btn.next {
+    margin-left: 0;
   }
   .event-create-actions {
     flex-direction: column;
@@ -492,6 +927,12 @@
     width: 100%;
     justify-content: center;
   }
+  .event-review-card {
+    padding: 16px;
+  }
+  .event-review-group {
+    padding: 14px;
+  }
 }
 
 @media (max-width: 430px) {
@@ -500,6 +941,45 @@
   }
   .event-type-option {
     padding: 14px 12px;
-    min-height: 90px;
+    min-height: 84px;
+  }
+  .event-wizard-stepper-wrap {
+    padding: 10px 12px;
+  }
+  .event-wizard-step-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .event-wizard-step-num {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+  .event-step-header h2 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 360px) {
+  .event-review-card {
+    padding: 12px 10px;
+  }
+  .event-review-group {
+    padding: 12px 10px;
+  }
+  .event-type-option {
+    padding: 12px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-wizard-progress-bar,
+  .event-wizard-step-btn,
+  .event-type-option,
+  .event-step-nav-btn,
+  .event-template-card {
+    transition: none !important;
+    animation: none !important;
   }
 }

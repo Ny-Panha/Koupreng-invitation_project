@@ -4,7 +4,22 @@ import { useAccountEntitlements } from '@/shared/access/entitlementContext';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, BriefcaseBusiness, Cake, Check, Heart, PartyPopper, Sparkles, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BriefcaseBusiness,
+  Cake,
+  Calendar,
+  Check,
+  Clock,
+  ExternalLink,
+  Heart,
+  MapPin,
+  PartyPopper,
+  Pencil,
+  Sparkles,
+  Users
+} from "lucide-react";
 import { api } from "@/shared/api/httpClient";
 import { unwrap } from "@/shared/api/helpers";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -22,7 +37,14 @@ import EventFields from "./EventFields.jsx";
 import "@/shared/styles/workspace-ui.css";
 import "./EventCreatePage.css";
 
-const TYPE_ICONS = { WEDDING: Heart, ENGAGEMENT: Users, BIRTHDAY: Cake, ANNIVERSARY: Sparkles, CORPORATE: BriefcaseBusiness, OTHER: PartyPopper };
+const TYPE_ICONS = {
+  WEDDING: Heart,
+  ENGAGEMENT: Users,
+  BIRTHDAY: Cake,
+  ANNIVERSARY: Sparkles,
+  CORPORATE: BriefcaseBusiness,
+  OTHER: PartyPopper
+};
 
 export default function EventCreatePage() {
   const uiCopy = useUiCopy();
@@ -46,6 +68,7 @@ export default function EventCreatePage() {
       return next;
     }, { replace: true });
   }, [hasUrlTemplate, setSearchParams]);
+
   const storageKey = `koupreng.onboarding.${user?.id}`;
   const [initial] = useState(() => { try { return JSON.parse(sessionStorage.getItem(storageKey)) || {}; } catch { return {}; } });
   const [type, setType] = useState(EVENT_TYPES.some(row => row[0] === initial.type) ? initial.type : "WEDDING");
@@ -70,25 +93,44 @@ export default function EventCreatePage() {
   const [retry, setRetry] = useState(0);
   const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
+
   const submitting = useRef(false);
   const saved = useRef(false);
   const templateSection = useRef(null);
+  const step1Ref = useRef(null);
+  const step2Ref = useRef(null);
+  const step3Ref = useRef(null);
+  const step4Ref = useRef(null);
   const dirty = Object.values(form).some(value => !!value);
+
+  const scrollToStep = (stepNumber) => {
+    setCurrentStep(stepNumber);
+    const refs = [step1Ref, step2Ref, step3Ref, step4Ref];
+    const target = refs[stepNumber - 1]?.current;
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     if (hasUrlTemplate && !urlTemplateKey) { clearTemplateIntent(); clearUrlIntent(); }
   }, [hasUrlTemplate, urlTemplateKey, clearUrlIntent]);
+
   useBeforeUnload(event => { if (dirty && !saved.current) { event.preventDefault(); event.returnValue = ""; } });
+
   useEffect(() => {
     try { sessionStorage.setItem(storageKey, JSON.stringify({ type, style, language, price, templateId, form, requestId })); setStorageError(false); }
     catch { setStorageError(true); }
   }, [storageKey, type, style, language, price, templateId, form, requestId]);
+
   useEffect(() => {
     let active = true;
     templateCatalogService.list().then(items => { if (active) { setCatalog(items); setCatalogLoaded(true); } }).catch(() => { /* Recommendations remain independently usable. */ });
     subscriptionService.current().then(value => { if (active) setPlan(value); }).catch(() => { /* Do not infer a subscription from unavailable account data. */ });
     return () => { active = false; };
   }, []);
+
   useEffect(() => {
     let active = true;
     setLoading(true); setRecommendationError("");
@@ -113,6 +155,7 @@ export default function EventCreatePage() {
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [type, style, language, price, retry]);
+
   useEffect(() => {
     if (intentConsumed.current || !initialIntentKey.current) return;
     const all = [...recommendations.map(r => r.template), ...catalog].filter(Boolean);
@@ -144,6 +187,7 @@ export default function EventCreatePage() {
       clearUrlIntent();
     }
   }, [catalog, recommendations, type, language, catalogLoaded, loading, recommendationError, clearUrlIntent]);
+
   useEffect(() => {
     let active = true;
     const premium = recommendations.map(row => row.template).filter(template => template.premium || Number(template.price) > 0);
@@ -151,19 +195,38 @@ export default function EventCreatePage() {
       .then(results => { if (active) setAccess(Object.fromEntries(results.filter(result => result.status === "fulfilled").map(result => result.value))); });
     return () => { active = false; };
   }, [recommendations]);
+
   const styles = [...new Set(catalog.filter(item => item.supportedEventTypes?.includes(type)).map(item => item.category))].filter(Boolean);
   const selectedTemplate = !loading && recommendations.find(row => String(row.template.id) === String(templateId))?.template;
   const allErrors = validateEventForm(form, type, { draft: submitted === "draft", en });
   const errors = Object.fromEntries(Object.entries(allErrors).filter(([key]) => submitted || touched[key]));
+
+  const completedSteps = [];
+  if (type) completedSteps.push(1);
+  if (form.title?.trim() && (submitted === "draft" || (form.eventDate && form.venueName))) completedSteps.push(2);
+  if (templateId) completedSteps.push(3);
+
+  const getParticipantsSummary = () => {
+    if (type === "WEDDING") {
+      if (form.groomName && form.brideName) return `${form.groomName} & ${form.brideName}`;
+      return form.groomName || form.brideName || copy("មិនទាន់បំពេញ", "Not added yet");
+    }
+    if (type === "ENGAGEMENT" || type === "ANNIVERSARY") {
+      if (form.hostName && form.partnerName) return `${form.hostName} & ${form.partnerName}`;
+      return form.hostName || form.partnerName || copy("មិនទាន់បំពេញ", "Not added yet");
+    }
+    return form.hostName || copy("មិនទាន់បំពេញ", "Not added yet");
+  };
+
   const changeType = value => {
     intentConsumed.current = true;
     intentTemplate.current = null;
     clearTemplateIntent();
     clearUrlIntent();
     setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError("");
-    // Preserve common details and translate participant fields without discarding prior entries.
     setForm(current => ({ ...current, hostName: current.hostName || current.groomName || "", partnerName: current.partnerName || current.brideName || "", groomName: current.groomName || current.hostName || "", brideName: current.brideName || current.partnerName || "" }));
   };
+
   const selectTemplate = id => {
     intentConsumed.current = true;
     intentTemplate.current = null;
@@ -173,28 +236,36 @@ export default function EventCreatePage() {
     setTemplateId(id);
     setBrowsingDesigns(false);
   };
+
   const save = async mode => {
     if (submitting.current) return;
     setSubmitted(mode); setError("");
     const validation = validateEventForm(form, type, { draft: mode === "draft", en });
     const firstError = Object.keys(validation)[0];
     if (firstError) {
-      document.getElementById(`event-${firstError}`)?.focus();
+      setCurrentStep(2);
+      const errorEl = document.getElementById(`event-${firstError}`);
+      errorEl?.focus();
+      errorEl?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     if (selectedTemplate && access[selectedTemplate.id] === false) {
+      setCurrentStep(3);
       setError(copy("គំរូនេះត្រូវការសិទ្ធិប្រើប្រាស់។ សូមជ្រើសគំរូឥតគិតថ្លៃ ឬទិញសិទ្ធិជាមុន។", "This template requires access. Choose a free template or purchase access first."));
-      templateSection.current?.focus(); return;
+      templateSection.current?.focus();
+      templateSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
     }
     if (mode !== "draft" && !selectedTemplate) {
+      setCurrentStep(3);
       setError(copy("សូមជ្រើសរើសគំរូសមស្របមុនបង្កើតកម្មវិធី។", "Choose a compatible template before creating your event."));
       templateSection.current?.focus();
+      templateSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
     submitting.current = true; setSaving(true);
     try {
       const details = { ...form, title: form.title.trim(), eventDate: form.eventDate || undefined, eventTime: form.eventTime || undefined };
-      // Only details for the current type are transmitted; hidden values stay in this tab.
       if (type !== "WEDDING") { details.groomName = ""; details.brideName = ""; }
       if (!["WEDDING", "ENGAGEMENT", "ANNIVERSARY"].includes(type)) details.partnerName = "";
       if (selectedTemplate?.code === "event-essential" && form.storyText) details.contentJson = JSON.stringify({ messageText: form.storyText });
@@ -208,47 +279,541 @@ export default function EventCreatePage() {
     finally { if (!saved.current) { submitting.current = false; setSaving(false); } }
   };
 
-  return <main className="workspace-page event-create" lang={en ? "en" : "km"}>
-    <Link className="event-create-back" to="/app/events"><ArrowLeft size={18} aria-hidden="true" />{copy("កម្មវិធីរបស់ខ្ញុំ", "My Events")}</Link>
-    <header className="workspace-heading"><h1>{copy("បង្កើតកម្មវិធីរបស់អ្នក", "Bring your event together")}</h1></header>
-    {account.verified && <QuotaProgress usage={account.value?.quotas?.invitations} resource="invitations" scope="ACCOUNT" />}
-    <form noValidate onSubmit={event => { event.preventDefault(); save("create"); }} aria-busy={saving} className="event-create-layout">
-      <fieldset disabled={saving} className="event-create-sections">
-        <section className="workspace-section" aria-labelledby="event-type-title"><h2 id="event-type-title">{copy("ប្រភេទកម្មវិធី", "What are you celebrating?")}</h2><div className="event-type-grid">{EVENT_TYPES.map(([value, kh, english]) => {
-          const Icon = TYPE_ICONS[value];
-          return <button type="button" className="event-type-option" key={value} aria-pressed={type === value} onClick={() => changeType(value)}><Icon size={24} aria-hidden="true" /><span>{en ? english : kh}</span>{type === value && <Check size={16} aria-hidden="true" />}</button>;
-        })}</div></section>
-        <section className="workspace-section" aria-labelledby="event-information-title"><div className="workspace-section-heading"><h2 id="event-information-title">{copy("ព័ត៌មានកម្មវិធី", "Event essentials")}</h2><span className="workspace-muted">{copy("* ត្រូវបំពេញសម្រាប់បង្កើតកម្មវិធី", "* Required to create")}</span></div><EventFields form={form} setForm={setForm} type={type} en={en} errors={errors} onBlur={key => setTouched(current => ({ ...current, [key]: true }))} draft={submitted === "draft"} /></section>
-        <details className="workspace-section event-preferences-disclosure"><summary>{copy("រចនាប័ទ្ម ភាសា និងតម្លៃគំរូ", "Design style, language and price preferences")}</summary><div className="event-preferences">
-          <label>{copy("រចនាប័ទ្ម", "Design style")}<select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}><option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>{styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}</select></label>
-          <label>{copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}<select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}><option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option><option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option><option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option></select></label>
-          <label>{copy("តម្លៃគំរូ", "Template price")}<select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}><option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option><option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option><option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option></select></label>
-        </div></details>
-        <section ref={templateSection} tabIndex={-1} className="workspace-section event-template-section" aria-labelledby="event-templates-title" aria-busy={loading}>
-          <h2 id="event-templates-title">{copy("គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក", "Invitations that fit")}</h2><p className="workspace-muted">{copy("គំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។", "These templates support your event type and invitation language.")}</p>
-          {intentNotice && <p className="workspace-notice" role="status">{copy("គំរូដែលបានជ្រើសរើសមិនអាចប្រើបានទេ។ សូមជ្រើសរើសគំរូដែលគាំទ្រកម្មវិធីរបស់អ្នក។", "The selected design is unavailable. Choose a compatible design below; your event details are retained.")}</p>}
-          {loading ? <div className="event-template-loading" role="status">{copy("កំពុងស្វែងរកគំរូសមស្រប…", "Finding compatible invitations…")}<div className="event-template-skeleton" aria-hidden="true" /></div> : recommendationError ? <div className="workspace-notice" role="alert"><p>{recommendationError}</p><button className="workspace-button" type="button" onClick={() => setRetry(value => value + 1)}>{copy("ទាញយកម្ដងទៀត", "Retry templates")}</button></div> : <>
-            {!recommendations.length && <div className="workspace-notice"><p>{copy("មិនមានគំរូគាំទ្រជម្រើសទាំងនេះទេ។ សូមប្ដូរភាសា ឬតម្លៃ។ អ្នកអាចរក្សាទុកព្រាងដោយមិនជ្រើសគំរូ។", "No templates support these preferences. Try another language or price filter, or save a draft without a template.")}</p><button className="workspace-button" type="button" onClick={() => { setStyle(""); setPrice("ALL"); }}>{copy("មើលគ្រប់តម្លៃ និងរចនាប័ទ្ម", "Show all prices and styles")}</button></div>}
-            {!!recommendations.length && !recommendations.some(row => row.styleMatch) && <p className="workspace-notice">{copy("មិនមានរចនាប័ទ្មត្រូវគ្នាទេ។ គំរូជំនួសទាំងនេះគាំទ្រកម្មវិធី និងភាសារបស់អ្នក។", "No exact style match. These alternatives support your event and language.")}</p>}
-            {selectedTemplate && <button className="workspace-button event-change-design" type="button" aria-expanded={browsingDesigns} aria-controls="event-design-options" onClick={() => setBrowsingDesigns(current => !current)}>{browsingDesigns ? copy("រក្សាគំរូដែលបានជ្រើសរើស", "Keep selected design") : copy("ប្ដូរគំរូ", "Change design")}</button>}
-            <div id="event-design-options" className={`event-template-grid${selectedTemplate && !browsingDesigns ? " event-template-grid--selected" : ""}`}>{recommendations.filter(({ template }) => !selectedTemplate || browsingDesigns || String(template.id) === String(templateId)).map(({ template }) => <article className={`event-template-card ${String(templateId) === String(template.id) ? "is-selected" : ""}`} key={template.id}>
-              <img src={template.thumbnailUrl || "/templates/event-essential.svg"} alt={template.name} loading="lazy" /><div className="event-template-content"><h3>{template.name}</h3><p>{STYLE_LABELS[template.category]?.[en ? 1 : 0] || template.category}</p><p>{template.premium || Number(template.price) > 0 ? `${packagePrice(template, en ? "en" : "km") || copy("តម្លៃមិនបានបញ្ជាក់", "Price not specified")} · Premium` : copy("ឥតគិតថ្លៃ", "Free")}</p>{(template.premium || Number(template.price) > 0) && <small>{copy("សិទ្ធិប្រើប្រាស់នឹងត្រូវពិនិត្យពេលរក្សាទុក។", "Access is verified when you save.")}</small>}
-                {access[template.id] === true && <small>{copy("មានសិទ្ធិប្រើប្រាស់", "Included in your access")}</small>}
-                <div className="event-template-actions"><a href={`/templates/${encodeURIComponent(template.code)}`} target="_blank" rel="noreferrer" aria-label={`${copy("មើលជាមុន", "Preview")} ${template.name} (${copy("ផ្ទាំងថ្មី", "new tab")})`}>{copy("មើលជាមុន", "Preview")}</a>{access[template.id] === false ? <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">{copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}</a> : <button className="workspace-button" type="button" aria-pressed={String(templateId) === String(template.id)} aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`} onClick={() => selectTemplate(template.id)}>{String(templateId) === String(template.id) ? <><Check size={16} aria-hidden="true" />{copy("បានជ្រើសរើស", "Selected")}</> : copy("ជ្រើសរើស", "Select")}</button>}</div>
-              </div></article>)}</div>
-          </>}
-        </section>
-        <details className="workspace-section event-additional"><summary>{copy("ព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)", "A personal touch (optional)")}</summary><label>{copy("សារអញ្ជើញ ឬការពិពណ៌នា", "Invitation message or description")}<textarea rows={4} maxLength={5000} value={form.storyText || ""} onChange={event => setForm(current => ({ ...current, storyText: event.target.value }))} placeholder={copy("សរសេរសារជូនភ្ញៀវរបស់អ្នក…", "A few words to welcome your guests…")} /></label></details>
-        <section className="event-create-final">
-          {error && <div role="alert" className="workspace-notice"><p>{error}</p><p>{copy("ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុក។ អ្នកអាចព្យាយាមរក្សាទុកម្ដងទៀតបាន។", "Your details are retained. You can retry saving safely.")}</p></div>}
-          <p className="workspace-muted">{copy("កម្មវិធីនឹងត្រូវរក្សាទុកជាឯកជន។ បន្ថែមភ្ញៀវ និងផ្សព្វផ្សាយពីកន្លែងគ្រប់គ្រងកម្មវិធី។", "Your event starts as a private draft. Add guests and publish from its workspace.")}</p>
-          <div className="event-create-actions"><button className="workspace-button" type="button" disabled={saving} onClick={() => save("draft")}>{copy("រក្សាទុកព្រាង", "Save draft")}</button><button className="workspace-button primary" type="submit" disabled={saving || loading}>{saving ? copy("កំពុងរក្សាទុក…", "Saving…") : copy("បង្កើតកម្មវិធី", "Create event")}</button></div>
-          <p className="event-save-note" role="status">{storageError ? copy("កម្មវិធីរុករកមិនអាចរក្សាទុកព័ត៌មានក្នុងផ្ទាំងនេះបានទេ។ សូមរក្សាទុកព្រាងមុនចាកចេញ។", "This browser cannot retain your setup. Save a draft before leaving.") : copy("ព័ត៌មានត្រូវបានរក្សាទុកក្នុងផ្ទាំងនេះ ខណៈអ្នកកំពុងបំពេញ។", "Your setup is kept in this tab while you work.")}</p>
-        </section>
-      </fieldset>
-      <aside className="event-create-summary workspace-section" aria-label={copy("សង្ខេបកម្មវិធី", "Event summary")}><h2>{copy("កម្មវិធីរបស់អ្នក", "Your event")}</h2><dl>
-        <div><dt>{copy("ប្រភេទ", "Type")}</dt><dd>{EVENT_TYPES.find(row => row[0] === type)?.[en ? 2 : 1]}</dd></div><div><dt>{copy("ឈ្មោះ", "Title")}</dt><dd>{form.title || copy("មិនទាន់បំពេញ", "Not added yet")}</dd></div><div><dt>{copy("កាលបរិច្ឆេទ", "Date")}</dt><dd>{form.eventDate || copy("មិនទាន់កំណត់", "Not set yet")}</dd></div><div><dt>{copy("គំរូ", "Invitation")}</dt><dd>{selectedTemplate?.name || copy("មិនទាន់ជ្រើសរើស", "Choose a template")}</dd></div><div><dt>{copy("កញ្ចប់", "Subscription")}</dt><dd>{plan?.active && plan?.status === "ACTIVE" && plan?.paymentStatus === "PAID" ? plan.packagePlan?.packageName : copy("សិទ្ធិនឹងត្រូវពិនិត្យពេលរក្សាទុក", "Eligibility checked when saving")}</dd></div>
-      </dl><p className="workspace-muted">{copy("សម្រាប់ព្រាង ត្រូវការតែឈ្មោះកម្មវិធី។", "Only a title is needed to save a draft.")}</p></aside>
-    </form>
-  </main>;
+  const stepsMeta = [
+    { id: 1, label: copy("ប្រភេទកម្មវិធី", "Event Type"), short: copy("ប្រភេទ", "Type") },
+    { id: 2, label: copy("ព័ត៌មានកម្មវិធី", "Event Essentials"), short: copy("ព័ត៌មាន", "Details") },
+    { id: 3, label: copy("គំរូសំបុត្រអញ្ជើញ", "Choose Design"), short: copy("គំរូ", "Design") },
+    { id: 4, label: copy("ពិនិត្យ & បង្កើត", "Review & Create"), short: copy("ពិនិត្យ", "Review") },
+  ];
+
+  return (
+    <main className="workspace-page event-create" lang={en ? "en" : "km"}>
+      <Link className="event-create-back" to="/app/events">
+        <ArrowLeft size={18} aria-hidden="true" />
+        {copy("កម្មវិធីរបស់ខ្ញុំ", "My Events")}
+      </Link>
+      <header className="workspace-heading">
+        <h1>{copy("បង្កើតកម្មវិធីរបស់អ្នក", "Bring your event together")}</h1>
+      </header>
+
+      {/* Modern Accessible Multi-Step Progress Stepper */}
+      <div className="event-wizard-stepper-wrap" role="region" aria-label={copy("ដំណើរការបង្កើតកម្មវិធី", "Creation progress")}>
+        <div className="event-wizard-stepper-inner">
+          <div className="event-wizard-progress-track">
+            <div
+              className="event-wizard-progress-bar"
+              role="progressbar"
+              aria-valuenow={currentStep * 25}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              style={{ width: `${currentStep * 25}%` }}
+            />
+          </div>
+          <nav className="event-wizard-steps" aria-label={copy("ជំហានបង្កើតកម្មវិធី", "Event creation steps")}>
+            {stepsMeta.map(step => {
+              const isCompleted = completedSteps.includes(step.id);
+              const isActive = currentStep === step.id;
+              return (
+                <button
+                  key={step.id}
+                  type="button"
+                  className={`event-wizard-step-btn ${isActive ? "is-active" : ""} ${isCompleted ? "is-completed" : ""}`}
+                  aria-current={isActive ? "step" : undefined}
+                  onClick={() => scrollToStep(step.id)}
+                >
+                  <span className="event-wizard-step-num" aria-hidden="true">
+                    {isCompleted ? <Check size={14} strokeWidth={2.5} /> : step.id}
+                  </span>
+                  <span className="event-wizard-step-label">{step.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+
+      {account.verified && <QuotaProgress usage={account.value?.quotas?.invitations} resource="invitations" scope="ACCOUNT" />}
+
+      <form noValidate onSubmit={event => { event.preventDefault(); save("create"); }} aria-busy={saving} className="event-create-layout">
+        <fieldset disabled={saving} className="event-create-sections">
+          
+          {/* STEP 1: CHOOSE EVENT TYPE */}
+          <section ref={step1Ref} className="workspace-section event-step-section" aria-labelledby="event-type-title">
+            <div className="event-step-header">
+              <div className="event-step-badge-wrap">
+                <span className="event-step-badge">{copy("ជំហានទី ១", "Step 1")}</span>
+                <span className="event-step-indicator-text">{copy("ជ្រើសរើសប្រភេទកម្មវិធី", "Choose celebration type")}</span>
+              </div>
+              <h2 id="event-type-title">{copy("ប្រភេទកម្មវិធី", "What are you celebrating?")}</h2>
+              <p className="workspace-muted">{copy("ជ្រើសរើសប្រភេទកម្មវិធី ដើម្បីបង្ហាញទម្រង់ព័ត៌មាន និងគំរូសំបុត្រដែលត្រូវគ្នា។", "Select your celebration type to customize relevant fields and compatible invitation designs.")}</p>
+            </div>
+            <div className="event-type-grid">
+              {EVENT_TYPES.map(([value, kh, english]) => {
+                const Icon = TYPE_ICONS[value] || PartyPopper;
+                return (
+                  <button
+                    type="button"
+                    className="event-type-option"
+                    key={value}
+                    aria-pressed={type === value}
+                    onClick={() => changeType(value)}
+                  >
+                    <Icon size={24} aria-hidden="true" />
+                    <span>{en ? english : kh}</span>
+                    {type === value && <Check size={16} aria-hidden="true" />}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="event-step-nav-footer">
+              <button
+                type="button"
+                className="workspace-button event-step-nav-btn next"
+                onClick={() => scrollToStep(2)}
+              >
+                <span>{copy("ទៅកាន់ព័ត៌មានកម្មវិធី", "Next: Event essentials")}</span>
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </section>
+
+          {/* STEP 2: EVENT ESSENTIALS */}
+          <section ref={step2Ref} className="workspace-section event-step-section" aria-labelledby="event-information-title">
+            <div className="event-step-header">
+              <div className="event-step-badge-wrap">
+                <span className="event-step-badge">{copy("ជំហានទី ២", "Step 2")}</span>
+                <span className="event-step-indicator-text">{copy("ព័ត៌មានចាំបាច់", "Essential details")}</span>
+              </div>
+              <div className="workspace-section-heading">
+                <h2 id="event-information-title">{copy("ព័ត៌មានកម្មវិធី", "Event essentials")}</h2>
+                <span className="workspace-muted">{copy("* ត្រូវបំពេញសម្រាប់បង្កើតកម្មវិធី", "* Required to create")}</span>
+              </div>
+            </div>
+            <EventFields
+              form={form}
+              setForm={setForm}
+              type={type}
+              en={en}
+              errors={errors}
+              onBlur={key => setTouched(current => ({ ...current, [key]: true }))}
+              draft={submitted === "draft"}
+            />
+            <details className="workspace-section event-additional">
+              <summary>{copy("ព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)", "A personal touch (optional)")}</summary>
+              <label>
+                {copy("សារអញ្ជើញ ឬការពិពណ៌នា", "Invitation message or description")}
+                <textarea
+                  rows={4}
+                  maxLength={5000}
+                  value={form.storyText || ""}
+                  onChange={event => setForm(current => ({ ...current, storyText: event.target.value }))}
+                  placeholder={copy("សរសេរសារជូនភ្ញៀវរបស់អ្នក…", "A few words to welcome your guests…")}
+                />
+              </label>
+            </details>
+            <div className="event-step-nav-footer">
+              <button
+                type="button"
+                className="workspace-button event-step-nav-btn prev"
+                onClick={() => scrollToStep(1)}
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+                <span>{copy("ថយក្រោយ: ប្រភេទកម្មវិធី", "Previous: Event type")}</span>
+              </button>
+              <button
+                type="button"
+                className="workspace-button event-step-nav-btn next"
+                onClick={() => scrollToStep(3)}
+              >
+                <span>{copy("ទៅកាន់ការជ្រើសរើសគំរូ", "Next: Choose design")}</span>
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </section>
+
+          {/* STEP 3: CHOOSE INVITATION DESIGN */}
+          <section
+            ref={templateSection}
+            tabIndex={-1}
+            className="workspace-section event-step-section event-template-section"
+            aria-labelledby="event-templates-title"
+            aria-busy={loading}
+          >
+            <div className="event-step-header" ref={step3Ref}>
+              <div className="event-step-badge-wrap">
+                <span className="event-step-badge">{copy("ជំហានទី ៣", "Step 3")}</span>
+                <span className="event-step-indicator-text">{copy("រចនាប័ទ្ម & សំបុត្រអញ្ជើញ", "Style & Invitation design")}</span>
+              </div>
+              <h2 id="event-templates-title">{copy("គំរូដែលសាកសមសម្រាប់កម្មវិធីរបស់អ្នក", "Invitations that fit")}</h2>
+              <p className="workspace-muted">{copy("គំរូទាំងនេះគាំទ្រប្រភេទកម្មវិធី និងភាសាដែលអ្នកជ្រើសរើស។", "These templates support your event type and invitation language.")}</p>
+            </div>
+
+            <details className="event-preferences-disclosure">
+              <summary>{copy("រចនាប័ទ្ម ភាសា និងតម្លៃគំរូ", "Design style, language and price preferences")}</summary>
+              <div className="event-preferences">
+                <label>
+                  {copy("រចនាប័ទ្ម", "Design style")}
+                  <select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}>
+                    <option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>
+                    {styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}
+                  </select>
+                </label>
+                <label>
+                  {copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}
+                  <select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}>
+                    <option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option>
+                    <option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option>
+                    <option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option>
+                  </select>
+                </label>
+                <label>
+                  {copy("តម្លៃគំរូ", "Template price")}
+                  <select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}>
+                    <option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option>
+                    <option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option>
+                    <option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option>
+                  </select>
+                </label>
+              </div>
+            </details>
+
+            {intentNotice && (
+              <p className="workspace-notice" role="status">
+                {copy("គំរូដែលបានជ្រើសរើសមិនអាចប្រើបានទេ។ សូមជ្រើសរើសគំរូដែលគាំទ្រកម្មវិធីរបស់អ្នក។", "The selected design is unavailable. Choose a compatible design below; your event details are retained.")}
+              </p>
+            )}
+
+            {loading ? (
+              <div className="event-template-loading" role="status">
+                {copy("កំពុងស្វែងរកគំរូសមស្រប…", "Finding compatible invitations…")}
+                <div className="event-template-skeleton" aria-hidden="true" />
+              </div>
+            ) : recommendationError ? (
+              <div className="workspace-notice" role="alert">
+                <p>{recommendationError}</p>
+                <button className="workspace-button" type="button" onClick={() => setRetry(value => value + 1)}>
+                  {copy("ទាញយកម្ដងទៀត", "Retry templates")}
+                </button>
+              </div>
+            ) : (
+              <>
+                {!recommendations.length && (
+                  <div className="workspace-notice">
+                    <p>{copy("មិនមានគំរូគាំទ្រជម្រើសទាំងនេះទេ។ សូមប្ដូរភាសា ឬតម្លៃ។ អ្នកអាចរក្សាទុកព្រាងដោយមិនជ្រើសគំរូ។", "No templates support these preferences. Try another language or price filter, or save a draft without a template.")}</p>
+                    <button className="workspace-button" type="button" onClick={() => { setStyle(""); setPrice("ALL"); }}>
+                      {copy("មើលគ្រប់តម្លៃ និងរចនាប័ទ្ម", "Show all prices and styles")}
+                    </button>
+                  </div>
+                )}
+                {!!recommendations.length && !recommendations.some(row => row.styleMatch) && (
+                  <p className="workspace-notice">
+                    {copy("មិនមានរចនាប័ទ្មត្រូវគ្នាទេ។ គំរូជំនួសទាំងនេះគាំទ្រកម្មវិធី និងភាសារបស់អ្នក។", "No exact style match. These alternatives support your event and language.")}
+                  </p>
+                )}
+                {selectedTemplate && (
+                  <button
+                    className="workspace-button event-change-design"
+                    type="button"
+                    aria-expanded={browsingDesigns}
+                    aria-controls="event-design-options"
+                    onClick={() => setBrowsingDesigns(current => !current)}
+                  >
+                    {browsingDesigns ? copy("រក្សាគំរូដែលបានជ្រើសរើស", "Keep selected design") : copy("ប្ដូរគំរូ", "Change design")}
+                  </button>
+                )}
+                <div
+                  id="event-design-options"
+                  className={`event-template-grid${selectedTemplate && !browsingDesigns ? " event-template-grid--selected" : ""}`}
+                >
+                  {recommendations
+                    .filter(({ template }) => !selectedTemplate || browsingDesigns || String(template.id) === String(templateId))
+                    .map(({ template }) => (
+                      <article
+                        className={`event-template-card ${String(templateId) === String(template.id) ? "is-selected" : ""}`}
+                        key={template.id}
+                      >
+                        <img src={template.thumbnailUrl || "/templates/event-essential.svg"} alt={template.name} loading="lazy" />
+                        <div className="event-template-content">
+                          <h3>{template.name}</h3>
+                          <p>{STYLE_LABELS[template.category]?.[en ? 1 : 0] || template.category}</p>
+                          <p>
+                            {template.premium || Number(template.price) > 0
+                              ? `${packagePrice(template, en ? "en" : "km") || copy("តម្លៃមិនបានបញ្ជាក់", "Price not specified")} · Premium`
+                              : copy("ឥតគិតថ្លៃ", "Free")}
+                          </p>
+                          {(template.premium || Number(template.price) > 0) && (
+                            <small>{copy("សិទ្ធិប្រើប្រាស់នឹងត្រូវពិនិត្យពេលរក្សាទុក។", "Access is verified when you save.")}</small>
+                          )}
+                          {access[template.id] === true && (
+                            <small className="event-access-highlight">{copy("មានសិទ្ធិប្រើប្រាស់", "Included in your access")}</small>
+                          )}
+                          <div className="event-template-actions">
+                            <a
+                              href={`/templates/${encodeURIComponent(template.code)}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label={`${copy("មើលជាមុន", "Preview")} ${template.name} (${copy("ផ្ទាំងថ្មី", "new tab")})`}
+                            >
+                              {copy("មើលជាមុន", "Preview")}
+                            </a>
+                            {access[template.id] === false ? (
+                              <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">
+                                {copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}
+                              </a>
+                            ) : (
+                              <button
+                                className="workspace-button"
+                                type="button"
+                                aria-pressed={String(templateId) === String(template.id)}
+                                aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`}
+                                onClick={() => selectTemplate(template.id)}
+                              >
+                                {String(templateId) === String(template.id) ? (
+                                  <>
+                                    <Check size={16} aria-hidden="true" />
+                                    {copy("បានជ្រើសរើស", "Selected")}
+                                  </>
+                                ) : (
+                                  copy("ជ្រើសរើស", "Select")
+                                )}
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              </>
+            )}
+            <div className="event-step-nav-footer">
+              <button
+                type="button"
+                className="workspace-button event-step-nav-btn prev"
+                onClick={() => scrollToStep(2)}
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+                <span>{copy("ថយក្រោយ: ព័ត៌មានកម្មវិធី", "Previous: Event essentials")}</span>
+              </button>
+              <button
+                type="button"
+                className="workspace-button event-step-nav-btn next"
+                onClick={() => scrollToStep(4)}
+              >
+                <span>{copy("ពិនិត្យ និងបង្កើត", "Next: Review & create")}</span>
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </section>
+
+          {/* STEP 4: REVIEW & CREATE */}
+          <section ref={step4Ref} className="workspace-section event-step-section event-review-section" aria-labelledby="event-review-title">
+            <div className="event-step-header">
+              <div className="event-step-badge-wrap">
+                <span className="event-step-badge">{copy("ជំហានទី ៤", "Step 4")}</span>
+                <span className="event-step-indicator-text">{copy("ជំហានចុងក្រោយ", "Final step")}</span>
+              </div>
+              <h2 id="event-review-title">{copy("ពិនិត្យ និងបង្កើតកម្មវិធី", "Review and create your event")}</h2>
+              <p className="workspace-muted">{copy("ពិនិត្យព័ត៌មានទាំងអស់មុនបង្កើតកម្មវិធី។ អ្នកអាចកែប្រែបានគ្រប់ពេលពីកន្លែងគ្រប់គ្រង។", "Review your celebration details before creating. You can edit anytime from your workspace.")}</p>
+            </div>
+
+            <div className="event-review-card">
+              {/* Event Type Review */}
+              <div className="event-review-group">
+                <div className="event-review-group-head">
+                  <div className="event-review-icon-wrap" aria-hidden="true">
+                    {(() => {
+                      const Icon = TYPE_ICONS[type] || PartyPopper;
+                      return <Icon size={20} />;
+                    })()}
+                  </div>
+                  <div className="event-review-group-info">
+                    <span className="event-review-group-kicker">{copy("ប្រភេទកម្មវិធី", "Event Type")}</span>
+                    <h3 className="event-review-group-title">{EVENT_TYPES.find(row => row[0] === type)?.[en ? 2 : 1]}</h3>
+                  </div>
+                  <button type="button" className="event-review-edit-btn" onClick={() => scrollToStep(1)} aria-label={copy("កែប្រែប្រភេទកម្មវិធី", "Edit event type")}>
+                    <Pencil size={14} aria-hidden="true" />
+                    <span>{copy("កែប្រែ", "Edit")}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Event Essentials Review */}
+              <div className="event-review-group">
+                <div className="event-review-group-head">
+                  <div className="event-review-icon-wrap" aria-hidden="true">
+                    <Heart size={20} />
+                  </div>
+                  <div className="event-review-group-info">
+                    <span className="event-review-group-kicker">{copy("ព័ត៌មានកម្មវិធី", "Event Essentials")}</span>
+                    <h3 className="event-review-group-title">{form.title || copy("មិនទាន់បំពេញឈ្មោះ", "Untitled event")}</h3>
+                  </div>
+                  <button type="button" className="event-review-edit-btn" onClick={() => scrollToStep(2)} aria-label={copy("កែប្រែព័ត៌មានកម្មវិធី", "Edit event details")}>
+                    <Pencil size={14} aria-hidden="true" />
+                    <span>{copy("កែប្រែ", "Edit")}</span>
+                  </button>
+                </div>
+                <div className="event-review-grid">
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("អ្នករៀបចំ / ម្ចាស់កម្មវិធី", "Celebrants / Hosts")}</span>
+                    <strong className="event-review-val">{getParticipantsSummary()}</strong>
+                  </div>
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("កាលបរិច្ឆេទ & ម៉ោង", "Date & Time")}</span>
+                    <strong className="event-review-val">
+                      <Calendar size={14} aria-hidden="true" />
+                      <span>{form.eventDate || copy("មិនទាន់កំណត់", "Not set")}</span>
+                      {form.eventTime && (
+                        <>
+                          <Clock size={14} aria-hidden="true" style={{ marginLeft: "6px" }} />
+                          <span>{form.eventTime}</span>
+                        </>
+                      )}
+                    </strong>
+                  </div>
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("ទីកន្លែង", "Venue")}</span>
+                    <strong className="event-review-val">
+                      <MapPin size={14} aria-hidden="true" />
+                      <span>{form.venueName || copy("មិនទាន់កំណត់", "Not set")}</span>
+                    </strong>
+                  </div>
+                  {form.venueAddress && (
+                    <div className="event-review-item event-review-item--full">
+                      <span className="event-review-label">{copy("អាសយដ្ឋាន", "Address")}</span>
+                      <span className="event-review-val-text">{form.venueAddress}</span>
+                    </div>
+                  )}
+                  {form.googleMapUrl && (
+                    <div className="event-review-item event-review-item--full">
+                      <span className="event-review-label">{copy("តំណ Google Maps", "Google Maps")}</span>
+                      <a href={form.googleMapUrl} target="_blank" rel="noreferrer" className="event-review-map-link">
+                        <span>{form.googleMapUrl}</span>
+                        <ExternalLink size={14} aria-hidden="true" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Template & Style Review */}
+              <div className="event-review-group">
+                <div className="event-review-group-head">
+                  <div className="event-review-icon-wrap" aria-hidden="true">
+                    <Sparkles size={20} />
+                  </div>
+                  <div className="event-review-group-info">
+                    <span className="event-review-group-kicker">{copy("គំរូសំបុត្រអញ្ជើញ", "Invitation Design")}</span>
+                    <h3 className="event-review-group-title">{selectedTemplate?.name || copy("មិនទាន់ជ្រើសរើស", "No design chosen")}</h3>
+                  </div>
+                  <button type="button" className="event-review-edit-btn" onClick={() => scrollToStep(3)} aria-label={copy("កែប្រែគំរូសំបុត្រ", "Edit design")}>
+                    <Pencil size={14} aria-hidden="true" />
+                    <span>{copy("កែប្រែ", "Edit")}</span>
+                  </button>
+                </div>
+                <div className="event-review-grid">
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("រចនាប័ទ្ម", "Style")}</span>
+                    <strong className="event-review-val">
+                      {selectedTemplate ? (STYLE_LABELS[selectedTemplate.category]?.[en ? 1 : 0] || selectedTemplate.category) : copy("ស្វ័យប្រវត្តិ", "Automatic")}
+                    </strong>
+                  </div>
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("ភាសាសំបុត្រ", "Invitation Language")}</span>
+                    <strong className="event-review-val">
+                      {language === "KH" ? copy("ភាសាខ្មែរ", "Khmer") : language === "EN" ? copy("ភាសាអង់គ្លេស", "English") : copy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer & English")}
+                    </strong>
+                  </div>
+                  <div className="event-review-item">
+                    <span className="event-review-label">{copy("តម្លៃ & សិទ្ធិ", "Pricing & Access")}</span>
+                    <strong className="event-review-val">
+                      {selectedTemplate ? (
+                        selectedTemplate.premium || Number(selectedTemplate.price) > 0 ? (
+                          access[selectedTemplate.id] === true ? (
+                            <span className="event-access-pill success"><Check size={12} /> {copy("មានសិទ្ធិប្រើប្រាស់", "Included")}</span>
+                          ) : (
+                            <span className="event-access-pill premium">{packagePrice(selectedTemplate, en ? "en" : "km") || "Premium"}</span>
+                          )
+                        ) : (
+                          <span className="event-access-pill free">{copy("ឥតគិតថ្លៃ", "Free")}</span>
+                        )
+                      ) : copy("ជ្រើសរើសគំរូដើម្បីពិនិត្យ", "Select template")}
+                    </strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Story Message (if present) */}
+              {form.storyText && (
+                <div className="event-review-group">
+                  <div className="event-review-quote">
+                    <span className="event-review-label">{copy("សារអញ្ជើញផ្ទាល់ខ្លួន", "Personal Welcome Message")}</span>
+                    <p>"{form.storyText}"</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="event-create-final">
+              {error && (
+                <div role="alert" className="workspace-notice">
+                  <p>{error}</p>
+                  <p>{copy("ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុក។ អ្នកអាចព្យាយាមរក្សាទុកម្ដងទៀតបាន។", "Your details are retained. You can retry saving safely.")}</p>
+                </div>
+              )}
+              <p className="workspace-muted">
+                {copy("កម្មវិធីនឹងត្រូវរក្សាទុកជាឯកជន។ បន្ថែមភ្ញៀវ និងផ្សព្វផ្សាយពីកន្លែងគ្រប់គ្រងកម្មវិធី។", "Your event starts as a private draft. Add guests and publish from its workspace.")}
+              </p>
+              <div className="event-create-actions">
+                <button className="workspace-button" type="button" disabled={saving} onClick={() => save("draft")}>
+                  {copy("រក្សាទុកព្រាង", "Save draft")}
+                </button>
+                <button className="workspace-button primary" type="submit" disabled={saving || loading}>
+                  {saving ? copy("កំពុងរក្សាទុក…", "Saving…") : copy("បង្កើតកម្មវិធី", "Create event")}
+                </button>
+              </div>
+              <p className="event-save-note" role="status">
+                {storageError
+                  ? copy("កម្មវិធីរុករកមិនអាចរក្សាទុកព័ត៌មានក្នុងផ្ទាំងនេះបានទេ។ សូមរក្សាទុកព្រាងមុនចាកចេញ។", "This browser cannot retain your setup. Save a draft before leaving.")
+                  : copy("ព័ត៌មានត្រូវបានរក្សាទុកក្នុងផ្ទាំងនេះ ខណៈអ្នកកំពុងបំពេញ។", "Your setup is kept in this tab while you work.")}
+              </p>
+            </div>
+          </section>
+        </fieldset>
+
+        {/* Desktop Sticky Summary Sidebar */}
+        <aside className="event-create-summary workspace-section" aria-label={copy("សង្ខេបកម្មវិធី", "Event summary")}>
+          <h2>{copy("កម្មវិធីរបស់អ្នក", "Your event")}</h2>
+          <dl>
+            <div>
+              <dt>{copy("ប្រភេទ", "Type")}</dt>
+              <dd>{EVENT_TYPES.find(row => row[0] === type)?.[en ? 2 : 1]}</dd>
+            </div>
+            <div>
+              <dt>{copy("ឈ្មោះ", "Title")}</dt>
+              <dd>{form.title || copy("មិនទាន់បំពេញ", "Not added yet")}</dd>
+            </div>
+            <div>
+              <dt>{copy("កាលបរិច្ឆេទ", "Date")}</dt>
+              <dd>{form.eventDate || copy("មិនទាន់កំណត់", "Not set yet")}</dd>
+            </div>
+            <div>
+              <dt>{copy("គំរូ", "Invitation")}</dt>
+              <dd>{selectedTemplate?.name || copy("មិនទាន់ជ្រើសរើស", "Choose a template")}</dd>
+            </div>
+            <div>
+              <dt>{copy("កញ្ចប់", "Subscription")}</dt>
+              <dd>
+                {plan?.active && plan?.status === "ACTIVE" && plan?.paymentStatus === "PAID"
+                  ? plan.packagePlan?.packageName
+                  : copy("សិទ្ធិនឹងត្រូវពិនិត្យពេលរក្សាទុក", "Eligibility checked when saving")}
+              </dd>
+            </div>
+          </dl>
+          <p className="workspace-muted">
+            {copy("សម្រាប់ព្រាង ត្រូវការតែឈ្មោះកម្មវិធី។", "Only a title is needed to save a draft.")}
+          </p>
+        </aside>
+      </form>
+    </main>
+  );
 }
