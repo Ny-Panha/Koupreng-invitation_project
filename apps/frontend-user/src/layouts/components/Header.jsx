@@ -20,8 +20,9 @@ export default function Header() {
   const active = (path) => path === "/" ? location.pathname === "/" : location.pathname === path || location.pathname.startsWith(path + "/");
   const closeMenu = () => dialog.current?.close();
   const containMenuFocus = (event) => {
-    if (event.key !== "Tab") return;
+    if (event.key !== "Tab" || !dialog.current) return;
     const controls = [...dialog.current.querySelectorAll('a[href], button:not([disabled])')].filter((node) => node.getClientRects().length);
+    if (!controls.length) return;
     const first = controls[0];
     const last = controls.at(-1);
     if (event.shiftKey && document.activeElement === first) {

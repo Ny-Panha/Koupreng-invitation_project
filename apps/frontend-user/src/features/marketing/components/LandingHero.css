@@ -1,13 +1,56 @@
 .kp-landing .kp-hero.kp-hero--live { grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 6vw, 88px); align-items: start; padding-block: 112px 64px; }
 .kp-hero--live .kp-hero-copy { padding-top: clamp(48px, 8vw, 112px); }
 .kp-hero--live .public-demo-viewport { height: 560px; }
-.kp-hero--live .kp-hero-category { margin: 0 0 20px; color: var(--kp-gold-ink); font: 500 15px/1.8 var(--kp-font); }
+.kp-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(185, 139, 66, 0.12);
+  border: 1px solid rgba(185, 139, 66, 0.3);
+  border-radius: var(--kp-radius-pill, 9999px);
+  color: var(--kp-gold-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  width: fit-content;
+}
+.kp-hero-badge svg {
+  color: var(--kp-gold, #c3a26b);
+  flex-shrink: 0;
+}
+.kp-hero--live .kp-hero-category { margin: 0 0 16px; color: var(--kp-gold-ink); font: 500 15px/1.8 var(--kp-font); }
 .kp-landing .kp-hero--live h1 { max-width: 13ch; margin: 0; font-size: clamp(40px, 4.6vw, 66px); font-weight: 600; letter-spacing: -.025em; }
 .kp-landing[lang="en"] .kp-hero--live h1 { line-height: 1.14; }
 .kp-landing[lang="km"] .kp-hero--live h1 { max-width: 16ch; line-height: 1.75; letter-spacing: 0; }
 .kp-hero--live h1 > span { display: block; }
-.kp-hero--live .kp-hero-lead { max-width: 47ch; margin-block: 26px 30px; }
-.kp-hero--live .kp-hero-proof { max-width: 43ch; margin-top: 24px; }
+.kp-hero--live .kp-hero-lead { max-width: 47ch; margin-block: 24px 28px; }
+.kp-hero--live .kp-hero-proof { max-width: 43ch; margin-top: 20px; }
+.kp-hero-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(229, 222, 210, 0.7);
+}
+.kp-hero-highlight-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--kp-muted);
+  line-height: 1.5;
+}
+.kp-hero-highlight-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kp-gold, #c3a26b);
+  flex-shrink: 0;
+}
 .kp-hero-live-art { min-width: 0; }
 @media (max-width: 900px) {
   .kp-landing .kp-hero.kp-hero--live { grid-template-columns: 1fr; gap: 42px; padding-block: 116px 52px; }
@@ -21,4 +64,10 @@
   .kp-landing .kp-hero--live h1 { font-size: clamp(33px, 8.5vw, 40px); }
   .kp-hero--live .kp-hero-lead { margin-block: 20px 24px; }
   .kp-hero--live .kp-hero-proof { margin-top: 20px; }
+  .kp-hero-highlights {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 14px;
+  }
 }

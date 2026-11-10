@@ -463,7 +463,6 @@
   overflow-y: auto;
   overscroll-behavior-y: contain;
   pointer-events: none;
-  display: flex;
   flex-direction: column;
 }
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, Sparkles } from "lucide-react";
 import InvitationDemo from "./InvitationDemo";
 import { FadeContent } from "@/shared/ui/vendor";
 import "./LandingHero.css";
@@ -8,6 +8,10 @@ export default function LandingHero({ copy }) {
   return (
     <section className="kp-hero kp-hero--live" aria-labelledby="kp-hero-title">
       <FadeContent className="kp-hero-copy" duration={0.6}>
+        <div className="kp-hero-badge" role="text">
+          <Sparkles size={14} aria-hidden="true" />
+          <span>{copy("វេទិកាធៀបការឌីជីថលខ្មែរដំបូងគេ", "Cambodia's premier digital wedding invitation platform")}</span>
+        </div>
         <p className="kp-hero-category">{copy("ធៀបការមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title">
           <span>{copy("ធៀបការដែលបង្ហាញ", "Invitations crafted")}</span>
@@ -33,6 +37,20 @@ export default function LandingHero({ copy }) {
           <Check size={16} aria-hidden="true" />
           {copy("មើលគំរូភ្លាមៗ ដោយមិនបាច់ចុះឈ្មោះ", "Explore a real invitation before signing up")}
         </p>
+        <div className="kp-hero-highlights" role="list" aria-label={copy("លក្ខណៈពិសេសចម្បង", "Core features")}>
+          <div className="kp-hero-highlight-item" role="listitem">
+            <span className="kp-hero-highlight-dot" aria-hidden="true" />
+            <span>{copy("ផ្ញើតាម Telegram & Messenger", "Instant Telegram & Messenger sharing")}</span>
+          </div>
+          <div className="kp-hero-highlight-item" role="listitem">
+            <span className="kp-hero-highlight-dot" aria-hidden="true" />
+            <span>{copy("តាមដានចម្លើយ RSVP ងាយស្រួល", "Real-time guest RSVP tracking")}</span>
+          </div>
+          <div className="kp-hero-highlight-item" role="listitem">
+            <span className="kp-hero-highlight-dot" aria-hidden="true" />
+            <span>{copy("រចនាបទខ្មែរប្រណីត ១០+ គំរូ", "10+ authentic Cambodian designs")}</span>
+          </div>
+        </div>
       </FadeContent>
       <div className="kp-hero-live-art">
         <InvitationDemo copy={copy} />

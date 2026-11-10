@@ -1094,6 +1094,12 @@
   color: var(--kp-ink);
 }
 
+.kp-faq-list summary:focus-visible {
+  outline: 2px solid var(--kp-gold, #c3a26b);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .kp-faq-list summary::-webkit-details-marker {
   display: none;
 }
@@ -1607,7 +1613,7 @@
 .kp-guest-demo-bar { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; background: var(--kp-surface-soft); border-bottom: 1px solid var(--kp-border); }
 .kp-guest-demo-bar > span:first-child { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
 .kp-demo-label { font-size: 12px; color: var(--kp-gold-text); border: 1px solid var(--kp-border); padding: 2px 10px; background: var(--kp-surface); border-radius: 6px; }
-.kp-guest-demo-content { padding: 28px 24px; min-height: 388px; }
+.kp-guest-demo-content { padding: 28px 24px; min-height: 388px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .kp-guest-demo-content h3 { font-size: 20px; }
 .kp-guest-demo-content > p { font-size: 14px; color: var(--kp-muted); margin-top: 8px; }
 .kp-demo-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 24px; }
