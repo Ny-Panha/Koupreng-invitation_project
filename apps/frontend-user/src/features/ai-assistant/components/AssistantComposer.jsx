@@ -1,5 +1,6 @@
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { FormField, LoadingButton } from "@/shared/ui";
+import { EVENT_TYPES } from "@/features/events/onboarding/eventFields";
 import {
   IoCreateOutline,
   IoDocumentTextOutline,
@@ -49,16 +50,47 @@ export default function AssistantComposer({
       </FormField>
 
       <div className="pe-ai-field-grid">
-        <FormField label={copy("ឈ្មោះគូស្វាមីភរិយា", "Couple names")}>
+        <FormField label={copy("ប្រភេទកម្មវិធី", "Event type")}>
+          <select
+            value={form.eventType || "WEDDING"}
+            onChange={(e) => setForm({ ...form, eventType: e.target.value })}
+          >
+            {EVENT_TYPES.map(([val, kmLabel, enLabel]) => (
+              <option key={val} value={val}>
+                {en ? enLabel : kmLabel}
+              </option>
+            ))}
+          </select>
+        </FormField>
+
+        <FormField
+          label={
+            form.eventType === "BIRTHDAY"
+              ? copy("ឈ្មោះម្ចាស់ខួប", "Celebrant name")
+              : form.eventType === "CORPORATE"
+              ? copy("ឈ្មោះអង្គភាព / ស្ថាប័ន", "Organization or event title")
+              : form.eventType === "ENGAGEMENT" || form.eventType === "ANNIVERSARY"
+              ? copy("ឈ្មោះគូស្នេហ៍", "Couple / partner names")
+              : copy("ឈ្មោះគូស្វាមីភរិយា", "Couple names")
+          }
+        >
           <input
             type="text"
             value={form.coupleNames}
             onChange={(e) => setForm({ ...form, coupleNames: e.target.value })}
-            placeholder={copy("សុក ដារ៉ា & កែវ សោភា", "Sok Dara & Keo Sophea")}
+            placeholder={
+              form.eventType === "BIRTHDAY"
+                ? copy("សុវណ្ណ វិសាល", "Sovann Visal")
+                : form.eventType === "CORPORATE"
+                ? copy("ក្រុមហ៊ុន គូប៉័ង បច្ចេកវិទ្យា", "Koupreng Technology")
+                : copy("សុក ដារ៉ា & កែវ សោភា", "Sok Dara & Keo Sophea")
+            }
           />
         </FormField>
+      </div>
 
-        <FormField label={copy("ឈ្មោះម្ចាស់ដើមការ", "Host name")}>
+      <div className="pe-ai-field-grid">
+        <FormField label={copy("ឈ្មោះម្ចាស់ដើមការ / អ្នករៀបចំ", "Host or organizer")}>
           <input
             type="text"
             value={form.hostName}
@@ -66,9 +98,7 @@ export default function AssistantComposer({
             placeholder={copy("លោក សុក ចាន់ & លោកស្រី", "Mr. and Mrs. Sok Chan")}
           />
         </FormField>
-      </div>
 
-      <div className="pe-ai-field-grid">
         <FormField label={copy("កាលបរិច្ឆេទកម្មវិធី", "Event date")}>
           <input
             type="text"
@@ -77,7 +107,9 @@ export default function AssistantComposer({
             placeholder={copy("ថ្ងៃអាទិត្យ ទី១៥ ខែមីនា ឆ្នាំ២០២៦", "Sunday, 15 March 2026")}
           />
         </FormField>
+      </div>
 
+      <div className="pe-ai-field-grid">
         <FormField label={copy("ទីតាំង", "Venue")}>
           <input
             type="text"

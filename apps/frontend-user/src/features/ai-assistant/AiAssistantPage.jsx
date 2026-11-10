@@ -26,6 +26,7 @@ export default function AiAssistantPage() {
 
   const [form, setForm] = useState({
     action: "copy",
+    eventType: "WEDDING",
     coupleNames: "",
     hostName: "",
     eventDate: "",
@@ -52,8 +53,9 @@ export default function AiAssistantPage() {
         setInvitation(data);
         setForm((prev) => ({
           ...prev,
+          eventType: data.eventType || prev.eventType || "WEDDING",
           coupleNames: data.title || data.slug || "",
-          hostName: data.groomName || data.brideName || "",
+          hostName: data.groomName || data.brideName || data.hostName || "",
           venueName: data.venueName || "",
           eventDate: data.eventDate || "",
         }));
@@ -72,10 +74,11 @@ export default function AiAssistantPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const resolvedEventType = form.eventType || invitation?.eventType || "WEDDING";
     generate(form.action, {
       language: form.language,
       tone: form.tone,
-      eventType: "Wedding",
+      eventType: resolvedEventType,
       coupleNames: form.coupleNames,
       hostName: form.hostName,
       venueName: form.venueName,

@@ -1,5 +1,5 @@
 import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, Shield } from "lucide-react";
 import AdminDialog from "../../layouts/components/AdminDialog";
@@ -96,6 +96,19 @@ export default function AdminUsersPage() {
     });
   }, [data, query, roleFilter]);
 
+  const [page, setPage] = useState(1);
+  const pageSize = 50;
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, roleFilter]);
+
+  const totalPages = Math.ceil(users.length / pageSize) || 1;
+  const paginatedUsers = useMemo(
+    () => users.slice((page - 1) * pageSize, page * pageSize),
+    [users, page, pageSize]
+  );
+
   const executeUserUpdate = async (user, action, value) => {
     if (action === "deactivate" && isCurrentAccount(user)) {
       show(t("users.cannotDeactivateSelf", "You cannot deactivate your own account"), "error");
@@ -149,11 +162,19 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      <section className="card" style={{ marginBottom: 18 }}>
-        <h3 className="page-title" style={{ fontSize: 16, marginBottom: 12 }}>
-          {t("users.createAdminTitle", "Create New Admin Account")}
-        </h3>
-        <form onSubmit={handleCreateUser}>
+      <details className="card admin-create-card" style={{ marginBottom: 18 }} open>
+        <summary
+          className="admin-create-summary flex items-center justify-between cursor-pointer select-none"
+          style={{ outline: "none" }}
+        >
+          <h3 className="page-title" style={{ fontSize: 16, margin: 0 }}>
+            {t("users.createAdminTitle", "Create New Admin Account")}
+          </h3>
+          <span className="text-xs text-slate-500 dark:text-zinc-400 font-normal">
+            + {t("users.toggleForm", "Toggle form")}
+          </span>
+        </summary>
+        <form onSubmit={handleCreateUser} style={{ marginTop: 14 }}>
           <div className="admin-form-grid">
             <label>
               {t("users.colName", "Name")}
@@ -225,19 +246,26 @@ export default function AdminUsersPage() {
             </button>
           </div>
         </form>
-      </section>
+      </details>
 
       <section className="card">
-        <div className="toolbar">
-          <input
-            className="text-input"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={t("users.searchPlaceholder", "Search users...")}
-          />
-          <button type="button" className="btn btn-ghost" onClick={reload}>
-            {t("users.refresh", "Refresh")}
-          </button>
+        <div className="toolbar" style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", justifyContent: "space-between" }}>
+          <div className="flex items-center gap-2 flex-1 min-w-[240px]">
+            <input
+              className="text-input"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("users.searchPlaceholder", "Search users...")}
+              style={{ flex: 1 }}
+            />
+            <button type="button" className="btn btn-ghost" onClick={reload}>
+              {t("users.refresh", "Refresh")}
+            </button>
+          </div>
+          <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">
+            {users.length} {t("users.usersFound", "users")}
+            {data && users.length !== data.length ? ` (${t("users.filteredFrom", "filtered from")} ${data.length})` : ""}
+          </span>
         </div>
         <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label={t("users.roleFilters", "Filter users by role")}>
           {[
@@ -280,7 +308,7 @@ export default function AdminUsersPage() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => {
+                {paginatedUsers.map((user) => {
                   const protectedUser = isProtectedAdminUser(user);
                   const isCurrent = isCurrentAccount(user);
 
@@ -345,6 +373,31 @@ export default function AdminUsersPage() {
                 })}
               </tbody>
             </table>
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-200 dark:border-zinc-800 text-xs px-2 pb-2">
+                <span className="text-slate-500 dark:text-zinc-400">
+                  {t("users.page", "Page")} {page} {t("users.of", "of")} {totalPages} ({users.length} {t("users.records", "total records")})
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                  >
+                    {t("users.previous", "Previous")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-ghost"
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                  >
+                    {t("users.next", "Next")}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </section>

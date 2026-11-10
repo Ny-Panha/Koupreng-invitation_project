@@ -432,7 +432,7 @@ export default function TemplateBoilerplateLayout({
             })()}
 
             {/* Footer */}
-            <div className="text-center pt-8 space-y-2 text-zinc-500 text-[11px]">
+            <div className="text-center pt-8 space-y-2 text-zinc-600 dark:text-zinc-400 text-xs">
               <p>សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម</p>
               <InvitationBranding content={effectiveContent} />
             </div>
