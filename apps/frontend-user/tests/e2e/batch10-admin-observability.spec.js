@@ -54,7 +54,7 @@ async function installAdminMockRoutes(page, lang = "en") {
               {
                 code: "invitations",
                 titleEn: "Invitations Report",
-                titleKm: "របាយការណ៍ធៀបការ",
+                titleKm: "របាយការណ៍សំបុត្រអញ្ចើញ",
                 defaultDateDimension: "createdAt",
                 dateDimensions: ["createdAt", "eventDate"],
                 filters: ["eventType", "search"],

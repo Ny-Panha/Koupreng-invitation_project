@@ -36,7 +36,7 @@ export default function TemplateCoverSection({
       {/* Invitation Title */}
       <div>
         <label className="text-xs font-semibold text-zinc-300 block mb-1">
-          {lang === "en" ? "Invitation Title (Heading)" : "ចំណងជើងធៀបការ (Title Header)"}
+          {lang === "en" ? "Invitation Title (Heading)" : "ចំណងជើងសំបុត្រអញ្ចើញ (Title Header)"}
         </label>
         <input
           type="text"

@@ -5,7 +5,7 @@ import { useLanguageStore } from "../stores/useLanguageStore";
 function getPageTitle(pathname, lang) {
   const isEn = lang === "en";
   if (!pathname || pathname === "/" || pathname === "") {
-    return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - ធៀបការឌីជីថល";
+    return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - សំបុត្រអញ្ចើញឌីជីថល";
   }
   if (pathname.startsWith("/login")) return isEn ? "Login | Koupreng" : "ចូលគណនី | គូព្រេង";
   if (pathname.startsWith("/register")) return isEn ? "Register | Koupreng" : "ចុះឈ្មោះ | គូព្រេង";
@@ -32,7 +32,7 @@ function getPageTitle(pathname, lang) {
   if (pathname.includes("/settings")) return isEn ? "Event Settings | Koupreng" : "ការកំណត់កម្មវិធី | គូព្រេង";
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/app/events")) return isEn ? "Events Dashboard | Koupreng" : "ផ្ទាំងគ្រប់គ្រងកម្មវិធី | គូព្រេង";
   if (pathname.startsWith("/templates")) return isEn ? "Templates Catalog | Koupreng" : "កាតាឡុកគំរូធៀប | គូព្រេង";
-  return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - ធៀបការឌីជីថល";
+  return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - សំបុត្រអញ្ចើញឌីជីថល";
 }
 
 const ScrollToTop = () => {

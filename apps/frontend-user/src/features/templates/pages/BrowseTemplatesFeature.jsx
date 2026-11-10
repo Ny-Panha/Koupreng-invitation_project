@@ -31,15 +31,15 @@ function formatTemplateDescription(description) {
         return parsed.blessingMessage.trim();
       }
       if (parsed.invitationTitle && typeof parsed.invitationTitle === "string" && parsed.invitationTitle.trim()) {
-        return `${parsed.invitationTitle} — គំរូធៀបការឌីជីថលបែបប្រណិត`;
+        return `${parsed.invitationTitle} — គំរូសំបុត្រអញ្ចើញឌីជីថលបែបប្រណិត`;
       }
       if (parsed.groomName && parsed.brideName) {
-        return `គំរូធៀបការមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
+        return `គំរូសំបុត្រអញ្ចើញមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
       }
       if (parsed.description && typeof parsed.description === "string" && parsed.description.trim()) {
         return parsed.description.trim();
       }
-      return "គំរូធៀបការមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+      return "គំរូសំបុត្រអញ្ចើញមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
     } catch {
       return str;
     }
@@ -84,7 +84,7 @@ export default function BrowseTemplatesFeature() {
       })
       .catch((err) => {
         if (active) {
-          setError(err.message || (t("error") || "មិនអាចទាញយកគំរូធៀបការបានទេ"));
+          setError(err.message || (t("error") || "មិនអាចទាញយកគំរូសំបុត្រអញ្ចើញបានទេ"));
         }
       })
       .finally(() => {

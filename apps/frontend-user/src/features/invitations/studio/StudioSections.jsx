@@ -23,7 +23,7 @@ export default function StudioSections({ sections, active, onChange, english }) 
     }
   };
 
-  return <nav className="studio-sections" aria-label={english ? 'Invitation sections' : 'ផ្នែកធៀបការ'}>
+  return <nav className="studio-sections" aria-label={english ? 'Invitation sections' : 'ផ្នែកសំបុត្រអញ្ចើញ'}>
     <label className="studio-section-select">{english ? 'Edit section' : 'កែសម្រួលផ្នែក'}
       <select value={current.id} onChange={event => choose(event.target.value)}>
         {STUDIO_TABS.map(tab => <option key={tab.id} value={tab.id}>{tab.labels[english ? 1 : 0]}</option>)}

@@ -10,13 +10,14 @@ export const INVITATION_LABELS_EN = {
   "ចំណងដៃឌីជីថល": "Digital gifts",
   "សូមអរគុណចំពោះសេចក្តីស្រឡាញ់ និងពរជ័យរបស់លោកអ្នក": "Thank you for your love and warm wishes",
   "សូមបញ្ជាក់ការចូលរួម": "Please confirm your attendance",
+  "កំពុងបើកសំបុត្រអញ្ចើញ...": "Opening invitation…",
   "កំពុងបើកធៀបការ...": "Opening invitation…",
   "ឆ្លើយតប RSVP": "RSVP",
   "វត្តមានដ៏ថ្លៃថ្លារបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុតសម្រាប់យើងខ្ញុំ": "Your presence means so much to us",
   "បញ្ជាក់ការចូលរួម": "Confirm attendance",
 
 
-  'និង': 'and', 'ជូនចំពោះ': 'To', 'បើកធៀបការ': 'Open invitation', 'ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ': 'Open the invitation and music',
+  'និង': 'and', 'ជូនចំពោះ': 'To', 'បើកសំបុត្រអញ្ចើញ': 'Open invitation', 'បើកធៀបការ': 'Open invitation', 'ចុចដើម្បីបើកសំបុត្រ និងចាក់ភ្លេងមង្គលការ': 'Open the invitation and music',
   'សេចក្តីផ្តើម': 'Welcome', 'កម្មវិធី': 'Program', 'កម្រងរូបភាព': 'Gallery', 'ទីតាំង': 'Location',
   'កាលវិភាគពិធីមង្គលការ': 'Wedding program', 'កម្មវិធីពិធីមង្គលការ': 'Wedding program', 'កម្មវិធីមង្គលការ': 'Wedding program',
   'កម្រងអនុស្សាវរីយ៍': 'Our memories', 'សំណួរដែលសួរញឹកញាប់': 'Frequently asked questions',

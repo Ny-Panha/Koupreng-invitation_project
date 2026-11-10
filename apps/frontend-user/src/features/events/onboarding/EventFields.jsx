@@ -1,14 +1,30 @@
 import { eventFields } from "./eventFields";
+import { getEventExamples, getFieldHelpers } from "@/shared/utils/eventPlaceholders";
+
 export default function EventFields({ form, setForm, type, en, errors = {}, onBlur, draft = false, grouped = false }) {
   const fields = eventFields(type);
-  const field = ([key, kh, english, inputType = "text", required = true]) =>
-    <label key={key} htmlFor={`event-${key}`}><span>{en ? english : kh}{required && <span className="event-required" aria-hidden="true"> *</span>}</span>
-      <input id={`event-${key}`} name={key} type={inputType} required={required && (!draft || key === "title")} maxLength={key === "venueAddress" ? 1000 : 255}
-        placeholder={inputType === "url" ? "https://maps.google.com/…" : inputType === "text" ? en ? english.replace(" (optional)", "") : kh : undefined}
-        aria-invalid={errors[key] ? true : undefined} aria-describedby={errors[key] ? `event-${key}-error` : undefined}
-        value={form[key] || ""} onBlur={() => onBlur?.(key)} onChange={e => setForm(current => ({ ...current, [key]: e.target.value }))} />
-      {errors[key] && <span className="workspace-field-error" id={`event-${key}-error`}>{errors[key]}</span>}
-    </label>;
+  const examples = getEventExamples(type, en ? "en" : "km");
+  const helpers = getFieldHelpers(en ? "en" : "km");
+
+  const field = ([key, kh, english, inputType = "text", required = true]) => {
+    const hintText = helpers[key];
+    const hintId = `event-${key}-hint`;
+    const errorId = `event-${key}-error`;
+    const describedBy = [errors[key] ? errorId : undefined, hintText ? hintId : undefined].filter(Boolean).join(" ") || undefined;
+    const examplePlaceholder = examples[key] || (inputType === "url" ? "https://maps.app.goo.gl/…" : undefined);
+
+    return (
+      <label key={key} htmlFor={`event-${key}`}>
+        <span>{en ? english : kh}{required && <span className="event-required" aria-hidden="true"> *</span>}</span>
+        <input id={`event-${key}`} name={key} type={inputType} required={required && (!draft || key === "title")} maxLength={key === "venueAddress" ? 1000 : 255}
+          placeholder={examplePlaceholder}
+          aria-invalid={errors[key] ? true : undefined} aria-describedby={describedBy}
+          value={form[key] || ""} onBlur={() => onBlur?.(key)} onChange={e => setForm(current => ({ ...current, [key]: e.target.value }))} />
+        {hintText && !errors[key] && <span className="workspace-field-hint" id={hintId}>{hintText}</span>}
+        {errors[key] && <span className="workspace-field-error" id={errorId}>{errors[key]}</span>}
+      </label>
+    );
+  };
   if (!grouped) return <div className={`event-wizard-grid event-fields-${String(type || "OTHER").toLowerCase()}`}>{fields.map(field)}</div>;
   const sections = [
     [en ? 'Event information' : 'ព័ត៌មានកម្មវិធី', fields.filter(([key]) => !['eventDate','eventTime','venueName','venueAddress','googleMapUrl'].includes(key))],

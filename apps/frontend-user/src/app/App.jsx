@@ -26,7 +26,7 @@ function App() {
   const lang = useLanguageStore(state => state.lang);
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.title = lang === "en" ? "Koupreng - Digital Invitation" : "គូព្រេង - ធៀបការឌីជីថល";
+    document.title = lang === "en" ? "Koupreng - Digital Invitation" : "គូព្រេង - សំបុត្រអញ្ចើញឌីជីថល";
   }, [lang]);
   useEffect(() => {
     initTelegramWebApp();

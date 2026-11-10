@@ -294,7 +294,7 @@ export default function PaymentQrCard({ order, onStatusChange, onRetry }) {
               </div>
               <div>
                 <strong>{copy("បានផ្ទៀងផ្ទាត់ការទូទាត់។", "Payment verified.")}</strong>
-                <p>{copy("អាចប្រើគំរូនេះបានហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតធៀបការបានឥឡូវនេះ។", "This design is available. You can start creating your invitation.")}</p>
+                <p>{copy("អាចប្រើគំរូនេះបានហើយ។ អ្នកអាចចាប់ផ្តើមបង្កើតសំបុត្រអញ្ចើញបានឥឡូវនេះ។", "This design is available. You can start creating your invitation.")}</p>
               </div>
               <Link
                 to={templateUsePath(order.templateId, true)}

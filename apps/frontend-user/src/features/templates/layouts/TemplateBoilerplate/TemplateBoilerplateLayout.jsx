@@ -202,7 +202,7 @@ export default function TemplateBoilerplateLayout({
                 className="tpl-btn-primary w-full max-w-xs mx-auto text-base py-3"
               >
                 <Sparkles className="h-4 w-4" />
-                <span>សូមបើកធៀបការ (Open Invitation)</span>
+                <span>សូមបើកសំបុត្រអញ្ចើញ (Open Invitation)</span>
               </button>
               <p className="text-[11px] text-zinc-500">
                 ចុចដើម្បីអានសេចក្តីអញ្ជើញ និងចាក់ភ្លេងមង្គលការ

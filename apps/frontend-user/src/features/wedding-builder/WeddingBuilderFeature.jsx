@@ -885,7 +885,7 @@ export default function WeddingBuilderFeature() {
                   <Sparkles size={18} style={{ color: "#d97706" }} /> ជ្រើសរើសគំរូធៀប (Select Template)
                 </h3>
                 <p className="pe-modal-subtitle">
-                  ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់ធៀបការ
+                  ជ្រើសរើសគំរូរចនាប័ទ្មដែលអ្នកពេញចិត្តសម្រាប់សំបុត្រអញ្ចើញ
                 </p>
               </div>
               <button

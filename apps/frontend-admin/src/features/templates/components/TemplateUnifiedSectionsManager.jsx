@@ -347,7 +347,7 @@ export default function TemplateUnifiedSectionsManager({
               className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/90 px-2.5 py-2 text-xs font-semibold text-zinc-200 hover:border-amber-500/50 hover:bg-zinc-800 hover:text-amber-300 disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer"
             >
               <Plus className="h-3.5 w-3.5 text-amber-400" />
-              <span>{lang === "en" ? "+ Section" : "+ ផ្នែកធៀបការ"}</span>
+              <span>{lang === "en" ? "+ Section" : "+ ផ្នែកសំបុត្រអញ្ចើញ"}</span>
             </button>
 
             {/* Legacy Section Dropdown Menu */}
@@ -387,7 +387,7 @@ export default function TemplateUnifiedSectionsManager({
           <p className="text-[11px] text-zinc-500 max-w-sm mx-auto">
             {lang === "en"
               ? "Click \"+ Cinematic Scroll\", \"+ Image\", or \"+ Section\" above to design your page."
-              : "សូមចុចប៊ូតុង \"+ Cinematic Scroll\", \"+ រូបភាព\", ឬ \"+ ផ្នែកធៀបការ\" ខាងលើដើម្បីរៀបចំទំព័រតាមចិត្ត។"}
+              : "សូមចុចប៊ូតុង \"+ Cinematic Scroll\", \"+ រូបភាព\", ឬ \"+ ផ្នែកសំបុត្រអញ្ចើញ\" ខាងលើដើម្បីរៀបចំទំព័រតាមចិត្ត។"}
           </p>
         </div>
       )}

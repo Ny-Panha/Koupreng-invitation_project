@@ -1925,7 +1925,7 @@ export default function InvitationForm({ invitation }) {
                         } : undefined}
                         hasDefault={Boolean(form.templateDefaultCoverBg && form.coverBackgroundImage !== form.templateDefaultCoverBg)}
                         inputRef={coverBgInputRef}
-                        hint={englishUI ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកធៀបការ")}
+                        hint={englishUI ? (flowConfig.hints.coverBackgroundImageEn || "Shown on the cover before the invitation is opened") : (flowConfig.hints.coverBackgroundImage || "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ចើញ")}
                     />
                 </div>
             )}
@@ -1956,7 +1956,7 @@ export default function InvitationForm({ invitation }) {
                             form.backgroundImage !== (form.templateDefaultBackground || "/invitations/khmer-celestial/botanical-frame.jpg")
                         )}
                         inputRef={bgFrameInputRef}
-                        hint={englishUI ? (flowConfig.hints.backgroundImageEn || "Shown as background or frame once invitation is opened (Full)") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកធៀបការពេញ (Full)")}
+                        hint={englishUI ? (flowConfig.hints.backgroundImageEn || "Shown as background or frame once invitation is opened (Full)") : (flowConfig.hints.backgroundImage || "ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកសំបុត្រអញ្ចើញពេញ (Full)")}
                     />
                 </div>
             )}
@@ -2143,7 +2143,7 @@ export default function InvitationForm({ invitation }) {
                 <span>{flowConfig.labels.familySection || uiCopy("មាតាបិតាទាំងសងខាង", "Together with our families")}</span>
             </h4>
             <p style={{ margin: "0 0 14px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                {uiCopy("* បញ្ចូលឈ្មោះលោកឪពុក និងអ្នកម្តាយទាំងសងខាងសម្រាប់បង្ហាញក្នុងធៀបការ", "* Enter the names of parents of both the groom and bride")}
+                {uiCopy("* បញ្ចូលឈ្មោះលោកឪពុក និងអ្នកម្តាយទាំងសងខាងសម្រាប់បង្ហាញក្នុងសំបុត្រអញ្ចើញ", "* Enter the names of parents of both the groom and bride")}
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
@@ -2237,6 +2237,7 @@ export default function InvitationForm({ invitation }) {
                     rows="6"
                     name="messageText" value={authoredForm.messageText}
                     onChange={(e) => update("messageText", e.target.value)}
+                    placeholder={uiCopy("ឧ. យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...", "e.g. We have the honor to cordially invite you and your family...")}
                 />
             </div>
         </div>
@@ -2305,7 +2306,7 @@ export default function InvitationForm({ invitation }) {
                     name="venueName" value={authoredForm.venueName}
                     id={`${fieldId}-venueName`}
                     onChange={(e) => update("venueName", e.target.value)}
-                    placeholder="The Premier Center Sen Sok"
+                    placeholder={uiCopy("ឧ. សណ្ឋាគារ សុខា ភ្នំពេញ", "e.g. Sokha Hotel Phnom Penh")}
                 />
             </div>
 
@@ -2315,6 +2316,7 @@ export default function InvitationForm({ invitation }) {
                 </label>
                 <input ref={venueAddressInput} id={`${fieldId}-venueAddress`} name="venueAddress" type="text"
                     className="pe-input" value={authoredForm.venueAddress} maxLength={1000} autoComplete="street-address"
+                    placeholder={uiCopy("ឧ. ផ្លូវសុធារស សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ", "e.g. Sothearos Blvd, Sangkat Tonle Bassac, Phnom Penh")}
                     aria-required="true" aria-invalid={Boolean(venueAddressError)}
                     aria-describedby={venueAddressError ? `${fieldId}-venueAddress-error` : `${fieldId}-venueAddress-hint`}
                     onChange={e => update("venueAddress", e.target.value)} />
@@ -2498,7 +2500,7 @@ export default function InvitationForm({ invitation }) {
             </div>
 
             <p style={{ margin: "0 0 12px 0", fontSize: "0.8rem", color: "#64748b" }}>
-                {uiCopy("* លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងវិចិត្រសាលធៀបការ", "* Upload 5 to 10 photos for your invitation gallery")}
+                {uiCopy("* លោកអ្នកអាចបញ្ចូលរូបថតពី 5 ដល់ 10 សន្លឹកសម្រាប់បង្ហាញក្នុងរូបភាពសំបុត្រអញ្ចើញ", "* Upload 5 to 10 photos for your invitation gallery")}
             </p>
 
             <div className="pe-gallery-grid-clean">
@@ -3109,7 +3111,7 @@ export default function InvitationForm({ invitation }) {
                 <span className="pe-sec-icon-badge">
                     <Globe size={17} />
                 </span>
-                <span>{t("secLangMode") || uiCopy("ភាសាធៀបការ", "Invitation language")}</span>
+                <span>{t("secLangMode") || uiCopy("ភាសាសំបុត្រអញ្ចើញ", "Invitation language")}</span>
             </h4>
             <div className="pe-form-group">
                 <label className="pe-label">

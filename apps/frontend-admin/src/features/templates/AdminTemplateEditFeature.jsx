@@ -1398,7 +1398,7 @@ export default function AdminTemplateEditPage() {
   const handleSave = async () => {
     if (loading || loadError || saving) return;
     if (!form.name.trim()) {
-      show("សូមបញ្ចូលឈ្មោះគំរូធៀបការ (Template Name)", "error");
+      show("សូមបញ្ចូលឈ្មោះគំរូសំបុត្រអញ្ចើញ (Template Name)", "error");
       return;
     }
 
@@ -1487,7 +1487,7 @@ export default function AdminTemplateEditPage() {
         ? await adminManagementService.createTemplate(payload)
         : await adminManagementService.updateTemplate(templateId, payload);
 
-      show("បានរក្សាទុក និងផ្សព្វផ្សាយគំរូធៀបការជោគជ័យ ✓");
+      show("បានរក្សាទុក និងផ្សព្វផ្សាយគំរូសំបុត្រអញ្ចើញជោគជ័យ ✓");
       setBaseline(editSnapshot);
       navigate(`/templates/${res.id || templateId}`, { replace: true });
     } catch (err) {
@@ -1785,7 +1785,7 @@ export default function AdminTemplateEditPage() {
                       <p className="text-xs text-zinc-400">
                         {lang === "en"
                           ? "Select the layout style for the invitation page. Click a layout to preview it immediately on the right."
-                          : "ជ្រើសរើសរចនាបថម៉ូដទំព័រធៀបការ។ ចុចជ្រើសរើសម៉ូដដើម្បីមើលផ្ទាំងគំរូខាងស្តាំភ្លាមៗ។"}
+                          : "ជ្រើសរើសរចនាបថម៉ូដទំព័រសំបុត្រអញ្ចើញ។ ចុចជ្រើសរើសម៉ូដដើម្បីមើលផ្ទាំងគំរូខាងស្តាំភ្លាមៗ។"}
                       </p>
                       {!isNew && <p className="text-xs text-amber-300">{lang === "en" ? "The layout identity is fixed for existing templates. Create a new template to choose another layout." : "គំរូដែលមានស្រាប់មានម៉ូដថេរ។ សូមបង្កើតគំរូថ្មីដើម្បីជ្រើសរើសម៉ូដផ្សេង។"}</p>}
                     </div>
@@ -1977,7 +1977,7 @@ export default function AdminTemplateEditPage() {
                         <div>
                           <h3 className="text-sm font-bold text-white flex items-center gap-2">
                             <Type className="h-4 w-4 text-amber-500" />
-                            <span>ពុម្ពអក្សរធៀបការ (Typography & Fonts)</span>
+                            <span>ពុម្ពអក្សរសំបុត្រអញ្ចើញ (Typography & Fonts)</span>
                           </h3>
                           <p className="text-[11px] text-zinc-400 mt-0.5">
                             កំណត់ Font រួម ឬបំបែកកំណត់តាម Element ទាំង ៦ លើក្របសំបុត្រ
@@ -2081,14 +2081,14 @@ export default function AdminTemplateEditPage() {
                                     type="text"
                                     value={form.groomName || ""}
                                     onChange={(e) => setField("groomName", e.target.value)}
-                                    placeholder="ឈ្មោះកូនកំលោះ (Groom)"
+                                    placeholder="ឧ. លោក វីរៈ (Groom)"
                                     className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                                   />
                                   <input
                                     type="text"
                                     value={form.brideName || ""}
                                     onChange={(e) => setField("brideName", e.target.value)}
-                                    placeholder="ឈ្មោះកូនក្រមុំ (Bride)"
+                                    placeholder="ឧ. កញ្ញា សុម៉ាលី (Bride)"
                                     className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                                   />
                                 </div>
@@ -2136,7 +2136,7 @@ export default function AdminTemplateEditPage() {
                                   type="text"
                                   value={form.invitationSubtitle || ""}
                                   onChange={(e) => setField("invitationSubtitle", e.target.value)}
-                                  placeholder="យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ"
+                                  placeholder="ឧ. យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ..."
                                   className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                                 />
                               </div>
@@ -3086,7 +3086,7 @@ export default function AdminTemplateEditPage() {
                                 type="text"
                                 value={form.groomName || ""}
                                 onChange={(e) => setField("groomName", e.target.value)}
-                                placeholder="ជា វណ្ណដា"
+                                placeholder="ឧ. លោក វីរៈ"
                                 className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500 font-bold"
                               />
                             </div>
@@ -3096,7 +3096,7 @@ export default function AdminTemplateEditPage() {
                                 type="text"
                                 value={form.brideName || ""}
                                 onChange={(e) => setField("brideName", e.target.value)}
-                                placeholder="សុខ ស្រីពេជ្រ"
+                                placeholder="ឧ. កញ្ញា សុម៉ាលី"
                                 className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500 font-bold"
                               />
                             </div>
@@ -3173,7 +3173,7 @@ export default function AdminTemplateEditPage() {
                               type="text"
                               value={form.invitationSubtitle || ""}
                               onChange={(e) => setField("invitationSubtitle", e.target.value)}
-                              placeholder="យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ"
+                              placeholder="ឧ. យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ..."
                               className="h-8 w-full rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 text-xs text-zinc-100 outline-none focus:border-amber-500"
                             />
                           </div>
@@ -3689,7 +3689,7 @@ export default function AdminTemplateEditPage() {
                         type="text"
                         value={form.venueName}
                         onChange={(e) => setField("venueName", e.target.value)}
-                        placeholder="The Premier Center Sen Sok"
+                        placeholder="ឧ. សណ្ឋាគារ សុខា ភ្នំពេញ"
                         className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                       />
                     </div>
@@ -3713,7 +3713,7 @@ export default function AdminTemplateEditPage() {
                         type="text"
                         value={form.venueAddress}
                         onChange={(e) => setField("venueAddress", e.target.value)}
-                        placeholder="ផ្លូវ 1003, សង្កាត់ភ្នំពេញថ្មី, ខណ្ឌសែនសុខ, រាជធានីភ្នំពេញ"
+                        placeholder="ឧ. ផ្លូវសុធារស សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ"
                         className="h-10 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-xs text-zinc-100 outline-none focus:border-amber-500"
                       />
                     </div>
@@ -3887,7 +3887,7 @@ export default function AdminTemplateEditPage() {
                   <div className="space-y-4">
                     <div>
                       <label htmlFor="template-catalog-name" className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        ឈ្មោះគំរូធៀបការ (Template Name) *
+                        ឈ្មោះគំរូសំបុត្រអញ្ចើញ (Template Name) *
                       </label>
                       <input
                         id="template-catalog-name"

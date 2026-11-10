@@ -84,18 +84,18 @@ const FEATURE_LIST = [
     label: "គំរូ Premium (Templates)",
     labelKm: "គំរូ Premium (Templates)",
     labelEn: "Premium Templates",
-    sublabel: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតធៀបការលំដាប់ប្រណិត",
-    sublabelKm: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតធៀបការលំដាប់ប្រណិត",
+    sublabel: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតសំបុត្រអញ្ចើញលំដាប់ប្រណិត",
+    sublabelKm: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតសំបុត្រអញ្ចើញលំដាប់ប្រណិត",
     sublabelEn: "Access to luxury and premium wedding templates",
     icon: Crown,
   },
   {
     key: "qrInvitationsEnabled",
-    label: "ធៀបការ QR (QR Invitations)",
-    labelKm: "ធៀបការ QR (QR Invitations)",
+    label: "សំបុត្រអញ្ចើញ QR (QR Invitations)",
+    labelKm: "សំបុត្រអញ្ចើញ QR (QR Invitations)",
     labelEn: "QR Invitations",
-    sublabel: "ចែករំលែកធៀបការតាម QR Code និងតំណភ្ជាប់",
-    sublabelKm: "ចែករំលែកធៀបការតាម QR Code និងតំណភ្ជាប់",
+    sublabel: "ចែករំលែកសំបុត្រអញ្ចើញតាម QR Code និងតំណភ្ជាប់",
+    sublabelKm: "ចែករំលែកសំបុត្រអញ្ចើញតាម QR Code និងតំណភ្ជាប់",
     sublabelEn: "Share invitations via QR Code and direct links",
     icon: QrCode,
   },
@@ -134,8 +134,8 @@ const FEATURE_LIST = [
     label: "សមាជិកក្រុម (Team Collaboration)",
     labelKm: "សមាជិកក្រុម (Team Collaboration)",
     labelEn: "Team Collaboration",
-    sublabel: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំធៀបការរួមគ្នា",
-    sublabelKm: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំធៀបការរួមគ្នា",
+    sublabel: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំសំបុត្រអញ្ចើញរួមគ្នា",
+    sublabelKm: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំសំបុត្រអញ្ចើញរួមគ្នា",
     sublabelEn: "Invite family members to co-manage invitations",
     icon: Users,
   },
@@ -803,10 +803,10 @@ export default function AdminPackagesPage() {
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 flex items-center gap-1">
                         <Mail className="h-3 w-3 text-amber-500" />
-                        <span>{lang === "en" ? "Invitations" : "ធៀបការ"}</span>
+                        <span>{lang === "en" ? "Invitations" : "សំបុត្រអញ្ចើញ"}</span>
                       </span>
                       <p className="text-xs font-bold text-slate-800 dark:text-zinc-200 mt-0.5">
-                        {plan.maxInvitations ? `${plan.maxInvitations} ${t("packages.invitationsCount", lang === "en" ? "invites" : "ធៀប")}` : t("packages.unlimited", lang === "en" ? "Unlimited" : "មិនកំណត់")}
+                        {plan.maxInvitations ? `${plan.maxInvitations} ${t("packages.invitationsCount", lang === "en" ? "invites" : "សំបុត្រ")}` : t("packages.unlimited", lang === "en" ? "Unlimited" : "មិនកំណត់")}
                       </p>
                     </div>
                     <div className="border-l border-slate-200/80 dark:border-zinc-800 pl-2.5">
@@ -1354,11 +1354,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Mail className="h-4 w-4 text-amber-500" />
                         <label htmlFor="package-maxInvitations" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          {t("packages.quotaMaxInvites", "ចំនួនធៀបការអតិបរមា")}
+                          {t("packages.quotaMaxInvites", "ចំនួនសំបុត្រអញ្ចើញអតិបរមា")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
-                        {t("packages.quotaMaxInvitesSub", "ចំនួនធៀបការមង្គលការដែល User អាចបង្កើតបាន")}
+                        {t("packages.quotaMaxInvitesSub", "ចំនួនសំបុត្រអញ្ចើញដែល User អាចបង្កើតបាន")}
                       </p>
                       <div className="relative">
                         <input
@@ -1370,7 +1370,7 @@ export default function AdminPackagesPage() {
                           placeholder={lang === "en" ? "e.g. 1, 10, 50" : "ឧ. 1, 10, 50"}
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs dark:text-zinc-400">
-                          {t("packages.invitationsCount", "ធៀប")}
+                          {t("packages.invitationsCount", "សំបុត្រ")}
                         </span>
                       </div>
                     </div>
@@ -1404,11 +1404,11 @@ export default function AdminPackagesPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="h-4 w-4 text-amber-500" />
                         <label htmlFor="package-maxGuestsPerInvitation" className="text-xs font-bold text-slate-800 dark:text-zinc-200">
-                          {t("packages.quotaPerInvite", "ភ្ញៀវក្នុង១ធៀបការ")}
+                          {t("packages.quotaPerInvite", "ភ្ញៀវក្នុង១សំបុត្រអញ្ចើញ")}
                         </label>
                       </div>
                       <p className="text-[11px] text-slate-600 dark:text-zinc-400 mb-2">
-                        {t("packages.quotaPerInviteSub", "ចំនួនភ្ញៀវអតិបរមាក្នុងធៀបនីមួយៗ")}
+                        {t("packages.quotaPerInviteSub", "ចំនួនភ្ញៀវអតិបរមាក្នុងសំបុត្រនីមួយៗ")}
                       </p>
                       <div className="relative">
                         <input

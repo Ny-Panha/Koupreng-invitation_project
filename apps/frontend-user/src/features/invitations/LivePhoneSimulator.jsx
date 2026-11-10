@@ -239,7 +239,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
                 </div>
 
                 {/* Clean, Full-Width Segmented Control - Easy to click */}
-                <div className="pe-sim-gate-switcher" role="tablist" aria-label={uiCopy("ទិដ្ឋភាពធៀបការ", "Invitation view")}>
+                <div className="pe-sim-gate-switcher" role="tablist" aria-label={uiCopy("ទិដ្ឋភាពសំបុត្រអញ្ចើញ", "Invitation view")}>
                     <button
                         type="button"
                         role="tab"

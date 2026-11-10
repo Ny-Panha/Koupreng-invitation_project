@@ -120,7 +120,7 @@ export default function AiAssistantPage() {
           <span className="dash-kicker" style={{ display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
             <IoSparklesOutline /> AI Writing Helper
           </span>
-          <h1>{copy("ជំនួយការសរសេរខ្លឹមសារធៀបការ", "Invitation writing helper")}</h1>
+          <h1>{copy("ជំនួយការសរសេរខ្លឹមសារសំបុត្រអញ្ចើញ", "Invitation writing helper")}</h1>
           <p>{copy("រៀបចំអត្ថបទអញ្ជើញ រឿងរ៉ាវស្នេហា និងលិខិតផ្លូវការ។ ពិនិត្យអត្ថបទមុនប្រើប្រាស់។", "Draft invitation wording, a love story or a formal letter. Review the result before using it.")}</p>
         </div>
       </header>

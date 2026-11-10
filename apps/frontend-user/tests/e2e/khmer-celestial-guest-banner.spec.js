@@ -222,7 +222,7 @@ test("public invite token reaches the existing Khmer Celestial guest-name destin
         venueName: "ភ្នំពេញ",
         designJson: JSON.stringify({ openingVideoEnabled: false }),
         contentJson: JSON.stringify({
-          opening: { genericGuestText: "ភ្ញៀវកិត្តិយស", openButtonText: "បើកធៀបការ" },
+          opening: { genericGuestText: "ភ្ញៀវកិត្តិយស", openButtonText: "បើកសំបុត្រអញ្ចើញ" },
         }),
         enabledSections: JSON.stringify({ music: false, rsvp: false }),
         layoutSettings: JSON.stringify({ openingVideoEnabled: false }),

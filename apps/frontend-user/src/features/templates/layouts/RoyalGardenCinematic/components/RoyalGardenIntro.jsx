@@ -54,7 +54,7 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
       <div className="rg-intro-controls">{slideshow && <button type="button" aria-label={sequence.paused ? (english ? 'Resume slideshow' : 'បន្តបង្ហាញរូបភាព') : (english ? 'Pause slideshow' : 'ផ្អាកបង្ហាញរូបភាព')} aria-pressed={sequence.paused} onClick={() => sequence.setPaused(!sequence.paused)}>{sequence.paused ? <Play size={18} /> : <Pause size={18} />}</button>}<button type="button" onClick={sequence.finish}>{english ? 'Skip intro' : 'រំលង'}<SkipForward size={16} aria-hidden="true" /></button></div>
     </div>
   </section>;
-  return <section ref={root} className="rg-intro" data-scene={sequence.stage} data-style={intro.style} data-palette={intro.palette} data-animation={intro.animationPreset} data-reduced={reducedMotion || undefined} data-paused={sequence.paused || sequence.hidden} aria-label={english ? 'Invitation opening' : 'ការបើកធៀបអញ្ជើញ'}>
+  return <section ref={root} className="rg-intro" data-scene={sequence.stage} data-style={intro.style} data-palette={intro.palette} data-animation={intro.animationPreset} data-reduced={reducedMotion || undefined} data-paused={sequence.paused || sequence.hidden} aria-label={english ? 'Invitation opening' : 'ការបើកសំបុត្រអញ្ចើញ'}>
     <CoverBackground content={content} templateDefault={manifest.cover} /><div className="rg-intro-wash" />
     {golden && <div className="rg-golden-backdrop" aria-hidden="true" />}
     {intro.style !== 'royal-arch' && <div className="rg-particles" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>}
@@ -64,14 +64,14 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
         <span className="rg-calligraphy-light" aria-hidden="true" />
       </div>}
       <div className="rg-calligraphy-copy">
-        {opening ? <><h1 className={hasArtwork ? 'rg-sr-only' : undefined}>{title}</h1><button className="rg-open" type="button" onClick={onOpen}>{english ? 'Open invitation' : 'សូមបើកធៀបការ'}</button></> : <>
+        {opening ? <><h1 className={hasArtwork ? 'rg-sr-only' : undefined}>{title}</h1><button className="rg-open" type="button" onClick={onOpen}>{english ? 'Open invitation' : 'សូមបើកសំបុត្រអញ្ចើញ'}</button></> : <>
           {!hasArtwork && <h1>{intro.heading ?? title}</h1>}
           {sequence.stage !== 'ORNAMENT_REVEAL' && <><p>{intro.subtitle ?? (english ? 'You are warmly invited' : 'សូមគោរពអញ្ជើញ')}</p><h1>{names}</h1><p>{date}</p></>}
         </>}
       </div>
     </div>}
     {!portraitScene && !golden && <div className="rg-oval-scene"><OrnamentalOval /><div className="rg-oval-copy">
-      {opening ? <><span className="rg-open-symbol" aria-hidden="true">✧</span><h1>{title}</h1><button className="rg-open" type="button" onClick={onOpen}>{english ? 'Open invitation' : 'សូមបើកធៀបការ'}</button></>
+      {opening ? <><span className="rg-open-symbol" aria-hidden="true">✧</span><h1>{title}</h1><button className="rg-open" type="button" onClick={onOpen}>{english ? 'Open invitation' : 'សូមបើកសំបុត្រអញ្ចើញ'}</button></>
         : <><h1>{intro.heading ?? title}</h1>{sequence.stage !== 'ORNAMENT_REVEAL' && <><p>{intro.subtitle ?? (english ? 'You are warmly invited' : 'សូមគោរពអញ្ជើញ')}</p><strong>{names}</strong></>}</>}
     </div></div>}
     {(portraitScene || arriving) && <div className="rg-intro-slides" data-arriving={arriving || undefined}>

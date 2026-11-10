@@ -67,7 +67,7 @@ describe("Royal Garden Cinematic layout", () => {
   it("shows a cover gate then opens to the user invitation", () => {
     const { container } = render(<MemoryRouter><RoyalGardenCinematicLayout content={content} preview={false}/></MemoryRouter>);
     expect(container.querySelector('[data-stage="COVER"]')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: /សូមបើកធៀបការ/ }));
+    fireEvent.click(screen.getByRole("button", { name: /សូមបើក(សំបុត្រអញ្ចើញ|ធៀបការ)/ }));
     expect(container.querySelector('[data-stage="CONTENT"]')).toBeInTheDocument();
   });
   it("does not fake a gift QR or a successful RSVP when not configured", () => {

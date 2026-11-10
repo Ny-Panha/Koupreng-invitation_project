@@ -22,7 +22,7 @@ const messages = {
     "បង្ហាញសកម្មភាព និងបញ្ហាដែលបានកត់ត្រា។ មិនមានទិន្នន័យសម្រាប់បញ្ជាក់ថាប្រព័ន្ធដំណើរការល្អគ្រប់ពេល ឬកំហុស API ទាំងអស់ទេ។",
     "Persisted operational events and exceptions only. Uptime and unpersisted API failures are unavailable; absence of events does not establish system health.",
   ],
-  publishedInvitations: ["ធៀបការបានផ្សាយ", "Published invitations"],
+  publishedInvitations: ["សំបុត្រអញ្ចើញបានផ្សាយ", "Published invitations"],
   publishedRate: ["អត្រាផ្សាយ", "Published rate"],
   permission: [
     "ត្រូវការសិទ្ធិអ្នកគ្រប់គ្រងសម្រាប់របាយការណ៍នេះ",
@@ -109,7 +109,7 @@ const messages = {
   exportError: ["មិនអាចបង្កើតឯកសារបានទេ", "Could not create the report file"],
   totalUsers: ["អ្នកប្រើប្រាស់សរុប", "Registered users"],
   activeUsers: ["គណនីបានបើក", "Enabled accounts"],
-  totalInvitations: ["ធៀបការក្នុងរយៈពេល", "Invitations in period"],
+  totalInvitations: ["សំបុត្រអញ្ចើញក្នុងរយៈពេល", "Invitations in period"],
   totalGuests: ["ភ្ញៀវក្នុងក្រុមកម្មវិធី", "Guests in event cohort"],
   totalRsvps: ["ចម្លើយពីភ្ញៀវ", "Guest-linked responses"],
   totalCheckIns: ["ភ្ញៀវបានចូល", "Checked-in guests"],

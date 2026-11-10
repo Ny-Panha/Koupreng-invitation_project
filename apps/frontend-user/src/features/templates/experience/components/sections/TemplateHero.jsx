@@ -35,6 +35,7 @@ export default function TemplateHero({ content, onOpen }) {
             lower.includes("wedding invitation") ||
             lower.includes("cover-") ||
             lower === "គំរូធៀបការ" ||
+            lower === "គំរូសំបុត្រអញ្ចើញ" ||
             lower === "គំរូសន្លឹកការ"
         );
     };

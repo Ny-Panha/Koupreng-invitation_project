@@ -18,7 +18,7 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
       <nav aria-label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"}>
         {items.map(({ to, icon: Icon, label, exact }) => <div className="admin-dock-item" key={to}><NavLink to={to} end={exact} aria-label={label} onClick={onNavigate}><Icon size={19} aria-hidden="true" /></NavLink><span className="admin-dock-tooltip" aria-hidden="true">{label}</span></div>)}
       </nav>
-      <NavLink className="admin-dock-create admin-icon-button" to="/templates/new" aria-label={en ? "Create invitation template" : "បង្កើតគំរូធៀបការ"} title={en ? "Create invitation template" : "បង្កើតគំរូធៀបការ"}><Plus size={20} aria-hidden="true" /></NavLink>
+      <NavLink className="admin-dock-create admin-icon-button" to="/templates/new" aria-label={en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ចើញ"} title={en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ចើញ"}><Plus size={20} aria-hidden="true" /></NavLink>
     </aside>
     {isMobileOpen && <AdminDialog id="admin-mobile-navigation" label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"} className="admin-navigation-dialog" onClose={onNavigate}>
       <div className="admin-navigation-panel">
@@ -29,7 +29,7 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
           {mobileItems.map(({ to, icon: Icon, label, exact }) => <NavLink key={to} to={to} end={exact} onClick={onNavigate}><Icon size={20} aria-hidden="true" /><span>{label}</span></NavLink>)}
           {!mobileItems.length && <p className="admin-search-empty" role="status">{en ? "No pages found. Try a different page name." : "រកមិនឃើញទំព័រ។ សូមសាកឈ្មោះទំព័រផ្សេងទៀត។"}</p>}
         </nav>
-        <NavLink className="admin-drawer-create" to="/templates/new" onClick={onNavigate}><Plus size={18} aria-hidden="true" />{en ? "Create invitation template" : "បង្កើតគំរូធៀបការ"}</NavLink>
+        <NavLink className="admin-drawer-create" to="/templates/new" onClick={onNavigate}><Plus size={18} aria-hidden="true" />{en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ចើញ"}</NavLink>
       </div>
     </AdminDialog>}
   </>;

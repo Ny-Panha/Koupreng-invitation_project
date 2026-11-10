@@ -230,7 +230,7 @@ ${inviteUrl}`;
   return `💌 ${weddingTitle} ${coupleText ? `${coupleText}\n` : ""}${guestSalutation}
 ចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីមង្គលការរបស់យើងខ្ញុំ។${dateText}${venueText}${noteText}
 
-👉 សូមចុចតំណភ្ជាប់ដើម្បីមើលធៀបការ និង RSVP:
+👉 សូមចុចតំណភ្ជាប់ដើម្បីមើលសំបុត្រអញ្ចើញ និង RSVP:
 ${inviteUrl}`;
 }
 

@@ -83,13 +83,13 @@ export default function PaidTemplatesPage() {
               <span>{uiCopy("សិទ្ធិប្រើប្រាស់បុព្វលាភជារៀងរហូត", "PREMIUM LIFETIME ACCESS")}</span>
             </div>
             <h1 className="paid-header-title">
-              {uiCopy("គំរូធៀបការ", "Invitation templates")} <span className="gold-text">{uiCopy("បានទិញរួច", "Purchased")}</span>
+              {uiCopy("គំរូសំបុត្រអញ្ចើញ", "Invitation templates")} <span className="gold-text">{uiCopy("បានទិញរួច", "Purchased")}</span>
               {templates.length > 0 && (
                 <span className="paid-count-badge">{templates.length} {uiCopy("គំរូ", "templates")}</span>
               )}
             </h1>
             <p className="paid-header-desc">
-              {uiCopy("បញ្ជីគំរូបុព្វលាភដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតធៀបការមង្គលការបានគ្រប់ពេលវេលា។", "Your purchased premium templates. Choose one to start creating an invitation at any time.")}
+              {uiCopy("បញ្ជីគំរូបុព្វលាភដែលអ្នកបានទូទាត់ប្រាក់ជោគជ័យ។ អ្នកអាចជ្រើសរើសដើម្បីចាប់ផ្តើមបង្កើតសំបុត្រអញ្ចើញមង្គលការបានគ្រប់ពេលវេលា។", "Your purchased premium templates. Choose one to start creating an invitation at any time.")}
             </p>
           </div>
 
@@ -120,7 +120,7 @@ export default function PaidTemplatesPage() {
               </div>
               <h2 className="paid-empty-title">{uiCopy("មិនទាន់មានគំរូដែលបានទិញនៅឡើយទេ", "No purchased templates yet")}</h2>
               <p className="paid-empty-desc">
-                {uiCopy("លោកអ្នកមិនទាន់មានគំរូបុព្វលាភណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស", "You have no premium templates yet. Choose a")} <strong>{uiCopy("គំរូឥតគិតថ្លៃ", "free template")}</strong> {uiCopy("ដើម្បីចាប់ផ្តើមបង្កើតធៀបការភ្លាមៗ ឬជ្រើសរើសទិញ", "to create your invitation immediately, or purchase a")} <strong>{uiCopy("គំរូបុព្វលាភ", "premium template")}</strong> {uiCopy("ខាងក្រោម៖", "below:")}
+                {uiCopy("លោកអ្នកមិនទាន់មានគំរូបុព្វលាភណាមួយឡើយ។ លោកអ្នកអាចជ្រើសរើស", "You have no premium templates yet. Choose a")} <strong>{uiCopy("គំរូឥតគិតថ្លៃ", "free template")}</strong> {uiCopy("ដើម្បីចាប់ផ្តើមបង្កើតសំបុត្រអញ្ចើញភ្លាមៗ ឬជ្រើសរើសទិញ", "to create your invitation immediately, or purchase a")} <strong>{uiCopy("គំរូបុព្វលាភ", "premium template")}</strong> {uiCopy("ខាងក្រោម៖", "below:")}
               </p>
               <Link to="/templates/browse" className="paid-empty-btn">
                 <IoSparkles /> {uiCopy("មើលគំរូទាំងអស់", "Browse all templates")}
@@ -133,7 +133,7 @@ export default function PaidTemplatesPage() {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
                   <div>
                     <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "var(--brand-text, #1e293b)" }}>
-                      {uiCopy("✨ គំរូធៀបការណែនាំសម្រាប់អ្នក", "✨ Suggested invitation templates")}
+                      {uiCopy("✨ គំរូសំបុត្រអញ្ចើញណែនាំសម្រាប់អ្នក", "✨ Suggested invitation templates")}
                     </h3>
                     <p style={{ margin: "4px 0 0", fontSize: "0.8125rem", color: "var(--brand-text-muted, #7a8799)" }}>
                       {uiCopy("ជ្រើសរើសគំរូឥតគិតថ្លៃ ឬគំរូបុព្វលាភដើម្បីចាប់ផ្តើម", "Choose a free or premium template to get started")}
@@ -257,7 +257,7 @@ export default function PaidTemplatesPage() {
                         className="paid-btn-use"
                       >
                         <IoSparkles />
-                        <span>{uiCopy("បង្កើតធៀបការ", "Use template")}</span>
+                        <span>{uiCopy("បង្កើតសំបុត្រអញ្ចើញ", "Use template")}</span>
                         <IoArrowForwardOutline />
                       </Link>
 
