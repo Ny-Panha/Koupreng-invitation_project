@@ -79,7 +79,7 @@ class SeatingLayoutIntegrationTests {
     }
     @Test void existingAssignmentCapacityMoveAndDeleteGuardsRemainAuthoritative() {
         var assignment = new SeatAssignmentRequest(); assignment.setGuestId(guest.getId());assignment.setTableId(table.getId());assignment.setSeatCount(2);
-        var saved = seating.assign(auth,event.getId(),assignment);
+        seating.assign(auth,event.getId(),assignment);
         assertThrows(ApiException.class,()->seating.deleteTable(auth,event.getId(),table.getId()));
         assignment.setSeatCount(4); assertThrows(ApiException.class,()->seating.assign(auth,event.getId(),assignment));
         var second = new EventTableRequest();second.setTableName("Friends");second.setCapacity(3);
