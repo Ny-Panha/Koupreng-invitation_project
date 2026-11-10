@@ -141,6 +141,7 @@ export default function InvitationPreviewPage() {
                         <button
                             type="button"
                             className={`inv-preview-toggle-btn ${viewMode === "phone" ? "is-active" : ""}`}
+                            aria-pressed={viewMode === "phone"}
                             onClick={() => setViewMode("phone")}
                             title={uiCopy("ទិដ្ឋភាពទូរស័ព្ទ", "Phone view")}
                         >
@@ -150,6 +151,7 @@ export default function InvitationPreviewPage() {
                         <button
                             type="button"
                             className={`inv-preview-toggle-btn ${viewMode === "full" ? "is-active" : ""}`}
+                            aria-pressed={viewMode === "full"}
                             onClick={() => setViewMode("full")}
                             title={uiCopy("ទិដ្ឋភាពពេញអេក្រង់", "Full screen view")}
                         >
@@ -161,6 +163,7 @@ export default function InvitationPreviewPage() {
                     <button
                         type="button"
                         className="inv-preview-btn inv-preview-btn--gate"
+                        aria-pressed={isGateOpen}
                         onClick={handleToggleGate}
                         title={isGateOpen ? uiCopy("មើលគម្របសំបុត្រ", "View invitation cover") : uiCopy("បើកមើលធៀបពេញ", "Open full invitation")}
                     >

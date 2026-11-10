@@ -100,13 +100,26 @@
 .dash-wrapper .host-profile-pill { border-radius: 10px; }
 .dash-wrapper .host-profile-name, .dash-wrapper .host-nav-link { color: var(--app-ink); }
 .dash-wrapper .host-profile-avatar { background: var(--app-gold); color: var(--app-canvas); }
-.inv-preview-workspace { background: var(--app-canvas); }
+.inv-preview-workspace { background: var(--app-canvas); min-height: 100vh; }
 .inv-preview-header { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
-.inv-preview-header :is(.inv-preview-title,.inv-preview-back-btn,.inv-preview-toggle-btn) { color: var(--app-ink); }
-.inv-preview-header :is(.inv-preview-back-btn,.inv-preview-view-toggle,.inv-preview-btn) { background: var(--app-subtle); border-color: var(--app-border); }
-.inv-preview-header :is(button,select) { min-height: 44px; }
-:root[data-color-mode=dark] .inv-preview-header { background: var(--app-surface); border-color: var(--app-border); color: var(--app-ink); }
-:root[data-color-mode=dark] .inv-preview-header :is(.inv-preview-title,.inv-preview-toggle-btn,.inv-preview-btn) { color: var(--app-ink); }
+.inv-preview-header .inv-preview-title { color: var(--app-ink); font-weight: 700; }
+.inv-preview-header .inv-preview-back-btn { background: var(--app-subtle); border: 1px solid var(--app-border); color: var(--app-ink); }
+.inv-preview-header .inv-preview-back-btn:hover { background: var(--app-border); color: var(--app-ink); }
+.inv-preview-header .inv-preview-view-toggle { background: var(--app-subtle); border: 1px solid var(--app-border); }
+.inv-preview-header .inv-preview-toggle-btn { color: var(--app-muted); font-weight: 600; }
+.inv-preview-header .inv-preview-toggle-btn:hover { color: var(--app-ink); }
+.inv-preview-header .inv-preview-toggle-btn.is-active { background: #8C6527; color: #ffffff !important; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+.inv-preview-header .inv-preview-btn--gate { background: #FAF5EE; border: 1.5px solid #8C6527; color: #745217 !important; font-weight: 700; }
+.inv-preview-header .inv-preview-btn--gate:hover { background: #8C6527; color: #ffffff !important; }
+.inv-preview-header :is(button,select) { min-height: 40px; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-title { color: #f0f6fc; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-back-btn { background: #21262d; border-color: #30363d; color: #c9d1d9; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-view-toggle { background: #21262d; border-color: #30363d; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-toggle-btn { color: #8b949e; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-toggle-btn:hover { color: #f0f6fc; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-toggle-btn.is-active { background: #D4AF37; color: #0d1117 !important; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-btn--gate { background: rgba(212, 175, 55, 0.16); border-color: #D4AF37; color: #fce8a9 !important; }
+:root[data-color-mode=dark] .inv-preview-header .inv-preview-btn--gate:hover { background: #D4AF37; color: #0d1117 !important; }
 
 /* These features already publish local tokens; bind those roles to the theme. */
 .dash-wrapper .guest-workspace, .guest-form-modal {
@@ -184,12 +197,28 @@
 :root[data-color-mode=dark] .invitation-studio :is(.pe-input,.pe-select,.pe-textarea,.studio-editing-focus,.studio-preview-tools button) { background: var(--app-subtle); border-color: var(--app-control-border); color: var(--app-ink); }
 :root[data-color-mode=dark] .invitation-studio :is(.studio-guide-modes button,.studio-split-controls label,.pe-lang-pill-btn,.pe-preview-live-title,.pe-preview-action-group button,.studio-device-caption) { color: var(--app-muted); }
 :root[data-color-mode=dark] .invitation-studio .pe-preview-column button { color: var(--app-ink); }
-:root[data-color-mode=dark] .dash-wrapper .event-settings :is(h1,legend) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings :is(h1,h2,h3,h4,legend,label,strong,p,summary) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-settings section > :is(h1,h2,h3) { color: var(--app-ink); }
 :root[data-color-mode=dark] .dash-wrapper .event-settings-nav button { background: var(--app-surface); color: var(--app-ink); border-color: var(--app-border); }
 :root[data-color-mode=dark] .dash-wrapper .event-settings-nav button[aria-pressed=true] { background: var(--app-accent-soft); color: var(--app-ink); }
 :root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes { background: var(--app-subtle); border-color: var(--app-border); }
 :root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes button { background: var(--app-surface); color: var(--app-ink); }
 :root[data-color-mode=dark] .dash-wrapper .event-settings .studio-guide-modes button[aria-pressed=true] { background: var(--app-accent-soft); color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .event-card-countdown-tag { background: var(--app-subtle); color: #f1dfb8; border: 1px solid rgba(200, 174, 124, 0.4); }
+:root[data-color-mode=dark] .dash-wrapper .event-card-countdown-tag span { color: #f1dfb8; }
+:root[data-color-mode=dark] .dash-wrapper :is(.guest-status-filters button,.guest-tabs button) { color: var(--app-muted); border-color: var(--app-border); }
+:root[data-color-mode=dark] .dash-wrapper :is(.guest-status-filters button.active,.guest-status-filters button[aria-pressed=true],.guest-tabs button.active) { background: var(--app-accent-soft); color: var(--app-ink); border-color: var(--app-accent); font-weight: 700; }
+:root[data-color-mode=dark] .dash-wrapper .rsvp-count-context { color: #cbd5e1; }
+:root[data-color-mode=dark] .dash-wrapper .workspace-section-heading :is(h1,h2,h3) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper .checkin-table td small { color: #cbd5e1; }
+:root[data-color-mode=dark] .dash-wrapper :is(.delivery-table-card td strong, td[data-label*="ភ្ញៀវ"] strong) { color: var(--app-ink); }
+:root[data-color-mode=dark] .dash-wrapper :is(.media-asset-body h2,.media-workspace h2) { color: var(--app-ink); }
+:root[data-color-mode=dark] .k-loading-btn > span { color: var(--app-on-accent); }
+:root[data-color-mode=dark] .dash-wrapper .profile-page strong { color: var(--app-ink); }
+:root[data-color-mode=dark] .enterprise-eyebrow { color: #d4b572; }
+:root[data-color-mode=dark] .notif-meta > span { color: #cbd5e1; }
+:root[data-color-mode=dark] :is(.k-org-breadcrumb-link span,.k-org-card a span) { color: var(--app-ink); }
+:root[data-color-mode=dark] .financial-report-page table thead th { color: var(--app-ink); background: var(--app-subtle); }
 
 /* Public marketing owns the same light/dark intent, without repainting artwork. */
 :root[data-color-mode=dark] .kp-marketing-shell {

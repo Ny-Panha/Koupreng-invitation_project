@@ -2,6 +2,7 @@ import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, Shield } from "lucide-react";
+import AdminDialog from "../../layouts/components/AdminDialog";
 import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
 import { useResource, useToast } from "../../shared/hooks";
 import { formatDate, readAuth } from "../../shared/utils";
@@ -350,11 +351,12 @@ export default function AdminUsersPage() {
 
       {/* Confirmation Modal */}
       {confirmModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
-          onClick={() => setConfirmModal(null)}
+        <AdminDialog
+          label={confirmModal.action === "deactivate"
+            ? t("users.confirmDeactivateTitle", "Deactivate User")
+            : t("users.confirmActivateTitle", "Activate User")}
+          onClose={() => setConfirmModal(null)}
+          className="w-full max-w-md p-0 rounded-2xl bg-transparent border-none"
         >
           <div
             className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-[#151518]"
@@ -413,7 +415,7 @@ export default function AdminUsersPage() {
               </button>
             </div>
           </div>
-        </div>
+        </AdminDialog>
       )}
 
       <Toast toast={toast} onClose={clear} />

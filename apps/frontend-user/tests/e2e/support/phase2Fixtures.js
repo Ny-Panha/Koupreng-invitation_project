@@ -13,6 +13,7 @@ export async function installPhase2Fixtures(page, { anonymous = false } = {}) {
   });
   await page.route("**/api/**", async route => {
     const request = route.request(), url = new URL(request.url()), path = url.pathname;
+    if (!path.startsWith("/api/")) return route.fallback();
     const reply = (data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify({ data }) });
     if (["/api/auth/login", "/api/auth/register"].includes(path) && request.method() === "POST") {
       // AuthController returns AuthResponse directly, unlike enveloped catalog DTOs.

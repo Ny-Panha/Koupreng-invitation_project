@@ -403,6 +403,8 @@ export default function AdminTemplatesPage() {
           <div className="flex items-center gap-2 flex-wrap">
             {/* Category Select */}
             <select
+              id="template-category-filter"
+              aria-label={lang === "en" ? "Filter by category" : "ចម្រាញ់តាមប្រភេទ"}
               className="py-2 px-3 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:border-amber-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200"
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
@@ -418,6 +420,8 @@ export default function AdminTemplatesPage() {
 
             {/* Type Select (Free / Premium) */}
             <select
+              id="template-type-filter"
+              aria-label={lang === "en" ? "Filter by pricing type" : "ចម្រាញ់តាមតម្លៃ"}
               className="py-2 px-3 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:border-amber-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200"
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
@@ -429,6 +433,8 @@ export default function AdminTemplatesPage() {
 
             {/* Status Select */}
             <select
+              id="template-status-filter"
+              aria-label={lang === "en" ? "Filter by status" : "ចម្រាញ់តាមស្ថានភាព"}
               className="py-2 px-3 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:border-amber-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}

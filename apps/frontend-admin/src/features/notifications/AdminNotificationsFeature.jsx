@@ -1,5 +1,6 @@
 import { RefreshStatus } from "../../shared/ui/AdminSkeleton";
 import { useMemo, useState } from "react";
+import AdminDialog from "../../layouts/components/AdminDialog";
 import {
   Bell,
   Send,
@@ -444,13 +445,12 @@ export default function AdminNotificationsPage() {
 
       {/* Broadcast Confirmation Modal */}
       {showBroadcastModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="broadcast-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+        <AdminDialog
+          label={t("notifications.broadcastConfirmTitle", "Confirm Broadcast Announcement")}
+          onClose={() => setShowBroadcastModal(false)}
+          className="w-full max-w-md p-0 rounded-2xl bg-transparent border-none"
         >
-          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 shadow-xl space-y-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                 <AlertTriangle className="h-5 w-5" />
@@ -526,7 +526,7 @@ export default function AdminNotificationsPage() {
               </button>
             </div>
           </div>
-        </div>
+        </AdminDialog>
       )}
 
       {/* History & Status Table Section */}

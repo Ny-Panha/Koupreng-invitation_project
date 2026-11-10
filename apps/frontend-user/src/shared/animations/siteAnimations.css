@@ -97,7 +97,8 @@
 
 .kp-reveal.kp-reveal-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
+  transform: none;
+  will-change: auto;
 }
 
 .tp-card,

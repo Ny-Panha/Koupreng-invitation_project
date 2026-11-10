@@ -13,6 +13,7 @@ export async function installBatch11Admin(page, { role = "ADMIN", lang = "en", e
   }, { user, lang, token: fixtureToken, expired, customerSessionOnly });
   await page.route("**/api/**", async route => {
     const request = route.request(), pathname = new URL(request.url()).pathname;
+    if (!pathname.startsWith("/api/")) return route.fallback();
     const reply = (data, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify({ data }) });
     if (request.method() !== "GET") {
       writes.push({ path: pathname, body: request.postDataJSON() });

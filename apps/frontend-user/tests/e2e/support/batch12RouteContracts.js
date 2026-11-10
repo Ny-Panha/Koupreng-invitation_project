@@ -54,6 +54,7 @@ export async function installRouteContractFixtures(page, contract, {lang='en'}={
   const reply = (route,data,status=200)=>route.fulfill({status,json:{data}});
   await page.route('**/api/**',async route=>{
     const request=route.request(), url=new URL(request.url()), p=url.pathname, method=request.method();
+    if (!p.startsWith('/api/')) return route.fallback();
     if (method!=='GET') {writes.push({method,path:p}); return route.fulfill({status:405,json:{message:'Read-only route smoke rejects mutations'}});}
     if (p.endsWith('/i18n/messages')) return reply(route,{messages:{}});
     // The served admin preview embeds the real user renderer and its catalog provider.
@@ -152,7 +153,11 @@ export async function assertRouteContract(page, contract, state) {
       await heading(copy('Bring your event together','បង្កើតកម្មវិធីរបស់អ្នក'));
       const title = page.locator('#event-title').first();
       if (!await title.isVisible()) {
-        const next = page.getByRole('button',{name:copy('Next','បន្ទាប់'),exact:true}).or(page.getByRole('button',{name:copy('Next: Event essentials','បន្ទាប់: ព័ត៌មានលម្អិត')})).first();
+        const next = page.getByRole('button',{name:copy('Next','បន្ទាប់'),exact:true})
+          .or(page.getByRole('button',{name:copy('Next: Event essentials','បន្ទាប់: ព័ត៌មានលម្អិត')}))
+          .or(page.getByRole('button',{name:'បន្ត',exact:true}))
+          .or(page.getByRole('button',{name:/ទៅកាន់ព័ត៌មានកម្មវិធី/}))
+          .first();
         if (await next.isVisible()) await next.click();
       }
       await visible('#event-title');

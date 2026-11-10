@@ -617,6 +617,8 @@ export default function AdminPackagesPage() {
           </div>
 
           <select
+            id="package-status-filter"
+            aria-label={t("packages.statusFilterLabel", lang === "en" ? "Filter by package status" : "ចម្រាញ់តាមស្ថានភាពកញ្ចប់")}
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="select text-xs"

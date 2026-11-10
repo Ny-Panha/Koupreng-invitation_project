@@ -1,5 +1,6 @@
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { ScrollReveal } from "../../shared/ui/ScrollReveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -227,9 +228,11 @@ const VenuesPage = () => {
         </div>
 
         {/* Venue Detail Modal */}
-        <AnimatePresence>
-          {selectedVenue && (
-            <div className="venue-modal-backdrop" onClick={handleCloseVenue}>
+        {typeof document !== "undefined" &&
+          createPortal(
+            <AnimatePresence>
+              {selectedVenue && (
+                <div className="venue-modal-backdrop" onClick={handleCloseVenue}>
               <motion.div
                 ref={dialogRef}
                 role="dialog"
@@ -302,7 +305,9 @@ const VenuesPage = () => {
               </motion.div>
             </div>
           )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
       </section>
 
       <style>{`
@@ -349,7 +354,7 @@ const VenuesPage = () => {
         .sub-title { 
           font-size: 11px; 
           font-weight: 800; 
-          color: #B0926A; 
+          color: #745217; 
           letter-spacing: 4px; 
           display: block;
           margin-bottom: 10px;
@@ -436,10 +441,10 @@ const VenuesPage = () => {
         .venue-tags { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; z-index: 5; }
         .tag { 
           background: white; 
-          color: #B0926A; 
+          color: #745217; 
           padding: 6px 15px; 
           border-radius: 50px; 
-          font-size: 10px; 
+          font-size: 11px; 
           font-weight: 800; 
           box-shadow: 0 4px 10px rgba(0,0,0,0.1);
           text-transform: uppercase;
@@ -509,7 +514,8 @@ const VenuesPage = () => {
           border-radius: 28px;
           max-width: 580px;
           width: 100%;
-          max-height: 90vh;
+          max-height: min(90vh, 90dvh);
+          margin: auto;
           overflow-y: auto;
           box-shadow: 0 25px 60px rgba(0,0,0,0.3);
           border: 1px solid rgba(176, 146, 106, 0.3);
@@ -519,13 +525,15 @@ const VenuesPage = () => {
           top: 16px;
           right: 16px;
           z-index: 10;
-          width: 38px;
-          height: 38px;
+          width: 44px;
+          height: 44px;
+          min-width: 44px;
+          min-height: 44px;
           border-radius: 50%;
-          background: rgba(0, 0, 0, 0.55);
+          background: rgba(0, 0, 0, 0.7);
           color: #fff;
-          border: none;
-          font-size: 16px;
+          border: 2px solid rgba(255, 255, 255, 0.25);
+          font-size: 18px;
           font-weight: 700;
           cursor: pointer;
           display: flex;
@@ -534,7 +542,7 @@ const VenuesPage = () => {
           transition: 0.2s;
         }
         .venue-modal-close:hover {
-          background: rgba(0, 0, 0, 0.85);
+          background: rgba(0, 0, 0, 0.9);
           transform: scale(1.08);
         }
         .venue-modal-image-wrapper {
@@ -562,7 +570,7 @@ const VenuesPage = () => {
         .venue-modal-kicker {
           font-size: 11px;
           font-weight: 800;
-          color: #B0926A;
+          color: #745217;
           letter-spacing: 0.08em;
           text-transform: uppercase;
         }
@@ -594,7 +602,7 @@ const VenuesPage = () => {
         .venue-modal-meta-item small {
           display: block;
           font-size: 11px;
-          color: #888;
+          color: #4b5563;
         }
         .venue-modal-meta-item strong {
           font-size: 14px;

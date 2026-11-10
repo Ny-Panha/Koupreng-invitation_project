@@ -1,6 +1,7 @@
 import { RefreshStatus } from '../../shared/ui/AdminSkeleton';
 import { useMemo, useState } from "react";
 import { ShieldAlert } from "lucide-react";
+import AdminDialog from "../../layouts/components/AdminDialog";
 import { Loading, ErrorState, Empty, Toast } from "../../shared/ui";
 import { useResource, useToast } from "../../shared/hooks";
 import { formatDate } from "../../shared/utils";
@@ -263,12 +264,10 @@ export default function AdminPaymentsPage() {
 
       {/* Manual Payment Verification Modal */}
       {verifyingPayment && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="verify-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs"
-          onClick={() => !isSubmitting && setVerifyingPayment(null)}
+        <AdminDialog
+          label={lang === "en" ? "Manual Payment Verification" : "ផ្ទៀងផ្ទាត់ការទូទាត់ដោយដៃ"}
+          onClose={() => !isSubmitting && setVerifyingPayment(null)}
+          className="w-full max-w-lg p-0 rounded-2xl bg-transparent border-none"
         >
           <div
             className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-[#151518]"
@@ -373,7 +372,7 @@ export default function AdminPaymentsPage() {
               </div>
             </form>
           </div>
-        </div>
+        </AdminDialog>
       )}
 
       <Toast toast={toast} onClose={clear} />

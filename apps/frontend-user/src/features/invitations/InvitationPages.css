@@ -608,9 +608,9 @@
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
-    background: rgba(200, 174, 124, 0.14);
-    border: 1px solid rgba(200, 174, 124, 0.36);
-    color: #e8d3a2;
+    background: #8C6527;
+    border: 1px solid #745217;
+    color: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     transition: all 0.18s ease;
@@ -618,11 +618,11 @@
 }
 
 .inv-preview-btn--gate:hover {
-    background: rgba(200, 174, 124, 0.26);
-    border-color: rgba(200, 174, 124, 0.6);
+    background: #745217;
+    border-color: #5c3e0e;
     color: #ffffff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(200, 174, 124, 0.22);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 .inv-preview-btn--gate:active {
@@ -673,8 +673,8 @@
 }
 
 .inv-preview-toggle-btn.is-active {
-    background: rgba(200, 174, 124, 0.22);
-    color: #f1dfb8;
+    background: #8C6527;
+    color: #ffffff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 

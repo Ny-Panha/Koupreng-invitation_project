@@ -1,5 +1,6 @@
 import { RefreshStatus } from "../../shared/ui/AdminSkeleton";
 import { useMemo, useState, useEffect } from "react";
+import AdminDialog from "../../layouts/components/AdminDialog";
 import {
   FileText,
   Search,
@@ -350,11 +351,10 @@ export default function AdminSystemLogsPage() {
 
       {/* Detail Inspection Drawer / Dialog */}
       {activeLog && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="audit-drawer-title"
-          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-slate-200 bg-white shadow-2xl transition-transform dark:border-zinc-800 dark:bg-zinc-900 sm:max-w-xl"
+        <AdminDialog
+          label={`${t("systemLogs.drawerTitle", "Audit Log Entry")} #${activeLog.id}`}
+          onClose={() => setActiveLog(null)}
+          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col p-0 border-l border-slate-200 bg-white shadow-2xl transition-transform dark:border-zinc-800 dark:bg-zinc-900 sm:max-w-xl"
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-zinc-800">
@@ -496,7 +496,7 @@ export default function AdminSystemLogsPage() {
               {lang === "en" ? "Close" : "បិទ"}
             </button>
           </div>
-        </div>
+        </AdminDialog>
       )}
     </div>
   );

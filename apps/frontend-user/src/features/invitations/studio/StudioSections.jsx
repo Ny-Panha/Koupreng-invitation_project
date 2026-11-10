@@ -29,7 +29,7 @@ export default function StudioSections({ sections, active, onChange, english }) 
         {STUDIO_TABS.map(tab => <option key={tab.id} value={tab.id}>{tab.labels[english ? 1 : 0]}</option>)}
       </select>
     </label>
-    <div className="studio-section-list" role="tablist" aria-orientation="vertical">
+    <div className="studio-section-list">
       {STUDIO_TABS.map((tab, index) => {
         const Icon = ICONS[index];
         const isCurrent = current.id === tab.id;
