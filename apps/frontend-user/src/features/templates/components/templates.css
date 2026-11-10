@@ -611,3 +611,136 @@
   .kp-collection .kp-design-actions svg { flex: none; }
 }
 @media (prefers-reduced-motion: reduce) { .kp-design-media > img { transition: none; } .kp-design-media:hover > img { transform: none; } }
+
+/* ==========================================================================
+   Phase 06 Premium Marketplace Modernization Styles
+   ========================================================================== */
+.tp-card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.tp-card-badge--premium {
+  background: linear-gradient(135deg, rgba(195, 162, 107, 0.95), rgba(184, 134, 11, 0.95));
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.tp-card-badge--free {
+  background: rgba(36, 87, 64, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.tp-card-badge--demo {
+  background: rgba(75, 85, 99, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.kp-design-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.tp-card-lang-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 6px;
+  background: rgba(176, 146, 106, 0.12);
+  color: #8b6914;
+  border: 1px solid rgba(176, 146, 106, 0.25);
+}
+
+.tp-controls-subrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.tp-price-filter-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tp-price-filter-row .tp-filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kp-muted, #5e6f66);
+}
+
+.tp-price-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--kp-surface, #ffffff);
+  border: 1px solid var(--kp-border, #e3ded5);
+  color: var(--kp-ink, #1f2b24);
+  transition: all 0.2s ease;
+}
+
+.tp-price-pill:hover {
+  background: #f7efe2;
+  border-color: var(--kp-gold, #c3a26b);
+}
+
+.tp-price-pill.is-active,
+.tp-price-pill[aria-pressed="true"] {
+  background: var(--kp-emerald, #245740);
+  border-color: var(--kp-emerald, #245740);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(36, 87, 64, 0.2);
+}
+
+.kp-action-use {
+  background: linear-gradient(135deg, #245740 0%, #1a3f2e 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(36, 87, 64, 0.25);
+}
+
+.kp-action-use:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(36, 87, 64, 0.35);
+}
+
+.kp-action-preview {
+  background: var(--kp-surface, #ffffff);
+  color: var(--kp-ink, #1f2b24) !important;
+  border: 1px solid var(--kp-border, #e3ded5) !important;
+}
+
+.kp-action-preview:hover {
+  background: #fdfaf4;
+  border-color: var(--kp-gold, #c3a26b) !important;
+}
+

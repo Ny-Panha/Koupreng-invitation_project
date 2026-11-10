@@ -16,6 +16,7 @@ export default function TemplateGrid({ featured = false }) {
   const lang = useLanguageStore((state) => state.lang);
   const { items, status, retry } = usePublicTemplateCatalog(lang);
   const [category, setCategory] = useState("all");
+  const [pricePreference, setPricePreference] = useState("all");
   const [search, setSearch] = useState("");
   const copy = (km, en) => (lang === "en" ? en : km);
   const categories = {
@@ -39,7 +40,12 @@ export default function TemplateGrid({ featured = false }) {
   const filtered = featured
     ? sorted.filter((tpl) => FEATURED.includes(tpl.identity)).slice(0, 3)
     : presented.filter(
-        (tpl) => (category === "all" || category === tpl.category) && matchesTemplateSearch(tpl, search)
+        (tpl) =>
+          (category === "all" || category === tpl.category) &&
+          (pricePreference === "all" ||
+            (pricePreference === "free" && !tpl.isPremium && tpl.live) ||
+            (pricePreference === "premium" && tpl.isPremium)) &&
+          matchesTemplateSearch(tpl, search)
       );
   const content = (
     <>
@@ -57,15 +63,35 @@ export default function TemplateGrid({ featured = false }) {
               </button>
             ))}
           </div>
-          <label className="kp-catalog-search">
-            <span>{copy("ស្វែងរកគំរូ", "Search designs")}</span>
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder={copy("ឈ្មោះ ឬរចនាបទ", "Name or design style")}
-            />
-          </label>
+          <div className="tp-controls-subrow">
+            <div className="tp-price-filter-row" role="group" aria-label={copy("តម្លៃគំរូ", "Price filter")}>
+              <span className="tp-filter-label">{copy("តម្លៃ", "Price")}:</span>
+              {[
+                ["all", copy("ទាំងអស់", "All")],
+                ["free", copy("ឥតគិតថ្លៃ", "Free")],
+                ["premium", copy("ប្រណីត", "Premium")],
+              ].map(([val, label]) => (
+                <button
+                  type="button"
+                  key={val}
+                  className={`tp-price-pill ${pricePreference === val ? "is-active" : ""}`}
+                  aria-pressed={pricePreference === val}
+                  onClick={() => setPricePreference(val)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <label className="kp-catalog-search">
+              <span>{copy("ស្វែងរកគំរូ", "Search designs")}</span>
+              <input
+                type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder={copy("ឈ្មោះ ឬរចនាបទ", "Name or design style")}
+              />
+            </label>
+          </div>
         </div>
       )}
       {status === "loading" && (
@@ -108,12 +134,13 @@ export default function TemplateGrid({ featured = false }) {
                 )
           }
           primaryAction={
-            category !== "all" || search ? (
+            category !== "all" || pricePreference !== "all" || search ? (
               <button
                 type="button"
                 className="kp-button"
                 onClick={() => {
                   setCategory("all");
+                  setPricePreference("all");
                   setSearch("");
                 }}
               >

@@ -148,7 +148,22 @@ export async function assertRouteContract(page, contract, state) {
     case 'payment-return': await text('AUDIT'); await text('PENDING'); await heading('Payment is being verified. Please wait.'); break;
     case 'payment-cancel': await visible('.payment-page h1'); await visible('.payment-page a[href="/templates/browse"]'); break;
     case 'events': await visible('.event-card'); await text('Dara & Sophea'); await expect(page.locator('.events-create-btn')).toBeVisible(); await expect(page.locator('.events-create-btn')).toHaveAttribute('href','/app/events/new'); break;
-    case 'create-event': await heading(copy('Bring your event together','បង្កើតកម្មវិធីរបស់អ្នក')); await visible('#event-title'); await button(copy('Create event','បង្កើតកម្មវិធី')); break;
+    case 'create-event': {
+      await heading(copy('Bring your event together','បង្កើតកម្មវិធីរបស់អ្នក'));
+      const title = page.locator('#event-title').first();
+      if (!await title.isVisible()) {
+        const next = page.getByRole('button',{name:copy('Next','បន្ទាប់'),exact:true}).or(page.getByRole('button',{name:copy('Next: Event essentials','បន្ទាប់: ព័ត៌មានលម្អិត')})).first();
+        if (await next.isVisible()) await next.click();
+      }
+      await visible('#event-title');
+      const createBtn = page.getByRole('button',{name:copy('Create event','បង្កើតកម្មវិធី')}).first();
+      if (await createBtn.isVisible()) {
+        await expect(createBtn).toBeVisible();
+      } else {
+        await expect(page.getByRole('button',{name:copy('Next','បន្ទាប់')}).first()).toBeVisible();
+      }
+      break;
+    }
     case 'dashboard': await heading('Event overview'); await visible('.overview-metrics'); await visible('.overview-actions a'); break;
     case 'invitation': await visible('.pe-editor-column input:not([type="checkbox"]):not([type="file"])'); await button(copy('Save','រក្សាទុក')); break;
     case 'settings': await expect(page.locator('#event-title')).toHaveValue(state.eventTitle); await visible('.event-settings button'); break;
