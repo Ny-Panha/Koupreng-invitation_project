@@ -68,7 +68,7 @@ export default function QrPage({ invitationId: propInvitationId, guestId: propGu
             <p>
               {isGuestQr
                 ? (en ? "Linked to specific guest record. Reuses authorized check-in token." : "ភ្ជាប់ជាមួយទិន្នន័យភ្ញៀវជាក់លាក់។ ប្រើប្រាស់សម្រាប់ផ្ទៀងផ្ទាត់វត្តមាន។")
-                : (en ? "Directs scanning guests to the official public invitation page." : "នាំភ្ញៀវដែលស្កេនទៅកាន់ទំព័រសំបុត្រអញ្ចើញជាសាធារណៈផ្លូវការ។")}
+                : (en ? "Directs scanning guests to the official public invitation page." : "នាំភ្ញៀវដែលស្កេនទៅកាន់ទំព័រសំបុត្រអញ្ជើញជាសាធារណៈផ្លូវការ។")}
             </p>
           </div>}>
             <QrDownloadButton onDownload={downloadPng} downloading={downloading} disabled={!qrData?.qrCodeDataUri} />

@@ -941,7 +941,7 @@ export default function EventCreatePage() {
                         navigate(`${eventPath(pendingEventId)}/invitation?mode=guided`, { replace: true });
                       }}
                     >
-                      <span>{copy("បន្តទៅកាន់សំបុត្រអញ្ចើញ", "Continue to invitation")}</span>
+                      <span>{copy("បន្តទៅកាន់សំបុត្រអញ្ជើញ", "Continue to invitation")}</span>
                     </button>
                   </div>
                 </div>

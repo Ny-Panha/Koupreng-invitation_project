@@ -51,7 +51,7 @@ const EMPTY_TEMPLATE = {
 };
 
 function formatTemplateDescription(description) {
-  if (!description) return "គំរូសំបុត្រអញ្ចើញមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+  if (!description) return "គំរូសំបុត្រអញ្ជើញមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
   const str = String(description).trim();
   if (str.startsWith("{") && str.endsWith("}")) {
     try {
@@ -60,15 +60,15 @@ function formatTemplateDescription(description) {
         return parsed.blessingMessage.trim();
       }
       if (parsed.invitationTitle && typeof parsed.invitationTitle === "string" && parsed.invitationTitle.trim()) {
-        return `${parsed.invitationTitle} — គំរូសំបុត្រអញ្ចើញឌីជីថលបែបប្រណិត`;
+        return `${parsed.invitationTitle} — គំរូសំបុត្រអញ្ជើញឌីជីថលបែបប្រណិត`;
       }
       if (parsed.groomName && parsed.brideName) {
-        return `គំរូសំបុត្រអញ្ចើញមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
+        return `គំរូសំបុត្រអញ្ជើញមង្គលការ ${parsed.groomName} & ${parsed.brideName}`;
       }
       if (parsed.description && typeof parsed.description === "string" && parsed.description.trim()) {
         return parsed.description.trim();
       }
-      return "គំរូសំបុត្រអញ្ចើញមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
+      return "គំរូសំបុត្រអញ្ជើញមង្គលការបែបប្រពៃណីខ្មែរ រចនាបទស្រស់ស្អាតនិងទំនើប";
     } catch {
       return str;
     }
@@ -224,7 +224,7 @@ export default function AdminTemplatesPage() {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     if (!formData.name.trim()) {
-      show("សូមបញ្ចូលឈ្មោះគំរូសំបុត្រអញ្ចើញ", "error");
+      show("សូមបញ្ចូលឈ្មោះគំរូសំបុត្រអញ្ជើញ", "error");
       return;
     }
 
@@ -237,11 +237,11 @@ export default function AdminTemplatesPage() {
             t.id === editingTemplate.id ? { ...t, ...formData, ...updated } : t
           )
         );
-        show("បានកែប្រែគំរូសំបុត្រអញ្ចើញជោគជ័យ ✓");
+        show("បានកែប្រែគំរូសំបុត្រអញ្ជើញជោគជ័យ ✓");
       } else {
         const created = await adminManagementService.createTemplate(formData);
         setData((current) => [created || { id: Date.now(), ...formData }, ...(current || [])]);
-        show("បានបង្កើតគំរូសំបុត្រអញ្ចើញថ្មីជោគជ័យ ✓");
+        show("បានបង្កើតគំរូសំបុត្រអញ្ជើញថ្មីជោគជ័យ ✓");
       }
       handleCloseModal();
     } catch (err) {
@@ -317,7 +317,7 @@ export default function AdminTemplatesPage() {
     try {
       await adminManagementService.deleteTemplate(deleteConfirm.id);
       setData((current) => (current || []).filter((t) => t.id !== deleteConfirm.id));
-      show("បានលុបគំរូសំបុត្រអញ្ចើញរួចរាល់ ✓");
+      show("បានលុបគំរូសំបុត្រអញ្ជើញរួចរាល់ ✓");
       setDeleteConfirm(null);
     } catch (err) {
       show(err?.message || "មិនអាចលុបគំរូនេះបានទេ", "error");
@@ -332,11 +332,11 @@ export default function AdminTemplatesPage() {
       <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <AdminPageHeader
         eyebrow={lang === "en" ? "Catalog & Templates" : "គំរូ & កាតាឡុក"}
-        title={t("nav.templates", "គំរូសំបុត្រអញ្ចើញ")}
+        title={t("nav.templates", "គំរូសំបុត្រអញ្ជើញ")}
         subtitle={
           lang === "en"
             ? "Manage digital invitation templates, packages, and publishing statuses"
-            : "គ្រប់គ្រងគំរូសំបុត្រអញ្ចើញឌីជីថល កំណត់កញ្ចប់សេវា និងស្ថានភាពបង្ហាញជូនអតិថិជន"
+            : "គ្រប់គ្រងគំរូសំបុត្រអញ្ជើញឌីជីថល កំណត់កញ្ចប់សេវា និងស្ថានភាពបង្ហាញជូនអតិថិជន"
         }
         actions={
           <>
@@ -477,7 +477,7 @@ export default function AdminTemplatesPage() {
 
       {/* Main Content Area */}
       {loading ? (
-        <Loading layout="template" label="កំពុងទាញយកបញ្ជីគំរូសំបុត្រអញ្ចើញ..." />
+        <Loading layout="template" label="កំពុងទាញយកបញ្ជីគំរូសំបុត្រអញ្ជើញ..." />
       ) : error && !data ? (
         <ErrorState message={error} onRetry={reload} />
       ) : filteredTemplates.length === 0 ? (
@@ -486,7 +486,7 @@ export default function AdminTemplatesPage() {
             <Palette className="h-7 w-7" />
           </div>
           <h3 className="text-base font-bold text-slate-800 dark:text-zinc-200">
-            រកមិនឃើញគំរូសំបុត្រអញ្ចើញឡើយ
+            រកមិនឃើញគំរូសំបុត្រអញ្ជើញឡើយ
           </h3>
           <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 max-w-sm mx-auto">
             មិនមានគំរូដែលត្រូវនឹងការស្វែងរករបស់អ្នកទេ។ សូមសាកល្បងប្ដូរពាក្យគន្លឹះ ឬបង្កើតគំរូថ្មី។
@@ -652,7 +652,7 @@ export default function AdminTemplatesPage() {
                           setDeleteConfirm(template);
                         }}
                         className="flex h-8 w-8 items-center justify-center rounded-xl border border-rose-200 bg-rose-50/50 text-rose-600 hover:bg-rose-100 hover:border-rose-300 dark:border-rose-900/40 dark:bg-rose-950/20 dark:text-rose-400 dark:hover:bg-rose-950/50 transition-all cursor-pointer"
-                        title="លុបគំរូសំបុត្រអញ្ចើញ (Delete)"
+                        title="លុបគំរូសំបុត្រអញ្ជើញ (Delete)"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -670,7 +670,7 @@ export default function AdminTemplatesPage() {
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="border-b border-slate-100 bg-slate-50/75 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-500">
                 <tr>
-                  <th className="py-3.5 pl-6 pr-3">គំរូសំបុត្រអញ្ចើញ (Template)</th>
+                  <th className="py-3.5 pl-6 pr-3">គំរូសំបុត្រអញ្ជើញ (Template)</th>
                   <th className="px-3 py-3.5">ប្រភេទ (Category)</th>
                   <th className="px-3 py-3.5">កញ្ចប់ (Tier)</th>
                   <th className="px-3 py-3.5">ស្ថានភាព (Status)</th>
@@ -800,7 +800,7 @@ export default function AdminTemplatesPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-2">
-                    <span>{editingTemplate ? "កែប្រែគំរូសំបុត្រអញ្ចើញ" : "បង្កើតគំរូសំបុត្រអញ្ចើញថ្មី (Template Studio)"}</span>
+                    <span>{editingTemplate ? "កែប្រែគំរូសំបុត្រអញ្ជើញ" : "បង្កើតគំរូសំបុត្រអញ្ជើញថ្មី (Template Studio)"}</span>
                     <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                       Live User Preview
                     </span>
@@ -808,7 +808,7 @@ export default function AdminTemplatesPage() {
                   <p className="text-xs text-slate-500 dark:text-zinc-400">
                     {editingTemplate
                       ? `កែប្រែព័ត៌មានសម្រាប់ ID #${editingTemplate.id} (Sync ជាមួយ Frontend User ភ្លាមៗ)`
-                      : "បង្កើតគំរូសំបុត្រអញ្ចើញថ្មីសម្រាប់ដាក់បង្ហាញជូនភ្ញៀវ/User លើគេហទំព័រ"}
+                      : "បង្កើតគំរូសំបុត្រអញ្ជើញថ្មីសម្រាប់ដាក់បង្ហាញជូនភ្ញៀវ/User លើគេហទំព័រ"}
                   </p>
                 </div>
               </div>
@@ -1074,7 +1074,7 @@ export default function AdminTemplatesPage() {
                   </label>
                   <textarea
                     rows={2}
-                    placeholder="ពិពណ៌នាសង្ខេបអំពីទម្រង់ និងរចនាបថនៃគំរូសំបុត្រអញ្ចើញ..."
+                    placeholder="ពិពណ៌នាសង្ខេបអំពីទម្រង់ និងរចនាបថនៃគំរូសំបុត្រអញ្ជើញ..."
                     className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:bg-white focus:border-amber-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -1137,7 +1137,7 @@ export default function AdminTemplatesPage() {
                   {/* Card Content */}
                   <div className="space-y-1.5 text-center">
                     <h4 className="text-sm font-bold text-slate-900 dark:text-zinc-100 truncate">
-                      {formData.name || "ឈ្មោះគំរូសំបុត្រអញ្ចើញ"}
+                      {formData.name || "ឈ្មោះគំរូសំបុត្រអញ្ជើញ"}
                     </h4>
                     <p className="text-[10px] font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wider">
                       {formData.category || "TRADITIONAL"} WEDDING TEMPLATE
@@ -1209,7 +1209,7 @@ export default function AdminTemplatesPage() {
                 <AlertCircle className="h-5 w-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 leading-normal">
-                បញ្ជាក់ការលុបគំរូសំបុត្រអញ្ចើញ
+                បញ្ជាក់ការលុបគំរូសំបុត្រអញ្ជើញ
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">

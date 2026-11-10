@@ -220,7 +220,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
     if (!templateSlug) return <aside className="pe-preview-column" role="alert">{uiCopy("មិនអាចបើកគំរូបានទេ។ សូមផ្ទុកបណ្ណាល័យគំរូឡើងវិញ ដើម្បីយកគំរូដែលបានជ្រើសរើស។", "Template unavailable. Reload the catalog to recover your selected template.")}</aside>;
 
     return (
-        <aside ref={previewRef} className="pe-preview-column" aria-label={uiCopy("មើលធៀបអញ្ជើញជាមុន", "Live invitation preview")}>
+        <aside ref={previewRef} className="pe-preview-column" aria-label={uiCopy("មើលសំបុត្រអញ្ជើញជាមុន", "Live invitation preview")}>
             {!isTest && readyPreview !== previewKey && <div className="studio-preview-recovery" role="status">
                 <p>{slowPreview === previewKey ? uiCopy("មើលជាមុនមិនទាន់ឆ្លើយតប។ ពង្រាងរបស់អ្នកនៅក្នុងផ្ទាំងកែសម្រួល។", "Preview has not responded. Your draft is still in the editor.") : uiCopy("កំពុងបើកពង្រាងមើលជាមុន…", "Loading draft preview…")}</p>
                 {slowPreview === previewKey && <button type="button" onClick={() => setPreviewAttempt(value => value + 1)}>{uiCopy("ផ្ទុកមើលជាមុនម្ដងទៀត", "Reload preview")}</button>}
@@ -239,7 +239,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
                 </div>
 
                 {/* Clean, Full-Width Segmented Control - Easy to click */}
-                <div className="pe-sim-gate-switcher" role="tablist" aria-label={uiCopy("ទិដ្ឋភាពសំបុត្រអញ្ចើញ", "Invitation view")}>
+                <div className="pe-sim-gate-switcher" role="tablist" aria-label={uiCopy("ទិដ្ឋភាពសំបុត្រអញ្ជើញ", "Invitation view")}>
                     <button
                         type="button"
                         role="tab"
@@ -257,7 +257,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
                         aria-selected={isGateOpen}
                         onClick={() => handleSetGate(true)}
                         className={`pe-sim-gate-btn ${isGateOpen ? "is-active" : ""}`}
-                        title={uiCopy("មើលមាតិកាធៀបពេញ", "View full invitation")}
+                        title={uiCopy("មើលមាតិកាសំបុត្រអញ្ជើញពេញ", "View full invitation")}
                     >
                         <Eye size={16} />
                         <span>{en ? "Full invitation" : "មាតិកាពេញ"}</span>
@@ -266,7 +266,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
             </div>
 
             {templateSlug === 'royal-garden-cinematic' && <div className="studio-scene-preview" aria-label={en ? 'Royal scene preview' : 'មើលទិដ្ឋភាពរាជជាមុន'}>
-                <p role="status">{en ? 'Current scene' : 'ទិដ្ឋភាពបច្ចុប្បន្ន'}: {en ? ({ entrance: 'Entrance', video: 'Video', information: 'Information' })[scene] : ({ entrance: 'បើកធៀប', video: 'វីដេអូ', information: 'ព័ត៌មាន' })[scene]}</p>
+                <p role="status">{en ? 'Current scene' : 'ទិដ្ឋភាពបច្ចុប្បន្ន'}: {en ? ({ entrance: 'Entrance', video: 'Video', information: 'Information' })[scene] : ({ entrance: 'បើកសំបុត្រអញ្ជើញ', video: 'វីដេអូ', information: 'ព័ត៌មាន' })[scene]}</p>
                 <div>{[['entrance', 'Preview entrance', 'មើលទំព័របើក'], ['video', 'Preview video scene', 'មើលទិដ្ឋភាពវីដេអូ'], ['information', 'Preview information', 'មើលព័ត៌មាន']].map(([key, english, khmer]) => <button type="button" key={key} disabled={(!isTest && readyPreview !== previewKey) || (key === 'video' && (!videoEntitled || data.preWeddingVideo?.enabled !== true || !data.preWeddingVideo?.videoMediaId))} onClick={() => { broadcastSync(); sendPreview({ type: 'PREVIEW_SCENE', data: { scene: key } }); }}>{en ? english : khmer}</button>)}
                 <button type="button" onClick={() => handleSetGate(false)}>{en ? 'Restart animation' : 'ចាប់ផ្ដើមចលនាឡើងវិញ'}</button></div>
                 {(!videoEntitled || !data.preWeddingVideo?.videoMediaId) && <small>{en ? (!videoEntitled ? 'Video preview requires the owner’s Premium package.' : 'Choose a video in Media & Opening to preview it.') : 'សូមជ្រើសរើសវីដេអូ និងមានកញ្ចប់ Premium ដើម្បីមើលវីដេអូជាមុន។'}</small>}
@@ -318,7 +318,7 @@ export default function LivePhoneSimulator({ data = {}, eventId, catalogVersion 
                             allow="clipboard-write; clipboard-read; autoplay"
                             src={buildPreviewUrl(`/templates/${templateSlug}/preview?embed=true`, previewSession)}
                             className="w-full h-full border-0 bg-zinc-950"
-                            title={en ? "Live User Template Preview" : "មើលគំរូធៀបអញ្ជើញផ្ទាល់"}
+                            title={en ? "Live User Template Preview" : "មើលគំរូសំបុត្រអញ្ជើញផ្ទាល់"}
                             onLoad={() => {
                                 synchronizeLoadedPreview();
                                 if (iframeRef.current?.contentWindow) {

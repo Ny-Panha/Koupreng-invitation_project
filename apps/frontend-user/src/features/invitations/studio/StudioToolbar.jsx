@@ -35,7 +35,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
               feedback.success({
                 id: 'studio-save',
                 title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ',
-                description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែធៀបរបស់អ្នកត្រូវបានរក្សាទុក។',
+                description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។',
               });
             }
           });
@@ -46,13 +46,13 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [saving, blocked, canEdit, studio, english]);
 
-  return <header className="studio-toolbar" aria-label={english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ"}>
+  return <header className="studio-toolbar" aria-label={english ? "Invitation studio" : "ស្ទូឌីយោសំបុត្រអញ្ជើញ"}>
     <button type="button" className="studio-back" onClick={onBack} aria-label={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"} title={english ? "Back to Event" : "ត្រឡប់ទៅកម្មវិធី"}><ArrowLeft size={20} /></button>
     {workspace?.openNavigation && <button type="button" ref={node => workspace.registerNavigationTrigger?.(node)} className="studio-back studio-event-menu" onClick={workspace.openNavigation} aria-label={english ? "Open event navigation" : "បើកម៉ឺនុយកម្មវិធី"} aria-haspopup="dialog" aria-expanded={workspace.navigationOpen} title={english ? "Event navigation" : "មុខងារកម្មវិធី"}><Menu size={20} aria-hidden="true" /></button>}
     <div className="studio-document">
       <BrandLogo variant="icon" className="studio-brand" priority />
       <div className="studio-document-copy">
-        <h1 title={title}>{title || (english ? "Invitation studio" : "រចនាធៀបអញ្ជើញ")}</h1>
+        <h1 title={title}>{title || (english ? "Invitation studio" : "ស្ទូឌីយោសំបុត្រអញ្ជើញ")}</h1>
         <button type="button" className="studio-template-button" disabled={!canEdit} onClick={onTemplate} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
           <Palette size={14} aria-hidden="true" /><span className="pe-template-tag">{templateName}</span>
         </button>
@@ -61,8 +61,8 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     <div className="studio-navbar-preferences"><DisplayPreferences compact /></div>
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} className={studio.phase === "saving" ? "animate-spin" : undefined} aria-hidden="true" />{labels[studio.phase]}</span>
     <StudioActionBar data-keyboard-open={keyboardOpen}>
-      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលជាមុន៖ ធៀបអញ្ជើញ"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
-      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked || !canEdit} title={english ? "Save changes (Ctrl+S)" : "រក្សាទុកការកែប្រែ (Ctrl+S)"} onClick={async () => { if (await studio.flush({ deliberate: true })) feedback.success({ id: 'studio-save', title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ', description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែធៀបរបស់អ្នកត្រូវបានរក្សាទុក។' }); }}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
+      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលសំបុត្រអញ្ជើញជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
+      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked || !canEdit} title={english ? "Save changes (Ctrl+S)" : "រក្សាទុកការកែប្រែ (Ctrl+S)"} onClick={async () => { if (await studio.flush({ deliberate: true })) feedback.success({ id: 'studio-save', title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ', description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។' }); }}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
       {canPublish && canEdit && !published && <button type="button" className="studio-action studio-action--publish" disabled={saving || publishing || blocked} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
         <summary aria-label={english ? "More studio actions" : "ជម្រើសបន្ថែម"}><MoreHorizontal size={20} aria-hidden="true" /></summary>

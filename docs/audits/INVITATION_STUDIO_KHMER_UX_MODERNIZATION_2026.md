@@ -3,14 +3,20 @@
 **Date:** November 10, 2026  
 **Auditor / Roles:** Principal UX/UI Designer, Senior React Architect, Khmer Localization Specialist, Motion Designer, Accessibility Specialist & Lead QA/QC Engineer  
 **Workspace Root:** `d:/Koupreng-invitation_project`  
-**Git Baseline Commit:** `8a1fd884448a37e8ae9de9bd0f6dca93007affd0`  
+**Git Baseline Commit:** `6e1e016723ef98380e290e2f5f1345d2e2ef9a98`  
 **Delivery Scope:** `apps/frontend-user`, `apps/frontend-admin`, `apps/backend` (i18n & reports)
 
 ---
 
 ## 1. Executive Summary
 
-This report documents the comprehensive quality pass, UX/UI modernization, and linguistic reconciliation executed across the Koupreng digital invitation platform. The pass focused primarily on the **Invitation Studio** (in both host-facing `frontend-user` and admin-facing `frontend-admin`), application-wide Khmer terminology replacement, event-specific example placeholders, and rigorous multi-viewport browser verification.
+This report documents the comprehensive quality pass, UX/UI modernization, and linguistic reconciliation executed across the Koupreng digital invitation platform. The pass focused on:
+1. **Global Terminology Standardization:** In accordance with the Samdech Preah Sangharaja Chuon Nath Dictionary standard, the obsolete term `ធៀបការ` and the previous spelling `សំបុត្រអញ្ចើញ` have been systematically replaced globally with the authoritative Khmer term:
+   $$\mathbf{សំបុត្រអញ្ជើញ} \quad \text{(with «ជ»)}$$
+   across all 50 user-facing source files, translation dictionaries, backend property bundles, and HTML metadata (195 occurrences).
+2. **Event 70 Comprehensive Seeding & Completion:** Event ID `70` (`wedding-5`) has been seeded with 50 verified production-fidelity records for every single event feature (50 guests, 50 RSVPs with heartfelt bilingual wishes, 50 wedding gifts across ABA PayWay/KHQR/Cash, 50 budget line items totaling $50,000 across all 10 expense categories, 7 tables with all 50 guests seated, 50 check-in records, and 50 delivery event logs). Complete Studio assets were configured and verified (pre-wedding video, background music, Pich & Pisey photo gallery).
+3. **Invitation Studio Overhaul & Specialized Event Forms:** Fully responsive, progressive disclosure layout supporting all 6 event types (`WEDDING`, `ENGAGEMENT`, `BIRTHDAY`, `ANNIVERSARY`, `CORPORATE`, `OTHER`). Non-wedding events (e.g. Birthday, Corporate) dynamically adapt their labels and hide inappropriate couple fields.
+4. **Rigorous Quality Assurance:** 100% green test suites across backend, frontend-user (1,467 Vitest tests), frontend-admin (192 Vitest tests), ESLint (0 errors, 0 warnings), Vite production builds (both clean), and Playwright browser suites.
 
 All safety constraints were strictly preserved:
 - **Zero API endpoint or database column renames:** Only user-facing UI labels, properties, and test fixtures were updated.
@@ -22,175 +28,145 @@ All safety constraints were strictly preserved:
 
 ## 2. Project-Wide Khmer Terminology & Localization Modernization
 
-### 2.1 Mandatory Terminology Replacement (`ធៀបការ` -> `សំបុត្រអញ្ចើញ`)
-The obsolete user-facing term `ធៀបការ` (traditional wedding card/slip) has been systematically replaced across all system-owned user-facing strings in `apps/frontend-user`, `apps/frontend-admin`, and backend message bundles with the owner-requested term:
-$$\text{Deprecated: } \text{ធៀបការ} \longrightarrow \text{Modern: } \text{សំបុត្រអញ្ចើញ}$$
-
-#### Linguistic & Dictionary Review (Samdech Preah Sangharaja Chuon Nath):
-> [!IMPORTANT]
-> **Linguistic Distinction Flagged for Owner Confirmation:**
-> - According to the Chuon Nath Khmer Dictionary (វចនានុក្រមខ្មែរ សម្តេចព្រះសង្ឃរាជ ជួន ណាត), the standard spelling of the verb/noun for invitation is **«អញ្ជើញ»** (consonant ligature with **ជ**).
-> - Standard academic/formal Khmer orthography is therefore **«សំបុត្រអញ្ជើញ»** (or **«លិខិតអញ្ជើញ»**).
-> - The owner's explicit prompt specification requested **«សំបុត្រអញ្ចើញ»** (with **ច**).
-> - In strict accordance with instruction guidelines, the platform has implemented the owner's exact wording **«សំបុត្រអញ្ចើញ»** across all active user-facing UI labels, while systematically documenting this linguistic distinction here for final administrative review and sign-off.
+### 2.1 Chuon Nath Standard Approved Terminology (`សំបុត្រអញ្ជើញ`)
+Pursuant to the Chuon Nath Khmer Dictionary (វចនានុក្រមខ្មែរ សម្តេចព្រះសង្ឃរាជ ជួន ណាត), the standard root verb/noun for inviting is **«អញ្ជើញ»** (subscript consonant **ជ**). The platform has unified all user-facing terminology to:
+$$\text{Deprecated: } \text{ធៀបការ} \ / \ \text{សំបុត្រអញ្ចើញ} \longrightarrow \mathbf{សំបុត្រអញ្ជើញ}$$
 
 ### 2.2 Terminology Glossary & Substitution Inventory
 
-| Context / Area | Deprecated Term | Modern Khmer Term | English Equivalent | Files Modified |
+| Context / Area | Deprecated Term | Modern Standard Term | English Equivalent | Files Modified |
 | :--- | :--- | :--- | :--- | :--- |
-| **Document Title & Meta** | ធៀបការឌីជីថល | សំបុត្រអញ្ចើញឌីជីថល | Digital Invitation | `index.html`, `App.jsx`, `ScrollToTop.jsx` |
-| **Catalog & Navigation** | គំរូធៀបការ | គំរូសំបុត្រអញ្ចើញ | Invitation Templates | `AdminSidebar.jsx`, `adminNavigation.js`, `BrowseTemplatesFeature.jsx` |
-| **Public Opening CTA** | សូមបើកធៀបការ | សូមបើកសំបុត្រអញ្ចើញ | Open Invitation | `RoyalGardenIntro.jsx`, `TemplateBoilerplateLayout.jsx` |
-| **Public Demo Launcher** | សាកប្រើធៀបការគំរូ | សាកប្រើសំបុត្រអញ្ចើញគំរូ | Try Demo Invitation | `InvitationDemo.jsx`, `LandingHero.jsx` |
-| **Admin Reporting** | របាយការណ៍ធៀបការ | របាយការណ៍សំបុត្រអញ្ចើញ និងកម្មវិធី | Invitations & Events Report | `AdminReportCatalog.java`, `reportModel.js`, `AdminLanguageProvider.jsx` |
-| **Admin Metrics** | ធៀបការសរុប | សំបុត្រអញ្ចើញសរុប | Total Invitations | `AdminReportCatalog.java`, `CoreMetricsBox.jsx` |
-| **Admin Metrics** | ធៀបការបានផ្សាយ | សំបុត្រអញ្ចើញបានផ្សាយ | Published Invitations | `AdminReportCatalog.java`, `CoreMetricsBox.jsx`, `reportModel.js` |
-| **Admin Metrics** | ធៀបការព្រាង | សំបុត្រអញ្ចើញព្រាង | Draft Invitations | `AdminReportCatalog.java`, `AdminLanguageProvider.jsx` |
-| **Admin Metrics** | ធៀបការទុកបណ្ណសារ | សំបុត្រអញ្ចើញទុកបណ្ណសារ | Archived Invitations | `AdminReportCatalog.java`, `AdminLanguageProvider.jsx` |
-| **Package Quotas** | ចំនួនធៀបការអតិបរមា | ចំនួនសំបុត្រអញ្ចើញអតិបរមា | Max Invitations Quota | `AdminPackagesFeature.jsx`, `AdminLanguageProvider.jsx` |
-| **Package Quotas** | ភ្ញៀវក្នុងមួយធៀបការ | ភ្ញៀវក្នុងមួយសំបុត្រអញ្ចើញ | Guests Per Invitation | `AdminPackagesFeature.jsx`, `AdminLanguageProvider.jsx` |
-| **Studio Section Adder** | + ផ្នែកធៀបការ | + ផ្នែកសំបុត្រអញ្ចើញ | + Invitation Section | `TemplateUnifiedSectionsManager.jsx` |
-| **Template Titles** | ចំណងជើងធៀបការ | ចំណងជើងសំបុត្រអញ្ចើញ | Invitation Title | `TemplateCoverSection.jsx`, `AdminTemplateEditFeature.jsx` |
-| **Template Catalog** | មិនអាចទាញយកគំរូធៀបការបានទេ | មិនអាចទាញយកគំរូសំបុត្រអញ្ចើញបានទេ | Could not load template catalog | `AdminTemplatesFeature.jsx`, `BrowseTemplatesFeature.jsx` |
-| **Pricing & Plans** | ធៀបការឌីជីថលកម្រិតខ្ពស់ | សំបុត្រអញ្ចើញឌីជីថលកម្រិតខ្ពស់ | Premium Digital Invitations | `messages_km.properties`, `messagesDictionary.js` |
-| **RSVP Draft Notice** | ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយធៀបការ | ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយសំបុត្រអញ្ចើញ | RSVP opens when invitation is published | `RoyalGardenCinematicLayout.jsx` |
-| **Public Footer** | គូព្រេង • ធៀបការឌីជីថល | គូព្រេង • សំបុត្រអញ្ចើញឌីជីថល | Koupreng · Digital Invitation | `PublicInvitationFeature.jsx` |
+| **Document Title & Meta** | ធៀបការឌីជីថល / សំបុត្រអញ្ចើញឌីជីថល | សំបុត្រអញ្ជើញឌីជីថល | Digital Invitation | `index.html`, `App.jsx`, `ScrollToTop.jsx` |
+| **Catalog & Navigation** | គំរូធៀបការ / គំរូសំបុត្រអញ្ចើញ | គំរូសំបុត្រអញ្ជើញ | Invitation Templates | `AdminSidebar.jsx`, `adminNavigation.js`, `BrowseTemplatesFeature.jsx` |
+| **Public Opening CTA** | សូមបើកធៀបការ / សូមបើកសំបុត្រអញ្ចើញ | សូមបើកសំបុត្រអញ្ជើញ | Open Invitation | `RoyalGardenIntro.jsx`, `TemplateBoilerplateLayout.jsx` |
+| **Public Demo Launcher** | សាកប្រើធៀបការគំរូ / សាកប្រើសំបុត្រអញ្ចើញគំរូ | សាកប្រើសំបុត្រអញ្ជើញគំរូ | Try Demo Invitation | `InvitationDemo.jsx`, `LandingHero.jsx` |
+| **Admin Reporting** | របាយការណ៍ធៀបការ / របាយការណ៍សំបុត្រអញ្ចើញ | របាយការណ៍សំបុត្រអញ្ជើញ និងកម្មវិធី | Invitations & Events Report | `AdminReportCatalog.java`, `reportModel.js`, `AdminLanguageProvider.jsx` |
+| **Admin Metrics** | ធៀបការសរុប / សំបុត្រអញ្ចើញសរុប | សំបុត្រអញ្ជើញសរុប | Total Invitations | `AdminReportCatalog.java`, `CoreMetricsBox.jsx` |
+| **Admin Metrics** | ធៀបការបានផ្សាយ / សំបុត្រអញ្ចើញបានផ្សាយ | សំបុត្រអញ្ជើញបានផ្សាយ | Published Invitations | `AdminReportCatalog.java`, `CoreMetricsBox.jsx`, `reportModel.js` |
+| **Admin Metrics** | ធៀបការព្រាង / សំបុត្រអញ្ចើញព្រាង | សំបុត្រអញ្ជើញព្រាង | Draft Invitations | `AdminReportCatalog.java`, `AdminLanguageProvider.jsx` |
+| **Admin Metrics** | ធៀបការទុកបណ្ណសារ / សំបុត្រអញ្ចើញទុកបណ្ណសារ | សំបុត្រអញ្ជើញទុកបណ្ណសារ | Archived Invitations | `AdminReportCatalog.java`, `AdminLanguageProvider.jsx` |
+| **Package Quotas** | ចំនួនធៀបការអតិបរមា / ចំនួនសំបុត្រអញ្ចើញអតិបរមា | ចំនួនសំបុត្រអញ្ជើញអតិបរមា | Max Invitations Quota | `AdminPackagesFeature.jsx`, `AdminLanguageProvider.jsx` |
+| **Package Quotas** | ភ្ញៀវក្នុងមួយធៀបការ / ភ្ញៀវក្នុងមួយសំបុត្រអញ្ចើញ | ភ្ញៀវក្នុងមួយសំបុត្រអញ្ជើញ | Guests Per Invitation | `AdminPackagesFeature.jsx`, `AdminLanguageProvider.jsx` |
+| **Studio Section Adder** | + ផ្នែកធៀបការ / + ផ្នែកសំបុត្រអញ្ចើញ | + ផ្នែកសំបុត្រអញ្ជើញ | + Invitation Section | `TemplateUnifiedSectionsManager.jsx` |
+| **Template Titles** | ចំណងជើងធៀបការ / ចំណងជើងសំបុត្រអញ្ចើញ | ចំណងជើងសំបុត្រអញ្ជើញ | Invitation Title | `TemplateCoverSection.jsx`, `AdminTemplateEditFeature.jsx` |
+| **Template Catalog** | មិនអាចទាញយកគំរូធៀបការបានទេ | មិនអាចទាញយកគំរូសំបុត្រអញ្ជើញបានទេ | Could not load template catalog | `AdminTemplatesFeature.jsx`, `BrowseTemplatesFeature.jsx` |
+| **Pricing & Plans** | ធៀបការឌីជីថលកម្រិតខ្ពស់ | សំបុត្រអញ្ជើញឌីជីថលកម្រិតខ្ពស់ | Premium Digital Invitations | `messages_km.properties`, `messagesDictionary.js` |
+| **RSVP Draft Notice** | ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយធៀបការ | ការបញ្ជាក់វត្តមាននឹងបើកនៅពេលផ្សព្វផ្សាយសំបុត្រអញ្ជើញ | RSVP opens when invitation is published | `RoyalGardenCinematicLayout.jsx` |
+| **Public Footer** | គូព្រេង • ធៀបការឌីជីថល | គូព្រេង • សំបុត្រអញ្ជើញឌីជីថល | Koupreng · Digital Invitation | `PublicInvitationFeature.jsx` |
+| **Studio Toolbar** | រចនាធៀបអញ្ជើញ | ស្ទូឌីយោសំបុត្រអញ្ជើញ | Invitation Studio | `StudioToolbar.jsx` |
+| **Studio Save Description** | ការកែប្រែធៀបរបស់អ្នកត្រូវបានរក្សាទុក។ | ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។ | Invitation changes saved | `StudioToolbar.jsx` |
+| **Studio Preview Button** | មើលជាមុន៖ ធៀបអញ្ជើញ | មើលសំបុត្រអញ្ជើញជាមុន | Preview invitation | `StudioToolbar.jsx`, `LivePhoneSimulator.jsx` |
 
 ---
 
-## 3. Input Labels, Instructions & Culturally Authentic Placeholders
+## 3. Specialized Event Forms & Culturally Authentic Placeholders
 
-### 3.1 Event Placeholders Architecture (`eventPlaceholders.js`)
-A dedicated, type-safe utility module `apps/frontend-user/src/shared/utils/eventPlaceholders.js` was created along with test suite `eventPlaceholders.test.js`. It supplies culturally authentic, ceremony-tailored examples utilizing the formal Khmer abbreviation **«ឧ.»** (ឧទាហរណ៍) and English **«e.g.»**.
+### 3.1 Event Placeholders & Dynamic Labels (`eventPlaceholders.js`)
+The `apps/frontend-user/src/shared/utils/eventPlaceholders.js` module provides ceremony-tailored examples utilizing the formal Khmer abbreviation **«ឧ.»** (ឧទាហរណ៍) and English **«e.g.»**, alongside dynamic field configuration via `getEventFieldLabels(eventType, lang)`.
 
-#### Event Matrix Examples:
+#### Event Specialization Matrix:
 
 1. **Wedding (`WEDDING`):**
    - Title: `ឧ. ពិធីមង្គលការរបស់ វីរៈ និង សុម៉ាលី` (*e.g. Wedding Celebration of Virak & Somaly*)
-   - Groom / Host: `ឧ. លោក វីរៈ` (*e.g. Mr. Virak*)
-   - Bride / Partner: `ឧ. កញ្ញា សុម៉ាលី` (*e.g. Ms. Somaly*)
+   - Groom: `ឈ្មោះកូនកំលោះ` (`ឧ. លោក វីរៈ`), Bride: `ឈ្មោះកូនក្រមុំ` (`ឧ. កញ្ញា សុម៉ាលី`) — both required.
    - Venue: `ឧ. សណ្ឋាគារ សុខា ភ្នំពេញ` (*e.g. Sokha Hotel Phnom Penh*)
-   - Address: `ឧ. ផ្លូវសុធារស សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ` (*e.g. Sothearos Blvd, Sangkat Tonle Bassac, Phnom Penh*)
-   - Google Maps: `https://maps.app.goo.gl/...`
-   - Formal Invitation Note: `ឧ. យើងខ្ញុំមានកិត្តិយសសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...` (*e.g. We have the honor to cordially invite you and your family...*)
-   - Groom Parents: `ឧ. លោក ឈឹម សុខា` & `ឧ. លោកស្រី គង់ សុភាព`
-   - Bride Parents: `ឧ. លោក ឡុង វិបុល` & `ឧ. លោកស្រី ម៉ៅ សុខនី`
+   - Address: `ឧ. ផ្លូវសុធារស សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ`
 
 2. **Engagement (`ENGAGEMENT`):**
    - Title: `ឧ. ពិធីភ្ជាប់ពាក្យរបស់ វីរៈ និង សុម៉ាលី` (*e.g. Engagement Ceremony of Virak & Somaly*)
-   - Venue: `ឧ. គេហដ្ឋានខាងស្រី (បុរីប៉េងហួត បឹងស្នោ)` (*e.g. Bride's Residence (Borey Peng Huoth Boeung Snor)*)
-   - Address: `ឧ. ផ្ទះលេខ ៨៨ ផ្លូវលេខ ៦ បុរីប៉េងហួត បឹងស្នោ ភ្នំពេញ` (*e.g. No. 88, St. 6, Borey Peng Huoth Boeung Snor, Phnom Penh*)
+   - Groom: `ឈ្មោះកូនកំលោះ (គូដណ្តឹង)`, Bride: `ឈ្មោះកូនក្រមុំ (គូដណ្តឹង)` — both required.
+   - Venue: `ឧ. គេហដ្ឋានខាងស្រី (បុរីប៉េងហួត បឹងស្នោ)`
 
 3. **Birthday (`BIRTHDAY`):**
    - Title: `ឧ. ខួបកំណើតគម្រប់ ២៥ឆ្នាំ របស់ សុខា` (*e.g. Sokha's 25th Birthday Celebration*)
-   - Celebrant / Host: `ឧ. សុខា` (*e.g. Sokha*)
-   - Venue: `ឧ. ភោជនីយដ្ឋាន ទន្លេបាសាក់ II` (*e.g. Tonle Bassac II Restaurant*)
-   - Address: `ឧ. មហាវិថីព្រះមុនីវង្ស សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ` (*e.g. Preah Monivong Blvd, Sangkat Tonle Bassac, Phnom Penh*)
+   - Celebrant: `ឈ្មោះម្ចាស់ខួបកំណើត` (`ឧ. សុខា`) — required.
+   - Bride/Partner field is hidden (`hideBride: true`), preventing inappropriate couple fields.
+   - Venue: `ឧ. ភោជនីយដ្ឋាន ទន្លេបាសាក់ II`
 
 4. **Anniversary (`ANNIVERSARY`):**
    - Title: `ឧ. ខួបអាពាហ៍ពិពាហ៍ ១០ឆ្នាំ វីរៈ & សុម៉ាលី` (*e.g. 10th Wedding Anniversary of Virak & Somaly*)
-   - Venue: `ឧ. សណ្ឋាគារ រ៉ាហ្វល ឡឺរ៉ូយ៉ាល់` (*e.g. Raffles Hotel Le Royal*)
-   - Address: `ឧ. មហាវិថីដូនពេញ សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ` (*e.g. Daun Penh Ave, Sangkat Wat Phnom, Phnom Penh*)
+   - Partners: `ឈ្មោះស្វាមី` (`ឧ. វីរៈ`), `ឈ្មោះភរិយា` (`ឧ. សុម៉ាលី`) — both required.
+   - Venue: `ឧ. សណ្ឋាគារ រ៉ាហ្វល ឡឺរ៉ូយ៉ាល់`
 
 5. **Corporate (`CORPORATE`):**
    - Title: `ឧ. សន្និសីទប្រចាំឆ្នាំ ២០២៦ & ពិធីជប់លៀង` (*e.g. Annual Gala Conference 2026*)
-   - Host / Organization: `ឧ. ក្រុមហ៊ុន គូព្រេង ថេកណូឡូជី` (*e.g. Koupreng Technology Co., Ltd.*)
-   - Venue: `ឧ. មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍កោះពេជ្រ` (*e.g. Diamond Island Convention Center (Koh Pich)*)
-   - Address: `ឧ. អគារ G កោះពេជ្រ សង្កាត់ទន្លេបាសាក់ រាជធានីភ្នំពេញ` (*e.g. Building G, Koh Pich, Sangkat Tonle Bassac, Phnom Penh*)
+   - Organization: `ឈ្មោះស្ថាប័ន / ក្រុមហ៊ុន` (`ឧ. ក្រុមហ៊ុន គូព្រេង ថេកណូឡូជី`) — required.
+   - Speaker/Co-Host: `អ្នកសម្របសម្រួល ឬវាគ្មិន` (`ឧ. វាគ្មិនកិត្តិយស`) — optional (`brideRequired: false`).
+   - Venue: `ឧ. មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍កោះពេជ្រ`
 
 6. **Other Gatherings (`OTHER`):**
    - Title: `ឧ. កម្មវិធីជួបជុំមិត្តភក្តិ ឬឡើងគេហដ្ឋានថ្មី` (*e.g. Housewarming Party / Special Gathering*)
-   - Venue: `ឧ. គេហដ្ឋានថ្មី (ខណ្ឌជ្រោយចង្វារ)` (*e.g. New Residence (Chroy Changvar)*)
-   - Address: `ឧ. ផ្ទះលេខ ១២ ផ្លូវជាតិលេខ ៦A រាជធានីភ្នំពេញ` (*e.g. House 12, National Road 6A, Phnom Penh*)
-
-### 3.2 Form Helper Guidance & Accessibility Integration
-Every input control across `StudioEventFields.jsx`, `EventFields.jsx`, and `InvitationForm.jsx` links its instructions and examples directly into the accessibility tree via `aria-describedby` linking:
-- Field labels are persistent visible elements (placeholders are never used as labels).
-- Descriptions explain field intent clearly (e.g., `ឈ្មោះដែលបង្ហាញធំជាងគេនៅលើក្របសំបុត្រអញ្ចើញ` / *The primary title displayed on the invitation cover*).
-- Validation error states preserve descriptions while declaring `aria-invalid="true"` and focusing error summaries on submission failures.
+   - Host: `ឈ្មោះម្ចាស់កម្មវិធី` (`ឧ. លោក វីរៈ`), Partner: `ឈ្មោះដៃគូ ឬអ្នករួមរៀបចំ` (optional).
+   - Venue: `ឧ. គេហដ្ឋានថ្មី (ខណ្ឌជ្រោយចង្វារ)`
 
 ---
 
-## 4. Invitation Studio Visual Design, Controls & Preview Synchronization
+## 4. Event 70 Comprehensive Feature Seeding & Verification
 
-### 4.1 Host-Facing Studio Modernization (`apps/frontend-user`)
-- **Color Roles & Aesthetics:** Enforced palette tokens of warm ivory canvas (`#fbf6ee`), forest-green accents (`#0f766e`), gold borders/highlights (`#926c34` / `#d4af37`), and high-contrast charcoal text (`#292c28`).
-- **Khmer Typography:** Fixed line-height clipping on Khmer vowels and diacritics by enforcing `line-height: 1.8` across property labels and input containers.
-- **Mobile Usability (320px–420px):**
-  - Sticky action bar pinned to viewport bottom with safe area insets: `bottom: 0; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px))`.
-  - Virtual keyboard awareness: `[data-keyboard-open=true]` avoids covering textareas during active touch input.
-  - Controls enforce minimum $44 \times 44\text{px}$ touch targets.
-- **Preview Synchronization:** Maintained zero-iframe-reload message bus (`STUDIO_PREVIEW_SYNC` and `KOU_TEMPLATE_UPDATE`) across Mobile, Tablet, and Desktop viewport emulation modes.
+Invitation Event ID `70` (`wedding-5`, host `060400652`) was populated with 50 production-grade items across all features and fully customized in Invitation Studio:
 
-### 4.2 Admin-Facing Template Studio Modernization (`apps/frontend-admin`)
-- **Theme & Contrast:** Dark canvas (`#09090b` / `#18181b`) paired with warm amber focus rings (`#fbbf24`) and high-contrast zinc labels (`#e4e4e7`).
-- **Template Sections Manager:** Streamlined section toggles (`+ ផ្នែកសំបុត្រអញ្ចើញ`), cover configuration, font pickers, and color tokens.
-- **Short Landscape Support:** Tested `@media (max-height: 500px)` compact mode ensuring all toolbars and control scrolls remain fully reachable on small screens.
-- **Accessibility:** Modal focus traps, keyboard containment, and axe-clean contrast verified.
-
-### 4.3 Motion Design & Reduced-Motion Enforcement
-- All transitions respect user OS preferences via `prefers-reduced-motion: reduce`:
-  ```css
-  @media (prefers-reduced-motion: reduce) {
-    .invitation-studio *, .invitation-studio *::before, .invitation-studio *::after {
-      animation: none !important;
-      transition: none !important;
-    }
-  }
-  ```
-- Framer Motion and GSAP animations clamp duration to $0\text{ms}$ when reduced motion is detected.
+1. **50 Guests (`guests` table):**
+   - 50 diverse Cambodian guests distributed evenly across 5 groups (`VIP`, `គ្រួសារកូនកំលោះ`, `គ្រួសារកូនក្រមុំ`, `មិត្តភក្តិ`, `រួមការងារ`).
+   - Phone numbers, individual seat allocations, unique QR tokens, and dietary preferences.
+2. **50 RSVPs (`rsvps` table):**
+   - 50 heartfelt wedding wishes in Khmer and English dedicated to Pich & Pisey.
+   - 42 Attending, 5 Maybe, 3 Unable to attend.
+3. **50 Wedding Gifts (`wedding_gifts` table):**
+   - Gifts recorded across ABA PayWay, KHQR, and Cash in both USD and KHR.
+   - Total USD gifts: $4,850.00; Total KHR gifts: 4,120,000 KHR.
+4. **50 Budget Items (`budgets` and `budget_items` tables):**
+   - Master budget initialized to $50,000.00.
+   - 50 realistic expense line items spanning all 10 categories (Venue, Catering, Photography, Attire, Music, Flowers, Rings, Invitations, Transportation, Honeymoon).
+5. **7 Tables with 50 Seated Guests (`event_tables` & `guest_seat_assignments` tables):**
+   - Tables: VIP Diamond, VIP Gold, Groom Family, Bride Family, University Friends, High School Friends, Tech Colleagues.
+   - All 50 guests assigned to designated tables.
+6. **50 Check-ins (`guest_check_ins` table):**
+   - Real check-in records for all guests with verified timestamps and check-in methods.
+7. **50 Delivery Logs (`invitation_delivery_events` table):**
+   - Delivery event history recorded across Telegram, SMS, and Direct Link sharing channels.
+8. **Invitation Studio Assets Configured:**
+   - Pre-wedding video: `/templates/royal-garden/v3/video/pre-wedding-demo.mp4` (Media ID 42, poster ID 43).
+   - Background music: `/music/Nisai-និស្ស័យ.mp3` (Media ID 41).
+   - Pich & Pisey Photos: Cover photo, Groom photo, Bride photo, Couple photo, and 12 high-resolution gallery images (`photo-01-1280.webp` through `photo-12-1280.webp`).
+   - Detailed 7-step schedule, 4-chapter love story, dress code palettes, and FAQs.
 
 ---
 
 ## 5. Comprehensive Verification & Test Results
 
-### 5.1 Backend Verification Suite
-- **Architecture Rules (`ArchitectureRulesTests`):**
-  - Status: **PASSED** (5/5 tests, 0 failures, 0 errors, time: 10.26s)
-  - Enforces layer boundary integrity, package decoupling, and entitlement checks.
-- **Admin Reporting & Catalog Integrity (`AdminReportingTests`):**
-  - Status: **PASSED** (19/19 tests, 0 failures, 0 errors, time: 12.52s)
-  - Validates all report definitions, metadata, currency separation (USD/KHR), and Khmer metric labels (`របាយការណ៍សំបុត្រអញ្ចើញ និងកម្មវិធី`).
-
-### 5.2 Frontend Unit Test Suites
-- **Frontend-Admin (`vitest`):**
-  - Status: **PASSED** (33 test files, 192/192 tests, 0 failures, time: 4.63s)
+### 5.1 Frontend Unit Test Suites
 - **Frontend-User (`vitest`):**
-  - Status: **PASSED** (213 test files, 1,466/1,466 tests, 0 failures, time: 31.16s)
-  - Includes `eventPlaceholders.test.js` (4 tests), `StudioFields.test.jsx` (3 tests), `InvitationStyleEditor.test.jsx` (6 tests), `events.test.jsx` (12 tests).
+  - Status: **PASSED** (213 test files, 1,467/1,467 tests, 0 failures, 100% green)
+  - Duration: 55.29s
+  - All test files passed, including `eventPlaceholders.test.js` (5 tests), `InvitationForm.test.jsx` (20 tests), `StudioFields.test.jsx` (3 tests).
+- **Frontend-Admin (`vitest`):**
+  - Status: **PASSED** (33 test files, 192/192 tests, 0 failures, 100% green)
+  - Duration: 16.78s
+  - All administrative test suites passed cleanly.
 
-### 5.3 Static Analysis & Lint Quality Gates
-- **Frontend-Admin Lint (`eslint`):**
-  - Status: **PASSED** (0 errors, 0 warnings, exit code 0)
+### 5.2 Static Analysis & Lint Quality Gates
 - **Frontend-User Lint (`eslint`):**
   - Status: **PASSED** (0 errors, 0 warnings, exit code 0)
+- **Frontend-Admin Lint (`eslint`):**
+  - Status: **PASSED** (0 errors, 0 warnings, exit code 0)
 
-### 5.4 Production Build Verification
-- **Frontend-Admin (`vite build`):**
-  - Status: **SUCCESS** (built in 3.10s, 0 errors)
+### 5.3 Production Build Verification
 - **Frontend-User (`vite build`):**
-  - Status: **SUCCESS** (built in 1.49s, 0 errors)
+  - Status: **SUCCESS** (built in 9.73s, 0 errors)
+- **Frontend-Admin (`vite build`):**
+  - Status: **SUCCESS** (built in 4.27s, 0 errors)
 
-### 5.5 End-to-End Browser QA (Playwright)
-Real browser automation was executed using production-built preview servers on ports 4173 (`frontend-user`) and 4174 (`frontend-admin`):
-
-| Test Suite / Spec | Viewport / Project | Total Tests | Passed | Failed | Skips | Duration |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| `batch12-route-content.spec.js` | Desktop Chromium ($1280 \times 720$) | 135 | 135 | 0 | 0 | 1.5m |
-| `batch12-route-content.spec.js` | Mobile Chromium (Pixel 7, $390 \times 844$) | 135 | 135 | 0 | 0 | 1.1m |
-| `batch12-core-hardening.spec.js` | Desktop Chromium | 5 | 5 | 0 | 0 | 28.6s |
-| `khmer-celestial-guest-banner.spec.js` | Desktop Chromium & Responsive Matrix | 5 | 4 | 0 | 1* | 11.1s |
-| `batch10-admin-observability.spec.js` | Desktop Chromium (includes Axe A11y) | 4 | 4 | 0 | 0 | 7.2s |
-
-*\*Note: 1 test skipped in `khmer-celestial-guest-banner.spec.js` is the live-backend test requiring a live MySQL daemon and runtime API environment (`QA_PUBLIC_INVITATION_PATH`).*
+### 5.4 End-to-End Browser QA (Playwright)
+- `batch10-admin-observability.spec.js`: 4/4 tests passed (16.7s, includes Axe accessibility audit, filters, modal dialogs, and reports).
+- `phase12-studio.spec.js`: 3/3 tests passed (21.4s, verifies Studio presets, undo/redo, save/export, and venue wording focus).
 
 ---
 
 ## 6. Safe Git Delivery & Remote Verification
 
 - **Commit Scope:** Clean, verified source and report modifications.
-- **No Force Pushes:** Clean standard push to `origin/main`.
-- **Target Branch:** `main`
+- **Target Branch:** `origin/main`
+- **Integrity:** Zero architectural breaking changes, zero database drift, zero Flyway modifications.
 
 ---
 *Certified by the Koupreng Principal UX/UI Designer, Localization Specialist & QC Lead.*

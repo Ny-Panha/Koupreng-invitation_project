@@ -125,7 +125,7 @@ export default function PaymentStatusPage() {
         <div className="payment-footer-links">
           <Link to="/app/events">{en ? 'My events' : 'ព្រឹត្តិការណ៍របស់ខ្ញុំ'}</Link>
           <span>•</span>
-          <Link to="/templates/browse">{en ? 'Browse templates' : 'ស្វែងរកគំរូសំបុត្រអញ្ចើញ'}</Link>
+          <Link to="/templates/browse">{en ? 'Browse templates' : 'ស្វែងរកគំរូសំបុត្រអញ្ជើញ'}</Link>
         </div>
       </main>
     </div>

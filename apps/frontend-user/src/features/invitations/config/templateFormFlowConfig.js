@@ -90,9 +90,9 @@ export const TEMPLATE_FORM_FLOWS = {
         hints: {
             coverImage: "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)",
             coverImageEn: "Shown on the front cover / hero",
-            coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ចើញ",
+            coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ជើញ",
             coverBackgroundImageEn: "Shown on the cover before the invitation is opened",
-            backgroundImage: "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតសំបុត្រអញ្ចើញពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)",
+            backgroundImage: "ស៊ុមផ្កាប្រណិតព័ទ្ធជុំវិញកាតសំបុត្រអញ្ជើញពេលបើក (អាចប្តូរជារូបស៊ុមផ្ទាល់ខ្លួនបាន)",
             backgroundImageEn: "Botanical frame shown once invitation is opened",
         },
         placePhotoInInvitation: false,
@@ -126,7 +126,7 @@ export function getTemplateFormFlow(templateIdOrTpl) {
     };
 
     const defaultHints = {
-        coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ចើញ",
+        coverBackgroundImage: "បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ជើញ",
         coverBackgroundImageEn: "Shown on the cover before the invitation is opened",
     };
 
@@ -175,8 +175,8 @@ const LABEL_COPY = {
 };
 const HINT_COPY = {
     coverImage: ["បង្ហាញលើក្របទំព័រដើម ឬស្រោមសំបុត្រ", "Shown on the front cover / envelope"],
-    coverBackgroundImage: ["បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ចើញ", "Shown on the cover before opening"],
-    backgroundImage: ["ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកសំបុត្រអញ្ចើញ", "Background or botanical frame shown after opening"],
+    coverBackgroundImage: ["បង្ហាញលើគ្របមុខពេលមិនទាន់បើកសំបុត្រអញ្ជើញ", "Shown on the cover before opening"],
+    backgroundImage: ["ស៊ុមផ្កា ឬរូបភាពផ្ទៃខាងក្រោយពេលបើកសំបុត្រអញ្ជើញ", "Background or botanical frame shown after opening"],
 };
 
 export function getLocalizedTemplateFormFlow(template, lang) {

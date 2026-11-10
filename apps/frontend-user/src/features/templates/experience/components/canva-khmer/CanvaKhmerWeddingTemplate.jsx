@@ -195,7 +195,7 @@ function CanvaKhmerOpeningCover({ content, onOpen }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.01 }}
             transition={{ duration: 0.5 }}
-            aria-label="បើកសំបុត្រអញ្ចើញ"
+            aria-label="បើកសំបុត្រអញ្ជើញ"
         >
             <CoverBackground
                 content={content}

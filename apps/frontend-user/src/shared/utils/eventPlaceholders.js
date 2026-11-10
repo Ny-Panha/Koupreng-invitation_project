@@ -169,7 +169,7 @@ export const EVENT_EXAMPLES = {
 
 export const FIELD_HELPERS = {
   km: {
-    title: 'ឈ្មោះដែលបង្ហាញធំជាងគេនៅលើក្របសំបុត្រអញ្ចើញ',
+    title: 'ឈ្មោះដែលបង្ហាញធំជាងគេនៅលើក្របសំបុត្រអញ្ជើញ',
     groomName: 'ឈ្មោះកូនកំលោះ ឬម្ចាស់កម្មវិធី',
     brideName: 'ឈ្មោះកូនក្រមុំ ឬដៃគូជីវិត',
     hostName: 'ឈ្មោះបុគ្គល ឬអង្គភាពដែលជាម្ចាស់កម្មវិធី',
@@ -211,4 +211,125 @@ export function getEventExamples(eventType = 'WEDDING', lang = 'km') {
 export function getFieldHelpers(lang = 'km') {
   const langKey = lang === 'en' ? 'en' : 'km';
   return FIELD_HELPERS[langKey] || FIELD_HELPERS.km;
+}
+
+export const EVENT_FIELD_LABELS = {
+  WEDDING: {
+    km: {
+      groom: 'ឈ្មោះកូនកំលោះ',
+      bride: 'ឈ្មោះកូនក្រមុំ',
+      groomHelp: 'ឈ្មោះកូនកំលោះ',
+      brideHelp: 'ឈ្មោះកូនក្រមុំ',
+      hideBride: false,
+      brideRequired: true,
+    },
+    en: {
+      groom: 'Groom name',
+      bride: 'Bride name',
+      groomHelp: 'Name of the groom',
+      brideHelp: 'Name of the bride',
+      hideBride: false,
+      brideRequired: true,
+    },
+  },
+  ENGAGEMENT: {
+    km: {
+      groom: 'ឈ្មោះកូនកំលោះ (គូដណ្តឹង)',
+      bride: 'ឈ្មោះកូនក្រមុំ (គូដណ្តឹង)',
+      groomHelp: 'ឈ្មោះគូដណ្តឹងខាងប្រុស',
+      brideHelp: 'ឈ្មោះគូដណ្តឹងខាងស្រី',
+      hideBride: false,
+      brideRequired: true,
+    },
+    en: {
+      groom: 'Fiancé (Groom) name',
+      bride: 'Fiancée (Bride) name',
+      groomHelp: 'Name of the groom / fiancé',
+      brideHelp: 'Name of the bride / fiancée',
+      hideBride: false,
+      brideRequired: true,
+    },
+  },
+  BIRTHDAY: {
+    km: {
+      groom: 'ឈ្មោះម្ចាស់ខួបកំណើត',
+      bride: 'អាយុ ឬចំណាំបន្ថែម',
+      groomHelp: 'ឈ្មោះម្ចាស់ខួបកំណើតដែលត្រូវប្រារព្ធ',
+      brideHelp: 'អាយុ ឬព័ត៌មានបន្ថែម (ប្រសិនបើមាន)',
+      hideBride: true,
+      brideRequired: false,
+    },
+    en: {
+      groom: 'Celebrant name',
+      bride: 'Age or additional note',
+      groomHelp: 'Name of the birthday celebrant',
+      brideHelp: 'Age or additional details (optional)',
+      hideBride: true,
+      brideRequired: false,
+    },
+  },
+  ANNIVERSARY: {
+    km: {
+      groom: 'ឈ្មោះស្វាមី',
+      bride: 'ឈ្មោះភរិយា',
+      groomHelp: 'ឈ្មោះស្វាមី ឬដៃគូទីមួយ',
+      brideHelp: 'ឈ្មោះភរិយា ឬដៃគូទីពីរ',
+      hideBride: false,
+      brideRequired: true,
+    },
+    en: {
+      groom: 'Husband / First partner',
+      bride: 'Wife / Second partner',
+      groomHelp: 'Name of the husband or first partner',
+      brideHelp: 'Name of the wife or second partner',
+      hideBride: false,
+      brideRequired: true,
+    },
+  },
+  CORPORATE: {
+    km: {
+      groom: 'ឈ្មោះស្ថាប័ន / ក្រុមហ៊ុន',
+      bride: 'អ្នកសម្របសម្រួល ឬវាគ្មិន',
+      groomHelp: 'ឈ្មោះស្ថាប័ន ឬក្រុមហ៊ុនម្ចាស់កម្មវិធី',
+      brideHelp: 'ឈ្មោះអ្នកសម្របសម្រួល ឬវាគ្មិនកិត្តិយស (ប្រសិនបើមាន)',
+      hideBride: false,
+      brideRequired: false,
+    },
+    en: {
+      groom: 'Organization / Company name',
+      bride: 'Coordinator or Keynote speaker',
+      groomHelp: 'Name of the host company or organization',
+      brideHelp: 'Coordinator or keynote speaker (optional)',
+      hideBride: false,
+      brideRequired: false,
+    },
+  },
+  OTHER: {
+    km: {
+      groom: 'ឈ្មោះម្ចាស់កម្មវិធី',
+      bride: 'ឈ្មោះដៃគូ ឬអ្នករួមរៀបចំ',
+      groomHelp: 'ឈ្មោះបុគ្គល ឬអង្គភាពម្ចាស់កម្មវិធី',
+      brideHelp: 'ឈ្មោះដៃគូ ឬអ្នករួមរៀបចំ (ប្រសិនបើមាន)',
+      hideBride: false,
+      brideRequired: false,
+    },
+    en: {
+      groom: 'Host name',
+      bride: 'Co-host / Partner',
+      groomHelp: 'Name of the primary host or organizer',
+      brideHelp: 'Name of the co-host or partner (optional)',
+      hideBride: false,
+      brideRequired: false,
+    },
+  },
+};
+
+/**
+ * Get field labels and visibility settings for a specific event type and language.
+ */
+export function getEventFieldLabels(eventType = 'WEDDING', lang = 'km') {
+  const normType = String(eventType || 'WEDDING').toUpperCase();
+  const typeConfig = EVENT_FIELD_LABELS[normType] || EVENT_FIELD_LABELS.WEDDING;
+  const langKey = lang === 'en' ? 'en' : 'km';
+  return typeConfig[langKey] || typeConfig.km;
 }

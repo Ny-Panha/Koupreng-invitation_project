@@ -16,14 +16,14 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                {lang === "en" ? "Recent Invitations" : "សំបុត្រអញ្ចើញថ្មីៗ (Recent Invitations)"}
+                {lang === "en" ? "Recent Invitations" : "សំបុត្រអញ្ជើញថ្មីៗ (Recent Invitations)"}
               </h3>
 
             </div>
             <span className="text-[11px] font-semibold text-muted-foreground block mt-0.5">
               {lang === "en"
                 ? `${items.length} recent invitations in system`
-                : `${items.length} សំបុត្រអញ្ចើញចុងក្រោយក្នុងប្រព័ន្ធ`}
+                : `${items.length} សំបុត្រអញ្ជើញចុងក្រោយក្នុងប្រព័ន្ធ`}
             </span>
           </div>
         </div>

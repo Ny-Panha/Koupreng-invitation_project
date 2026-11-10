@@ -36,6 +36,8 @@ export default function TemplateHero({ content, onOpen }) {
             lower.includes("cover-") ||
             lower === "គំរូធៀបការ" ||
             lower === "គំរូសំបុត្រអញ្ចើញ" ||
+            lower === "គំរូសំបុត្រអញ្ជើញ" ||
+            lower === "គំរូសំបុត្រអញ្ជើញ" ||
             lower === "គំរូសន្លឹកការ"
         );
     };

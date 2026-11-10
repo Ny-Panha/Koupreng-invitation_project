@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getEventExamples, getFieldHelpers, EVENT_EXAMPLES } from './eventPlaceholders';
+import { getEventExamples, getFieldHelpers, getEventFieldLabels, EVENT_EXAMPLES } from './eventPlaceholders';
 
 describe('eventPlaceholders', () => {
   it('provides wedding examples with Khmer ឧ. and English e.g. prefixes', () => {
@@ -34,11 +34,31 @@ describe('eventPlaceholders', () => {
 
   it('provides field helper descriptions in both languages', () => {
     const kmHelpers = getFieldHelpers('km');
-    expect(kmHelpers.title).toContain('ក្របសំបុត្រអញ្ចើញ');
+    expect(kmHelpers.title).toContain('ក្របសំបុត្រអញ្ជើញ');
     expect(kmHelpers.venueAddress).toContain('អាសយដ្ឋាន');
 
     const enHelpers = getFieldHelpers('en');
     expect(enHelpers.title).toContain('invitation cover');
     expect(enHelpers.venueAddress).toContain('address');
+  });
+
+  it('provides event-specific field labels for wedding, birthday, corporate, and anniversary', () => {
+    const kmWeddingLabels = getEventFieldLabels('WEDDING', 'km');
+    expect(kmWeddingLabels.groom).toBe('ឈ្មោះកូនកំលោះ');
+    expect(kmWeddingLabels.bride).toBe('ឈ្មោះកូនក្រមុំ');
+    expect(kmWeddingLabels.hideBride).toBe(false);
+    expect(kmWeddingLabels.brideRequired).toBe(true);
+
+    const kmBirthdayLabels = getEventFieldLabels('BIRTHDAY', 'km');
+    expect(kmBirthdayLabels.groom).toBe('ឈ្មោះម្ចាស់ខួបកំណើត');
+    expect(kmBirthdayLabels.hideBride).toBe(true);
+
+    const enCorporateLabels = getEventFieldLabels('CORPORATE', 'en');
+    expect(enCorporateLabels.groom).toBe('Organization / Company name');
+    expect(enCorporateLabels.brideRequired).toBe(false);
+
+    const kmAnniversaryLabels = getEventFieldLabels('ANNIVERSARY', 'km');
+    expect(kmAnniversaryLabels.groom).toBe('ឈ្មោះស្វាមី');
+    expect(kmAnniversaryLabels.bride).toBe('ឈ្មោះភរិយា');
   });
 });

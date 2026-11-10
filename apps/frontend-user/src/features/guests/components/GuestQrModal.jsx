@@ -196,7 +196,7 @@ export default function GuestQrModal({
         </div>
         <div className="guest-share-qr-section">
           <div className="guest-share-qr-code" style={{ opacity: syncing ? 0.5 : 1 }}><QRCode id="guest-qr-svg" value={inviteUrl} size={156} /></div>
-          <div className="guest-share-qr-details"><h3>{text("qrModalTitle", "QR Code សំបុត្រអញ្ចើញ")}</h3><p>{text("qrHelp", "រក្សាទុក QR Code ដើម្បីផ្ញើទៅភ្ញៀវ ឬដាក់លើសំបុត្រអញ្ចើញ។")}</p>
+          <div className="guest-share-qr-details"><h3>{text("qrModalTitle", "QR Code សំបុត្រអញ្ជើញ")}</h3><p>{text("qrHelp", "រក្សាទុក QR Code ដើម្បីផ្ញើទៅភ្ញៀវ ឬដាក់លើសំបុត្រអញ្ជើញ។")}</p>
             <button type="button" className="guest-button guest-button-secondary" disabled={syncing} onClick={handleDownloadQr}><Download size={16} aria-hidden="true" />{text("downloadQr", "ទាញយក QR")}</button>
           </div>
         </div>

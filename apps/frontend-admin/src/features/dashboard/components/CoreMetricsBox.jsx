@@ -21,7 +21,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
     },
     {
       id: "templates",
-      label: t("dashboard.totalTemplates", "គំរូសំបុត្រអញ្ចើញ"),
+      label: t("dashboard.totalTemplates", "គំរូសំបុត្រអញ្ជើញ"),
       value: data.totalTemplates ?? 0,
       note: `${data.premiumTemplates ?? 0} Premium`,
       icon: Palette,
@@ -30,7 +30,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
     },
     {
       id: "invitations",
-      label: t("dashboard.totalInvitations", "សំបុត្រអញ្ចើញសរុប"),
+      label: t("dashboard.totalInvitations", "សំបុត្រអញ្ជើញសរុប"),
       value: data.totalInvitations ?? 0,
       note: lang === "en" ? `${data.publishedInvitations ?? 0} Published` : `${data.publishedInvitations ?? 0} បានផ្សាយ`,
       icon: Mail,
@@ -40,7 +40,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
       id: "guests",
       label: t("dashboard.totalGuests", "ភ្ញៀវសរុប (Guests)"),
       value: data.totalGuests ?? 0,
-      note: t("dashboard.allGuestsNote", "ភ្ញៀវក្នុងសំបុត្រអញ្ចើញ"),
+      note: t("dashboard.allGuestsNote", "ភ្ញៀវក្នុងសំបុត្រអញ្ជើញ"),
       icon: UserCheck,
       tone: "emerald",
       badge: "GUESTS",
@@ -86,7 +86,7 @@ export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d
               {lang === "en" ? "System Core Metrics" : "ស្ថិតិទូទៅនៃប្រព័ន្ធ"}
             </h3>
             <span className="text-[11px] text-muted-foreground block">
-              {lang === "en" ? "Overview of users, invitations & revenue" : "ទិដ្ឋភាពទូទៅនៃអ្នកប្រើប្រាស់ សំបុត្រអញ្ចើញ និងចំណូល"}
+              {lang === "en" ? "Overview of users, invitations & revenue" : "ទិដ្ឋភាពទូទៅនៃអ្នកប្រើប្រាស់ សំបុត្រអញ្ជើញ និងចំណូល"}
             </span>
           </div>
         </div>

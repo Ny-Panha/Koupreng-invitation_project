@@ -137,10 +137,10 @@ describe("InvitationDeliveryManager", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Invitation Not Yet Published|សំបុត្រអញ្ចើញមិនទាន់បានបោះផ្សាយនៅឡើយទេ|ធៀបការមិនទាន់បានបោះផ្សាយនៅឡើយទេ/i)).toBeInTheDocument();
+      expect(screen.getByText(/Invitation Not Yet Published|សំបុត្រអញ្ជើញមិនទាន់បានបោះផ្សាយនៅឡើយទេ|ធៀបការមិនទាន់បានបោះផ្សាយនៅឡើយទេ/i)).toBeInTheDocument();
     });
 
-    expect(screen.getByRole("link", { name: /Publish Invitation|ទៅផ្សព្វផ្សាយសំបុត្រអញ្ចើញ|ទៅផ្សព្វផ្សាយធៀប/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Publish Invitation|ទៅផ្សព្វផ្សាយសំបុត្រអញ្ជើញ|ទៅផ្សព្វផ្សាយធៀប/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Prepare delivery' })).toBeDisabled();
   });
 

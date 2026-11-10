@@ -147,7 +147,7 @@ export const KHMER_CELESTIAL_TEMPLATE = withTemplateMedia({
     hasGate: true,
     opening: {
         heading: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
-        openButtonText: "បើកសំបុត្រអញ្ចើញ",
+        openButtonText: "បើកសំបុត្រអញ្ជើញ",
     },
     enabledSections: {
         countdown: true,
@@ -382,7 +382,7 @@ export const THE_DIGITAL_YES_TEMPLATE = withTemplateMedia({
     accent: "#13382c",
     dark: "#081c15",
     label: "THE DIGITAL YES",
-    description: "គំរូសំបុត្រអញ្ចើញបែប Modern Luxury ដែលមានចលនាបើកស្រោមសំបុត្រ 3D ត្រាបោះពុម្ព Wax Seal ផ្កាធ្លាក់ និងចាក់ភ្លេងស្វ័យប្រវត្តិ។",
+    description: "គំរូសំបុត្រអញ្ជើញបែប Modern Luxury ដែលមានចលនាបើកស្រោមសំបុត្រ 3D ត្រាបោះពុម្ព Wax Seal ផ្កាធ្លាក់ និងចាក់ភ្លេងស្វ័យប្រវត្តិ។",
     design: {
         openingStyle: "envelope-3d",
         primaryColor: "#13382c",
@@ -421,7 +421,7 @@ export const EMERALD_CANVA_LUXE_TEMPLATE = withTemplateMedia({
     accent: "#13382c",
     dark: "#081c15",
     label: "EMERALD ROYAL LUXE",
-    description: "គំរូសំបុត្រអញ្ចើញបែប Modern Emerald & Gold Luxury ដែលមានចលនាបើកវាំងននល្ខោន ផ្កាអ័រគីដេ និងពន្លឺមាសចែងចាំង។",
+    description: "គំរូសំបុត្រអញ្ជើញបែប Modern Emerald & Gold Luxury ដែលមានចលនាបើកវាំងននល្ខោន ផ្កាអ័រគីដេ និងពន្លឺមាសចែងចាំង។",
     design: {
         openingStyle: "curtain",
         primaryColor: "#13382c",
@@ -447,7 +447,7 @@ export const WITHJOY_PORTAL_TEMPLATE = withTemplateMedia({
     venueName: "The Premier Center Sen Sok",
     venueAddress: "អគារ A, សែនសុខ, ភ្នំពេញ",
     label: "WITHJOY PORTAL",
-    description: "គំរូសំបុត្រអញ្ចើញបែប Interactive Web App ទំនើប មាន Navigation Bar, Love Story, Schedule, Lightbox Gallery និង RSVP។",
+    description: "គំរូសំបុត្រអញ្ជើញបែប Interactive Web App ទំនើប មាន Navigation Bar, Love Story, Schedule, Lightbox Gallery និង RSVP។",
 }, "03-card");
 
 export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
@@ -471,7 +471,7 @@ export const BLISS_EDITORIAL_TEMPLATE = withTemplateMedia({
     venueName: "The Premier Center Sen Sok",
     venueAddress: "ផ្លូវ 1003, សែនសុខ, ភ្នំពេញ",
     label: "BLISS EDITORIAL",
-    description: "គំរូសំបុត្រអញ្ចើញបែប High-Fashion Vogue Editorial អក្សរ Serif ថ្លៃថ្នូរ Asymmetrical Gallery និង Slide-out RSVP Drawer។",
+    description: "គំរូសំបុត្រអញ្ជើញបែប High-Fashion Vogue Editorial អក្សរ Serif ថ្លៃថ្នូរ Asymmetrical Gallery និង Slide-out RSVP Drawer។",
 }, "03-card");
 
 export const SILK_HERITAGE_TEMPLATE = {
@@ -551,7 +551,7 @@ export const SILK_HERITAGE_TEMPLATE = {
     hasGate: true,
     opening: {
         heading: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
-        openButtonText: "បើកសំបុត្រអញ្ចើញ",
+        openButtonText: "បើកសំបុត្រអញ្ជើញ",
     },
     enabledSections: {
         countdown: true,
@@ -804,8 +804,8 @@ export function templateFromCatalogItem(item) {
             backendId: item.id,
             code: item.code || String(item.id),
             slug: item.slug || item.code || resolvedVariant || String(item.id),
-            name: item.name || parsedConfig.invitationTitle || baseStatic?.name || "គំរូសំបុត្រអញ្ចើញ",
-            title: item.name || parsedConfig.invitationTitle || baseStatic?.title || "គំរូសំបុត្រអញ្ចើញ",
+            name: item.name || parsedConfig.invitationTitle || baseStatic?.name || "គំរូសំបុត្រអញ្ជើញ",
+            title: item.name || parsedConfig.invitationTitle || baseStatic?.title || "គំរូសំបុត្រអញ្ជើញ",
             style: item.name || baseStatic?.style || "Wedding Template",
             category: item.category || baseStatic?.category || "wedding",
             image: item.thumbnailUrl || baseStatic?.image || cover,
@@ -857,7 +857,7 @@ export function templateFromCatalogItem(item) {
             googleMapUrl: parsedConfig.googleMapUrl || baseStatic?.mapQuery || "",
             message: parsedConfig.blessingMessage || baseStatic?.message || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
             messageText: parsedConfig.blessingMessage || baseStatic?.message || "សូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី...",
-            description: (parsedConfig.blessingMessage || item.description?.trim().startsWith("{") ? (parsedConfig.blessingMessage || item.name) : item.description) || baseStatic?.description || "គំរូសំបុត្រអញ្ចើញ",
+            description: (parsedConfig.blessingMessage || item.description?.trim().startsWith("{") ? (parsedConfig.blessingMessage || item.name) : item.description) || baseStatic?.description || "គំរូសំបុត្រអញ្ជើញ",
             schedule,
             dressCode,
             dressColors,
@@ -1019,8 +1019,8 @@ export function getTemplatePreset(tpl) {
         templateId: String(tpl.id || tpl.code || ""),
         presetId: presetCandidate,
         variant: tpl.variant || "",
-        name: tpl.name || tpl.style || "គំរូសំបុត្រអញ្ចើញ",
-        title: tpl.name || tpl.title || "គំរូសំបុត្រអញ្ចើញ",
+        name: tpl.name || tpl.style || "គំរូសំបុត្រអញ្ជើញ",
+        title: tpl.name || tpl.title || "គំរូសំបុត្រអញ្ជើញ",
         openingStyle,
         frontColor,
         bottomColor,

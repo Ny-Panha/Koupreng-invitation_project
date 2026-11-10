@@ -10,11 +10,11 @@ export default function LandingHero({ copy }) {
       <FadeContent className="kp-hero-copy" duration={0.6}>
         <div className="kp-hero-badge" role="text">
           <Sparkles size={14} aria-hidden="true" />
-          <span>{copy("វេទិកាសំបុត្រអញ្ចើញឌីជីថលខ្មែរដំបូងគេ", "Cambodia's premier digital wedding invitation platform")}</span>
+          <span>{copy("វេទិកាសំបុត្រអញ្ជើញឌីជីថលខ្មែរដំបូងគេ", "Cambodia's premier digital wedding invitation platform")}</span>
         </div>
-        <p className="kp-hero-category">{copy("សំបុត្រអញ្ចើញមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
+        <p className="kp-hero-category">{copy("សំបុត្រអញ្ជើញមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title">
-          <span>{copy("សំបុត្រអញ្ចើញដែលបង្ហាញ", "Invitations crafted")}</span>
+          <span>{copy("សំបុត្រអញ្ជើញដែលបង្ហាញ", "Invitations crafted")}</span>
           <span>{copy("រឿងរ៉ាវរបស់អ្នក។", "around your story.")}</span>
         </h1>
         <p className="kp-hero-lead">
@@ -29,7 +29,7 @@ export default function LandingHero({ copy }) {
             <ArrowUpRight size={18} aria-hidden="true" />
           </Link>
           <Link to="/templates" className="kp-text-link">
-            {copy("មើលគំរូសំបុត្រអញ្ចើញ", "Explore templates")}
+            {copy("មើលគំរូសំបុត្រអញ្ជើញ", "Explore templates")}
             <ArrowUpRight size={18} aria-hidden="true" />
           </Link>
         </div>

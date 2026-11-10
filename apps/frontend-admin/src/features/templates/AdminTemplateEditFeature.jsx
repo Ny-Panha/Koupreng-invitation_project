@@ -1398,7 +1398,7 @@ export default function AdminTemplateEditPage() {
   const handleSave = async () => {
     if (loading || loadError || saving) return;
     if (!form.name.trim()) {
-      show("សូមបញ្ចូលឈ្មោះគំរូសំបុត្រអញ្ចើញ (Template Name)", "error");
+      show("សូមបញ្ចូលឈ្មោះគំរូសំបុត្រអញ្ជើញ (Template Name)", "error");
       return;
     }
 
@@ -1487,7 +1487,7 @@ export default function AdminTemplateEditPage() {
         ? await adminManagementService.createTemplate(payload)
         : await adminManagementService.updateTemplate(templateId, payload);
 
-      show("បានរក្សាទុក និងផ្សព្វផ្សាយគំរូសំបុត្រអញ្ចើញជោគជ័យ ✓");
+      show("បានរក្សាទុក និងផ្សព្វផ្សាយគំរូសំបុត្រអញ្ជើញជោគជ័យ ✓");
       setBaseline(editSnapshot);
       navigate(`/templates/${res.id || templateId}`, { replace: true });
     } catch (err) {
@@ -1785,7 +1785,7 @@ export default function AdminTemplateEditPage() {
                       <p className="text-xs text-zinc-400">
                         {lang === "en"
                           ? "Select the layout style for the invitation page. Click a layout to preview it immediately on the right."
-                          : "ជ្រើសរើសរចនាបថម៉ូដទំព័រសំបុត្រអញ្ចើញ។ ចុចជ្រើសរើសម៉ូដដើម្បីមើលផ្ទាំងគំរូខាងស្តាំភ្លាមៗ។"}
+                          : "ជ្រើសរើសរចនាបថម៉ូដទំព័រសំបុត្រអញ្ជើញ។ ចុចជ្រើសរើសម៉ូដដើម្បីមើលផ្ទាំងគំរូខាងស្តាំភ្លាមៗ។"}
                       </p>
                       {!isNew && <p className="text-xs text-amber-300">{lang === "en" ? "The layout identity is fixed for existing templates. Create a new template to choose another layout." : "គំរូដែលមានស្រាប់មានម៉ូដថេរ។ សូមបង្កើតគំរូថ្មីដើម្បីជ្រើសរើសម៉ូដផ្សេង។"}</p>}
                     </div>
@@ -1977,7 +1977,7 @@ export default function AdminTemplateEditPage() {
                         <div>
                           <h3 className="text-sm font-bold text-white flex items-center gap-2">
                             <Type className="h-4 w-4 text-amber-500" />
-                            <span>ពុម្ពអក្សរសំបុត្រអញ្ចើញ (Typography & Fonts)</span>
+                            <span>ពុម្ពអក្សរសំបុត្រអញ្ជើញ (Typography & Fonts)</span>
                           </h3>
                           <p className="text-[11px] text-zinc-400 mt-0.5">
                             កំណត់ Font រួម ឬបំបែកកំណត់តាម Element ទាំង ៦ លើក្របសំបុត្រ
@@ -3887,7 +3887,7 @@ export default function AdminTemplateEditPage() {
                   <div className="space-y-4">
                     <div>
                       <label htmlFor="template-catalog-name" className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        ឈ្មោះគំរូសំបុត្រអញ្ចើញ (Template Name) *
+                        ឈ្មោះគំរូសំបុត្រអញ្ជើញ (Template Name) *
                       </label>
                       <input
                         id="template-catalog-name"

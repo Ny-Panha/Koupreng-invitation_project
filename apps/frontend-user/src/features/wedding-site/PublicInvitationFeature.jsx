@@ -510,7 +510,7 @@ function PublicUnavailableView({
                         marginBottom: "12px",
                     }}
                 >
-                    {isEn ? "Digital Wedding Hub" : "គូព្រេង • សំបុត្រអញ្ចើញឌីជីថល"}
+                    {isEn ? "Digital Wedding Hub" : "គូព្រេង • សំបុត្រអញ្ជើញឌីជីថល"}
                 </div>
 
                 {/* Main Title */}
