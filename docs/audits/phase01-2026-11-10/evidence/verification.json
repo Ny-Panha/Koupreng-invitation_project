@@ -1,0 +1,53 @@
+{
+  "auditDate": "2026-11-10",
+  "timezone": "Asia/Bangkok",
+  "reportMarkdownFiles": 16,
+  "featureRows": 50,
+  "routeRows": 135,
+  "sourceInventoryFiles": 1619,
+  "sourceInventoryLines": 225868,
+  "jsonFilesParsed": 19,
+  "brokenLocalLinks": [],
+  "migrationFilesChecked": 48,
+  "migrationChecksumDifferences": [],
+  "trackedDifferences": [],
+  "gitStatus": [
+    "?? docs/audits/",
+    "?? output/playwright/phase01-audit-20261110/"
+  ],
+  "applicationCodeModified": false,
+  "phase02Executed": false,
+  "previewServers": "Stopped via Ctrl+C; zero listeners on 4173, 4174, 5173",
+  "tests": {
+    "userVitest": {
+      "passed": 1391,
+      "failed": 0
+    },
+    "adminVitest": {
+      "passed": 191,
+      "failed": 0
+    },
+    "backendFull": {
+      "passed": 598,
+      "skipped": 82,
+      "failed": 0
+    },
+    "browserJourneys": {
+      "passed": 12,
+      "failed": 0
+    },
+    "additionalRegression": {
+      "passed": 48,
+      "failed": 4
+    },
+    "previewOriginRetest": {
+      "passed": 2,
+      "failed": 0
+    },
+    "publicTapProbe": {
+      "passed": 6,
+      "failed": 0
+    }
+  },
+  "releaseReadiness": "Unverified: live/physical-device/MySQL/provider/deployment gates remain open"
+}

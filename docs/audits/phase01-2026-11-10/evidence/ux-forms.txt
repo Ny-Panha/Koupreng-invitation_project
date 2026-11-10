@@ -1,0 +1,48 @@
+## UI Pro Max Search Results
+**Domain:** ux | **Query:** mobile form validation
+**Source:** ux-guidelines.csv | **Found:** 4 results
+
+### Result 1
+- **Category:** Forms
+- **Issue:** Submit Feedback
+- **Platform:** All
+- **Description:** Confirm form submission status
+- **Do:** Show loading then success/error state
+- **Don't:** No feedback after submit
+- **Code Example Good:** Loading -> Success message
+- **Code Example Bad:** Button click with no response
+- **Severity:** High
+
+### Result 2
+- **Category:** Accessibility
+- **Issue:** Form Labels
+- **Platform:** All
+- **Description:** Inputs must have associated labels
+- **Do:** Use label with for attribute or wrap input
+- **Don't:** Placeholder-only inputs
+- **Code Example Good:** <label for='email'>
+- **Code Example Bad:** placeholder='Email' only
+- **Severity:** High
+
+### Result 3
+- **Category:** Forms
+- **Issue:** Inline Validation
+- **Platform:** All
+- **Description:** Validate as user types or on blur
+- **Do:** Validate on blur for most fields
+- **Don't:** Validate only on submit
+- **Code Example Good:** onBlur validation
+- **Code Example Bad:** Submit-only validation
+- **Severity:** Medium
+
+### Result 4
+- **Category:** Forms
+- **Issue:** Mobile Keyboards
+- **Platform:** Mobile
+- **Description:** Show appropriate keyboard for input type
+- **Do:** Use inputmode attribute
+- **Don't:** Default keyboard for all inputs
+- **Code Example Good:** inputmode='numeric'
+- **Code Example Bad:** Text keyboard for numbers
+- **Severity:** Medium
+

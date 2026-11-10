@@ -1,0 +1,15 @@
+## UI Pro Max Search Results
+**Domain:** ux | **Query:** dragging movements
+**Source:** ux-guidelines.csv | **Found:** 1 results
+
+### Result 1
+- **Category:** Accessibility
+- **Issue:** Dragging Movements
+- **Platform:** All
+- **Description:** WCAG 2.2 AA requires a single-pointer alternative for author-controlled drag operations
+- **Do:** Add buttons menus or tap-to-move controls and retain keyboard operation
+- **Don't:** Make dragging the only way to reorder resize or select
+- **Code Example Good:** Move up and Move down buttons beside drag handle
+- **Code Example Bad:** drag handle only
+- **Severity:** High
+

@@ -1,0 +1,26 @@
+## UI Pro Max Search Results
+**Domain:** ux | **Query:** responsive layout reflow
+**Source:** ux-guidelines.csv | **Found:** 2 results
+
+### Result 1
+- **Category:** Layout
+- **Issue:** Chip Collection Reflow
+- **Platform:** All
+- **Description:** Filter chips and editable value collections must preserve labels when space or text size changes
+- **Do:** Wrap the collection or use an operable +n disclosure for hidden overflow values
+- **Don't:** Force all chips into one clipped row or hide overflow values
+- **Code Example Good:** <div class='chip-list'>{chips}</div> with flex-wrap
+- **Code Example Bad:** <div class='chip-list' style='height:32px;overflow:hidden'>
+- **Severity:** High
+
+### Result 2
+- **Category:** Accessibility
+- **Issue:** Text Reflow and Spacing
+- **Platform:** Web
+- **Description:** Text must remain available at narrow widths zoom and user spacing overrides
+- **Do:** Use fluid sizes content-driven height and unitless line height
+- **Don't:** Clip text in fixed-width or fixed-height boxes
+- **Code Example Good:** .copy { inline-size: min(100%, 65ch); height: auto; line-height: 1.5; }
+- **Code Example Bad:** .copy { width: 900px; height: 40px; overflow: hidden; }
+- **Severity:** Critical
+

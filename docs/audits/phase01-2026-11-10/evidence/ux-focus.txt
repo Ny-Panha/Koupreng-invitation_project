@@ -1,0 +1,37 @@
+## UI Pro Max Search Results
+**Domain:** ux | **Query:** keyboard focus modal
+**Source:** ux-guidelines.csv | **Found:** 3 results
+
+### Result 1
+- **Category:** Interaction
+- **Issue:** Focus States
+- **Platform:** All
+- **Description:** Keyboard focus, including controls inside a modal, needs a visible indicator
+- **Do:** Use a visible focus ring on every interactive control, including modal controls
+- **Don't:** Remove focus outline without replacement
+- **Code Example Good:** focus:ring-2 focus:ring-blue-500
+- **Code Example Bad:** outline-none without alternative
+- **Severity:** High
+
+### Result 2
+- **Category:** Accessibility
+- **Issue:** Focus Not Obscured (Enhanced)
+- **Platform:** Web
+- **Description:** WCAG 2.2 AAA requires keyboard focus to remain fully visible
+- **Do:** Keep the entire focused component unobscured by author-created content
+- **Don't:** Present this enhanced AAA criterion as an AA requirement or allow persistent UI to hide any part of focus
+- **Code Example Good:** close persistent overlay before focus moves behind it
+- **Code Example Bad:** sticky footer covers half the focused button
+- **Severity:** Medium
+
+### Result 3
+- **Category:** Accessibility
+- **Issue:** Focus Not Obscured (Minimum)
+- **Platform:** Web
+- **Description:** WCAG 2.2 AA requires keyboard focus to remain at least partially visible
+- **Do:** Offset sticky UI with scroll-padding and dismiss or move persistent overlays
+- **Don't:** Let headers footers banners or chat widgets fully cover focus
+- **Code Example Good:** scroll-padding-top: var(--header-height)
+- **Code Example Bad:** fixed overlay covers :focus
+- **Severity:** High
+

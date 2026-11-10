@@ -1,0 +1,1818 @@
+[
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/video/pre-wedding-demo.mp4",
+    "bytes": 6457854
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-4096w-transparent.png",
+    "bytes": 4299898
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/regal_scroll_frame_08_4k.webp",
+    "bytes": 3951330
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/CoverKhmer.svg",
+    "bytes": 3895101
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp-lossless/koupreng-logo-4096w-lossless.webp",
+    "bytes": 3254312
+  },
+  {
+    "file": "apps/frontend-user/src/assets/icons/background.png",
+    "bytes": 2520889
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-2048w-transparent.png",
+    "bytes": 1465750
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-original-transparent.png",
+    "bytes": 1347686
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/butto_invitation.webp",
+    "bytes": 1200030
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/butto_invitation.webp",
+    "bytes": 1200030
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-4096w.webp",
+    "bytes": 1186460
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp-lossless/koupreng-logo-2048w-lossless.webp",
+    "bytes": 1181898
+  },
+  {
+    "file": "apps/frontend-user/public/templates/canva-luxury/emerald-luxury.jpg",
+    "bytes": 1064977
+  },
+  {
+    "file": "apps/frontend-admin/public/image/a1.png",
+    "bytes": 862530
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-3072w.webp",
+    "bytes": 794506
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/07-card/07-03.jpg",
+    "bytes": 764032
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/07-card/07-03.jpg",
+    "bytes": 764032
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/cover-card.jpg",
+    "bytes": 717734
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/cover-card.jpg",
+    "bytes": 717734
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/information/background.webp",
+    "bytes": 696258
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-05.jpg",
+    "bytes": 691896
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-05.jpg",
+    "bytes": 691896
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/cover-card.jpg",
+    "bytes": 667795
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/cover-card.jpg",
+    "bytes": 667795
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/golden-calligraphy.webp",
+    "bytes": 657920
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-03.jpg",
+    "bytes": 632103
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-03.jpg",
+    "bytes": 632103
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-2560w.webp",
+    "bytes": 613604
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-04.jpg",
+    "bytes": 591975
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-04.jpg",
+    "bytes": 591975
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/07-card/cover-card.jpg",
+    "bytes": 550547
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/07-card/cover-card.jpg",
+    "bytes": 550547
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/07-card/07-02.jpg",
+    "bytes": 549325
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/07-card/07-02.jpg",
+    "bytes": 549325
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/01-card/01-03.jpg",
+    "bytes": 547415
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/01-card/01-03.jpg",
+    "bytes": 547415
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-06.jpg",
+    "bytes": 545372
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-06.jpg",
+    "bytes": 545372
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/10-04.jpg",
+    "bytes": 545098
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/10-04.jpg",
+    "bytes": 545098
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-06.jpg",
+    "bytes": 533940
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-06.jpg",
+    "bytes": 533940
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romduol-kbach-guest-frame.webp",
+    "bytes": 529718
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-07.jpg",
+    "bytes": 526531
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-07.jpg",
+    "bytes": 526531
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/09-card/09-04.jpg",
+    "bytes": 522992
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/09-card/09-04.jpg",
+    "bytes": 522992
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/08-card/08-03.jpg",
+    "bytes": 518659
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/08-card/08-03.jpg",
+    "bytes": 518659
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-02.jpg",
+    "bytes": 512953
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-02.jpg",
+    "bytes": 512953
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-07.jpg",
+    "bytes": 508243
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-07.jpg",
+    "bytes": 508243
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-08.jpg",
+    "bytes": 505246
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-08.jpg",
+    "bytes": 505246
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romduol-kbach-open-button.webp",
+    "bytes": 499062
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/08-card/08-04.jpg",
+    "bytes": 496918
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/08-card/08-04.jpg",
+    "bytes": 496918
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-05.jpg",
+    "bytes": 496262
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-05.jpg",
+    "bytes": 496262
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/07-card/07-01.jpg",
+    "bytes": 493542
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/07-card/07-01.jpg",
+    "bytes": 493542
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/07-card/07-04.jpg",
+    "bytes": 489868
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/07-card/07-04.jpg",
+    "bytes": 489868
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-1200.webp",
+    "bytes": 485280
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/11-card/11-04.jpg",
+    "bytes": 467722
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/11-card/11-04.jpg",
+    "bytes": 467722
+  },
+  {
+    "file": "apps/frontend-user/public/logo.png",
+    "bytes": 467587
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-01.jpg",
+    "bytes": 463794
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-01.jpg",
+    "bytes": 463794
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-05.jpg",
+    "bytes": 463489
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-05.jpg",
+    "bytes": 463489
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-05.jpg",
+    "bytes": 458156
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-05.jpg",
+    "bytes": 458156
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/09-card/09-03.jpg",
+    "bytes": 449885
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/09-card/09-03.jpg",
+    "bytes": 449885
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-2048w.webp",
+    "bytes": 442688
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/09-card/09-02.jpg",
+    "bytes": 437681
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/09-card/09-02.jpg",
+    "bytes": 437681
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-1024w-transparent.png",
+    "bytes": 434381
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/09-card/cover-card.jpg",
+    "bytes": 427345
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/09-card/cover-card.jpg",
+    "bytes": 427345
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-04.jpg",
+    "bytes": 423566
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-04.jpg",
+    "bytes": 423566
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/10-03.jpg",
+    "bytes": 423095
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/10-03.jpg",
+    "bytes": 423095
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/burgundy-bokeh.mp4",
+    "bytes": 420975
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/burgundy-bokeh.mp4",
+    "bytes": 420975
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/08-card/08-02.jpg",
+    "bytes": 418832
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/08-card/08-02.jpg",
+    "bytes": 418832
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-01.jpg",
+    "bytes": 417741
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-01.jpg",
+    "bytes": 417741
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/08-card/cover-card.jpg",
+    "bytes": 410812
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/08-card/cover-card.jpg",
+    "bytes": 410812
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/guest-name-banner1.webp",
+    "bytes": 408266
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/guest-name-banner1.webp",
+    "bytes": 408266
+  },
+  {
+    "file": "apps/frontend-user/src/assets/images/webp/flowers/Peony.png",
+    "bytes": 402915
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-1920w.webp",
+    "bytes": 402122
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/08-card/08-01.jpg",
+    "bytes": 397813
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/08-card/08-01.jpg",
+    "bytes": 397813
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-green-border-top.webp",
+    "bytes": 391742
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/09-card/09-01.jpg",
+    "bytes": 387114
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/09-card/09-01.jpg",
+    "bytes": 387114
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-green-border-bottom.webp",
+    "bytes": 385256
+  },
+  {
+    "file": "apps/frontend-user/src/assets/logo.png",
+    "bytes": 384504
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-garden-rings.jpg",
+    "bytes": 378992
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/11-card/11-03.jpg",
+    "bytes": 371221
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/11-card/11-03.jpg",
+    "bytes": 371221
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/06-card/06-07.jpg",
+    "bytes": 363847
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/06-card/06-07.jpg",
+    "bytes": 363847
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-03.jpg",
+    "bytes": 358492
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-03.jpg",
+    "bytes": 358492
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp-lossless/koupreng-logo-1024w-lossless.webp",
+    "bytes": 355344
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/ceremonial-title-1100.webp",
+    "bytes": 350470
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-11-1280.webp",
+    "bytes": 348994
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-02.jpg",
+    "bytes": 347391
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-02.jpg",
+    "bytes": 347391
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-04.jpg",
+    "bytes": 342613
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-04.jpg",
+    "bytes": 342613
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/11-card/11-01.jpg",
+    "bytes": 339466
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/11-card/11-01.jpg",
+    "bytes": 339466
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/04-02.jpg",
+    "bytes": 335008
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/04-02.jpg",
+    "bytes": 335008
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/opening/calligraphy.webp",
+    "bytes": 333246
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/location.webp",
+    "bytes": 331174
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/royal-garden-cinematic-960.webp",
+    "bytes": 328836
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-06.jpg",
+    "bytes": 323013
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-06.jpg",
+    "bytes": 323013
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/program.webp",
+    "bytes": 318178
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/11-card/cover-card.jpg",
+    "bytes": 312788
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/11-card/cover-card.jpg",
+    "bytes": 312788
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/blossom-branch.webp",
+    "bytes": 311354
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-hero-meadow.jpg",
+    "bytes": 308026
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-garden-rings.webp",
+    "bytes": 307144
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/botanical-frame.jpg",
+    "bytes": 305336
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/botanical-frame.jpg",
+    "bytes": 305336
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-walk-candid.jpg",
+    "bytes": 304909
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-celebration-confetti.jpg",
+    "bytes": 303187
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/opening/arch.webp",
+    "bytes": 301712
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-04.jpg",
+    "bytes": 299741
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-04.jpg",
+    "bytes": 299741
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/10-01.jpg",
+    "bytes": 289798
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/10-01.jpg",
+    "bytes": 289798
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-1536w.webp",
+    "bytes": 286448
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/information/background-640.webp",
+    "bytes": 282950
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/heritage-frame.webp",
+    "bytes": 281386
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/phone-preview-880.webp",
+    "bytes": 278322
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/golden-calligraphy-960.webp",
+    "bytes": 275214
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/video-footer-1920.webp",
+    "bytes": 275116
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-02-1280.webp",
+    "bytes": 272076
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-11.webp",
+    "bytes": 269428
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/khmer-celestial-1280.webp",
+    "bytes": 268886
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/04-03.jpg",
+    "bytes": 268465
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/04-03.jpg",
+    "bytes": 268465
+  },
+  {
+    "file": "apps/frontend-user/src/assets/images/webp/flower/lily.png",
+    "bytes": 267409
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/cover-preview-960.webp",
+    "bytes": 263420
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-06.jpg",
+    "bytes": 262528
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-06.jpg",
+    "bytes": 262528
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-03.jpg",
+    "bytes": 259910
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-03.jpg",
+    "bytes": 259910
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-09.jpg",
+    "bytes": 256001
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-09.jpg",
+    "bytes": 256001
+  },
+  {
+    "file": "apps/frontend-user/src/assets/images/webp/flower/rose.png",
+    "bytes": 242245
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-hero-meadow.webp",
+    "bytes": 242024
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-05-1280.webp",
+    "bytes": 237694
+  },
+  {
+    "file": "apps/frontend-user/src/assets/images/webp/flower/daisy.png",
+    "bytes": 236264
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/details.webp",
+    "bytes": 235292
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/floral-watercolor.webp",
+    "bytes": 233724
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-walk-candid.webp",
+    "bytes": 233480
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-01.jpg",
+    "bytes": 231298
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-01.jpg",
+    "bytes": 231298
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/cover-card.jpg",
+    "bytes": 230792
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/cover-card.jpg",
+    "bytes": 230792
+  },
+  {
+    "file": "apps/frontend-user/public/templates/silk-heritage/together.webp",
+    "bytes": 230308
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/ceremonial-folio.webp",
+    "bytes": 228792
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/ceremonial-folio.webp",
+    "bytes": 228792
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-bow.jpg",
+    "bytes": 225254
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-celebration-confetti.webp",
+    "bytes": 224922
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/10-05.jpg",
+    "bytes": 220694
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/10-05.jpg",
+    "bytes": 220694
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-1280w.webp",
+    "bytes": 219814
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-10-1280.webp",
+    "bytes": 217570
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-cake.jpg",
+    "bytes": 216982
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-08-1280.webp",
+    "bytes": 214464
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/10-card/10-02.jpg",
+    "bytes": 212057
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/10-card/10-02.jpg",
+    "bytes": 212057
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-640.webp",
+    "bytes": 205234
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-calligraphy-800.webp",
+    "bytes": 201784
+  },
+  {
+    "file": "apps/frontend-user/public/branding/preview/koupreng-on-light.jpg",
+    "bytes": 200528
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-4.webp",
+    "bytes": 196100
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/royal-garden-cinematic-640.webp",
+    "bytes": 194350
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-640w-transparent.png",
+    "bytes": 193199
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/png/koupreng-logo-640w-transparent.png",
+    "bytes": 193199
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-07-1280.webp",
+    "bytes": 190920
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/02-08.jpg",
+    "bytes": 190760
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/02-08.jpg",
+    "bytes": 190760
+  },
+  {
+    "file": "apps/frontend-user/public/branding/preview/koupreng-on-dark.jpg",
+    "bytes": 188703
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-2.webp",
+    "bytes": 187322
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-embrace.jpg",
+    "bytes": 183538
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-04-1280.webp",
+    "bytes": 182146
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-6.webp",
+    "bytes": 181048
+  },
+  {
+    "file": "apps/frontend-user/public/templates/silk-heritage/portrait.webp",
+    "bytes": 180378
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/koupreng-gold-mark.webp",
+    "bytes": 179704
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/koupreng-gold-mark.webp",
+    "bytes": 179704
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-bouquet-warmth.jpg",
+    "bytes": 175135
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/11-card/11-02.jpg",
+    "bytes": 175135
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/11-card/11-02.jpg",
+    "bytes": 175135
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/royal-stage-backdrop.jpg",
+    "bytes": 170252
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/royal-stage-backdrop.jpg",
+    "bytes": 170252
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-1.webp",
+    "bytes": 168998
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-06-1280.webp",
+    "bytes": 168618
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-03-1280.webp",
+    "bytes": 168414
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-bow.webp",
+    "bytes": 167958
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/opening/arch-640.webp",
+    "bytes": 166806
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/heritage-frame-640.webp",
+    "bytes": 163138
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-05.webp",
+    "bytes": 163008
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-banquet-night.jpg",
+    "bytes": 162511
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-09-1280.webp",
+    "bytes": 162412
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/story.webp",
+    "bytes": 162046
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/emerald-luxe-768.webp",
+    "bytes": 160142
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/regal-scroll-gold.webp",
+    "bytes": 158114
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/blush-floral-border-bottom.webp",
+    "bytes": 157418
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/blush-floral-border-top.webp",
+    "bytes": 155680
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-3.webp",
+    "bytes": 154794
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/petal-5.webp",
+    "bytes": 154696
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-blue.webp",
+    "bytes": 153070
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-1024w.webp",
+    "bytes": 153044
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/open-button-960.webp",
+    "bytes": 152514
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-cake.webp",
+    "bytes": 151862
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-01-1280.webp",
+    "bytes": 147478
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-banquet-night.webp",
+    "bytes": 147112
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/ceremonial-title-640.webp",
+    "bytes": 145080
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/cover-preview-640.webp",
+    "bytes": 143362
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-amber.webp",
+    "bytes": 143352
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/hero.webp",
+    "bytes": 143130
+  },
+  {
+    "file": "apps/frontend-user/src/assets/qr/aba_khqr_clean.png",
+    "bytes": 141867
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/opening/calligraphy-640.webp",
+    "bytes": 138822
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-960w.webp",
+    "bytes": 138450
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-violet.webp",
+    "bytes": 138388
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/video-footer-1280.webp",
+    "bytes": 134576
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-512.png",
+    "bytes": 133381
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-512.png",
+    "bytes": 133381
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/butterfly-ivory.webp",
+    "bytes": 132842
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/cover-card.jpg",
+    "bytes": 132145
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/cover-card.jpg",
+    "bytes": 132145
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/realistic/white-blossom-paper.jpg",
+    "bytes": 132011
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/khmer/NotoSansKhmer.woff2",
+    "bytes": 130576
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/silk-portrait-768.webp",
+    "bytes": 130228
+  },
+  {
+    "file": "apps/frontend-user/src/assets/images/webp/flower/orchid.png",
+    "bytes": 129977
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-frame-480.webp",
+    "bytes": 128132
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-embrace.webp",
+    "bytes": 123834
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-06.webp",
+    "bytes": 122698
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-12-1280.webp",
+    "bytes": 116496
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-bouquet-warmth.webp",
+    "bytes": 112288
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp-lossless/koupreng-logo-512w-lossless.webp",
+    "bytes": 110632
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-garden-rings-thumb.webp",
+    "bytes": 107454
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/template-defaults/PlayfairDisplay.woff2",
+    "bytes": 106612
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/couple-1280.webp",
+    "bytes": 104434
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/template-defaults/PlayfairDisplay-Italic.woff2",
+    "bytes": 103828
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/khmer-celestial-640.webp",
+    "bytes": 101136
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/phone-preview-440.webp",
+    "bytes": 100820
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-768w.webp",
+    "bytes": 99052
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/opening/demo-portrait-640.webp",
+    "bytes": 96678
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-12.webp",
+    "bytes": 93256
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-11-480.webp",
+    "bytes": 92772
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/together.webp",
+    "bytes": 89420
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/guest-kbach-1200.webp",
+    "bytes": 89208
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-banquet-night-thumb.webp",
+    "bytes": 88562
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/blessing.webp",
+    "bytes": 88238
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-512.webp",
+    "bytes": 87802
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/01-card/01-01.jpg",
+    "bytes": 87559
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/01-card/01-01.jpg",
+    "bytes": 87559
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/video-calligraphy-960.webp",
+    "bytes": 87396
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/gift.webp",
+    "bytes": 85488
+  },
+  {
+    "file": "apps/frontend-user/public/branding/social-card.jpg",
+    "bytes": 83213
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/social-card.jpg",
+    "bytes": 83213
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-celebration-confetti-thumb.webp",
+    "bytes": 82836
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/memories.webp",
+    "bytes": 82588
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-384w-transparent.png",
+    "bytes": 81917
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/png/koupreng-logo-384w-transparent.png",
+    "bytes": 81917
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-walk-candid-thumb.webp",
+    "bytes": 80412
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-01.jpg",
+    "bytes": 80005
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-01.jpg",
+    "bytes": 80005
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-hero-meadow-thumb.webp",
+    "bytes": 78708
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/silk-heritage/KantumruyPro.woff2",
+    "bytes": 76848
+  },
+  {
+    "file": "apps/frontend-admin/public/fonts/reports/KantumruyPro.woff2",
+    "bytes": 76848
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/video/footer.webp",
+    "bytes": 76036
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/cover-card.jpg",
+    "bytes": 75683
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/cover-card.jpg",
+    "bytes": 75683
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-640w.webp",
+    "bytes": 74998
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-640w.webp",
+    "bytes": 74998
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-09.webp",
+    "bytes": 73708
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-03.jpg",
+    "bytes": 73423
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-03.jpg",
+    "bytes": 73423
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/emerald-luxe-480.webp",
+    "bytes": 70598
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-02.webp",
+    "bytes": 70402
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/couple-960.webp",
+    "bytes": 69966
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-01.webp",
+    "bytes": 69286
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/ornaments/guest-frame.webp",
+    "bytes": 68856
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-11-480.webp",
+    "bytes": 67514
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-10.webp",
+    "bytes": 67404
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/royal-garden-cinematic-320.webp",
+    "bytes": 66764
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/05-card/05-02.jpg",
+    "bytes": 63788
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/05-card/05-02.jpg",
+    "bytes": 63788
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/demo-portrait-480.webp",
+    "bytes": 63230
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-05-480.webp",
+    "bytes": 59068
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-03-640.webp",
+    "bytes": 56750
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/regal-scroll-gold-480.webp",
+    "bytes": 56372
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/ceremonial-corners.webp",
+    "bytes": 55554
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/ceremonial-corners.webp",
+    "bytes": 55554
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/silk-portrait-480.webp",
+    "bytes": 55108
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-bow-thumb.webp",
+    "bytes": 53896
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-08.webp",
+    "bytes": 53628
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-512w.webp",
+    "bytes": 53626
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/open-button-480.webp",
+    "bytes": 53214
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-07.webp",
+    "bytes": 52638
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/silk-heritage/Moul-Regular.woff2",
+    "bytes": 52296
+  },
+  {
+    "file": "apps/frontend-admin/public/fonts/reports/Moul-Regular.woff2",
+    "bytes": 52296
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-02-480.webp",
+    "bytes": 52218
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/03-card/03-02.jpg",
+    "bytes": 50214
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/03-card/03-02.jpg",
+    "bytes": 50214
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/cover-preview-320.webp",
+    "bytes": 49622
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-06-480.webp",
+    "bytes": 49580
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/bride.webp",
+    "bytes": 49376
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-cake-thumb.webp",
+    "bytes": 49316
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/04-01.jpg",
+    "bytes": 49173
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/04-01.jpg",
+    "bytes": 49173
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-480w.webp",
+    "bytes": 48906
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-480w.webp",
+    "bytes": 48906
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/template-defaults/Cinzel.woff2",
+    "bytes": 47956
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/02-card/cover-card.jpg",
+    "bytes": 47787
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/02-card/cover-card.jpg",
+    "bytes": 47787
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-10-480.webp",
+    "bytes": 47530
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/video/poster.webp",
+    "bytes": 47182
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/opening-calligraphy-320.webp",
+    "bytes": 45822
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-08-480.webp",
+    "bytes": 45506
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/04-05.jpg",
+    "bytes": 43819
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/04-05.jpg",
+    "bytes": 43819
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-bouquet-warmth-thumb.webp",
+    "bytes": 43666
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/burgundy-bokeh-poster.webp",
+    "bytes": 43136
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/burgundy-bokeh-poster.webp",
+    "bytes": 43136
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-04.webp",
+    "bytes": 42012
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/04-card/04-04.jpg",
+    "bytes": 40910
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/04-card/04-04.jpg",
+    "bytes": 40910
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-09-480.webp",
+    "bytes": 40548
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/video-footer-640.webp",
+    "bytes": 40466
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/khmer/Battambang-Regular.woff2",
+    "bytes": 39920
+  },
+  {
+    "file": "apps/frontend-user/public/images/wedding/couple-studio-embrace-thumb.webp",
+    "bytes": 39646
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-05-480.webp",
+    "bytes": 39476
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/khmer/Battambang-Bold.woff2",
+    "bytes": 38568
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-06-480.webp",
+    "bytes": 37150
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/marketing/DMSans-Latin.woff2",
+    "bytes": 36932
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/01-card/01-02.jpg",
+    "bytes": 36750
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/01-card/01-02.jpg",
+    "bytes": 36750
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-03-480.webp",
+    "bytes": 36592
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/royal-location-frame.png",
+    "bytes": 36503
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/royal-location-frame.png",
+    "bytes": 36503
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-04-480.webp",
+    "bytes": 36496
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-03.webp",
+    "bytes": 36390
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-07-480.webp",
+    "bytes": 35868
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-384w.webp",
+    "bytes": 35674
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-384w.webp",
+    "bytes": 35674
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/01-card/cover-card.jpg",
+    "bytes": 35041
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/01-card/cover-card.jpg",
+    "bytes": 35041
+  },
+  {
+    "file": "apps/frontend-user/public/facebook/all/01-card/01-04.jpg",
+    "bytes": 34611
+  },
+  {
+    "file": "apps/frontend-admin/public/facebook/all/01-card/01-04.jpg",
+    "bytes": 34611
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-01-480.webp",
+    "bytes": 33392
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/rsvp.webp",
+    "bytes": 31304
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-12-480.webp",
+    "bytes": 30678
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/video-calligraphy-480.webp",
+    "bytes": 29822
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-192.png",
+    "bytes": 29544
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-192.png",
+    "bytes": 29544
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/khmer-celestial-320.webp",
+    "bytes": 29504
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-256.webp",
+    "bytes": 29364
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/guest-kbach-600.webp",
+    "bytes": 28878
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-320w.webp",
+    "bytes": 27394
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-320w.webp",
+    "bytes": 27394
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/groom.webp",
+    "bytes": 26978
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-180.png",
+    "bytes": 26514
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-180.png",
+    "bytes": 26514
+  },
+  {
+    "file": "apps/frontend-user/public/branding/png/koupreng-logo-192w-transparent.png",
+    "bytes": 26204
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/png/koupreng-logo-192w-transparent.png",
+    "bytes": 26204
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/pich-pisey/photo-12-480.webp",
+    "bytes": 25320
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/couple-480.webp",
+    "bytes": 25140
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-01-480.webp",
+    "bytes": 25062
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-10-480.webp",
+    "bytes": 24764
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-09-480.webp",
+    "bytes": 24372
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/silk-heritage/CormorantGaramond.woff2",
+    "bytes": 24320
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/guest-frame-480.webp",
+    "bytes": 24156
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/gallery.webp",
+    "bytes": 23342
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-02-480.webp",
+    "bytes": 22628
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/khmer-celestial/royal-khmer-crest.png",
+    "bytes": 21554
+  },
+  {
+    "file": "apps/frontend-admin/public/invitations/khmer-celestial/royal-khmer-crest.png",
+    "bytes": 21554
+  },
+  {
+    "file": "apps/frontend-user/public/fonts/template-defaults/Koulen-Regular.woff2",
+    "bytes": 20920
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-256w.webp",
+    "bytes": 19870
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-256w.webp",
+    "bytes": 19870
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-07-480.webp",
+    "bytes": 18454
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-08-480.webp",
+    "bytes": 17562
+  },
+  {
+    "file": "apps/frontend-user/public/images/marketing/catalog/emerald-luxe-240.webp",
+    "bytes": 16862
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-04-480.webp",
+    "bytes": 15880
+  },
+  {
+    "file": "apps/frontend-user/public/branding/koupreng-mark.png",
+    "bytes": 15813
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-03-480.webp",
+    "bytes": 13198
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-192w.webp",
+    "bytes": 13046
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-192w.webp",
+    "bytes": 13046
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v4/burgundy-velvet.webp",
+    "bytes": 13010
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-11-thumb.webp",
+    "bytes": 11120
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3-1/monogram-128.webp",
+    "bytes": 10958
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/v3/effects/butterfly.webp",
+    "bytes": 10580
+  },
+  {
+    "file": "apps/frontend-user/public/invitations/canva-khmer/sections/footer.webp",
+    "bytes": 10212
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-160w.webp",
+    "bytes": 10050
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-160w.webp",
+    "bytes": 10050
+  },
+  {
+    "file": "apps/frontend-admin/public/favicon.svg",
+    "bytes": 9522
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-06-thumb.webp",
+    "bytes": 8632
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-05-thumb.webp",
+    "bytes": 8584
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/violet-butterfly.webp",
+    "bytes": 8498
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/blue-butterfly.webp",
+    "bytes": 8444
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/golden-butterfly.webp",
+    "bytes": 8150
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-128w.webp",
+    "bytes": 7138
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/webp/koupreng-logo-128w.webp",
+    "bytes": 7138
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/pink-butterfly.webp",
+    "bytes": 6694
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-12-thumb.webp",
+    "bytes": 4790
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-96w.webp",
+    "bytes": 4678
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-10-thumb.webp",
+    "bytes": 4334
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/preview.svg",
+    "bytes": 4234
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-01-thumb.webp",
+    "bytes": 3926
+  },
+  {
+    "file": "apps/frontend-user/public/templates/cover-khmer-golden-wedding/cover-preview.svg",
+    "bytes": 3924
+  },
+  {
+    "file": "apps/frontend-user/public/templates/cover-khmer-golden-wedding/cover-bg.svg",
+    "bytes": 3558
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/lotus-petal.webp",
+    "bytes": 3472
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/botanical.svg",
+    "bytes": 3372
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-09-thumb.webp",
+    "bytes": 3272
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-48.png",
+    "bytes": 3191
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-48.png",
+    "bytes": 3191
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-02-thumb.webp",
+    "bytes": 2932
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-07-thumb.webp",
+    "bytes": 2656
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-04-thumb.webp",
+    "bytes": 2652
+  },
+  {
+    "file": "apps/frontend-user/public/branding/webp/koupreng-logo-64w.webp",
+    "bytes": 2620
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-03-thumb.webp",
+    "bytes": 2432
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/gold-star.webp",
+    "bytes": 2424
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/romantic-08-thumb.webp",
+    "bytes": 2402
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/demo-map.svg",
+    "bytes": 2303
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-32.png",
+    "bytes": 1733
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-32.png",
+    "bytes": 1733
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/effects/blush-heart.webp",
+    "bytes": 1654
+  },
+  {
+    "file": "apps/frontend-user/public/branding/favicon.png",
+    "bytes": 1254
+  },
+  {
+    "file": "apps/frontend-user/public/templates/silk-heritage/cover.svg",
+    "bytes": 1066
+  },
+  {
+    "file": "apps/frontend-user/public/templates/silk-heritage/preview.svg",
+    "bytes": 991
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/kbach-pattern.svg",
+    "bytes": 878
+  },
+  {
+    "file": "apps/frontend-user/public/templates/event-essential.svg",
+    "bytes": 672
+  },
+  {
+    "file": "apps/frontend-user/public/branding/icons/icon-16.png",
+    "bytes": 617
+  },
+  {
+    "file": "apps/frontend-admin/public/branding/icons/icon-16.png",
+    "bytes": 617
+  },
+  {
+    "file": "apps/frontend-user/public/templates/silk-heritage/woven-ornament.svg",
+    "bytes": 367
+  },
+  {
+    "file": "apps/frontend-user/public/templates/khmer-floral-gold/paper-grain.svg",
+    "bytes": 326
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/ivory.svg",
+    "bytes": 267
+  },
+  {
+    "file": "apps/frontend-user/public/templates/royal-garden/timeline-curve.svg",
+    "bytes": 215
+  }
+]

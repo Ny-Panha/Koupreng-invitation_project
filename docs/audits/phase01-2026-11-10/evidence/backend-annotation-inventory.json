@@ -1,0 +1,3112 @@
+[
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/ticket/application/TicketIntegrationTests.java",
+    "line": 46,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/rsvp/application/RsvpSummaryPerformanceMySqlTests.java",
+    "line": 41,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/reporting/application/QueryGrowthIntegrationTests.java",
+    "line": 38,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/reporting/application/ReportingIntegrityMySqlTests.java",
+    "line": 30,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/invitation/application/EventDraftPersistenceTests.java",
+    "line": 39,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/invitation/application/KhmerFloralGoldIntegrationTests.java",
+    "line": 36,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/invitation/application/RoyalGardenMapMySqlTests.java",
+    "line": 38,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/gift/application/ManualGiftPersistenceTests.java",
+    "line": 29,
+    "annotation": "@ActiveProfiles(\"test\") @Transactional"
+  },
+  {
+    "file": "apps/backend/src/test/java/com/koupreng/backend/checkin/application/CheckInSummaryQueryIntegrationTests.java",
+    "line": 39,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/dev/DevSampleDataInitializer.java",
+    "line": 71,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/api/UserController.java",
+    "line": 29,
+    "annotation": "@RequestMapping({\"/api/v1/users/me\", \"/api/users/me\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/api/UserController.java",
+    "line": 45,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/api/UserController.java",
+    "line": 50,
+    "annotation": "@PatchMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/api/UserController.java",
+    "line": 58,
+    "annotation": "@PostMapping(\"/change-password\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/api/UserController.java",
+    "line": 67,
+    "annotation": "@PostMapping(value = \"/profile-image\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/application/UserService.java",
+    "line": 51,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/application/UserService.java",
+    "line": 56,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/application/UserService.java",
+    "line": 73,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/application/UserService.java",
+    "line": 86,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/domain/AppUser.java",
+    "line": 29,
+    "annotation": "@Table(name = \"users\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/user/infrastructure/persistence/AppUserRepository.java",
+    "line": 17,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 12,
+    "annotation": "@RequestMapping(value = \"/api/v1\", produces = \"application/json\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 28,
+    "annotation": "@GetMapping(\"/invitations/{eventId}/ticket-design\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 33,
+    "annotation": "@PutMapping(\"/invitations/{eventId}/ticket-design\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 43,
+    "annotation": "@GetMapping(\"/invitations/{eventId}/ticket\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 48,
+    "annotation": "@GetMapping(\"/invitations/{eventId}/guests/{guestId}/ticket\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/api/TicketController.java",
+    "line": 53,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}/ticket\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/application/TicketService.java",
+    "line": 42,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/application/TicketService.java",
+    "line": 48,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/application/TicketService.java",
+    "line": 84,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/application/TicketService.java",
+    "line": 93,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/ticket/domain/InvitationTicketDesign.java",
+    "line": 9,
+    "annotation": "@Table(name = \"invitation_ticket_designs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateCatalogController.java",
+    "line": 16,
+    "annotation": "@RequestMapping(\"/api/v1/templates\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateCatalogController.java",
+    "line": 26,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateCatalogController.java",
+    "line": 34,
+    "annotation": "@GetMapping(\"/{templateId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateCatalogController.java",
+    "line": 42,
+    "annotation": "@GetMapping(\"/slug/{code}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateRecommendationController.java",
+    "line": 13,
+    "annotation": "@RequestMapping(\"/api/v1/templates/recommendations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/api/TemplateRecommendationController.java",
+    "line": 19,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/application/TemplateCatalogService.java",
+    "line": 40,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/application/TemplateCatalogService.java",
+    "line": 48,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/application/TemplateCatalogService.java",
+    "line": 56,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/application/TemplateCatalogService.java",
+    "line": 67,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/application/TemplateRecommendationService.java",
+    "line": 39,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/template/domain/InvitationTemplate.java",
+    "line": 14,
+    "annotation": "@Table(name = \"templates\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 31,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 42,
+    "annotation": "@GetMapping(\"/public/packages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 51,
+    "annotation": "@GetMapping(\"/packages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 59,
+    "annotation": "@GetMapping({\"/me/subscriptions/current\", \"/me/subscription\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 67,
+    "annotation": "@GetMapping(\"/me/subscriptions\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 75,
+    "annotation": "@GetMapping(\"/me/subscriptions/orders/{orderCode}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 87,
+    "annotation": "@PostMapping({\"/me/subscriptions/purchase\", \"/packages/{packageId}/purchase\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 108,
+    "annotation": "@PostMapping(\"/internal/subscription-payments/telegram-detect\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/api/SubscriptionController.java",
+    "line": 124,
+    "annotation": "@PostMapping(\"/internal/subscription-payments/confirm\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 115,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 123,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 178,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 188,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 196,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 208,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 279,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 550,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 722,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 729,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 740,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 756,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 768,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/application/SubscriptionService.java",
+    "line": 824,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/domain/Subscription.java",
+    "line": 11,
+    "annotation": "@Table(name = \"subscriptions\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/domain/SubscriptionPackage.java",
+    "line": 10,
+    "annotation": "@Table(name = \"packages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/infrastructure/persistence/SubscriptionRepository.java",
+    "line": 32,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/infrastructure/persistence/SubscriptionRepository.java",
+    "line": 42,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/infrastructure/persistence/SubscriptionRepository.java",
+    "line": 46,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/subscription/infrastructure/persistence/SubscriptionRepository.java",
+    "line": 87,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/shared/api/HealthController.java",
+    "line": 14,
+    "annotation": "@GetMapping({\"/\", \"/api/health\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/shared/api/I18nController.java",
+    "line": 417,
+    "annotation": "@GetMapping(\"/api/v1/i18n/messages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/shared/config/DocumentationRedirectController.java",
+    "line": 14,
+    "annotation": "@GetMapping({\"/swagger-ui.html\", \"/swagger-ui/index.html\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 31,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 42,
+    "annotation": "@GetMapping(\"/seating\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 53,
+    "annotation": "@GetMapping(\"/tables\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 64,
+    "annotation": "@PostMapping({\"/seating/tables\", \"/tables\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 76,
+    "annotation": "@PutMapping({\"/seating/tables/{tableId}\", \"/tables/{tableId}\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 89,
+    "annotation": "@DeleteMapping({\"/seating/tables/{tableId}\", \"/tables/{tableId}\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 99,
+    "annotation": "@PostMapping(\"/seating/assignments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 111,
+    "annotation": "@PostMapping(\"/tables/{tableId}/assign-guests\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 125,
+    "annotation": "@DeleteMapping(\"/seating/assignments/{assignmentId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 135,
+    "annotation": "@DeleteMapping(\"/guests/{guestId}/seat\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 145,
+    "annotation": "@GetMapping(\"/seating/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingController.java",
+    "line": 156,
+    "annotation": "@GetMapping(\"/seating/export\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingLayoutController.java",
+    "line": 15,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/seating/layout\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingLayoutController.java",
+    "line": 21,
+    "annotation": "@GetMapping public ApiResponse<SeatingLayoutResponse> get(Authentication auth, @PathVariable Long invitationId) {"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/api/SeatingLayoutController.java",
+    "line": 25,
+    "annotation": "@PutMapping public ApiResponse<SeatingLayoutResponse> save(Authentication auth, @PathVariable Long invitationId, @Valid @RequestBody SeatingLayoutRequest request) {"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingLayoutService.java",
+    "line": 30,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingLayoutService.java",
+    "line": 36,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 63,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 91,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 102,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 122,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 142,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 170,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 180,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 216,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 228,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/application/SeatingService.java",
+    "line": 240,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/domain/EventTable.java",
+    "line": 21,
+    "annotation": "@Table(name = \"event_tables\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/domain/GuestSeatAssignment.java",
+    "line": 21,
+    "annotation": "@Table(name = \"guest_seat_assignments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/domain/SeatingLayout.java",
+    "line": 8,
+    "annotation": "@Getter @Setter @Entity @Table(name = \"event_seating_layouts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/seating/infrastructure/persistence/EventTableRepository.java",
+    "line": 19,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 37,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 57,
+    "annotation": "@PostMapping(\"/public/invitations/{slug}/rsvp\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 72,
+    "annotation": "@PostMapping(\"/public/invitations/{slug}/guests/{inviteToken}/rsvp\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 86,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}/rsvp-summary-public\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 100,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}/wishes\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 112,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/rsvps\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 123,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/rsvps/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 134,
+    "annotation": "@PatchMapping(\"/invitations/{invitationId}/rsvps/{rsvpId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 147,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/rsvps/{rsvpId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 158,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/wishes/{wishId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/api/RsvpController.java",
+    "line": 164,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/wishes\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 57,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 63,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 84,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 98,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 104,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 115,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 121,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 132,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 138,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 146,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 152,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 179,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 187,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/application/RsvpService.java",
+    "line": 193,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/rsvp/domain/Rsvp.java",
+    "line": 11,
+    "annotation": "@Table(name = \"rsvps\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 26,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 37,
+    "annotation": "@GetMapping(\"/dashboard/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 45,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/dashboard\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 56,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/reports/rsvp\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 67,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/reports/guests\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 78,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/reports/rsvp/export\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 87,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/reports/guests/export\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 96,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/api/DashboardReportController.java",
+    "line": 99,
+    "annotation": "@GetMapping(\"/admin/dashboard/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 81,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 128,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 155,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 171,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 191,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 224,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/reporting/application/DashboardReportService.java",
+    "line": 257,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentConfirmationController.java",
+    "line": 22,
+    "annotation": "@RequestMapping(\"/api/v1/admin/payments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentConfirmationController.java",
+    "line": 33,
+    "annotation": "@PostMapping(\"/confirm\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentConfirmationController.java",
+    "line": 34,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentHistoryController.java",
+    "line": 21,
+    "annotation": "@RequestMapping(\"/api/v1/me/payments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentHistoryController.java",
+    "line": 32,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentHistoryController.java",
+    "line": 40,
+    "annotation": "@GetMapping(\"/{orderCode}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/PaymentHistoryController.java",
+    "line": 51,
+    "annotation": "@GetMapping(\"/{orderCode}/receipt\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 39,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 53,
+    "annotation": "@PostMapping(\"/template-payments/payway/create\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 64,
+    "annotation": "@PostMapping(\"/template-payments/create\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 75,
+    "annotation": "@PostMapping(\"/template-payments/static/create\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 86,
+    "annotation": "@GetMapping(\"/template-payments/{orderCode}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 98,
+    "annotation": "@PostMapping({\"/template-payments/{orderCode}/claim\", \"/template-payments/orders/{orderCode}/claim\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 111,
+    "annotation": "@GetMapping(\"/me/templates/paid\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 120,
+    "annotation": "@GetMapping(\"/me/templates/{templateId}/access\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 133,
+    "annotation": "@PostMapping(\"/payway/callback\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 146,
+    "annotation": "@GetMapping(\"/payway/return\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 155,
+    "annotation": "@GetMapping(\"/payway/cancel\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 163,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 166,
+    "annotation": "@GetMapping(\"/admin/template-payments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 174,
+    "annotation": "@PostMapping(\"/admin/template-payments/confirm\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 175,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 185,
+    "annotation": "@PostMapping(\"/admin/template-payments/telegram-detect\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 186,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 197,
+    "annotation": "@PostMapping(\"/internal/template-payments/confirm\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/api/TemplatePaymentController.java",
+    "line": 206,
+    "annotation": "@PostMapping(\"/internal/template-payments/telegram-detect\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentEvidenceService.java",
+    "line": 16,
+    "annotation": "@Transactional(propagation = Propagation.MANDATORY)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 46,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 71,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 100,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 133,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 157,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/PaymentHistoryService.java",
+    "line": 162,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 191,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 206,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 214,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 272,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 429,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 533,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 585,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 641,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 649,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 665,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/application/TemplatePaymentService.java",
+    "line": 677,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/OrganizerPayoutAccount.java",
+    "line": 10,
+    "annotation": "@Table(name = \"organizer_payout_accounts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/PaymentConfig.java",
+    "line": 11,
+    "annotation": "@Table(name = \"payment_configs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/PaymentEvidence.java",
+    "line": 13,
+    "annotation": "@Table(name = \"payment_evidence\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/PaymentTransaction.java",
+    "line": 12,
+    "annotation": "@Table(name = \"payment_transactions\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/PaymentWebhookLog.java",
+    "line": 9,
+    "annotation": "@Table(name = \"payment_webhook_logs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/TelegramNotification.java",
+    "line": 9,
+    "annotation": "@Table(name = \"telegram_notifications\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/TemplateOrder.java",
+    "line": 24,
+    "annotation": "@Table(name = \"template_orders\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/TemplatePaymentOrder.java",
+    "line": 24,
+    "annotation": "@Table(name = \"template_payment_orders\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/domain/UserTemplateAccess.java",
+    "line": 22,
+    "annotation": "@Table(name = \"user_template_access\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/infrastructure/persistence/PaymentEvidenceRepository.java",
+    "line": 21,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/infrastructure/persistence/TemplatePaymentOrderRepository.java",
+    "line": 29,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/payment/infrastructure/persistence/TemplatePaymentOrderRepository.java",
+    "line": 36,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 29,
+    "annotation": "@RequestMapping(\"/api/v1/organizations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 40,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 48,
+    "annotation": "@PostMapping(\"/invitations/accept\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 57,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 68,
+    "annotation": "@GetMapping(\"/{organizationId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 79,
+    "annotation": "@PostMapping(\"/{organizationId}/members\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/api/OrganizationController.java",
+    "line": 91,
+    "annotation": "@DeleteMapping(\"/{organizationId}/members/{memberId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 70,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 88,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 110,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 115,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 155,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 169,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/application/OrganizationService.java",
+    "line": 262,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/domain/Organization.java",
+    "line": 21,
+    "annotation": "@Table(name = \"organizations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/organization/domain/OrganizationMember.java",
+    "line": 21,
+    "annotation": "@Table(name = \"organization_members\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/AdminNotificationController.java",
+    "line": 35,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/AdminNotificationController.java",
+    "line": 36,
+    "annotation": "@RequestMapping(\"/api/v1/admin/notifications\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/AdminNotificationController.java",
+    "line": 52,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/AdminNotificationController.java",
+    "line": 65,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/AdminNotificationController.java",
+    "line": 77,
+    "annotation": "@PatchMapping(\"/{notificationId}/status\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 22,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 33,
+    "annotation": "@GetMapping(\"/notifications\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 41,
+    "annotation": "@GetMapping(\"/notifications/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 49,
+    "annotation": "@PatchMapping(\"/notifications/{notificationId}/read\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 60,
+    "annotation": "@PatchMapping(\"/notifications/read-all\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/api/NotificationController.java",
+    "line": 68,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/notifications\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 75,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 81,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 106,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 129,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 153,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 196,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 211,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 219,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 227,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 239,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 255,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/NotificationService.java",
+    "line": 270,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/application/PaymentNotificationService.java",
+    "line": 14,
+    "annotation": "@Transactional(propagation = Propagation.MANDATORY)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/notification/domain/Notification.java",
+    "line": 27,
+    "annotation": "@Table(name = \"notifications\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 30,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 37,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/ticket-image\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 43,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/pre-wedding-video\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 49,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/media/{mediaId}/cinematic-content\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 60,
+    "annotation": "@PostMapping(\"/public/invitations/{slug}/media/{mediaId}/cinematic-content\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 75,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/cover\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 86,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/gallery\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 106,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/video\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 117,
+    "annotation": "@PostMapping(value = \"/invitations/{invitationId}/media/music\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 128,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/media\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 141,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}/media\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 153,
+    "annotation": "@PutMapping(value = \"/invitations/{invitationId}/media/{mediaId}/replace\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/api/MediaController.java",
+    "line": 166,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/media/{mediaId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 125,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 130,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 166,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 173,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 190,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 197,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 212,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 217,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 222,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 228,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 235,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 247,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+    "line": 270,
+    "annotation": "@Transactional(isolation = Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/media/domain/MediaFile.java",
+    "line": 10,
+    "annotation": "@Table(name = \"media_files\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 37,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 48,
+    "annotation": "@PostMapping(\"/invitations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 58,
+    "annotation": "@GetMapping(\"/invitations/my\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 69,
+    "annotation": "@GetMapping(\"/invitations/my/status/{status}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 80,
+    "annotation": "@GetMapping(\"/invitations/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 91,
+    "annotation": "@PutMapping(\"/invitations/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 103,
+    "annotation": "@GetMapping(\"/invitations/{id}/access\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 108,
+    "annotation": "@GetMapping(\"/invitations/{id}/templates/{templateId}/access\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 115,
+    "annotation": "@PatchMapping(\"/invitations/{id}/team\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 121,
+    "annotation": "@DeleteMapping(\"/invitations/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 130,
+    "annotation": "@PatchMapping(\"/invitations/{id}/draft\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 141,
+    "annotation": "@PatchMapping(\"/invitations/{id}/publish\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 152,
+    "annotation": "@PatchMapping(\"/invitations/{id}/unpublish\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 163,
+    "annotation": "@GetMapping(\"/invitations/{id}/preview\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 174,
+    "annotation": "@GetMapping(\"/invitations/{id}/customization\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 185,
+    "annotation": "@PutMapping(\"/invitations/{id}/customization\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 199,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 213,
+    "annotation": "@GetMapping(\"/public/invitations/{slug}/guest-view\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/InvitationController.java",
+    "line": 226,
+    "annotation": "@PostMapping(\"/public/invitations/{slug}/access/verify\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/QrCodeController.java",
+    "line": 18,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/QrCodeController.java",
+    "line": 29,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/qr\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/QrCodeController.java",
+    "line": 40,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/guests/{guestId}/qr\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/EventCollaborationService.java",
+    "line": 22,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 207,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 234,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 268,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 275,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 280,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 310,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 350,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 359,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 374,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 388,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 393,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 398,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 416,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 421,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 442,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 458,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 463,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 472,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 505,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 510,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 515,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 525,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 537,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 547,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 575,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 582,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 587,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+    "line": 971,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/QrCodeService.java",
+    "line": 47,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/QrCodeService.java",
+    "line": 58,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/domain/InvitationSection.java",
+    "line": 8,
+    "annotation": "@Table(name = \"invitation_sections\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/domain/UserInvitation.java",
+    "line": 14,
+    "annotation": "@Table(name = \"invitations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/invitation/infrastructure/persistence/UserInvitationRepository.java",
+    "line": 32,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 19,
+    "annotation": "@RequestMapping(\"/api/v1/ai\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 30,
+    "annotation": "@PostMapping(\"/invitation-copy\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 40,
+    "annotation": "@PostMapping(\"/invitation/story\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 50,
+    "annotation": "@PostMapping(\"/invitation/formal-text\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 60,
+    "annotation": "@PostMapping(\"/invitation/translate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/integration/ai/api/AiInvitationAssistantController.java",
+    "line": 70,
+    "annotation": "@PostMapping(\"/invitation/timeline-suggestion\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/AttendanceAnalyticsController.java",
+    "line": 13,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/analytics\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/AttendanceAnalyticsController.java",
+    "line": 19,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestBatchController.java",
+    "line": 14,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/guests/import-batch\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestBatchController.java",
+    "line": 18,
+    "annotation": "@PostMapping(value = \"/inspect\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestBatchController.java",
+    "line": 24,
+    "annotation": "@PostMapping(\"/preview\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestBatchController.java",
+    "line": 30,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 36,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/guests\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 47,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 58,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 69,
+    "annotation": "@GetMapping(\"/grouped\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 80,
+    "annotation": "@GetMapping(\"/send-list\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 91,
+    "annotation": "@GetMapping(\"/{guestId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 103,
+    "annotation": "@PutMapping(\"/{guestId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 116,
+    "annotation": "@DeleteMapping(\"/{guestId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 126,
+    "annotation": "@GetMapping(\"/search\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 138,
+    "annotation": "@PostMapping(\"/import\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 153,
+    "annotation": "@PostMapping(value = \"/import-file/preview\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 163,
+    "annotation": "@PostMapping(value = \"/import-file\", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestController.java",
+    "line": 176,
+    "annotation": "@GetMapping(\"/export\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestDashboardController.java",
+    "line": 12,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/guests\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestDashboardController.java",
+    "line": 18,
+    "annotation": "@GetMapping(\"/overview\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestDashboardController.java",
+    "line": 22,
+    "annotation": "@GetMapping(\"/page\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/api/GuestDashboardController.java",
+    "line": 28,
+    "annotation": "@PostMapping(value=\"/export-selection\",produces=\"text/csv\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/AttendanceAnalyticsService.java",
+    "line": 31,
+    "annotation": "@Transactional(readOnly=true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestBatchService.java",
+    "line": 37,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestBatchService.java",
+    "line": 43,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestBatchService.java",
+    "line": 49,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestDashboardService.java",
+    "line": 32,
+    "annotation": "@Transactional(readOnly=true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestDashboardService.java",
+    "line": 38,
+    "annotation": "@Transactional(readOnly=true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestDashboardService.java",
+    "line": 49,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 91,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 104,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 115,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 134,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 153,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 159,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 171,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 177,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 188,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 208,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 245,
+    "annotation": "@Transactional(isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/application/GuestService.java",
+    "line": 286,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/domain/Guest.java",
+    "line": 11,
+    "annotation": "@Table(name = \"guests\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/domain/GuestImportBatch.java",
+    "line": 8,
+    "annotation": "@Getter @Setter @Entity @Table(name = \"guest_import_batches\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/infrastructure/persistence/GuestRepository.java",
+    "line": 35,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/guest/infrastructure/persistence/GuestRepository.java",
+    "line": 44,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/api/WeddingGiftController.java",
+    "line": 27,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/gifts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/api/WeddingGiftController.java",
+    "line": 38,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/api/WeddingGiftController.java",
+    "line": 49,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/api/WeddingGiftController.java",
+    "line": 62,
+    "annotation": "@PutMapping(\"/{giftId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/api/WeddingGiftController.java",
+    "line": 75,
+    "annotation": "@DeleteMapping(\"/{giftId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/application/WeddingGiftService.java",
+    "line": 45,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/application/WeddingGiftService.java",
+    "line": 53,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/application/WeddingGiftService.java",
+    "line": 60,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/application/WeddingGiftService.java",
+    "line": 86,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/application/WeddingGiftService.java",
+    "line": 99,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/gift/domain/WeddingGift.java",
+    "line": 23,
+    "annotation": "@Table(name = \"wedding_gifts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 19,
+    "annotation": "@RequestMapping(\"/api/v1/events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 21,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 30,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 41,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 49,
+    "annotation": "@GetMapping(\"/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 57,
+    "annotation": "@GetMapping(\"/published\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 65,
+    "annotation": "@GetMapping(\"/drafts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 73,
+    "annotation": "@GetMapping(\"/{id}/preview\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 81,
+    "annotation": "@PutMapping(\"/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 92,
+    "annotation": "@PatchMapping(\"/{id}/draft\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 100,
+    "annotation": "@PatchMapping(\"/{id}/publish\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 108,
+    "annotation": "@PatchMapping(\"/{id}/unpublish\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/api/EventController.java",
+    "line": 116,
+    "annotation": "@DeleteMapping(\"/{id}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 26,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 73,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 95,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 104,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 113,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/application/EventService.java",
+    "line": 129,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/event/domain/Event.java",
+    "line": 13,
+    "annotation": "@Table(name = \"events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/api/EntitlementController.java",
+    "line": 15,
+    "annotation": "@RequestMapping(\"/api/v1/me/entitlements\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/api/EntitlementController.java",
+    "line": 22,
+    "annotation": "@GetMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 64,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 76,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 89,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 96,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 105,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 112,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 127,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/entitlement/application/EntitlementService.java",
+    "line": 170,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 23,
+    "annotation": "@RequestMapping(\"/api/v1/admin/dev-monitor\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 24,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 33,
+    "annotation": "@GetMapping(value = \"/stream\", produces = MediaType.TEXT_EVENT_STREAM_VALUE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 50,
+    "annotation": "@GetMapping(\"/events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 66,
+    "annotation": "@GetMapping(\"/stats\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/ApiMonitorController.java",
+    "line": 71,
+    "annotation": "@PostMapping(\"/clear\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/DevTelemetryController.java",
+    "line": 20,
+    "annotation": "@RequestMapping(\"/api/v1/dev-monitor\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/devmonitor/api/DevTelemetryController.java",
+    "line": 29,
+    "annotation": "@PostMapping(\"/telemetry\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 28,
+    "annotation": "@RequestMapping(\"/api/v1/invitations/{invitationId}/delivery\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 39,
+    "annotation": "@PostMapping(\"/prepare\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 50,
+    "annotation": "@GetMapping(\"/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 61,
+    "annotation": "@GetMapping(\"/guests/{guestId}/share-message\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 73,
+    "annotation": "@PostMapping(\"/guests/{guestId}/mark-shared\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 85,
+    "annotation": "@PostMapping(\"/email\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 97,
+    "annotation": "@PostMapping(\"/reminders\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/api/InvitationDeliveryController.java",
+    "line": 109,
+    "annotation": "@GetMapping(\"/events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 72,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 111,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 167,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 182,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 208,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 255,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/application/InvitationDeliveryService.java",
+    "line": 325,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/delivery/domain/InvitationDeliveryEvent.java",
+    "line": 12,
+    "annotation": "@Table(name = \"invitation_delivery_events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/contact/api/ContactController.java",
+    "line": 17,
+    "annotation": "@RequestMapping(\"/api/v1/contact\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/contact/api/ContactController.java",
+    "line": 28,
+    "annotation": "@PostMapping"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 28,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 32,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/check-in/roster\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 47,
+    "annotation": "@PostMapping(\"/invitations/{invitationId}/check-in/scan\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 59,
+    "annotation": "@PostMapping(\"/invitations/{invitationId}/guests/{guestId}/check-in\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 73,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/guests/{guestId}/check-in\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 79,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/check-in/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/api/CheckInController.java",
+    "line": 90,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/check-in/list\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 76,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 85,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 93,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 112,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 129,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/application/CheckInService.java",
+    "line": 137,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/domain/GuestCheckIn.java",
+    "line": 22,
+    "annotation": "@Table(name = \"guest_check_ins\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/checkin/domain/GuestCheckInEvent.java",
+    "line": 12,
+    "annotation": "@Table(name = \"guest_check_in_events\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 36,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 47,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/budget\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 58,
+    "annotation": "@PutMapping(\"/invitations/{invitationId}/budget\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 70,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/budget/summary\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 81,
+    "annotation": "@PostMapping(\"/invitations/{invitationId}/budget/items\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 93,
+    "annotation": "@PutMapping(\"/invitations/{invitationId}/budget/items/{itemId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 106,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/budget/items/{itemId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 116,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/budget/export\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 124,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 127,
+    "annotation": "@GetMapping(\"/admin/invitations/{invitationId}/budget\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 138,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 139,
+    "annotation": "@GetMapping(\"/admin/invitations/{invitationId}/budget-items\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 150,
+    "annotation": "@GetMapping(\"/invitations/{invitationId}/budget-items\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 161,
+    "annotation": "@PostMapping(\"/invitations/{invitationId}/budget-items\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 174,
+    "annotation": "@PutMapping(\"/invitations/{invitationId}/budget-items/{itemId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/api/BudgetController.java",
+    "line": 187,
+    "annotation": "@DeleteMapping(\"/invitations/{invitationId}/budget-items/{itemId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 69,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 76,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 103,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 134,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 179,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 196,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 203,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 219,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 228,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 238,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 246,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 256,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/application/BudgetService.java",
+    "line": 270,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/domain/Budget.java",
+    "line": 11,
+    "annotation": "@Table(name = \"budgets\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/budget/domain/BudgetItem.java",
+    "line": 10,
+    "annotation": "@Table(name = \"budget_items\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 45,
+    "annotation": "@RequestMapping({\"/api/v1/auth\", \"/api/auth\"})"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 76,
+    "annotation": "@PostMapping(\"/register\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 91,
+    "annotation": "@PostMapping(\"/login\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 97,
+    "annotation": "@PostMapping(\"/google\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 104,
+    "annotation": "@PostMapping(\"/telegram\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 111,
+    "annotation": "@PostMapping(\"/link/google\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 118,
+    "annotation": "@PostMapping(\"/link/telegram\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 125,
+    "annotation": "@PostMapping(\"/logout\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 137,
+    "annotation": "@GetMapping(\"/me\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 150,
+    "annotation": "@PutMapping(\"/me\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 161,
+    "annotation": "@PostMapping(\"/change-password\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 172,
+    "annotation": "@PostMapping(\"/forgot-password\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java",
+    "line": 180,
+    "annotation": "@PostMapping(\"/reset-password\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AccountService.java",
+    "line": 70,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AccountService.java",
+    "line": 84,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AccountService.java",
+    "line": 92,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 94,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 128,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 164,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 169,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 174,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 179,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AuthService.java",
+    "line": 184,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/domain/PasswordResetToken.java",
+    "line": 19,
+    "annotation": "@Table(name = \"password_reset_tokens\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/domain/UserExternalIdentity.java",
+    "line": 24,
+    "annotation": "@Table(name = \"user_external_identities\", uniqueConstraints = {"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/auth/infrastructure/persistence/PasswordResetTokenRepository.java",
+    "line": 16,
+    "annotation": "@Lock(LockModeType.PESSIMISTIC_WRITE)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/api/AuditLogController.java",
+    "line": 18,
+    "annotation": "@RequestMapping(\"/api/v1\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/api/AuditLogController.java",
+    "line": 20,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/api/AuditLogController.java",
+    "line": 31,
+    "annotation": "@GetMapping(\"/audit-logs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/application/AuditLogQueryService.java",
+    "line": 30,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/application/AuditLogService.java",
+    "line": 39,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/application/AuditLogService.java",
+    "line": 56,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/application/AuditLogService.java",
+    "line": 67,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/application/AuditLogService.java",
+    "line": 75,
+    "annotation": "@Transactional(propagation = Propagation.REQUIRES_NEW)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/domain/AuditLog.java",
+    "line": 23,
+    "annotation": "@Table(name = \"audit_logs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/audit/domain/SystemAuditLog.java",
+    "line": 16,
+    "annotation": "@Table(name = \"system_audit_logs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 51,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 52,
+    "annotation": "@RequestMapping(\"/api/v1/admin\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 80,
+    "annotation": "@PostMapping(\"/users\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 92,
+    "annotation": "@GetMapping(\"/users\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 97,
+    "annotation": "@GetMapping(\"/users/{userId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 102,
+    "annotation": "@PatchMapping(\"/users/{userId}/activate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 114,
+    "annotation": "@PatchMapping(\"/users/{userId}/deactivate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 126,
+    "annotation": "@PatchMapping(\"/users/{userId}/role\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 139,
+    "annotation": "@GetMapping(\"/users/{userId}/invitations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 147,
+    "annotation": "@GetMapping(\"/templates\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 152,
+    "annotation": "@PostMapping(\"/templates\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 164,
+    "annotation": "@GetMapping(\"/templates/{templateId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 169,
+    "annotation": "@PutMapping(\"/templates/{templateId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 182,
+    "annotation": "@PatchMapping(\"/templates/{templateId}/activate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 194,
+    "annotation": "@PatchMapping(\"/templates/{templateId}/deactivate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 206,
+    "annotation": "@PatchMapping(\"/templates/{templateId}/premium\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 219,
+    "annotation": "@DeleteMapping(\"/templates/{templateId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 229,
+    "annotation": "@GetMapping(\"/invitations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 237,
+    "annotation": "@PatchMapping(\"/invitations/{invitationId}/moderate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 250,
+    "annotation": "@PatchMapping(\"/invitations/{invitationId}/status\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 263,
+    "annotation": "@PatchMapping(\"/invitations/{invitationId}/activate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 275,
+    "annotation": "@PatchMapping(\"/invitations/{invitationId}/deactivate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 287,
+    "annotation": "@GetMapping(\"/reports/users\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 292,
+    "annotation": "@GetMapping(\"/reports/invitations\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 307,
+    "annotation": "@GetMapping(value = \"/reports/invitations/export\", produces = \"text/csv; charset=UTF-8\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 316,
+    "annotation": "@GetMapping(\"/reports/payments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 324,
+    "annotation": "@GetMapping(value = \"/reports/payments/export\", produces = \"text/csv; charset=UTF-8\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 333,
+    "annotation": "@GetMapping(\"/reports/rsvp\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 338,
+    "annotation": "@GetMapping(\"/reports/system\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 346,
+    "annotation": "@GetMapping(\"/reports/platform\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 354,
+    "annotation": "@GetMapping(\"/analytics/overview\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 362,
+    "annotation": "@GetMapping(\"/analytics/revenue\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 370,
+    "annotation": "@GetMapping(\"/analytics/templates\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 378,
+    "annotation": "@GetMapping(\"/analytics/delivery\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 386,
+    "annotation": "@GetMapping(\"/analytics/rsvp\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 394,
+    "annotation": "@GetMapping(\"/analytics/check-in\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 402,
+    "annotation": "@GetMapping(\"/system-health\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 410,
+    "annotation": "@GetMapping(\"/audit-logs/recent\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 418,
+    "annotation": "@GetMapping(\"/alerts\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 426,
+    "annotation": "@GetMapping(\"/system-logs\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 431,
+    "annotation": "@GetMapping(\"/packages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 439,
+    "annotation": "@PostMapping(\"/packages\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 449,
+    "annotation": "@PutMapping(\"/packages/{packageId}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 463,
+    "annotation": "@PatchMapping(\"/packages/{packageId}/activate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 473,
+    "annotation": "@PatchMapping(\"/packages/{packageId}/deactivate\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 483,
+    "annotation": "@PatchMapping(\"/packages/{packageId}/toggle-visibility\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 493,
+    "annotation": "@GetMapping(\"/payments\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 501,
+    "annotation": "@GetMapping(\"/payments/{orderCode}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminManagementController.java",
+    "line": 512,
+    "annotation": "@PostMapping(\"/payments/{orderCode}/confirm\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminReportingController.java",
+    "line": 16,
+    "annotation": "@RequestMapping(\"/api/v1/admin/reports/management\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminReportingController.java",
+    "line": 17,
+    "annotation": "@PreAuthorize(\"hasRole('ADMIN')\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminReportingController.java",
+    "line": 25,
+    "annotation": "@GetMapping(\"/definitions\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminReportingController.java",
+    "line": 31,
+    "annotation": "@GetMapping(\"/{report}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/api/AdminReportingController.java",
+    "line": 36,
+    "annotation": "@GetMapping(\"/{report}/export/{format}\")"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 112,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 149,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 156,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 161,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 172,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 186,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 206,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 214,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 221,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 244,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 249,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 267,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 277,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 287,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 303,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 311,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 318,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 338,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 359,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 368,
+    "annotation": "@Transactional"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 377,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 392,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 466,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 471,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 574,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 592,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 609,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 614,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 619,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 634,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 652,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 913,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 942,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 959,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 982,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminManagementService.java",
+    "line": 989,
+    "annotation": "@Transactional(readOnly = true)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminReportingService.java",
+    "line": 37,
+    "annotation": "@Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)"
+  },
+  {
+    "file": "apps/backend/src/main/java/com/koupreng/backend/admin/application/AdminReportSnapshotWriter.java",
+    "line": 22,
+    "annotation": "@Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)"
+  }
+]

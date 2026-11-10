@@ -1,0 +1,2846 @@
+[
+  {
+    "group": "events",
+    "width": 390,
+    "url": "/app/events",
+    "body": "Skip to main content\nEN\nA\nA\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nKOUPRENG INVITATIONS\nMy Events\n\nManage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics.\n\n+ Create Event\nSearch events\nStatus\nAll statuses\nDraft\nPublished\nUnpublished\nEvent type\nAll event types\nWedding\nBirthday\nSort\nNewest\nEvent date\nTitle\nShowing 2 of 2 events\nPublished\nWedding\nEvent Essential\nDara & Sophea\nDec 20, 2026 · 17:30\nPhnom Penh\nManage event\nEdit\nPreview\nPublished\nBirthday\nEvent Essential\nSokha’s birthday\nDec 22, 2026\nGarden House\nManage event\nEdit\nPreview\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Main menu",
+        "href": null,
+        "class": "host-hamburger-btn"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item active"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "+ Create Event",
+        "href": "/app/events/new",
+        "class": "events-create-btn"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "All statusesDraftPublishedUnpublished",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Event type",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "NewestEvent dateTitle",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Manage event",
+        "href": null,
+        "class": "event-card-btn event-card-btn--primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Preview",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More options",
+        "href": null,
+        "class": "event-card-dots-btn "
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Manage event",
+        "href": null,
+        "class": "event-card-btn event-card-btn--primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Preview",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More options",
+        "href": null,
+        "class": "event-card-dots-btn "
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "ticket",
+    "width": 390,
+    "url": "/app/events/101/tickets/design",
+    "body": "Skip to main content\nEN\nA\nA\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nDigital tickets\n\nDara & Sophea\n\nPublished\nDigital invitations\nTicket designer\n\nDara & Sophea\n\nSaved design\n\nSave design\nEdit\nPreview & export\nCustomize your ticket\nStyle\nLayout\nRoyal Gold\nModern Minimal\nBotanical Floral\nIvory Seal\nAccent\nFrame\nDouble\nSingle\nNone\nHeading font\nMoul\nKantumruy Pro\nCormorant Garamond\nWording\nHeader\nFooter\nArtwork\nCover image\nNone\nUpload or replace\nRemove · Cover image\nBackground\nNone\nUpload or replace\nRemove · Background\nCover fit\nFill frame\nShow entire image\nHorizontal focal point\nVertical focal point\nBackground opacity\nGuest details\nTable & seat\nGuest count\nGuest group\nReset changes\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Main menu",
+        "href": null,
+        "class": "host-hamburger-btn"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Toggle modules menu",
+        "href": null,
+        "class": "event-mobile-nav-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Save design",
+        "href": null,
+        "class": "ticket-save-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Preview & export",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Royal GoldModern MinimalBotanical FloralIvory Seal",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "DoubleSingleNone",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "MoulKantumruy ProCormorant Garamond",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "None",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Upload Cover image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Remove · Cover image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "None",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Upload Background",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Remove · Background",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Fill frameShow entire image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Reset changes",
+        "href": null,
+        "class": "ticket-reset-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "seating",
+    "width": 390,
+    "url": "/app/events/101/seating",
+    "body": "Skip to main content\nEN\nA\nA\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nSeating\n\nDara & Sophea\n\nPublished\nSeating planner\nGuests\nExport CSV\nCreate table\nTables\n0\nCapacity\n0\nAssigned seats\n0\nUnassigned guests\n2\nTables\nAssign guests\nFloor plan\nTables\nList\nFloor plan\nA place for everyone\n\nCreate your first table to start arranging guests.\n\nCreate table\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Main menu",
+        "href": null,
+        "class": "host-hamburger-btn"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Toggle modules menu",
+        "href": null,
+        "class": "event-mobile-nav-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Guests",
+        "href": "/app/events/101/guests",
+        "class": "workspace-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export CSV",
+        "href": null,
+        "class": "workspace-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create table",
+        "href": null,
+        "class": "workspace-button primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Tables",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Assign guests",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Floor plan",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "List",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Floor plan",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create table",
+        "href": null,
+        "class": "workspace-button primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "guests",
+    "width": 390,
+    "url": "/app/events/101/guests",
+    "body": "Skip to main content\nEN\nA\nA\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nGuests\n\nDara & Sophea\n\nPublished\nGuest list\nImport\nGuest records\n2\nReserved seats\n3\nMarked sent / opened\n0\nResponded\n1\nYour guest list\n2\nGuest check-in\nExport selected (0)\nAll guests\n2\nTo invite\n1\nResponded\n1\nChecked in\n0\nConfirmed RSVP\n1\nDeclined RSVP\n0\nMaybe\n0\nNo RSVP response\n1\nGroup\nAll Groups\nGroom Side\nBride Side\nCategory\nAll Categories\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n2 / 2 guests\nGroom Side\nBride Side\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\nInclude this guest and their companions\nNot sent\nAdd\nRG\nReview Guest 2\n012340001\nNotes\nBride Side\nFamily\n2\nTable not assigned\nPending\nInvitation\nRG\nReview Guest 1\n012340000\nNotes\nBride Side\nFamily\n1\nTable not assigned\nRSVP: Attending\nInvitation\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Main menu",
+        "href": null,
+        "class": "host-hamburger-btn"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Toggle modules menu",
+        "href": null,
+        "class": "event-mobile-nav-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Import",
+        "href": null,
+        "class": "guest-button guest-button-secondary"
+      },
+      {
+        "tag": "A",
+        "text": "Guest check-in",
+        "href": "/dashboard/invitations/101/check-in",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export selected (0)",
+        "href": null,
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "All guests2",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "To invite1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Responded1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Checked in0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Confirmed RSVP1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Declined RSVP0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Maybe0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "No RSVP response1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Search name, group, phone...",
+        "href": null,
+        "class": "k-search-input"
+      },
+      {
+        "tag": "SELECT",
+        "text": "All GroupsGroom SideBride Side",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworkerOther",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Guest Name",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Group",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Category",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Seats / Persons",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Add",
+        "href": null,
+        "class": "guest-inline-save"
+      },
+      {
+        "tag": "INPUT",
+        "text": "Select guest: Review Guest 2",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "guest-icon-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Ticket",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "A",
+        "text": "Send or share for Review Guest 2 in Delivery",
+        "href": "/app/events/101/delivery?guestId=502",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "A",
+        "text": "Share invitation for Review Guest 2 via Telegram",
+        "href": "https://t.me/share/url?url=http%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation&text=%F0%9F%92%8C%20Wedding%20invitation%20Dear%20Review%20Guest%202%0APlease%20join%20us%20to%20celebrate%20our%20wedding.%0A%F0%9F%93%9D%20Note%3A%20Review%20note%0A%0A%F0%9F%91%89%20Open%20your%20invitation%20and%20RSVP%3A%0Ahttp%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Copy invitation message",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Record manual sharing",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Delete",
+        "href": null,
+        "class": "guest-danger-action"
+      },
+      {
+        "tag": "INPUT",
+        "text": "Select guest: Review Guest 1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "guest-icon-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Ticket",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "A",
+        "text": "Send or share for Review Guest 1 in Delivery",
+        "href": "/app/events/101/delivery?guestId=501",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "A",
+        "text": "Share invitation for Review Guest 1 via Telegram",
+        "href": "https://t.me/share/url?url=http%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation&text=%F0%9F%92%8C%20Wedding%20invitation%20Dear%20Review%20Guest%201%0APlease%20join%20us%20to%20celebrate%20our%20wedding.%0A%F0%9F%93%9D%20Note%3A%20Review%20note%0A%0A%F0%9F%91%89%20Open%20your%20invitation%20and%20RSVP%3A%0Ahttp%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Copy invitation message",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Delete",
+        "href": null,
+        "class": "guest-danger-action"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "auth-login",
+    "width": 390,
+    "url": "/login",
+    "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nWelcome Back\n\nSign in to continue planning your wedding invitations\n\nPhone or Email\nPassword\nSign In\n\nOR CONTINUE WITH\n\nLoading Google…\nContinue with Telegram\nGoogle script failed to load. Check your network, Google origin settings, and VITE_GOOGLE_CLIENT_ID.\nForgot password?\n\nDon't have an account? Create Account",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Back to home",
+        "href": "/",
+        "class": "auth-home-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ភាសាខ្មែរ",
+        "href": null,
+        "class": "auth-lang-btn"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English",
+        "href": null,
+        "class": "auth-lang-btn active"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "auth-brand"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": "auth-input"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": "auth-input"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "បង្ហាញពាក្យសម្ងាត់ / Show password",
+        "href": null,
+        "class": "auth-eye-btn"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign In",
+        "href": null,
+        "class": "auth-submit"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Continue with Telegram",
+        "href": null,
+        "class": "auth-social-btn telegram"
+      },
+      {
+        "tag": "A",
+        "text": "Forgot password?",
+        "href": "/forgot-password",
+        "class": "auth-footer-link"
+      },
+      {
+        "tag": "A",
+        "text": "Create Account",
+        "href": "/register",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Open support chat",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "admin-template-edit",
+    "width": 390,
+    "url": "/templates/30",
+    "body": "🎨 Edit: Batch 11 fixture template\n\nConfigure Themes, Layouts, Couple Info, and Live Realtime Preview\n\nMobile (380px)\nTablet (680px)\nDesktop\nSave & Publish\nTheme & Styles\nCouple Info\nSchedule & Media\nVenue & QR\nSettings\nម៉ូដ Template (UI Layouts)\nពណ៌ & ពុម្ពអក្សរ (Colors & Fonts)\nក្បាច់ & ក្រដាស (Frames & Textures)\nស្រោម & ពាក្យជូនពរ (Cover & Hero)\nរចនាបថម៉ូដ Template (UI Layout Engines)\nevent-essential\n\nជ្រើសរើស Architecture & Interactive Style របស់ទំព័រធៀបការ។ ចុចប្តូរ Layout ដើម្បីមើល Live Preview ខាងស្តាំភ្លាមៗ។\n\nThe layout identity is fixed for existing templates. Create a new template to choose another layout.\n\n🌸\nKhmer Celestial\nFlagship\nផ្កា & ពន្លឺមាសប្រណិត\nជ្រើសរើស\n\nរចនាបទផ្កា ស៊ុម Botanical ព័ទ្ធជុំវិញ និងពន្លឺផ្កាយមាស (Flagship)\n\n💌\nThe Digital Yes\nInteractive\nស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់\nជ្រើសរើស\n\nស្រោមសំបុត្របិទត្រា Wax Seal ចុចរបើកហូតសំបុត្រ + ផ្កាធ្លាក់\n\n🌿\nEmerald Luxe\nLuxury\nកាត 3D Flip & វាំងននកម្ញី\nជ្រើសរើស\n\nវាំងននកម្ញី Velvet បៃតងត្បូងមរកត + បង្វិលកាត 3D Flip\n\n🚀\nCustom Boilerplate\nStarter\nគំរូ Starter ថ្មីសម្រាប់ Custom\nជ្រើសរើស\n\nLayout គំរូស្រាល លឿន សម្រាប់ Developer កែប្រែតាមចិត្ត\n\nLive Simulator\nស្រោមសំបុត្រ (Cover)\nមាតិកាពេញ (Full)\n9:41\n5G\n100%",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Back to templates",
+        "href": "/templates",
+        "class": "flex h-11 shrink-0 items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-800/50 px-3.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Mobile (380px)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Tablet (680px)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Desktop",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export JSON",
+        "href": null,
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Import JSON",
+        "href": null,
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+      },
+      {
+        "tag": "A",
+        "text": "Open User Tab",
+        "href": "http://localhost:5173/templates/event-essential",
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Save & Publish",
+        "href": null,
+        "class": "flex h-9 items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 text-xs font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:brightness-110 active:scale-95 disabled:opacity-50 cursor-pointer"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Theme & Styles",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-md shadow-amber-500/20"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Couple Info",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Schedule & Media",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Venue & QR",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Settings",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ម៉ូដ Template (UI Layouts)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ពណ៌ & ពុម្ពអក្សរ (Colors & Fonts)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ក្បាច់ & ក្រដាស (Frames & Textures)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ស្រោម & ពាក្យជូនពរ (Cover & Hero)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🌸Khmer CelestialFlagshipផ្កា & ពន្លឺមាសប្រណិតជ្រើសរើសរចនាបទផ្កា ស៊ុម Botanical ព័ទ្ធជុំវិ",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "💌The Digital YesInteractiveស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់ជ្រើសរើសស្រោមសំបុត្របិទត្រា Wax Se",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🌿Emerald LuxeLuxuryកាត 3D Flip & វាំងននកម្ញីជ្រើសរើសវាំងននកម្ញី Velvet បៃតងត្បូងមរកត + បង",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🚀Custom BoilerplateStarterគំរូ Starter ថ្មីសម្រាប់ Customជ្រើសរើសLayout គំរូស្រាល លឿន សម្",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ស្រោមសំបុត្រ (Cover)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap bg-amber-500 text-slate-950 shadow-sm font-bold"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "មាតិកាពេញ (Full)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap text-zinc-400 hover:text-zinc-200"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "events",
+    "width": 1440,
+    "url": "/app/events",
+    "body": "Skip to main content\nEvents\nCreate Event\nPackages\nBrowse Templates\nខ្មែរ\nEN\nA\nAudit Host\nA\nAudit Host\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nKOUPRENG INVITATIONS\nMy Events\n\nManage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics.\n\n+ Create Event\nSearch events\nStatus\nAll statuses\nDraft\nPublished\nUnpublished\nEvent type\nAll event types\nWedding\nBirthday\nSort\nNewest\nEvent date\nTitle\nShowing 2 of 2 events\nPublished\nWedding\nEvent Essential\nDara & Sophea\nDec 20, 2026 · 17:30\nPhnom Penh\nManage event\nEdit\nPreview\nPublished\nBirthday\nEvent Essential\nSokha’s birthday\nDec 22, 2026\nGarden House\nManage event\nEdit\nPreview\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-nav-link active"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item active"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "+ Create Event",
+        "href": "/app/events/new",
+        "class": "events-create-btn"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "All statusesDraftPublishedUnpublished",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Event type",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "NewestEvent dateTitle",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Manage event",
+        "href": null,
+        "class": "event-card-btn event-card-btn--primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Preview",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More options",
+        "href": null,
+        "class": "event-card-dots-btn "
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Manage event",
+        "href": null,
+        "class": "event-card-btn event-card-btn--primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Preview",
+        "href": null,
+        "class": "event-card-btn event-card-btn--secondary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More options",
+        "href": null,
+        "class": "event-card-dots-btn "
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "ticket",
+    "width": 1440,
+    "url": "/app/events/101/tickets/design",
+    "body": "Skip to main content\nEvents\nCreate Event\nPackages\nBrowse Templates\nខ្មែរ\nEN\nA\nAudit Host\nA\nAudit Host\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nEvent workspace\nSwitch event\nDara & Sophea\nSokha’s birthday\nWedding\nPublished\nDashboard\nInvitation Studio\nGuests\nRSVP\nDelivery\nInvitation\nDigital tickets\nPreview\nMedia\nAttendance\nManagement\nGifts\nBudget\nReports\nMore\nMy Events\nCollapse\nDigital invitations\nTicket designer\n\nDara & Sophea\n\nSaved design\n\nSave design\nCustomize your ticket\nStyle\nLayout\nRoyal Gold\nModern Minimal\nBotanical Floral\nIvory Seal\nAccent\nFrame\nDouble\nSingle\nNone\nHeading font\nMoul\nKantumruy Pro\nCormorant Garamond\nWording\nHeader\nFooter\nArtwork\nCover image\nNone\nUpload or replace\nRemove · Cover image\nBackground\nNone\nUpload or replace\nRemove · Background\nCover fit\nFill frame\nShow entire image\nHorizontal focal point\nVertical focal point\nBackground opacity\nGuest details\nTable & seat\nGuest count\nGuest group\nReset changes\nLive preview\nPreview recipient\nGeneral invitation · no guest check-in\nReview Guest 1\nReview Guest 2\n\n· 2027-12-20 17:30 · Phnom Penh\n\nDownload PNG · 2×\nPNG · 3×\nShare\nCopy invitation link\nTelegram\n\nThis QR opens the general invitation. Use a personal ticket for guest check-in.\n\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "SELECT",
+        "text": "Switch event",
+        "href": null,
+        "class": "event-switcher-select"
+      },
+      {
+        "tag": "A",
+        "text": "Dashboard",
+        "href": "/app/events/101",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Invitation Studio",
+        "href": "/app/events/101/invitation",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Guests",
+        "href": "/app/events/101/guests",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "RSVP",
+        "href": "/app/events/101/rsvp",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Delivery",
+        "href": "/app/events/101/delivery",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Digital tickets",
+        "href": "/app/events/101/tickets/design",
+        "class": "event-nav-tab active"
+      },
+      {
+        "tag": "A",
+        "text": "Preview",
+        "href": "/app/events/101/preview",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Media",
+        "href": "/app/events/101/media",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Attendance",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Management",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Gifts",
+        "href": "/app/events/101/gifts",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Budget",
+        "href": "/app/events/101/budget",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Reports",
+        "href": "/app/events/101/reports",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Back to My Events",
+        "href": "/app/events",
+        "class": "event-utility-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Collapse navigation",
+        "href": null,
+        "class": "event-sidebar-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Save design",
+        "href": null,
+        "class": "ticket-save-button"
+      },
+      {
+        "tag": "SELECT",
+        "text": "Royal GoldModern MinimalBotanical FloralIvory Seal",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "DoubleSingleNone",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "MoulKantumruy ProCormorant Garamond",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "None",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Upload Cover image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Remove · Cover image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "None",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Upload Background",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Remove · Background",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Fill frameShow entire image",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Reset changes",
+        "href": null,
+        "class": "ticket-reset-button"
+      },
+      {
+        "tag": "SELECT",
+        "text": "General invitation · no guest check-inReview Guest 1Review Guest 2",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Download PNG · 2×",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "PNG · 3×",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Share",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Copy invitation link",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "A",
+        "text": "Telegram",
+        "href": "https://t.me/share/url?url=https%3A%2F%2Fkoupreng.example%2Fi%2Faudit-event",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "seating",
+    "width": 1440,
+    "url": "/app/events/101/seating",
+    "body": "Skip to main content\nEvents\nCreate Event\nPackages\nBrowse Templates\nខ្មែរ\nEN\nA\nAudit Host\nA\nAudit Host\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nEvent workspace\nSwitch event\nDara & Sophea\nSokha’s birthday\nWedding\nPublished\nDashboard\nInvitation Studio\nGuests\nRSVP\nDelivery\nInvitation\nDigital tickets\nPreview\nMedia\nAttendance\nSeating\nCheck-in\nAttendance analytics\nManagement\nGifts\nBudget\nReports\nMore\nMy Events\nCollapse\nSeating planner\nGuests\nExport CSV\nCreate table\nTables\n0\nCapacity\n0\nAssigned seats\n0\nUnassigned guests\n2\nTables\nList\nFloor plan\nA place for everyone\n\nCreate your first table to start arranging guests.\n\nCreate table\nAssign guests\nGuest\nChoose a guest\nReview Guest 1 · 1 seats\nReview Guest 2 · 2 seats\nTable\nChoose a table\nseats\nSeat label (optional)\n\nCreate a table before assigning guests.\n\nAssign guest\nUnassigned guests 2\nReview Guest 1\n1 seats\nReview Guest 2\n2 seats\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "SELECT",
+        "text": "Switch event",
+        "href": null,
+        "class": "event-switcher-select"
+      },
+      {
+        "tag": "A",
+        "text": "Dashboard",
+        "href": "/app/events/101",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Invitation Studio",
+        "href": "/app/events/101/invitation",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Guests",
+        "href": "/app/events/101/guests",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "RSVP",
+        "href": "/app/events/101/rsvp",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Delivery",
+        "href": "/app/events/101/delivery",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Digital tickets",
+        "href": "/app/events/101/tickets/design",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Preview",
+        "href": "/app/events/101/preview",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Media",
+        "href": "/app/events/101/media",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Attendance",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Seating",
+        "href": "/app/events/101/seating",
+        "class": "event-nav-tab active"
+      },
+      {
+        "tag": "A",
+        "text": "Check-in",
+        "href": "/app/events/101/check-in",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Attendance analytics",
+        "href": "/app/events/101/analytics",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Management",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Gifts",
+        "href": "/app/events/101/gifts",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Budget",
+        "href": "/app/events/101/budget",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Reports",
+        "href": "/app/events/101/reports",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Back to My Events",
+        "href": "/app/events",
+        "class": "event-utility-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Collapse navigation",
+        "href": null,
+        "class": "event-sidebar-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Guests",
+        "href": "/app/events/101/guests",
+        "class": "workspace-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export CSV",
+        "href": null,
+        "class": "workspace-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create table",
+        "href": null,
+        "class": "workspace-button primary"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "List",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Floor plan",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Create table",
+        "href": null,
+        "class": "workspace-button primary"
+      },
+      {
+        "tag": "SELECT",
+        "text": "Guest",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Table",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Assign guest",
+        "href": null,
+        "class": "workspace-button operational"
+      },
+      {
+        "tag": "INPUT",
+        "text": "Search unassigned guests",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Review Guest 11 seats",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Review Guest 22 seats",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "guests",
+    "width": 1440,
+    "url": "/app/events/101/guests",
+    "body": "Skip to main content\nEvents\nCreate Event\nPackages\nBrowse Templates\nខ្មែរ\nEN\nA\nAudit Host\nA\nAudit Host\nEvents\nCreate Event\nPackages\nBrowse Templates\nPaid Templates\nPayment History\nFinancial Reports\nSign Out\nSkip to event content\nEvent workspace\nSwitch event\nDara & Sophea\nSokha’s birthday\nWedding\nPublished\nDashboard\nInvitation Studio\nGuests\nRSVP\nDelivery\nInvitation\nDigital tickets\nPreview\nMedia\nAttendance\nManagement\nGifts\nBudget\nReports\nMore\nMy Events\nCollapse\nGuest list\nImport\nGuest records\n2\nReserved seats\n3\nMarked sent / opened\n0\nResponded\n1\nYour guest list\n2\nGuest check-in\nExport selected (0)\nAll guests\n2\nTo invite\n1\nResponded\n1\nChecked in\n0\nConfirmed RSVP\n1\nDeclined RSVP\n0\nMaybe\n0\nNo RSVP response\n1\nGroup\nAll Groups\nGroom Side\nBride Side\nCategory\nAll Categories\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n2 / 2 guests\nGuest Name *\tGroup\tCategory\tSeats\tStatus\tActions\n\t\nGroom Side\nBride Side\n\t\nHigh School Friend\nCollege Friend\nFriend\nFamily\nCoworker\nOther\n\t\nInclude this guest and their companions\n\tNot sent\t\nAdd\n\n\nRG\nReview Guest 2\n012340001\nNotes\n\tBride Side\t\nFamily\n\t\n2\nTable not assigned\n\t\nPending\n\t\nInvitation\n\n\nRG\nReview Guest 1\n012340000\nNotes\n\tBride Side\t\nFamily\n\t\n1\nTable not assigned\n\t\nRSVP: Attending\n\t\nInvitation\nHelp & Support",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Skip to main content",
+        "href": "#host-main-content",
+        "class": "host-skip-link"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "host-logo-box"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-nav-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English interface",
+        "href": null,
+        "class": "app-language-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Switch to dark mode",
+        "href": null,
+        "class": "app-theme-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Audit Host",
+        "href": null,
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "A",
+        "text": "AAudit Host",
+        "href": "/app/profile",
+        "class": "host-profile-pill"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Close menu",
+        "href": null,
+        "class": "host-mobile-close-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Events",
+        "href": "/app/events",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Create Event",
+        "href": "/app/events/new",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Packages",
+        "href": "/app/packages",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Browse Templates",
+        "href": "/templates/browse",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Paid Templates",
+        "href": "/app/templates/paid",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Payment History",
+        "href": "/app/payments",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "A",
+        "text": "Financial Reports",
+        "href": "/dashboard/reports",
+        "class": "host-mobile-menu-item"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign Out",
+        "href": null,
+        "class": "host-mobile-logout-btn"
+      },
+      {
+        "tag": "A",
+        "text": "Skip to event content",
+        "href": "#event-module-content",
+        "class": "event-skip-link"
+      },
+      {
+        "tag": "SELECT",
+        "text": "Switch event",
+        "href": null,
+        "class": "event-switcher-select"
+      },
+      {
+        "tag": "A",
+        "text": "Dashboard",
+        "href": "/app/events/101",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Invitation Studio",
+        "href": "/app/events/101/invitation",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Guests",
+        "href": "/app/events/101/guests",
+        "class": "event-nav-tab active"
+      },
+      {
+        "tag": "A",
+        "text": "RSVP",
+        "href": "/app/events/101/rsvp",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Delivery",
+        "href": "/app/events/101/delivery",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Digital tickets",
+        "href": "/app/events/101/tickets/design",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Preview",
+        "href": "/app/events/101/preview",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Media",
+        "href": "/app/events/101/media",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Attendance",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Management",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Gifts",
+        "href": "/app/events/101/gifts",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Budget",
+        "href": "/app/events/101/budget",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "A",
+        "text": "Reports",
+        "href": "/app/events/101/reports",
+        "class": "event-nav-tab"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "More",
+        "href": null,
+        "class": "event-nav-group-toggle"
+      },
+      {
+        "tag": "A",
+        "text": "Back to My Events",
+        "href": "/app/events",
+        "class": "event-utility-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Collapse navigation",
+        "href": null,
+        "class": "event-sidebar-toggle"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Import",
+        "href": null,
+        "class": "guest-button guest-button-secondary"
+      },
+      {
+        "tag": "A",
+        "text": "Guest check-in",
+        "href": "/dashboard/invitations/101/check-in",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export selected (0)",
+        "href": null,
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "All guests2",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "To invite1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Responded1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Checked in0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Confirmed RSVP1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Declined RSVP0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Maybe0",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "No RSVP response1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Search name, group, phone...",
+        "href": null,
+        "class": "k-search-input"
+      },
+      {
+        "tag": "SELECT",
+        "text": "All GroupsGroom SideBride Side",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworkerOther",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Select all guests on this page",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Guest Name",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Group",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "SELECT",
+        "text": "Category",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Seats / Persons",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Add",
+        "href": null,
+        "class": "guest-inline-save"
+      },
+      {
+        "tag": "INPUT",
+        "text": "Select guest: Review Guest 2",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "guest-icon-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Ticket",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "A",
+        "text": "Send or share for Review Guest 2 in Delivery",
+        "href": "/app/events/101/delivery?guestId=502",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "A",
+        "text": "Share invitation for Review Guest 2 via Telegram",
+        "href": "https://t.me/share/url?url=http%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation&text=%F0%9F%92%8C%20Wedding%20invitation%20Dear%20Review%20Guest%202%0APlease%20join%20us%20to%20celebrate%20our%20wedding.%0A%F0%9F%93%9D%20Note%3A%20Review%20note%0A%0A%F0%9F%91%89%20Open%20your%20invitation%20and%20RSVP%3A%0Ahttp%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Copy invitation message",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Record manual sharing",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Delete",
+        "href": null,
+        "class": "guest-danger-action"
+      },
+      {
+        "tag": "INPUT",
+        "text": "Select guest: Review Guest 1",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Invitation",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Edit",
+        "href": null,
+        "class": "guest-icon-button"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Ticket",
+        "href": null,
+        "class": "guest-invite-button"
+      },
+      {
+        "tag": "A",
+        "text": "Send or share for Review Guest 1 in Delivery",
+        "href": "/app/events/101/delivery?guestId=501",
+        "class": "guest-text-button"
+      },
+      {
+        "tag": "A",
+        "text": "Share invitation for Review Guest 1 via Telegram",
+        "href": "https://t.me/share/url?url=http%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation&text=%F0%9F%92%8C%20Wedding%20invitation%20Dear%20Review%20Guest%201%0APlease%20join%20us%20to%20celebrate%20our%20wedding.%0A%F0%9F%93%9D%20Note%3A%20Review%20note%0A%0A%F0%9F%91%89%20Open%20your%20invitation%20and%20RSVP%3A%0Ahttp%3A%2F%2F127.0.0.1%3A4173%2Fw%2Finvitation",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Copy invitation message",
+        "href": null,
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Delete",
+        "href": null,
+        "class": "guest-danger-action"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Help & Support",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "auth-login",
+    "width": 1440,
+    "url": "/login",
+    "body": "Back to home\nភាសាខ្មែរ\n/\nEnglish\nWelcome Back\n\nSign in to continue planning your wedding invitations\n\nPhone or Email\nPassword\nSign In\n\nOR CONTINUE WITH\n\nLoading Google…\nContinue with Telegram\nGoogle script failed to load. Check your network, Google origin settings, and VITE_GOOGLE_CLIENT_ID.\nForgot password?\n\nDon't have an account? Create Account",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Back to home",
+        "href": "/",
+        "class": "auth-home-link"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ភាសាខ្មែរ",
+        "href": null,
+        "class": "auth-lang-btn"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "English",
+        "href": null,
+        "class": "auth-lang-btn active"
+      },
+      {
+        "tag": "A",
+        "text": "Koupreng · Home",
+        "href": "/",
+        "class": "auth-brand"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": "auth-input"
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "href": null,
+        "class": "auth-input"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "បង្ហាញពាក្យសម្ងាត់ / Show password",
+        "href": null,
+        "class": "auth-eye-btn"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sign In",
+        "href": null,
+        "class": "auth-submit"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Continue with Telegram",
+        "href": null,
+        "class": "auth-social-btn telegram"
+      },
+      {
+        "tag": "A",
+        "text": "Forgot password?",
+        "href": "/forgot-password",
+        "class": "auth-footer-link"
+      },
+      {
+        "tag": "A",
+        "text": "Create Account",
+        "href": "/register",
+        "class": ""
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Open support chat",
+        "href": null,
+        "class": "chat-toggle-btn"
+      }
+    ],
+    "api": [],
+    "errors": []
+  },
+  {
+    "group": "admin-template-edit",
+    "width": 1440,
+    "url": "/templates/30",
+    "body": "Back to Templates\n🎨 Edit: Batch 11 fixture template\nStudio Editor v2\n\nConfigure Themes, Layouts, Couple Info, and Live Realtime Preview\n\nMobile (380px)\nTablet (680px)\nDesktop\nExport JSON\nImport JSON\nOpen User Tab\nSave & Publish\nTheme & Styles\nCouple Info\nSchedule & Media\nVenue & QR\nSettings\nម៉ូដ Template (UI Layouts)\nពណ៌ & ពុម្ពអក្សរ (Colors & Fonts)\nក្បាច់ & ក្រដាស (Frames & Textures)\nស្រោម & ពាក្យជូនពរ (Cover & Hero)\nរចនាបថម៉ូដ Template (UI Layout Engines)\nevent-essential\n\nជ្រើសរើស Architecture & Interactive Style របស់ទំព័រធៀបការ។ ចុចប្តូរ Layout ដើម្បីមើល Live Preview ខាងស្តាំភ្លាមៗ។\n\nThe layout identity is fixed for existing templates. Create a new template to choose another layout.\n\n🌸\nKhmer Celestial\nFlagship\nផ្កា & ពន្លឺមាសប្រណិត\nជ្រើសរើស\n\nរចនាបទផ្កា ស៊ុម Botanical ព័ទ្ធជុំវិញ និងពន្លឺផ្កាយមាស (Flagship)\n\n💌\nThe Digital Yes\nInteractive\nស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់\nជ្រើសរើស\n\nស្រោមសំបុត្របិទត្រា Wax Seal ចុចរបើកហូតសំបុត្រ + ផ្កាធ្លាក់\n\n🌿\nEmerald Luxe\nLuxury\nកាត 3D Flip & វាំងននកម្ញី\nជ្រើសរើស\n\nវាំងននកម្ញី Velvet បៃតងត្បូងមរកត + បង្វិលកាត 3D Flip\n\n🚀\nCustom Boilerplate\nStarter\nគំរូ Starter ថ្មីសម្រាប់ Custom\nជ្រើសរើស\n\nLayout គំរូស្រាល លឿន សម្រាប់ Developer កែប្រែតាមចិត្ត\n\nLive Simulator\nស្រោមសំបុត្រ (Cover)\nមាតិកាពេញ (Full)\n9:41\n5G\n100%",
+    "controls": [
+      {
+        "tag": "A",
+        "text": "Back to templates",
+        "href": "/templates",
+        "class": "flex h-11 shrink-0 items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-800/50 px-3.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Mobile (380px)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Tablet (680px)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Desktop",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Export JSON",
+        "href": null,
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Import JSON",
+        "href": null,
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
+      },
+      {
+        "tag": "A",
+        "text": "Open User Tab",
+        "href": "http://localhost:5173/templates/event-essential",
+        "class": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Save & Publish",
+        "href": null,
+        "class": "flex h-9 items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 text-xs font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:brightness-110 active:scale-95 disabled:opacity-50 cursor-pointer"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Theme & Styles",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold shadow-md shadow-amber-500/20"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Couple Info",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Schedule & Media",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Venue & QR",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Settings",
+        "href": null,
+        "class": "flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-center transition-all cursor-pointer text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ម៉ូដ Template (UI Layouts)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ពណ៌ & ពុម្ពអក្សរ (Colors & Fonts)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ក្បាច់ & ក្រដាស (Frames & Textures)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ស្រោម & ពាក្យជូនពរ (Cover & Hero)",
+        "href": null,
+        "class": "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition cursor-pointer text-zinc-400 hover:text-zinc-200"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🌸Khmer CelestialFlagshipផ្កា & ពន្លឺមាសប្រណិតជ្រើសរើសរចនាបទផ្កា ស៊ុម Botanical ព័ទ្ធជុំវិ",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "💌The Digital YesInteractiveស្រោមសំបុត្រ 3D & ផ្កាធ្លាក់ជ្រើសរើសស្រោមសំបុត្របិទត្រា Wax Se",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🌿Emerald LuxeLuxuryកាត 3D Flip & វាំងននកម្ញីជ្រើសរើសវាំងននកម្ញី Velvet បៃតងត្បូងមរកត + បង",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "🚀Custom BoilerplateStarterគំរូ Starter ថ្មីសម្រាប់ Customជ្រើសរើសLayout គំរូស្រាល លឿន សម្",
+        "href": null,
+        "class": "group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-zinc-900/70 border-zinc-800/80 hover:bg-zinc-850 hover:border-zinc-700"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "ស្រោមសំបុត្រ (Cover)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap bg-amber-500 text-slate-950 shadow-sm font-bold"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "មាតិកាពេញ (Full)",
+        "href": null,
+        "class": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap text-zinc-400 hover:text-zinc-200"
+      }
+    ],
+    "api": [],
+    "errors": []
+  }
+]

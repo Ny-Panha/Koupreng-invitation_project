@@ -1,0 +1,44 @@
+[
+  {
+    "engine": "chromium",
+    "reducedMotion": "no-preference",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  },
+  {
+    "engine": "chromium",
+    "reducedMotion": "reduce",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  },
+  {
+    "engine": "firefox",
+    "reducedMotion": "no-preference",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  },
+  {
+    "engine": "firefox",
+    "reducedMotion": "reduce",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  },
+  {
+    "engine": "webkit",
+    "reducedMotion": "no-preference",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  },
+  {
+    "engine": "webkit",
+    "reducedMotion": "reduce",
+    "width": 390,
+    "result": "PASS",
+    "method": "physical coordinate tap on visible CTA; fictional public invitation"
+  }
+]

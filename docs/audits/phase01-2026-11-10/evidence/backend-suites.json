@@ -1,0 +1,1449 @@
+[
+  {
+    "class": "com.koupreng.backend.admin.api.AdminReportingControllerTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "23.972",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.admin.application.AdminManagementServiceTests",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "1.628",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.admin.application.AdminReportingTests",
+    "tests": 19,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "10.781",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.architecture.ArchitectureRulesTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "6.05",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.audit.application.AuditLogQueryServiceTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.155",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.audit.application.AuditLogServiceTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.12",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.api.AuthControllerCookieTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.408",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.api.dto.LoginRequestTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.07",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.api.dto.RegisterRequestTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.068",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.application.AccountServiceTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.649",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.application.AuthIntegrityMySqlTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 5,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "rejectedLoginPersistsRedactedAuditOutsideItsRollback",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "simultaneousResetRedemptionsHaveExactlyOneWinner",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "providerSubjectConstraintsAreCaseSensitiveAndRejectDuplicateOwnership",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "staleProfileUpdateCannotUndoACommittedPasswordReset",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "staffCreationAndRoleUpdatePersistWithoutGrantingAdminAuthority",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.auth.application.AuthServiceTests",
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "1.144",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.identity.GoogleIdentityVerifierTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "1.567",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.identity.TelegramIdentityVerifierTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.423",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.AppJwtAuthenticationConverterTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.048",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.AuthEndpointSecurityTests",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "5.013",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.AuthRateLimitFilterTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.375",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.CookieBearerTokenResolverTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.008",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.CookieCsrfSecurityTests",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "4.37",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.security.PasswordRoleAuthorityTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.006",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.auth.infrastructure.session.UserAuthCacheServiceTests",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.078",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.BackendApplicationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.092",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.budget.application.BudgetServiceTests",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.415",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.checkin.api.GuestMutationEndpointTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.342",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.checkin.application.CheckInServiceTests",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.167",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.checkin.application.CheckInSummaryQueryIntegrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "4.331",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.checkin.application.GuestMutationIntegrityMySqlTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "undoAndRecheckInPreserveHistoryAndRejectNonOwner",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "wishModerationPreservesAttendanceGuestAndResponseTime",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.contact.api.ContactEndpointTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.355",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.contact.application.ContactServiceTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.23",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.delivery.application.InvitationDeliveryServiceTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.186",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.dev.DevSampleDataConditionTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.225",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.dev.DevSampleDataInitializerTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.541",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.devmonitor.api.ApiMonitorControllerTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.097",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.devmonitor.application.ApiMonitorServiceTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.006",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.devmonitor.infrastructure.ApiMonitorEventStoreTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.01",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.devmonitor.infrastructure.DevSqlStatementTrackerTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.003",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.entitlement.application.EntitlementIntegrityMySqlTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 5,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "bulkQuotaRejectionLeavesNoPartialGuestRows",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "concurrentGuestCreationHasOneWinnerAtTheConfiguredLimit",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "legacyStaticOfferFixtureCannotBeUsedBeforeTrustedConfirmation",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "concurrentInvitationCreationHasOneWinnerAtTheConfiguredLimit",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "genericRsvpAndOwnerGuestCreationShareTheSameSerializedQuota",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.entitlement.application.EntitlementServiceTests",
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.48",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.event.api.LegacyEventEndpointTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.326",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.event.application.EventServiceTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.018",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.FreshDatabaseMigrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "migrationsApplyAndHibernateValidatesTheFreshSchema",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.gift.application.ManualGiftMySqlTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "currenciesRemainSeparateAndNegativeOrOverprecisionValuesAreRejected",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "retriesReturnTheSameManualRecordAndConflictingReuseDoesNotCreateAnother",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.gift.application.ManualGiftPersistenceTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.65",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.gift.application.WeddingGiftServiceTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.137",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.guest.api.GuestImportPreviewEndpointTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.537",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.guest.application.GuestBatchIntegrationTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.489",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.guest.application.GuestBatchMySqlTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 6,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "previewNeverWritesAndCommitPersistsKhmerPhoneAndOptionalFieldsAndReplaysExactly",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "invalidAndDuplicateRowsRequireExplicitResolutionAndExistingQrRemainsUnchanged",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "midBatchCapacityFailureRollsBackGuestsAndReceipt",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "actualHttpPreviewThenCommitReturnsTruthfulCountsAndList",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "inFileContactDuplicatesAreBlockedAndNamesCanBeIntentionallySeparate",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "anonymousCrossEventAndBadPayloadRequestsNeverCreateGuests",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.guest.application.GuestImportFileReaderTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.132",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.guest.application.GuestImportPreviewTests",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.416",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.guest.application.GuestServiceTests",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.032",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.integration.ai.api.AiInvitationEndpointTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.663",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.integration.ai.application.AiInvitationAssistantServiceTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.166",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.api.InvitationCoverSummaryTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.004",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.EventAccessPolicyTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.005",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.EventCollaborationServiceTests",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.156",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.EventDraftPersistenceTests",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "7.284",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationAccessSecurityTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.148",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationContentPolicyTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.011",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationCoverReaderTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.004",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationDesignPolicyTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.026",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationPasswordAttemptLimiterTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.003",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.InvitationServiceTests",
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.034",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.KhmerFloralGoldIntegrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.661",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.LocalizedInvitationPolicyTests",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.015",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.invitation.application.RoyalGardenMapMySqlTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "freeAndBasicCannotPersistNewOrDisabledPaidMapProperties(String)",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "anotherAuthenticatedUserCannotEditTheOwnersMap",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "expiredSubscriptionStillAllowsAnExactDisableOnlyChange",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "activatedOwnerCanSaveReloadPublishAndReadTheSameMap(String)",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.KhmerFloralGoldMigrationMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "addsTheCatalogEntryAndPreservesExistingCommercialSettings",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.media.application.MediaIntegrityMySqlTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "concurrentGalleryUploadsCannotExceedConfiguredInvitationQuota",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "sqlRollbackKeepsOriginalReferenceAndBytesThenSuccessfulCommitCleansOldObject",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.media.application.MediaServiceTests",
+    "tests": 26,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.55",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.media.infrastructure.storage.CloudinaryCinematicContractTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.56",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.media.infrastructure.storage.LocalCinematicStorageTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.079",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.MigrationUpgradeMySqlTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 5,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "retiredZeroPriceFreePolicyIsRestoredWithoutChangingItsBenefits",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "v34PreservesAnAlreadyPresentTransactionDateColumn",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "originalV33UpgradesWithoutChangingItsChecksumOrEvidence",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "organizationUpgradePreservesLegacyMembershipsWithoutInventingConsent",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "appendOnlyUpgradePreservesUsersLegacyEventsAndCheckInHistory",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.notification.application.NotificationServiceTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.019",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.notification.application.PaymentNotificationServiceTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.005",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.organization.application.OrganizationServiceTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.244",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.payment.api.TemplateClaimEndpointTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.25",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.payment.application.PaymentConfirmationServiceTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.261",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.payment.application.PaymentEvidenceIntegrityMySqlTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "concurrentTemplateAndSubscriptionClaimsHaveExactlyOneWinner",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "alteringTransactionIdOnTheSameOriginalMessageIsRejected",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "unmatchedEvidenceIsDurableButUntrustedEvidenceCannotSettle",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "settlementRollbackLeavesEvidenceAvailableAndUnclaimed",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.payment.application.PaymentHistoryServiceTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.235",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.payment.application.TemplateCheckoutPolicyTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.003",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.payment.application.TemplatePaymentServiceTests",
+    "tests": 39,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.535",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.phase6.Phase6DemoMySqlTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "freeSignupCalendarPersistencePublishedEditsAndStaleSaveAreEnforcedThroughServlets",
+        "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+      },
+      {
+        "test": "provisionAndVerifyOnlyTheIsolatedDevelopmentDatabase",
+        "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+      },
+      {
+        "test": "immutableBenefitsPendingFutureExpiredAndRevokedGrantsResolveSafely",
+        "reason": "Environment variable [PHASE6_DEMO_PROVISION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.phase7.Phase7CollaborationMySqlTests",
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 22,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "phase11IndependentLocalesPreserveIdentityAndRejectStaleLegacyWrites",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase8ProgramRoundTripsThroughHttpMySqlAndPublicationWithConflictAndIdorProtection",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "batch11RealBrowserUsesTheDisposableBackend",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "batch12GuestViewNeverDisclosesOtherGuestsPrivateMessagesOrProtectedMedia",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "guestOverviewPagesAndSelectionExportReconcileWithoutContactLeaks",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase14TemplateAccessUsesOwnerPurchasesAfterPermissionAndNeverTheCollaboratorsTier",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "analyticsUseOwnerEntitlementAndBoundedCambodianDatesWithCurrentRecordFacts",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase12RichProgramFamilyAndRoutePersistWithIndependentWordingAndOwnerBenefits",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase11PremiumDesignsEnforceCurrentOwnerSnapshotAndExpiryOverHttp",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "expiredInvitationAndExpiredOwnerGrantCannotBeUsed",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "registrationGetsTheConfiguredFreePlanWithoutCheckout",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "checkInStaffUseBoundedRosterWithoutGuestContactsOrSecrets",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "legacyActiveMembershipNeedsNewConsentBeforeGainingEventTools",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "concurrentInvitationsCannotExceedOwnerCapacity",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "acceptanceIsExplicitRecipientBoundOneTimeAndRemovalRevokesAccess",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "concurrentCollaborativeSavesHaveOneWinnerAndPreserveTheTeam",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "guestWritesUseOwnerQuotaAndRoleChangesTakeEffectOnTheNextRequest",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase14GuestQuotaDetailsAreEventScopedAndOnlyFollowAuthorization",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "phase14ActualConfiguredPoliciesProjectOnlyVerifiedPurchasableBenefits",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "batch11PublishedGuestJourneyReconcilesRsvpCheckInAndAdminReporting",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "publicPackagePolicyMatchesCurrentCatalogWithoutGrantingAdminAuthority",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "managerGuestEditsCannotReadClearOrSetOwnerContributionFields",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.phase9.Phase9MediaMySqlTests",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 5,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "freeFloralTemplateKeepsThePremiumVideoBoundaryThroughRealPublication",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "freeAndProCannotUploadOrForgePremiumConfiguration",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "privateInvitationCannotReleaseCinematicBytesWithoutItsAccessToken",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "reproduceGalleryQuotaFailureThenPersistIndependentTicketCoverAndBackground",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      },
+      {
+        "test": "cinematicBytesRequirePublishedAccessCurrentPremiumAndSelectedOwnedId",
+        "reason": "Environment variable [RUN_PHASE7_MYSQL] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.reporting.application.DashboardReportServiceTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.304",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.reporting.application.QueryGrowthIntegrationTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.436",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.reporting.application.ReportingIntegrityMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "aggregateProjectionsRetainCountsCurrencyAndPaidMetadataOnMySql",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.rsvp.application.RsvpServiceTests",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.389",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.rsvp.application.RsvpSummaryPerformanceMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.001",
+    "skipReasons": [
+      {
+        "test": "benchmarkSummaryAndVerifyCounts",
+        "reason": "Environment variable [RUN_RSVP_PERFORMANCE] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.rsvp.application.RsvpSummaryRepositoryTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "1.788",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.seating.application.SeatingLayoutIntegrationTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "3.349",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.seating.application.SeatingLayoutMySqlTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "rejectsCrossEventTableAndOutOfBoundsCoordinates",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "httpOwnerGuardSchemaValidationAndPersistedReload",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "existingAssignmentCapacityMoveAndDeleteGuardsRemainAuthoritative",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "persistsAllGeometryWithoutChangingCapacityAssignmentsOrLegacyNotesAndRejectsStaleVersion",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.seating.application.SeatingServiceTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.405",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.config.GoogleProfileConfigurationTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.066",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.config.OpenApiDisabledIntegrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.178",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.config.OpenApiIntegrationTests",
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "8.599",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.config.ProductionSecurityValidatorTests",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.009",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.exception.GlobalExceptionHandlerTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.006",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.export.CsvExportUtilsTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.001",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.FlywayMigrationVersionTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.002",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.GuestContactMigrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.013",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.KhmerCelestialMigrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.028",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.PaymentEvidenceMigrationChecksumTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.013",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.SubscriptionFulfillmentMigrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.013",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.persistence.migration.SubscriptionReconciliationMigrationTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.011",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.AdminPaymentSecretFilterChainTests",
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.36",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.AdminPaymentSecretFilterTests",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.006",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.ApiRequestLoggingFilterTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.01",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.FileUploadValidatorTests",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.007",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.PaymentConfirmationSecurityTests",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.192",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.PublicRsvpRateLimitFilterTests",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.005",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.UploadSecurityFilterTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.001",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.shared.security.waf.WafFilterTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.027",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.SilkHeritageMigrationMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "addsTheCatalogEntryAndPreservesExistingCommercialSettings",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.subscription.application.SubscriptionIntegrityMySqlTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 6,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "expiredFlagIsClosedBeforeRenewalAndRepeatedConfirmationIsIdempotent",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "activeReplacementPreservesPaidHistory",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "strictOptInMerchantEvidenceActivatesOnlyOnceUsingTheRealPersistencePath",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "simultaneousActivationSerializesAndRetainsExactlyOneActiveSlot",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "rollbackRestoresPreviousActiveSlotAndLeavesReplacementPending",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      },
+      {
+        "test": "rolledBackActivationDoesNotLeaveADeliverableSuccessNotification",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.subscription.application.SubscriptionServiceTests",
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.06",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.template.application.RoyalGardenCatalogMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "adminPublicationRoundTripsCompatibilityAndKeepsInactiveDesignsPrivate",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.template.application.TemplateCatalogServiceTests",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.01",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.template.application.TemplateRecommendationServiceTests",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.003",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.ticket.application.TicketIntegrationTests",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "2.426",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.TicketMigrationMySqlTests",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "time": "0.0",
+    "skipReasons": [
+      {
+        "test": "failedV39CanBeRepairedWithoutChangingAppliedHistoryOrTicketData",
+        "reason": "Environment variable [RUN_FLYWAY_INTEGRATION] does not exist"
+      }
+    ]
+  },
+  {
+    "class": "com.koupreng.backend.user.application.CurrentUserServiceTests",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.007",
+    "skipReasons": []
+  },
+  {
+    "class": "com.koupreng.backend.user.application.UserServiceTests",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": "0.212",
+    "skipReasons": []
+  }
+]

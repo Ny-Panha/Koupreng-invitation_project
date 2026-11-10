@@ -1,0 +1,191 @@
+[
+  {
+    "engine": "chromium",
+    "group": "events",
+    "width": 390,
+    "outcome": "PASS: visible Create Event link opens onboarding",
+    "screenshot": "followup-chromium-events-390.png"
+  },
+  {
+    "engine": "chromium",
+    "group": "ticket",
+    "width": 390,
+    "outcome": "PASS: mobile preview switch exposes canvas",
+    "screenshot": "followup-chromium-ticket-390.png"
+  },
+  {
+    "engine": "chromium",
+    "group": "seating",
+    "width": 390,
+    "options": [
+      "Choose a guest",
+      "Review Guest 1 · 1 seats",
+      "Review Guest 2 · 2 seats"
+    ],
+    "outcome": "PASS: assignment panel exposes guest selector",
+    "screenshot": "followup-chromium-seating-390.png"
+  },
+  {
+    "engine": "chromium",
+    "group": "admin-template-edit",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "rootScrollWidth": 390,
+      "aside": {
+        "x": 0,
+        "y": 167,
+        "width": 320,
+        "height": 677,
+        "right": 320
+      },
+      "preview": {
+        "x": 320,
+        "y": 167,
+        "width": 360,
+        "height": 677,
+        "right": 680
+      },
+      "frame": {
+        "x": 314,
+        "y": 269,
+        "width": 372,
+        "height": 547,
+        "right": 686
+      }
+    },
+    "divider": {
+      "tag": "DIV",
+      "tabIndex": -1,
+      "role": null
+    },
+    "outcome": "FAIL: preview pane clipped beyond viewport; divider lacks keyboard focus",
+    "screenshot": "followup-chromium-admin-template-edit-390.png"
+  },
+  {
+    "engine": "firefox",
+    "group": "events",
+    "width": 390,
+    "outcome": "PASS: visible Create Event link opens onboarding",
+    "screenshot": "followup-firefox-events-390.png"
+  },
+  {
+    "engine": "firefox",
+    "group": "ticket",
+    "width": 390,
+    "outcome": "PASS: mobile preview switch exposes canvas",
+    "screenshot": "followup-firefox-ticket-390.png"
+  },
+  {
+    "engine": "firefox",
+    "group": "seating",
+    "width": 390,
+    "options": [
+      "Choose a guest",
+      "Review Guest 1 · 1 seats",
+      "Review Guest 2 · 2 seats"
+    ],
+    "outcome": "PASS: assignment panel exposes guest selector",
+    "screenshot": "followup-firefox-seating-390.png"
+  },
+  {
+    "engine": "firefox",
+    "group": "admin-template-edit",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "rootScrollWidth": 390,
+      "aside": {
+        "x": 0,
+        "y": 167,
+        "width": 320,
+        "height": 677,
+        "right": 320
+      },
+      "preview": {
+        "x": 320,
+        "y": 167,
+        "width": 360,
+        "height": 677,
+        "right": 680
+      },
+      "frame": {
+        "x": 314,
+        "y": 269,
+        "width": 372,
+        "height": 547,
+        "right": 686
+      }
+    },
+    "divider": {
+      "tag": "DIV",
+      "tabIndex": -1,
+      "role": null
+    },
+    "outcome": "FAIL: preview pane clipped beyond viewport; divider lacks keyboard focus",
+    "screenshot": "followup-firefox-admin-template-edit-390.png"
+  },
+  {
+    "engine": "webkit",
+    "group": "events",
+    "width": 390,
+    "outcome": "PASS: visible Create Event link opens onboarding",
+    "screenshot": "followup-webkit-events-390.png"
+  },
+  {
+    "engine": "webkit",
+    "group": "ticket",
+    "width": 390,
+    "outcome": "PASS: mobile preview switch exposes canvas",
+    "screenshot": "followup-webkit-ticket-390.png"
+  },
+  {
+    "engine": "webkit",
+    "group": "seating",
+    "width": 390,
+    "options": [
+      "Choose a guest",
+      "Review Guest 1 · 1 seats",
+      "Review Guest 2 · 2 seats"
+    ],
+    "outcome": "PASS: assignment panel exposes guest selector",
+    "screenshot": "followup-webkit-seating-390.png"
+  },
+  {
+    "engine": "webkit",
+    "group": "admin-template-edit",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "rootScrollWidth": 390,
+      "aside": {
+        "x": 0,
+        "y": 167,
+        "width": 320,
+        "height": 677,
+        "right": 320
+      },
+      "preview": {
+        "x": 320,
+        "y": 167,
+        "width": 360,
+        "height": 677,
+        "right": 680
+      },
+      "frame": {
+        "x": 314,
+        "y": 269,
+        "width": 372,
+        "height": 547,
+        "right": 686
+      }
+    },
+    "divider": {
+      "tag": "DIV",
+      "tabIndex": -1,
+      "role": null
+    },
+    "outcome": "FAIL: preview pane clipped beyond viewport; divider lacks keyboard focus",
+    "screenshot": "followup-webkit-admin-template-edit-390.png"
+  }
+]

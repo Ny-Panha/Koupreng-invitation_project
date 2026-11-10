@@ -1,0 +1,5918 @@
+[
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding",
+    "url": "/create/wedding",
+    "group": "create-event",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All available stylesMinimalist",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "KhmerEnglishKhmer and English",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All pricesFreePremium",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 118,
+          "font": "15px"
+        }
+      ],
+      "h1": [
+        "Bring your event together"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-create-event.png",
+    "elapsedMs": 6681
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding/:id",
+    "url": "/create/wedding/101",
+    "group": "invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event InformationSchedule & VenueMedia & OpeningDesign & CoverGue",
+          "w": 253,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 20,
+          "h": 20,
+          "font": "11px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "pe-input",
+          "text": "Asia/Phnom PenhAsia/BangkokAsia/SingaporeUTCAfrica/AbidjanAfrica/",
+          "w": 328,
+          "h": 48,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Template defaultGroom left / bride rightBride left / groom rightV",
+          "w": 286,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 260,
+          "h": 47,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Celestial celebration"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-invitation.png",
+    "elapsedMs": 5842
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/w/:slug",
+    "url": "/w/audit-event",
+    "group": "public-invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "AttendingNot attendingMaybe",
+          "w": 258,
+          "h": 42,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 120,
+          "font": "14.0781px"
+        }
+      ],
+      "h1": [
+        "Dara & Sophea"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-public-invitation.png",
+    "elapsedMs": 2605
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/",
+    "url": "/",
+    "group": "home",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "Invitations craftedaround your story."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-home.png",
+    "elapsedMs": 2810
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates",
+    "url": "/templates",
+    "group": "catalog",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 240,
+          "h": 48,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "A design that feels like you."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-catalog.png",
+    "elapsedMs": 1995
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates/:templateId/checkout",
+    "url": "/templates/30/checkout",
+    "group": "checkout",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "Review your template order"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-checkout.png",
+    "elapsedMs": 1905
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Welcome Back"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-auth-login.png",
+    "elapsedMs": 1621
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/register",
+    "url": "/register",
+    "group": "auth-register",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Sign In",
+          "w": 35,
+          "h": 14
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Create Account"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-user-auth-register.png",
+    "elapsedMs": 1570
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events",
+    "url": "/app/events",
+    "group": "events",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "FAIL",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  locator('a[href=\"/app/events/new\"]').first()\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" locator('a[href=\"/app/events/new\"]').first() with timeout 5000ms\n  - waiting for locator('a[href=\"/app/events/new\"]').first()\n    13 × locator resolved to <a data-discover=\"true\" class=\"host-nav-link\" href=\"/app/events/new\">Create Event</a>\n       - unexpected value \"hidden\"\n",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item active",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All statusesDraftPublishedUnpublished",
+          "w": 324,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event type",
+          "w": 324,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "NewestEvent dateTitle",
+          "w": 324,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "My Events"
+      ],
+      "landmarks": 1
+    },
+    "elapsedMs": 6008
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events/:eventId/guests",
+    "url": "/app/events/101/guests",
+    "group": "guests",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "k-search-input",
+          "text": "Search name, group, phone...",
+          "w": 316,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All GroupsGroom SideBride Side",
+          "w": 152,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworke",
+          "w": 152,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        }
+      ],
+      "h1": [
+        "Guest list"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              ".guest-record-row:nth-child(2) > .guest-person-cell[data-label=\"Guest Name\"] > .guest-person > .guest-person-info > .guest-note > summary"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #b98b42, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".guest-record-row:nth-child(3) > .guest-person-cell[data-label=\"Guest Name\"] > .guest-person > .guest-person-info > .guest-note > summary"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #b98b42, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "firefox-390-en-frontend-user-guests.png",
+    "elapsedMs": 3326
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[120px",
+          "text": "",
+          "w": 550,
+          "h": 550
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer text-zinc-400 hover:text-zinc-200",
+          "text": "ខ្មែរ",
+          "w": 38,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer bg-amber-500 text-slate-950 font-bold",
+          "text": "EN",
+          "w": 35,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 c",
+          "text": "Show password",
+          "w": 24,
+          "h": 24
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 ",
+          "text": "",
+          "w": 292,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600",
+          "text": "",
+          "w": 292,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Koupreng administrator sign in"
+      ],
+      "landmarks": 0
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              ".mt-8"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #71717b, background color: #121214, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "firefox-390-en-frontend-admin-auth-login.png",
+    "elapsedMs": 1538
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/templates/:templateId",
+    "url": "/templates/30",
+    "group": "admin-template-edit",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "MAIN",
+          "cls": "flex-1 flex flex-col bg-zinc-950/90 relative overflow-hidden items-center justify-center p-6 min-w-[360px]",
+          "text": "Live Simulatorស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)9:415G100%",
+          "w": 360,
+          "h": 677
+        },
+        {
+          "tag": "DIV",
+          "cls": "absolute -top-20 -right-20 h-96 w-96 rounded-full blur-[140px] opacity-20 pointer-events-none",
+          "text": "",
+          "w": 384,
+          "h": 384
+        },
+        {
+          "tag": "DIV",
+          "cls": "mb-3 flex items-center justify-between w-full px-1 z-10 transition-all duration-300 gap-2 max-w-[380px]",
+          "text": "Live Simulatorស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)",
+          "w": 312,
+          "h": 34
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-2 shrink-0",
+          "text": "Live Simulator",
+          "w": 109,
+          "h": 26
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-1.5 rounded-xl bg-zinc-900/90 px-2.5 py-1 text-xs font-semibold text-zinc-300 border border-zinc-8",
+          "text": "Live Simulator",
+          "w": 109,
+          "h": 26
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tracking-tight text-zinc-200",
+          "text": "Live Simulator",
+          "w": 73,
+          "h": 16
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-900/90 p-1 shadow-lg backdrop-blur-md shrink-0",
+          "text": "ស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)",
+          "w": 273,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap bg-am",
+          "text": "ស្រោមសំបុត្រ (Cover)",
+          "w": 139,
+          "h": 24
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 14,
+          "h": 14
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 13,
+          "h": 8
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 13,
+          "h": 5
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 13,
+          "h": 5
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 ",
+          "text": "Export JSON",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 ",
+          "text": "Import JSON",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "🎨 Edit: Batch 11 fixture template"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "link-name",
+        "impact": "serious",
+        "help": "Links must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/link-name?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              "a[target=\"_blank\"]"
+            ],
+            "summary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+          }
+        ]
+      }
+    ],
+    "screenshot": "firefox-390-en-frontend-admin-admin-template-edit.png",
+    "elapsedMs": 1715
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/",
+    "url": "/",
+    "group": "admin-dashboard",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-left text-xs",
+          "text": "NameEmailRoleStatusBatch 11 fictional accountbatch11@example.test",
+          "w": 377,
+          "h": 105
+        },
+        {
+          "tag": "THEAD",
+          "cls": "border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60",
+          "text": "NameEmailRoleStatus",
+          "w": 377,
+          "h": 37
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "NameEmailRoleStatus",
+          "w": 377,
+          "h": 37
+        },
+        {
+          "tag": "TH",
+          "cls": "px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400",
+          "text": "Status",
+          "w": 89,
+          "h": 37
+        },
+        {
+          "tag": "TBODY",
+          "cls": "divide-y divide-slate-100 dark:divide-zinc-800/60",
+          "text": "Batch 11 fictional accountbatch11@example.testADMINACTIVE",
+          "w": 377,
+          "h": 69
+        },
+        {
+          "tag": "TR",
+          "cls": "hover:bg-amber-500/5 dark:hover:bg-amber-500/5 transition-colors",
+          "text": "Batch 11 fictional accountbatch11@example.testADMINACTIVE",
+          "w": 377,
+          "h": 69
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 py-2.5",
+          "text": "ACTIVE",
+          "w": 89,
+          "h": 69
+        },
+        {
+          "tag": "SPAN",
+          "cls": "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider bg-emerald-500",
+          "text": "ACTIVE",
+          "w": 65,
+          "h": 22
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Create new template",
+          "w": 28,
+          "h": 28
+        },
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Open reports",
+          "w": 28,
+          "h": 28
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 64,
+          "h": 44,
+          "font": "13px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "firefox-390-en-frontend-admin-admin-dashboard.png",
+    "elapsedMs": 2161
+  },
+  {
+    "engine": "firefox",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/users",
+    "url": "/users",
+    "group": "admin-users",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "cls": "data",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions1101Batc",
+          "w": 934,
+          "h": 94
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions",
+          "w": 934,
+          "h": 43
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions",
+          "w": 934,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Account (Email / Phone)",
+          "w": 190,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Role",
+          "w": 97,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Status",
+          "w": 97,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Joined Date",
+          "w": 108,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Actions",
+          "w": 154,
+          "h": 43
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "text": "1101Batch 11 fictional accountYoubatch11@example.testAdminACTIVE—",
+          "w": 934,
+          "h": 51
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "1101Batch 11 fictional accountYoubatch11@example.testAdminACTIVE—",
+          "w": 934,
+          "h": 51
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "text": "batch11@example.test",
+          "w": 190,
+          "h": 51
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "text": "Admin",
+          "w": 97,
+          "h": 51
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "btn btn-sm btn-primary",
+          "text": "All",
+          "w": 35,
+          "h": 26
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 64,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 316,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 316,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 316,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "select",
+          "text": "ADMIN",
+          "w": 316,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 169,
+          "h": 36,
+          "font": "12px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              "p"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #62748e, background color: #fbf6ee, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".ml-1\\.5"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.96 (foreground color: #e17100, background color: #fff5e6, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "firefox-390-en-frontend-admin-admin-users.png",
+    "elapsedMs": 2347
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding",
+    "url": "/create/wedding",
+    "group": "create-event",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All available stylesMinimalist",
+          "w": 278,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "KhmerEnglishKhmer and English",
+          "w": 278,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All pricesFreePremium",
+          "w": 278,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 118,
+          "font": "15px"
+        }
+      ],
+      "h1": [
+        "Bring your event together"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1008
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding/:id",
+    "url": "/create/wedding/101",
+    "group": "invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Editor 60%Focus EditorBalancedFocus PreviewReset Layout",
+          "w": 131,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 20,
+          "h": 20,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 644,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 313,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 313,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "pe-input",
+          "text": "Asia/Phnom PenhAsia/BangkokAsia/SingaporeUTCAfrica/AbidjanAfrica/",
+          "w": 313,
+          "h": 48,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Template defaultGroom left / bride rightBride left / groom rightV",
+          "w": 602,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 576,
+          "h": 47,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Celestial celebration"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1673
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/w/:slug",
+    "url": "/w/audit-event",
+    "group": "public-invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "AttendingNot attendingMaybe",
+          "w": 303,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 43,
+          "font": "14.0781px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 622,
+          "h": 120,
+          "font": "14.0781px"
+        }
+      ],
+      "h1": [
+        "Dara & Sophea"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1616
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/",
+    "url": "/",
+    "group": "home",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "Invitations craftedaround your story."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 594
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates",
+    "url": "/templates",
+    "group": "catalog",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 450,
+          "h": 48,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "A design that feels like you."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 665
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates/:templateId/checkout",
+    "url": "/templates/30/checkout",
+    "group": "checkout",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "Review your template order"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 674
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Welcome Back"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1037
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/register",
+    "url": "/register",
+    "group": "auth-register",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Sign In",
+          "w": 35,
+          "h": 14
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Create Account"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 885
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events",
+    "url": "/app/events",
+    "group": "events",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item active",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 408,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All statusesDraftPublishedUnpublished",
+          "w": 294,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event type",
+          "w": 294,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "NewestEvent dateTitle",
+          "w": 294,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "My Events"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1070
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events/:eventId/guests",
+    "url": "/app/events/101/guests",
+    "group": "guests",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 12
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 2,
+          "h": 5
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select all guests on this page",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "event-switcher-select",
+          "text": "Switch event",
+          "w": 222,
+          "h": 48,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "k-search-input",
+          "text": "Search name, group, phone...",
+          "w": 570,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All GroupsGroom SideBride Side",
+          "w": 222,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworke",
+          "w": 222,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select all guests on this page",
+          "w": 18,
+          "h": 18,
+          "font": "12.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Guest Name",
+          "w": 192,
+          "h": 45,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Group",
+          "w": 161,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Category",
+          "w": 213,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Seats / Persons",
+          "w": 77,
+          "h": 45,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        }
+      ],
+      "h1": [
+        "Guest list"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1670
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer text-zinc-400 hover:text-zinc-200",
+          "text": "ខ្មែរ",
+          "w": 38,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer bg-amber-500 text-slate-950 font-bold",
+          "text": "EN",
+          "w": 35,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 c",
+          "text": "Show password",
+          "w": 24,
+          "h": 24
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 ",
+          "text": "",
+          "w": 366,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600",
+          "text": "",
+          "w": 366,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Koupreng administrator sign in"
+      ],
+      "landmarks": 0
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 632
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/templates/:templateId",
+    "url": "/templates/30",
+    "group": "admin-template-edit",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "absolute -top-20 -right-20 h-96 w-96 rounded-full blur-[140px] opacity-20 pointer-events-none",
+          "text": "",
+          "w": 384,
+          "h": 384
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "🎨 Edit: Batch 11 fixture template"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 776
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/",
+    "url": "/",
+    "group": "admin-dashboard",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Create new template",
+          "w": 28,
+          "h": 28
+        },
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Open reports",
+          "w": 28,
+          "h": 28
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 72,
+          "h": 44,
+          "font": "13px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 877
+  },
+  {
+    "engine": "firefox",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/users",
+    "url": "/users",
+    "group": "admin-users",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "btn btn-sm btn-primary",
+          "text": "All",
+          "w": 35,
+          "h": 26
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 72,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "select",
+          "text": "ADMIN",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 169,
+          "h": 36,
+          "font": "12px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 794
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding",
+    "url": "/create/wedding",
+    "group": "create-event",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Events",
+          "w": 49,
+          "h": 24
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All available stylesMinimalist",
+          "w": 324,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "KhmerEnglishKhmer and English",
+          "w": 324,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All pricesFreePremium",
+          "w": 324,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 118,
+          "font": "15px"
+        }
+      ],
+      "h1": [
+        "Bring your event together"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-create-event.png",
+    "elapsedMs": 2790
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding/:id",
+    "url": "/create/wedding/101",
+    "group": "invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event InformationSchedule & VenueMedia & OpeningDesign & CoverGue",
+          "w": 253,
+          "h": 47,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 20,
+          "h": 20,
+          "font": "11px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 328,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "pe-input",
+          "text": "Asia/Phnom PenhAsia/BangkokAsia/SingaporeUTCAfrica/AbidjanAfrica/",
+          "w": 328,
+          "h": 53,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 302,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Template defaultGroom left / bride rightBride left / groom rightV",
+          "w": 286,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 260,
+          "h": 47,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Celestial celebration"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-invitation.png",
+    "elapsedMs": 3451
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/w/:slug",
+    "url": "/w/audit-event",
+    "group": "public-invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.08px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.08px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "AttendingNot attendingMaybe",
+          "w": 258,
+          "h": 50,
+          "font": "14.08px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 43,
+          "font": "14.08px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 258,
+          "h": 120,
+          "font": "14.08px"
+        }
+      ],
+      "h1": [
+        "Dara & Sophea"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-public-invitation.png",
+    "elapsedMs": 2030
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/",
+    "url": "/",
+    "group": "home",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "Invitations craftedaround your story."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-home.png",
+    "elapsedMs": 3059
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates",
+    "url": "/templates",
+    "group": "catalog",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 240,
+          "h": 48,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "A design that feels like you."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-catalog.png",
+    "elapsedMs": 1352
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates/:templateId/checkout",
+    "url": "/templates/30/checkout",
+    "group": "checkout",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "Review your template order"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-checkout.png",
+    "elapsedMs": 1598
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Welcome Back"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-auth-login.png",
+    "elapsedMs": 2077
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/register",
+    "url": "/register",
+    "group": "auth-register",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Sign In",
+          "w": 35,
+          "h": 14
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 294,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Create Account"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-user-auth-register.png",
+    "elapsedMs": 1960
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events",
+    "url": "/app/events",
+    "group": "events",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "FAIL",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator:  locator('a[href=\"/app/events/new\"]').first()\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" locator('a[href=\"/app/events/new\"]').first() with timeout 5000ms\n  - waiting for locator('a[href=\"/app/events/new\"]').first()\n    14 × locator resolved to <a data-discover=\"true\" class=\"host-nav-link\" href=\"/app/events/new\">Create Event</a>\n       - unexpected value \"hidden\"\n",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item active",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Events",
+          "w": 49,
+          "h": 24
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 324,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All statusesDraftPublishedUnpublished",
+          "w": 324,
+          "h": 46,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event type",
+          "w": 324,
+          "h": 46,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "NewestEvent dateTitle",
+          "w": 324,
+          "h": 46,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "My Events"
+      ],
+      "landmarks": 1
+    },
+    "elapsedMs": 6121
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events/:eventId/guests",
+    "url": "/app/events/101/guests",
+    "group": "guests",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 34,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Events",
+          "w": 49,
+          "h": 24
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "k-search-input",
+          "text": "Search name, group, phone...",
+          "w": 316,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All GroupsGroom SideBride Side",
+          "w": 152,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworke",
+          "w": 152,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        }
+      ],
+      "h1": [
+        "Guest list"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              ".guest-record-row:nth-child(2) > .guest-person-cell[data-label=\"Guest Name\"] > .guest-person > .guest-person-info > .guest-note > summary"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #b98b42, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".guest-record-row:nth-child(3) > .guest-person-cell[data-label=\"Guest Name\"] > .guest-person > .guest-person-info > .guest-note > summary"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #b98b42, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "webkit-390-en-frontend-user-guests.png",
+    "elapsedMs": 2409
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[120px",
+          "text": "",
+          "w": 550,
+          "h": 550
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer text-zinc-400 hover:text-zinc-200",
+          "text": "ខ្មែរ",
+          "w": 38,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer bg-amber-500 text-slate-950 font-bold",
+          "text": "EN",
+          "w": 35,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 c",
+          "text": "Show password",
+          "w": 24,
+          "h": 24
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 ",
+          "text": "",
+          "w": 292,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600",
+          "text": "",
+          "w": 292,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Koupreng administrator sign in"
+      ],
+      "landmarks": 0
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              ".mt-8"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.87 (foreground color: #71717b, background color: #121214, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "webkit-390-en-frontend-admin-auth-login.png",
+    "elapsedMs": 2121
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/templates/:templateId",
+    "url": "/templates/30",
+    "group": "admin-template-edit",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 390,
+      "overflow": [
+        {
+          "tag": "MAIN",
+          "cls": "flex-1 flex flex-col bg-zinc-950/90 relative overflow-hidden items-center justify-center p-6 min-w-[360px]",
+          "text": "Live Simulatorស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)9:415G100%",
+          "w": 360,
+          "h": 677
+        },
+        {
+          "tag": "DIV",
+          "cls": "absolute -top-20 -right-20 h-96 w-96 rounded-full blur-[140px] opacity-20 pointer-events-none",
+          "text": "",
+          "w": 384,
+          "h": 384
+        },
+        {
+          "tag": "DIV",
+          "cls": "mb-3 flex items-center justify-between w-full px-1 z-10 transition-all duration-300 gap-2 max-w-[380px]",
+          "text": "Live Simulatorស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)",
+          "w": 312,
+          "h": 34
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-2 shrink-0",
+          "text": "Live Simulator",
+          "w": 109,
+          "h": 26
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-1.5 rounded-xl bg-zinc-900/90 px-2.5 py-1 text-xs font-semibold text-zinc-300 border border-zinc-8",
+          "text": "Live Simulator",
+          "w": 109,
+          "h": 26
+        },
+        {
+          "tag": "SPAN",
+          "cls": "tracking-tight text-zinc-200",
+          "text": "Live Simulator",
+          "w": 73,
+          "h": 16
+        },
+        {
+          "tag": "DIV",
+          "cls": "flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-900/90 p-1 shadow-lg backdrop-blur-md shrink-0",
+          "text": "ស្រោមសំបុត្រ (Cover)មាតិកាពេញ (Full)",
+          "w": 298,
+          "h": 34
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer whitespace-nowrap bg-am",
+          "text": "ស្រោមសំបុត្រ (Cover)",
+          "w": 150,
+          "h": 24
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 14,
+          "h": 14
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 6
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 3
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 12,
+          "h": 3
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 ",
+          "text": "Export JSON",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 ",
+          "text": "Import JSON",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "🎨 Edit: Batch 11 fixture template"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "link-name",
+        "impact": "serious",
+        "help": "Links must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/link-name?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              "a[target=\"_blank\"]"
+            ],
+            "summary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+          }
+        ]
+      }
+    ],
+    "screenshot": "webkit-390-en-frontend-admin-admin-template-edit.png",
+    "elapsedMs": 2803
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/",
+    "url": "/",
+    "group": "admin-dashboard",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 384,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "cls": "w-full text-left text-xs",
+          "text": "NameEmailRoleStatusBatch 11 fictional accountbatch11@example.test",
+          "w": 377,
+          "h": 105
+        },
+        {
+          "tag": "THEAD",
+          "cls": "border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60",
+          "text": "NameEmailRoleStatus",
+          "w": 377,
+          "h": 37
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "NameEmailRoleStatus",
+          "w": 377,
+          "h": 37
+        },
+        {
+          "tag": "TH",
+          "cls": "px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400",
+          "text": "Status",
+          "w": 89,
+          "h": 37
+        },
+        {
+          "tag": "TBODY",
+          "cls": "divide-y divide-slate-100 dark:divide-zinc-800/60",
+          "text": "Batch 11 fictional accountbatch11@example.testADMINACTIVE",
+          "w": 377,
+          "h": 69
+        },
+        {
+          "tag": "TR",
+          "cls": "hover:bg-amber-500/5 dark:hover:bg-amber-500/5 transition-colors",
+          "text": "Batch 11 fictional accountbatch11@example.testADMINACTIVE",
+          "w": 377,
+          "h": 69
+        },
+        {
+          "tag": "TD",
+          "cls": "px-3 py-2.5",
+          "text": "ACTIVE",
+          "w": 89,
+          "h": 69
+        },
+        {
+          "tag": "SPAN",
+          "cls": "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider bg-emerald-500",
+          "text": "ACTIVE",
+          "w": 65,
+          "h": 22
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Create new template",
+          "w": 28,
+          "h": 28
+        },
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Open reports",
+          "w": 28,
+          "h": 28
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 64,
+          "h": 45,
+          "font": "13px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [],
+    "screenshot": "webkit-390-en-frontend-admin-admin-dashboard.png",
+    "elapsedMs": 2648
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/users",
+    "url": "/users",
+    "group": "admin-users",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollWidth": 384,
+      "overflow": [
+        {
+          "tag": "TABLE",
+          "cls": "data",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions1101Batc",
+          "w": 934,
+          "h": 94
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions",
+          "w": 934,
+          "h": 43
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "IDNameAccount (Email / Phone)RoleStatusJoined DateActions",
+          "w": 934,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Account (Email / Phone)",
+          "w": 190,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Role",
+          "w": 97,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Status",
+          "w": 97,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Joined Date",
+          "w": 108,
+          "h": 43
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "text": "Actions",
+          "w": 154,
+          "h": 43
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "text": "1101Batch 11 fictional accountYoubatch11@example.testAdminACTIVE—",
+          "w": 934,
+          "h": 51
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "text": "1101Batch 11 fictional accountYoubatch11@example.testAdminACTIVE—",
+          "w": 934,
+          "h": 51
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "text": "batch11@example.test",
+          "w": 190,
+          "h": 51
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "text": "Admin",
+          "w": 97,
+          "h": 51
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "btn btn-sm btn-primary",
+          "text": "All",
+          "w": 35,
+          "h": 26
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 64,
+          "h": 45,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 310,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 310,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 310,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "select",
+          "text": "ADMIN",
+          "w": 310,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 158,
+          "h": 36,
+          "font": "12px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "nodes": [
+          {
+            "target": [
+              "p"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #62748e, background color: #fbf6ee, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".ml-1\\.5"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.96 (foreground color: #e17100, background color: #fff5e6, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "screenshot": "webkit-390-en-frontend-admin-admin-users.png",
+    "elapsedMs": 1796
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding",
+    "url": "/create/wedding",
+    "group": "create-event",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 423,
+          "h": 48,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All available stylesMinimalist",
+          "w": 278,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "KhmerEnglishKhmer and English",
+          "w": 278,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All pricesFreePremium",
+          "w": 278,
+          "h": 52,
+          "font": "15px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 866,
+          "h": 118,
+          "font": "15px"
+        }
+      ],
+      "h1": [
+        "Bring your event together"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1223
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/create/wedding/:id",
+    "url": "/create/wedding/101",
+    "group": "invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Editor 60%Focus EditorBalancedFocus PreviewReset Layout",
+          "w": 139,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 20,
+          "h": 20,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 644,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 313,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 313,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "pe-input",
+          "text": "Asia/Phnom PenhAsia/BangkokAsia/SingaporeUTCAfrica/AbidjanAfrica/",
+          "w": 313,
+          "h": 53,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "pe-input",
+          "text": "",
+          "w": 289,
+          "h": 51,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Template defaultGroom left / bride rightBride left / groom rightV",
+          "w": 602,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 576,
+          "h": 47,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Celestial celebration"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1946
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/w/:slug",
+    "url": "/w/audit-event",
+    "group": "public-invitation",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 43,
+          "font": "14.08px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 43,
+          "font": "14.08px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "AttendingNot attendingMaybe",
+          "w": 303,
+          "h": 50,
+          "font": "14.08px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 303,
+          "h": 47,
+          "font": "14.08px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "cls": "",
+          "text": "",
+          "w": 622,
+          "h": 120,
+          "font": "14.08px"
+        }
+      ],
+      "h1": [
+        "Dara & Sophea"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1267
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/",
+    "url": "/",
+    "group": "home",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - ធៀបការឌីជីថល (Digital Invitation)",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "Invitations craftedaround your story."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 451
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates",
+    "url": "/templates",
+    "group": "catalog",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 450,
+          "h": 48,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "A design that feels like you."
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 391
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/templates/:templateId/checkout",
+    "url": "/templates/30/checkout",
+    "group": "checkout",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "ខ្មែរ",
+          "w": 40,
+          "h": 36
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "",
+          "text": "EN",
+          "w": 40,
+          "h": 36
+        }
+      ],
+      "smallInputs": [],
+      "h1": [
+        "Review your template order"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1161
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Welcome Back"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1042
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/register",
+    "url": "/register",
+    "group": "auth-register",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn",
+          "text": "ភាសាខ្មែរ",
+          "w": 41,
+          "h": 18
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "auth-lang-btn active",
+          "text": "English",
+          "w": 42,
+          "h": 18
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Sign In",
+          "w": 35,
+          "h": 14
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "auth-input",
+          "text": "",
+          "w": 376,
+          "h": 50,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Create Account"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1037
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events",
+    "url": "/app/events",
+    "group": "events",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item active",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "",
+          "w": 408,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All statusesDraftPublishedUnpublished",
+          "w": 294,
+          "h": 46,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Event type",
+          "w": 294,
+          "h": 46,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "NewestEvent dateTitle",
+          "w": 294,
+          "h": 46,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "My Events"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1011
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-user",
+    "pattern": "/app/events/:eventId/guests",
+    "url": "/app/events/101/guests",
+    "group": "guests",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "Koupreng - Digital Invitation",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "host-mobile-header",
+          "text": "AAudit Host",
+          "w": 259,
+          "h": 59
+        },
+        {
+          "tag": "A",
+          "cls": "host-profile-pill",
+          "text": "AAudit Host",
+          "w": 137,
+          "h": 44
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-avatar",
+          "text": "A",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "SPAN",
+          "cls": "host-profile-name",
+          "text": "Audit Host",
+          "w": 73,
+          "h": 25
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "host-mobile-close-btn",
+          "text": "Close menu",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "path",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 10,
+          "h": 10
+        },
+        {
+          "tag": "A",
+          "cls": "host-mobile-menu-item",
+          "text": "Events",
+          "w": 259,
+          "h": 56
+        },
+        {
+          "tag": "SPAN",
+          "cls": "menu-icon",
+          "text": "",
+          "w": 36,
+          "h": 36
+        },
+        {
+          "tag": "svg",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 20,
+          "h": 20
+        },
+        {
+          "tag": "rect",
+          "cls": "[object SVGAnimatedString]",
+          "text": "",
+          "w": 15,
+          "h": 15
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select all guests on this page",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "event-switcher-select",
+          "text": "Switch event",
+          "w": 222,
+          "h": 48,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "k-search-input",
+          "text": "Search name, group, phone...",
+          "w": 570,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All GroupsGroom SideBride Side",
+          "w": 222,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "All CategoriesHigh School FriendCollege FriendFriendFamilyCoworke",
+          "w": 222,
+          "h": 48,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select all guests on this page",
+          "w": 18,
+          "h": 18,
+          "font": "12.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Guest Name",
+          "w": 192,
+          "h": 45,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Group",
+          "w": 161,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "",
+          "text": "Category",
+          "w": 213,
+          "h": 49,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Seats / Persons",
+          "w": 77,
+          "h": 45,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 2",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "",
+          "text": "Select guest: Review Guest 1",
+          "w": 18,
+          "h": 18,
+          "font": "13.5px"
+        }
+      ],
+      "h1": [
+        "Guest list"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1050
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/login",
+    "url": "/login",
+    "group": "auth-login",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer text-zinc-400 hover:text-zinc-200",
+          "text": "ខ្មែរ",
+          "w": 38,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer bg-amber-500 text-slate-950 font-bold",
+          "text": "EN",
+          "w": 35,
+          "h": 24
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 c",
+          "text": "Show password",
+          "w": 24,
+          "h": 24
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 ",
+          "text": "",
+          "w": 366,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600",
+          "text": "",
+          "w": 366,
+          "h": 44,
+          "font": "14px"
+        }
+      ],
+      "h1": [
+        "Koupreng administrator sign in"
+      ],
+      "landmarks": 0
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 480
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/templates/:templateId",
+    "url": "/templates/30",
+    "group": "admin-template-edit",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [
+        {
+          "tag": "DIV",
+          "cls": "absolute -top-20 -right-20 h-96 w-96 rounded-full blur-[140px] opacity-20 pointer-events-none",
+          "text": "",
+          "w": 384,
+          "h": 384
+        }
+      ],
+      "smallTargets": [],
+      "smallInputs": [],
+      "h1": [
+        "🎨 Edit: Batch 11 fixture template"
+      ],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 974
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/",
+    "url": "/",
+    "group": "admin-dashboard",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1434,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Create new template",
+          "w": 28,
+          "h": 28
+        },
+        {
+          "tag": "A",
+          "cls": "flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-20",
+          "text": "Open reports",
+          "w": 28,
+          "h": 28
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 72,
+          "h": 45,
+          "font": "13px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 1115
+  },
+  {
+    "engine": "webkit",
+    "width": 1440,
+    "height": 844,
+    "lang": "en",
+    "application": "frontend-admin",
+    "pattern": "/users",
+    "url": "/users",
+    "group": "admin-users",
+    "mode": "fictional DTO read-only render; not live end-to-end",
+    "render": "PASS",
+    "layout": {
+      "title": "គូព្រេង · Koupreng",
+      "viewport": [
+        1440,
+        844
+      ],
+      "scrollWidth": 1440,
+      "overflow": [],
+      "smallTargets": [
+        {
+          "tag": "BUTTON",
+          "cls": "btn btn-sm btn-primary",
+          "text": "All",
+          "w": 35,
+          "h": 26
+        }
+      ],
+      "smallInputs": [
+        {
+          "tag": "SELECT",
+          "cls": "admin-language-select",
+          "text": "Interface language",
+          "w": 72,
+          "h": 45,
+          "font": "13px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "SELECT",
+          "cls": "select",
+          "text": "ADMIN",
+          "w": 302,
+          "h": 36,
+          "font": "12px"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "text-input",
+          "text": "",
+          "w": 158,
+          "h": 36,
+          "font": "12px"
+        }
+      ],
+      "h1": [],
+      "landmarks": 1
+    },
+    "api": {
+      "unexpected": [],
+      "writes": [],
+      "errors": []
+    },
+    "elapsedMs": 711
+  }
+]

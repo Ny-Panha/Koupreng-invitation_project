@@ -1,0 +1,343 @@
+[
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V10__add_invitation_delivery.sql",
+    "sha256": "eec961f64b72ee4020f9d194a9f11fc74ec8e3406a291e8928934b76a33d8718",
+    "tables": [
+      "invitation_delivery_events"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V11__add_planning_gifts_and_budget_item_fields.sql",
+    "sha256": "cba861c2bb31f75d78b7623d51692093d45df2f9ed656697b8aafe6a2722402e",
+    "tables": [
+      "wedding_gifts"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V12__add_profile_image_to_users.sql",
+    "sha256": "1d77c535ae1ae481b09868bae5a9ee5c934b9f18e7aaeba287fffa4a114f87c7",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V13__add_account_planning_and_notification_schema.sql",
+    "sha256": "72d0c06859fc99989218ee6ae4ae3730a7c9839eac19826e6c33987645cee7b9",
+    "tables": [
+      "password_reset_tokens",
+      "organizations",
+      "organization_members",
+      "event_tables",
+      "guest_seat_assignments",
+      "guest_check_ins",
+      "events",
+      "system_audit_logs"
+    ],
+    "indexes": 23
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V14__seed_royal_khmer_wedding_template.sql",
+    "sha256": "ccc4d1820827193c2a405b06d22855cc95f843688e105c90faa366f20b2b59ab",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V15__seed_garden_royal_khmer_wedding_template.sql",
+    "sha256": "ea053d5daaa0ba0e2d4b01452dd044b67f1b4e435055174ff33fa2465551ad3a",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V16__keep_single_invitation_template.sql",
+    "sha256": "9139048def2fc62a58efc6f174e3c5dbc131664150f5eb26a4e8b29cbe80c49a",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V17__enforce_guest_contact_uniqueness.sql",
+    "sha256": "197b35bb473a814da380ec54fd2351e75932e47057b44baa32a2abc736cbf827",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V18__complete_subscription_payment_fulfillment.sql",
+    "sha256": "79c0c49bf573470906717f0d814561f88580dd828f10817991abd282f97bb130",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V19__add_static_subscription_payment_reconciliation.sql",
+    "sha256": "faec395295e6e9ebc393e36bd45ccadf175048de67efb32ffbefb7b4dc322180",
+    "tables": [],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V1__create_auth_schema.sql",
+    "sha256": "f2718459230d053e59d1c643917f25dbdac7a257fdbbc9bf2c52b65a59597d46",
+    "tables": [
+      "users"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V20__align_audit_logs_schema.sql",
+    "sha256": "3d980f74ab6dbd1d7d122c4bd54edb31deeee0af311ee4b911b20eb862d4a3bb",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V21__add_jpa_auditing_fields_to_users.sql",
+    "sha256": "708642826d1db4913fe117c01223c5908475258ed124518a80a72b122f9e4a61",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V22__seed_khmer_celestial_template.sql",
+    "sha256": "140efd9c284cb6ecf132f186b8c17ffdf41003fc9bdf1b106a9548a321f534fa",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V23__enable_khmer_celestial_opening_video.sql",
+    "sha256": "4321a5a3bf227ebdabcc5b13173654d5f836e6d07f34b872c330c7d4e6986946",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V26__add_currency_to_wedding_finances.sql",
+    "sha256": "a1159dad83a5066bf4c248f91db290a95fe5802913bf0031957a9d65e1e93774",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V27__add_template_colors.sql",
+    "sha256": "166a5f0920ae8f440e127001bcd85099051507c527b07dd36cea5aff32f11ef4",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V28__persist_verified_provider_identities.sql",
+    "sha256": "61772f5201dd60c650ed5527c684e81ff1fef74c01607b0a21dfd27bf0745ab8",
+    "tables": [
+      "user_external_identities"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V29__preserve_staff_role.sql",
+    "sha256": "10112fca3b9e3e0b1367181ebe7272cef39bee32b896e7c017c63705c21cdfde",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V30__preserve_check_in_undo_history.sql",
+    "sha256": "0861452e684870b8cc7de68aeac4b54a5d82b4256f963110e163d3bd75ed549c",
+    "tables": [
+      "guest_check_in_events"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V31__add_guest_companion_name.sql",
+    "sha256": "979b76a8d3c9d2a6722d01b83e059cda5f0ae9e59f8da28967b7bd48172bc91c",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V32__link_wedding_gifts_to_guests.sql",
+    "sha256": "2771d1b1a6c1989969d1d9c51b5316622181ca7083e28ad551d2571bbedb4e2e",
+    "tables": [],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V33__payment_evidence_and_notification_delivery.sql",
+    "sha256": "60593e369ae19852031a0bcd705430ab64338ddf507b4c230dc060262dd14c83",
+    "tables": [
+      "payment_evidence"
+    ],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V34__add_payment_evidence_transaction_date.sql",
+    "sha256": "339c03682bc5b35255b57f1f7983614f2c9c255e5edd0541f2104a4b2c249be1",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V35__register_silk_heritage_template.sql",
+    "sha256": "34c9b2b541fba1f935331452d9f5b17f333684421dee0242cd30984b7108edd6",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V36__add_public_visible_to_packages.sql",
+    "sha256": "93d901c85d60a1231b0ad76c85be049c2d564d611fbf2aadded00bca3d2d42ec",
+    "tables": [],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V37__template_compatibility_and_draft_identity.sql",
+    "sha256": "daf670e4236ad3d820e1cf5abe588b329d0d8fb3844b9719458c732ef1dd0274",
+    "tables": [
+      "template_event_types",
+      "template_languages"
+    ],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V38__invitation_ticket_designs.sql",
+    "sha256": "97f50f3db6ba1d7e1056ed864b0bc7934ebf7b66f291ca9661c085dcad37b00d",
+    "tables": [
+      "invitation_ticket_designs"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V39__cascade_invitation_ticket_design_cleanup.sql",
+    "sha256": "3e545841784354dc5f82f964ebbb85862aad28228932a542a19b9633a6044bbe",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V3__create_event_and_payment_tables.sql",
+    "sha256": "9197f4d7b4c4ebe3caf4a7aab9ae8829764bc6585fcd3250ab0ac9589bcd889c",
+    "tables": [
+      "templates",
+      "invitations",
+      "invitation_sections",
+      "media_files",
+      "guests",
+      "rsvps",
+      "notifications",
+      "budgets",
+      "budget_items",
+      "packages",
+      "subscriptions",
+      "audit_logs",
+      "payment_configs",
+      "payment_transactions",
+      "payment_webhook_logs",
+      "telegram_notifications",
+      "organizer_payout_accounts"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V40__seed_khmer_royal_lotus_template.sql",
+    "sha256": "5c88236f2f28e08c0e192f5bbb01ebe64a91fed4697baf5c9aa9914ee0d9baa4",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V41__guest_import_batch_receipts.sql",
+    "sha256": "e7cd262798faf39d46f1ef728e1bbf9eb9371c60adcfba7c1ed29b7215595707",
+    "tables": [
+      "guest_import_batches"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V42__event_seating_layouts.sql",
+    "sha256": "25402e9a3c38c509da4553c4ab62ee897cea315507df6cd3cf175109a8b9a16b",
+    "tables": [
+      "event_seating_layouts"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V43__manual_gift_request_identity.sql",
+    "sha256": "6b02e9017fca969dc2ac5abe4f3d8a6fa9363d329c05854e6367a2fc7be9b769",
+    "tables": [],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V44__subscription_benefit_snapshots_and_free.sql",
+    "sha256": "998faa02a991797c2eb925fce8c75e73048b7689321dbd658cee7f565f0b46ce",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V45__preserve_snapshot_extra_benefits.sql",
+    "sha256": "ff9a5cbe15be0cf971da572086aed6817cda0e6e1647499b76bb3a0c4985c971",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V46__restore_retired_free_fallback.sql",
+    "sha256": "ea6c65f9312e2f5a41ce513037fcc62bfbb5017e70bbe4db52a81177ef8d7e14",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V47__organization_invitation_acceptance.sql",
+    "sha256": "bb2ccae580783312e116079569b43629b9f743b76d36bdd514d8b3c490d9fae7",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V48__organization_event_acceptance_proof.sql",
+    "sha256": "fe96c037ff46c88668aaadff323416c653d16e929b1c30425dca8d076cc00c4c",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V49__index_guest_dashboard_order.sql",
+    "sha256": "95888b5e84c8f91942180539489a7ff824c550b4c73f382e050d9597d89997bf",
+    "tables": [],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V4__complete_invitation_guest_rsvp_module.sql",
+    "sha256": "55f868ae4652fc7f92efd351268b19dea862bb06c7dc8b1289150f5b7fa9a571",
+    "tables": [],
+    "indexes": 7
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V50__retire_garden_royal_and_khmer_royal_lotus_templates.sql",
+    "sha256": "18fb7a6f89a022b895a9441bf9bc8212e8f2488cd1a2914f85908f60323d09f1",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V51__register_khmer_floral_gold_template.sql",
+    "sha256": "ab9ede2db851e469475f00a57270ad89fc187f31330e31b386a5ffe2f26710ff",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V5__complete_media_file_module.sql",
+    "sha256": "05d276c778d55b2b118e236dfbc68be24657d52488a5b2a39ae86bbd0d0d7916",
+    "tables": [],
+    "indexes": 3
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V6__create_template_payment_orders.sql",
+    "sha256": "f085e303ce2c8e683242fb34e0adc25455950b9cddfb6ad314d8e2d7d112a9c5",
+    "tables": [
+      "template_orders",
+      "user_template_access"
+    ],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V7__create_payway_template_payment_orders.sql",
+    "sha256": "5535c2d3d7f0369e852e83b59745c3bb6d8f4524444915434537d6bbfdefb502",
+    "tables": [
+      "template_payment_orders"
+    ],
+    "indexes": 1
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V8__add_payway_dynamic_qr_fields.sql",
+    "sha256": "83cd8bf7219c35f3971ffe32c07d4075d0db1a20ba0cca3c1a0f0eba8edf6953",
+    "tables": [],
+    "indexes": 0
+  },
+  {
+    "file": "apps/backend/src/main/resources/db/migration/V9__add_static_telegram_payment_fields.sql",
+    "sha256": "4542175dc0bba4830a8fc12efd09700e10616f5e35e1cf94bd2da58ddc108293",
+    "tables": [],
+    "indexes": 1
+  }
+]

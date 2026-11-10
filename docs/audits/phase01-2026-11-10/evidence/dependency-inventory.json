@@ -1,0 +1,566 @@
+{
+  "frontend-user": {
+    "dependencies": [
+      {
+        "name": "@tailwindcss/vite",
+        "declared": "^4.3.3",
+        "locked": "4.3.3",
+        "installed": "4.3.3"
+      },
+      {
+        "name": "axios",
+        "declared": "^1.19.0",
+        "locked": "1.20.0",
+        "installed": "1.20.0"
+      },
+      {
+        "name": "framer-motion",
+        "declared": "^14.5.0",
+        "locked": "14.6.0",
+        "installed": "14.6.0"
+      },
+      {
+        "name": "jsqr",
+        "declared": "^1.4.0",
+        "locked": "1.4.0",
+        "installed": "1.4.0"
+      },
+      {
+        "name": "lucide-react",
+        "declared": "^1.61.0",
+        "locked": "1.61.0",
+        "installed": "1.61.0"
+      },
+      {
+        "name": "prop-types",
+        "declared": "^15.8.1",
+        "locked": "15.8.1",
+        "installed": "15.8.1"
+      },
+      {
+        "name": "react",
+        "declared": "^19.3.1",
+        "locked": "19.3.1",
+        "installed": "19.3.1"
+      },
+      {
+        "name": "react-dom",
+        "declared": "^19.3.1",
+        "locked": "19.3.1",
+        "installed": "19.3.1"
+      },
+      {
+        "name": "react-icons",
+        "declared": "^5.7.0",
+        "locked": "5.7.0",
+        "installed": "5.7.0"
+      },
+      {
+        "name": "react-qr-code",
+        "declared": "^2.2.0",
+        "locked": "2.2.0",
+        "installed": "2.2.0"
+      },
+      {
+        "name": "react-router-dom",
+        "declared": "^7.18.2",
+        "locked": "7.18.4",
+        "installed": "7.18.4"
+      },
+      {
+        "name": "tailwindcss",
+        "declared": "^4.3.3",
+        "locked": "4.3.3",
+        "installed": "4.3.3"
+      },
+      {
+        "name": "zustand",
+        "declared": "^5.0.16",
+        "locked": "5.0.16",
+        "installed": "5.0.16"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@axe-core/playwright",
+        "declared": "4.14.0",
+        "locked": "4.14.0",
+        "installed": "4.14.0"
+      },
+      {
+        "name": "@eslint/js",
+        "declared": "^10.0.1",
+        "locked": "10.0.1",
+        "installed": "10.0.1"
+      },
+      {
+        "name": "@playwright/test",
+        "declared": "^1.64.1",
+        "locked": "1.64.1",
+        "installed": "1.64.1"
+      },
+      {
+        "name": "@testing-library/jest-dom",
+        "declared": "^7.0.1",
+        "locked": "7.0.1",
+        "installed": "7.0.1"
+      },
+      {
+        "name": "@testing-library/react",
+        "declared": "^16.3.2",
+        "locked": "16.3.3",
+        "installed": "16.3.3"
+      },
+      {
+        "name": "@types/react",
+        "declared": "^19.3.0",
+        "locked": "19.3.0",
+        "installed": "19.3.0"
+      },
+      {
+        "name": "@types/react-dom",
+        "declared": "^19.3.0",
+        "locked": "19.3.0",
+        "installed": "19.3.0"
+      },
+      {
+        "name": "@vitejs/plugin-react",
+        "declared": "^6.1.2",
+        "locked": "6.1.2",
+        "installed": "6.1.2"
+      },
+      {
+        "name": "eslint",
+        "declared": "^10.13.0",
+        "locked": "10.13.0",
+        "installed": "10.13.0"
+      },
+      {
+        "name": "eslint-plugin-react-hooks",
+        "declared": "^7.1.1",
+        "locked": "7.1.1",
+        "installed": "7.1.1"
+      },
+      {
+        "name": "eslint-plugin-react-refresh",
+        "declared": "^0.5.3",
+        "locked": "0.5.7",
+        "installed": "0.5.7"
+      },
+      {
+        "name": "globals",
+        "declared": "^17.13.0",
+        "locked": "17.13.0",
+        "installed": "17.13.0"
+      },
+      {
+        "name": "happy-dom",
+        "declared": "^21.0.4",
+        "locked": "21.0.4",
+        "installed": "21.0.4"
+      },
+      {
+        "name": "jsdom",
+        "declared": "^30.1.3",
+        "locked": "30.1.3",
+        "installed": "30.1.3"
+      },
+      {
+        "name": "knip",
+        "declared": "^6.43.0",
+        "locked": "6.43.0",
+        "installed": "6.43.0"
+      },
+      {
+        "name": "vite",
+        "declared": "^8.3.5",
+        "locked": "8.3.5",
+        "installed": "8.3.5"
+      },
+      {
+        "name": "vitest",
+        "declared": "^5.0.5",
+        "locked": "5.0.5",
+        "installed": "5.0.5"
+      }
+    ],
+    "optionalDependencies": [
+      {
+        "name": "@esbuild/linux-x64",
+        "declared": "^0.28.2",
+        "locked": "0.28.2",
+        "installed": null
+      },
+      {
+        "name": "@rolldown/binding-linux-x64-gnu",
+        "declared": "^1.2.15",
+        "locked": "1.2.15",
+        "installed": null
+      },
+      {
+        "name": "@rollup/rollup-linux-x64-gnu",
+        "declared": "^4.65.0",
+        "locked": "4.65.0",
+        "installed": null
+      }
+    ]
+  },
+  "frontend-admin": {
+    "dependencies": [
+      {
+        "name": "@dnd-kit/core",
+        "declared": "^6.3.1",
+        "locked": "6.3.1",
+        "installed": "6.3.1"
+      },
+      {
+        "name": "@dnd-kit/sortable",
+        "declared": "^10.0.0",
+        "locked": "10.0.0",
+        "installed": "10.0.0"
+      },
+      {
+        "name": "@dnd-kit/utilities",
+        "declared": "^3.2.2",
+        "locked": "3.2.2",
+        "installed": "3.2.2"
+      },
+      {
+        "name": "@tailwindcss/vite",
+        "declared": "^4.3.3",
+        "locked": "4.3.3",
+        "installed": "4.3.3"
+      },
+      {
+        "name": "axios",
+        "declared": "^1.19.0",
+        "locked": "1.20.0",
+        "installed": "1.20.0"
+      },
+      {
+        "name": "lucide-react",
+        "declared": "^1.61.0",
+        "locked": "1.61.0",
+        "installed": "1.61.0"
+      },
+      {
+        "name": "react",
+        "declared": "^19.3.1",
+        "locked": "19.3.1",
+        "installed": "19.3.1"
+      },
+      {
+        "name": "react-dom",
+        "declared": "^19.3.1",
+        "locked": "19.3.1",
+        "installed": "19.3.1"
+      },
+      {
+        "name": "react-router-dom",
+        "declared": "^7.18.2",
+        "locked": "7.18.4",
+        "installed": "7.18.4"
+      },
+      {
+        "name": "tailwindcss",
+        "declared": "^4.3.3",
+        "locked": "4.3.3",
+        "installed": "4.3.3"
+      }
+    ],
+    "devDependencies": [
+      {
+        "name": "@eslint/js",
+        "declared": "^10.0.1",
+        "locked": "10.0.1",
+        "installed": "10.0.1"
+      },
+      {
+        "name": "@testing-library/dom",
+        "declared": "^10.4.2",
+        "locked": "10.4.2",
+        "installed": "10.4.2"
+      },
+      {
+        "name": "@testing-library/jest-dom",
+        "declared": "^7.0.1",
+        "locked": "7.0.1",
+        "installed": "7.0.1"
+      },
+      {
+        "name": "@testing-library/react",
+        "declared": "^16.3.2",
+        "locked": "16.3.3",
+        "installed": "16.3.3"
+      },
+      {
+        "name": "@types/react",
+        "declared": "^19.3.0",
+        "locked": "19.3.0",
+        "installed": "19.3.0"
+      },
+      {
+        "name": "@types/react-dom",
+        "declared": "^19.3.0",
+        "locked": "19.3.0",
+        "installed": "19.3.0"
+      },
+      {
+        "name": "@vitejs/plugin-react",
+        "declared": "^6.1.2",
+        "locked": "6.1.2",
+        "installed": "6.1.2"
+      },
+      {
+        "name": "eslint",
+        "declared": "^10.13.0",
+        "locked": "10.13.0",
+        "installed": "10.13.0"
+      },
+      {
+        "name": "eslint-plugin-react-hooks",
+        "declared": "^7.1.1",
+        "locked": "7.1.1",
+        "installed": "7.1.1"
+      },
+      {
+        "name": "eslint-plugin-react-refresh",
+        "declared": "^0.5.3",
+        "locked": "0.5.7",
+        "installed": "0.5.7"
+      },
+      {
+        "name": "globals",
+        "declared": "^17.13.0",
+        "locked": "17.13.0",
+        "installed": "17.13.0"
+      },
+      {
+        "name": "happy-dom",
+        "declared": "^21.0.4",
+        "locked": "21.0.4",
+        "installed": "21.0.4"
+      },
+      {
+        "name": "knip",
+        "declared": "^6.43.0",
+        "locked": "6.43.0",
+        "installed": "6.43.0"
+      },
+      {
+        "name": "vite",
+        "declared": "^8.3.5",
+        "locked": "8.3.5",
+        "installed": "8.3.5"
+      },
+      {
+        "name": "vitest",
+        "declared": "^5.0.5",
+        "locked": "5.0.5",
+        "installed": "5.0.5"
+      }
+    ],
+    "optionalDependencies": []
+  },
+  "backend": {
+    "parent": "4.1.1",
+    "properties": {
+      "jackson-2-bom.version": "2.21.5",
+      "java.version": "25",
+      "log4j2.version": "2.25.5",
+      "netty.version": "4.2.18.Final",
+      "mysql.version": "26.7.0",
+      "postgresql.version": "42.7.14",
+      "tomcat.version": "11.0.25",
+      "archunit.version": "1.5.1",
+      "poi.version": "6.0.0",
+      "nimbus-jose-jwt.version": "10.10"
+    },
+    "dependencies": [
+      {
+        "groupId": "com.fasterxml.jackson.core",
+        "artifactId": "jackson-annotations"
+      },
+      {
+        "groupId": "com.fasterxml.jackson.core",
+        "artifactId": "jackson-core"
+      },
+      {
+        "groupId": "com.fasterxml.jackson.core",
+        "artifactId": "jackson-databind"
+      },
+      {
+        "groupId": "com.nimbusds",
+        "artifactId": "nimbus-jose-jwt",
+        "version": "${nimbus-jose-jwt.version}"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-actuator"
+      },
+      {
+        "groupId": "io.micrometer",
+        "artifactId": "micrometer-registry-prometheus"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-data-jpa"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-data-redis"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-flyway"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-security"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-security-oauth2-resource-server"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-mail"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-validation"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-configuration-processor",
+        "optional": "true"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-webmvc"
+      },
+      {
+        "groupId": "org.springdoc",
+        "artifactId": "springdoc-openapi-starter-webmvc-scalar",
+        "version": "3.2.0"
+      },
+      {
+        "groupId": "com.fasterxml.jackson.dataformat",
+        "artifactId": "jackson-dataformat-yaml"
+      },
+      {
+        "groupId": "org.flywaydb",
+        "artifactId": "flyway-database-postgresql"
+      },
+      {
+        "groupId": "org.flywaydb",
+        "artifactId": "flyway-mysql"
+      },
+      {
+        "groupId": "org.apache.poi",
+        "artifactId": "poi",
+        "version": "${poi.version}"
+      },
+      {
+        "groupId": "org.apache.poi",
+        "artifactId": "poi-ooxml",
+        "version": "${poi.version}"
+      },
+      {
+        "groupId": "com.google.zxing",
+        "artifactId": "core",
+        "version": "3.5.4"
+      },
+      {
+        "groupId": "com.google.zxing",
+        "artifactId": "javase",
+        "version": "3.5.4"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-devtools",
+        "scope": "runtime",
+        "optional": "true"
+      },
+      {
+        "groupId": "com.mysql",
+        "artifactId": "mysql-connector-j",
+        "scope": "runtime"
+      },
+      {
+        "groupId": "org.postgresql",
+        "artifactId": "postgresql",
+        "scope": "runtime"
+      },
+      {
+        "groupId": "org.projectlombok",
+        "artifactId": "lombok",
+        "optional": "true"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-actuator-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-data-jpa-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-flyway-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-security-oauth2-resource-server-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-security-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-validation-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-webmvc-test",
+        "scope": "test"
+      },
+      {
+        "groupId": "com.h2database",
+        "artifactId": "h2",
+        "scope": "test"
+      },
+      {
+        "groupId": "com.tngtech.archunit",
+        "artifactId": "archunit-junit5",
+        "version": "${archunit.version}",
+        "scope": "test"
+      }
+    ]
+  },
+  "telegram-bot": {
+    "requirements": [
+      "fastapi==0.156.4",
+      "httpx==0.28.1",
+      "python-dotenv==1.2.4",
+      "uvicorn==0.54.0",
+      "certifi==2026.10.23"
+    ],
+    "development": [
+      "-r requirements.txt",
+      "",
+      "bandit==1.9.4",
+      "pip-audit==2.10.1",
+      "pytest==9.1.1",
+      "pytest-asyncio==1.4.0",
+      "ruff==0.17.1"
+    ]
+  }
+}
