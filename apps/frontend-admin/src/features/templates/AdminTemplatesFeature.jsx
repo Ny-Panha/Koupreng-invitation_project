@@ -524,20 +524,20 @@ export default function AdminTemplatesPage() {
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
                     {/* Premium / Free Badge */}
                     {isPremium ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-md shadow-amber-500/20 backdrop-blur-md">
-                        <Crown className="h-3 w-3" />
+                      <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-amber-500/20 backdrop-blur-md">
+                        <Crown className="h-3.5 w-3.5" />
                         <span>👑 PREMIUM</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-md shadow-emerald-500/20 backdrop-blur-md">
-                        <Gift className="h-3 w-3" />
+                      <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-emerald-500/20 backdrop-blur-md">
+                        <Gift className="h-3.5 w-3.5" />
                         <span>🎁 FREE</span>
                       </span>
                     )}
 
                     {/* Active / Inactive Badge */}
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider shadow-sm backdrop-blur-md ${
+                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider shadow-sm backdrop-blur-md ${
                         isActive
                           ? "bg-slate-900/85 text-emerald-400 border border-emerald-500/40"
                           : "bg-slate-900/85 text-rose-400 border border-rose-500/40"
@@ -1096,7 +1096,7 @@ export default function AdminTemplatesPage() {
                 <div className="w-full max-w-[290px] rounded-2xl border border-slate-200/90 bg-white p-3 shadow-lg dark:border-zinc-800 dark:bg-[#151518] relative group">
                   
                   {/* Category badge */}
-                  <div className="absolute top-5 left-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500 text-white shadow-xs">
+                  <div className="absolute top-5 left-5 z-10 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-600 text-white shadow-xs">
                     {formData.category === "TRADITIONAL"
                       ? "បុរាណ"
                       : formData.category === "MODERN"
@@ -1109,12 +1109,12 @@ export default function AdminTemplatesPage() {
                   {/* Premium Badge */}
                   <div className="absolute top-5 right-5 z-10">
                     {formData.premium ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-600 text-white shadow-xs flex items-center gap-1">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-600 text-white shadow-xs flex items-center gap-1">
                         <Crown className="h-3 w-3" />
                         <span>Premium</span>
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-xs">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-700 text-white shadow-xs">
                         🎁 Free
                       </span>
                     )}

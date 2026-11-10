@@ -84,7 +84,7 @@ export function StatCard({
           </span>
         )}
         {badge && (
-          <span className="ml-auto rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400 animate-zoom-in" style={{ animationDelay: "0.20s" }}>
+          <span className="ml-auto rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-400 animate-zoom-in" style={{ animationDelay: "0.20s" }}>
             {badge}
           </span>
         )}

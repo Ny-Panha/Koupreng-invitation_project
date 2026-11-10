@@ -208,7 +208,7 @@ export default function FinancialReport() {
               </div>
               <strong>{report.incomeRows.length} {t("records")}</strong>
             </div>
-            <div className="report-table-wrapper">
+            <div className="report-table-wrapper" tabIndex={0} role="region" aria-label={t("incomeTable")}>
               <table className="report-table">
                 <thead>
                   <tr>
@@ -243,7 +243,7 @@ export default function FinancialReport() {
               </div>
               <strong>{report.expenseRows.length} {t("records")}</strong>
             </div>
-            <div className="report-table-wrapper">
+            <div className="report-table-wrapper" tabIndex={0} role="region" aria-label={t("expenseTable")}>
               <table className="report-table">
                 <thead>
                   <tr>
@@ -295,19 +295,19 @@ function ReportSurface({ preview, onClose, label, children }) {
 
 function MoneyCard({ label, amounts, tone, detail }) {
   const amountColor = tone === "income"
-    ? "text-emerald-600"
+    ? "text-emerald-700 dark:text-emerald-400"
     : tone === "balance"
-      ? "text-rose-500"
-      : "text-amber-600";
+      ? "text-rose-700 dark:text-rose-400"
+      : "text-amber-800 dark:text-amber-300";
 
   return (
-    <article className={`report-summary-card money-card is-${tone} bg-white border border-[#f0e8dd] shadow-sm hover:shadow-md transition-all rounded-2xl p-5`}>
-      <span>{label}</span>
+    <article className={`report-summary-card money-card is-${tone} bg-white dark:bg-[#1a221d] border border-[#f0e8dd] dark:border-[#2d3832] shadow-sm hover:shadow-md transition-all rounded-2xl p-5`}>
+      <span className="text-gray-700 dark:text-zinc-300 font-medium">{label}</span>
       <div className="money-card-amounts">
         <strong className={amountColor}>{formatAmount(amounts.USD, "USD")}</strong>
         <strong className={amountColor}>{formatAmount(amounts.KHR, "KHR")}</strong>
       </div>
-      <small className="text-xs text-gray-500">{detail}</small>
+      <small className="text-xs text-gray-600 dark:text-zinc-400">{detail}</small>
     </article>
   );
 }

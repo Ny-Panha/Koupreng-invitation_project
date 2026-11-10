@@ -116,6 +116,7 @@ export default function ResetPasswordPage() {
                     required
                     minLength={8}
                     autoComplete="new-password"
+                    aria-describedby="reset-password-hint"
                     className="auth-input"
                   />
                   <button
@@ -127,6 +128,9 @@ export default function ResetPasswordPage() {
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
+                <p id="reset-password-hint" className="auth-hint">
+                  {copy("លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "Password must be at least 8 characters long.")}
+                </p>
               </div>
 
               <div className="auth-field">

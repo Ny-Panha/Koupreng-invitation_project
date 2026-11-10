@@ -50,15 +50,15 @@
 }
 
 .admin-feature-card span {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #64748b;
+  color: #475569;
 }
 
 .dark .admin-feature-card span {
-  color: #a1a1aa;
+  color: #cbd5e1;
 }
 
 .admin-feature-card strong {
@@ -237,4 +237,50 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* User detail & detail grids (A-04) */
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.admin-detail-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--admin-subtle, #f8fafc);
+  border: 1px solid var(--admin-border, #e2e8f0);
+  border-radius: 12px;
+}
+
+.admin-detail-cell span {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #475569;
+}
+
+.admin-detail-cell strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.dark .admin-detail-cell {
+  background: #18181b;
+  border-color: #27272a;
+}
+
+.dark .admin-detail-cell span {
+  color: #cbd5e1;
+}
+
+.dark .admin-detail-cell strong {
+  color: #f4f4f5;
 }

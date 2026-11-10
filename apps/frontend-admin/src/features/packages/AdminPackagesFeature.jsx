@@ -717,18 +717,18 @@ export default function AdminPackagesPage() {
                           <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 truncate group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
                             {plan.packageName}
                           </h3>
-                          <span className="font-mono text-[10px] font-bold text-slate-600 dark:text-zinc-400 block truncate">
+                          <span className="font-mono text-xs font-bold text-slate-600 dark:text-zinc-400 block truncate">
                             {plan.code}
                           </span>
-                          <small className="text-[10px] text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
+                          <small className="text-xs text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-1.5 flex-wrap justify-end shrink-0">
                         <span
-                          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${
+                          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider ${
                             plan.publicVisible
-                              ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
+                              ? "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20"
                               : "bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-700"
                           }`}
                           title={plan.publicVisible ? "Publicly listed on /pricing" : "Unlisted / hidden from /pricing"}
@@ -736,7 +736,7 @@ export default function AdminPackagesPage() {
                           {plan.publicVisible ? (lang === "en" ? "PUBLIC" : "សាធារណៈ") : (lang === "en" ? "UNLISTED" : "ឯកជន")}
                         </span>
                         <span
-                          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${
+                          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider ${
                             plan.active
                               ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20"
                               : "bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400 border-slate-200 dark:border-zinc-700"
@@ -801,7 +801,7 @@ export default function AdminPackagesPage() {
                   {/* Quotas & Capacity (Clean dual metric capsules) */}
                   <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-xl bg-slate-50/90 dark:bg-zinc-900/60 border border-slate-100 dark:border-zinc-800/80">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 flex items-center gap-1">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 flex items-center gap-1">
                         <Mail className="h-3 w-3 text-amber-500" />
                         <span>{lang === "en" ? "Invitations" : "ធៀបការ"}</span>
                       </span>
@@ -810,7 +810,7 @@ export default function AdminPackagesPage() {
                       </p>
                     </div>
                     <div className="border-l border-slate-200/80 dark:border-zinc-800 pl-2.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 flex items-center gap-1">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300 flex items-center gap-1">
                         <Users className="h-3 w-3 text-amber-500" />
                         <span>{lang === "en" ? "Guests" : "ចំនួនភ្ញៀវ"}</span>
                       </span>
@@ -823,15 +823,15 @@ export default function AdminPackagesPage() {
                   {/* Features & Permissions (Clean Checklist) */}
                   <div className="pt-3 border-t border-slate-100 dark:border-zinc-800/80">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-zinc-300">
                         {t("packages.featuresSec", lang === "en" ? "Key Features" : "មុខងារពិសេស")}
                       </span>
-                      <span className="text-[10px] font-extrabold text-amber-800 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                      <span className="text-xs font-extrabold text-amber-800 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
                         {enabledCount}/{FEATURE_LIST.length} {lang === "en" ? "Active" : "សកម្ម"}
                       </span>
                     </div>
 
-                    <div className="space-y-1.5 text-[11px]">
+                    <div className="space-y-1.5 text-xs">
                       {FEATURE_LIST.map((feat) => {
                         const enabled = Boolean(plan[feat.key]);
                         const featLabel = lang === "en" ? (feat.labelEn || feat.label) : (feat.labelKm || feat.label).split(" (")[0];
@@ -932,9 +932,9 @@ export default function AdminPackagesPage() {
                         <p className="font-semibold text-slate-900 dark:text-zinc-100">
                           {plan.packageName}
                         </p>
-                        <small className="text-[10px] text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
+                        <small className="text-xs text-slate-600 dark:text-zinc-400">{lang === 'en' ? 'Revision' : 'កំណែ'} {plan.revision ?? 0}</small>
                         {plan.description && (
-                          <p className="text-[11px] text-slate-600 dark:text-zinc-400 truncate max-w-xs">
+                          <p className="text-xs text-slate-600 dark:text-zinc-400 truncate max-w-xs">
                             {plan.description}
                           </p>
                         )}
@@ -945,7 +945,7 @@ export default function AdminPackagesPage() {
                         {isFree ? "Free" : `${plan.currency || "USD"} ${plan.price}`}
                       </span>
                       {!isFree && (
-                        <span className="text-[10px] text-slate-600 ml-1 dark:text-zinc-400">
+                        <span className="text-xs text-slate-600 ml-1 dark:text-zinc-400">
                           /{plan.billingInterval}
                         </span>
                       )}
@@ -955,7 +955,7 @@ export default function AdminPackagesPage() {
                         <p className="text-slate-700 dark:text-zinc-300">
                           💌 {plan.maxInvitations || "—"} {t("packages.invitationsCount", "ធៀប")}
                         </p>
-                        <p className="text-slate-600 dark:text-zinc-400 text-[11px]">
+                        <p className="text-slate-600 dark:text-zinc-400 text-xs">
                           👥 {plan.maxGuests || "—"} {t("packages.guestsCount", "ភ្ញៀវ")}
                         </p>
                       </div>
@@ -967,7 +967,7 @@ export default function AdminPackagesPage() {
                           return (
                             <span
                               key={f.key}
-                              className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300"
+                              className="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300"
                             >
                               {badgeLabel}
                             </span>

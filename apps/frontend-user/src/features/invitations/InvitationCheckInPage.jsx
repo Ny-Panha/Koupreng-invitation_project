@@ -483,7 +483,7 @@ export default function InvitationCheckInPage() {
                         </div>
                     </div>
 
-                    <div className="guest-table-wrap">
+                    <div className="guest-table-wrap" tabIndex={0} role="region" aria-label={copy("បញ្ជីភ្ញៀវកត់ត្រាវត្តមាន", "Guest roster")}>
                         <table className="checkin-guest-table guest-table" aria-label={copy("បញ្ជីភ្ញៀវកត់ត្រាវត្តមាន", "Guest roster")} data-testid="guest-roster-table">
                             <thead>
                                 <tr>
@@ -584,7 +584,7 @@ export default function InvitationCheckInPage() {
                     </span>
                 </div>
 
-                <div className="guest-table-wrap">
+                <div className="guest-table-wrap" tabIndex={0} role="region" aria-label={copy("បញ្ជីចូលរួមចុងក្រោយ", "Recent check-ins")}>
                     <table className="checkin-guest-table guest-table" aria-label={copy("បញ្ជីចូលរួមចុងក្រោយ", "Recent check-ins")} data-testid="recent-checkins-table">
                         <thead>
                             <tr>

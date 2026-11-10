@@ -104,6 +104,14 @@ export default function ForgotPassword() {
               </button>
             </form>
 
+            <div className="auth-recovery-hint" style={{ marginTop: "16px", padding: "12px 14px", borderRadius: "10px", background: "var(--app-subtle, #f5efe6)", fontSize: "13px", color: "var(--app-muted, #5e6f66)", lineHeight: 1.5 }}>
+              <strong>{copy("ចុះឈ្មោះតាមលេខទូរស័ព្ទ?", "Signed up with phone?")}</strong>{" "}
+              {copy(
+                "សូមទាក់ទងមកកាន់ក្រុមការងារគាំទ្រ ឬចូលតាម Telegram ដើម្បីស្វែងរកគណនីរបស់អ្នក។",
+                "Please contact support or sign in via Telegram to recover access."
+              )}
+            </div>
+
             <div className="auth-back" style={{ marginTop: "20px" }}>
               <Link to="/login" className="auth-home-link">
                 <ArrowLeft size={15} aria-hidden="true" />

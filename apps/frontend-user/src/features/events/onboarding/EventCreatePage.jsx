@@ -358,9 +358,11 @@ export default function EventCreatePage() {
             <div
               className="event-wizard-progress-bar"
               role="progressbar"
+              aria-label={copy("វឌ្ឍនភាពនៃការបង្កើតកម្មវិធី", "Event creation progress")}
               aria-valuenow={currentStep * 25}
               aria-valuemin={0}
               aria-valuemax={100}
+              aria-valuetext={copy(`ជំហានទី ${currentStep} នៃ 4`, `Step ${currentStep} of 4`)}
               style={{ width: `${currentStep * 25}%` }}
             />
           </div>

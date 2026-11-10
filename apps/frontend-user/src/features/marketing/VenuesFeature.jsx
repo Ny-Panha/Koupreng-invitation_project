@@ -462,14 +462,14 @@ const VenuesPage = () => {
         .venue-meta { margin-bottom: 25px; }
         .venue-meta p { 
           font-size: 14px; 
-          color: #666; 
+          color: #475569; 
           margin-bottom: 10px; 
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
         }
-        .gold-text-bold { color: #B0926A; font-weight: 800; }
+        .gold-text-bold { color: #8c6527; font-weight: 800; }
         
         .view-detail-btn { 
           display: block; 

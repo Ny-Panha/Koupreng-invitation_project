@@ -502,6 +502,33 @@
     gap: 4px;
 }
 
+.event-card-countdown-tag {
+    background: #fbf5ec;
+    color: #6e4e1f;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.event-card-countdown-tag.is-past {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+:root[data-color-mode=dark] .event-card-countdown-tag {
+    background: rgba(176, 146, 106, 0.18);
+    color: #f1dfb8;
+}
+
+:root[data-color-mode=dark] .event-card-countdown-tag.is-past {
+    background: rgba(255, 255, 255, 0.08);
+    color: #9ca3af;
+}
+
 .event-card-title {
     font-size: 22px;
     font-weight: 750;
