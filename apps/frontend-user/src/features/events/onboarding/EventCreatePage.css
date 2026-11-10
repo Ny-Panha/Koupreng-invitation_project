@@ -777,6 +777,48 @@
   line-height: 1.6;
 }
 
+/* Event Review Photo Preview */
+.event-review-photo-preview {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(227, 222, 213, 0.6);
+}
+
+.event-review-photo-thumb {
+  width: 90px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ebdccb;
+  flex-shrink: 0;
+  background: #1f2937;
+}
+
+.event-review-photo-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-review-photo-focal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ws-ink);
+}
+
+.event-review-photo-empty {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(227, 222, 213, 0.6);
+}
+
+.event-retry-banner {
+  margin-bottom: 16px;
+}
+
 /* Actions Bar */
 .event-create-final {
   padding: 8px 0;

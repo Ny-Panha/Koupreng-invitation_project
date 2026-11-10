@@ -18,11 +18,14 @@ import {
   PartyPopper,
   Pencil,
   Sparkles,
-  Users
+  Users,
+  Camera,
+  RefreshCw
 } from "lucide-react";
 import { api } from "@/shared/api/httpClient";
 import { unwrap } from "@/shared/api/helpers";
 import { invitationService } from "@/features/invitations/api/invitationApi";
+import { mediaService } from "@/features/invitations/api/mediaApi";
 import { templateCatalogService } from "@/features/templates/api/templateCatalogApi";
 import { getTemplateIntent, clearTemplateIntent, findMatchingTemplate, templateIntentFromParams } from "@/features/templates/model/templateIntent";
 import subscriptionService from "@/features/subscriptions/subscriptionService";
@@ -35,6 +38,7 @@ import { EVENT_TYPES, STYLE_LABELS, eventPayload } from "./eventFields.js";
 import { validateEventForm } from "./eventCreation.js";
 import { generateSecureUuid } from "@/shared/utils/uuid";
 import EventFields from "./EventFields.jsx";
+import EventPhotoUpload from "./EventPhotoUpload.jsx";
 import "@/shared/styles/workspace-ui.css";
 import "./EventCreatePage.css";
 
@@ -95,6 +99,19 @@ export default function EventCreatePage() {
   const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState(null);
+  const [photoFocalPoint, setPhotoFocalPoint] = useState("center");
+  const [photoError, setPhotoError] = useState("");
+  const [pendingEventId, setPendingEventId] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (photoPreviewUrl && photoPreviewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(photoPreviewUrl);
+      }
+    };
+  }, [photoPreviewUrl]);
 
   const submitting = useRef(false);
   const saved = useRef(false);
@@ -206,7 +223,7 @@ export default function EventCreatePage() {
 
   const completedSteps = [];
   if (type) completedSteps.push(1);
-  if (form.title?.trim() && (submitted === "draft" || (form.eventDate && form.venueName))) completedSteps.push(2);
+  if (form.title?.trim() && (submitted === "draft" || (form.eventDate && form.venueName && (photoFile || submitted === "draft")))) completedSteps.push(2);
   if (templateId) completedSteps.push(3);
 
   const getParticipantsSummary = () => {
@@ -226,7 +243,7 @@ export default function EventCreatePage() {
     intentTemplate.current = null;
     clearTemplateIntent();
     clearUrlIntent();
-    setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError("");
+    setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError(""); setPhotoError("");
     setForm(current => ({ ...current, hostName: current.hostName || current.groomName || "", partnerName: current.partnerName || current.brideName || "", groomName: current.groomName || current.hostName || "", brideName: current.brideName || current.partnerName || "" }));
   };
 
@@ -242,7 +259,7 @@ export default function EventCreatePage() {
 
   const save = async mode => {
     if (submitting.current) return;
-    setSubmitted(mode); setError("");
+    setSubmitted(mode); setError(""); setPhotoError("");
     const validation = validateEventForm(form, type, { draft: mode === "draft", en });
     const firstError = Object.keys(validation)[0];
     if (firstError) {
@@ -250,6 +267,18 @@ export default function EventCreatePage() {
       const errorEl = document.getElementById(`event-${firstError}`);
       errorEl?.focus();
       errorEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (mode !== "draft" && !photoFile) {
+      setCurrentStep(2);
+      const msg = copy(
+        "សូមជ្រើសរើសរូបថតកម្មវិធីដើម្បីបង្កើត។",
+        "An event photo is required to complete event creation."
+      );
+      setPhotoError(msg);
+      setError(msg);
+      const photoEl = document.getElementById("event-photo-upload");
+      photoEl?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     if (selectedTemplate && access[selectedTemplate.id] === false) {
@@ -268,16 +297,39 @@ export default function EventCreatePage() {
     }
     submitting.current = true; setSaving(true);
     try {
-      const details = { ...form, title: form.title.trim(), eventDate: form.eventDate || undefined, eventTime: form.eventTime || undefined };
-      if (type !== "WEDDING") { details.groomName = ""; details.brideName = ""; }
-      if (!["WEDDING", "ENGAGEMENT", "ANNIVERSARY"].includes(type)) details.partnerName = "";
-      if (selectedTemplate?.code === "event-essential" && form.storyText) details.contentJson = JSON.stringify({ messageText: form.storyText });
-      const event = await invitationService.create({ ...eventPayload(details, type), templateId: selectedTemplate?.id || undefined, languageMode: language, visibility: "PRIVATE", clientRequestId: requestId });
-      if (!/^[1-9]\d*$/.test(String(event?.id || ""))) throw new Error(copy("ម៉ាស៊ីនមេមិនបានបញ្ជាក់កម្មវិធី។", "The server did not return an event ID. Retry safely."));
+      let eventId = pendingEventId;
+      if (!eventId) {
+        const details = { ...form, title: form.title.trim(), eventDate: form.eventDate || undefined, eventTime: form.eventTime || undefined };
+        if (type !== "WEDDING") { details.groomName = ""; details.brideName = ""; }
+        if (!["WEDDING", "ENGAGEMENT", "ANNIVERSARY"].includes(type)) details.partnerName = "";
+        const designOverrides = {};
+        if (photoFocalPoint && photoFocalPoint !== "center") {
+          designOverrides.coverFocalPoint = photoFocalPoint;
+        }
+        if (selectedTemplate?.code === "event-essential" && form.storyText) details.contentJson = JSON.stringify({ messageText: form.storyText });
+        if (Object.keys(designOverrides).length > 0) {
+          details.designJson = JSON.stringify(designOverrides);
+        }
+        const event = await invitationService.create({ ...eventPayload(details, type), templateId: selectedTemplate?.id || undefined, languageMode: language, visibility: "PRIVATE", clientRequestId: requestId });
+        if (!/^[1-9]\d*$/.test(String(event?.id || ""))) throw new Error(copy("ម៉ាស៊ីនមេមិនបានបញ្ជាក់កម្មវិធី។", "The server did not return an event ID. Retry safely."));
+        eventId = event.id;
+        setPendingEventId(eventId);
+      }
+
+      if (photoFile && eventId) {
+        try {
+          await mediaService.uploadCover(eventId, photoFile);
+        } catch (uploadErr) {
+          feedback.explain(uploadErr);
+          setError(copy("បានបង្កើតកម្មវិធីរួចរាល់ ប៉ុន្តែការបញ្ចូលរូបថតមិនជោគជ័យ។ សូមចុច 'ព្យាយាមបញ្ចូលរូបថតម្ដងទៀត'។", "Event created successfully, but photo upload failed. Please click 'Retry photo upload'."));
+          return;
+        }
+      }
+
       saved.current = true;
       clearTemplateIntent();
       try { sessionStorage.removeItem(storageKey); } catch { /* A successful backend save must still open its workspace. */ }
-      navigate(mode === "draft" ? eventPath(event.id) : `${eventPath(event.id)}/invitation?mode=guided`, { replace: true });
+      navigate(mode === "draft" ? eventPath(eventId) : `${eventPath(eventId)}/invitation?mode=guided`, { replace: true });
     } catch (err) { feedback.explain(err); setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }
     finally { if (!saved.current) { submitting.current = false; setSaving(false); } }
   };
@@ -411,6 +463,32 @@ export default function EventCreatePage() {
               onBlur={key => setTouched(current => ({ ...current, [key]: true }))}
               draft={submitted === "draft"}
               grouped={true}
+            />
+            <EventPhotoUpload
+              file={photoFile}
+              previewUrl={photoPreviewUrl}
+              focalPoint={photoFocalPoint}
+              eventType={type}
+              onFileChange={(file, url) => {
+                if (photoPreviewUrl && photoPreviewUrl.startsWith("blob:")) {
+                  URL.revokeObjectURL(photoPreviewUrl);
+                }
+                setPhotoFile(file);
+                setPhotoPreviewUrl(url);
+                setPhotoError("");
+              }}
+              onFocalPointChange={setPhotoFocalPoint}
+              onRemove={() => {
+                if (photoPreviewUrl && photoPreviewUrl.startsWith("blob:")) {
+                  URL.revokeObjectURL(photoPreviewUrl);
+                }
+                setPhotoFile(null);
+                setPhotoPreviewUrl(null);
+              }}
+              error={photoError}
+              required={submitted !== "draft"}
+              disabled={saving}
+              en={en}
             />
             <details className="workspace-section event-additional">
               <summary>{copy("ព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)", "A personal touch (optional)")}</summary>
@@ -715,6 +793,64 @@ export default function EventCreatePage() {
                 </div>
               </div>
 
+              {/* Event Photo Review */}
+              <div className="event-review-group">
+                <div className="event-review-group-head">
+                  <div className="event-review-icon-wrap" aria-hidden="true">
+                    <Camera size={20} />
+                  </div>
+                  <div className="event-review-group-info">
+                    <span className="event-review-group-kicker">{copy("រូបថតកម្មវិធី", "Event Photo")}</span>
+                    <h3 className="event-review-group-title">
+                      {photoFile
+                        ? photoFile.name || copy("រូបថតបានជ្រើសរើស", "Photo selected")
+                        : copy("មិនទាន់ជ្រើសរើសរូបថត", "No photo selected")}
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    className="event-review-edit-btn"
+                    onClick={() => scrollToStep(2)}
+                    aria-label={copy("កែប្រែរូបថតកម្មវិធី", "Edit event photo")}
+                  >
+                    <Pencil size={14} aria-hidden="true" />
+                    <span>{copy("កែប្រែ", "Edit")}</span>
+                  </button>
+                </div>
+                {photoPreviewUrl ? (
+                  <div className="event-review-photo-preview">
+                    <img
+                      src={photoPreviewUrl}
+                      alt={copy("រូបថតកម្មវិធី", "Event photo")}
+                      className="event-review-photo-thumb"
+                      style={{ objectPosition: photoFocalPoint }}
+                    />
+                    <div className="event-review-photo-meta">
+                      <span className="event-review-photo-focal">
+                        {copy("តម្រង់៖ ", "Focus: ")}
+                        {photoFocalPoint === "top"
+                          ? copy("ផ្នែកលើ", "Top")
+                          : photoFocalPoint === "bottom"
+                          ? copy("ផ្នែកក្រោម", "Bottom")
+                          : copy("កណ្ដាល", "Center")}
+                      </span>
+                      <small className="workspace-muted">
+                        {copy("នឹងត្រូវបង្ហាញលើកាតកម្មវិធី និងសំបុត្រអញ្ជើញ", "Appears on event card & invitation")}
+                      </small>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="event-review-photo-empty">
+                    <p className="workspace-muted">
+                      {copy(
+                        "មិនទាន់មានរូបថត (ចាំបាច់សម្រាប់ការបង្កើតកម្មវិធី)",
+                        "No photo selected (Required to create event)"
+                      )}
+                    </p>
+                  </div>
+                )}
+              </div>
+
               {/* Template & Style Review */}
               <div className="event-review-group">
                 <div className="event-review-group-head">
@@ -774,6 +910,40 @@ export default function EventCreatePage() {
             </div>
 
             <div className="event-create-final">
+              {pendingEventId && (
+                <div className="event-retry-banner workspace-notice" role="alert">
+                  <p>
+                    {copy(
+                      "កម្មវិធីរបស់អ្នកត្រូវបានបង្កើតរួចហើយ ប៉ុន្តែរូបថតមិនទាន់បញ្ចូលបានសម្រេច។",
+                      "Your event was created, but the photo upload did not finish."
+                    )}
+                  </p>
+                  <div className="event-retry-actions" style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
+                    <button
+                      type="button"
+                      className="workspace-button primary"
+                      disabled={saving}
+                      onClick={() => save("create")}
+                    >
+                      <RefreshCw size={14} aria-hidden="true" />
+                      <span>{copy("ព្យាយាមបញ្ចូលរូបថតម្ដងទៀត", "Retry photo upload")}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="workspace-button"
+                      disabled={saving}
+                      onClick={() => {
+                        saved.current = true;
+                        clearTemplateIntent();
+                        try { sessionStorage.removeItem(storageKey); } catch { /* Session cleanup is best effort. */ }
+                        navigate(`${eventPath(pendingEventId)}/invitation?mode=guided`, { replace: true });
+                      }}
+                    >
+                      <span>{copy("បន្តទៅកាន់ធៀបការ", "Continue to invitation")}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
               {error && (
                 <div role="alert" className="workspace-notice">
                   <p>{error}</p>
@@ -811,6 +981,10 @@ export default function EventCreatePage() {
             <div>
               <dt>{copy("ឈ្មោះ", "Title")}</dt>
               <dd>{form.title || copy("មិនទាន់បំពេញ", "Not added yet")}</dd>
+            </div>
+            <div>
+              <dt>{copy("រូបថត", "Photo")}</dt>
+              <dd>{photoFile ? photoFile.name : copy("មិនទាន់ជ្រើសរើស", "Not chosen yet")}</dd>
             </div>
             <div>
               <dt>{copy("កាលបរិច្ឆេទ", "Date")}</dt>

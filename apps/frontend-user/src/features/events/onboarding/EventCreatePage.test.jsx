@@ -12,6 +12,7 @@ import { validateEventForm } from "./eventCreation.js";
 
 vi.mock("@/shared/api/httpClient", () => ({ api: { get: vi.fn() } }));
 vi.mock("@/features/invitations/api/invitationApi", () => ({ invitationService: { create: vi.fn() } }));
+vi.mock("@/features/invitations/api/mediaApi", () => ({ mediaService: { uploadCover: vi.fn().mockResolvedValue({ id: 1, fileUrl: "https://example.com/cover.jpg" }) } }));
 vi.mock("@/features/templates/api/templateCatalogApi", () => ({ templateCatalogService: { list: vi.fn() } }));
 vi.mock("@/features/subscriptions/subscriptionService", () => ({ default: { current: vi.fn() } }));
 vi.mock("@/features/payments/paymentService", () => ({ paymentService: { templateAccess: vi.fn() } }));
@@ -19,12 +20,21 @@ vi.mock("@/features/auth/hooks/useAuth", () => ({ useAuth: () => ({ user: { id: 
 const template = { id: 30, name: "Event Essential", code: "event-essential", category: "MINIMALIST", thumbnailUrl: "/templates/event-essential.svg", price: 0, currency: "USD", supportedEventTypes: ["WEDDING", "ENGAGEMENT", "BIRTHDAY", "ANNIVERSARY", "CORPORATE", "OTHER"], supportedLanguages: ["KH", "EN", "BOTH"] };
 const recommendations = [{ template, styleMatch: true }];
 const fill = (name, value) => fireEvent.change(document.querySelector(`[name="${name}"]`), { target: { value } });
+const attachPhoto = () => {
+  const input = document.getElementById("event-photo-input");
+  if (input) {
+    const file = new File(["dummy"], "event-photo.jpg", { type: "image/jpeg" });
+    fireEvent.change(input, { target: { files: [file] } });
+  }
+};
 function show(path = "/app/events/new") {
   return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/app/events/new" element={<EventCreatePage />} /><Route path="/app/events/:eventId" element={<p>Exact saved workspace</p>} /><Route path="/app/events/:eventId/invitation" element={<><p>Exact saved workspace</p><p>Guided invitation studio</p></>} /></Routes></MemoryRouter>);
 }
 beforeEach(() => {
   vi.clearAllMocks(); sessionStorage.clear();
   useLanguageStore.setState({ lang: "en" });
+  window.URL.createObjectURL = vi.fn(() => "blob:http://localhost/test-photo");
+  window.URL.revokeObjectURL = vi.fn();
   api.get.mockResolvedValue({ data: recommendations });
   templateCatalogService.list.mockResolvedValue([template]);
   subscriptionService.current.mockResolvedValue(null);
@@ -52,6 +62,7 @@ describe("single-page event creation", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Select Event Essential" }));
     fill("title", `${label} party`); participants.forEach((key, index) => fill(key, `Person ${index + 1}`));
     fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
+    attachPhoto();
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
     await screen.findByText("Exact saved workspace");
     expect(screen.getByText("Guided invitation studio")).toBeInTheDocument();
@@ -187,6 +198,7 @@ describe("explicit template intent precedence", () => {
     expect(screen.getByLabelText("Invitation language")).toHaveValue("KH");
     await waitFor(() => expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull());
     fill("groomName", "Dara"); fill("brideName", "Sokha"); fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
+    attachPhoto();
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
     await screen.findByText("Exact saved workspace");
     expect(invitationService.create.mock.calls[0][0]).toMatchObject({ templateId: 50, eventType: "WEDDING", languageMode: "KH" });
