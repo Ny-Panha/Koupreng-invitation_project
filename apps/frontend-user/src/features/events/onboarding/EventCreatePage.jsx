@@ -109,8 +109,10 @@ export default function EventCreatePage() {
     setCurrentStep(stepNumber);
     const refs = [step1Ref, step2Ref, step3Ref, step4Ref];
     const target = refs[stepNumber - 1]?.current;
-    if (target) {
+    if (target && typeof target.scrollIntoView === "function") {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -339,7 +341,12 @@ export default function EventCreatePage() {
         <fieldset disabled={saving} className="event-create-sections">
           
           {/* STEP 1: CHOOSE EVENT TYPE */}
-          <section ref={step1Ref} className="workspace-section event-step-section" aria-labelledby="event-type-title">
+          <section
+            ref={step1Ref}
+            id="step-1-type"
+            className={`workspace-section event-step-section step-1 ${currentStep === 1 ? "is-step-active" : "is-step-inactive"}`}
+            aria-labelledby="event-type-title"
+          >
             <div className="event-step-header">
               <div className="event-step-badge-wrap">
                 <span className="event-step-badge">{copy("ជំហានទី ១", "Step 1")}</span>
@@ -379,7 +386,12 @@ export default function EventCreatePage() {
           </section>
 
           {/* STEP 2: EVENT ESSENTIALS */}
-          <section ref={step2Ref} className="workspace-section event-step-section" aria-labelledby="event-information-title">
+          <section
+            ref={step2Ref}
+            id="step-2-details"
+            className={`workspace-section event-step-section step-2 ${currentStep === 2 ? "is-step-active" : "is-step-inactive"}`}
+            aria-labelledby="event-information-title"
+          >
             <div className="event-step-header">
               <div className="event-step-badge-wrap">
                 <span className="event-step-badge">{copy("ជំហានទី ២", "Step 2")}</span>
@@ -398,6 +410,7 @@ export default function EventCreatePage() {
               errors={errors}
               onBlur={key => setTouched(current => ({ ...current, [key]: true }))}
               draft={submitted === "draft"}
+              grouped={true}
             />
             <details className="workspace-section event-additional">
               <summary>{copy("ព័ត៌មានបន្ថែម (មិនបាច់បំពេញ)", "A personal touch (optional)")}</summary>
@@ -435,8 +448,9 @@ export default function EventCreatePage() {
           {/* STEP 3: CHOOSE INVITATION DESIGN */}
           <section
             ref={templateSection}
+            id="step-3-design"
             tabIndex={-1}
-            className="workspace-section event-step-section event-template-section"
+            className={`workspace-section event-step-section event-template-section step-3 ${currentStep === 3 ? "is-step-active" : "is-step-inactive"}`}
             aria-labelledby="event-templates-title"
             aria-busy={loading}
           >
@@ -607,7 +621,12 @@ export default function EventCreatePage() {
           </section>
 
           {/* STEP 4: REVIEW & CREATE */}
-          <section ref={step4Ref} className="workspace-section event-step-section event-review-section" aria-labelledby="event-review-title">
+          <section
+            ref={step4Ref}
+            id="step-4-review"
+            className={`workspace-section event-step-section event-review-section step-4 ${currentStep === 4 ? "is-step-active" : "is-step-inactive"}`}
+            aria-labelledby="event-review-title"
+          >
             <div className="event-step-header">
               <div className="event-step-badge-wrap">
                 <span className="event-step-badge">{copy("ជំហានទី ៤", "Step 4")}</span>
@@ -815,6 +834,55 @@ export default function EventCreatePage() {
           </p>
         </aside>
       </form>
+
+      {/* Persistent Mobile Bottom Navigation Bar */}
+      <div className="event-mobile-bottom-bar" role="region" aria-label={copy("ការរុករកជំហាន", "Wizard step navigation")}>
+        {currentStep === 1 ? (
+          <Link to="/app/events" className="event-mobile-nav-btn prev">
+            <ArrowLeft size={16} aria-hidden="true" />
+            <span>{copy("បោះបង់", "Cancel")}</span>
+          </Link>
+        ) : (
+          <button
+            type="button"
+            className="event-mobile-nav-btn prev"
+            onClick={() => scrollToStep(currentStep - 1)}
+          >
+            <ArrowLeft size={16} aria-hidden="true" />
+            <span>{copy("ថយក្រោយ", "Back")}</span>
+          </button>
+        )}
+
+        {currentStep < 4 ? (
+          <button
+            type="button"
+            className="event-mobile-nav-btn next"
+            onClick={() => scrollToStep(currentStep + 1)}
+          >
+            <span>{copy("បន្ត", "Next")}</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </button>
+        ) : (
+          <div className="event-mobile-submit-group">
+            <button
+              type="button"
+              className="event-mobile-nav-btn draft"
+              disabled={saving}
+              onClick={() => save("draft")}
+            >
+              <span>{saving && submitted === "draft" ? copy("កំពុងរក្សា…", "Saving…") : copy("រក្សាពង្រាង", "Save Draft")}</span>
+            </button>
+            <button
+              type="button"
+              className="event-mobile-nav-btn create"
+              disabled={saving}
+              onClick={() => save("create")}
+            >
+              <span>{saving && submitted === "create" ? copy("កំពុងបង្កើត…", "Creating…") : copy("បង្កើតកម្មវិធី", "Create Event")}</span>
+            </button>
+          </div>
+        )}
+      </div>
     </main>
   );
 }

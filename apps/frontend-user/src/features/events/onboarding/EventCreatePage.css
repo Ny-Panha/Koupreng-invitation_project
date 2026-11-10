@@ -897,6 +897,125 @@
     padding: 6px 10px;
     font-size: 13px;
   }
+
+  .event-create {
+    padding-bottom: 96px;
+  }
+
+  .event-step-section.is-step-inactive {
+    display: none !important;
+  }
+
+  .event-step-section.is-step-active {
+    display: block !important;
+    animation: fadeInStep 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes fadeInStep {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Persistent Mobile Bottom Navigation Bar (Workstream B)
+   ========================================================================== */
+.event-mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .event-mobile-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--ws-border, #e3ded5);
+    box-shadow: 0 -4px 18px rgba(31, 43, 36, 0.08);
+    z-index: 999;
+  }
+
+  .event-mobile-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+  }
+
+  .event-mobile-nav-btn.prev {
+    background: #f7f3eb;
+    color: var(--ws-ink, #1f2b24);
+    border: 1px solid var(--ws-border, #e3ded5);
+  }
+
+  .event-mobile-nav-btn.next {
+    background: linear-gradient(135deg, #245740 0%, #1a3f2e 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 3px 10px rgba(36, 87, 64, 0.25);
+    margin-left: auto;
+  }
+
+  .event-mobile-submit-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .event-mobile-nav-btn.draft {
+    background: #fdfaf4;
+    color: var(--ws-gold-dark, #6e4e1f);
+    border: 1px solid var(--ws-border, #e3ded5);
+  }
+
+  .event-mobile-nav-btn.create {
+    background: linear-gradient(135deg, #c3a26b 0%, #b8860b 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 14px rgba(184, 134, 11, 0.25);
+  }
+}
+
+.event-create .event-settings-section {
+  margin-bottom: 20px;
+  border: 1px solid var(--ws-border, #e3ded5);
+  border-radius: 14px;
+  padding: 16px;
+  background: var(--ws-surface, #ffffff);
+}
+
+.event-create .event-settings-section legend {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ws-ink, #1f2b24);
+  padding: 0 8px;
+  font-family: var(--font-heading, "Kantumruy Pro", sans-serif);
 }
 
 @media (max-width: 600px) {
