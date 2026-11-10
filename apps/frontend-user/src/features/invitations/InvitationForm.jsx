@@ -398,6 +398,8 @@ const DEFAULT_STATE = {
     backgroundColor: "#ffffff",
     coverImage: null,
     coverBackgroundImage: null,
+    coverFocalPoint: "center",
+    couplePhoto: null,
     invitationImage: null,
     invitationImage2: null,
     backgroundImage: null,
@@ -489,10 +491,25 @@ export default function InvitationForm({ invitation }) {
         const templateDefaultCoverBg = preset.coverBackgroundImage || tpl?.coverBackgroundImage || DEFAULT_STATE.coverBackgroundImage;
         const templateDefaultBackground = floral ? '' : preset.backgroundImage || tpl?.backgroundImage || (String(activeTplId).includes("celestial") ? "/invitations/khmer-celestial/botanical-frame.jpg" : "");
         const uploadedCoverFromDraft = uploadedCover || ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : "");
+
+        const tplCode = tpl?.code || tpl?.slug || String(activeTplId);
+        const isDecorativeTemplate = ['silk-heritage', 'cover-khmer-golden-wedding'].includes(tplCode);
+        const coverImage = isDecorativeTemplate
+            ? ((!isDefaultCover && customParsed.coverImage) ? customParsed.coverImage : templateDefaultCover)
+            : (uploadedCoverFromDraft || templateDefaultCover);
+
+        const couplePhotoTemplates = ['the-digital-yes-wedding', 'emerald-luxe', 'emerald-canva-luxe-wedding', 'bliss-editorial-wedding', 'withjoy-modern-portal'];
+        const couplePhoto = customParsed.couplePhoto || invitation?.couplePhoto || (couplePhotoTemplates.includes(tplCode) && uploadedCover ? uploadedCover : (preset.couplePhoto || ""));
+
+        const cinematicTemplates = ['royal-garden-cinematic', 'khmer-floral-gold'];
+        const invitationImage = customParsed.invitationImage || invitation?.invitationImage || (cinematicTemplates.includes(tplCode) && uploadedCover ? uploadedCover : (preset.invitationImage || ""));
+        const coverFocalPoint = customParsed.coverFocalPoint || invitation?.coverFocalPoint || "center";
+
         const coverBackgroundImage = customParsed.coverBackgroundImage
             || invitation?.coverBackgroundImage
             || invitation?.design?.coverBackgroundImage
             || invitation?.content?.coverBackgroundImage
+            || (String(activeTplId).includes("celestial") && uploadedCover ? uploadedCover : '')
             || preset.coverBackgroundImage
             || tpl?.coverBackgroundImage
             || templateDefaultCoverBg
@@ -502,7 +519,6 @@ export default function InvitationForm({ invitation }) {
         const bottomColor = (!isDefaultGold && (customParsed.bottomColor || invitation?.bottomColor)) || tpl?.secondaryColor || preset.bottomColor || DEFAULT_STATE.bottomColor;
         const backgroundColor = customParsed.backgroundColor || invitation?.backgroundColor || tpl?.backgroundColor || preset.backgroundColor || DEFAULT_STATE.backgroundColor;
         const openingStyle = (!isDefaultOpening && (customParsed.openingStyle || invitation?.openingStyle)) || preset.openingStyle || DEFAULT_STATE.openingStyle;
-        const coverImage = uploadedCoverFromDraft || templateDefaultCover;
         const title = canonicalEvent ? (invitation.title || customParsed.title || "") : ((!isDefaultTitle && (invitation?.title || customParsed.title)) ? (invitation?.title || customParsed.title) : (preset.title || DEFAULT_STATE.title));
         const groomName = canonicalEvent ? (invitation.groomName || invitation.hostName || customParsed.groomName || "") : ((!isDefaultCouple && (invitation?.groomName || customParsed.groomName)) ? (invitation?.groomName || customParsed.groomName) : "");
         const brideName = canonicalEvent ? (invitation.brideName || invitation.partnerName || customParsed.brideName || "") : ((!isDefaultCouple && (invitation?.brideName || customParsed.brideName)) ? (invitation?.brideName || customParsed.brideName) : "");
@@ -561,9 +577,12 @@ export default function InvitationForm({ invitation }) {
             uploadedCoverUrl: uploadedCoverFromDraft,
             templateDefaultCover,
             coverBackgroundImage,
+            coverFocalPoint,
+            couplePhoto,
+            invitationImage,
             templateDefaultCoverBg,
             templateDefaultBackground,
-            backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || templateDefaultBackground || "",
+            backgroundImage: customParsed.backgroundImage || invitation?.backgroundImage || (floral && uploadedCover ? uploadedCover : "") || templateDefaultBackground || "",
             messageText: (invitation?.storyText && invitation.storyText !== DEFAULT_INVITATION_TEXT)
                 ? invitation.storyText
                 : ((customParsed.messageText && customParsed.messageText !== DEFAULT_INVITATION_TEXT)
@@ -869,10 +888,25 @@ export default function InvitationForm({ invitation }) {
             party: form.party,
             faq: form.faq,
         };
+        const isDecorativeSwitch = ['silk-heritage', 'cover-khmer-golden-wedding'].includes(template.code || template.slug);
         nextForm.hostName = nextForm.groomName;
         nextForm.partnerName = nextForm.brideName;
         nextForm.uploadedCoverUrl = uploadedCoverUrl;
-        nextForm.coverImage = uploadedCoverUrl || nextForm.templateDefaultCover;
+        nextForm.coverImage = isDecorativeSwitch ? nextForm.templateDefaultCover : (uploadedCoverUrl || nextForm.templateDefaultCover);
+        if (uploadedCoverUrl) {
+            if (['the-digital-yes-wedding', 'emerald-luxe', 'emerald-canva-luxe-wedding', 'bliss-editorial-wedding', 'withjoy-modern-portal'].includes(template.code || template.slug)) {
+                nextForm.couplePhoto = form.couplePhoto || uploadedCoverUrl;
+            }
+            if (['royal-garden-cinematic', 'khmer-floral-gold'].includes(template.code || template.slug)) {
+                nextForm.invitationImage = form.invitationImage || uploadedCoverUrl;
+            }
+            if (template.code === 'khmer-floral-gold' && !form.backgroundImage) {
+                nextForm.backgroundImage = uploadedCoverUrl;
+            }
+            if (String(template.code || template.slug || template.id).includes("celestial") && !form.coverBackgroundImage) {
+                nextForm.coverBackgroundImage = uploadedCoverUrl;
+            }
+        }
         setForm(nextForm);
         setCatalogVersion(getCatalogVersion());
 
@@ -1500,9 +1534,11 @@ export default function InvitationForm({ invitation }) {
             }
 
             const finalDesign = { ...designPayload, coverImage: savedCoverUrl || designPayload.coverImage,
+                coverFocalPoint: form.coverFocalPoint || "center",
+                couplePhoto: form.couplePhoto || savedCoverUrl || designPayload.coverImage || null,
                 photos: savedPhotos, coverBackgroundImage: savedCoverBgUrl || null, backgroundImage: savedBgUrl || null,
                 invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2, sketchMapImage: savedSketchMapUrl };
-            const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2", 'sketchMapImage'].map(key => [key, finalDesign[key]])),
+            const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2", 'sketchMapImage', 'coverFocalPoint', 'couplePhoto'].map(key => [key, finalDesign[key]])),
                 gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })) };
             let extraMedia = new globalThis.Map();
             if (backendId && !apiSyncFailed) {
@@ -1836,6 +1872,36 @@ export default function InvitationForm({ invitation }) {
                     inputRef={coverInputRef}
                     hint={flowConfig.hints.coverImage || (englishUI ? (flowConfig.hints.coverImageEn || "Shown on front cover / hero") : "បង្ហាញលើក្របទំព័រដើម (Front Cover / Hero)")}
                 />
+            )}
+
+            {/* Cover Focal Point Alignment */}
+            {flowConfig.hasCoverImage !== false && form.coverImage && (
+                <div className="studio-focal-point-control" style={{ marginTop: 8, padding: "8px 12px", background: "#fdfbf7", borderRadius: 8, border: "1px solid #ebdccb" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 6 }}>
+                        <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "#5d4f40" }}>
+                            {englishUI ? "Focal alignment:" : "ចំណុចតម្រង់រូបភាពក្រប៖"}
+                        </span>
+                        <div style={{ display: "flex", gap: 4 }}>
+                            {["top", "center", "bottom"].map((pt) => (
+                                <button
+                                    key={pt}
+                                    type="button"
+                                    className={`pe-btn-upload-action ${form.coverFocalPoint === pt ? "is-active" : ""}`}
+                                    style={{
+                                        padding: "4px 8px",
+                                        fontSize: "0.78rem",
+                                        background: form.coverFocalPoint === pt ? "#2e433a" : "#fff",
+                                        color: form.coverFocalPoint === pt ? "#fff" : "#4b3f33",
+                                        borderColor: form.coverFocalPoint === pt ? "#2e433a" : "#dcd1c4"
+                                    }}
+                                    onClick={() => update("coverFocalPoint", pt)}
+                                >
+                                    {pt === "top" ? (englishUI ? "Top" : "លើ") : pt === "bottom" ? (englishUI ? "Bottom" : "ក្រោម") : (englishUI ? "Center" : "កណ្ដាល")}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             )}
 
             {/* Cover Background (Closed State) Image Upload (Field 1 for Celestial / Royal Khmer) */}

@@ -253,3 +253,8 @@
     justify-content: center;
   }
 }
+
+.media-library .workspace-section.is-dragover {
+  border: 2px dashed #245740;
+  background: #f7faf8;
+}

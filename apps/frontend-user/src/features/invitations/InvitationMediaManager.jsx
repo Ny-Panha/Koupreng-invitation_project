@@ -31,6 +31,7 @@ export default function InvitationMediaManager() {
   const [error, setError] = useState('');
   const [progress, setProgress] = useState(0);
   const [retry, setRetry] = useState(null);
+  const [dragOver, setDragOver] = useState(false);
   const picker = useRef(null);
   const replaceTarget = useRef(null);
   useEffect(() => {
@@ -49,14 +50,17 @@ export default function InvitationMediaManager() {
   const records = (Array.isArray(library?.[config.field]) ? library[config.field] : [library?.[config.field]]).filter(Boolean);
   const references = invitationMediaReferences(invitation);
   const choose = target => { replaceTarget.current = target || null; if (picker.current) picker.current.multiple = category === 'gallery' && !target; picker.current?.click(); };
-  const selectedFiles = event => {
-    const files = Array.from(event.target.files || []);
-    event.target.value = '';
+  const handleFiles = files => {
     if (!files.length) return;
     for (const file of files) { const failure = validateLibraryFile(file, category); if (failure) { setRetry(null); setError(t(failure, { limit: config.limit })); return; } }
     const target = replaceTarget.current;
     const onProgress = e => { if (e.total) setProgress(Math.round(e.loaded / e.total * 100)); };
     run(() => target ? mediaService.replace(id, target.id, files[0], onProgress) : ({ cover: () => mediaService.uploadCover(id, files[0], onProgress), gallery: () => mediaService.uploadGallery(id, files, undefined, onProgress), video: () => mediaService.uploadVideo(id, files[0], onProgress), music: () => mediaService.uploadMusic(id, files[0], onProgress) })[category]());
+  };
+  const selectedFiles = event => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = '';
+    handleFiles(files);
   };
   const resolvedCover = resolveEventCover(invitation || {});
   const coverReference = ['owner', 'invitation'].includes(resolvedCover.source);
@@ -67,7 +71,19 @@ export default function InvitationMediaManager() {
     {error && <div className="workspace-notice" role="alert">{error}<button className="workspace-button" disabled={busy} onClick={() => run(retry || refresh)}>{t('retry')}</button></div>}
     {!library && !error && <CardGridSkeleton variant="gallery" label={t('loading')} />}
     <div className="workspace-tabs" role="group" aria-label={t('categories')}>{[['cover', Images], ['gallery', Images], ['video', Video], ['music', Music]].map(([key, Icon]) => <button type="button" key={key} aria-pressed={key === category} disabled={busy} onClick={() => { setCategory(key); setError(''); }}><Icon size={18} />{t(key)}</button>)}</div>
-    <section className="workspace-section">
+    <section
+      className={`workspace-section ${dragOver ? 'is-dragover' : ''}`}
+      aria-label={t(category)}
+      onDragOver={e => { e.preventDefault(); if (!busy) setDragOver(true); }}
+      onDragLeave={e => { e.preventDefault(); setDragOver(false); }}
+      onDrop={e => {
+        e.preventDefault();
+        setDragOver(false);
+        if (!busy && e.dataTransfer.files?.length) {
+          handleFiles(Array.from(e.dataTransfer.files));
+        }
+      }}
+    >
       <div className="workspace-section-heading"><div><h2>{t(category)}</h2><p className="workspace-muted">{t('formats', { formats: config.extensions.join(', ').toUpperCase(), limit: config.limit })}</p></div>{isCoverInUse ? <Link className="workspace-button" to={`/app/events/${id}/invitation`}>{t('editInStudio')}</Link> : <button className="workspace-button primary" disabled={busy || !library} onClick={() => choose(null)}><Upload size={18} />{t(category === 'gallery' ? 'uploadImages' : 'upload')}</button>}</div>
       <input ref={picker} hidden type="file" accept={config.accept} multiple={category === 'gallery'} aria-label={t('upload')} onChange={selectedFiles} />
       {busy && <div className="media-upload-progress" role="status"><span>{t('uploading', { progress })}</span><progress max="100" value={progress} aria-label={t('uploadProgress')} /></div>}

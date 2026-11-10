@@ -91,4 +91,48 @@ describe('InvitationMediaManager', () => {
       expect(screen.getByText('photo1.jpg')).toBeInTheDocument();
     });
   });
+
+  it('supports drag-and-drop file upload', async () => {
+    mediaService.uploadGallery.mockResolvedValueOnce([
+      { id: 3, fileUrl: 'https://example.com/dropped.jpg', originalFilename: 'dropped.jpg' },
+    ]);
+
+    render(
+      <MemoryRouter initialEntries={['/app/events/101/media']}>
+        <Routes>
+          <Route path="/app/events/:id/media" element={<InvitationMediaManager />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('cover.jpg')).toBeInTheDocument();
+    });
+
+    // Switch to gallery
+    fireEvent.click(screen.getByRole('button', { name: /កម្រងរូបភាព|gallery/i }));
+    await waitFor(() => {
+      expect(screen.getByText('photo1.jpg')).toBeInTheDocument();
+    });
+
+    const dropSection = document.querySelector('.workspace-section');
+    const droppedFile = new File(['content'], 'dropped.jpg', { type: 'image/jpeg' });
+
+    fireEvent.dragOver(dropSection);
+    expect(dropSection).toHaveClass('is-dragover');
+
+    fireEvent.drop(dropSection, {
+      dataTransfer: { files: [droppedFile] },
+    });
+
+    expect(dropSection).not.toHaveClass('is-dragover');
+    await waitFor(() => {
+      expect(mediaService.uploadGallery).toHaveBeenCalledWith(
+        '101',
+        [droppedFile],
+        undefined,
+        expect.any(Function)
+      );
+    });
+  });
 });

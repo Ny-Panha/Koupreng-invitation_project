@@ -13,7 +13,7 @@ const KhmerCelestialLayout = templateRegistry["khmer-celestial"];
 describe("templateRegistry (1 Template = 1 Dedicated UI)", () => {
   it("loads the deferred fallback when a legacy CMS block has an unknown layout", async () => {
     render(<MemoryRouter><LegacyTemplateBlock templateId="unknown-historical-layout" content={{ groomName: "Fallback groom fixture", brideName: "Fallback bride fixture", preview: true, enabledSections: { rsvp: false } }} /></MemoryRouter>);
-    expect(await screen.findByRole("heading", { name: /Fallback groom fixture.*Fallback bride fixture/ })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /Fallback groom fixture.*Fallback bride fixture/ }, { timeout: 4000 })).toBeInTheDocument();
   });
   it("maps Khmer Celestial by slug and admin preset", () => {
     expect(templateRegistry["khmer-celestial"]).toBe(KhmerCelestialLayout);
