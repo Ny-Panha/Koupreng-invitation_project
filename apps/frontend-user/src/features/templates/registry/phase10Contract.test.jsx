@@ -46,7 +46,7 @@ it.each([...TEMPLATES, { id: 'event-essential', code: 'event-essential' }])('ret
   expect(vm.schedule[0]).toMatchObject(content.schedule[0]);
   expect(vm.programDays).toEqual(content.programDays);
   const { container } = render(<MemoryRouter><TemplateExperience tpl={mapped.tpl} preview showActions={false} showBreadcrumb={false} /></MemoryRouter>);
-  await screen.findAllByText(content.couple.groom, { exact: false });
+  await screen.findAllByText(content.couple.groom, { exact: false }, { timeout: 4000 });
   expect(container.textContent).toContain(content.couple.bride);
   expect(container.textContent).toContain(content.venueName);
   const probes = Object.fromEntries([

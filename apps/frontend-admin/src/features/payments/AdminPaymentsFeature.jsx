@@ -20,6 +20,7 @@ export default function AdminPaymentsPage() {
   const { lang, t } = useAdminLanguage();
   const { data, loading, refreshing, error, reload } = useResource(adminManagementService.payments);
   const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
   const [verifyingPayment, setVerifyingPayment] = useState(null);
   const [transactionReference, setTransactionReference] = useState("");
   const [modalError, setModalError] = useState("");
@@ -75,6 +76,20 @@ export default function AdminPaymentsPage() {
   const payments = useMemo(() => {
     const q = query.trim().toLowerCase();
     return (data || []).filter((payment) => {
+      // Status tab filter
+      if (statusFilter === "PENDING") {
+        const isPending = String(payment.status || "").includes("PENDING") || payment.status === "REVIEW_REQUIRED";
+        if (!isPending) return false;
+      } else if (statusFilter === "REVIEW") {
+        const isReview = payment.status === "REVIEW_REQUIRED" || payment.status === "PAID_PENDING_REVIEW";
+        if (!isReview) return false;
+      } else if (statusFilter === "PAID") {
+        if (payment.status !== "PAID") return false;
+      } else if (statusFilter === "FAILED") {
+        const isFailed = ["FAILED", "REJECTED", "CANCELLED", "EXPIRED"].includes(String(payment.status || ""));
+        if (!isFailed) return false;
+      }
+
       if (!q) return true;
       return [
         payment.orderCode,
@@ -83,9 +98,11 @@ export default function AdminPaymentsPage() {
         payment.status,
         payment.provider,
         payment.itemType,
+        payment.paywayTransactionId,
+        payment.payerName,
       ].filter(Boolean).some((value) => String(value).toLowerCase().includes(q));
     });
-  }, [data, query]);
+  }, [data, query, statusFilter]);
 
   const totals = useMemo(() => {
     const rows = data || [];
@@ -94,6 +111,7 @@ export default function AdminPaymentsPage() {
       pending: rows.filter((row) => String(row.status || "").includes("PENDING") || row.status === "REVIEW_REQUIRED").length,
       paid: rows.filter((row) => String(row.status || "") === "PAID").length,
       failed: rows.filter((row) => ["FAILED", "REJECTED", "CANCELLED", "EXPIRED"].includes(String(row.status || ""))).length,
+      review: rows.filter((row) => row.status === "REVIEW_REQUIRED" || row.status === "PAID_PENDING_REVIEW").length,
     };
   }, [data]);
 
@@ -141,9 +159,30 @@ export default function AdminPaymentsPage() {
       </section>
 
       <section className="card">
-        <div className="toolbar">
+        <div className="toolbar" style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", justifyContent: "space-between" }}>
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label={t("payments.statusFilters", "Filter payments by status")}>
+            {[
+              ["ALL", lang === "en" ? `All (${totals.total})` : `ទាំងអស់ (${totals.total})`],
+              ["PENDING", lang === "en" ? `Pending (${totals.pending})` : `កំពុងរង់ចាំ (${totals.pending})`],
+              ["REVIEW", lang === "en" ? `Review Required (${totals.review})` : `ត្រូវការផ្ទៀងផ្ទាត់ (${totals.review})`],
+              ["PAID", lang === "en" ? `Paid (${totals.paid})` : `បានទូទាត់ (${totals.paid})`],
+              ["FAILED", lang === "en" ? `Failed / Expired (${totals.failed})` : `បរាជ័យ / ផុតកំណត់ (${totals.failed})`],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                role="tab"
+                aria-selected={statusFilter === value}
+                className={`btn btn-sm ${statusFilter === value ? "btn-primary" : "btn-ghost"}`}
+                onClick={() => setStatusFilter(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <input
             className="text-input"
+            style={{ maxWidth: "260px" }}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t("payments.searchPlaceholder", "Search payments...")}
@@ -167,6 +206,7 @@ export default function AdminPaymentsPage() {
                   <th>{t("payments.colAmount", "Amount")}</th>
                   <th>{t("payments.colStatus", "Status")}</th>
                   <th>{t("payments.colMethod", "Provider")}</th>
+                  <th>{lang === "en" ? "Payer / Reference" : "អ្នកបង់ / លេខកូដ"}</th>
                   <th>{lang === "en" ? "Created" : "បង្កើត"}</th>
                   <th>{lang === "en" ? "Paid" : "ទូទាត់"}</th>
                   <th>{t("payments.colActions", "Action")}</th>
@@ -185,6 +225,18 @@ export default function AdminPaymentsPage() {
                       </span>
                     </td>
                     <td>{payment.provider || "—"}</td>
+                    <td>
+                      <div className="text-xs">
+                        {payment.payerName && <span className="font-medium">{payment.payerName}</span>}
+                        {payment.payerAccountLast3 && <span className="text-slate-500 font-mono"> (*{payment.payerAccountLast3})</span>}
+                        {payment.paywayTransactionId && (
+                          <div className="font-mono text-[11px] text-slate-500 truncate max-w-[140px]" title={payment.paywayTransactionId}>
+                            Tx: {payment.paywayTransactionId}
+                          </div>
+                        )}
+                        {!payment.payerName && !payment.paywayTransactionId && "—"}
+                      </div>
+                    </td>
                     <td>{formatDate(payment.createdAt)}</td>
                     <td>{formatDate(payment.paidAt)}</td>
                     <td>

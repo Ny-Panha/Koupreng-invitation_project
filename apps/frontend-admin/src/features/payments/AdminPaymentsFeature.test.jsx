@@ -214,4 +214,42 @@ describe("AdminPaymentsFeature Financial Verification & Safety", () => {
     // Modal stays open so admin can fix transaction ID
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
+
+  it("filters payment orders by status tabs", async () => {
+    render(
+      <AdminLanguageProvider>
+        <MemoryRouter>
+          <AdminPaymentsPage />
+        </MemoryRouter>
+      </AdminLanguageProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("KPR-TMP-101")).toBeInTheDocument();
+    });
+
+    // Click "Paid" tab -> only KPR-TMP-303 visible
+    const paidTab = screen.getByRole("tab", { name: /Paid/i });
+    fireEvent.click(paidTab);
+
+    expect(screen.getByText("KPR-TMP-303")).toBeInTheDocument();
+    expect(screen.queryByText("KPR-TMP-101")).not.toBeInTheDocument();
+    expect(screen.queryByText("SUB-PKG-202")).not.toBeInTheDocument();
+
+    // Click "Pending" tab -> KPR-TMP-101 and SUB-PKG-202 visible, KPR-TMP-303 hidden
+    const pendingTab = screen.getByRole("tab", { name: /Pending/i });
+    fireEvent.click(pendingTab);
+
+    expect(screen.getByText("KPR-TMP-101")).toBeInTheDocument();
+    expect(screen.getByText("SUB-PKG-202")).toBeInTheDocument();
+    expect(screen.queryByText("KPR-TMP-303")).not.toBeInTheDocument();
+
+    // Click "All" tab -> all 3 visible
+    const allTab = screen.getByRole("tab", { name: /All/i });
+    fireEvent.click(allTab);
+
+    expect(screen.getByText("KPR-TMP-101")).toBeInTheDocument();
+    expect(screen.getByText("SUB-PKG-202")).toBeInTheDocument();
+    expect(screen.getByText("KPR-TMP-303")).toBeInTheDocument();
+  });
 });

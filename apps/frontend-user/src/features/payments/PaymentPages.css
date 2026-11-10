@@ -1185,6 +1185,35 @@
   }
 }
 
+@media (max-width: 400px) {
+  .checkout-main-container {
+    width: calc(100vw - 16px);
+  }
+
+  .payment-qr-box-lux {
+    padding: 14px 10px 12px;
+  }
+
+  .payment-code-box-lux {
+    padding: 12px 10px;
+  }
+
+  .payment-code-number {
+    font-size: 0.95rem;
+  }
+
+  .payment-actions-lux {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .payment-action-gold-btn,
+  .payment-action-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ==========================================================================
    Dashboard: Paid Templates Page Styles
    ========================================================================== */
