@@ -46,7 +46,9 @@ logs/
 
 # Local media uploads
 uploads/
+uploads-private/
 apps/backend/uploads/
+apps/backend/uploads-private/
 
 # Python
 __pycache__/
