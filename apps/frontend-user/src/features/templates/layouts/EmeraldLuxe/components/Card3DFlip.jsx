@@ -60,6 +60,22 @@ export default function Card3DFlip({
             )}
           </div>
 
+          {(tpl.couplePhoto || (tpl.coverImage && !String(tpl.coverImage).endsWith('.svg') && !String(tpl.coverImage).includes('cover-card.jpg'))) && (
+            <div style={{ margin: "1rem auto 1.25rem", width: "150px", height: "190px", borderRadius: "75px 75px 16px 16px", overflow: "hidden", border: "2px solid var(--el-gold-primary)", boxShadow: "0 8px 24px rgba(0,0,0,0.6)" }}>
+              <img
+                src={tpl.couplePhoto || tpl.coverImage}
+                alt={`${tpl.groom} & ${tpl.bride}`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: tpl.coverFocalPoint === "top" ? "50% 15%" : tpl.coverFocalPoint === "bottom" ? "50% 85%" : "50% 50%",
+                }}
+                loading="lazy"
+              />
+            </div>
+          )}
+
           <div style={{ textAlign: "center" }}>
             <span className="el-date-badge">
               <Calendar className="w-4 h-4 inline mr-2" />

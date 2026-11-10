@@ -38,11 +38,23 @@ export default function CoverBackground({
   const [failedImages, setFailedImages] = useState([]);
 
   // 1. Resolve custom user uploads
+  const templateKey = String(content.templateCode || content.templateId || content.code || content.slug || "").toLowerCase();
+  const isDecorativeArtworkTemplate = [
+    "silk-heritage",
+    "silk_heritage",
+    "cover-khmer-golden-wedding",
+    "khmer-golden-canva-inspired-wedding"
+  ].includes(templateKey);
+
   const customCoverImage = resolveMediaUrl(
     content.coverBackgroundImage ||
     content.design?.coverBackgroundImage ||
-    content.coverBgImage
+    content.coverBgImage ||
+    (!isDecorativeArtworkTemplate ? (content.couplePhoto || content.coverImage) : "")
   );
+
+  const focalPoint = content.coverFocalPoint || content.design?.coverFocalPoint || "center";
+  const focalPosition = focalPoint === "top" ? "50% 15%" : focalPoint === "bottom" ? "50% 85%" : "50% 50%";
 
   const customCoverVideo = resolveMediaUrl(
     content.coverVideoUrl ||
@@ -121,6 +133,7 @@ export default function CoverBackground({
           alt=""
           fetchPriority={priority ? 'high' : undefined}
           decoding="async"
+          style={{ objectPosition: focalPosition }}
           onError={() => failImage(mediaSrc)}
         />
       ) : posterSrc ? (
@@ -129,6 +142,7 @@ export default function CoverBackground({
           className="cover-bg-media"
           src={posterSrc}
           alt=""
+          style={{ objectPosition: focalPosition }}
           onError={() => failImage(posterSrc)}
         />
       ) : null}

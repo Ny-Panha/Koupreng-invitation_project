@@ -272,12 +272,21 @@
 .pub-rsvp-form textarea {
     width: 100%;
     border: 1px solid #d6dee6;
-    border-radius: 8px;
-    min-height: 42px;
-    padding: 10px 12px;
+    border-radius: 10px;
+    min-height: 46px;
+    padding: 10px 14px;
     color: #253041;
     background: #fff;
     font: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pub-rsvp-form input:focus-visible,
+.pub-rsvp-form select:focus-visible,
+.pub-rsvp-form textarea:focus-visible {
+    outline: 2px solid var(--kp-gold, #c3a26b);
+    outline-offset: 1px;
+    border-color: var(--kp-gold, #c3a26b);
 }
 
 .inv-form textarea,

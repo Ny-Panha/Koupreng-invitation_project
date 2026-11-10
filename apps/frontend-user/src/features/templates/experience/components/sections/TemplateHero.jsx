@@ -49,6 +49,9 @@ export default function TemplateHero({ content, onOpen }) {
         ? content.eventTitle
         : "WEDDING INVITATION";
 
+    const focalPoint = content.coverFocalPoint || content.design?.coverFocalPoint || "center";
+    const objectPosition = focalPoint === "top" ? "50% 15%" : focalPoint === "bottom" ? "50% 85%" : "50% 50%";
+
     return (
         <section className="tx-hero" data-tx-section="hero" aria-label="ការអញ្ជើញ">
             <TemplateImage
@@ -57,6 +60,7 @@ export default function TemplateHero({ content, onOpen }) {
                 alt={`${content.groom} និង ${content.bride}`}
                 loading="eager"
                 fetchPriority="high"
+                style={{ objectPosition }}
             />
             <div className="tx-hero__overlay" aria-hidden="true" />
             <span className="tx-hero__petal tx-hero__petal--one" aria-hidden="true" />

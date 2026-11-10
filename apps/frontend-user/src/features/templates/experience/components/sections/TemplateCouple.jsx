@@ -13,7 +13,7 @@ import { templateIcons } from "../../config/templateIcons";
  */
 export default function TemplateCouple({ content }) {
     if (usesFamilyLayout(content)) return <section className="tx-section tx-couple" data-tx-section="couple"><div className="tx-shell"><FamilyNames content={content} /></div></section>;
-    if (content.hasHostContent && !content.groomImage && !content.brideImage && !content.backgroundImage) {
+    if (content.hasHostContent && !content.groomImage && !content.brideImage && !content.backgroundImage && !content.couplePhoto && !content.coverImage) {
         return null;
     }
 
@@ -22,7 +22,7 @@ export default function TemplateCouple({ content }) {
         content.brideImage &&
         content.groomImage !== content.brideImage;
 
-    const couplePhoto = content.backgroundImage || content.portraitImage || content.coverImage;
+    const couplePhoto = content.couplePhoto || content.backgroundImage || content.portraitImage || content.coverImage;
 
     return (
         <section className="tx-section tx-couple" data-tx-section="couple" aria-labelledby="tx-couple-title">

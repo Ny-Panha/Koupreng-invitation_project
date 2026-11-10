@@ -229,6 +229,8 @@ export function publicInvitationToDraft(invitation, media) {
     showParty: content.showParty ?? design.showParty ?? enabled.party,
     showFaq: content.showFaq ?? design.showFaq ?? enabled.faq,
     coverImage: mediaCover || invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || content.coverImage || invitation?.templateThumbnailUrl || "",
+    couplePhoto: content.couplePhoto || mediaCover || invitation?.coverUrl || invitation?.media?.coverImage?.fileUrl || (content.coverImage && content.coverImage !== invitation?.templateThumbnailUrl ? content.coverImage : "") || "",
+    coverFocalPoint: content.coverFocalPoint || design.coverFocalPoint || "center",
     invitationImage: content.invitationImage || design.invitationImage || "",
     invitationImage2: content.invitationImage2 || design.invitationImage2 || "",
     backgroundImage: content.backgroundImage || design.backgroundImage || "",

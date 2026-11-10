@@ -337,7 +337,7 @@ export default function KhmerCelestialLayout({
   const faq = Array.isArray(content.faq) ? content.faq : [];
   const gift = Array.isArray(content.gift) ? content.gift : [];
   const galleryImages = Array.isArray(content.gallery) ? content.gallery : [];
-  const invitationImage = firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
+  const invitationImage = content.couplePhoto || firstImage(galleryImages[1]) || firstImage(galleryImages[0]) || content.coverImage;
 
   return (
     <CelestialMotion value={content.studioStyle?.motion || 'elegant'}><div className={`kc-root${preview ? " kc-root--preview" : ""}`} data-variant="khmer-celestial"

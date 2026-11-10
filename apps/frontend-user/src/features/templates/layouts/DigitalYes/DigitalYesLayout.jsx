@@ -396,6 +396,29 @@ export default function DigitalYesLayout({
               </div>
             )}
 
+            {/* Couple Portrait Card */}
+            {(tpl.couplePhoto || (tpl.coverImage && !String(tpl.coverImage).endsWith('.svg'))) && (
+              <div className="pt-2 pb-2 max-w-xs sm:max-w-sm mx-auto w-full">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-amber-400/40 shadow-2xl">
+                  <img
+                    src={tpl.couplePhoto || tpl.coverImage}
+                    alt={`${tpl.groom} & ${tpl.bride}`}
+                    className="w-full h-full object-cover"
+                    style={{
+                      objectPosition: tpl.coverFocalPoint === "top" ? "50% 15%" : tpl.coverFocalPoint === "bottom" ? "50% 85%" : "50% 50%",
+                    }}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-3 inset-x-0 text-center px-4">
+                    <p className="text-xs uppercase tracking-widest text-amber-200 font-semibold tdy-font-cinzel">
+                      {tpl.groom} &amp; {tpl.bride}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Wedding Date Pill */}
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500/20 via-amber-400/25 to-amber-500/20 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-semibold shadow-sm">

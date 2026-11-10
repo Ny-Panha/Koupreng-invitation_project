@@ -439,8 +439,8 @@ export default function PublicRsvpForm({
                             rows="3"
                         />
                     </label>
-                    {error && <div className="inv-error" role="alert">{error}</div>}
-                    <button className="inv-primary-btn" type="submit" disabled={loading}>
+                    {error && <div className="inv-error" role="alert" aria-live="assertive">{error}</div>}
+                    <button className="inv-primary-btn" type="submit" disabled={loading} style={{ minHeight: "48px" }}>
                         {loading ? labels.submitting : labels.submit}
                     </button>
                 </form>

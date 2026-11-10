@@ -13,9 +13,17 @@ export default function EventEssentialLayout({ tpl = {}, preview = false, backLi
   const type = EVENT_TYPES.find(row => row[0] === tpl.eventType) || EVENT_TYPES.at(-1);
   const names = [tpl.hostName || tpl.groom, tpl.partnerName || tpl.bride].filter(Boolean).join(" & ");
   const details = tpl.hostContent || tpl;
+  const cover = details.couplePhoto || details.coverImage || tpl.coverImage || "";
+  const focal = details.coverFocalPoint || tpl.coverFocalPoint || "center";
+  const objectPosition = focal === "top" ? "50% 15%" : focal === "bottom" ? "50% 85%" : "50% 50%";
   return <main className="event-wizard" style={{ minHeight: "100vh", background: "#faf6ee", textAlign: "center", paddingTop: "clamp(32px,8vw,100px)" }}>
     {!preview && showBreadcrumb && <Link to={backLink}>← {copy("ត្រឡប់", "Back")}</Link>}
     <article className="event-wizard-card" style={{ padding: "clamp(24px,6vw,64px)", overflowWrap: "anywhere" }}>
+      {cover && !String(cover).endsWith('.svg') && (
+        <div style={{ maxWidth: "440px", margin: "0 auto 1.5rem", borderRadius: "16px", overflow: "hidden", aspectRatio: "16/9", border: "1px solid rgba(195, 162, 107, 0.4)", boxShadow: "0 8px 24px rgba(0,0,0,0.06)" }}>
+          <img src={cover} alt={tpl.title || "Event cover"} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition }} loading="eager" />
+        </div>
+      )}
       <p>{copy(type[1], type[2])}</p><h1>{tpl.title || copy("សូមអញ្ជើញចូលរួម", "You are invited")}</h1>
       {names && <h2>{names}</h2>}
       <p>{copy("សូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង", "Please join us for our event")}</p>
