@@ -1821,6 +1821,116 @@
     transform: translateY(-1px);
 }
 
+/* Mobile-first Quick Action Anchor Bar */
+.checkin-mobile-nav {
+    display: none;
+    gap: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.checkin-quick-anchor {
+    flex: 1;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--app-surface, #ffffff);
+    border: 1.5px solid var(--app-border, #e8dfcf);
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--app-ink, #1f2421);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(93, 67, 32, 0.05);
+    font-family: inherit;
+}
+
+.checkin-quick-anchor:hover,
+.checkin-quick-anchor:focus-visible {
+    border-color: var(--app-gold, #B0926A);
+    background: #fdfbf7;
+    color: var(--app-gold, #B0926A);
+}
+
+.checkin-quick-anchor--action {
+    background: linear-gradient(135deg, #B0926A 0%, #8c6f4b 100%);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.checkin-quick-anchor--action:hover,
+.checkin-quick-anchor--action:focus-visible {
+    background: linear-gradient(135deg, #ba9c74 0%, #997c58 100%);
+    color: #ffffff;
+}
+
+:root[data-color-mode=dark] .checkin-quick-anchor {
+    background: var(--app-surface, #1e2621);
+    border-color: var(--app-border, #2d3832);
+    color: var(--app-ink, #e5ece8);
+}
+
+:root[data-color-mode=dark] .checkin-quick-anchor:hover,
+:root[data-color-mode=dark] .checkin-quick-anchor:focus-visible {
+    background: var(--app-subtle, #28332c);
+    border-color: var(--app-gold, #cbb085);
+    color: var(--app-gold, #cbb085);
+}
+
+@media (max-width: 767px) {
+    .checkin-mobile-nav {
+        display: flex;
+    }
+    .checkin-hero-banner {
+        padding: 16px 18px;
+        margin-bottom: 14px;
+        border-radius: 18px;
+        gap: 12px;
+    }
+    .checkin-hero-title {
+        font-size: 1.35rem;
+        margin-bottom: 4px;
+    }
+    .checkin-hero-desc {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .checkin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+    .checkin-kpi-card {
+        padding: 10px 12px;
+        border-radius: 14px;
+        gap: 10px;
+    }
+    .checkin-kpi-icon-wrap {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+    .checkin-kpi-icon-wrap svg {
+        width: 18px;
+        height: 18px;
+    }
+    .checkin-kpi-label {
+        font-size: 11.5px;
+        margin-bottom: 2px;
+    }
+    .checkin-kpi-value {
+        font-size: 1.2rem;
+    }
+    .checkin-kpi-sub {
+        display: none;
+    }
+}
+
 /* KPI / STATS CARDS */
 .checkin-stats-grid {
     display: grid;

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { Download, QrCode, Upload, Users } from "lucide-react";
+import { Download, QrCode, Upload, UserPlus, Users } from "lucide-react";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
 import { ErrorState, SkeletonTable, toast } from "@/shared/ui";
 import { useGuests } from "./hooks/useGuests";
@@ -266,6 +266,22 @@ export default function GuestsPage() {
           <h1>{t ? t("title") : "បញ្ជីភ្ញៀវកិត្តិយស"}</h1>
         </div>
         <div className="guest-header-actions">
+          <button
+            type="button"
+            className="guest-button guest-button-primary guest-add-btn"
+            onClick={() => {
+              setEditingGuest(null);
+              setGuestFormFocus((v) => v + 1);
+              const nameInput = document.getElementById("guestForm-name");
+              if (nameInput) {
+                nameInput.focus();
+                nameInput.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            }}
+          >
+            <UserPlus size={17} aria-hidden="true" />
+            <span>{t ? t("addGuestAction") : "បន្ថែមភ្ញៀវ"}</span>
+          </button>
           <button type="button" className="guest-button guest-button-secondary" disabled={loading || !backendInvitationId} onClick={() => setImportModalOpen(true)}>
             <Upload size={17} aria-hidden="true" /><span>{t("importBtn")}</span>
           </button>

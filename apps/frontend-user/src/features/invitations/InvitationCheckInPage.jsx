@@ -227,6 +227,50 @@ export default function InvitationCheckInPage() {
                 </div>
             </div>
 
+            {/* Mobile-first Quick Action Navigation Bar */}
+            <nav className="checkin-mobile-nav" aria-label={copy("ផ្លូវកាត់កត់ត្រាវត្តមាន", "Check-in shortcuts")}>
+                <a
+                    href={`#${fieldId}-token`}
+                    className="checkin-quick-anchor"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        const el = document.getElementById(`${fieldId}-token`);
+                        if (el) {
+                            el.focus();
+                            el.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    }}
+                >
+                    <QrCode size={18} />
+                    <span>{copy("ស្កេនកូដ", "Scan token")}</span>
+                </a>
+                <a
+                    href="#checkin-guest-search"
+                    className="checkin-quick-anchor"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        const el = document.getElementById("checkin-guest-search");
+                        if (el) {
+                            el.focus();
+                            el.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    }}
+                >
+                    <Search size={18} />
+                    <span>{copy("ស្វែងរកភ្ញៀវ", "Find guest")}</span>
+                </a>
+                {canManageGuests && (
+                    <button
+                        type="button"
+                        className="checkin-quick-anchor checkin-quick-anchor--action"
+                        onClick={() => setWalkInModalOpen(true)}
+                    >
+                        <UserPlus size={18} />
+                        <span>{copy("ភ្ញៀវបន្ទាន់", "Walk-in guest")}</span>
+                    </button>
+                )}
+            </nav>
+
             {/* KPI Statistics */}
             {summary && (
                 <div className="checkin-stats-grid guest-stats checkin-stats">
@@ -388,6 +432,7 @@ export default function InvitationCheckInPage() {
                         <div className="checkin-search-box">
                             <Search className="checkin-search-icon" size={16} />
                             <input
+                                id="checkin-guest-search"
                                 aria-label={copy("ស្វែងរកភ្ញៀវ", "Search guest")}
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
