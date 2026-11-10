@@ -50,7 +50,15 @@
 }
 @media (max-height: 500px) {
   .template-studio { overflow-y: auto; }
-  .template-studio-workspace { flex: 0 0 320px; min-height: 320px; }
+  .template-studio-toolbar { padding: 6px 12px; min-height: 48px; }
+  .template-studio-toolbar p { display: none; }
+  .template-studio-toolbar .h-6 { display: none; }
+  .studio-panel-switch { padding: 4px 12px; }
+  .studio-panel-switch button { min-height: 38px; padding: 4px 8px; font-size: 13px; }
+  .studio-section-tabs { gap: 2px; }
+  .studio-section-tabs button { min-height: 38px; padding: 4px 8px; font-size: 12px; }
+  .template-studio-workspace { flex: 1 0 auto; min-height: 280px; }
+  .studio-controls-scroll { padding: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .template-studio *, .template-studio *::before, .template-studio *::after { animation-duration: .01ms !important; transition-duration: 0ms !important; }

@@ -18,4 +18,28 @@ describe("neutral event invitation", () => {
     expect(screen.getByText("18:00 · Dinner")).toBeInTheDocument();
     expect(screen.getByText("sokha@example.test")).toBeInTheDocument();
   });
+
+  it("U-14: suppresses duplicate secondary heading when names match title and formats time cleanly", () => {
+    const draft = publicInvitationToDraft({
+      id: 101,
+      templateCode: "event-essential",
+      eventType: "WEDDING",
+      title: "Dara & Sophea",
+      groomName: "Dara",
+      brideName: "Sophea",
+      languageMode: "EN",
+      eventDate: "2027-12-20",
+      eventTime: "17:30:00",
+      venueName: "Phnom Penh",
+    });
+    const { tpl } = draftToTemplate(draft);
+    render(<MemoryRouter><EventEssentialLayout tpl={tpl} preview /></MemoryRouter>);
+
+    // Title heading is rendered
+    expect(screen.getByRole("heading", { level: 1, name: "Dara & Sophea" })).toBeInTheDocument();
+    // Duplicate level 2 heading for the exact same names is suppressed
+    expect(screen.queryByRole("heading", { level: 2, name: "Dara & Sophea" })).not.toBeInTheDocument();
+    // Time without raw seconds
+    expect(screen.getByText(/5:30 PM/)).toBeInTheDocument();
+  });
 });

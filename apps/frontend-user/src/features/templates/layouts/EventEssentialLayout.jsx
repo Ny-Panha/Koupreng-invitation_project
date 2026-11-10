@@ -2,6 +2,7 @@ import IllustratedMap from '../shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import InvitationBranding from '../shared/InvitationBranding';
+import { formatEventTime } from '../shared/eventDateTime';
 import { Link } from "react-router-dom";
 import { normalizeInvitationLanguage } from "@/shared/i18n/invitationLanguage";
 import { EVENT_TYPES } from "@/features/events/onboarding/eventFields";
@@ -10,8 +11,15 @@ import "@/features/events/workspace/EventWorkspace.css";
 export default function EventEssentialLayout({ tpl = {}, preview = false, backLink = "/templates", showBreadcrumb = true, showActions = true, children }) {
   const language = normalizeInvitationLanguage(tpl.languageMode || "KH");
   const copy = (kh, en) => language === "kh" || language === "km" ? kh : language === "both" ? `${kh} / ${en}` : en;
+  const isEnglish = language === "en";
   const type = EVENT_TYPES.find(row => row[0] === tpl.eventType) || EVENT_TYPES.at(-1);
   const names = [tpl.hostName || tpl.groom, tpl.partnerName || tpl.bride].filter(Boolean).join(" & ");
+  const isRedundantHeading = Boolean(
+    names &&
+    tpl.title &&
+    names.trim().toLowerCase() === tpl.title.trim().toLowerCase()
+  );
+  const displayTime = tpl.eventTime ? formatEventTime(tpl.eventTime, isEnglish, isEnglish ? 'latin' : 'khmer') : "";
   const details = tpl.hostContent || tpl;
   const cover = details.couplePhoto || details.coverImage || tpl.coverImage || "";
   const focal = details.coverFocalPoint || tpl.coverFocalPoint || "center";
@@ -25,9 +33,9 @@ export default function EventEssentialLayout({ tpl = {}, preview = false, backLi
         </div>
       )}
       <p>{copy(type[1], type[2])}</p><h1>{tpl.title || copy("សូមអញ្ជើញចូលរួម", "You are invited")}</h1>
-      {names && <h2>{names}</h2>}
+      {names && !isRedundantHeading && <h2>{names}</h2>}
       <p>{copy("សូមអញ្ជើញចូលរួមកម្មវិធីរបស់យើង", "Please join us for our event")}</p>
-      <p><time dateTime={tpl.eventDate || undefined}>{tpl.eventDate || tpl.dateText || ""}</time> {tpl.eventTime || ""}</p>
+      <p><time dateTime={tpl.eventDate || undefined}>{tpl.eventDate || tpl.dateText || ""}</time>{displayTime ? ` ${displayTime}` : tpl.eventTime ? ` ${tpl.eventTime}` : ""}</p>
       <IllustratedMap content={{ ...tpl, ...details }} />
       {tpl.venueName && <h2>{tpl.venueName}</h2>}<p>{tpl.venueAddress || ""}</p>
       {(details.messageText || tpl.message) && <p>{details.messageText || tpl.message}</p>}

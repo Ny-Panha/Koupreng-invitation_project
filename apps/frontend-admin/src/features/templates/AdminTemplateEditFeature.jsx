@@ -1721,7 +1721,7 @@ export default function AdminTemplateEditPage() {
                     }`}
                   >
                     <LayoutTemplate className="h-3.5 w-3.5" />
-                    <span>ម៉ូដ Template (UI Layouts)</span>
+                    <span>{lang === "en" ? "Layout Style" : "ម៉ូដទំព័រ (Layouts)"}</span>
                   </button>
                   <button
                     type="button"
@@ -1776,14 +1776,16 @@ export default function AdminTemplateEditPage() {
                       <div className="flex items-center justify-between mb-1">
                         <h3 className="text-sm font-bold text-white flex items-center gap-2">
                           <LayoutTemplate className="h-4 w-4 text-amber-500" />
-                          <span>រចនាបថម៉ូដ Template (UI Layout Engines)</span>
+                          <span>{lang === "en" ? "Template Layout Style" : "រចនាបថម៉ូដទំព័រ (Layout Style)"}</span>
                         </h3>
                         <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
                           {form.code || "khmer-celestial"}
                         </span>
                       </div>
                       <p className="text-xs text-zinc-400">
-                        ជ្រើសរើស Architecture & Interactive Style របស់ទំព័រធៀបការ។ ចុចប្តូរ Layout ដើម្បីមើល Live Preview ខាងស្តាំភ្លាមៗ។
+                        {lang === "en"
+                          ? "Select the layout style for the invitation page. Click a layout to preview it immediately on the right."
+                          : "ជ្រើសរើសរចនាបថម៉ូដទំព័រធៀបការ។ ចុចជ្រើសរើសម៉ូដដើម្បីមើលផ្ទាំងគំរូខាងស្តាំភ្លាមៗ។"}
                       </p>
                       {!isNew && <p className="text-xs text-amber-300">{lang === "en" ? "The layout identity is fixed for existing templates. Create a new template to choose another layout." : "គំរូដែលមានស្រាប់មានម៉ូដថេរ។ សូមបង្កើតគំរូថ្មីដើម្បីជ្រើសរើសម៉ូដផ្សេង។"}</p>}
                     </div>
