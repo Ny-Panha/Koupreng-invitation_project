@@ -1,0 +1,4264 @@
+{
+  "config": {
+    "argv": [
+      "C:\\nvm4w\\nodejs\\node.exe",
+      "D:\\Koupreng-invitation_project\\apps\\frontend-user\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/frontend-user/playwright.phase02-foundations.config.js",
+      "phase02-foundations.spec.js",
+      "--output",
+      "output/playwright/phase02-foundations/complete-foundations-results"
+    ],
+    "configFile": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\playwright.phase02-foundations.config.js",
+    "rootDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-chromium",
+        "name": "desktop-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-chromium",
+        "name": "mobile-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-firefox",
+        "name": "desktop-firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-firefox",
+        "name": "mobile-firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 412,
+            "height": 839
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-webkit",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1792,
+            "height": 1120
+          },
+          "deviceScaleFactor": 2,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-webkit"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-webkit",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 390,
+            "height": 664
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-firefox",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-firefox"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-firefox",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": true,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-firefox"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../output/playwright/phase02-foundations/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "phase02-foundations.spec.js",
+      "file": "phase02-foundations.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:39.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b8acd00d2908107cfc70",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:41.792Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-ec9de84aed1e2137d0b0",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:43.264Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-8098981275f6a7ea7360",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:45.477Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-21b8e179830c3507e533",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1049,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:48.030Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-4e4d347d2ccd19183a2a",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 974,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:49.105Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MTEyIC0wLjAwNTg0MDAzIC8gMC45KSIKICB9Cl0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-87107edc30de0b638a8b",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:50.089Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b53c5a19a6626e11d80b",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:55.831Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-cbace625ab350f253d1b",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:04.384Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-25e9f059e6512b678bca",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1084,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:05.648Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-a859e45ce6bde20dcf1f",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2004,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:06.750Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-edbd716bdfd73afcecf8",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1331,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:08.769Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-2e843a335e1ca8d5f6ad",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1479,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:10.113Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b56a16e4e33611129743",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 974,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:12.272Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-fb8847df8d6d31264033",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3316,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:13.353Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoOSwgOSwgMTEpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAiWW91IiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyNTIsIDIxMSwgNzcpIiwKICAgICJiYWNrZ3JvdW5kIjogInJnYig1OSwgNDQsIDE3KSIKICB9Cl0="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-cdcb4e380474a462962f",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:16.680Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMTYxLCAxNjEsIDE3MCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDksIDksIDExKSIKICB9LAogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1jdXJyZW50LWFjY291bnQtYmFkZ2UgbWwtMS41IGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYW1iZXItNTAwLzMwIHB4LTEuNSBweS0wLjUgdGV4dC1bMTFweF0gZm9udC1ib2xkIiwKICAgICJ0ZXh0IjogIuGeouGfkuGek+GegCIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjUyLCAyMTEsIDc3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoNTksIDQ0LCAxNykiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-9d0ddb6df4aa77522a0c",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2889,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:39.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-135fd82ba998c4fb240a",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1755,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:42.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e7b5e5203e569d084e64",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3031,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:44.527Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-a48abe09e0aab80a1cfa",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:47.583Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e01accf101158466fd97",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1020,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:49.638Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-55829efc7263b65ec2cf",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1267,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:50.669Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MTEyIC0wLjAwNTg0MDAzIC8gMC45KSIKICB9Cl0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-f926e3540e6788ef8739",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7907,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:51.943Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-bd7de08189d6082fcebd",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:41:59.863Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-cff50820dd4b674dc392",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:09.397Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-97a280e8d656f35577e6",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1361,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:10.763Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e09d532ed46e8944eb94",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:12.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-79d693855af0d45d6cac",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3106,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:14.435Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-d88ba8260f64636d05d7",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 1324,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:17.554Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-6ac63a926794141928cd",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1197,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:19.691Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-05172d3ee21aaf1e32e0",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4014,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:20.978Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoOSwgOSwgMTEpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAiWW91IiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyNTIsIDIxMSwgNzcpIiwKICAgICJiYWNrZ3JvdW5kIjogInJnYig1OSwgNDQsIDE3KSIKICB9Cl0="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-d648c219e25ab12565a5",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:25.009Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMTYxLCAxNjEsIDE3MCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDksIDksIDExKSIKICB9LAogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1jdXJyZW50LWFjY291bnQtYmFkZ2UgbWwtMS41IGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYW1iZXItNTAwLzMwIHB4LTEuNSBweS0wLjUgdGV4dC1bMTFweF0gZm9udC1ib2xkIiwKICAgICJ0ZXh0IjogIuGeouGfkuGek+GegCIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjUyLCAyMTEsIDc3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoNTksIDQ0LCAxNykiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-896355a7a51f8cd686c1",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2746,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:21.014Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-1684935900ef0ebb028b",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:23.837Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-abc9b2f694094f988567",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:25.918Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-d77ad64b67ff8259d815",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2121,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:42.615Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-a3aede7f3f4af7070022",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:44.754Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-ff8d3ee4d825b27306a3",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4127,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:48.065Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MSAtMC4wMDU4NCAvIDAuOSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-6946377030f5eba86752",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 41743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:52.208Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-8217351dd25a66fe02c1",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:33.968Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-2761a5f7f28145b0131c",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1257,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:44.259Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-322c9546541e03909c2c",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:45.537Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-1dd1e5c2ffdcaa2a8040",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:47.701Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-c518403cf842f5372a45",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2586,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:50.782Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-5dea8ef1af152ece099e",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2789,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:53.386Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-webkit\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-webkit\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-webkit\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-6a41d90d35d9b03fafbd",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1416,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:57.182Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-85c310b510f645dc5c77",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8442,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:58.677Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-90b0f29036be1db1ec24",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:07.139Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoODksIDk3LCA5MikiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1MSwgMjQ2LCAyMzgpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAi4Z6i4Z+S4Z6T4Z6AIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNDYsIDY0LCAxNCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjQ1LCAyMzApIgogIH0KXQ=="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e659bd4c49477a9b4ff9",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2191,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:29.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e8907ce96020e1feb597",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:32.068Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-3ff54e606f7e6a93bd3e",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10526,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:34.455Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-4a8a25143360faa2e0ff",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2873,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:44.997Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-39f5976fd887061eada8",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:47.887Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b9c81e30ec12047fcb87",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1803,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:49.842Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MSAtMC4wMDU4NCAvIDAuOSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-511fb6e8ea8e8679cec6",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 44978,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:42:51.659Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-cb092b7aeaede94daa35",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8979,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:36.658Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-544f8a52f6780c303e3b",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:45.664Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-659fb8a8fdf84a0d00bf",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:48.091Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-69dfea4416ad3ad4405b",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:50.577Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-bb93441fc79cfe344f82",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2462,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:54.634Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-a12eadbb1ebe6c2d8caf",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 2126,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:43:57.114Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-webkit\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-webkit\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-webkit\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-0246593baccec1a3d953",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:00.032Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-77d504a1c11e037734ba",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:01.569Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-25d6f9d866b712122fe4",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8781,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:09.570Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoODksIDk3LCA5MikiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1MSwgMjQ2LCAyMzgpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAi4Z6i4Z+S4Z6T4Z6AIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNDYsIDY0LCAxNCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjQ1LCAyMzApIgogIH0KXQ=="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-7826901f2c0c61ebe5b7",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2544,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:15.029Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b3b13d2fab064be45a9d",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3065,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:18.054Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-de5b71948066b7e908dc",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3842,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:21.136Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-d0c2fcbd999054a3b7f8",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:24.998Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-679cc0a7b4b105684898",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:28.600Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-8ea6894d7688b5ddde6a",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2260,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:30.792Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MTEyIC0wLjAwNTg0MDAzIC8gMC45KSIKICB9Cl0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-a8a83d8b2b75d83469cc",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:33.083Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-382437925a77ec1e2517",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:43.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-31099f7b50e35e19f812",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1987,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:52.119Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-1985f5cc099f245c33d0",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2933,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:54.138Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-de5a35175f242afb6365",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3415,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:57.096Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-0fbffac7821a11e22dc8",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1925,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:00.527Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-6a39b9d8e3d319c9a8b3",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3900,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:02.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-firefox\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-firefox\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-desktop-firefox\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-bc5e5793e144a388b84c",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:08.042Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-e29799ec874cee92de2b",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8059,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:11.006Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoOSwgOSwgMTEpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAiWW91IiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyNTIsIDIxMSwgNzcpIiwKICAgICJiYWNrZ3JvdW5kIjogInJnYig1OSwgNDQsIDE3KSIKICB9Cl0="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-740e80f2e1a733c6a55b",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:19.119Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMTYxLCAxNjEsIDE3MCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDksIDksIDExKSIKICB9LAogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1jdXJyZW50LWFjY291bnQtYmFkZ2UgbWwtMS41IGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYW1iZXItNTAwLzMwIHB4LTEuNSBweS0wLjUgdGV4dC1bMTFweF0gZm9udC1ib2xkIiwKICAgICJ0ZXh0IjogIuGeouGfkuGek+GegCIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjUyLCAyMTEsIDc3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoNTksIDQ0LCAxNykiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-0338f79d8b14bba109f2",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "AU-001 mobile Studio exposes the entire preview and reachable editing sections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2833,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:18.880Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-8d00a39aacc9d2cd73d4",
+          "file": "phase02-foundations.spec.js",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "AU-002 icon-only mobile preview link retains its accessible name",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:22.160Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-ef2a8999d9e2c9a2d12b",
+          "file": "phase02-foundations.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "AU-003 desktop resize works by keyboard and simple pointer controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3458,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:25.721Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-694cddf2170ce114ce4a",
+          "file": "phase02-foundations.spec.js",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "AU-004 guest notes meet normal text contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3442,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:29.216Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxMjgsIDk2LCA0NykiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI1NSwgMjU1LCAyNTUpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAiTm90ZXMiLAogICAgImZvcmVncm91bmQiOiAicmdiKDEyOCwgOTYsIDQ3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNTUsIDI1NSkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-aa01cf410de5674e9aad",
+          "file": "phase02-foundations.spec.js",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "AU-005 admin subtitle and current-account badge meet contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2257,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:32.677Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYig4OSwgOTcsIDkyKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjUxLCAyNDYsIDIzOCkiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiYWRtaW4tY3VycmVudC1hY2NvdW50LWJhZGdlIG1sLTEuNSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWFtYmVyLTUwMC8zMCBweC0xLjUgcHktMC41IHRleHQtWzExcHhdIGZvbnQtYm9sZCIsCiAgICAidGV4dCI6ICJZb3UiLAogICAgImZvcmVncm91bmQiOiAicmdiKDE0NiwgNjQsIDE0KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjU1LCAyNDUsIDIzMCkiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-5c53c0a3e2294645c19b",
+          "file": "phase02-foundations.spec.js",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "AU-006 dark administrative login footer meets contrast",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:34.973Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1hdXRoLWZvb3RlciBtdC04IHRleHQtY2VudGVyIHRleHQtWzExcHhdIiwKICAgICJ0ZXh0IjogIsKpIDIwMjYgS291cHJlbmcgUGxhdGZvcm0uIEFsbCByaWdodHMgcmVzZXJ2ZWQuIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJva2xhYigwLjE4MzU1NiAwLjAwMTY1MTEyIC0wLjAwNTg0MDAzIC8gMC45KSIKICB9Cl0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-c95dbb869d238e226eea",
+          "file": "phase02-foundations.spec.js",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "responsive Studio retains edits, preview viewport and all sections across widths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10960,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:37.515Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-ec76cea83b3eeac1c965",
+          "file": "phase02-foundations.spec.js",
+          "line": 109,
+          "column": 1
+        },
+        {
+          "title": "normal-motion invitation opens with a real pointer action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8060,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:48.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-2146349afce4877e73d7",
+          "file": "phase02-foundations.spec.js",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "Khmer route contract uses the active controls: events",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:56.577Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-7897f3fa35f7a1b1bf50",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: create-event",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3032,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:44:58.584Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-40ba7e98f91e4667a9d7",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: invitation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4878,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:01.639Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-9707a93ea6c919b92a04",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: checkout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1914,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:06.534Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-69ab7d84b124fb1b5fd9",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-template-edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 3392,
+                  "error": {
+                    "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                      "column": 77,
+                      "line": 206
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39msupport\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                        "column": 77,
+                        "line": 206
+                      },
+                      "message": "Error: /templates/:templateId: unspecified API contracts\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"method\": \"GET\",\u001b[39m\n\u001b[31m+     \"path\": \"/api/v1/templates\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at support\\batch12RouteContracts.js:206\n\n  204 |   }\n  205 |   expect(state.errors,`${contract.pattern}: JavaScript errors`).toEqual([]);\n> 206 |   expect(state.unexpected,`${contract.pattern}: unspecified API contracts`).toEqual([]);\n      |                                                                             ^\n  207 |   expect(state.writes,`${contract.pattern}: read-only smoke mutations`).toEqual([]);\n  208 | }\n  209 |\n    at assertRouteContract (D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js:206:77)\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\phase02-foundations.spec.js:181:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:08.479Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-firefox\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-firefox\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\complete-foundations-results\\phase02-foundations-Khmer--3c5b9-ontrols-admin-template-edit-mobile-firefox\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\support\\batch12RouteContracts.js",
+                    "column": 77,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b4dec51593ca84fd8763",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Khmer route contract uses the active controls: admin-dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:13.730Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-7543540031a04ff0f2ae",
+          "file": "phase02-foundations.spec.js",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "Studio and contrast roles remain usable in en and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:17.849Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIlNlYXJjaCwgaW5zcGVjdCwgYWN0aXZhdGUsIGFuZCBkZWFjdGl2YXRlIHVzZXJzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigxNjEsIDE2MSwgMTcwKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoOSwgOSwgMTEpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogImFkbWluLWN1cnJlbnQtYWNjb3VudC1iYWRnZSBtbC0xLjUgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1hbWJlci01MDAvMzAgcHgtMS41IHB5LTAuNSB0ZXh0LVsxMXB4XSBmb250LWJvbGQiLAogICAgInRleHQiOiAiWW91IiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyNTIsIDIxMSwgNzcpIiwKICAgICJiYWNrZ3JvdW5kIjogInJnYig1OSwgNDQsIDE3KSIKICB9Cl0="
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIk5vdGVzIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfSwKICB7CiAgICAic2VsZWN0b3IiOiAiU1VNTUFSWSIsCiAgICAidGV4dCI6ICJOb3RlcyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0KXQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-24defd2c4a0151df3f27",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        },
+        {
+          "title": "Studio and contrast roles remain usable in km and dark mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5881,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:45:26.379Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJwYWdlLXN1YnRpdGxlIiwKICAgICJ0ZXh0IjogIuGen+GfkuGenOGfguGehOGemuGegCDhnpbhnrfhnpPhnrfhno/hn5Lhnpkg4Z6U4Z6+4Z6A4Z6K4Z+G4Z6O4Z6+4Z6a4Z6A4Z624Z6aIOGerOGelOGet+GekeGeguGejuGek+GeuOGeouGfkuGek+GegOGelOGfkuGemuGevuGelOGfkuGemuGetuGen+GfiyIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMTYxLCAxNjEsIDE3MCkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDksIDksIDExKSIKICB9LAogIHsKICAgICJzZWxlY3RvciI6ICJhZG1pbi1jdXJyZW50LWFjY291bnQtYmFkZ2UgbWwtMS41IGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYW1iZXItNTAwLzMwIHB4LTEuNSBweS0wLjUgdGV4dC1bMTFweF0gZm9udC1ib2xkIiwKICAgICJ0ZXh0IjogIuGeouGfkuGek+GegCIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjUyLCAyMTEsIDc3KSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoNTksIDQ0LCAxNykiCiAgfQpd"
+                    },
+                    {
+                      "name": "contrast-computed-styles",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJzZWxlY3RvciI6ICJTVU1NQVJZIiwKICAgICJ0ZXh0IjogIuGeheGfhuGejuGetuGfhiIsCiAgICAiZm9yZWdyb3VuZCI6ICJyZ2IoMjE5LCAxOTMsIDE0MSkiLAogICAgImJhY2tncm91bmQiOiAicmdiKDI2LCAzOCwgMzIpIgogIH0sCiAgewogICAgInNlbGVjdG9yIjogIlNVTU1BUlkiLAogICAgInRleHQiOiAi4Z6F4Z+G4Z6O4Z624Z+GIiwKICAgICJmb3JlZ3JvdW5kIjogInJnYigyMTksIDE5MywgMTQxKSIsCiAgICAiYmFja2dyb3VuZCI6ICJyZ2IoMjYsIDM4LCAzMikiCiAgfQpd"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd5dd77208c22956d14c-b95e55e965a645b7ae3c",
+          "file": "phase02-foundations.spec.js",
+          "line": 188,
+          "column": 34
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T02:41:33.869Z",
+    "duration": 239678.61599999998,
+    "expected": 90,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

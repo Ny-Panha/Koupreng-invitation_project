@@ -226,7 +226,7 @@ export default function LoginPage() {
           </form>
 
           {/* Footer Note */}
-          <div className="mt-8 text-center text-[11px] text-zinc-500">
+          <div className="admin-auth-footer mt-8 text-center text-[11px]">
             © 2026 Koupreng Platform. All rights reserved.
           </div>
         </div>

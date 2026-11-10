@@ -51,6 +51,8 @@
 }
 
 .dark {
+  --ui-warning: #fcd34d;
+  --ui-warning-soft: #3b2c11;
   --background: #09090b;
   --foreground: #f8fafc;
   --card: #111113;
@@ -431,8 +433,12 @@ table.data tbody tr:nth-child(10), .table-wrap tbody tr:nth-child(10), table.w-f
 }
 
 .page-subtitle {
-  @apply text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1;
+  @apply text-xs sm:text-sm mt-1;
+  color: var(--muted-foreground);
 }
+
+.admin-current-account-badge { color: var(--ui-warning); background: var(--ui-warning-soft); }
+.admin-auth-footer { color: var(--ui-on-dark-muted); }
 
 .toolbar {
   @apply flex items-center gap-3 flex-wrap mb-4;

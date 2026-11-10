@@ -1,0 +1,260 @@
+{
+  "reports": {
+    "foundation-results.json": {
+      "passed": 96,
+      "failed": 0,
+      "skipped": 0,
+      "other": 0,
+      "projects": {
+        "desktop-chromium": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-chromium": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "desktop-webkit": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-webkit": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "desktop-firefox": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-firefox": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "specifications": {
+        "phase02-foundations.spec.js": {
+          "passed": 96,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "durationMs": 269554.56899999996,
+      "reportErrors": []
+    },
+    "regression-results.json": {
+      "passed": 334,
+      "failed": 0,
+      "skipped": 0,
+      "other": 0,
+      "projects": {
+        "desktop-chromium": {
+          "passed": 167,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-chromium": {
+          "passed": 167,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "specifications": {
+        "batch12-core-hardening.spec.js": {
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "batch12-route-content.spec.js": {
+          "passed": 270,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "batch11-auth-boundaries.spec.js": {
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "batch11-payment-journey.spec.js": {
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase2-intent.spec.js": {
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase2-operations.spec.js": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase2-payment.spec.js": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase2-studio.spec.js": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase7-auth-accessibility.spec.js": {
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase8-functional.spec.js": {
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "durationMs": 308168.755,
+      "reportErrors": []
+    },
+    "final-verification-results.json": {
+      "passed": 126,
+      "failed": 0,
+      "skipped": 0,
+      "other": 0,
+      "projects": {
+        "desktop-chromium": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-chromium": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "desktop-webkit": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-webkit": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "desktop-firefox": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "mobile-firefox": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "specifications": {
+        "batch12-core-hardening.spec.js": {
+          "passed": 30,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        },
+        "phase02-foundations.spec.js": {
+          "passed": 96,
+          "failed": 0,
+          "skipped": 0,
+          "other": 0
+        }
+      },
+      "durationMs": 456572.92100000003,
+      "reportErrors": []
+    }
+  },
+  "renderedContrast": [
+    {
+      "selector": "SUMMARY",
+      "foreground": "rgb(128, 96, 47)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 5.78,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "page-subtitle",
+      "foreground": "rgb(89, 97, 92)",
+      "background": "rgb(251, 246, 238)",
+      "ratio": 5.93,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "admin-current-account-badge ml-1.5 inline-flex items-center rounded-md border border-amber-500/30 px-1.5 py-0.5 text-[11px] font-bold",
+      "foreground": "rgb(146, 64, 14)",
+      "background": "rgb(255, 245, 230)",
+      "ratio": 6.57,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "admin-auth-footer mt-8 text-center text-[11px]",
+      "foreground": "rgb(161, 161, 170)",
+      "background": "oklab(0.183556 0.00165112 -0.00584003 / 0.9)",
+      "ratio": null,
+      "evidence": "Passing rendered axe check; advanced/alpha color surface is not reduced to an uncomposited RGB ratio"
+    },
+    {
+      "selector": "page-subtitle",
+      "foreground": "rgb(161, 161, 170)",
+      "background": "rgb(9, 9, 11)",
+      "ratio": 7.76,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "admin-current-account-badge ml-1.5 inline-flex items-center rounded-md border border-amber-500/30 px-1.5 py-0.5 text-[11px] font-bold",
+      "foreground": "rgb(252, 211, 77)",
+      "background": "rgb(59, 44, 17)",
+      "ratio": 9.37,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "SUMMARY",
+      "foreground": "rgb(219, 193, 141)",
+      "background": "rgb(26, 38, 32)",
+      "ratio": 8.96,
+      "evidence": "Opaque computed RGB pair plus passing rendered axe check"
+    },
+    {
+      "selector": "admin-auth-footer mt-8 text-center text-[11px]",
+      "foreground": "rgb(161, 161, 170)",
+      "background": "oklab(0.183556 0.001651 -0.00584 / 0.9)",
+      "ratio": null,
+      "evidence": "Passing rendered axe check; advanced/alpha color surface is not reduced to an uncomposited RGB ratio"
+    }
+  ]
+}

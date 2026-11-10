@@ -1,4 +1,8 @@
 import { serializeTemplateConfig } from "./templatePersistence";
+import useStudioPanelLayout from './useStudioPanelLayout';
+import StudioPanelResize from './components/StudioPanelResize';
+import StudioPreviewFrame from './components/StudioPreviewFrame';
+import './TemplateStudio.css';
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { usePreviewSyncRetries } from "../../shared/hooks/usePreviewSyncRetries";
@@ -674,6 +678,7 @@ export default function AdminTemplateEditPage() {
   const [venueSubTab, setVenueSubTab] = useState("map"); // 'map' | 'dress'
   const [settingsSubTab, setSettingsSubTab] = useState("sections"); // 'sections' | 'catalog'
   const [deviceView, setDeviceView] = useState("mobile"); // 'mobile' | 'tablet' | 'desktop'
+  const [mobilePanel, setMobilePanel] = useState('edit');
   const [previewGateOpen, setPreviewGateOpen] = useState(false);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -910,46 +915,8 @@ export default function AdminTemplateEditPage() {
     show("បានលុបពុម្ពអក្សរផ្ទាល់ខ្លួនចេញ ✓");
   };
 
-  // Draggable Split Divider State (Left Controls vs Right Live Preview)
-  const [leftWidthPercent, setLeftWidthPercent] = useState(48); // default 48% split
+  const { workspaceRef, value: leftWidthPercent, setValue: setLeftWidthPercent, min: minPanelPercent, max: maxPanelPercent } = useStudioPanelLayout(!loading && !loadError);
   const [isDraggingDivider, setIsDraggingDivider] = useState(false);
-  const workspaceRef = useRef(null);
-
-  // Mouse drag handler for horizontal panel resizing
-  useEffect(() => {
-    if (!isDraggingDivider) return;
-
-    const handleMouseMove = (e) => {
-      if (!workspaceRef.current) return;
-      const rect = workspaceRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      let pct = (x / rect.width) * 100;
-      if (pct < 25) pct = 25; // min 25% for controls panel
-      if (pct > 75) pct = 75; // max 75% for controls panel
-      setLeftWidthPercent(pct);
-    };
-
-    const handleMouseUp = () => {
-      setIsDraggingDivider(false);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDraggingDivider]);
-
-  const handleDividerMouseDown = (e) => {
-    e.preventDefault();
-    setIsDraggingDivider(true);
-  };
-
-  const handleDividerDoubleClick = () => {
-    setLeftWidthPercent(48); // Reset to default 48% on double-click
-  };
 
   // Sync form inputs to iframe live engine in real-time
   const broadcastSync = useCallback(() => {
@@ -1544,9 +1511,12 @@ export default function AdminTemplateEditPage() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex h-screen w-screen flex-col bg-zinc-950 text-zinc-100 overflow-hidden font-sans">
+    <div className="template-studio font-sans" data-panel={mobilePanel} onFocusCapture={event => {
+      if (event.target.closest('#template-studio-controls')) setMobilePanel('edit');
+      else if (event.target.closest('#template-studio-preview')) setMobilePanel('preview');
+    }}>
       {/* 1. TOP STUDIO TOOLBAR */}
-      <header className="flex min-h-16 shrink-0 flex-wrap gap-3 items-center justify-between border-b border-zinc-800/80 bg-zinc-900/90 px-4 py-3 backdrop-blur-md">
+      <header className="template-studio-toolbar flex min-h-16 shrink-0 flex-wrap gap-3 items-center justify-between border-b border-zinc-800/80 bg-zinc-900/90 px-4 py-3 backdrop-blur-md">
         <div className="flex flex-1 basis-full xl:basis-auto items-center gap-3 min-w-0">
           <Link
             to="/templates"
@@ -1579,10 +1549,11 @@ export default function AdminTemplateEditPage() {
         </div>
 
         {/* Device Mode Switcher */}
-        <div className="flex items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 p-1 shrink-0">
+        <div className="studio-device-switch items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 p-1">
           <button
             type="button"
             onClick={() => setDeviceView("mobile")}
+            aria-pressed={deviceView === 'mobile'}
             className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
               deviceView === "mobile"
                 ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
@@ -1595,6 +1566,7 @@ export default function AdminTemplateEditPage() {
           <button
             type="button"
             onClick={() => setDeviceView("tablet")}
+            aria-pressed={deviceView === 'tablet'}
             className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
               deviceView === "tablet"
                 ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
@@ -1607,6 +1579,7 @@ export default function AdminTemplateEditPage() {
           <button
             type="button"
             onClick={() => setDeviceView("desktop")}
+            aria-pressed={deviceView === 'desktop'}
             className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
               deviceView === "desktop"
                 ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
@@ -1619,10 +1592,11 @@ export default function AdminTemplateEditPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="studio-toolbar-actions flex items-center gap-2">
           <button
             type="button"
             onClick={handleExportJson}
+            aria-label={lang === 'en' ? 'Export template JSON' : 'ទាញយកគំរូជា JSON'}
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
             title="ទាញយក Template ទុកជា File JSON (Export)"
           >
@@ -1633,6 +1607,7 @@ export default function AdminTemplateEditPage() {
           <button
             type="button"
             onClick={() => exportFileInputRef.current?.click()}
+            aria-label={lang === 'en' ? 'Import template JSON' : 'បញ្ចូលគំរូពី JSON'}
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700 hover:text-amber-300 cursor-pointer"
             title="បញ្ចូល Template ពី File JSON (Import)"
           >
@@ -1651,9 +1626,10 @@ export default function AdminTemplateEditPage() {
             href={userTemplateUrl(form.code || form.slug || form.presetId?.toLowerCase() || "the-digital-yes-wedding")}
             target="_blank"
             rel="noreferrer"
+            aria-label={lang === 'en' ? 'Open template preview in a new tab' : 'បើកគំរូធៀបក្នុងផ្ទាំងថ្មី'}
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
           >
-            <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
+            <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 text-amber-400" />
             <span className="hidden md:inline">{t("templateEditor.userTab", "មើល User Tab")}</span>
           </a>
           <button
@@ -1668,26 +1644,27 @@ export default function AdminTemplateEditPage() {
         </div>
       </header>
 
+      <div className="studio-panel-switch" role="group" aria-label={lang === 'en' ? 'Editor workspace' : 'ផ្ទាំងកែសម្រួល'}>
+        <button type="button" aria-pressed={mobilePanel === 'edit'} aria-controls="template-studio-controls" onClick={() => setMobilePanel('edit')}>{lang === 'en' ? 'Edit' : 'កែសម្រួល'}</button>
+        <button type="button" aria-pressed={mobilePanel === 'preview'} aria-controls="template-studio-preview" onClick={() => setMobilePanel('preview')}>{lang === 'en' ? 'Preview' : 'មើលជាមុន'}</button>
+      </div>
+
       {/* 2. MAIN SPLIT STUDIO WORKSPACE */}
       <div
         ref={workspaceRef}
-        className={`flex flex-1 overflow-hidden relative ${
+        style={{ '--studio-controls-width': `${leftWidthPercent}%` }}
+        className={`template-studio-workspace ${
           isDraggingDivider ? "select-none cursor-col-resize" : ""
         }`}
       >
-        {/* Transparent backdrop overlay while dragging to capture all mousemove/mouseup and prevent iframe mouse trapping */}
-        {isDraggingDivider && (
-          <div className="fixed inset-0 z-50 cursor-col-resize select-none" />
-        )}
-
         {/* ================= LEFT CONTROLS PANEL ================= */}
         <aside
-          style={{ width: `${leftWidthPercent}%` }}
-          className="flex flex-col border-r border-zinc-800 bg-zinc-900/50 shrink-0 min-w-[320px] max-w-[80vw]"
+          id="template-studio-controls"
+          className="template-studio-controls"
         >
           {/* Studio Navigation Tabs - Clean 5 Symmetrical Tabs on 1 Single Row */}
           <div className="border-b border-zinc-800/80 bg-zinc-950/80 p-3">
-            <div className="grid grid-cols-5 gap-2 rounded-2xl border border-zinc-800/80 bg-zinc-900/50 p-1.5">
+            <div className="studio-section-tabs rounded-2xl border border-zinc-800/80 bg-zinc-900/50 p-1.5">
               {[
                 { id: "theme", label: lang === "en" ? "Theme & Styles" : "រចនាបថ", icon: Palette },
                 { id: "couple", label: lang === "en" ? "Couple Info" : "សាមីខ្លួន", icon: Heart },
@@ -1701,6 +1678,7 @@ export default function AdminTemplateEditPage() {
                   <button
                     key={tab.id}
                     type="button"
+                    aria-pressed={active}
                     onClick={() => {
                       setActiveTab(tab.id);
                       if (tab.id === "theme" && themeSubTab === "cover") {
@@ -1724,7 +1702,7 @@ export default function AdminTemplateEditPage() {
           </div>
 
           {/* Tab Content Panels (Scrollable) */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="studio-controls-scroll space-y-6">
             {/* TAB 1: THEME & APPEARANCE (Styles + Cover) */}
             {activeTab === "theme" && (
               <div className="space-y-6 animate-in fade-in">
@@ -3906,10 +3884,11 @@ export default function AdminTemplateEditPage() {
                 {settingsSubTab === "catalog" && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                      <label htmlFor="template-catalog-name" className="block text-xs font-semibold text-zinc-300 mb-1.5">
                         ឈ្មោះគំរូធៀបការ (Template Name) *
                       </label>
                       <input
+                        id="template-catalog-name"
                         type="text"
                         value={form.name}
                         onChange={(e) => setField("name", e.target.value)}
@@ -4000,50 +3979,20 @@ export default function AdminTemplateEditPage() {
           </div>
         </aside>
 
-        {/* DRAGGABLE RESIZER DIVIDER (Can drag horizontally to resize panels) */}
-        <div
-          onMouseDown={handleDividerMouseDown}
-          onDoubleClick={handleDividerDoubleClick}
-          className={`group relative z-30 flex w-3 -ml-1.5 -mr-1.5 shrink-0 cursor-col-resize items-center justify-center transition-colors select-none ${
-            isDraggingDivider ? "bg-amber-500/20" : "hover:bg-amber-500/10"
-          }`}
-          title="ចុចទាញពង្រីក/បង្រួម (Drag to resize, Double-click to reset)"
-        >
-          {/* Vertical line indicator */}
-          <div
-            className={`h-full w-px transition-colors ${
-              isDraggingDivider
-                ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"
-                : "bg-zinc-800 group-hover:bg-amber-500/80"
-            }`}
-          />
-          {/* Handle pill knob with grip dots */}
-          <div
-            className={`absolute flex h-10 w-4 items-center justify-center rounded-full border shadow-sm transition-all ${
-              isDraggingDivider
-                ? "border-amber-400 bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/40 scale-110"
-                : "border-zinc-700 bg-zinc-900 text-zinc-400 group-hover:border-amber-500 group-hover:text-amber-400 group-hover:bg-zinc-800"
-            }`}
-          >
-            <div className="flex flex-col gap-0.5">
-              <span className="h-0.5 w-0.5 rounded-full bg-current" />
-              <span className="h-0.5 w-0.5 rounded-full bg-current" />
-              <span className="h-0.5 w-0.5 rounded-full bg-current" />
-            </div>
-          </div>
-        </div>
+        <StudioPanelResize value={leftWidthPercent} min={minPanelPercent} max={maxPanelPercent}
+          onChange={setLeftWidthPercent} workspaceRef={workspaceRef} onDraggingChange={setIsDraggingDivider} english={lang === 'en'} />
 
-        {/* ================= RIGHT LIVE PREVIEW PANEL ================= */}
-        <main className="flex-1 flex flex-col bg-zinc-950/90 relative overflow-hidden items-center justify-center p-6 min-w-[360px]">
+        <main id="template-studio-preview" className="studio-preview-panel">
           {/* Subtle Ambient Glow */}
           <div
-            className="absolute -top-20 -right-20 h-96 w-96 rounded-full blur-[140px] opacity-20 pointer-events-none"
+            aria-hidden="true"
+            className="absolute top-0 right-0 h-96 w-96 max-h-full max-w-full rounded-full blur-[140px] opacity-20 pointer-events-none"
             style={{ backgroundColor: form.primaryColor }}
           />
 
           {/* Single Clean Live Control Bar */}
           <div
-            className={`mb-3 flex items-center justify-between w-full px-1 z-10 transition-all duration-300 gap-2 ${
+            className={`studio-preview-toolbar mb-3 flex items-center justify-between w-full px-1 z-10 gap-2 ${
               deviceView === "mobile"
                 ? "max-w-[380px]"
                 : deviceView === "tablet"
@@ -4090,20 +4039,10 @@ export default function AdminTemplateEditPage() {
             </div>
           </div>
 
-          {/* Interactive Frame Box */}
-          <div
-            className={`h-full flex flex-col rounded-[36px] border-4 border-zinc-800/90 bg-zinc-950 shadow-2xl overflow-hidden transition-all duration-300 relative ${
-              deviceView === "mobile"
-                ? "w-[380px]"
-                : deviceView === "tablet"
-                ? "w-[620px]"
-                : "w-full max-w-4xl"
-            }`}
-            style={{
-              "--primary-color": form.primaryColor,
-              "--secondary-color": form.secondaryColor,
-            }}
-          >
+          <StudioPreviewFrame device={deviceView} style={{
+            '--primary-color': form.primaryColor,
+            '--secondary-color': form.secondaryColor,
+          }}>
             {/* Mockup Mobile Status Bar */}
             <div className="flex h-7 shrink-0 items-center justify-between px-6 bg-black/80 text-[10px] text-zinc-300 font-semibold border-b border-black/10 z-20">
               <span>9:41</span>
@@ -4154,7 +4093,7 @@ export default function AdminTemplateEditPage() {
                 }}
               />
             </div>
-          </div>
+          </StudioPreviewFrame>
         </main>
       </div>
 

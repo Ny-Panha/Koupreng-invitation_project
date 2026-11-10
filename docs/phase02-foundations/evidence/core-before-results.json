@@ -1,0 +1,1832 @@
+{
+  "config": {
+    "argv": [
+      "C:\\nvm4w\\nodejs\\node.exe",
+      "D:\\Koupreng-invitation_project\\apps\\frontend-user\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/frontend-user/playwright.phase02-foundations.config.js",
+      "batch12-core-hardening.spec.js",
+      "--output",
+      "output/playwright/phase02-foundations/core-results"
+    ],
+    "configFile": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\playwright.phase02-foundations.config.js",
+    "rootDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-chromium",
+        "name": "desktop-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-chromium",
+        "name": "mobile-chromium",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-webkit",
+        "name": "mobile-webkit",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "desktop-firefox",
+        "name": "desktop-firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/Koupreng-invitation_project/output/playwright/phase02-foundations/core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "mobile-firefox",
+        "name": "mobile-firefox",
+        "testDir": "D:/Koupreng-invitation_project/apps/frontend-user/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-chromium",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 412,
+            "height": 839
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-webkit",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1792,
+            "height": 1120
+          },
+          "deviceScaleFactor": 2,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-webkit"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-webkit",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 390,
+            "height": 664
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-webkit"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "desktop-firefox",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop-firefox"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "name": "mobile-firefox",
+        "testDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "snapshotDir": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "phase02-foundations.spec.js",
+          "batch12-route-content.spec.js",
+          "batch12-core-hardening.spec.js",
+          "batch12-security-journeys.spec.js",
+          "phase2-intent.spec.js",
+          "phase2-studio.spec.js",
+          "phase2-payment.spec.js",
+          "phase2-operations.spec.js",
+          "phase7-auth-accessibility.spec.js",
+          "phase8-functional.spec.js"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173",
+          "reducedMotion": "reduce",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": true,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-firefox"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../output/playwright/phase02-foundations/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "batch12-core-hardening.spec.js",
+      "file": "batch12-core-hardening.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12059,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:01.726Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-37563b16d97dce5a5351",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1588,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:13.872Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-b4791060f682f1775de2",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2480,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:15.468Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-154e9c3d8bf253d94178",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12824,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:17.957Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-12756d9019b93c0d4952",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:30.794Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-538333bf9a61516a0622",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 12779,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:01.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-fcb49e2e3cb599913125",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2362,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:14.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-fdf2399111aa082f18f2",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1759,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:16.990Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-1bf3e8fd406e3e789923",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 17823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:18.757Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-63a2af3d24018bdbea4b",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 32022,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:36.591Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-21d385a17af507a2b014",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:42.583Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-15bf730b707b8499b208",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6422,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:52:54.278Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-91c61410df047ac359c4",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:00.722Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-cb89f54abb807866857c",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 37368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:04.409Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-39b43426661711d86296",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-webkit",
+              "projectName": "desktop-webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:41.798Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-3d2343bcc002af87b312",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 7691,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\batch12-core-hardening.spec.js:50:18",
+                    "location": {
+                      "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\batch12-core-hardening.spec.js",
+                      "column": 18,
+                      "line": 50
+                    },
+                    "snippet": "  48 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  49 |   }\n> 50 |   expect(errors).toEqual([]);\n     |                  ^\n  51 |   await page.screenshot({ path: info.outputPath('template-roundtrip.png'), fullPage: true });\n  52 | });\n  53 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\batch12-core-hardening.spec.js",
+                        "column": 18,
+                        "line": 50
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+   \"ResizeObserver loop completed with undelivered notifications.\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  48 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  49 |   }\n> 50 |   expect(errors).toEqual([]);\n     |                  ^\n  51 |   await page.screenshot({ path: info.outputPath('template-roundtrip.png'), fullPage: true });\n  52 | });\n  53 |\n    at D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\batch12-core-hardening.spec.js:50:18"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:09.142Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results\\batch12-core-hardening-tem-61080--immutable-catalog-identity-mobile-webkit\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results\\batch12-core-hardening-tem-61080--immutable-catalog-identity-mobile-webkit\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "D:\\Koupreng-invitation_project\\output\\playwright\\phase02-foundations\\core-results\\batch12-core-hardening-tem-61080--immutable-catalog-identity-mobile-webkit\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\Koupreng-invitation_project\\apps\\frontend-user\\tests\\e2e\\batch12-core-hardening.spec.js",
+                    "column": 18,
+                    "line": 50
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-1d545599acf45feba8f2",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:17.663Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-762a671812d033b4c67f",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:20.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-7401a1c682f97c948c09",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 54408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:53:22.216Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-8a2f5988ae103ea0dfb2",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-webkit",
+              "projectName": "mobile-webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 53564,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:16.646Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-4cc0ad76d5d843407eed",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5615,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:11.507Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-5bd79615da613ebffb0e",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3064,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:17.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-e203e804f45da928f6ce",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:20.611Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-de582427968ea65fd9e2",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:22.996Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-3d92d1c370386581a5fc",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-firefox",
+              "projectName": "desktop-firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:38.173Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-887a3335954c7a3d1bf9",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "template save roundtrip preserves authored fields and immutable catalog identity",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:48.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-21da7e4cd09fcec60a84",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "template Back warns before discarding authored changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3053,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:54.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-7c49b989b82d17fb546a",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "failed template load blocks overwrite and retry recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2349,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:54:57.700Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-1faf09903dc19577b7a7",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "package dialog traps and restores focus, switches work by keyboard, bilingual responsive axe",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15545,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:55:00.066Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "package-quotas-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-features-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-light-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-en-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "package-basic-km-dark-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-be305592306b084257a6",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "public wedding opens in three engines with reduced motion and bilingual responsive content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-firefox",
+              "projectName": "mobile-firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:55:15.627Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "wedding-en-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "wedding-km-axe",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4ca48b71d73b50cb8960-dbeb1395c0232e779043",
+          "file": "batch12-core-hardening.spec.js",
+          "line": 127,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T02:51:56.145Z",
+    "duration": 209497.17799999999,
+    "expected": 29,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

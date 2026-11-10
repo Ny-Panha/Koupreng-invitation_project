@@ -291,7 +291,7 @@ export default function AdminUsersPage() {
                           {user.fullName || "—"}
                         </Link>
                         {isCurrent && (
-                          <span className="ml-1.5 inline-flex items-center rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[11px] font-bold text-amber-600 dark:bg-amber-500/20 dark:text-amber-400">
+                          <span className="admin-current-account-badge ml-1.5 inline-flex items-center rounded-md border border-amber-500/30 px-1.5 py-0.5 text-[11px] font-bold">
                             {t("users.youBadge", "You")}
                           </span>
                         )}

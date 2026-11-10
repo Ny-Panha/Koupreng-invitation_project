@@ -56,6 +56,12 @@ export async function installRouteContractFixtures(page, contract, {lang='en'}={
     const request=route.request(), url=new URL(request.url()), p=url.pathname, method=request.method();
     if (method!=='GET') {writes.push({method,path:p}); return route.fulfill({status:405,json:{message:'Read-only route smoke rejects mutations'}});}
     if (p.endsWith('/i18n/messages')) return reply(route,{messages:{}});
+    // The served admin preview embeds the real user renderer and its catalog provider.
+    // Allow only its known fictional Event Essential reads; other APIs still fail closed.
+    if (isAdmin && contract.group.startsWith('admin-template-')) {
+      if (p==='/api/v1/templates') return reply(route,uxTemplates);
+      if (['/api/v1/templates/30','/api/v1/templates/event-essential','/api/v1/templates/slug/event-essential'].includes(p)) return reply(route,uxTemplates[0]);
+    }
     if (p==='/api/auth/me' || p==='/api/users/me') return route.fulfill({json:account});
     if (p==='/api/v1/me/entitlements') return reply(route,entitlements);
     if (p==='/api/v1/organizations') return reply(route,[organization]);
@@ -106,11 +112,12 @@ export async function installRouteContractFixtures(page, contract, {lang='en'}={
     return route.fulfill({status:501,json:{message:`Unspecified Batch12 fixture: ${method} ${p}`}});
   });
   page.addInitScript = addInit;
-  return {base,unexpected,writes,errors,eventTitle:studio?'Celestial celebration':'Dara & Sophea'};
+  return {base,unexpected,writes,errors,lang,eventTitle:studio?'Celestial celebration':'Dara & Sophea'};
 }
 
 /** Uses route-specific content/controls. Does not accept #admin-main or #event-module-content alone. */
 export async function assertRouteContract(page, contract, state) {
+  const copy = (en, km) => state.lang === 'km' ? km : en;
   await expect.poll(()=>new URL(page.url()).pathname).toBe(contract.expectedPathname);
   const visible = selector=>expect(page.locator(selector).first()).toBeVisible();
   const text = value=>expect(page.getByText(value,{exact:true}).first()).toBeVisible();
@@ -127,19 +134,33 @@ export async function assertRouteContract(page, contract, state) {
     case 'auth-register': await visible('input[type="tel"]'); await visible('input[autocomplete="new-password"]'); await visible('form button[type="submit"]'); break;
     case 'auth-forgot': await visible('input[type="email"]'); await visible('.auth-form button[type="submit"]'); break;
     case 'auth-reset': await expect(page.locator('input[autocomplete="new-password"]')).toHaveCount(2); await visible('form button[type="submit"]'); break;
-    case 'checkout': await heading('Review your template order'); await visible('.checkout-template-name'); await expect(page.getByRole('button',{name:'Create payment order',exact:true})).toBeEnabled(); await text('$15.00'); break;
+    case 'checkout': {
+      await heading(copy('Review your template order','ពិនិត្យមុនទូទាត់')); await visible('.checkout-template-name');
+      await expect(page.getByRole('button',{name:copy('Create payment order','បង្កើតការបញ្ជាទិញ'),exact:true})).toBeEnabled();
+      // Currency symbol placement follows the browser's locale data (Khmer differs by engine).
+      const amount = await page.evaluate(lang => new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'km-KH', {style:'currency',currency:'USD'}).format(15), state.lang);
+      await expect(page.locator('.checkout-summary-row dd').nth(1)).toHaveText(amount); break;
+    }
     case 'template-demo': await visible('[data-template-renderer="event-essential"] h1'); await expect(page.getByText(/Template unavailable/)).toHaveCount(0); break;
     case 'public-invitation': await visible('[data-template-renderer="event-essential"] h1'); await text('Dara & Sophea'); break;
     case 'local-preview': await visible('[data-template-renderer="silk-heritage"] .sh-cover'); await expect(page.locator('[data-template-renderer="silk-heritage"]')).toContainText('Local Dara'); break;
     case 'payment-status': await text('AUDIT'); await text('Awaiting verification'); await heading('Review your payment'); break;
     case 'payment-return': await text('AUDIT'); await text('PENDING'); await heading('Payment is being verified. Please wait.'); break;
     case 'payment-cancel': await visible('.payment-page h1'); await visible('.payment-page a[href="/templates/browse"]'); break;
-    case 'events': await visible('.event-card'); await text('Dara & Sophea'); await visible('a[href="/app/events/new"]'); break;
-    case 'create-event': await heading('Bring your event together'); await visible('#event-title'); await button('Create event'); break;
+    case 'events': await visible('.event-card'); await text('Dara & Sophea'); await expect(page.locator('.events-create-btn')).toBeVisible(); await expect(page.locator('.events-create-btn')).toHaveAttribute('href','/app/events/new'); break;
+    case 'create-event': await heading(copy('Bring your event together','បង្កើតកម្មវិធីរបស់អ្នក')); await visible('#event-title'); await button(copy('Create event','បង្កើតកម្មវិធី')); break;
     case 'dashboard': await heading('Event overview'); await visible('.overview-metrics'); await visible('.overview-actions a'); break;
-    case 'invitation': await visible('.pe-editor-column input:not([type="checkbox"]):not([type="file"])'); await button('Save'); break;
+    case 'invitation': await visible('.pe-editor-column input:not([type="checkbox"]):not([type="file"])'); await button(copy('Save','រក្សាទុក')); break;
     case 'settings': await expect(page.locator('#event-title')).toHaveValue(state.eventTitle); await visible('.event-settings button'); break;
-    case 'ticket': await heading('Ticket designer'); await visible('.ticket-preview canvas[role="img"]'); await visible('.ticket-studio select'); break;
+    case 'ticket': {
+      await heading('Ticket designer');
+      const preview = page.getByRole('button',{name:'Preview & export',exact:true});
+      if (await preview.isVisible()) await preview.click();
+      await visible('.ticket-preview canvas[role="img"]');
+      const edit = page.getByRole('button',{name:'Edit',exact:true});
+      if (await edit.isVisible()) await edit.click();
+      await visible('.ticket-studio select'); break;
+    }
     case 'analytics': await heading('Attendance analytics'); await heading('Current event totals'); await visible('.analytics-table-scroll tbody tr'); break;
     case 'team': await heading('Event team'); await expect(page.getByRole('option',{name:'Batch12 owned team'})).toHaveCount(1); break;
     case 'preview': await visible('.inv-preview-workspace'); await visible('[data-template-renderer="event-essential"] h1'); break;
@@ -147,7 +168,14 @@ export async function assertRouteContract(page, contract, state) {
     case 'rsvp': await text('Review Guest 1'); await text('See you soon.'); await visible('table'); break;
     case 'gifts': await visible('.wg-page'); await text('USD contributor'); await text('KHR contributor'); break;
     case 'budget': await visible('.exp-page'); await text('USD venue'); await text('KHR flowers'); break;
-    case 'seating': await visible('.seating-page'); await text('Review Guest 1'); await visible('.seating-page button'); break;
+    case 'seating': {
+      await visible('.seating-page');
+      const assignment = page.getByRole('button',{name:'Assign guests',exact:true});
+      if (await assignment.isVisible()) await assignment.click();
+      await expect(page.locator('#seating-assignment-guest')).toBeVisible();
+      await expect(page.locator('#seating-assignment-guest option')).toContainText(['Choose a guest','Review Guest 1','Review Guest 2']);
+      break;
+    }
     case 'check-in': await visible('[data-testid="guest-roster-table"]'); await expect(page.getByTestId('guest-roster-table')).toContainText('Review Guest 1'); await button('Check in'); break;
     case 'reports': await visible('.reports-content-container'); await visible('.owner-report-summary'); await visible('.reports-content-container button'); break;
     case 'delivery': await heading('Recipients'); await expect(page.getByRole('checkbox',{name:/Review Guest 1/})).toBeVisible(); break;
@@ -166,12 +194,12 @@ export async function assertRouteContract(page, contract, state) {
     case 'paid-templates': await text('Event Essential'); await visible('.paid-card-item'); break;
     case 'legacy-unsaved-editor': await heading('Invitation studio'); await visible('.pe-editor-column input:not([type="checkbox"]):not([type="file"])'); await button('Save'); break;
     case 'not-found': await heading('404'); await expect(page.getByRole('link',{name:'Back to home'})).toHaveAttribute('href','/'); break;
-    case 'admin-dashboard': await text('Stored attendance and operations'); await text('Dara & Sophea'); await text('batch11@example.test'); break;
+    case 'admin-dashboard': await text(copy('Stored attendance and operations','វត្តមាន និងប្រតិបត្តិការដែលបានកត់ត្រា')); await text('Dara & Sophea'); await text('batch11@example.test'); break;
     case 'admin-users': await text('Batch 11 fictional account'); await text('batch11@example.test'); await visible('a[href="/users/1101"]'); break;
     case 'admin-user-detail': await heading('Batch 11 fictional account'); await text('batch11@example.test'); await text('Dara & Sophea'); break;
     case 'admin-templates': await text('Batch 11 fixture template'); await expect(page.getByTitle(/\(Edit\)/)).toBeVisible(); await button('+ New Template'); break;
     case 'admin-template-create': await expect(page.getByRole('heading',{name:/Create New Template/})).toBeVisible(); await button('Save & Publish'); break;
-    case 'admin-template-edit': await expect(page.getByRole('heading',{name:/Edit: Batch 11 fixture template/})).toBeVisible(); await button('Save & Publish'); break;
+    case 'admin-template-edit': await expect(page.getByRole('heading',{name:copy(/Edit: Batch 11 fixture template/,/កែសម្រួល: Batch 11 fixture template/)})).toBeVisible(); await button(copy('Save & Publish','រក្សាទុក & ផ្សាយ')); break;
     case 'admin-payments': await text('AUDIT'); await text('AUDIT-PAID'); await visible('table tbody tr'); break;
     case 'admin-packages': await heading('Pricing & Packages'); await text('Fixture Basic'); await button('Edit'); break;
     case 'admin-notifications': await expect(page.getByLabel(/Recipient User ID/)).toBeVisible(); await expect(page.getByLabel(/Action URL/)).toBeDisabled(); await button('Send Notification'); break;

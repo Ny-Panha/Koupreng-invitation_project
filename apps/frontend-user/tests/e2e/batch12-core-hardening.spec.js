@@ -25,7 +25,11 @@ test('template save roundtrip preserves authored fields and immutable catalog id
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await page.goto(`${admin}/templates/30`);
   await expect(page.getByRole('heading', { name: /Edit: Batch12 authored template/ })).toBeVisible();
+  const preview = page.getByRole('button', { name: 'Preview', exact: true });
+  if (await preview.isVisible()) await preview.click();
   await expect(page.frameLocator('iframe[title="Live User Template Preview"]').getByRole('heading', { name: 'Batch12 preview heading', exact: true })).toBeVisible();
+  const edit = page.getByRole('button', { name: 'Edit', exact: true });
+  if (await edit.isVisible()) await edit.click();
   // An existing catalog code selects public registry/offer policy; layout changes require a new record.
   await expect(page.locator('button[disabled]').filter({ hasText: 'Khmer Celestial' })).toHaveCount(1);
   await page.getByRole('button', { name: /Save.*Publish/ }).click();
@@ -122,10 +126,11 @@ test('package dialog traps and restores focus, switches work by keyboard, biling
 
 test('public wedding opens in three engines with reduced motion and bilingual responsive content', async ({ page }, info) => {
   test.setTimeout(120000);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   for (const lang of ['en', 'km']) {
     await phase8Fixtures(page, { lang });
-    await page.goto('/i/audit-event');
+    await page.goto('/i/review-celestial');
     const open = page.locator('.kc-opening button').first();
     await expect(open).toBeVisible(); await open.click();
     await expect(page.locator('.kc-shell').first()).toBeVisible();

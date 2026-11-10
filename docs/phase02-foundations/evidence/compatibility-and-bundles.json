@@ -1,0 +1,100 @@
+{
+  "branch": "main",
+  "commit": "b96e24297b8f0b44c5119c3f0a5a24b8ea2ac1cd",
+  "migrationCount": 48,
+  "changedMigrations": [],
+  "protectedTrackedChanges": "",
+  "bundleConditions": "Same Vite production build mode and loopback preview configuration. Before assets are the retained first source build used by the six failing baseline tests; after assets are resolved from the current built HTML/entry. Compressed with Node gzipSync defaults, not measured transfer or field CWV. Cached older hashed files are excluded.",
+  "bundles": [
+    {
+      "label": "user entry JS",
+      "before": {
+        "file": "index-pJe8AV10.js",
+        "bytes": 461977,
+        "gzipBytes": 137816
+      },
+      "after": {
+        "file": "index-Bywvy1-K.js",
+        "bytes": 461977,
+        "gzipBytes": 137812
+      },
+      "deltaBytes": 0,
+      "deltaGzipBytes": -4
+    },
+    {
+      "label": "user global CSS",
+      "before": {
+        "file": "index-C5b9iP70.css",
+        "bytes": 212136,
+        "gzipBytes": 38616
+      },
+      "after": {
+        "file": "index-DKEAUujP.css",
+        "bytes": 212216,
+        "gzipBytes": 38645
+      },
+      "deltaBytes": 80,
+      "deltaGzipBytes": 29
+    },
+    {
+      "label": "admin entry JS",
+      "before": {
+        "file": "index-DMmPypWZ.js",
+        "bytes": 282407,
+        "gzipBytes": 89150
+      },
+      "after": {
+        "file": "index-CVOWV6Xs.js",
+        "bytes": 282454,
+        "gzipBytes": 89164
+      },
+      "deltaBytes": 47,
+      "deltaGzipBytes": 14
+    },
+    {
+      "label": "admin global CSS",
+      "before": {
+        "file": "index-C4jY52LC.css",
+        "bytes": 190973,
+        "gzipBytes": 27382
+      },
+      "after": {
+        "file": "index-Dd5PzKJj.css",
+        "bytes": 189206,
+        "gzipBytes": 27227
+      },
+      "deltaBytes": -1767,
+      "deltaGzipBytes": -155
+    },
+    {
+      "label": "admin Studio lazy JS",
+      "before": {
+        "file": "AdminTemplateEditPage-Cuv-H32z.js",
+        "bytes": 233782,
+        "gzipBytes": 54692
+      },
+      "after": {
+        "file": "AdminTemplateEditPage-BAQpyP5F.js",
+        "bytes": 236548,
+        "gzipBytes": 55726
+      },
+      "deltaBytes": 2766,
+      "deltaGzipBytes": 1034
+    },
+    {
+      "label": "admin Studio lazy CSS",
+      "before": {
+        "file": null,
+        "bytes": 0,
+        "gzipBytes": 0
+      },
+      "after": {
+        "file": "AdminTemplateEditPage-B1EfNXjm.css",
+        "bytes": 4302,
+        "gzipBytes": 1324
+      },
+      "deltaBytes": 4302,
+      "deltaGzipBytes": 1324
+    }
+  ]
+}

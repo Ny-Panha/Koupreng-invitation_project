@@ -98,6 +98,8 @@ client_secret*.json
 
 /output/playwright/phase11-baseline/
 /output/playwright/phase12/
+/output/playwright/phase01-audit-20261110/
+/output/playwright/phase02-foundations/
 
 # Browser traces are local; reviewed Studio screenshots live under output/playwright/next-studio-ux.
 /apps/frontend-user/test-results-studio/

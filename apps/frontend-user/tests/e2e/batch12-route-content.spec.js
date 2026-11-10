@@ -1,8 +1,7 @@
 ﻿import { test, expect } from '@playwright/test';
 import { routeContracts, installRouteContractFixtures, assertRouteContract } from './support/batch12RouteContracts.js';
 
-test.use({ viewport: { width: 1440, height: 1000 } });
-// All135 leaves run in Chromium. Core behavioral/a11y/security flows run in every engine.
+// Respect each project viewport: a mobile project must exercise mobile controls.
 for (const contract of routeContracts) {
   test(`${contract.application} ${contract.pattern}: ${contract.group}`, async ({ page }, info) => {
     const state = await installRouteContractFixtures(page, contract);
