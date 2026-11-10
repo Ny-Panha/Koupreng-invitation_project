@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { getTemplateById } from "../../templates/data/templatesData";
 import EventCover from './EventCover';
 import { EVENT_TYPES } from "../onboarding/eventFields";
@@ -6,6 +6,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { formatLocalDate } from "@/shared/utils/localDate";
 import {
   Calendar,
+  Clock,
   MapPin,
   Palette,
   LayoutDashboard,
@@ -146,6 +147,20 @@ export function EventCard({
   const venueText = draft.venueName || draft.event?.venueName || "";
   const premiumAccessRequired = draft.syncFailure?.status === 403 && draft.syncFailure?.code === "PACKAGE_FEATURE_REQUIRED";
 
+  const countdown = useMemo(() => {
+    const rawDate = draft.event?.date || draft.eventDate;
+    if (!rawDate || !/^(\d{4})-(\d{2})-(\d{2})/.test(rawDate)) return null;
+    const [y, m, d] = rawDate.slice(0, 10).split("-").map(Number);
+    const target = new Date(y, m - 1, d, 12, 0, 0);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+    const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays === 0) return { label: en ? "Today" : "ថ្ងៃនេះ", isPast: false };
+    if (diffDays === 1) return { label: en ? "Tomorrow" : "ថ្ងៃស្អែក", isPast: false };
+    if (diffDays > 1) return { label: en ? `In ${diffDays} days` : `ក្នុងរយៈពេល ${diffDays} ថ្ងៃ`, isPast: false };
+    return { label: en ? "Past event" : "បានកន្លងផុត", isPast: true };
+  }, [draft.event?.date, draft.eventDate, en]);
+
   return (
     <article
       className={`event-card ${featured ? "event-card--featured" : ""}`}
@@ -179,6 +194,12 @@ export function EventCard({
             <span className="event-card-template-tag">
               <Palette size={12} aria-hidden="true" />
               <span>{templateName}</span>
+            </span>
+          )}
+          {countdown && (
+            <span className={`event-card-countdown-tag ${countdown.isPast ? "is-past" : ""}`}>
+              <Clock size={11} aria-hidden="true" />
+              <span>{countdown.label}</span>
             </span>
           )}
         </div>
