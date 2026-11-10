@@ -419,9 +419,9 @@ function CinematicPlayback({ loadVideo, videoUrl, posterUrl, presentation, exiti
       {royal && presentation.replay && <button type="button" disabled={!source} onClick={() => { if (video.current) { video.current.currentTime = 0; setProgressValue(0); video.current.play().catch(() => setStatus('blocked')); } }}><RotateCcw size={16} aria-hidden="true" />{copy('Replay video', 'ចាក់វីដេអូឡើងវិញ')}</button>}
       <progress max="1" value={progressValue} aria-label={copy('Video progress', 'ដំណើរការវីដេអូ')} />
     </div>
-    <p role="status">{status === "loading" ? copy("Loading video… You can skip at any time.", "កំពុងផ្ទុកវីដេអូ… អ្នកអាចរំលងបានគ្រប់ពេល។") : status === "blocked" ? copy("Playback was blocked. Play the video or continue to the invitation.", "មិនអាចចាក់វីដេអូបាន។ សូមចាក់ ឬរំលងទៅធៀបអញ្ជើញ។") : ''}</p>
+    <p role="status">{status === "loading" ? copy("Loading video… You can skip at any time.", "កំពុងផ្ទុកវីដេអូ… អ្នកអាចរំលងបានគ្រប់ពេល។") : status === "blocked" ? copy("Playback was blocked. Play the video or continue to the invitation.", "មិនអាចចាក់វីដេអូបាន។ សូមចាក់ ឬរំលងទៅសំបុត្រអញ្ជើញ។") : ''}</p>
     {status === "blocked" && <button type="button" onClick={() => video.current?.play().catch(() => onFinish.current?.())}>{copy("Play video", "ចាក់វីដេអូ")}</button>}
-    {royal && <button type="button" className="cinematic-continue" onClick={onOpen}>{copy('Continue to invitation', 'បន្តទៅធៀបអញ្ជើញ')} <ChevronRight size={16} aria-hidden="true" /></button>}
+    {royal && <button type="button" className="cinematic-continue" onClick={onOpen}>{copy('Continue to invitation', 'បន្តទៅសំបុត្រអញ្ជើញ')} <ChevronRight size={16} aria-hidden="true" /></button>}
     {royal && presentation.footer && <img className="cinematic-film-footer" src={presentation.footerSrc} alt="" width="960" height="320" onError={event => { event.currentTarget.hidden = true; }} />}
   </div>;
 }

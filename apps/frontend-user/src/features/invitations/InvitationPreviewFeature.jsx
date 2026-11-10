@@ -96,7 +96,7 @@ export default function InvitationPreviewPage() {
             <div className="inv-page">
                 <div className="inv-error">{error}</div>
                 <button type="button" className="inv-secondary-btn" onClick={() => navigate("/dashboard/invitations")}>
-                    {uiCopy("ត្រឡប់ទៅបញ្ជីធៀប", "Back to invitations")}
+                    {uiCopy("ត្រឡប់ទៅបញ្ជីសំបុត្រអញ្ជើញ", "Back to invitations")}
                 </button>
             </div>
         );
@@ -165,16 +165,16 @@ export default function InvitationPreviewPage() {
                         className="inv-preview-btn inv-preview-btn--gate"
                         aria-pressed={isGateOpen}
                         onClick={handleToggleGate}
-                        title={isGateOpen ? uiCopy("មើលគម្របសំបុត្រ", "View invitation cover") : uiCopy("បើកមើលធៀបពេញ", "Open full invitation")}
+                        title={isGateOpen ? uiCopy("មើលគម្របសំបុត្រ", "View invitation cover") : uiCopy("បើកមើលសំបុត្រអញ្ជើញពេញ", "Open full invitation")}
                     >
                         {isGateOpen ? <Mail size={15} /> : <ScrollText size={15} />}
-                        <span>{isGateOpen ? uiCopy("គម្រប", "Cover") : uiCopy("ធៀប", "Invitation")}</span>
+                        <span>{isGateOpen ? uiCopy("គម្រប", "Cover") : uiCopy("សំបុត្រអញ្ជើញ", "Invitation")}</span>
                     </button>
                 </div>
             </header>
 
             {/* Preview Canvas: supports Full Screen or Phone View */}
-            <section aria-label={uiCopy("ផ្ទាំងធៀបអញ្ជើញ", "Invitation canvas")} className={`inv-preview-canvas ${viewMode === "full" ? "inv-preview-canvas--full" : ""}`}>
+            <section aria-label={uiCopy("ផ្ទាំងសំបុត្រអញ្ជើញ", "Invitation canvas")} className={`inv-preview-canvas ${viewMode === "full" ? "inv-preview-canvas--full" : ""}`}>
                 {rendered ? (
                     <div className={`inv-phone-viewport ${viewMode === "full" ? "inv-phone-viewport--full" : ""}`}>
                         <TemplateExperience

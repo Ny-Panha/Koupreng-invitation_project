@@ -171,7 +171,7 @@ export default function BudgetPage() {
         <div className="report-actions" style={{ display: "flex", gap: "0.75rem" }}>
           {invitationId && (
             <Link to={`/dashboard/invitations/${invitationId}/edit`} className="dash-btn">
-              ត្រឡប់ទៅធៀប / Back to Invitation
+              ត្រឡប់ទៅសំបុត្រអញ្ជើញ / Back to Invitation
             </Link>
           )}
           <button

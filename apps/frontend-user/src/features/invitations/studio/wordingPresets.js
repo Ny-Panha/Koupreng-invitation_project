@@ -32,6 +32,18 @@ for (const [id, pair] of Object.entries(invitationStyles)) {
   WORDING_PRESETS[id] = Object.fromEntries(['km', 'en'].map(locale => [locale, { ...WORDING_PRESETS.formal[locale], ...pair[locale] }]));
 }
 export const WORDING_PRESET_LABELS = { formal: 'Traditional formal wedding', modern: 'Warm modern invitation', family: 'Formal family invitation', welcome: 'Welcome / introduction', rsvp: 'RSVP guidance', neutral: 'Neutral event wording' };
+export const WORDING_PRESET_LABELS_KM = {
+  formal: 'ពិធីមង្គលការផ្លូវការតាមប្រពៃណី',
+  modern: 'ការអញ្ជើញបែបទំនើបកក់ក្តៅ',
+  family: 'ការអញ្ជើញផ្លូវការតំណាងគ្រួសារ',
+  welcome: 'សារស្វាគមន៍ / សេចក្តីផ្តើម',
+  rsvp: 'ការណែនាំអំពីការឆ្លើយតប (RSVP)',
+  neutral: 'ឃ្លាគំរូកម្មវិធីទូទៅ',
+};
+export const getWordingPresetLabel = (id, lang = 'km') => {
+  if (lang === 'en') return WORDING_PRESET_LABELS[id] || id;
+  return WORDING_PRESET_LABELS_KM[id] || WORDING_PRESET_LABELS[id] || id;
+};
 export const wordingPresetId = value => Object.hasOwn(WORDING_PRESETS, value) ? value : 'formal';
 export function interpolateWording(template, values) {
   const missing = [];

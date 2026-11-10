@@ -4,7 +4,35 @@ const text = value => typeof value === 'string' ? value : '';
 export const LOCALIZED_COLLECTIONS = { storyChapters: ['kicker', 'title', 'date', 'text'], party: ['name', 'role'], photos: ['alt', 'caption'], faq: ['q', 'a', 'question', 'answer'] };
 const rowKey = (row, index) => row.id || `row-${index}`;
 export const LOCALIZED_FIELD_LABELS = { title: 'Event title', subtitle: 'Subtitle', messageTitle: 'Invitation heading', messageText: 'Invitation message', thankYouTitle: 'Thank-you heading', thankYouText: 'Thank-you message', apologyTitle: 'Apology heading', apologyText: 'Apology message', groomName: 'First partner', brideName: 'Second partner', hostName: 'Host name', partnerName: 'Second host', groomFather: 'First partner’s father', groomMother: 'First partner’s mother', brideFather: 'Second partner’s father', brideMother: 'Second partner’s mother', groomHonorific: 'First partner’s honorific', brideHonorific: 'Second partner’s honorific', venueName: 'Venue name', venueAddress: 'Venue address' };
-export function translationFieldLabel(key) {
+export const LOCALIZED_FIELD_LABELS_KM = {
+  title: 'ចំណងជើងកម្មវិធី',
+  subtitle: 'ចំណងជើងរង',
+  messageTitle: 'ចំណងជើងសំបុត្រអញ្ជើញ',
+  messageText: 'ខ្លឹមសារសំបុត្រអញ្ជើញ',
+  thankYouTitle: 'ចំណងជើងថ្លែងអំណរគុណ',
+  thankYouText: 'ខ្លឹមសារថ្លែងអំណរគុណ',
+  apologyTitle: 'ចំណងជើងសូមអភ័យទោស',
+  apologyText: 'ខ្លឹមសារសូមអភ័យទោស',
+  groomName: 'កូនកំលោះ / ដៃគូទី១',
+  brideName: 'កូនក្រមុំ / ដៃគូទី២',
+  hostName: 'ម្ចាស់កម្មវិធី',
+  partnerName: 'ដៃគូទី២',
+  groomFather: 'ឪពុកកូនកំលោះ',
+  groomMother: 'ម្តាយកូនកំលោះ',
+  brideFather: 'ឪពុកកូនក្រមុំ',
+  brideMother: 'ម្តាយកូនក្រមុំ',
+  groomHonorific: 'ងារកិត្តិយសកូនកំលោះ',
+  brideHonorific: 'ងារកិត្តិយសកូនក្រមុំ',
+  venueName: 'ឈ្មោះទីតាំង',
+  venueAddress: 'អាសយដ្ឋានទីតាំង',
+};
+export function translationFieldLabel(key, lang = 'en') {
+  if (lang === 'km') {
+    if (LOCALIZED_FIELD_LABELS_KM[key]) return LOCALIZED_FIELD_LABELS_KM[key];
+    const section = ({ schedule: 'កម្មវិធី', programDays: 'ថ្ងៃកម្មវិធី', family: 'ក្រុមគ្រួសារ', map: 'ផែនទី', photos: 'កម្រងរូបភាព', storyChapters: 'រឿងរ៉ាវ', faq: 'សំណួរចម្លើយ', saveTheDate: 'ប្រតិទិន', dressCode: 'សម្លៀកបំពាក់', party: 'សមាជិកកិត្តិយស' })[key.split('.')[0]] || 'បកប្រែ';
+    const field = ({ titleEn: 'ចំណងជើង', descriptionEn: 'ការពិពណ៌នា', locationEn: 'ទីតាំង', q: 'សំណួរ', a: 'ចម្លើយ', title: 'ចំណងជើង', text: 'ខ្លឹមសារ', name: 'ឈ្មោះ', label: 'ស្លាកឈ្មោះ', heading: 'ក្បាលទំព័រ', subtitle: 'ចំណងជើងរង', date: 'កាលបរិច្ឆេទ', alt: 'ការពិពណ៌នារូបភាព', caption: 'ចំណងជើងរូបភាព', honorific: 'ងារកិត្តិយស', relationship: 'ទំនាក់ទំនង' })[key.split('.').at(-1)] || 'ខ្លឹមសារ';
+    return `${section}៖ ${field}`;
+  }
   if (LOCALIZED_FIELD_LABELS[key]) return LOCALIZED_FIELD_LABELS[key];
   const section = ({ schedule: 'Program', programDays: 'Program day', family: 'Family', map: 'Map', photos: 'Gallery', storyChapters: 'Story', faq: 'Guest notes', saveTheDate: 'Calendar', dressCode: 'Dress code', party: 'Wedding party' })[key.split('.')[0]] || 'Translation';
   const field = ({ titleEn: 'title', descriptionEn: 'description', locationEn: 'location', q: 'question', a: 'answer', title: 'title', text: 'wording', name: 'name', label: 'label', heading: 'heading', subtitle: 'subtitle', date: 'date wording', alt: 'image description', caption: 'caption', honorific: 'honorific', relationship: 'relationship' })[key.split('.').at(-1)] || 'wording';

@@ -68,7 +68,7 @@ describe("InvitationPreviewPage", () => {
     expect(within(header).getByRole("button", { name: /ត្រឡប់/ })).toBeInTheDocument();
 
     // Check gate toggle button
-    expect(within(header).getByRole("button", { name: /គម្រប|ធៀប/ })).toBeInTheDocument();
+    expect(within(header).getByRole("button", { name: /គម្រប|សំបុត្រអញ្ជើញ|ធៀប/ })).toBeInTheDocument();
 
     // Verify edit and guest view buttons are removed
     expect(within(header).queryByRole("button", { name: /កែ/ })).not.toBeInTheDocument();
@@ -112,7 +112,7 @@ describe("InvitationPreviewPage", () => {
     fireEvent.click(gateBtn);
 
     await waitFor(() => {
-      expect(within(header).getByRole("button", { name: /ធៀប/ })).toBeInTheDocument();
+      expect(within(header).getByRole("button", { name: /សំបុត្រអញ្ជើញ|ធៀប/ })).toBeInTheDocument();
     });
   });
 
@@ -169,6 +169,6 @@ describe("InvitationPreviewPage", () => {
       expect(screen.getByText("Invitation not found")).toBeInTheDocument();
     });
 
-    expect(screen.getByRole("button", { name: /ត្រឡប់ទៅបញ្ជីធៀប/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /ត្រឡប់ទៅបញ្ជីសំបុត្រអញ្ជើញ|ត្រឡប់ទៅបញ្ជីធៀប/ })).toBeInTheDocument();
   });
 });

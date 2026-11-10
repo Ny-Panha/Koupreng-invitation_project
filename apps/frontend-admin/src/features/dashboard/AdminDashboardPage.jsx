@@ -145,7 +145,7 @@ export default function AdminDashboardPage() {
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                 {lang === "en"
                   ? "Recorded receipts & recent invitations"
-                  : "ប្រាក់ទទួលកត់ត្រា និងធៀបអញ្ជើញថ្មីៗ"}
+                  : "ប្រាក់ទទួលកត់ត្រា និងសំបុត្រអញ្ជើញថ្មីៗ"}
               </h2>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
@@ -211,7 +211,7 @@ export default function AdminDashboardPage() {
                   {data.totalInvitations ?? 0}
                 </strong>
                 <span className="text-[10px] font-semibold text-muted-foreground block">
-                  {lang === "en" ? "Invitation records" : "កំណត់ត្រាធៀបអញ្ជើញ"}
+                  {lang === "en" ? "Invitation records" : "កំណត់ត្រាសំបុត្រអញ្ជើញ"}
                 </span>
               </div>
             </div>

@@ -162,11 +162,42 @@ Invitation Event ID `70` (`wedding-5`, host `060400652`) was populated with 50 p
 
 ---
 
-## 6. Safe Git Delivery & Remote Verification
+## 6. Critical Invitation Studio Localization & Bilingual Separation Pass
+
+### 6.1 Root Cause Audit & Targeted Remediation
+Following the initial terminology pass, an in-depth source and screenshot audit identified lingering hardcoded English text, raw technical suffixes like `(km)`, and unlocalized wording presets within the Invitation Studio. These root causes have been resolved in full:
+
+1. **`FamilyDesignEditor.jsx` & `MonogramEditor` Overhaul:**
+   - **Interface vs. Content Separation:** Added explicit `english={englishUI}` prop passing from `InvitationForm.jsx` down to `FamilyDesignEditor` and `MonogramEditor`. The interface language reliably controls UI chrome, headers, legends, select options, buttons, and placeholder guidance, while `locale` strictly dictates the authored content partition (`km` vs. `en`).
+   - **Family & Name Arrangement:** Localized panel heading (`ការរៀបចំក្រុមគ្រួសារ និងឈ្មោះ`), name placement select options (`តាមលំនាំដើមនៃគំរូ`, `កូនកំលោះខាងឆ្វេង / កូនក្រមុំខាងស្តាំ`, `កូនក្រមុំខាងឆ្វេង / កូនកំលោះខាងស្តាំ`, `តម្រៀបលើក្រោម (បញ្ឈរ)`, `ចំកណ្តាលទំព័រ`), group legends (`ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)` / `ក្រុមគ្រួសារខាងកូនក្រមុំ (ដៃគូទី២)`), and action buttons (`+ បន្ថែមអ្នករៀបចំ`, `លុបអ្នករៀបចំនេះ`, `ប្រើទម្រង់មាតាបិតាធម្មតាឡើងវិញ`).
+   - **Elimination of Raw Technical Suffixes:** Replaced raw `(${locale})` rendering with clean localized descriptors (`(ខ្មែរ)` in Khmer UI, `(km)` in English UI) and added authentic Cambodian placeholders (`ឧ. លោក, កញ្ញា, ឯកឧត្តម`, `ឧ. ក្រុមគ្រួសារខាងកូនកំលោះ`, `ឧ. ឈឹម សុខា`, `ឧ. ឪពុក, ម្តាយ, អាណាព្យាបាល`).
+   - **Monogram Editor:** Fully localized premium monogram heading (`តែមអក្សរកាត់គូស្នេហ៍ · Premium`), style buttons (`អក្សរកាត់រង្វង់មូល`, `ផ្កាពងក្រពើ`, `ហត្ថលេខាសាមញ្ញ`, `ស៊ុមពេជ្រ`), fonts, positions, frames, motifs, and export buttons (`ទាញយកតែម SVG`, `ទាញយកតែម PNG`, `កំណត់តែមឡើងវិញ`) with placeholder `ឧ. វ & ស`.
+
+2. **Bilingual Wording Presets & Error Interpolation:**
+   - In `wordingPresets.js`, added `WORDING_PRESET_LABELS_KM` and `getWordingPresetLabel(id, lang)` providing natural Khmer titles (`ពិធីមង្គលការផ្លូវការតាមប្រពៃណី`, `ការអញ្ជើញបែបទំនើបកក់ក្តៅ`, `ការអញ្ជើញផ្លូវការតំណាងគ្រួសារ`, `សារស្វាគមន៍ / សេចក្តីផ្តើម`, `ការណែនាំអំពីការឆ្លើយតប (RSVP)`, `ឃ្លាគំរូកម្មវិធីទូទៅ`).
+   - In `InvitationForm.jsx`, localized the preset dropdown (`ជម្រើសឃ្លាគំរូ`), preset indicators, action confirm dialogues, and missing-token validation messages into polite Cambodian Khmer.
+
+3. **`LocaleChecklist.jsx` & `localizedContent.js`:**
+   - In `localizedContent.js`, implemented `LOCALIZED_FIELD_LABELS_KM` and updated `translationFieldLabel(key, lang)` to support Khmer field titles and section prefixes.
+   - In `LocaleChecklist.jsx`, localized summaries, completion notices, field buttons, and copy buttons (`ចម្លងតម្លៃភាសាខ្មែរ`).
+
+4. **Lingering Colloquial Terminology Cleanup:**
+   - Systematically replaced all lingering occurrences of colloquial `ធៀប` with standard `សំបុត្រអញ្ជើញ` in `InvitationForm.jsx`, `CinematicIntroEditor.jsx`, `PreWeddingVideoEditor.jsx`, `InvitationStyleEditor.jsx`, `SaveTheDateEditor.jsx`, `WeddingProgramEditor.jsx`, `StudioAppearance.jsx`, `StudioGuide.jsx`, `PublishReview.jsx`, `RoyalGardenSceneEditor.jsx`, and administrative template/dashboard components.
+
+5. **Visual Evidence & Playwright Verification:**
+   - Added a dedicated end-to-end Playwright test `invitation studio renders complete Khmer localization, authentic placeholders, and bilingual integrity` in `apps/frontend-user/tests/e2e/phase12-studio.spec.js`.
+   - Verified that switching interface language preserves authored text, that all controls reflect the active UI language, and that screenshots are captured:
+     * Desktop Chromium: `docs/phase12/evidence/after/khmer-studio-complete-desktop-chromium.png`
+     * Mobile Chromium: `docs/phase12/evidence/after/khmer-studio-complete-mobile-chromium.png`
+
+---
+
+## 7. Safe Git Delivery & Remote Verification
 
 - **Commit Scope:** Clean, verified source and report modifications.
 - **Target Branch:** `origin/main`
 - **Integrity:** Zero architectural breaking changes, zero database drift, zero Flyway modifications.
+- **Rule Boundary:** Phase 11 remains untouched; focus maintained strictly on Invitation Studio UX/UI & Khmer localization completion.
 
 ---
 *Certified by the Koupreng Principal UX/UI Designer, Localization Specialist & QC Lead.*

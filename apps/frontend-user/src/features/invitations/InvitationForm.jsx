@@ -7,7 +7,7 @@ import { useFeatureAccess } from '@/shared/access/useFeatureAccess';
 import TemplateChooser from "./studio/TemplateChooser";
 import { templateService } from "../templates/api/templateService";
 import { isPublicCatalogTemplate, requiresTemplateAccess } from "../templates/model/catalogPolicy";
-import { WORDING_PRESETS, WORDING_PRESET_LABELS, wordingPresetId, interpolateWording } from './studio/wordingPresets';
+import { WORDING_PRESETS, WORDING_PRESET_LABELS, getWordingPresetLabel, wordingPresetId, interpolateWording } from './studio/wordingPresets';
 import { FamilyDesignEditor, MonogramEditor } from './studio/FamilyDesignEditor';
 import IllustratedMapEditor from './studio/IllustratedMapEditor';
 import { invitationFeatureFields } from '../templates/shared/invitationFeatures';
@@ -836,7 +836,7 @@ export default function InvitationForm({ invitation }) {
         }
         if (!await feedback.confirm({ title: uiCopy("បញ្ជាក់ការប្តូរគំរូ", "Confirm template change"), message: englishUI
             ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
-            : "ប្ដូរគំរូធៀប? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។"})) return;
+            : "ប្ដូរគំរូសំបុត្រអញ្ជើញ? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។"})) return;
         if (!editAccess.current) { void feedback.permissionDenied({ event: workspace }); return; }
         const preset = getTemplatePreset(template) || {};
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
@@ -1778,7 +1778,7 @@ export default function InvitationForm({ invitation }) {
         setPublishReviewOpen(false);
         setEditorMode("guided");
         setGuideStep(4);
-        toast(uiCopy("បានផ្សព្វផ្សាយធៀបអញ្ជើញ", "Invitation published"), "success");
+        toast(uiCopy("បានផ្សព្វផ្សាយសំបុត្រអញ្ជើញ", "Invitation published"), "success");
     }
     async function checkPublication() {
         setIsPublishing(true);
@@ -3132,35 +3132,58 @@ export default function InvitationForm({ invitation }) {
     );
 
     const renderWordingPresets = wordingSection => (
-<div className="studio-message-presets">
-                            <label>Editable wording preset<select value={wordingPresetId(wordingPreset)} onChange={e => setWordingPreset(e.target.value)}>{Object.entries(WORDING_PRESET_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
-                            <p>{WORDING_PRESETS[wordingPresetId(wordingPreset)][activeLangTab === 'EN' ? 'en' : 'km'][wordingSection === 'invitation' ? 'messageText' : 'thankYouText']}</p>
-                            {wordingError && <p role="alert">{wordingError}</p>}
-                            <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab})</p>
-                             <button type="button" onClick={async () => {
-                                 if (!await feedback.confirm({ title: uiCopy('ប្ដូរឃ្លាអញ្ជើញ', 'Replace invitation wording'), message: uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?") })) return;
-                                const locale = activeLangTab === 'EN' ? 'en' : 'km';
-                                const selected = WORDING_PRESETS[wordingPresetId(wordingPreset)][locale];
-                                const keys = wordingSection === 'invitation' ? ['messageTitle', 'messageText'] : ['thankYouTitle', 'thankYouText', 'apologyTitle', 'apologyText'];
-                                const values = { guest_honorific: '', guest_name: authoredForm.guestName || '', groom_name: authoredForm.groomName, bride_name: authoredForm.brideName, event_date: authoredForm.eventDateText || form.eventDate, event_time: form.eventTime, venue_name: authoredForm.venueName, venue_address: authoredForm.venueAddress };
-                                const resolved = keys.map(key => [key, interpolateWording(selected[key], values)]);
-                                const missing = resolved.flatMap(([, result]) => result.missing);
-                                if (missing.length) { setWordingError('Complete these values before applying: ' + [...new Set(missing)].join(', ')); return; }
-                                setWordingError('');
-                                setForm(previous => {
-                                    let next = previous;
-                                    for (const [key, result] of resolved) next = editLocalizedField(next, locale, key, result.text);
-                                    // Legacy English-only rows keep their existing publish contract until
-                                    // the author deliberately starts a separate Khmer version.
-                                    if (!next.localizedContentV1) return next;
-                                    return { ...next, localizedContentV1: { ...localeContent(next), [locale]: { ...localeContent(next)[locale], presetId: wordingPreset } } };
-                                });
-                            }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
-                        </div>
+        <div className="studio-message-presets">
+            <label>
+                {uiCopy("ជម្រើសឃ្លាគំរូ", "Editable wording preset")}
+                <select value={wordingPresetId(wordingPreset)} onChange={e => setWordingPreset(e.target.value)}>
+                    {Object.keys(WORDING_PRESET_LABELS).map(id => (
+                        <option key={id} value={id}>
+                            {getWordingPresetLabel(id, englishUI ? 'en' : 'km')}
+                        </option>
+                    ))}
+                </select>
+            </label>
+            <p>{WORDING_PRESETS[wordingPresetId(wordingPreset)][activeLangTab === 'EN' ? 'en' : 'km'][wordingSection === 'invitation' ? 'messageText' : 'thankYouText']}</p>
+            {wordingError && <p role="alert">{wordingError}</p>}
+            <p>{uiCopy("ឃ្លាអញ្ជើញគំរូ (", "Wording preset (")}{activeLangTab === 'EN' ? (englishUI ? 'English' : 'អង់គ្លេស') : (englishUI ? 'Khmer' : 'ខ្មែរ')})</p>
+            <button type="button" onClick={async () => {
+                if (!await feedback.confirm({ title: uiCopy('ប្ដូរឃ្លាសំបុត្រអញ្ជើញ', 'Replace invitation wording'), message: uiCopy("ជំនួសឃ្លានៅក្នុងផ្នែកនេះដោយឃ្លាគំរូដែលបានជ្រើសរើស?", "Replace the wording in this section with the selected preset?") })) return;
+                const locale = activeLangTab === 'EN' ? 'en' : 'km';
+                const selected = WORDING_PRESETS[wordingPresetId(wordingPreset)][locale];
+                const keys = wordingSection === 'invitation' ? ['messageTitle', 'messageText'] : ['thankYouTitle', 'thankYouText', 'apologyTitle', 'apologyText'];
+                const values = { guest_honorific: '', guest_name: authoredForm.guestName || '', groom_name: authoredForm.groomName, bride_name: authoredForm.brideName, event_date: authoredForm.eventDateText || form.eventDate, event_time: form.eventTime, venue_name: authoredForm.venueName, venue_address: authoredForm.venueAddress };
+                const resolved = keys.map(key => [key, interpolateWording(selected[key], values)]);
+                const missing = resolved.flatMap(([, result]) => result.missing);
+                if (missing.length) {
+                    const tokenLabels = {
+                        groom_name: { km: 'ឈ្មោះកូនកំលោះ', en: 'groom name' },
+                        bride_name: { km: 'ឈ្មោះកូនក្រមុំ', en: 'bride name' },
+                        venue_name: { km: 'ទីតាំងកម្មវិធី', en: 'venue name' },
+                        venue_address: { km: 'អាសយដ្ឋានទីតាំង', en: 'venue address' },
+                        event_date: { km: 'កាលបរិច្ឆេទកម្មវិធី', en: 'event date' },
+                        event_time: { km: 'ពេលវេលាកម្មវិធី', en: 'event time' },
+                        guest_name: { km: 'ឈ្មោះភ្ញៀវ', en: 'guest name' },
+                        guest_honorific: { km: 'ងារកិត្តិយសភ្ញៀវ', en: 'guest honorific' },
+                    };
+                    const missingLabels = missing.map(m => (englishUI ? (tokenLabels[m]?.en || m) : (tokenLabels[m]?.km || m)));
+                    setWordingError((englishUI ? 'Complete these values before applying: ' : 'សូមបំពេញព័ត៌មានទាំងនេះមុននឹងប្រើប្រាស់៖ ') + [...new Set(missingLabels)].join(', '));
+                    return;
+                }
+                setWordingError('');
+                setForm(previous => {
+                    let next = previous;
+                    for (const [key, result] of resolved) next = editLocalizedField(next, locale, key, result.text);
+                    // Legacy English-only rows keep their existing publish contract until
+                    // the author deliberately starts a separate Khmer version.
+                    if (!next.localizedContentV1) return next;
+                    return { ...next, localizedContentV1: { ...localeContent(next), [locale]: { ...localeContent(next)[locale], presetId: wordingPreset } } };
+                });
+            }}>{uiCopy("ប្រើឃ្លាសុភាព", "Apply formal wording")}</button>
+        </div>
     );
 
     const sectionRenderers = {
-        invitationStyles: () => <Suspense fallback={<p role="status">{englishUI ? 'Loading invitation styles…' : 'កំពុងផ្ទុករចនាប័ទ្មធៀប…'}</p>}><InvitationStyleEditor form={form} update={update} capabilities={templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })} english={englishUI} eventId={invitation?.backendInvitationId || invitationId} /></Suspense>,
+        invitationStyles: () => <Suspense fallback={<p role="status">{englishUI ? 'Loading invitation styles…' : 'កំពុងផ្ទុករចនាប័ទ្មសំបុត្រអញ្ជើញ…'}</p>}><InvitationStyleEditor form={form} update={update} capabilities={templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })} english={englishUI} eventId={invitation?.backendInvitationId || invitationId} /></Suspense>,
         cinematicIntro: () => <CinematicIntroEditor value={form.cinematicIntro} photos={form.photos} english={englishUI} onChange={change => setForm(previous => ({ ...previous, cinematicIntro: change(previous.cinematicIntro) }))} />,
         eventInfo: renderEventInfoSection,
         music: renderMusicSection,
@@ -3238,13 +3261,13 @@ export default function InvitationForm({ invitation }) {
                             {activeLangTab === "KH" ? (t("editingKh") || uiCopy("កំពុងកែសម្រួល៖ ភាសាខ្មែរ", "Editing: Khmer")) : (t("editingEn") || uiCopy("កំពុងកែសម្រួល៖ អង់គ្លេស", "Editing: English"))}
                         </span>
                         <details className="studio-authoring-options"><summary>{uiCopy('ភាសា និងការផ្សព្វផ្សាយ', 'Language & publishing')}</summary><fieldset className="studio-authoring-options-body" disabled={!canEdit}>
-                        <small>{activeLangTab}: {JSON.stringify(localeContent(form)[activeLangTab === 'EN' ? 'en' : 'km']) !== JSON.stringify(studio.savedValue ? localeContent(studio.savedValue)[activeLangTab === 'EN' ? 'en' : 'km'] : null) ? uiCopy('មិនទាន់រក្សាទុក', 'Unsaved') : uiCopy('បានរក្សាទុក', 'Saved')} · English: {englishReadiness.complete}/{englishReadiness.total}</small>
+                        <small>{activeLangTab}: {JSON.stringify(localeContent(form)[activeLangTab === 'EN' ? 'en' : 'km']) !== JSON.stringify(studio.savedValue ? localeContent(studio.savedValue)[activeLangTab === 'EN' ? 'en' : 'km'] : null) ? uiCopy('មិនទាន់រក្សាទុក', 'Unsaved') : uiCopy('បានរក្សាទុក', 'Saved')} · {uiCopy('អង់គ្លេស៖ ', 'English: ')}{englishReadiness.complete}/{englishReadiness.total}</small>
                         <label className="studio-inline-check"><input type="checkbox" checked={localeContent(form).enabledLocales.includes('en')}
                           disabled={!(workspace ? workspace.isOwner : true) || (!englishReadiness.ready && !localeContent(form).enabledLocales.includes('en'))}
                           onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), enabledLocales: e.target.checked ? ['km', 'en'] : ['km'], defaultLocale: e.target.checked ? localeContent(previous).defaultLocale : 'km' } }))} />{uiCopy('ផ្សព្វផ្សាយជាភាសាអង់គ្លេស', 'Publish English version')}</label>
-                        {form.localizedContentV1 && <label>Default guest language<select value={localeContent(form).defaultLocale} onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), defaultLocale: e.target.value } }))}><option value="km">Khmer</option>{localeContent(form).enabledLocales.includes('en') && <option value="en">English</option>}</select></label>}
-                        {activeLangTab === 'EN' && <button type="button" onClick={() => setForm(previous => { let next = previous; for (const key of ['groomName', 'brideName', 'hostName', 'partnerName']) next = editLocalizedField(next, 'en', key, localeContent(previous).km[key] || ''); return next; })}>Copy names from Khmer</button>}
-                        <LocaleChecklist form={{ ...form, eventType: invitation?.eventType || 'WEDDING', translationCapabilities: templateCapabilities(getTemplateById(form.templateId) || {}) }} locale={activeLangTab === 'EN' ? 'en' : 'km'}
+                        {form.localizedContentV1 && <label>{uiCopy('ភាសាលំនាំដើមសម្រាប់ភ្ញៀវ', 'Default guest language')}<select value={localeContent(form).defaultLocale} onChange={e => setForm(previous => ({ ...previous, localizedContentV1: { ...localeContent(previous), defaultLocale: e.target.value } }))}><option value="km">{uiCopy('ភាសាខ្មែរ', 'Khmer')}</option>{localeContent(form).enabledLocales.includes('en') && <option value="en">{uiCopy('ភាសាអង់គ្លេស', 'English')}</option>}</select></label>}
+                        {activeLangTab === 'EN' && <button type="button" onClick={() => setForm(previous => { let next = previous; for (const key of ['groomName', 'brideName', 'hostName', 'partnerName']) next = editLocalizedField(next, 'en', key, localeContent(previous).km[key] || ''); return next; })}>{uiCopy('ចម្លងឈ្មោះពីភាសាខ្មែរ', 'Copy names from Khmer')}</button>}
+                        <LocaleChecklist form={{ ...form, eventType: invitation?.eventType || 'WEDDING', translationCapabilities: templateCapabilities(getTemplateById(form.templateId) || {}) }} locale={activeLangTab === 'EN' ? 'en' : 'km'} english={englishUI}
                           onCopy={key => setForm(previous => editLocalizedField(previous, 'en', key, localeContent(previous).km[key] || ''))}
                           onField={key => { const section = translationSection(key); setSelectedSection(section); setExpandedSections(current => ({ ...current, [section]: true })); requestAnimationFrame(() => {
                             const scope = editorRoot.current?.querySelector(`[data-studio-section="${section}"]`);
@@ -3258,7 +3281,7 @@ export default function InvitationForm({ invitation }) {
 
                     <div className="pe-editor-scroll-body">
                         {!canEdit && <div className="workspace-notice" role="alert"><p>{uiCopy('សិទ្ធិបានផ្លាស់ប្ដូរ ឬមិនអាចផ្ទៀងផ្ទាត់បាន។ ការកែប្រែនៅទីនេះ ប៉ុន្តែមិនអាចរក្សាទុក ឬផ្សព្វផ្សាយបានទេ។','Access changed or could not be verified. Your edits remain here; saving and publishing are disabled.')}</p><button type="button" className="workspace-button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = 'invitation-unsaved-draft.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy('ទាញយកពង្រាង','Download recovery draft')}</button><button type="button" className="workspace-button" onClick={() => window.dispatchEvent(new Event('koupreng:access-refresh'))}>{uiCopy('ពិនិត្យសិទ្ធិម្ដងទៀត','Recheck access')}</button></div>}
-                        <fieldset className="studio-editable-fields" aria-label={uiCopy('វាលធៀបអញ្ជើញ','Invitation fields')} disabled={!canEdit}>
+                        <fieldset className="studio-editable-fields" aria-label={uiCopy('វាលសំបុត្រអញ្ជើញ','Invitation fields')} disabled={!canEdit}>
                         <StudioValidationSummary issues={validationIssues} onField={focusValidationIssue} english={englishUI} />
                         {editorMode === "advanced" && <h2 className="studio-tab-heading">{activeStudioTab.labels[englishUI ? 1 : 0]}</h2>}
                         {activeStudioTab.sections.some(key => templateCapabilities(getTemplateById(form.templateId) || { id: form.templateId })[key] === false) && <p className="workspace-notice">{uiCopy('ផ្នែកខ្លះមិនមានក្នុងគំរូនេះទេ។ មាតិកាដែលបានសរសេរត្រូវបានរក្សាទុកសម្រាប់ពេលប្ដូរគំរូ។', 'Some sections are unavailable in this template. Your authored content stays saved for switching templates.')}</p>}
@@ -3277,8 +3300,8 @@ export default function InvitationForm({ invitation }) {
                                         }
                                     }}>
                                     <div>{["invitation", "closing"].includes(sectionKey) && renderWordingPresets(sectionKey)}{renderer()}
-                                    {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} />}
-                                    {sectionKey === 'cover' && !floralTemplate && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} />}
+                                    {sectionKey === 'family' && <FamilyDesignEditor form={form} locale={activeLangTab === 'EN' ? 'en' : 'km'} onChange={update} supported={templateCapabilities(getTemplateById(form.templateId) || {}).familyLayout} english={englishUI} />}
+                                    {sectionKey === 'cover' && !floralTemplate && <MonogramEditor value={form.coupleMonogram} onChange={value => update('coupleMonogram', value)} entitled={workspace?.access?.ownerFeatures?.includes('COUPLE_MONOGRAM') === true} supported={templateCapabilities(getTemplateById(form.templateId) || {}).monogram} english={englishUI} />}
                                     {sectionKey === 'venue' && !floralTemplate && <IllustratedMapEditor value={form.illustratedMap} onChange={value => update('illustratedMap', value)} locale={activeLangTab === 'EN' ? 'en' : 'km'} onUndo={studio.undo} onRedo={studio.redo} canUndo={studio.canUndo} canRedo={studio.canRedo} onSave={() => studio.flush({ deliberate: true })} savedValue={studio.savedValue?.illustratedMap ?? null} savePhase={studio.phase} saveError={studio.error} />}</div>
                                 </StudioSectionPanel>
                             </div>;
@@ -3306,7 +3329,7 @@ export default function InvitationForm({ invitation }) {
 
             {/* Mobile Live Phone Simulator Overlay */}
             {isMobilePreviewOpen && (
-                <Modal isOpen onClose={closePreview} size="full" className="studio-preview-sheet" title={englishUI ? "Invitation preview" : "មើលធៀបជាមុន"} closeLabel={englishUI ? "Return to editing" : "ត្រឡប់ទៅកែសម្រួល"}>
+                <Modal isOpen onClose={closePreview} size="full" className="studio-preview-sheet" title={englishUI ? "Invitation preview" : "មើលសំបុត្រអញ្ជើញជាមុន"} closeLabel={englishUI ? "Return to editing" : "ត្រឡប់ទៅកែសម្រួល"}>
                     <div className="pe-mobile-preview-drawer">
                         <div className="pe-mobile-preview-drawer-header" hidden>
                             <span className="pe-mobile-preview-drawer-title">

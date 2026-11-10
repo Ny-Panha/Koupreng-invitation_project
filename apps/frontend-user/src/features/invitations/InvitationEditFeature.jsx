@@ -190,8 +190,8 @@ export default function InvitationEditPage() {
                 <header className="events-page-header">
                     <div>
                         <span>{t("brand") || "គូព្រេង INVITATIONS"}</span>
-                        <h1>{t("title") || "គម្រូធៀប"}</h1>
-                        <p>{t("subtitle") || "គ្រប់គ្រង និងកែសម្រួលគំរូធៀបអាពាហ៍ពិពាហ៍"}</p>
+                        <h1>{t("title") || "គំរូសំបុត្រអញ្ជើញ"}</h1>
+                        <p>{t("subtitle") || "គ្រប់គ្រង និងកែសម្រួលគំរូសំបុត្រអញ្ជើញអាពាហ៍ពិពាហ៍"}</p>
                     </div>
                     <Link to={createEventUrl} className="events-create-btn">
                         {t("createBtn") || "+ បង្កើតកម្មវិធី"}
@@ -201,7 +201,7 @@ export default function InvitationEditPage() {
                 <section className="events-empty">
                     <div className="events-empty-icon">{t("emptyIcon") || "គម្រោង"}</div>
                     <h2>{t("emptyTitle") || "មិនទាន់មានកម្មវិធី"}</h2>
-                    <p>{t("emptyText") || "សូមចាប់ផ្តើមបង្កើតកម្មវិធីជាមុនសិន ដើម្បីកែសម្រួលគំរូធៀបឌីជីថល។"}</p>
+                    <p>{t("emptyText") || "សូមចាប់ផ្តើមបង្កើតកម្មវិធីជាមុនសិន ដើម្បីកែសម្រួលគំរូសំបុត្រអញ្ជើញឌីជីថល។"}</p>
                     <Link to={createEventUrl} className="events-empty-btn">
                         {t("emptyActionBtn") || "+ បង្កើតកម្មវិធី"}
                     </Link>

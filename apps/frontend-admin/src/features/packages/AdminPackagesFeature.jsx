@@ -124,8 +124,8 @@ const FEATURE_LIST = [
     label: "របាយការណ៍លម្អិត (Analytics)",
     labelKm: "របាយការណ៍លម្អិត (Analytics)",
     labelEn: "Advanced Analytics",
-    sublabel: "ស្ថិតិការបើកមើលធៀប និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
-    sublabelKm: "ស្ថិតិការបើកមើលធៀប និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
+    sublabel: "ស្ថិតិការបើកមើលសំបុត្រអញ្ជើញ និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
+    sublabelKm: "ស្ថិតិការបើកមើលសំបុត្រអញ្ជើញ និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
     sublabelEn: "Track invitation views and real-time RSVP rates",
     icon: BarChart3,
   },
@@ -953,7 +953,7 @@ export default function AdminPackagesPage() {
                     <td>
                       <div className="text-xs space-y-0.5">
                         <p className="text-slate-700 dark:text-zinc-300">
-                          💌 {plan.maxInvitations || "—"} {t("packages.invitationsCount", "ធៀប")}
+                          💌 {plan.maxInvitations || "—"} {t("packages.invitationsCount", "សំបុត្រអញ្ជើញ")}
                         </p>
                         <p className="text-slate-600 dark:text-zinc-400 text-xs">
                           👥 {plan.maxGuests || "—"} {t("packages.guestsCount", "ភ្ញៀវ")}

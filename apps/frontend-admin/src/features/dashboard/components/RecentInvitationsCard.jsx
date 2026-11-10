@@ -51,7 +51,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
         </div>
       </div>
 
-      {items.length === 0 && <p role="status">{lang === "en" ? "No recent invitations to display." : "មិនមានធៀបអញ្ជើញថ្មីសម្រាប់បង្ហាញ។"}</p>}
+      {items.length === 0 && <p role="status">{lang === "en" ? "No recent invitations to display." : "មិនមានសំបុត្រអញ្ជើញថ្មីសម្រាប់បង្ហាញ។"}</p>}
       {/* Recent invitation records */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {items.map((inv, i) => {

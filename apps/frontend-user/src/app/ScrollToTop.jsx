@@ -19,8 +19,8 @@ function getPageTitle(pathname, lang) {
   if (pathname.startsWith("/payment/success")) return isEn ? "Payment Confirmation | Koupreng" : "ការបញ្ជាក់ការទូទាត់ | គូព្រេង";
   if (pathname.startsWith("/payment/cancel")) return isEn ? "Payment Cancelled | Koupreng" : "ការទូទាត់ត្រូវបានបោះបង់ | គូព្រេង";
   if (pathname.startsWith("/app/events/new")) return isEn ? "Create Event | Koupreng" : "បង្កើតកម្មវិធីថ្មី | គូព្រេង";
-  if (pathname.includes("/studio")) return isEn ? "Invitation Studio | Koupreng" : "ស្ទូឌីយោរចនាធៀប | គូព្រេង";
-  if (pathname.includes("/preview")) return isEn ? "Invitation Preview | Koupreng" : "មើលគំរូធៀប | គូព្រេង";
+  if (pathname.includes("/studio")) return isEn ? "Invitation Studio | Koupreng" : "ស្ទូឌីយោរចនាសំបុត្រអញ្ជើញ | គូព្រេង";
+  if (pathname.includes("/preview")) return isEn ? "Invitation Preview | Koupreng" : "មើលគំរូសំបុត្រអញ្ជើញ | គូព្រេង";
   if (pathname.includes("/guests")) return isEn ? "Guest List | Koupreng" : "បញ្ជីភ្ញៀវ | គូព្រេង";
   if (pathname.includes("/check-in")) return isEn ? "Check-in Desk | Koupreng" : "តុកត់ត្រាវត្តមាន | គូព្រេង";
   if (pathname.includes("/seating")) return isEn ? "Seating Plan | Koupreng" : "ប្លង់កៅអី | គូព្រេង";
@@ -31,7 +31,7 @@ function getPageTitle(pathname, lang) {
   if (pathname.includes("/tickets")) return isEn ? "Ticket Designer | Koupreng" : "រចនាសំបុត្រ | គូព្រេង";
   if (pathname.includes("/settings")) return isEn ? "Event Settings | Koupreng" : "ការកំណត់កម្មវិធី | គូព្រេង";
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/app/events")) return isEn ? "Events Dashboard | Koupreng" : "ផ្ទាំងគ្រប់គ្រងកម្មវិធី | គូព្រេង";
-  if (pathname.startsWith("/templates")) return isEn ? "Templates Catalog | Koupreng" : "កាតាឡុកគំរូធៀប | គូព្រេង";
+  if (pathname.startsWith("/templates")) return isEn ? "Templates Catalog | Koupreng" : "កាតាឡុកគំរូសំបុត្រអញ្ជើញ | គូព្រេង";
   return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - សំបុត្រអញ្ជើញឌីជីថល";
 }
 

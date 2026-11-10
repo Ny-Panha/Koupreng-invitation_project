@@ -33,7 +33,7 @@ function AdminTitleAndFocus() {
     let title = isEn ? "Admin Dashboard | Koupreng" : "ផ្ទាំងគ្រប់គ្រង Admin | គូព្រេង";
     if (pathname.includes("/users/")) title = isEn ? "User Detail | Koupreng Admin" : "ព័ត៌មានលម្អិតអ្នកប្រើប្រាស់ | គូព្រេង Admin";
     else if (pathname.startsWith("/users")) title = isEn ? "Users Management | Koupreng Admin" : "គ្រប់គ្រងអ្នកប្រើប្រាស់ | គូព្រេង Admin";
-    else if (pathname.startsWith("/templates")) title = isEn ? "Template Studio | Koupreng Admin" : "គ្រប់គ្រងគំរូធៀប | គូព្រេង Admin";
+    else if (pathname.startsWith("/templates")) title = isEn ? "Template Studio | Koupreng Admin" : "គ្រប់គ្រងគំរូសំបុត្រអញ្ជើញ | គូព្រេង Admin";
     else if (pathname.startsWith("/payments")) title = isEn ? "Payments & Orders | Koupreng Admin" : "ការទូទាត់ និងការបញ្ជាទិញ | គូព្រេង Admin";
     else if (pathname.startsWith("/packages")) title = isEn ? "Subscription Packages | Koupreng Admin" : "កញ្ចប់សេវាកម្ម | គូព្រេង Admin";
     else if (pathname.startsWith("/notifications")) title = isEn ? "Notifications | Koupreng Admin" : "ការជូនដំណឹង | គូព្រេង Admin";

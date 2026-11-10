@@ -196,7 +196,7 @@ export default function InvitationCheckInPage() {
                         <Sparkles size={14} /> {copy("តុកត់ត្រាវត្តមានតាម QR", "QR CHECK-IN DESK")}
                     </div>
                     <h1 className="checkin-hero-title">{invitation?.title || "Invitation check-in"}</h1>
-                    <p role="status">{persistenceMode === "LOCAL_DRAFT" ? copy("សេចក្ដីព្រាងក្នុងឧបករណ៍ — ទិន្នន័យនៅតែក្នុងឧបករណ៍នេះ។", "Local draft — records stay on this device.") : copy("ធៀបក្នុងគណនី — វត្តមាន និងចំណងដៃត្រូវបានរក្សាទុកក្នុងគណនីរបស់អ្នក។", "Server invitation — attendance and gifts are saved to your account.")}</p>
+                    <p role="status">{persistenceMode === "LOCAL_DRAFT" ? copy("សេចក្ដីព្រាងក្នុងឧបករណ៍ — ទិន្នន័យនៅតែក្នុងឧបករណ៍នេះ។", "Local draft — records stay on this device.") : copy("សំបុត្រអញ្ជើញក្នុងគណនី — វត្តមាន និងចំណងដៃត្រូវបានរក្សាទុកក្នុងគណនីរបស់អ្នក។", "Server invitation — attendance and gifts are saved to your account.")}</p>
                     <p className="checkin-hero-desc">
                         {copy("ស្កេន QR កាតអញ្ជើញ ឬស្វែងរកឈ្មោះភ្ញៀវ ដើម្បីកត់ត្រាវត្តមាន។", "Scan a personal invitation QR or find a guest to record attendance.")}
                     </p>
@@ -351,7 +351,7 @@ export default function InvitationCheckInPage() {
                             value={token}
                             rows="2"
                             onChange={(event) => setToken(event.target.value)}
-                            placeholder={uiCopy("បិទភ្ជាប់តំណធៀបអញ្ជើញ ឬលេខកូដ", "Paste /i/slug?token=... or token")}
+                            placeholder={uiCopy("បិទភ្ជាប់តំណសំបុត្រអញ្ជើញ ឬលេខកូដ", "Paste /i/slug?token=... or token")}
                             required
                         />
                     </div>

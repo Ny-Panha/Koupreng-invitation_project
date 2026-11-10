@@ -50,7 +50,7 @@ const copy = {
     "Selects events by their scheduled event date.",
   ],
   publishedAtHint: [
-    "ប្រើថ្ងៃផ្សាយធៀប។",
+    "ប្រើថ្ងៃផ្សាយសំបុត្រអញ្ជើញ។",
     "Uses the invitation publication date.",
   ],
   confirmedAtHint: [
@@ -208,7 +208,7 @@ const statuses = {
   ANNIVERSARY: ["ខួបអនុស្សាវរីយ៍", "Anniversary"],
   CORPORATE: ["កម្មវិធីក្រុមហ៊ុន", "Corporate"],
   OTHER: ["ផ្សេងៗ", "Other"],
-  TEMPLATE: ["គំរូធៀប", "Template"],
+  TEMPLATE: ["គំរូសំបុត្រអញ្ជើញ", "Template"],
   SUBSCRIPTION: ["សមាជិកភាព", "Subscription"],
   FREE: ["ឥតគិតថ្លៃ", "Free"],
   PREMIUM: ["ពិសេស", "Premium"],

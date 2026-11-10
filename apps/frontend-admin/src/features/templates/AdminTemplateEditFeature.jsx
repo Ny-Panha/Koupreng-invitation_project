@@ -282,7 +282,7 @@ const BACKGROUND_TEXTURES = [
   {
     id: "ivory-paper",
     name: "ក្រដាសភ្លុកបុរាណ (Ivory Paper)",
-    desc: "អារម្មណ៍ក្រដាសធៀបបុរាណបែបធម្មជាតិ",
+    desc: "អារម្មណ៍ក្រដាសសំបុត្រអញ្ជើញបុរាណបែបធម្មជាតិ",
     icon: "📜",
     bgPattern: "radial-gradient(#d4af37 0.75px, transparent 0.75px)",
     bgSize: "16px 16px",
@@ -1626,7 +1626,7 @@ export default function AdminTemplateEditPage() {
             href={userTemplateUrl(form.code || form.slug || form.presetId?.toLowerCase() || "the-digital-yes-wedding")}
             target="_blank"
             rel="noreferrer"
-            aria-label={lang === 'en' ? 'Open template preview in a new tab' : 'បើកគំរូធៀបក្នុងផ្ទាំងថ្មី'}
+            aria-label={lang === 'en' ? 'Open template preview in a new tab' : 'បើកគំរូសំបុត្រអញ្ជើញក្នុងផ្ទាំងថ្មី'}
             className="flex h-9 items-center gap-1.5 rounded-xl border border-zinc-700 bg-zinc-800/80 px-3.5 text-xs font-semibold text-zinc-200 transition hover:bg-zinc-700"
           >
             <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 text-amber-400" />
@@ -2288,7 +2288,7 @@ export default function AdminTemplateEditPage() {
                           </span>
                         </div>
                         <p className="text-xs text-zinc-400">
-                          ប្តូរ Texture ផ្ទៃខាងក្រោយដើម្បីបង្កើនភាពប្រណិតដូចធៀបបោះពុម្ពពិតៗ។
+                          ប្តូរ Texture ផ្ទៃខាងក្រោយដើម្បីបង្កើនភាពប្រណិតដូចសំបុត្រអញ្ជើញបោះពុម្ពពិតៗ។
                         </p>
                       </div>
 

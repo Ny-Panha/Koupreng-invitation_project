@@ -46,7 +46,7 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
     finally { setBusy(false); }
   }
   return <section className="studio-video-editor" aria-label={text('Premium cinematic opening', 'ការបើកវីដេអូ Premium')}>
-    <p>{text('An optional video after guests open your existing invitation cover. Starts muted and can be skipped immediately.', 'វីដេអូជាជម្រើស បន្ទាប់ពីភ្ញៀវបើកក្របធៀបដើម។ វីដេអូចាប់ផ្ដើមដោយបិទសំឡេង ហើយអាចរំលងបានភ្លាមៗ។')}</p>
+    <p>{text('An optional video after guests open your existing invitation cover. Starts muted and can be skipped immediately.', 'វីដេអូជាជម្រើស បន្ទាប់ពីភ្ញៀវបើកក្របសំបុត្រអញ្ជើញដើម។ វីដេអូចាប់ផ្ដើមដោយបិទសំឡេង ហើយអាចរំលងបានភ្លាមៗ។')}</p>
     {!entitled && <FeatureAccessCard feature="PRE_WEDDING_VIDEO" permission="MANAGE_INVITATION" />}
     {error && <p role="alert">{error}</p>}
     {presentation && <fieldset className="studio-royal-video" disabled={!entitled || busy}><legend>{text('Video scene', 'ទិដ្ឋភាពវីដេអូ')}</legend>
@@ -63,7 +63,7 @@ export default function PreWeddingVideoEditor({ eventId, value, onChange, englis
       <label>{text('Upload or replace video · MP4 / WebM · 50 MB', 'បញ្ចូល ឬប្ដូរវីដេអូ · MP4 / WebM · 50 MB')}<input disabled={busy || !library} type="file" accept="video/mp4,video/webm" onChange={upload} /></label>
       {busy && <div role="status">{text('Uploading video', 'កំពុងបញ្ចូលវីដេអូ')} {progress}%<progress max="100" value={progress} aria-label={text('Video upload progress', 'ដំណើរការបញ្ចូលវីដេអូ')} /></div>}
       <label>{text('Poster / thumbnail', 'រូបមុខវីដេអូ')}<select disabled={busy} value={config.posterMediaId || ''} onChange={event => onChange({ ...config, posterMediaId: Number(event.target.value) || null })}><option value="">{text('No poster', 'គ្មានរូបមុខ')}</option>{posters.map(item => <option key={item.id} value={item.id}>{item.originalFilename}</option>)}</select></label>
-      <p>{text('Choose a cover or gallery image as the poster. Cover background videos remain separate. Save the invitation to apply these preferences.', 'ជ្រើសរើសរូបក្រប ឬរូបវិចិត្រសាលជារូបមុខ។ វីដេអូផ្ទៃក្របគឺជាផ្នែកផ្សេង។ សូមរក្សាទុកធៀប ដើម្បីអនុវត្តការកំណត់នេះ។')}</p>
+      <p>{text('Choose a cover or gallery image as the poster. Cover background videos remain separate. Save the invitation to apply these preferences.', 'ជ្រើសរើសរូបក្រប ឬរូបវិចិត្រសាលជារូបមុខ។ វីដេអូផ្ទៃក្របគឺជាផ្នែកផ្សេង។ សូមរក្សាទុកសំបុត្រអញ្ជើញ ដើម្បីអនុវត្តការកំណត់នេះ។')}</p>
       <div className="workspace-actions"><button className="workspace-button" type="button" disabled={!config.videoMediaId || busy} onClick={() => setPreview(value => !value)}>{preview ? text('Close video preview', 'បិទវីដេអូមើលជាមុន') : text('Preview video', 'មើលវីដេអូជាមុន')}</button>
         <button type="button" className="workspace-button" disabled={!config.videoMediaId || busy} onClick={() => { setPreview(false); onChange({ enabled: false, videoMediaId: null, posterMediaId: config.posterMediaId }); }}>{text('Remove selected video', 'ដកវីដេអូដែលបានជ្រើស')}</button></div>
       {preview && <CinematicVideoOpening stageOnly alwaysMuted={Boolean(presentation)} english={english} loadVideo={loadVideo} posterUrl={posters.find(item => item.id === config.posterMediaId)?.fileUrl} onOpen={() => setPreview(false)} />}
