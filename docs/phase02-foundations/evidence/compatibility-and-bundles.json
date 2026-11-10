@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "commit": "df3bef257208a5ed0187720847921907948f71d2",
+  "commit": "09e7a28379e5039d1f3e0618bc14deb272d28cc9",
   "migrationCount": 48,
   "changedMigrations": [],
   "protectedTrackedChanges": "",
@@ -14,12 +14,12 @@
         "gzipBytes": 137816
       },
       "after": {
-        "file": "index-DaH_Bovi.js",
-        "bytes": 463450,
-        "gzipBytes": 138140
+        "file": "index-DJcwfYl2.js",
+        "bytes": 467632,
+        "gzipBytes": 139147
       },
-      "deltaBytes": 1473,
-      "deltaGzipBytes": 324
+      "deltaBytes": 5655,
+      "deltaGzipBytes": 1331
     },
     {
       "label": "user global CSS",
@@ -29,12 +29,12 @@
         "gzipBytes": 38616
       },
       "after": {
-        "file": "index-x4BtSMxn.css",
-        "bytes": 213684,
-        "gzipBytes": 38927
+        "file": "index-DL2xZGEL.css",
+        "bytes": 218365,
+        "gzipBytes": 39898
       },
-      "deltaBytes": 1548,
-      "deltaGzipBytes": 311
+      "deltaBytes": 6229,
+      "deltaGzipBytes": 1282
     },
     {
       "label": "admin entry JS",
