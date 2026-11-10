@@ -55,7 +55,7 @@ export default function PaymentSuccessPage() {
             return uiCopy("មិនមានលេខកូដបញ្ជាទិញ", "Missing order reference");
         }
         if (!order) {
-            return uiCopy("កំពុងផ្ទៀងផ្ទាត់ការទូទាត់។ សូមរង់ចាំ...", "Verifying payment. Please wait...");
+            return uiCopy("កំពុងផ្ទៀងផ្ទាត់ការទូទាត់។ សូមរង់ចាំ...", "Payment is being verified. Please wait.");
         }
         switch (order.status) {
             case "PAID":
@@ -72,7 +72,7 @@ export default function PaymentSuccessPage() {
             case "REJECTED":
                 return uiCopy("ការទូទាត់ត្រូវបានបដិសេធ", "Payment rejected");
             default:
-                return uiCopy("កំពុងផ្ទៀងផ្ទាត់ការទូទាត់...", "Payment is being verified. Please wait...");
+                return uiCopy("កំពុងផ្ទៀងផ្ទាត់ការទូទាត់...", "Payment is being verified. Please wait.");
         }
     };
 

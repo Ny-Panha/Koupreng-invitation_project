@@ -99,7 +99,7 @@ export default function LoginPage() {
           {/* Brand Header */}
           <div className="flex flex-col items-center text-center mb-8">
             <BrandLogo variant="auth" priority />
-            <h1 className="sr-only">{isKm ? "ចូលគណនីអ្នកគ្រប់គ្រងគូព្រេង" : "Koupreng administrator sign in"}</h1>
+            <h1 className="sr-only">{isKm ? "គូព្រេង" : "Koupreng"}</h1>
             <p className="text-xs text-zinc-400 mt-1">
               {isKm
                 ? "ចូលប្រើប្រាស់ផ្ទាំងគ្រប់គ្រងសម្រាប់អ្នកគ្រប់គ្រងប្រព័ន្ធ"

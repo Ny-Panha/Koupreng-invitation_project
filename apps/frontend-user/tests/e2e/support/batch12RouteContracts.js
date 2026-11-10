@@ -214,6 +214,7 @@ export async function assertRouteContract(page, contract, state) {
     case 'paid-templates': await text('Event Essential'); await visible('.paid-card-item'); break;
     case 'legacy-unsaved-editor': await heading('Invitation studio'); await visible('.pe-editor-column input:not([type="checkbox"]):not([type="file"])'); await button('Save'); break;
     case 'not-found': await heading('404'); await expect(page.getByRole('link',{name:'Back to home'})).toHaveAttribute('href','/'); break;
+    case 'admin-not-found': await text('404'); await expect(page.getByRole('link', { name: copy('Return to Dashboard', 'ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង') })).toHaveAttribute('href', '/dashboard'); break;
     case 'admin-dashboard': await text(copy('Stored attendance and operations','វត្តមាន និងប្រតិបត្តិការដែលបានកត់ត្រា')); await text('Dara & Sophea'); await text('batch11@example.test'); break;
     case 'admin-users': await text('Batch 11 fictional account'); await text('batch11@example.test'); await visible('a[href="/users/1101"]'); break;
     case 'admin-user-detail': await heading('Batch 11 fictional account'); await text('batch11@example.test'); await text('Dara & Sophea'); break;

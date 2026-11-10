@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function AdminNotFoundPage() {
-  const { t, lang } = useAdminLanguage();
+  const { lang } = useAdminLanguage();
   const isEn = lang === "en";
 
   return (

@@ -21,7 +21,15 @@ export default function VelvetCurtainOpening({
       className={`el-curtain-overlay ${opened ? "opened" : ""} ${hasCustomCover ? "has-custom-bg" : ""}`}
       style={opened ? { pointerEvents: "none", visibility: "hidden" } : undefined}
       onClick={!opened ? onOpenCurtain : undefined}
-      aria-hidden={opened ? "true" : "false"}
+      onKeyDown={(event) => {
+        if (!opened && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          onOpenCurtain?.();
+        }
+      }}
+      tabIndex={!opened ? 0 : undefined}
+      aria-hidden={opened ? "true" : undefined}
+      aria-label={!opened ? "ចុចដើម្បីបើកវាំងនន" : undefined}
     >
       <CoverBackground
         content={content}
