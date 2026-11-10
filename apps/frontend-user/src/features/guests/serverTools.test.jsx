@@ -65,4 +65,19 @@ describe('server-authorized guest import', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Revalidate' }));
     await waitFor(() => expect(screen.getByRole('button', { name: 'Review import' })).toBeEnabled());
   });
+  it('functions correctly when crypto.subtle is undefined (LAN HTTP Safari fallback)', async () => {
+    const insecureCrypto = {
+      getRandomValues: (arr) => webcrypto.getRandomValues(arr),
+      subtle: undefined,
+    };
+    vi.stubGlobal('crypto', insecureCrypto);
+    const refresh = vi.fn();
+    render(<GuestImportModal isOpen invitationId={42} onFileImported={refresh} onClose={vi.fn()} />);
+    await uploadAndValidate();
+    expect(guestService.previewBatch).toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Review import' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm import' }));
+    await screen.findByText('Import saved to this event');
+    expect(refresh).toHaveBeenCalledOnce();
+  });
 });

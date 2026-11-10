@@ -109,7 +109,16 @@ export default function GuestTable({
                 <div className="guest-person"><span className={`guest-avatar ${guest.group === groups[1]?.name ? "guest-avatar-bride" : ""}`} aria-hidden="true">{initials(guest.name)}</span>
                   <div className="guest-person-info"><strong>{guest.name}</strong>
                     {guest.companionName && <span className="guest-companion">{guest.companionName}</span>}
-                    <span className="guest-contact"><Phone size={12} aria-hidden="true" />{guest.phone || text("contactMissing", "មិនមានលេខទូរស័ព្ទ")}</span>
+                    <span className="guest-contact">
+                      <Phone size={12} aria-hidden="true" />
+                      {guest.phone ? (
+                        <a href={`tel:${guest.phone}`} className="guest-phone-link" title={lang === "en" ? `Call ${guest.name}` : `ហៅទៅកាន់ ${guest.name}`}>
+                          {guest.phone}
+                        </a>
+                      ) : (
+                        text("contactMissing", "មិនមានលេខទូរស័ព្ទ")
+                      )}
+                    </span>
                     {guest.note && <details className="guest-note"><summary>{text("fieldNote", "ចំណាំ")}</summary><p>{guest.note}</p></details>}
                   </div>
                 </div>

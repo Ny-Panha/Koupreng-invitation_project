@@ -9,9 +9,34 @@ import { IMPORT_FIELDS, proposeImportMapping, mappingError, mapImportRows, impor
 import { generateSecureUuid } from '@/shared/utils/uuid';
 import './GuestImportModal.css';
 
+function fallbackDeterministicHash(string) {
+  let h1 = 0xdeadbeef, h2 = 0x41c64e6d;
+  for (let i = 0; i < string.length; i++) {
+    const ch = string.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+}
+
+async function computeDigestHex(payloadString) {
+  if (typeof crypto !== 'undefined' && crypto.subtle && typeof crypto.subtle.digest === 'function') {
+    try {
+      const bytes = new TextEncoder().encode(payloadString);
+      const buffer = await crypto.subtle.digest('SHA-256', bytes);
+      return Array.from(new Uint8Array(buffer), byte => byte.toString(16).padStart(2, '0')).join('');
+    } catch {
+      // Subtle crypto may fail in insecure context or sandbox
+    }
+  }
+  return fallbackDeterministicHash(payloadString);
+}
+
 async function batchIdentity(eventId, rows) {
-  const bytes = new TextEncoder().encode(JSON.stringify(importPayload('', rows).rows));
-  const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte => byte.toString(16).padStart(2, '0')).join('');
+  const payloadString = JSON.stringify(importPayload('', rows).rows);
+  const hash = await computeDigestHex(payloadString);
   const key = `koupreng.import.${eventId}.${hash}`;
   let id;
   try { id = sessionStorage.getItem(key); } catch { /* Exact retries remain safe while the dialog is open. */ }

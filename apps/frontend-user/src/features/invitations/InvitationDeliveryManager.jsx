@@ -421,6 +421,21 @@ export default function InvitationDeliveryManager() {
               <SendHorizontal size={16} />
               {t('telegram')}
             </a>
+            <a
+              className="workspace-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-disabled={busy || !published}
+              onClick={(event) => {
+                if (busy || !published) event.preventDefault();
+                else act(() => recordShare(selectedGuests[0]));
+              }}
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(selectedGuests[0].invitationUrl)}`}
+              title="WhatsApp"
+            >
+              <Share2 size={16} />
+              WhatsApp
+            </a>
             <button
               className="workspace-button"
               disabled={busy || !published}
