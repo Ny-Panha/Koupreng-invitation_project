@@ -1,3 +1,5 @@
+import { generateSecureUuid } from '@/shared/utils/uuid';
+
 export const LEGACY_MAP_NODE_TYPES = ['destination', 'road', 'arrow', 'label', 'building', 'intersection', 'market', 'school', 'pagoda', 'parking'];
 export const MAP_NODE_TYPES = [...LEGACY_MAP_NODE_TYPES, 'curve', 't-junction', 'roundabout', 'venue', 'house', 'hotel', 'restaurant', 'hospital', 'gas', 'bank', 'bridge', 'landmark', 'info', 'decoration'];
 export const MAP_LIMIT = 80;
@@ -41,7 +43,7 @@ export function fitMapNode(node, map) {
 }
 export function newMapNode(type, map) {
   const route = ['road', 'curve', 'arrow', 'bridge'].includes(type);
-  return fitMapNode({ id: crypto.randomUUID(), type, x: .5, y: .5, width: route ? .34 : .12, height: type === 'curve' ? .15 : route ? .035 : .13, rotation: 0, label: { km: '', en: '' }, ...(type === 'curve' ? { curvature: .6 } : {}) }, map);
+  return fitMapNode({ id: generateSecureUuid(), type, x: .5, y: .5, width: route ? .34 : .12, height: type === 'curve' ? .15 : route ? .035 : .13, rotation: 0, label: { km: '', en: '' }, ...(type === 'curve' ? { curvature: .6 } : {}) }, map);
 }
 export function roadEndpoints(node, map) {
   if (!['road', 'curve', 'bridge'].includes(node.type)) return [{ x: node.x, y: node.y }];

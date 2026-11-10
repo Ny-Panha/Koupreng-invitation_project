@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, Check, Copy, Download, Eye, Hand, Layers, MapPinned, Minus, MousePointer2, Plus, Redo2, Route, Save, Scan, Search, Shapes, SlidersHorizontal, Trash2, Undo2, X } from 'lucide-react';
 import Modal from '@/shared/ui/Modal';
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import { feedback } from '@/shared/feedback/feedback';
 import { MapDrawing } from '../../templates/shared/IllustratedMap';
 import { MAP_TOOL_GROUPS, MAP_TYPE_NAMES, MAP_THEME_TOKENS, MAP_LIMIT, MAP_FONTS, blankMap, mapSize, normalizeMap, newMapNode, bounded, fitMapNode, moveMapNode, connectMapNodes } from '../../templates/shared/illustratedMapModel';
@@ -29,7 +30,7 @@ export default function IllustratedMapDesignerModal({ value, onChange, locale = 
   const edit = change => { if (selected) patch({ nodes: config.nodes.map(node => node.id === selection ? fitMapNode({ ...node, ...change }, config) : node) }); };
   const add = (type, geometry = {}) => { if (config.nodes.length >= MAP_LIMIT) return; const node = fitMapNode({ ...newMapNode(type, config), ...geometry }, config); patch({ enabled: true, nodes: [...config.nodes, node] }); setSelection(node.id); setMobilePanel('canvas'); };
   const remove = () => { patch({ nodes: config.nodes.filter(node => node.id !== selection) }); setSelection(''); };
-  const duplicate = () => { if (!selected || config.nodes.length >= MAP_LIMIT) return; const node = fitMapNode({ ...selected, id: crypto.randomUUID(), label: { ...selected.label }, x: selected.x+.025, y: selected.y+.025 }, config); patch({ nodes: [...config.nodes,node] }); setSelection(node.id); };
+  const duplicate = () => { if (!selected || config.nodes.length >= MAP_LIMIT) return; const node = fitMapNode({ ...selected, id: generateSecureUuid(), label: { ...selected.label }, x: selected.x+.025, y: selected.y+.025 }, config); patch({ nodes: [...config.nodes,node] }); setSelection(node.id); };
   const close = async () => {
     if (!previewOnly && !saved && !await feedback.confirm({ title: L('បិទកម្មវិធីរចនា?','Close map designer?'), message: L('ការកែប្រែនៅតែក្នុងពង្រាង Studio។ មិនទាន់បញ្ជាក់ការរក្សាទុកលើម៉ាស៊ីនមេទេ។','Your changes stay in the Studio draft. They have not yet been confirmed saved by the server.'), confirmText: L('រក្សាពង្រាង និងបិទ','Keep draft and close'), cancelText: L('បន្តកែសម្រួល','Keep editing') })) return;
     onClose();

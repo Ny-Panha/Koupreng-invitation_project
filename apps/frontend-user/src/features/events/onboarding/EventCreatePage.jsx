@@ -33,6 +33,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { eventPath } from "../workspace/eventRoutes";
 import { EVENT_TYPES, STYLE_LABELS, eventPayload } from "./eventFields.js";
 import { validateEventForm } from "./eventCreation.js";
+import { generateSecureUuid } from "@/shared/utils/uuid";
 import EventFields from "./EventFields.jsx";
 import "@/shared/styles/workspace-ui.css";
 import "./EventCreatePage.css";
@@ -77,7 +78,7 @@ export default function EventCreatePage() {
   const [price, setPrice] = useState(initial.price || "ALL");
   const [templateId, setTemplateId] = useState(initialRequestedKey || (hasUrlTemplate ? "" : initial.templateId) || "");
   const [form, setForm] = useState(initial.form || {});
-  const [requestId] = useState(() => initial.requestId || crypto.randomUUID());
+  const [requestId] = useState(() => initial.requestId || generateSecureUuid());
   const [catalog, setCatalog] = useState([]);
   const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [intentNotice, setIntentNotice] = useState(hasUrlTemplate && !urlTemplateKey ? "invalid" : "");

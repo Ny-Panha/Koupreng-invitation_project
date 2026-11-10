@@ -1,4 +1,5 @@
 import RouteLoadingSkeleton from "@/shared/ui/RouteLoadingSkeleton";
+import RouteErrorBoundary from "@/shared/ui/RouteErrorBoundary";
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -10,15 +11,17 @@ import { marketingRoutes } from "./routes/marketingRoutes";
 
 export default function AppRouter() {
   return (
-    <Suspense fallback={<RouteLoadingSkeleton />}>
-    <Routes>
-      {builderRoutes()}
-      {marketingRoutes()}
-      {authRoutes()}
-      {hostRoutes()}
+    <RouteErrorBoundary>
+      <Suspense fallback={<RouteLoadingSkeleton />}>
+        <Routes>
+          {builderRoutes()}
+          {marketingRoutes()}
+          {authRoutes()}
+          {hostRoutes()}
 
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-    </Suspense>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </RouteErrorBoundary>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { generateSecureUuid } from "../../../shared/utils/uuid";
 import { listDrafts, deleteDraft, saveDraft } from "../../../shared/storage/weddingStorage";
 import { eventsApi } from "../api/eventsApi";
 import { toast } from "../../../shared/ui/toast";
@@ -104,7 +105,7 @@ export function useEvents(t) {
         setSyncingDraftId(draftId);
         try {
             if (!draft.backendInvitationId) {
-                draft = { ...draft, clientRequestId: draft.clientRequestId || crypto.randomUUID(),
+                draft = { ...draft, clientRequestId: draft.clientRequestId || generateSecureUuid(),
                     ...(ownerUserId != null ? { ownerUserId } : {}) };
                 saveDraft(draft);
             }

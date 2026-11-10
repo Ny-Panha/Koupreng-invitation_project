@@ -12,6 +12,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { eventPath } from "../workspace/eventRoutes";
 import { eventPayload } from "./eventFields";
+import { generateSecureUuid } from "@/shared/utils/uuid";
 import EventFields from "./EventFields.jsx";
 import StudioGuide from '@/features/invitations/studio/StudioGuide';
 import SaveTheDateEditor from '@/features/invitations/studio/SaveTheDateEditor';
@@ -131,7 +132,7 @@ export default function EventDetails() {
           <label>Activity in English<input maxLength={255} value={item.titleEn || ''} onChange={e => setSchedule(current => current.map((row, i) => i === index ? { ...row, titleEn: e.target.value } : row))} /></label>
           <button type="button" onClick={() => setSchedule(current => current.filter((_, i) => i !== index))}>{en ? "Remove activity" : "លុបសកម្មភាព"}</button>
         </div>)}
-        <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { id: crypto.randomUUID(), time: "", title: "", titleEn: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
+        <button type="button" disabled={schedule.length >= 20} onClick={() => setSchedule(current => [...current, { id: generateSecureUuid(), time: "", title: "", titleEn: "" }])}>{en ? "Add activity" : "បន្ថែមសកម្មភាព"}</button>
       </fieldset>}
       <details className="studio-subsection"><summary>{en ? 'Media & Opening' : 'មេឌៀ និងការបើកធៀប'}</summary><div className="studio-subsection-body"><PreWeddingVideoEditor eventId={eventId} value={form.preWeddingVideo} english={en} onChange={value => setForm(current => ({ ...current, preWeddingVideo: value }))} /></div></details>
     </>}{!generic && <p>{en ? 'Design artwork and optional media in the invitation and media tools.' : 'រចនារូបភាព និងមាតិកាជាជម្រើសក្នុងឧបករណ៍រចនា និងរូបភាព។'}</p>}<Link className="workspace-button" to={eventPath(eventId,'media')}>{en ? 'Media tools' : 'ឧបករណ៍រូបភាព'}</Link></div>

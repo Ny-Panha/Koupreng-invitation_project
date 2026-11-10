@@ -1,4 +1,5 @@
 import FeatureAccessCard from "@/shared/access/FeatureAccessCard";
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import { COUPLE_LAYOUTS } from '../../templates/shared/invitationFeatures';
 import { CoupleMonogram } from '../../templates/shared/FamilyNames';
 import { useRef, useState } from 'react';
@@ -19,7 +20,7 @@ export function FamilyDesignEditor({ form, locale, onChange, supported }) {
         <label>Partner honorific ({locale})<input maxLength={100} value={form.localizedContentV1?.[locale]?.[`${side}Honorific`] ?? (locale === 'km' ? form[`${side}Honorific`] || '' : '')} onChange={e => onChange(`${side}Honorific`, e.target.value)} /></label>
         <label>Family label ({locale})<input data-translation-key={`family.${side}.label`} maxLength={300} value={group?.label?.[locale] || ''} onChange={e => patchGroup(side, { label: { ...group?.label || pair(), [locale]: e.target.value } })} /></label>
         {group?.members.map(member => <fieldset key={member.id}><legend>Host</legend>{['name', 'honorific', 'relationship'].map(key => <label key={key}>{key} ({locale})<input maxLength={300} data-translation-key={`family.${member.id}.${key}`} value={member[key]?.[locale] || ''} onChange={e => patchGroup(side, { members: group.members.map(item => item.id === member.id ? { ...member, [key]: { ...member[key], [locale]: e.target.value } } : item) })} /></label>)}<button type="button" onClick={() => patchGroup(side, { members: group.members.filter(item => item.id !== member.id) })}>Remove host</button></fieldset>)}
-        <button type="button" disabled={(group?.members.length || 0) >= 8} onClick={() => patchGroup(side, { members: [...group?.members || [], { id: crypto.randomUUID(), name: pair(), honorific: pair(), relationship: pair() }] })}>Add host</button>
+        <button type="button" disabled={(group?.members.length || 0) >= 8} onClick={() => patchGroup(side, { members: [...group?.members || [], { id: generateSecureUuid(), name: pair(), honorific: pair(), relationship: pair() }] })}>Add host</button>
         {group && <button type="button" onClick={() => onChange('familyGroupsV1', groups.filter(item => item.side !== side))}>Use existing parent fields</button>}
       </fieldset>;
     })}

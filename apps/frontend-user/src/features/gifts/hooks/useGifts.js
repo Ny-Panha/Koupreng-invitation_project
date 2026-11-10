@@ -10,6 +10,7 @@ import { listDrafts } from "../../../shared/storage/weddingStorage";
 import { giftsApi } from "../api/giftsApi";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { localDateString } from "@/shared/utils/localDate";
+import { generateSecureUuid } from "@/shared/utils/uuid";
 
 export function toGiftPayload(form) {
     return {
@@ -135,7 +136,7 @@ export function useGifts() {
     };
 
     const openAddForm = () => {
-        setShowForm(true); setError(''); createRequestId.current = crypto.randomUUID();
+        setShowForm(true); setError(''); createRequestId.current = generateSecureUuid();
         setEditingId(null);
         setForm({ name: "", guestId: null, amount: "", currency: "USD", method: "Cash", date: localDateString(), note: "" });
     };
@@ -153,7 +154,7 @@ export function useGifts() {
         setError("");
         try {
             const payload = toGiftPayload(form);
-            if (!editingId) payload.clientRequestId = createRequestId.current ||= crypto.randomUUID();
+            if (!editingId) payload.clientRequestId = createRequestId.current ||= generateSecureUuid();
             if (backendInvitation?.id) {
                 if (editingId) {
                     const updated = await giftsApi.updateGift(backendInvitation.id, editingId, payload);

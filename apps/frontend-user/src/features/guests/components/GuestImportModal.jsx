@@ -6,6 +6,7 @@ import { Modal } from '@/shared/ui';
 import { useLanguageStore } from '@/stores/useLanguageStore';
 import { guestService } from '../api/guestApi';
 import { IMPORT_FIELDS, proposeImportMapping, mappingError, mapImportRows, importPayload, downloadImportErrors, importIssueLabel } from '../model/guestImport';
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import './GuestImportModal.css';
 
 async function batchIdentity(eventId, rows) {
@@ -14,7 +15,7 @@ async function batchIdentity(eventId, rows) {
   const key = `koupreng.import.${eventId}.${hash}`;
   let id;
   try { id = sessionStorage.getItem(key); } catch { /* Exact retries remain safe while the dialog is open. */ }
-  id ||= crypto.randomUUID();
+  id ||= generateSecureUuid();
   try { sessionStorage.setItem(key, id); } catch { /* Guest details are never stored here. */ }
   return id;
 }

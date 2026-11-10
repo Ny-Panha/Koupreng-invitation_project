@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, Images, Trash2 } from 'lucide-react';
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import { introArtwork, INTRO_PALETTES, normalizeIntro, normalizeIntroUpload } from '../../templates/shared/cinematicIntro';
 
 export default function CinematicIntroEditor({ value, onChange, photos = [], english }) {
@@ -23,7 +24,7 @@ export default function CinematicIntroEditor({ value, onChange, photos = [], eng
     }
     setReading(true); setError('');
     try {
-      const added = await Promise.all(files.map(async source => { const file = await normalizeIntroUpload(source); return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve({ id: crypto.randomUUID(), src: reader.result, alt: file.name.replace(/\.[^.]+$/, ''), x: 50, y: 50 }); reader.onerror = () => reject(new Error('Could not read image')); reader.readAsDataURL(file); }); }));
+      const added = await Promise.all(files.map(async source => { const file = await normalizeIntroUpload(source); return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve({ id: generateSecureUuid(), src: reader.result, alt: file.name.replace(/\.[^.]+$/, ''), x: 50, y: 50 }); reader.onerror = () => reject(new Error('Could not read image')); reader.readAsDataURL(file); }); }));
       onChange(previous => { const current = normalizeIntro(previous); return { ...current, slides: [...(current.slides || []), ...added].slice(0, 24) }; });
     } catch { setError(t('Choose a readable JPEG, PNG or WebP image under 5 MB.', 'សូមជ្រើសរើសរូបភាព JPEG, PNG ឬ WebP ដែលអាចអានបាន និងតូចជាង 5 MB។')); }
     finally { setReading(false); }

@@ -23,6 +23,7 @@ import SaveTheDateEditor from "./studio/SaveTheDateEditor";
 import { eventPresentationFields } from '../templates/shared/eventPresentation';
 import { resolveEvent, validTimezone, wallTimeToInstant } from '../templates/shared/eventDateTime';
 import { safeJson } from '../wedding-builder/utils/invitationDraftAdapter';
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import { legacyProgram, normalizeProgram } from "../templates/shared/program";
 import StudioSections from "./studio/StudioSections";
 import { useStudioSplit } from './studio/useStudioSplit';
@@ -584,7 +585,7 @@ export default function InvitationForm({ invitation }) {
             showDressCode: customParsed.showDressCode ?? safeJson(invitation?.enabledSections).dressCode ?? (tpl?.enabledSections?.dressCode !== false),
             showCountdown: customParsed.showCountdown !== undefined ? customParsed.showCountdown : (tpl?.enabledSections?.countdown !== false),
             showSchedule: customParsed.showSchedule ?? safeJson(invitation?.enabledSections).schedule ?? true,
-            calendarUid: customParsed.calendarUid || crypto.randomUUID(),
+            calendarUid: customParsed.calendarUid || generateSecureUuid(),
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
             photos: (() => {

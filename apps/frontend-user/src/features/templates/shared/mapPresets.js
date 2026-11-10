@@ -1,3 +1,5 @@
+import { generateSecureUuid } from '@/shared/utils/uuid';
+
 // Original fictitious schematics. No real geography, tiles or copied topology.
 const label = (km = '', en = '') => ({ km, en });
 const node = (type, x, y, width, height, rotation = 0, km = '', en = '') => ({ type, x, y, width, height, rotation, label: label(km, en) });
@@ -17,7 +19,7 @@ export const MAP_PRESETS = [
 ];
 export function createMapPreset(id, { idPrefix } = {}) {
   const preset = MAP_PRESETS.find(item => item.id === id);
-  return preset ? preset.nodes.map((item, index) => ({ ...item, label: { ...item.label }, id: idPrefix ? `${idPrefix}-${index}` : crypto.randomUUID() })) : [];
+  return preset ? preset.nodes.map((item, index) => ({ ...item, label: { ...item.label }, id: idPrefix ? `${idPrefix}-${index}` : generateSecureUuid() })) : [];
 }
 
 export const MAP_EXAMPLE_DESCRIPTION = { km: 'ផែនទីគំរូ មិនមែនទីតាំងពិតទេ។ សូមកែសម្រួលផ្លូវ និងស្លាកមុនប្រើប្រាស់។', en: 'Example diagram, not a real location. Replace the roads and labels before use.' };

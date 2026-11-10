@@ -1,10 +1,11 @@
 import { feedback } from "@/shared/feedback/feedback";
 import { useState } from 'react';
+import { generateSecureUuid } from '@/shared/utils/uuid';
 import { groupProgram, serializeProgramDays, PROGRAM_PERIODS } from '../../templates/shared/program';
 import CeremonyIcon from '../../templates/shared/CeremonyIcon';
 import { CEREMONY_ICONS } from '../../templates/shared/ceremonyIcons';
 
-const newId = () => crypto.randomUUID();
+const newId = () => generateSecureUuid();
 const emptyRow = () => ({ id: newId(), time: '', title: '', titleEn: '', description: '', enabled: true });
 const blankDay = () => ({ id: newId(), date: '', title: '', enabled: true, items: [] });
 
