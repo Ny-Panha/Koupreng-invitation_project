@@ -1,0 +1,1326 @@
+{
+  "browser": "156.0.8078.4",
+  "widths": [
+    320,
+    360,
+    375,
+    390,
+    414,
+    430,
+    599,
+    600,
+    601,
+    767,
+    768,
+    769,
+    820,
+    1023,
+    1024,
+    1025,
+    1280,
+    1440,
+    1920
+  ],
+  "rows": [
+    {
+      "group": "home",
+      "width": 320,
+      "height": 900,
+      "documentWidth": 320,
+      "viewportWidth": 320,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 360,
+      "height": 900,
+      "documentWidth": 360,
+      "viewportWidth": 360,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 375,
+      "height": 900,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 390,
+      "height": 900,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 414,
+      "height": 900,
+      "documentWidth": 414,
+      "viewportWidth": 414,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 430,
+      "height": 900,
+      "documentWidth": 430,
+      "viewportWidth": 430,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 599,
+      "height": 900,
+      "documentWidth": 599,
+      "viewportWidth": 599,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 600,
+      "height": 900,
+      "documentWidth": 600,
+      "viewportWidth": 600,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 601,
+      "height": 900,
+      "documentWidth": 601,
+      "viewportWidth": 601,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 767,
+      "height": 900,
+      "documentWidth": 767,
+      "viewportWidth": 767,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "viewportWidth": 768,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 769,
+      "height": 900,
+      "documentWidth": 769,
+      "viewportWidth": 769,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 820,
+      "height": 900,
+      "documentWidth": 820,
+      "viewportWidth": 820,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1023,
+      "height": 900,
+      "documentWidth": 1023,
+      "viewportWidth": 1023,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1024,
+      "height": 900,
+      "documentWidth": 1024,
+      "viewportWidth": 1024,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1025,
+      "height": 900,
+      "documentWidth": 1025,
+      "viewportWidth": 1025,
+      "controls": 38,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "controls": 44,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1440,
+      "height": 900,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "controls": 44,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "home",
+      "width": 1920,
+      "height": 900,
+      "documentWidth": 1920,
+      "viewportWidth": 1920,
+      "controls": 44,
+      "clippedControls": [],
+      "minControlHeight": 19
+    },
+    {
+      "group": "auth-login",
+      "width": 320,
+      "height": 900,
+      "documentWidth": 320,
+      "viewportWidth": 320,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 360,
+      "height": 900,
+      "documentWidth": 360,
+      "viewportWidth": 360,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 375,
+      "height": 900,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 390,
+      "height": 900,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 414,
+      "height": 900,
+      "documentWidth": 414,
+      "viewportWidth": 414,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 430,
+      "height": 900,
+      "documentWidth": 430,
+      "viewportWidth": 430,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 599,
+      "height": 900,
+      "documentWidth": 599,
+      "viewportWidth": 599,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 600,
+      "height": 900,
+      "documentWidth": 600,
+      "viewportWidth": 600,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 601,
+      "height": 900,
+      "documentWidth": 601,
+      "viewportWidth": 601,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 767,
+      "height": 900,
+      "documentWidth": 767,
+      "viewportWidth": 767,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "viewportWidth": 768,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 769,
+      "height": 900,
+      "documentWidth": 769,
+      "viewportWidth": 769,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 820,
+      "height": 900,
+      "documentWidth": 820,
+      "viewportWidth": 820,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1023,
+      "height": 900,
+      "documentWidth": 1023,
+      "viewportWidth": 1023,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1024,
+      "height": 900,
+      "documentWidth": 1024,
+      "viewportWidth": 1024,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1025,
+      "height": 900,
+      "documentWidth": 1025,
+      "viewportWidth": 1025,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1440,
+      "height": 900,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "auth-login",
+      "width": 1920,
+      "height": 900,
+      "documentWidth": 1920,
+      "viewportWidth": 1920,
+      "controls": 12,
+      "clippedControls": [],
+      "minControlHeight": 14
+    },
+    {
+      "group": "dashboard",
+      "width": 320,
+      "height": 900,
+      "documentWidth": 320,
+      "viewportWidth": 320,
+      "controls": 40,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 360,
+      "height": 900,
+      "documentWidth": 360,
+      "viewportWidth": 360,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 375,
+      "height": 900,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 390,
+      "height": 900,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 414,
+      "height": 900,
+      "documentWidth": 414,
+      "viewportWidth": 414,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 430,
+      "height": 900,
+      "documentWidth": 430,
+      "viewportWidth": 430,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 599,
+      "height": 900,
+      "documentWidth": 599,
+      "viewportWidth": 599,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 600,
+      "height": 900,
+      "documentWidth": 600,
+      "viewportWidth": 600,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 601,
+      "height": 900,
+      "documentWidth": 601,
+      "viewportWidth": 601,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 767,
+      "height": 900,
+      "documentWidth": 767,
+      "viewportWidth": 767,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "viewportWidth": 768,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 769,
+      "height": 900,
+      "documentWidth": 769,
+      "viewportWidth": 769,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 820,
+      "height": 900,
+      "documentWidth": 820,
+      "viewportWidth": 820,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1023,
+      "height": 900,
+      "documentWidth": 1023,
+      "viewportWidth": 1023,
+      "controls": 41,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1024,
+      "height": 900,
+      "documentWidth": 1024,
+      "viewportWidth": 1024,
+      "controls": 62,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1025,
+      "height": 900,
+      "documentWidth": 1025,
+      "viewportWidth": 1025,
+      "controls": 62,
+      "clippedControls": [
+        "a.host-profile-pill",
+        "button.host-mobile-close-btn",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item",
+        "a.host-mobile-menu-item"
+      ],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "controls": 55,
+      "clippedControls": [],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1440,
+      "height": 900,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "controls": 51,
+      "clippedControls": [],
+      "minControlHeight": 28
+    },
+    {
+      "group": "dashboard",
+      "width": 1920,
+      "height": 900,
+      "documentWidth": 1920,
+      "viewportWidth": 1920,
+      "controls": 51,
+      "clippedControls": [],
+      "minControlHeight": 28
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 320,
+      "height": 900,
+      "documentWidth": 320,
+      "viewportWidth": 320,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 360,
+      "height": 900,
+      "documentWidth": 360,
+      "viewportWidth": 360,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 375,
+      "height": 900,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 390,
+      "height": 900,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 414,
+      "height": 900,
+      "documentWidth": 414,
+      "viewportWidth": 414,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 430,
+      "height": 900,
+      "documentWidth": 430,
+      "viewportWidth": 430,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 599,
+      "height": 900,
+      "documentWidth": 599,
+      "viewportWidth": 599,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 600,
+      "height": 900,
+      "documentWidth": 600,
+      "viewportWidth": 600,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 601,
+      "height": 900,
+      "documentWidth": 601,
+      "viewportWidth": 601,
+      "controls": 6,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 767,
+      "height": 900,
+      "documentWidth": 767,
+      "viewportWidth": 767,
+      "controls": 7,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "viewportWidth": 768,
+      "controls": 8,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 769,
+      "height": 900,
+      "documentWidth": 769,
+      "viewportWidth": 769,
+      "controls": 8,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 820,
+      "height": 900,
+      "documentWidth": 820,
+      "viewportWidth": 820,
+      "controls": 8,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1023,
+      "height": 900,
+      "documentWidth": 1023,
+      "viewportWidth": 1023,
+      "controls": 8,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1024,
+      "height": 900,
+      "documentWidth": 1024,
+      "viewportWidth": 1024,
+      "controls": 18,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1025,
+      "height": 900,
+      "documentWidth": 1025,
+      "viewportWidth": 1025,
+      "controls": 18,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "controls": 18,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1440,
+      "height": 900,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "controls": 18,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-dashboard",
+      "width": 1920,
+      "height": 900,
+      "documentWidth": 1920,
+      "viewportWidth": 1920,
+      "controls": 18,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 320,
+      "height": 900,
+      "documentWidth": 320,
+      "viewportWidth": 320,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 360,
+      "height": 900,
+      "documentWidth": 360,
+      "viewportWidth": 360,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 375,
+      "height": 900,
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 390,
+      "height": 900,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 414,
+      "height": 900,
+      "documentWidth": 414,
+      "viewportWidth": 414,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 430,
+      "height": 900,
+      "documentWidth": 430,
+      "viewportWidth": 430,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 599,
+      "height": 900,
+      "documentWidth": 599,
+      "viewportWidth": 599,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 600,
+      "height": 900,
+      "documentWidth": 600,
+      "viewportWidth": 600,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 601,
+      "height": 900,
+      "documentWidth": 601,
+      "viewportWidth": 601,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 767,
+      "height": 900,
+      "documentWidth": 767,
+      "viewportWidth": 767,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 768,
+      "height": 900,
+      "documentWidth": 768,
+      "viewportWidth": 768,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 769,
+      "height": 900,
+      "documentWidth": 769,
+      "viewportWidth": 769,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 820,
+      "height": 900,
+      "documentWidth": 820,
+      "viewportWidth": 820,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1023,
+      "height": 900,
+      "documentWidth": 1023,
+      "viewportWidth": 1023,
+      "controls": 23,
+      "clippedControls": [],
+      "minControlHeight": 32
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1024,
+      "height": 900,
+      "documentWidth": 1024,
+      "viewportWidth": 1024,
+      "controls": 26,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1025,
+      "height": 900,
+      "documentWidth": 1025,
+      "viewportWidth": 1025,
+      "controls": 26,
+      "clippedControls": [],
+      "minControlHeight": 44
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1280,
+      "height": 900,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "controls": 26,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1440,
+      "height": 900,
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "controls": 26,
+      "clippedControls": [],
+      "minControlHeight": 34
+    },
+    {
+      "group": "admin-template-edit",
+      "width": 1920,
+      "height": 900,
+      "documentWidth": 1920,
+      "viewportWidth": 1920,
+      "controls": 26,
+      "clippedControls": [],
+      "minControlHeight": 32
+    }
+  ],
+  "shortLandscape": [
+    {
+      "width": 844,
+      "height": 390,
+      "result": {
+        ".template-studio-toolbar": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 123,
+          "scrollHeight": 122,
+          "clientHeight": 122
+        },
+        ".studio-panel-switch": {
+          "x": 0,
+          "y": 123,
+          "width": 844,
+          "height": 47,
+          "scrollHeight": 46,
+          "clientHeight": 46
+        },
+        ".studio-controls-scroll": {
+          "x": 0,
+          "y": 247,
+          "width": 843,
+          "height": 662.5,
+          "scrollHeight": 663,
+          "clientHeight": 663
+        },
+        ".studio-preview-panel": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "scrollHeight": 0,
+          "clientHeight": 0
+        },
+        ".studio-section-tabs": {
+          "x": 12,
+          "y": 182,
+          "width": 819,
+          "height": 52,
+          "scrollHeight": 50,
+          "clientHeight": 50
+        },
+        "outerBefore": {
+          "scrollHeight": 910,
+          "clientHeight": 390,
+          "scrollTop": 0
+        },
+        "outerAfter": {
+          "scrollTop": 520,
+          "scrollHeight": 910,
+          "clientHeight": 390
+        },
+        "switches": 2,
+        "previewVisible": true,
+        "editVisible": true
+      }
+    },
+    {
+      "width": 820,
+      "height": 430,
+      "result": {
+        ".template-studio-toolbar": {
+          "x": 0,
+          "y": 0,
+          "width": 820,
+          "height": 123,
+          "scrollHeight": 122,
+          "clientHeight": 122
+        },
+        ".studio-panel-switch": {
+          "x": 0,
+          "y": 123,
+          "width": 820,
+          "height": 47,
+          "scrollHeight": 46,
+          "clientHeight": 46
+        },
+        ".studio-controls-scroll": {
+          "x": 0,
+          "y": 247,
+          "width": 819,
+          "height": 662.5,
+          "scrollHeight": 663,
+          "clientHeight": 663
+        },
+        ".studio-preview-panel": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "scrollHeight": 0,
+          "clientHeight": 0
+        },
+        ".studio-section-tabs": {
+          "x": 12,
+          "y": 182,
+          "width": 795,
+          "height": 52,
+          "scrollHeight": 50,
+          "clientHeight": 50
+        },
+        "outerBefore": {
+          "scrollHeight": 910,
+          "clientHeight": 430,
+          "scrollTop": 0
+        },
+        "outerAfter": {
+          "scrollTop": 480,
+          "scrollHeight": 910,
+          "clientHeight": 430
+        },
+        "switches": 2,
+        "previewVisible": true,
+        "editVisible": true
+      }
+    },
+    {
+      "width": 768,
+      "height": 390,
+      "result": {
+        ".template-studio-toolbar": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 123,
+          "scrollHeight": 122,
+          "clientHeight": 122
+        },
+        ".studio-panel-switch": {
+          "x": 0,
+          "y": 123,
+          "width": 768,
+          "height": 47,
+          "scrollHeight": 46,
+          "clientHeight": 46
+        },
+        ".studio-controls-scroll": {
+          "x": 0,
+          "y": 247,
+          "width": 767,
+          "height": 662.5,
+          "scrollHeight": 663,
+          "clientHeight": 663
+        },
+        ".studio-preview-panel": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "scrollHeight": 0,
+          "clientHeight": 0
+        },
+        ".studio-section-tabs": {
+          "x": 12,
+          "y": 182,
+          "width": 743,
+          "height": 52,
+          "scrollHeight": 50,
+          "clientHeight": 50
+        },
+        "outerBefore": {
+          "scrollHeight": 910,
+          "clientHeight": 390,
+          "scrollTop": 0
+        },
+        "outerAfter": {
+          "scrollTop": 520,
+          "scrollHeight": 910,
+          "clientHeight": 390
+        },
+        "switches": 2,
+        "previewVisible": true,
+        "editVisible": true
+      }
+    }
+  ],
+  "scans": [
+    {
+      "group": "home",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "dashboard",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "admin-dashboard",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "admin-template-edit",
+      "mode": "dark",
+      "violations": []
+    }
+  ]
+}

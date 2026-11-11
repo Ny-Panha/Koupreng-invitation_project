@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kantumruy+Pro:wght@300;400;500;600;700&family=Moul&display=swap');
 @import "tailwindcss";
 @import "./application-tokens.css";
 @custom-variant dark (&:where(.dark, .dark *));
+
+@font-face { font-family: "DM Sans"; src: url('/fonts/management/DMSans-Latin.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Kantumruy Pro"; src: url('/fonts/reports/KantumruyPro.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Moul"; src: url('/fonts/reports/Moul-Regular.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
 
 @theme {
   --color-background: var(--background);
@@ -24,61 +27,42 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-sans: "Inter", "Kantumruy Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-moul: "Moul", serif;
+  --font-sans: var(--ui-font-management);
+  --font-moul: var(--ui-font-display);
 }
 
 :root {
-  --background: var(--ui-canvas);
-  --foreground: var(--ui-ink);
-  --card: var(--ui-surface);
-  --card-foreground: var(--ui-ink);
-  --popover: var(--ui-surface);
-  --popover-foreground: var(--ui-ink);
-  --primary: var(--ui-action);
-  --primary-foreground: var(--ui-on-action);
-  --secondary: var(--ui-surface-subtle);
-  --secondary-foreground: var(--ui-ink);
-  --muted: var(--ui-surface-subtle);
-  --muted-foreground: var(--ui-muted);
-  --accent: var(--ui-action-soft);
-  --accent-foreground: var(--ui-ink);
-  --destructive: var(--ui-danger);
-  --destructive-foreground: var(--ui-on-action);
-  --border: var(--ui-border);
-  --input: var(--ui-control-border);
-  --ring: var(--ui-focus);
+  --background: var(--ui-theme-canvas);
+  --foreground: var(--ui-theme-ink);
+  --card: var(--ui-theme-surface);
+  --card-foreground: var(--ui-theme-ink);
+  --popover: var(--ui-theme-surface);
+  --popover-foreground: var(--ui-theme-ink);
+  --primary: var(--ui-theme-action);
+  --primary-foreground: var(--ui-theme-on-action);
+  --secondary: var(--ui-theme-subtle);
+  --secondary-foreground: var(--ui-theme-ink);
+  --muted: var(--ui-theme-subtle);
+  --muted-foreground: var(--ui-theme-muted);
+  --accent: var(--ui-theme-action-soft);
+  --accent-foreground: var(--ui-theme-ink);
+  --destructive: var(--ui-theme-danger);
+  --destructive-foreground: var(--ui-theme-on-action);
+  --border: var(--ui-theme-border);
+  --input: var(--ui-theme-control-border);
+  --ring: var(--ui-theme-focus);
 }
 
-.dark {
-  --ui-warning: #fcd34d;
-  --ui-warning-soft: #3b2c11;
-  --background: #09090b;
-  --foreground: #f8fafc;
-  --card: #111113;
-  --card-foreground: #f8fafc;
-  --popover: #111113;
-  --popover-foreground: #f8fafc;
-  --primary: #f59e0b;
-  --primary-foreground: #000000;
-  --secondary: #1e1e24;
-  --secondary-foreground: #f8fafc;
-  --muted: #18181b;
-  --muted-foreground: #a1a1aa;
-  --accent: #18181b;
-  --accent-foreground: #f8fafc;
-  --destructive: #f87171;
-  --destructive-foreground: #ffffff;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #f59e0b;
+:root.dark {
+  --ui-warning: var(--ui-theme-warning);
+  --ui-warning-soft: var(--ui-theme-warning-soft);
 }
 
 html, body, #root {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color var(--ui-duration-overlay) var(--ui-ease-standard), color var(--ui-duration-overlay) var(--ui-ease-standard);
   min-height: 100%;
 }
 
@@ -128,7 +112,10 @@ html, body, #root {
 
 /* Modern Kambuja-POS & Tavola UI Utility Classes */
 .card {
-  @apply rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111113] transition-all;
+  @apply rounded-2xl border p-5 shadow-xs transition-all;
+  border-color: var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
 }
 
 /* ============================================================

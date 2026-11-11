@@ -1,0 +1,9 @@
+# Responsive spacing and layout contracts
+
+Use `--ui-space-1/2/3/4/6/8/12` = 4/8/12/16/24/32/48px. `--ui-page-gutter: clamp(16px, 4vw, 48px)` and `--ui-text-measure: 72ch` are foundations for Phase 04 adoption. Comfortable primary control height is `--ui-target-comfort: 44px`; WCAG 2.2 AA's target minimum and exceptions are a separate, less strict standard. Controls and icons must retain descriptive text or an accessible name.
+
+The read-only Chromium matrix used 320, 360, 375, 390, 414, 430, 599/600/601, 767/768/769, 820, 1023/1024/1025, 1280, 1440 and 1920 CSS px for Home, auth/login, owner dashboard, admin dashboard and Studio: **95 route-width observations, zero document-level horizontal overflows**. Owner's closed mobile drawer produced 16 groups of offscreen controls in a naive geometry selector; these are intentionally hidden by the drawer transform and are not document overflow. This probe does not establish drawer focus containment or all controls' touch sizing.
+
+Short landscapes 844×390, 820×430 and 768×390: Studio's outer scroll region is 910px tall. The observed `scrollTop` reached 520/480/520px respectively. Both Edit and Preview switches were present and clicking each revealed the corresponding pane. The iframe need not fit simultaneously into a 390px-high viewport. Bottom content, keyboard traversal and pointer hit testing should be checked again on physical devices; a viewport-ratio assertion is not a reachability contract.
+
+320px tests simulate a 1440px desktop at roughly 400% zoom; 720px is a 200% CSS viewport equivalent, but browser zoom and OS text scaling have additional behavior. The width matrix includes 767/768/769 neighbors, while actual native zoom, keyboard occlusion, safe-area insets, forced colors and long Khmer strings remain open. Do not infer physical-device certification from emulation.

@@ -1,39 +1,21 @@
 /* Application chrome. Public invitation renderers keep their authored palette. */
 :root {
-  --app-canvas: #f6f7f3;
-  --app-surface: #ffffff;
-  --app-subtle: #f0f4ed;
-  --app-raised: #ffffff;
-  --app-ink: #233f30;
-  --app-muted: #586954;
-  --app-border: #e1e7dc;
-  --app-control-border: #c4d0bf;
-  --app-accent: #345e42;
-  --app-on-accent: #ffffff;
-  --app-accent-soft: #e6efe1;
-  --app-gold: #80602f;
-  --app-gold-soft: #faf2e4;
-  --app-focus: #367969;
-  --app-danger: #a73537;
-  --app-shadow: 0 4px 22px rgb(28 52 31 / 4%);
-}
-:root[data-color-mode=dark] {
-  --app-canvas: #111a16;
-  --app-surface: #1a2620;
-  --app-subtle: #213027;
-  --app-raised: #26372c;
-  --app-ink: #e7eee5;
-  --app-muted: #b2c1ad;
-  --app-border: #344639;
-  --app-control-border: #53694f;
-  --app-accent: #b1cc9c;
-  --app-on-accent: #142219;
-  --app-accent-soft: #2a3e2b;
-  --app-gold: #dbc18d;
-  --app-gold-soft: #382e20;
-  --app-focus: #92d9bf;
-  --app-danger: #ffb4ab;
-  --app-shadow: 0 5px 24px rgb(0 0 0 / 12%);
+  --app-canvas: var(--ui-theme-canvas);
+  --app-surface: var(--ui-theme-surface);
+  --app-subtle: var(--ui-theme-subtle);
+  --app-raised: var(--ui-theme-raised);
+  --app-ink: var(--ui-theme-ink);
+  --app-muted: var(--ui-theme-muted);
+  --app-border: var(--ui-theme-border);
+  --app-control-border: var(--ui-theme-control-border);
+  --app-accent: var(--ui-theme-action);
+  --app-on-accent: var(--ui-theme-on-action);
+  --app-accent-soft: var(--ui-theme-action-soft);
+  --app-gold: var(--ui-theme-gold);
+  --app-gold-soft: var(--ui-theme-gold-soft);
+  --app-focus: var(--ui-theme-focus);
+  --app-danger: var(--ui-theme-danger);
+  --app-shadow: var(--ui-theme-shadow);
 }
 .app-preferences { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .app-language-control { display: block; margin: 0; min-width: 0; }

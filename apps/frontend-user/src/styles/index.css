@@ -288,24 +288,24 @@
 /* Public marketing tokens — Silk & Ink Editorial design system.
    Preserves dashboard and wedding template variables intact. */
 .kp-marketing-shell {
-  --kp-page: #F8F5EE;
-  --kp-surface-soft: #F2ECE2;
-  --kp-brand: #2E433A;
-  --kp-brand-hover: #21352D;
+  --kp-page: var(--ui-theme-canvas);
+  --kp-surface-soft: var(--ui-theme-subtle);
+  --kp-brand: var(--ui-theme-action);
+  --kp-brand-hover: var(--ui-theme-action);
   --kp-gold-decorative: #C3A26B;
-  --kp-gold-text: #77572C;
-  --kp-focus: #254F7E;
+  --kp-gold-text: var(--ui-theme-gold);
+  --kp-focus: var(--ui-theme-focus);
   --kp-motion-silk: cubic-bezier(.22, 1, .36, 1);
-  --kp-public-bg: #F8F5EE;
-  --kp-public-surface: #FFFFFF;
-  --kp-public-surface-warm: #F4EFE6;
-  --kp-public-ink: #262622;
-  --kp-public-muted: #695D50;
+  --kp-public-bg: var(--ui-theme-canvas);
+  --kp-public-surface: var(--ui-theme-surface);
+  --kp-public-surface-warm: var(--ui-theme-subtle);
+  --kp-public-ink: var(--ui-theme-ink);
+  --kp-public-muted: var(--ui-theme-muted);
   --kp-public-gold: #C3A26B;
-  --kp-public-gold-ink: #77572C;
-  --kp-public-deep: #2E433A;
-  --kp-public-deep-hover: #22332C;
-  --kp-public-border: #E5DED2;
+  --kp-public-gold-ink: var(--ui-theme-gold);
+  --kp-public-deep: var(--ui-theme-action);
+  --kp-public-deep-hover: var(--ui-theme-action);
+  --kp-public-border: var(--ui-theme-border);
 
   --kp-bg: var(--kp-public-bg);
   --kp-surface: var(--kp-public-surface);

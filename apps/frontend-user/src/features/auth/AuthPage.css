@@ -799,6 +799,25 @@
 .auth-footer-text a { color: var(--ui-action); }
 .auth-input { border-color: var(--ui-control-border); }
 
+/* Auth is management chrome: inherit the same theme as marketing and owner. */
+.auth-shell { color: var(--ui-theme-ink); font-family: var(--ui-font-management); }
+.auth-shell :is(.auth-page,.auth-page--centered) { background: var(--ui-theme-canvas); color: var(--ui-theme-ink); }
+.auth-shell .auth-card { background: var(--ui-theme-surface); color: var(--ui-theme-ink); border: 1px solid var(--ui-theme-border); box-shadow: var(--ui-theme-shadow); }
+.auth-shell :is(.auth-title,.auth-label,.auth-lang-btn.active) { color: var(--ui-theme-ink); }
+.auth-shell :is(.auth-subtitle,.auth-home-link,.auth-lang-btn,.auth-footer-text,.auth-eye-btn) { color: var(--ui-theme-muted); }
+.auth-shell .auth-divider { color: var(--ui-theme-muted); font-size: 12px; letter-spacing: 0; line-height: var(--ui-leading-khmer); }
+.auth-shell .auth-footer-text a, .auth-shell .auth-footer-text a:hover { color: var(--ui-theme-link); }
+.auth-shell .auth-lang-pill { background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
+.auth-shell .auth-input { color: var(--ui-theme-ink); background: var(--ui-theme-surface); border-color: var(--ui-theme-control-border); }
+.auth-shell .auth-input:focus { background: var(--ui-theme-raised); border-color: var(--ui-theme-focus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-theme-focus) 30%, transparent); }
+.auth-shell .auth-input.error { border-color: var(--ui-theme-danger); }
+.auth-shell .auth-input::placeholder { color: var(--ui-theme-muted); }
+.auth-shell .auth-submit, .auth-shell .auth-submit:hover:not(:disabled) { background: var(--ui-theme-action); color: var(--ui-theme-on-action); }
+.auth-shell :is(.auth-error,.auth-error-msg,.auth-link-recovery,.auth-link-recovery .auth-footer-link) { color: var(--ui-theme-danger); }
+.auth-shell .auth-error { background: var(--ui-theme-danger-soft); }
+.auth-shell :is(a,button,input,select):focus-visible { outline-color: var(--ui-theme-focus); }
+:root[data-color-mode="dark"] .auth-shell { color-scheme: dark; }
+
 /* Mobile-first responsive refinements (Phase 03) */
 @media (max-width: 480px) {
     .auth-page--centered {
