@@ -1,0 +1,37 @@
+# Full-product improvement and dependency map
+
+**Traceability:** [135/135 route leaves](04-all-routes-to-ia-mapping.md) carry one primary phase; [62/62 feature groups](evidence/group-ledger.md) aggregate the same leaves and the [surface ledger](evidence/feature-surface-ledger.md) gives each group an entry, current fixture task, target action, exception and input modes; [10 renderer families/38 aliases](08-template-experience-tiers.md) retain their identities; [10/10 journeys](05-ten-user-journey-blueprints.md) span them. The table below maps proposed decisions through Phases 03–27. `SOURCE-MAPPED` means a current route/component exists, not that the target behavior has passed live tests. No P0 is confirmed.
+
+| Decision ID / priority | Surface / role and evidence | Current → target experience | Dependency / owner | Risk / acceptance test |
+|---|---|---|---|---|
+| UX-03 / P2 | Both management apps; SOURCE-MAPPED tokens | Separate token sheets → canonical semantic color/type/spacing/focus roles; invitation CSS isolated | Phase 02 art direction → **03** | Token collision; light/dark contrast, 320px/zoom, renderer snapshots. |
+| UX-04 / P2 | Shared form/modal/feedback; SOURCE-MAPPED | Several primitives → state-complete accessible family without second focus manager | 03 → **04** | Focus regression; keyboard/AT, validation/empty/error, long Khmer. |
+| UX-05 / P2 | Management and renderer motion; SOURCE-MAPPED | Local CSS/Motion → role-based durations, reduced-motion/static paths | 03–04 → **05** | Blocking actions; low-end INP and animation cancellation. |
+| UX-06 / P1 | Four shells/nav and user 404; SOURCE-MAPPED | Existing navigation → coherent role/task IA and no dead-end deep links | 03–04 → **06** | Alias/guard break; both factory tests, auth/deep links, 320–1920 and short landscape. |
+| UX-07 / P2 | Home/venue/contact; SOURCE-MAPPED | Route-led marketing → credible story and clear template entry | 03/06 → **07** | Invented claims, media LCP; content review, CTA completion and lab LCP. |
+| UX-08 / P1 | Auth/profile; SOURCE-MAPPED | Route/guard paths → safe expiry/recovery and return intent | 06 + auth API → **08** | Open redirect/role confusion; 401/403/expired/provider paths. |
+| UX-09 / P1 | Catalog/pricing/checkout; SOURCE-MAPPED | Cards/price routes → truthful free/premium/owned decision | 07/08 + catalog API → **09** | Incorrect price/entitlement; staging catalog/checkout state matrix. |
+| UX-10 / P2 | Ten dedicated, two shared, fallback; SOURCE-MAPPED | Current art → preserved bespoke quality with authored data parity | 03/05/09 + rights → **10** | Homogenization/asset rights; all 38 aliases, long Khmer and guest contract. |
+| UX-11 / P1 | Creation wizard; SOURCE-MAPPED + QA-NEW-01 | Current steps → draft-safe onboarding and consistent label | 08/09 + event API → **11** | Lost intent/duplicate event; save/reload/offline/conflict. |
+| UX-12 / P2 | Event list/workspace; SOURCE-MAPPED | Modules → status/next-task owner home | 06/11 + event API → **12** | Stale event context; event switch and server-count tests. |
+| UX-13 / P1 | Creator Studio; SOURCE-MAPPED | Existing editor → guided/advanced authoring with revision-safe preview | 10–12 + JSON/preview contract → **13** | Lost unknown JSON/drafts; two-session save/reload/published parity. |
+| UX-14 / P2 | Media tools; SOURCE-MAPPED | Upload/gallery routes → clear crop/focal/consent/error workflows | 13 + media API/rights → **14** | MIME/ownership leak; isolated upload and orientation cases. |
+| UX-15 / P1 | Preview/publish/share; SOURCE-MAPPED | Multiple paths → review and canonical safe share/access | 13–14 + invitation API → **15** | Private link leak; staging publish/revoke/denied flows. |
+| UX-16 / P1 | Guest invitation; SOURCE-MAPPED | Renderer openings → essential-first, skippable guest task | 10/15 + guest access → **16** | Mobile/in-app trap; physical devices and ten-family guest completion. |
+| UX-17 / P1 | Guest CRM/import; SOURCE-MAPPED | List/import → preview/dedupe/partial-result clarity | 12/15 + guest API → **17** | Duplicate or leaked guest; isolated import/pagination/role tests. |
+| UX-18 / P1 | RSVP/wishes; SOURCE-MAPPED | Existing routes → token/deadline/privacy-aware response lifecycle | 16/17 + RSVP API → **18** | False response, privacy; public/personalized/expired/duplicate tests. |
+| UX-19 / P2 | Seating; SOURCE-MAPPED | Drag-centric plan → capacity-safe keyboard/list alternative | 17/18 + seating API → **19** | Inaccessible assignment; persistent capacity and phone tests. |
+| UX-20 / P1 | Ticket/QR/check-in; SOURCE-MAPPED | Separate tools → scannable design and denial-safe admission | 17–19 + admission API → **20** | Duplicate admission; real scan/invalid/duplicate/offline audit. |
+| UX-21 / P1 | Purchase/gift/payment; SOURCE-MAPPED | Redirects and records → verified server status/provenance only | 09 + provider/MySQL/security → **21** | False PAID/entitlement; sandbox settlement/replay/timeout/denial. |
+| UX-22 / P2 | Budget/reports/analytics; SOURCE-MAPPED | Metrics routes → source-labeled currency/status facts | 17–21 + DB → **22** | Mixed money/stale totals; reconcile exports against isolated DB. |
+| UX-23 / P1 | Team/org/notification/settings/assistant; SOURCE-MAPPED | Role routes → invite/revoke and permission-aware tasks | 08/12 + team API → **23** | Revoked access persists; two-session accept/revoke/deny. |
+| UX-24 / P1 | Admin operations; SOURCE-MAPPED | 19 admin leaves → safe dense task IA, audited mutations | 03/04/06 + admin API → **24** | Wrong role/status; guarded CRUD/empty/error/confirmation. |
+| UX-25 / P1 | Admin Template Studio; SOURCE-MAPPED + QA-NEW-02/03 | Current five sections → reachable, trustworthy edit/preview/publish | 10/13/24 + preview origin → **25** | Overflow/serialization; 320–1440+landscape, keyboard/save/reload. |
+| UX-26 / P1 | Cross-cutting quality; RISK | Partial fixture evidence → real-device/AT/perf/security coverage | 03–25 → **26** | Unsupported certification; full PASS/FAIL/BLOCKED matrix and field/lab separation. |
+| UX-27 / P1 | Release/operations; RISK | Historical mixed evidence → release gate and handover | 21/26 + ops → **27** | Premature launch; complete critical journey/provider/MySQL/device evidence. |
+
+## Ordered gates
+
+03 tokens → 04 components → 05 motion and 06 shells before broad screen rollout. Template registry and art review (10) precede both creator/guest/admin template changes (13/16/25). Event persistence and auth (08/11) precede publish/share (15). Payment/entitlement (21) cannot be inferred from catalog visuals (09). Phases 26–27 verify rather than retroactively imply earlier completion. A newly reproduced P0 would override this order and require explicit evidence and owner.
+
+Every phase must expand its assigned routes from the route matrix into default/loading/empty/validation/401/403/404/409/429/503/offline/expired states as relevant. User/admin authorization stays server-enforced. Public guest tokens, RSVP deadlines and privacy, order reference/amount/currency/settlement and replay resistance, preview origin/session, unknown authored JSON/revisions, slug/code precedence, applied Flyway migrations, media signatures/MIME/size/ownership and licensed artwork are preservation invariants. Optional calendar, general CMS, live AI, refunds and venue booking are **PROPOSAL / REQUIRES PRODUCT DECISION**, with no phase silently implementing them.
