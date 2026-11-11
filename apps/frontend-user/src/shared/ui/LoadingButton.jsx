@@ -14,6 +14,7 @@ export default function LoadingButton({
       type={type}
       className={`k-loading-btn ${isLoading ? "k-btn-loading" : ""} ${className}`}
       disabled={disabled || isLoading}
+      aria-busy={isLoading || undefined}
       onClick={onClick}
       {...props}
     >

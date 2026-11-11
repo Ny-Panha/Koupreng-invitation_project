@@ -1,0 +1,5 @@
+# 10 — Khmer/English typography and theme states
+
+The Phase 03 semantic CSS remains the token source. Admin `StatusBadge`, `StatCard`, `Toast` and danger `ActionButton` consume its light/dark theme roles; user `FormField`, `SearchInput`, `ResponsiveTable` and owner status badges now use those roles too. Invitation renderer badge artwork remains scoped. The admin toast close control is named `បិទការជូនដំណឹង` in Khmer and “Dismiss notification” in English. Existing Khmer/English content and controls were not replaced.
+
+Before/after fixture captures cover 390 and 1440 light management/public surfaces, six 390 dark surfaces, and twelve template keys at two widths. The responsive sweep covers 19 widths from 320 to 1920; eight axe scans across light/dark fixture routes have zero reported rules after correcting RSVP and organization contrast. This does not certify native Khmer glyph shaping, long real-world copy, browser zoom/reflow at 200–400%, high-contrast visual affordances across all controls, or physical screen readers. The previous source's broad remote font catalog is still an independent open gate.

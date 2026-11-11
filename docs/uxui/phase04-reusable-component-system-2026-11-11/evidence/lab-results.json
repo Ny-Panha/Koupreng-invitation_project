@@ -1,0 +1,5931 @@
+{
+  "browser": "156.0.8078.4",
+  "viewport": "390x844",
+  "motion": "reduce",
+  "network": "default loopback",
+  "cpu": "unthrottled",
+  "bundles": [
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AccessFailureState-g3y_1rET.js",
+      "bytes": 408,
+      "gzip": 267,
+      "brotli": 217
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AiAssistantPage-CbaqwFwC.css",
+      "bytes": 3508,
+      "gzip": 1041,
+      "brotli": 877
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AiAssistantPage-Cv4ItOgH.js",
+      "bytes": 18199,
+      "gzip": 6139,
+      "brotli": 5247
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/armchair-_ct-2rwT.js",
+      "bytes": 404,
+      "gzip": 263,
+      "brotli": 244
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/arrow-down-HF_ljo1e.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 196
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/arrow-left-Co9bFwqD.js",
+      "bytes": 205,
+      "gzip": 188,
+      "brotli": 184
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/arrow-right-CjmE3qHL.js",
+      "bytes": 205,
+      "gzip": 188,
+      "brotli": 183
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AttendanceAnalytics-CpDRg61S.js",
+      "bytes": 7784,
+      "gzip": 3025,
+      "brotli": 2550
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AttendanceAnalytics-DMXZMAHO.css",
+      "bytes": 3287,
+      "gzip": 1085,
+      "brotli": 924
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/authApi-CuYpX8K0.js",
+      "bytes": 1070,
+      "gzip": 422,
+      "brotli": 363
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AuthLayout-Qy0WLkIJ.js",
+      "bytes": 1709,
+      "gzip": 713,
+      "brotli": 606
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AuthoredClosing-D5vcxWy8.js",
+      "bytes": 465,
+      "gzip": 259,
+      "brotli": 214
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/AuthPage-BoJH1O4z.css",
+      "bytes": 13806,
+      "gzip": 3306,
+      "brotli": 2881
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/background-Dt0NvFi2.js",
+      "bytes": 55,
+      "gzip": 75,
+      "brotli": 59
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/BlissEditorialLayout-C5He49E0.css",
+      "bytes": 5192,
+      "gzip": 1539,
+      "brotli": 1284
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/BlissEditorialLayout-Cyv5TFyt.js",
+      "bytes": 15569,
+      "gzip": 4655,
+      "brotli": 3969
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/BrowseTemplatesPage-D4Wr239W.js",
+      "bytes": 156,
+      "gzip": 143,
+      "brotli": 108
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/budgetApi-BHSCGwLM.js",
+      "bytes": 1419,
+      "gzip": 526,
+      "brotli": 438
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/BudgetPage-CJWQtRWI.css",
+      "bytes": 2159,
+      "gzip": 711,
+      "brotli": 571
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/BudgetPage-prUf1eEF.js",
+      "bytes": 19994,
+      "gzip": 5595,
+      "brotli": 4799
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/calendar-C1JtYLha.js",
+      "bytes": 295,
+      "gzip": 230,
+      "brotli": 200
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/camera-C5-R6UP4.js",
+      "bytes": 376,
+      "gzip": 277,
+      "brotli": 248
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CanvaKhmerWeddingTemplate-CiqSs23V.js",
+      "bytes": 24764,
+      "gzip": 7550,
+      "brotli": 6558
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CanvaKhmerWeddingTemplate-FujMIGo9.css",
+      "bytes": 22855,
+      "gzip": 5729,
+      "brotli": 5010
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/catalogPolicy-O2nCERmB.js",
+      "bytes": 1007,
+      "gzip": 521,
+      "brotli": 446
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ChangePasswordPage-BARKKZP3.js",
+      "bytes": 8472,
+      "gzip": 2330,
+      "brotli": 1941
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/chart-column-HFsnCLDd.js",
+      "bytes": 315,
+      "gzip": 237,
+      "brotli": 214
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ChatBot-7rpWxPn1.js",
+      "bytes": 8235,
+      "gzip": 2800,
+      "brotli": 2331
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ChatBot-BL96F1Mk.css",
+      "bytes": 4239,
+      "gzip": 1285,
+      "brotli": 1053
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/chevron-down-DxRDuKka.js",
+      "bytes": 168,
+      "gzip": 165,
+      "brotli": 151
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/chevron-left-BUDSM_O6.js",
+      "bytes": 170,
+      "gzip": 170,
+      "brotli": 156
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CinematicVideoOpening-CVxRneHo.js",
+      "bytes": 14270,
+      "gzip": 4397,
+      "brotli": 3873
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CinematicVideoOpening-DI2lfRqW.css",
+      "bytes": 21776,
+      "gzip": 4598,
+      "brotli": 3989
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/circle-alert-DAJ0l-jr.js",
+      "bytes": 315,
+      "gzip": 228,
+      "brotli": 235
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/circle-check-DGgvMsbA.js",
+      "bytes": 250,
+      "gzip": 216,
+      "brotli": 194
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/clock-3-B7QKIK3n.js",
+      "bytes": 209,
+      "gzip": 192,
+      "brotli": 168
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/clock-CYcN1Ohb.js",
+      "bytes": 209,
+      "gzip": 192,
+      "brotli": 199
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ContactPage-DHs0XvJZ.js",
+      "bytes": 9825,
+      "gzip": 3569,
+      "brotli": 3004
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/copy-DXssfycg.js",
+      "bytes": 276,
+      "gzip": 236,
+      "brotli": 211
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CoverBackground-CUT11KnJ.js",
+      "bytes": 2686,
+      "gzip": 1264,
+      "brotli": 1108
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/CoverBackground-DWWHaHKW.css",
+      "bytes": 434,
+      "gzip": 251,
+      "brotli": 180
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/createLucideIcon-iAjGl61D.js",
+      "bytes": 3088,
+      "gzip": 1480,
+      "brotli": 1340
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/currencyTotals-CpX6dh_3.js",
+      "bytes": 380,
+      "gzip": 288,
+      "brotli": 244
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DashboardPage-8jDWMK4x.css",
+      "bytes": 21915,
+      "gzip": 4567,
+      "brotli": 4043
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DashboardPage-D110qts3.js",
+      "bytes": 18581,
+      "gzip": 5719,
+      "brotli": 4999
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DatePicker-BqS2Tumu.js",
+      "bytes": 6282,
+      "gzip": 2517,
+      "brotli": 2198
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DatePicker-CmASfBZO.css",
+      "bytes": 3396,
+      "gzip": 1123,
+      "brotli": 928
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DefaultTemplateLayout-Bbp4OzUV.js",
+      "bytes": 5834,
+      "gzip": 2146,
+      "brotli": 1810
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/deliveryApi-BvwjkPvY.js",
+      "bytes": 604,
+      "gzip": 247,
+      "brotli": 205
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DigitalYesLayout-By6oAR9f.css",
+      "bytes": 5680,
+      "gzip": 1713,
+      "brotli": 1466
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DigitalYesLayout-N7Rt1i-N.js",
+      "bytes": 35589,
+      "gzip": 9493,
+      "brotli": 8207
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/download-BRsF9N4w.js",
+      "bytes": 272,
+      "gzip": 223,
+      "brotli": 195
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/draftMediaStorage-DTubrHY0.js",
+      "bytes": 984,
+      "gzip": 501,
+      "brotli": 430
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/draftToTemplate-C7E_CANs.js",
+      "bytes": 10362,
+      "gzip": 2993,
+      "brotli": 2685
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/DynamicTemplateRenderer-DNydroTn.js",
+      "bytes": 13383,
+      "gzip": 4587,
+      "brotli": 3985
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/earth-DVD7C6k-.js",
+      "bytes": 453,
+      "gzip": 308,
+      "brotli": 297
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eighth-note-DwLY30UA.js",
+      "bytes": 254,
+      "gzip": 226,
+      "brotli": 201
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eighth-notes-ldlrLYQV.js",
+      "bytes": 326,
+      "gzip": 254,
+      "brotli": 235
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ellipsis-DtTzxnNG.js",
+      "bytes": 294,
+      "gzip": 212,
+      "brotli": 185
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EmeraldLuxeLayout-BHtnf6Bw.js",
+      "bytes": 19458,
+      "gzip": 5945,
+      "brotli": 5123
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EmeraldLuxeLayout-t-wl7iBo.css",
+      "bytes": 5179,
+      "gzip": 1718,
+      "brotli": 1494
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EnterprisePages-CaLKO3tt.css",
+      "bytes": 3237,
+      "gzip": 1103,
+      "brotli": 907
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventContext-fHWhCzEg.js",
+      "bytes": 157,
+      "gzip": 145,
+      "brotli": 117
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventCover-1sXxLu5p.js",
+      "bytes": 1543,
+      "gzip": 782,
+      "brotli": 694
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventCreatePage-B9V-HCyh.js",
+      "bytes": 51244,
+      "gzip": 12907,
+      "brotli": 11172
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventCreatePage-C3OFDRFo.css",
+      "bytes": 21634,
+      "gzip": 4762,
+      "brotli": 4129
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventDetails-DuzSCJ7I.js",
+      "bytes": 20594,
+      "gzip": 7119,
+      "brotli": 6161
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventDetails-U1CqV5n4.css",
+      "bytes": 4622,
+      "gzip": 1456,
+      "brotli": 1231
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventEssentialLayout-CHu51lP1.js",
+      "bytes": 3370,
+      "gzip": 1660,
+      "brotli": 1423
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventFields-CzdatgUH.js",
+      "bytes": 2251,
+      "gzip": 1131,
+      "brotli": 957
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eventFields-uQ6QlnAc.js",
+      "bytes": 3031,
+      "gzip": 1321,
+      "brotli": 1084
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventInvitation-B9fV4-tm.js",
+      "bytes": 5473,
+      "gzip": 2536,
+      "brotli": 2162
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eventNavigationModel-BiPv6Fnb.js",
+      "bytes": 4406,
+      "gzip": 1936,
+      "brotli": 1644
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eventPlaceholders-BvP-szOJ.js",
+      "bytes": 25486,
+      "gzip": 4718,
+      "brotli": 3995
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/eventPresentation-st0VK6LJ.js",
+      "bytes": 226,
+      "gzip": 192,
+      "brotli": 145
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventsFeature-sGvaD9Qa.css",
+      "bytes": 21660,
+      "gzip": 4722,
+      "brotli": 4118
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventsPage-C5nC-FqS.js",
+      "bytes": 42484,
+      "gzip": 12470,
+      "brotli": 11045
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventsPage-rQJhgB7g.css",
+      "bytes": 9638,
+      "gzip": 2160,
+      "brotli": 1837
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventTeamPanel-Ae4QSWZS.js",
+      "bytes": 5237,
+      "gzip": 2051,
+      "brotli": 1737
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventWorkspace-BQrfHuTv.js",
+      "bytes": 15566,
+      "gzip": 5558,
+      "brotli": 4851
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/EventWorkspace-cFAQ1hDI.css",
+      "bytes": 11891,
+      "gzip": 3110,
+      "brotli": 2693
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ExpensesPage-BCFnFEMU.js",
+      "bytes": 23899,
+      "gzip": 6841,
+      "brotli": 6039
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ExpensesPage-BSei-XLZ.css",
+      "bytes": 21195,
+      "gzip": 4517,
+      "brotli": 3938
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/external-link-Cyqe121L.js",
+      "bytes": 291,
+      "gzip": 229,
+      "brotli": 195
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/FeatureAccessCard-CtcpPbfu.js",
+      "bytes": 2026,
+      "gzip": 1133,
+      "brotli": 922
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/FinancialReport-D3rvPQYR.js",
+      "bytes": 19030,
+      "gzip": 6122,
+      "brotli": 5408
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/FinancialReport-DhvG7joz.css",
+      "bytes": 17572,
+      "gzip": 3416,
+      "brotli": 3012
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/FloatingAudioPlayer-DayaTPdi.css",
+      "bytes": 1237,
+      "gzip": 600,
+      "brotli": 473
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/FloatingAudioPlayer-Duf4Cn3S.js",
+      "bytes": 1618,
+      "gzip": 916,
+      "brotli": 766
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ForgotPasswordPage-Co-ttxMh.js",
+      "bytes": 5802,
+      "gzip": 2158,
+      "brotli": 1796
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/galleryStorage-hdbuO4NG.js",
+      "bytes": 668,
+      "gzip": 358,
+      "brotli": 302
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/gem-BgV0Nu7W.js",
+      "bytes": 374,
+      "gzip": 271,
+      "brotli": 264
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/gift-BCi0GZxU.js",
+      "bytes": 389,
+      "gzip": 278,
+      "brotli": 255
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/giftsApi-D6Ea0mo4.js",
+      "bytes": 368,
+      "gzip": 225,
+      "brotli": 224
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/guestApi-_WID2RBC.js",
+      "bytes": 2845,
+      "gzip": 804,
+      "brotli": 681
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestImportModal-HW0QRBWx.js",
+      "bytes": 22355,
+      "gzip": 7396,
+      "brotli": 6459
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestImportModal-O4l2sDhL.css",
+      "bytes": 3967,
+      "gzip": 1260,
+      "brotli": 1054
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestSectionNavigation-Aj9lHyA3.js",
+      "bytes": 2692,
+      "gzip": 1524,
+      "brotli": 1318
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestSectionNavigation-CgEtE96C.css",
+      "bytes": 1421,
+      "gzip": 690,
+      "brotli": 548
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestsPage-BaT13ydP.css",
+      "bytes": 59360,
+      "gzip": 11179,
+      "brotli": 9853
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/GuestsPage-CTjZEi9V.js",
+      "bytes": 52602,
+      "gzip": 15718,
+      "brotli": 13842
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/hostPlanningStorage-C53eoEYx.js",
+      "bytes": 1710,
+      "gzip": 677,
+      "brotli": 588
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/HostShell-D3UXP9TK.css",
+      "bytes": 13936,
+      "gzip": 3150,
+      "brotli": 2767
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/HostShell-Lpn3ZcYI.js",
+      "bytes": 12553,
+      "gzip": 3830,
+      "brotli": 3348
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/HostTemplateDemoPage-DXyPqTBW.js",
+      "bytes": 151,
+      "gzip": 143,
+      "brotli": 104
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/httpClient-ecMDaaxJ.js",
+      "bytes": 54207,
+      "gzip": 19992,
+      "brotli": 18128
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/IllustratedMapDesignerModal-CoWkia6P.js",
+      "bytes": 27554,
+      "gzip": 9005,
+      "brotli": 7882
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/image-PgfDdNte.js",
+      "bytes": 309,
+      "gzip": 247,
+      "brotli": 220
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/images-DptK46fJ.js",
+      "bytes": 410,
+      "gzip": 301,
+      "brotli": 268
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/index-BthmFj7w.js",
+      "bytes": 472266,
+      "gzip": 139973,
+      "brotli": 117898
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/index-DzAlWHCO.css",
+      "bytes": 225829,
+      "gzip": 41280,
+      "brotli": 34102
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/Instrumental Wedding Music (VioSounds Cover)-dvp3gij_.js",
+      "bytes": 97,
+      "gzip": 117,
+      "brotli": 87
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/invitationApi-CfbbPcdS.js",
+      "bytes": 1871,
+      "gzip": 761,
+      "brotli": 630
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationBranding-CKeGOpOL.js",
+      "bytes": 10059,
+      "gzip": 4143,
+      "brotli": 3679
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationBranding-DPjhi_gm.css",
+      "bytes": 373,
+      "gzip": 245,
+      "brotli": 169
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationCheckInPage-Z-l2qgcz.js",
+      "bytes": 181318,
+      "gzip": 60915,
+      "brotli": 38983
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationCreatePage-CcG-xgvJ.js",
+      "bytes": 25197,
+      "gzip": 6440,
+      "brotli": 5607
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationCreatePage-DfKoFnW2.css",
+      "bytes": 14967,
+      "gzip": 3442,
+      "brotli": 2974
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationDeliveryPage-DBcO5Gid.js",
+      "bytes": 12085,
+      "gzip": 3849,
+      "brotli": 3426
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationDeliveryPage-DrVE9xd3.css",
+      "bytes": 10276,
+      "gzip": 2236,
+      "brotli": 1879
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/invitationDraftAdapter-BR7Qg6l-.js",
+      "bytes": 10159,
+      "gzip": 3410,
+      "brotli": 3063
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationEditFeature-aDLA-VuA.css",
+      "bytes": 55745,
+      "gzip": 10805,
+      "brotli": 9483
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationEditFeature-ByGDvgwC.js",
+      "bytes": 240386,
+      "gzip": 62752,
+      "brotli": 50490
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationEditPage-BiePwZTn.js",
+      "bytes": 163,
+      "gzip": 156,
+      "brotli": 120
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationLabel-i3FMH5-r.js",
+      "bytes": 8727,
+      "gzip": 2697,
+      "brotli": 2238
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationMediaPage-CBahCHbL.css",
+      "bytes": 3958,
+      "gzip": 1237,
+      "brotli": 1034
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationMediaPage-CQzRJZq4.js",
+      "bytes": 7699,
+      "gzip": 3016,
+      "brotli": 2670
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationPages-z4Ie7dql.css",
+      "bytes": 39786,
+      "gzip": 7930,
+      "brotli": 6970
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationPreviewPage-3BtZqekk.js",
+      "bytes": 6171,
+      "gzip": 2461,
+      "brotli": 2113
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationStudio-DJB0BikX.css",
+      "bytes": 41445,
+      "gzip": 8045,
+      "brotli": 7174
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationStudio-Dzk_GMr8.js",
+      "bytes": 47596,
+      "gzip": 14168,
+      "brotli": 12236
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationStyleEditor-DQV_Fox3.css",
+      "bytes": 3695,
+      "gzip": 1316,
+      "brotli": 1106
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/InvitationStyleEditor-g0f3I4P9.js",
+      "bytes": 18164,
+      "gzip": 5600,
+      "brotli": 4858
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/io5-b3milcAS.js",
+      "bytes": 45435,
+      "gzip": 10532,
+      "brotli": 8796
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/jsx-runtime-Wy9s6hX0.js",
+      "bytes": 8911,
+      "gzip": 3383,
+      "brotli": 3033
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/khmer-celestial-BhHWmCfe.css",
+      "bytes": 41784,
+      "gzip": 9189,
+      "brotli": 8002
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/khmer-celestial-ByXO9yAF.js",
+      "bytes": 26186,
+      "gzip": 8298,
+      "brotli": 7120
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/khmer-floral-gold-B1XirV0l.js",
+      "bytes": 8558,
+      "gzip": 3400,
+      "brotli": 2979
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/khmer-floral-gold-D0dBZ0XE.css",
+      "bytes": 55901,
+      "gzip": 12207,
+      "brotli": 10727
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/KhmerCelestialLayout-DcNBzQOc.js",
+      "bytes": 31881,
+      "gzip": 10201,
+      "brotli": 8845
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/KhmerFloralGoldLayout-DW4ufMpO.js",
+      "bytes": 51637,
+      "gzip": 17485,
+      "brotli": 15673
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/layers-dn2VuUtx.js",
+      "bytes": 482,
+      "gzip": 279,
+      "brotli": 257
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/layout-dashboard-BXVxEiuj.js",
+      "bytes": 391,
+      "gzip": 234,
+      "brotli": 220
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/lib-DKqfGMZD.js",
+      "bytes": 23212,
+      "gzip": 8115,
+      "brotli": 7073
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/loader-circle-wWmsqaDV.js",
+      "bytes": 205,
+      "gzip": 193,
+      "brotli": 203
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/localDate-D_tAugdn.js",
+      "bytes": 356,
+      "gzip": 251,
+      "brotli": 212
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/localizedContent-BPtF94pE.js",
+      "bytes": 8997,
+      "gzip": 2968,
+      "brotli": 2584
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/LoginPage-CetVFfah.js",
+      "bytes": 3769,
+      "gzip": 1595,
+      "brotli": 1360
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/mail-BEvm0P9D.js",
+      "bytes": 253,
+      "gzip": 226,
+      "brotli": 198
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/map-BtfO4Uj9.js",
+      "bytes": 465,
+      "gzip": 295,
+      "brotli": 280
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/mapPresets-BkyINy53.js",
+      "bytes": 3787,
+      "gzip": 1478,
+      "brotli": 1241
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/mediaApi-qHt0erW9.js",
+      "bytes": 3207,
+      "gzip": 1074,
+      "brotli": 913
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/mediaLibraryModel-mEEr4ePo.js",
+      "bytes": 1315,
+      "gzip": 664,
+      "brotli": 578
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/message-circle-heart-DlGxIvU_.js",
+      "bytes": 423,
+      "gzip": 307,
+      "brotli": 283
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/minus-BUwbHLqS.js",
+      "bytes": 157,
+      "gzip": 160,
+      "brotli": 139
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/Modal-CPMz-hmB.js",
+      "bytes": 4798,
+      "gzip": 1974,
+      "brotli": 1749
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/Modal-Jynf-Qp7.css",
+      "bytes": 2976,
+      "gzip": 1112,
+      "brotli": 926
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/MotionConfigContext-CluVpD3A.js",
+      "bytes": 55920,
+      "gzip": 20439,
+      "brotli": 18725
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/notificationsApi-Bwrpw7Uz.js",
+      "bytes": 459,
+      "gzip": 275,
+      "brotli": 229
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/NotificationsPage-CcNnYtcp.js",
+      "bytes": 5758,
+      "gzip": 2211,
+      "brotli": 1893
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/NotificationsPage-CHAlT3AJ.css",
+      "bytes": 2135,
+      "gzip": 816,
+      "brotli": 661
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/openingConfig-V494-HbQ.js",
+      "bytes": 2104,
+      "gzip": 994,
+      "brotli": 864
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/organizationApi-C8SzCDsi.js",
+      "bytes": 465,
+      "gzip": 265,
+      "brotli": 232
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/OrganizationDetailPage-BZHYwg2c.js",
+      "bytes": 19211,
+      "gzip": 5811,
+      "brotli": 4978
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/OrganizationPage-Bc9Y-NaS.css",
+      "bytes": 7848,
+      "gzip": 1913,
+      "brotli": 1601
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/OrganizationPage-CotDwY3i.js",
+      "bytes": 8019,
+      "gzip": 2773,
+      "brotli": 2365
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaidTemplatesPage-Bw8Md--4.js",
+      "bytes": 9134,
+      "gzip": 2792,
+      "brotli": 2369
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/palette-CmOQPUUD.js",
+      "bytes": 550,
+      "gzip": 305,
+      "brotli": 278
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentCancelPage-Db7Pu8Su.js",
+      "bytes": 1405,
+      "gzip": 654,
+      "brotli": 550
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentHistoryPage-SerCiU4V.js",
+      "bytes": 3125,
+      "gzip": 1223,
+      "brotli": 1036
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentPages-CtMCt73q.css",
+      "bytes": 26071,
+      "gzip": 5065,
+      "brotli": 4384
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentReceiptPage-jHpP_Xwl.js",
+      "bytes": 3417,
+      "gzip": 1298,
+      "brotli": 1096
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/paymentService-8aiwCpRs.js",
+      "bytes": 1007,
+      "gzip": 351,
+      "brotli": 290
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/paymentStatus-Ca9Sc1nv.js",
+      "bytes": 2417,
+      "gzip": 866,
+      "brotli": 717
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentStatusPage-lGTKDq68.js",
+      "bytes": 17721,
+      "gzip": 5281,
+      "brotli": 4518
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PaymentSuccessPage-DvYCZPuP.js",
+      "bytes": 4884,
+      "gzip": 1787,
+      "brotli": 1473
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/pencil-RJR14nLM.js",
+      "bytes": 316,
+      "gzip": 250,
+      "brotli": 235
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/planningApi-B4YcOiXD.js",
+      "bytes": 770,
+      "gzip": 289,
+      "brotli": 255
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/previewMessaging-a6DG3MSn.css",
+      "bytes": 4632,
+      "gzip": 1381,
+      "brotli": 1158
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/previewMessaging-zUFsuHlm.js",
+      "bytes": 25569,
+      "gzip": 10661,
+      "brotli": 9372
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PricingPage-Dg_5BXXH.js",
+      "bytes": 11640,
+      "gzip": 3554,
+      "brotli": 2981
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ProfilePage-C1_P3FDb.js",
+      "bytes": 13194,
+      "gzip": 3463,
+      "brotli": 3004
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/program-B_KDOsp3.js",
+      "bytes": 3511,
+      "gzip": 1704,
+      "brotli": 1500
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ProgramTimeline-CgZGKh_q.js",
+      "bytes": 21515,
+      "gzip": 8170,
+      "brotli": 7182
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ProgramTimeline-CTCRCZCW.css",
+      "bytes": 12870,
+      "gzip": 3287,
+      "brotli": 2838
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/prop-types-CSvbPeQ-.js",
+      "bytes": 810,
+      "gzip": 505,
+      "brotli": 427
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/proxy-4uqr5Owt.js",
+      "bytes": 78720,
+      "gzip": 24707,
+      "brotli": 22035
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/PublicInvitationPage-BsSLbkcV.js",
+      "bytes": 24445,
+      "gzip": 8154,
+      "brotli": 7161
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/qr-code-BkWIctgA.js",
+      "bytes": 690,
+      "gzip": 337,
+      "brotli": 317
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/QrPage-BG1l54Ml.js",
+      "bytes": 7208,
+      "gzip": 3029,
+      "brotli": 2565
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/QrPage-CuTZfzOJ.css",
+      "bytes": 2822,
+      "gzip": 1061,
+      "brotli": 859
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/QuotaProgress-DcSM6EKZ.js",
+      "bytes": 1197,
+      "gzip": 705,
+      "brotli": 591
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/react-dom-g7hNCJoM.js",
+      "bytes": 3864,
+      "gzip": 1393,
+      "brotli": 1211
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/refresh-cw-Ca3m3Dup.js",
+      "bytes": 361,
+      "gzip": 253,
+      "brotli": 228
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RegisterPage-Bq6algBg.js",
+      "bytes": 6124,
+      "gzip": 2195,
+      "brotli": 1888
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/reportsApi-CHKpMUFc.js",
+      "bytes": 873,
+      "gzip": 525,
+      "brotli": 420
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ResetPasswordPage-C5fj_ohq.js",
+      "bytes": 7141,
+      "gzip": 2508,
+      "brotli": 2145
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RibbonOpening-D1nJWSKK.js",
+      "bytes": 3758,
+      "gzip": 1430,
+      "brotli": 1238
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RoyalGardenCinematicLayout-B-D9kq3s.css",
+      "bytes": 95663,
+      "gzip": 19074,
+      "brotli": 15854
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RoyalGardenCinematicLayout-B6N_TymE.js",
+      "bytes": 70720,
+      "gzip": 21907,
+      "brotli": 19306
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/rsvpApi-BG7yJHjA.js",
+      "bytes": 1037,
+      "gzip": 411,
+      "brotli": 343
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RsvpContainer-D9Ii3ZjV.js",
+      "bytes": 7560,
+      "gzip": 2507,
+      "brotli": 2124
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RsvpDashboardPage-Cy1M4YyE.js",
+      "bytes": 13906,
+      "gzip": 4269,
+      "brotli": 3836
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/RsvpDashboardPage-DKQObDxI.css",
+      "bytes": 7528,
+      "gzip": 2086,
+      "brotli": 1770
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/save-BGNRUap4.js",
+      "bytes": 367,
+      "gzip": 254,
+      "brotli": 238
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ScheduleList-nHnoBIW0.js",
+      "bytes": 1145,
+      "gzip": 481,
+      "brotli": 409
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/search-sdVUzAfb.js",
+      "bytes": 214,
+      "gzip": 194,
+      "brotli": 201
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SeatingFloorPlan-CdbZk0WQ.css",
+      "bytes": 17235,
+      "gzip": 4070,
+      "brotli": 3580
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SeatingFloorPlan-IXDYhciL.js",
+      "bytes": 22638,
+      "gzip": 7076,
+      "brotli": 6210
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SeatingPage-BTJqiIsB.js",
+      "bytes": 16677,
+      "gzip": 5004,
+      "brotli": 4501
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SeatingPage-CsgqTI34.css",
+      "bytes": 5186,
+      "gzip": 1511,
+      "brotli": 1277
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/share-2-BEJ_2Nea.js",
+      "bytes": 397,
+      "gzip": 261,
+      "brotli": 239
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/shared-Cmv7F83G.js",
+      "bytes": 326,
+      "gzip": 234,
+      "brotli": 191
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SilkHeritageLayout-DWovnA4v.js",
+      "bytes": 24293,
+      "gzip": 7946,
+      "brotli": 6890
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SilkHeritageLayout-H8mHa4sN.css",
+      "bytes": 25415,
+      "gzip": 5303,
+      "brotli": 4656
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SiteAnimations-Ba-LXPX_.js",
+      "bytes": 3554,
+      "gzip": 1548,
+      "brotli": 1368
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SiteAnimations-D6jIc5kO.css",
+      "bytes": 2566,
+      "gzip": 1104,
+      "brotli": 950
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SocialAuthButtons-DIq-4I3E.js",
+      "bytes": 15471,
+      "gzip": 6223,
+      "brotli": 5326
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/studioMedia-MOMtDV3k.js",
+      "bytes": 1743,
+      "gzip": 878,
+      "brotli": 780
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SubscriptionPackagesPage-BzB5yHrj.js",
+      "bytes": 36828,
+      "gzip": 10282,
+      "brotli": 8891
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/SubscriptionPackagesPage-CI5Er5LL.css",
+      "bytes": 16160,
+      "gzip": 3556,
+      "brotli": 3066
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateBoilerplateLayout-DdLD3nKH.js",
+      "bytes": 14002,
+      "gzip": 4356,
+      "brotli": 3742
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateBoilerplateLayout-KsL0tCMp.css",
+      "bytes": 4380,
+      "gzip": 1441,
+      "brotli": 1241
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/templateCatalogApi-B2atPAZo.js",
+      "bytes": 792,
+      "gzip": 477,
+      "brotli": 411
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateCheckoutPage-CmPj00PI.js",
+      "bytes": 9070,
+      "gzip": 3200,
+      "brotli": 2702
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateDemoPage-g9AJJ1WM.js",
+      "bytes": 156,
+      "gzip": 145,
+      "brotli": 108
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateExperience-CXdJEP-7.css",
+      "bytes": 104612,
+      "gzip": 20144,
+      "brotli": 17077
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateExperience-CZ8JlTFY.js",
+      "bytes": 126648,
+      "gzip": 33593,
+      "brotli": 28091
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateGift-CDgzLpKL.js",
+      "bytes": 5729,
+      "gzip": 2758,
+      "brotli": 2325
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateImage-Cj6plCj6.js",
+      "bytes": 636,
+      "gzip": 441,
+      "brotli": 374
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/templateModel-DxyaV7J7.js",
+      "bytes": 4072,
+      "gzip": 1760,
+      "brotli": 1519
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplateRsvp-BWD4Kn1c.js",
+      "bytes": 10923,
+      "gzip": 4584,
+      "brotli": 4049
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/templates-Bhmc2Bff.js",
+      "bytes": 12550,
+      "gzip": 4614,
+      "brotli": 4017
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/templates-CFCVfUoY.css",
+      "bytes": 7049,
+      "gzip": 2029,
+      "brotli": 1747
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplatesFeature-BXk6t_qi.js",
+      "bytes": 146,
+      "gzip": 138,
+      "brotli": 113
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TemplatesPage-BQvoQ33m.js",
+      "bytes": 158,
+      "gzip": 151,
+      "brotli": 111
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/templateTypography-D2aSXzJ5.js",
+      "bytes": 461,
+      "gzip": 345,
+      "brotli": 304
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ticket-Bz_Q0bYW.js",
+      "bytes": 361,
+      "gzip": 244,
+      "brotli": 222
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TicketActions-CxQyqQf1.js",
+      "bytes": 17394,
+      "gzip": 6995,
+      "brotli": 6090
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TicketActions-dpxtvUX1.css",
+      "bytes": 7502,
+      "gzip": 2004,
+      "brotli": 1704
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TicketDesigner-CfsxqYz6.js",
+      "bytes": 14289,
+      "gzip": 4942,
+      "brotli": 4294
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TicketModal-DKGQsBK3.js",
+      "bytes": 1608,
+      "gzip": 927,
+      "brotli": 809
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TimePicker-WdylPF6N.css",
+      "bytes": 5265,
+      "gzip": 1504,
+      "brotli": 1261
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/TimePicker-ZObCQ8DJ.js",
+      "bytes": 8925,
+      "gzip": 2877,
+      "brotli": 2461
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/trash-CFx6BrYV.js",
+      "bytes": 386,
+      "gzip": 254,
+      "brotli": 240
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/triangle-alert-DcfJLe8V.js",
+      "bytes": 332,
+      "gzip": 252,
+      "brotli": 235
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ui-BUvqafO6.css",
+      "bytes": 7250,
+      "gzip": 1765,
+      "brotli": 1486
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ui-wFrosOA2.js",
+      "bytes": 6623,
+      "gzip": 2476,
+      "brotli": 2128
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/upload-7TWEfXGF.js",
+      "bytes": 270,
+      "gzip": 220,
+      "brotli": 193
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useAccessError-BZbsvM4i.js",
+      "bytes": 304,
+      "gzip": 232,
+      "brotli": 188
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useBackendMessages-lc8e6dek.js",
+      "bytes": 106675,
+      "gzip": 26262,
+      "brotli": 21963
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useClickOutside-D-aSKM02.js",
+      "bytes": 287,
+      "gzip": 214,
+      "brotli": 170
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useLanguageStore-mmn9Okko.js",
+      "bytes": 1006,
+      "gzip": 568,
+      "brotli": 518
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/user-plus-BFPmHxgW.js",
+      "bytes": 350,
+      "gzip": 260,
+      "brotli": 231
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/users-CZYN77kL.js",
+      "bytes": 346,
+      "gzip": 250,
+      "brotli": 225
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useT-8JXcW_xa.js",
+      "bytes": 725,
+      "gzip": 474,
+      "brotli": 416
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useUiCopy-nahFYZIp.js",
+      "bytes": 215,
+      "gzip": 191,
+      "brotli": 159
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/useWeddingStore-CNKo3flo.js",
+      "bytes": 905,
+      "gzip": 415,
+      "brotli": 365
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/uuid-C0vvs8Si.js",
+      "bytes": 520,
+      "gzip": 319,
+      "brotli": 270
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/vectorExport-VCYmNhda.js",
+      "bytes": 4588,
+      "gzip": 2190,
+      "brotli": 1979
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/VenuesPage-DzpBeLD2.js",
+      "bytes": 19313,
+      "gzip": 5425,
+      "brotli": 4634
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WeddingGiftPage-CyrzWBzp.css",
+      "bytes": 15991,
+      "gzip": 3575,
+      "brotli": 3113
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WeddingGiftPage-D82XJU8q.js",
+      "bytes": 18921,
+      "gzip": 6110,
+      "brotli": 5468
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WeddingPreviewPage-BqGZfOlg.js",
+      "bytes": 2586,
+      "gzip": 1321,
+      "brotli": 1132
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WeddingSite-BtkOgxUv.js",
+      "bytes": 1377,
+      "gzip": 818,
+      "brotli": 689
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WeddingSite-l0_oLjVb.css",
+      "bytes": 61017,
+      "gzip": 12541,
+      "brotli": 10806
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/weddingStorage-DJXjYQZX.js",
+      "bytes": 3328,
+      "gzip": 1556,
+      "brotli": 1336
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WishesPage-CAaxGRhy.css",
+      "bytes": 4567,
+      "gzip": 1384,
+      "brotli": 1168
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WishesPage-eaK2TBV1.js",
+      "bytes": 8579,
+      "gzip": 3255,
+      "brotli": 2842
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WithJoyPortalLayout-1YB19IdO.js",
+      "bytes": 20750,
+      "gzip": 5654,
+      "brotli": 4873
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/WithJoyPortalLayout-Cox7hMc5.css",
+      "bytes": 7668,
+      "gzip": 2112,
+      "brotli": 1782
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/workspace-ui-B0ZAnjY1.css",
+      "bytes": 7262,
+      "gzip": 1810,
+      "brotli": 1519
+    },
+    {
+      "stage": "before",
+      "app": "user",
+      "file": "assets/ថ្ងៃដែលរង់ចាំ-EL9I3BZ5.js",
+      "bytes": 162,
+      "gzip": 111,
+      "brotli": 111
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminDashboardPage-jUlJMer7.js",
+      "bytes": 33795,
+      "gzip": 7714,
+      "brotli": 6690
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminLanguageProvider-BvRtNR54.js",
+      "bytes": 50574,
+      "gzip": 13853,
+      "brotli": 11995
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminNotFoundPage-KSkWDlE3.js",
+      "bytes": 1230,
+      "gzip": 744,
+      "brotli": 587
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminNotificationsPage-CQcMv0gL.js",
+      "bytes": 21544,
+      "gzip": 5835,
+      "brotli": 4985
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminPackagesPage-BfdqdSBX.js",
+      "bytes": 57368,
+      "gzip": 12846,
+      "brotli": 11087
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminPaymentsPage-BhzggzW7.js",
+      "bytes": 13352,
+      "gzip": 4278,
+      "brotli": 3660
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminReportsPage-D9CzHweh.css",
+      "bytes": 24827,
+      "gzip": 5273,
+      "brotli": 4562
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminReportsPage-DvFBGTS5.js",
+      "bytes": 68846,
+      "gzip": 20570,
+      "brotli": 17768
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/adminService-BD0yhiBB.js",
+      "bytes": 55809,
+      "gzip": 20081,
+      "brotli": 18122
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminSystemLogsPage-DJqFCcKm.js",
+      "bytes": 14562,
+      "gzip": 3958,
+      "brotli": 3423
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminTemplateEditPage-C67Zm7cX.js",
+      "bytes": 238057,
+      "gzip": 56239,
+      "brotli": 45461
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminTemplateEditPage-DKzqC4SA.css",
+      "bytes": 4888,
+      "gzip": 1404,
+      "brotli": 1179
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminTemplatesPage-CJn3eHR_.js",
+      "bytes": 46658,
+      "gzip": 10289,
+      "brotli": 8879
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminUI-xz3b0QPz.js",
+      "bytes": 8081,
+      "gzip": 3030,
+      "brotli": 2616
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminUserDetailPage-BJgagnCF.js",
+      "bytes": 8022,
+      "gzip": 2657,
+      "brotli": 2308
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/AdminUsersPage-BDH_0lzl.js",
+      "bytes": 13083,
+      "gzip": 4324,
+      "brotli": 3777
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/ApiMonitorPage-B6ZdYqcd.js",
+      "bytes": 171444,
+      "gzip": 33450,
+      "brotli": 26419
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/arrow-left-DdOaFbcI.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 163
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/arrow-right-CpHamTh3.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 186
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/auditSanitizer-SwLxg3cE.js",
+      "bytes": 1653,
+      "gzip": 900,
+      "brotli": 795
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/check-Dt6soMXU.js",
+      "bytes": 164,
+      "gzip": 166,
+      "brotli": 152
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/chevron-right-ubztWdX9.js",
+      "bytes": 170,
+      "gzip": 166,
+      "brotli": 157
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/circle-alert-3yJuDEW9.js",
+      "bytes": 315,
+      "gzip": 228,
+      "brotli": 202
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/circle-check-DOzTiSNH.js",
+      "bytes": 250,
+      "gzip": 216,
+      "brotli": 194
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/circle-x-CqB4Vmru.js",
+      "bytes": 268,
+      "gzip": 215,
+      "brotli": 194
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/clock-97zHbrUY.js",
+      "bytes": 209,
+      "gzip": 191,
+      "brotli": 169
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/copy-Cc8LyrUI.js",
+      "bytes": 276,
+      "gzip": 236,
+      "brotli": 210
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/createLucideIcon-B4zn7OBl.js",
+      "bytes": 4182,
+      "gzip": 1880,
+      "brotli": 1703
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/crown-CHnGqGYq.js",
+      "bytes": 402,
+      "gzip": 282,
+      "brotli": 261
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/download-Bf3Moeyj.js",
+      "bytes": 553,
+      "gzip": 321,
+      "brotli": 299
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/external-link-BejgCa5u.js",
+      "bytes": 291,
+      "gzip": 230,
+      "brotli": 195
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/eye-DL5-EzKj.js",
+      "bytes": 296,
+      "gzip": 229,
+      "brotli": 207
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/file-text-vdqLZeWQ.js",
+      "bytes": 425,
+      "gzip": 277,
+      "brotli": 254
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/format-DxCPDTVf.js",
+      "bytes": 911,
+      "gzip": 456,
+      "brotli": 401
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/globe-CwKfbyDW.js",
+      "bytes": 684,
+      "gzip": 381,
+      "brotli": 352
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/hooks-B3tKxHNp.js",
+      "bytes": 1412,
+      "gzip": 718,
+      "brotli": 637
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/index-McFVwmNK.js",
+      "bytes": 284587,
+      "gzip": 89598,
+      "brotli": 77393
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/index-SYkljhQF.css",
+      "bytes": 194309,
+      "gzip": 28241,
+      "brotli": 21494
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/layout-grid-Qrzg9fYC.js",
+      "bytes": 386,
+      "gzip": 221,
+      "brotli": 204
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/LoginPage-OydsJLBa.js",
+      "bytes": 7931,
+      "gzip": 2778,
+      "brotli": 2375
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/mail-CgZeHGxZ.js",
+      "bytes": 253,
+      "gzip": 225,
+      "brotli": 198
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/rotate-ccw-fKQAQylm.js",
+      "bytes": 595,
+      "gzip": 356,
+      "brotli": 323
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/rotate-cw-D7ltkn4J.js",
+      "bytes": 241,
+      "gzip": 213,
+      "brotli": 190
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/runtime-DGY1CSM0.js",
+      "bytes": 865,
+      "gzip": 492,
+      "brotli": 451
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/shield-check-KmBgPiwe.js",
+      "bytes": 360,
+      "gzip": 276,
+      "brotli": 268
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/sliders-vertical-b4zt9euj.js",
+      "bytes": 482,
+      "gzip": 275,
+      "brotli": 244
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/sparkles-uql9vgI9.js",
+      "bytes": 552,
+      "gzip": 321,
+      "brotli": 309
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/table-DD5YHQ-w.js",
+      "bytes": 472,
+      "gzip": 295,
+      "brotli": 265
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/trash-Be3DzCOa.js",
+      "bytes": 386,
+      "gzip": 253,
+      "brotli": 242
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/trending-up-BpaH4i6O.js",
+      "bytes": 215,
+      "gzip": 196,
+      "brotli": 170
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/triangle-alert-nTe2MV0o.js",
+      "bytes": 332,
+      "gzip": 251,
+      "brotli": 236
+    },
+    {
+      "stage": "before",
+      "app": "admin",
+      "file": "assets/ui-BhRMBZ3S.js",
+      "bytes": 16145,
+      "gzip": 4737,
+      "brotli": 4062
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AccessFailureState-DbiVletZ.js",
+      "bytes": 408,
+      "gzip": 271,
+      "brotli": 217
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AiAssistantPage-CbaqwFwC.css",
+      "bytes": 3508,
+      "gzip": 1041,
+      "brotli": 877
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AiAssistantPage-f0ROLwNn.js",
+      "bytes": 18199,
+      "gzip": 6139,
+      "brotli": 5254
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/armchair-_ct-2rwT.js",
+      "bytes": 404,
+      "gzip": 263,
+      "brotli": 244
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/arrow-down-HF_ljo1e.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 196
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/arrow-left-Co9bFwqD.js",
+      "bytes": 205,
+      "gzip": 188,
+      "brotli": 184
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/arrow-right-CjmE3qHL.js",
+      "bytes": 205,
+      "gzip": 188,
+      "brotli": 183
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AttendanceAnalytics-CT3O4cPF.js",
+      "bytes": 7784,
+      "gzip": 3022,
+      "brotli": 2533
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AttendanceAnalytics-DMXZMAHO.css",
+      "bytes": 3287,
+      "gzip": 1085,
+      "brotli": 924
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/authApi-CuYpX8K0.js",
+      "bytes": 1070,
+      "gzip": 422,
+      "brotli": 363
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AuthLayout-DIDa55NJ.js",
+      "bytes": 1709,
+      "gzip": 713,
+      "brotli": 606
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AuthoredClosing-D5vcxWy8.js",
+      "bytes": 465,
+      "gzip": 259,
+      "brotli": 214
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/AuthPage-BoJH1O4z.css",
+      "bytes": 13806,
+      "gzip": 3306,
+      "brotli": 2881
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/background-Dt0NvFi2.js",
+      "bytes": 55,
+      "gzip": 75,
+      "brotli": 59
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/BlissEditorialLayout-C5He49E0.css",
+      "bytes": 5192,
+      "gzip": 1539,
+      "brotli": 1284
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/BlissEditorialLayout-DaYYpVJK.js",
+      "bytes": 15569,
+      "gzip": 4653,
+      "brotli": 3978
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/BrowseTemplatesPage-BqfCWZbz.js",
+      "bytes": 156,
+      "gzip": 145,
+      "brotli": 116
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/budgetApi-BHSCGwLM.js",
+      "bytes": 1419,
+      "gzip": 526,
+      "brotli": 438
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/BudgetPage-CJWQtRWI.css",
+      "bytes": 2159,
+      "gzip": 711,
+      "brotli": 571
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/BudgetPage-sr43Y3Ve.js",
+      "bytes": 19994,
+      "gzip": 5596,
+      "brotli": 4789
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/calendar-C1JtYLha.js",
+      "bytes": 295,
+      "gzip": 230,
+      "brotli": 200
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/camera-C5-R6UP4.js",
+      "bytes": 376,
+      "gzip": 277,
+      "brotli": 248
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CanvaKhmerWeddingTemplate-CxkUzXeD.js",
+      "bytes": 24764,
+      "gzip": 7548,
+      "brotli": 6546
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CanvaKhmerWeddingTemplate-FujMIGo9.css",
+      "bytes": 22855,
+      "gzip": 5729,
+      "brotli": 5010
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/catalogPolicy-O2nCERmB.js",
+      "bytes": 1007,
+      "gzip": 521,
+      "brotli": 446
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ChangePasswordPage-BARKKZP3.js",
+      "bytes": 8472,
+      "gzip": 2330,
+      "brotli": 1941
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/chart-column-HFsnCLDd.js",
+      "bytes": 315,
+      "gzip": 237,
+      "brotli": 214
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ChatBot-BL96F1Mk.css",
+      "bytes": 4239,
+      "gzip": 1285,
+      "brotli": 1053
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ChatBot-DZtddKPP.js",
+      "bytes": 8235,
+      "gzip": 2801,
+      "brotli": 2332
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/chevron-down-DxRDuKka.js",
+      "bytes": 168,
+      "gzip": 165,
+      "brotli": 151
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/chevron-left-BUDSM_O6.js",
+      "bytes": 170,
+      "gzip": 170,
+      "brotli": 156
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CinematicVideoOpening-DI2lfRqW.css",
+      "bytes": 21776,
+      "gzip": 4598,
+      "brotli": 3989
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CinematicVideoOpening-DWXuLSSg.js",
+      "bytes": 14270,
+      "gzip": 4397,
+      "brotli": 3846
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/circle-alert-DAJ0l-jr.js",
+      "bytes": 315,
+      "gzip": 228,
+      "brotli": 235
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/circle-check-DGgvMsbA.js",
+      "bytes": 250,
+      "gzip": 216,
+      "brotli": 194
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/clock-3-B7QKIK3n.js",
+      "bytes": 209,
+      "gzip": 192,
+      "brotli": 168
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/clock-CYcN1Ohb.js",
+      "bytes": 209,
+      "gzip": 192,
+      "brotli": 199
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ContactPage-2Cv7WvBh.js",
+      "bytes": 9825,
+      "gzip": 3568,
+      "brotli": 3001
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/copy-DXssfycg.js",
+      "bytes": 276,
+      "gzip": 236,
+      "brotli": 211
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CoverBackground-DuWJ0Rzu.js",
+      "bytes": 2686,
+      "gzip": 1264,
+      "brotli": 1109
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/CoverBackground-DWWHaHKW.css",
+      "bytes": 434,
+      "gzip": 251,
+      "brotli": 180
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/createLucideIcon-iAjGl61D.js",
+      "bytes": 3088,
+      "gzip": 1480,
+      "brotli": 1340
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/currencyTotals-CpX6dh_3.js",
+      "bytes": 380,
+      "gzip": 288,
+      "brotli": 244
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DashboardPage-8jDWMK4x.css",
+      "bytes": 21915,
+      "gzip": 4567,
+      "brotli": 4043
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DashboardPage-CF1FI7_K.js",
+      "bytes": 18581,
+      "gzip": 5718,
+      "brotli": 4999
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DatePicker-BqS2Tumu.js",
+      "bytes": 6282,
+      "gzip": 2517,
+      "brotli": 2198
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DatePicker-CmASfBZO.css",
+      "bytes": 3396,
+      "gzip": 1123,
+      "brotli": 928
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DefaultTemplateLayout-EAhukzdv.js",
+      "bytes": 5834,
+      "gzip": 2146,
+      "brotli": 1807
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/deliveryApi-BvwjkPvY.js",
+      "bytes": 604,
+      "gzip": 247,
+      "brotli": 205
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DigitalYesLayout-By6oAR9f.css",
+      "bytes": 5680,
+      "gzip": 1713,
+      "brotli": 1466
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DigitalYesLayout-uC9kUyRn.js",
+      "bytes": 35589,
+      "gzip": 9492,
+      "brotli": 8237
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/download-BRsF9N4w.js",
+      "bytes": 272,
+      "gzip": 223,
+      "brotli": 195
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/draftMediaStorage-DTubrHY0.js",
+      "bytes": 984,
+      "gzip": 501,
+      "brotli": 430
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/draftToTemplate-B-DZpCug.js",
+      "bytes": 10362,
+      "gzip": 2993,
+      "brotli": 2688
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/DynamicTemplateRenderer-HCI0APm8.js",
+      "bytes": 13383,
+      "gzip": 4584,
+      "brotli": 3990
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/earth-DVD7C6k-.js",
+      "bytes": 453,
+      "gzip": 308,
+      "brotli": 297
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eighth-note-DwLY30UA.js",
+      "bytes": 254,
+      "gzip": 226,
+      "brotli": 201
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eighth-notes-ldlrLYQV.js",
+      "bytes": 326,
+      "gzip": 254,
+      "brotli": 235
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ellipsis-DtTzxnNG.js",
+      "bytes": 294,
+      "gzip": 212,
+      "brotli": 185
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EmeraldLuxeLayout-n1iYm0-5.js",
+      "bytes": 19458,
+      "gzip": 5944,
+      "brotli": 5111
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EmeraldLuxeLayout-t-wl7iBo.css",
+      "bytes": 5179,
+      "gzip": 1718,
+      "brotli": 1494
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EnterprisePages-CaLKO3tt.css",
+      "bytes": 3237,
+      "gzip": 1103,
+      "brotli": 907
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventContext-fHWhCzEg.js",
+      "bytes": 157,
+      "gzip": 145,
+      "brotli": 117
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventCover-D08EEaOU.js",
+      "bytes": 1543,
+      "gzip": 782,
+      "brotli": 695
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventCreatePage-BEiwsUAU.js",
+      "bytes": 51244,
+      "gzip": 12907,
+      "brotli": 11189
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventCreatePage-C3OFDRFo.css",
+      "bytes": 21634,
+      "gzip": 4762,
+      "brotli": 4129
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventDetails-eURKg4Fb.js",
+      "bytes": 20594,
+      "gzip": 7120,
+      "brotli": 6177
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventDetails-U1CqV5n4.css",
+      "bytes": 4622,
+      "gzip": 1456,
+      "brotli": 1231
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventEssentialLayout-BDj5E0r2.js",
+      "bytes": 3370,
+      "gzip": 1660,
+      "brotli": 1419
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventFields-CzdatgUH.js",
+      "bytes": 2251,
+      "gzip": 1131,
+      "brotli": 957
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eventFields-uQ6QlnAc.js",
+      "bytes": 3031,
+      "gzip": 1321,
+      "brotli": 1084
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventInvitation-CQK4GDuH.js",
+      "bytes": 5473,
+      "gzip": 2540,
+      "brotli": 2156
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eventNavigationModel-DVICkmdZ.js",
+      "bytes": 4406,
+      "gzip": 1936,
+      "brotli": 1645
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eventPlaceholders-BvP-szOJ.js",
+      "bytes": 25486,
+      "gzip": 4718,
+      "brotli": 3995
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/eventPresentation-st0VK6LJ.js",
+      "bytes": 226,
+      "gzip": 192,
+      "brotli": 145
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventsFeature-sGvaD9Qa.css",
+      "bytes": 21660,
+      "gzip": 4722,
+      "brotli": 4118
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventsPage-BiplQeOX.js",
+      "bytes": 42484,
+      "gzip": 12471,
+      "brotli": 10995
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventsPage-rQJhgB7g.css",
+      "bytes": 9638,
+      "gzip": 2160,
+      "brotli": 1837
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventTeamPanel-BAEjFGzI.js",
+      "bytes": 5237,
+      "gzip": 2052,
+      "brotli": 1745
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventWorkspace-CF76c3eV.js",
+      "bytes": 15566,
+      "gzip": 5558,
+      "brotli": 4847
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/EventWorkspace-cFAQ1hDI.css",
+      "bytes": 11891,
+      "gzip": 3110,
+      "brotli": 2693
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ExpensesPage-BSei-XLZ.css",
+      "bytes": 21195,
+      "gzip": 4517,
+      "brotli": 3938
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ExpensesPage-Bz4O7fwc.js",
+      "bytes": 23899,
+      "gzip": 6840,
+      "brotli": 6049
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/external-link-Cyqe121L.js",
+      "bytes": 291,
+      "gzip": 229,
+      "brotli": 195
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/FeatureAccessCard-Cf4fMgPH.js",
+      "bytes": 2026,
+      "gzip": 1133,
+      "brotli": 922
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/FinancialReport-DhvG7joz.css",
+      "bytes": 17572,
+      "gzip": 3416,
+      "brotli": 3012
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/FinancialReport-DmTCl8D5.js",
+      "bytes": 19030,
+      "gzip": 6125,
+      "brotli": 5398
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/FloatingAudioPlayer-CuVBOhad.js",
+      "bytes": 1618,
+      "gzip": 916,
+      "brotli": 770
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/FloatingAudioPlayer-DayaTPdi.css",
+      "bytes": 1237,
+      "gzip": 600,
+      "brotli": 473
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ForgotPasswordPage-DtkL4O0r.js",
+      "bytes": 5802,
+      "gzip": 2158,
+      "brotli": 1798
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/galleryStorage-hdbuO4NG.js",
+      "bytes": 668,
+      "gzip": 358,
+      "brotli": 302
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/gem-BgV0Nu7W.js",
+      "bytes": 374,
+      "gzip": 271,
+      "brotli": 264
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/gift-BCi0GZxU.js",
+      "bytes": 389,
+      "gzip": 278,
+      "brotli": 255
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/giftsApi-D6Ea0mo4.js",
+      "bytes": 368,
+      "gzip": 225,
+      "brotli": 224
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/guestApi-_WID2RBC.js",
+      "bytes": 2845,
+      "gzip": 804,
+      "brotli": 681
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestImportModal-CM5bwDXN.js",
+      "bytes": 22355,
+      "gzip": 7398,
+      "brotli": 6461
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestImportModal-O4l2sDhL.css",
+      "bytes": 3967,
+      "gzip": 1260,
+      "brotli": 1054
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestSectionNavigation-B18uPeI6.js",
+      "bytes": 2692,
+      "gzip": 1524,
+      "brotli": 1318
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestSectionNavigation-CgEtE96C.css",
+      "bytes": 1421,
+      "gzip": 690,
+      "brotli": 548
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestsPage-BaT13ydP.css",
+      "bytes": 59360,
+      "gzip": 11179,
+      "brotli": 9853
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/GuestsPage-_61Dr2ye.js",
+      "bytes": 52602,
+      "gzip": 15717,
+      "brotli": 13834
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/hostPlanningStorage-C53eoEYx.js",
+      "bytes": 1710,
+      "gzip": 677,
+      "brotli": 588
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/HostShell-D3UXP9TK.css",
+      "bytes": 13936,
+      "gzip": 3150,
+      "brotli": 2767
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/HostShell-DDtthIPG.js",
+      "bytes": 12553,
+      "gzip": 3830,
+      "brotli": 3345
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/HostTemplateDemoPage-543IaO5Q.js",
+      "bytes": 151,
+      "gzip": 146,
+      "brotli": 115
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/httpClient-ecMDaaxJ.js",
+      "bytes": 54207,
+      "gzip": 19992,
+      "brotli": 18128
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/IllustratedMapDesignerModal-CTOB1x1h.js",
+      "bytes": 27554,
+      "gzip": 9005,
+      "brotli": 7889
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/image-PgfDdNte.js",
+      "bytes": 309,
+      "gzip": 247,
+      "brotli": 220
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/images-DptK46fJ.js",
+      "bytes": 410,
+      "gzip": 301,
+      "brotli": 268
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/index-DEoCpkJZ.js",
+      "bytes": 472288,
+      "gzip": 139992,
+      "brotli": 117799
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/index-ZxQMkZv3.css",
+      "bytes": 225864,
+      "gzip": 41258,
+      "brotli": 34076
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/Instrumental Wedding Music (VioSounds Cover)-dvp3gij_.js",
+      "bytes": 97,
+      "gzip": 117,
+      "brotli": 87
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/invitationApi-CfbbPcdS.js",
+      "bytes": 1871,
+      "gzip": 761,
+      "brotli": 630
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationBranding-CeGLDUxq.js",
+      "bytes": 10059,
+      "gzip": 4141,
+      "brotli": 3680
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationBranding-DPjhi_gm.css",
+      "bytes": 373,
+      "gzip": 245,
+      "brotli": 169
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationCheckInPage-BBkZjBNs.js",
+      "bytes": 181318,
+      "gzip": 60914,
+      "brotli": 38889
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationCreatePage-BFZrOQ14.js",
+      "bytes": 25197,
+      "gzip": 6440,
+      "brotli": 5608
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationCreatePage-DfKoFnW2.css",
+      "bytes": 14967,
+      "gzip": 3442,
+      "brotli": 2974
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationDeliveryPage-CSLDid1-.js",
+      "bytes": 12085,
+      "gzip": 3848,
+      "brotli": 3424
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationDeliveryPage-DrVE9xd3.css",
+      "bytes": 10276,
+      "gzip": 2236,
+      "brotli": 1879
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/invitationDraftAdapter-CywXFHW3.js",
+      "bytes": 10159,
+      "gzip": 3411,
+      "brotli": 3058
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationEditFeature-aDLA-VuA.css",
+      "bytes": 55745,
+      "gzip": 10805,
+      "brotli": 9483
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationEditFeature-DJu-UaMp.js",
+      "bytes": 240386,
+      "gzip": 62755,
+      "brotli": 50454
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationEditPage-DXlkWtss.js",
+      "bytes": 163,
+      "gzip": 155,
+      "brotli": 120
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationLabel-BRkk9sL7.js",
+      "bytes": 8727,
+      "gzip": 2699,
+      "brotli": 2239
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationMediaPage-BEi1C2wA.js",
+      "bytes": 7699,
+      "gzip": 3017,
+      "brotli": 2665
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationMediaPage-CBahCHbL.css",
+      "bytes": 3958,
+      "gzip": 1237,
+      "brotli": 1034
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationPages-z4Ie7dql.css",
+      "bytes": 39786,
+      "gzip": 7930,
+      "brotli": 6970
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationPreviewPage-DaD2sH8T.js",
+      "bytes": 6171,
+      "gzip": 2461,
+      "brotli": 2096
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationStudio-DJB0BikX.css",
+      "bytes": 41445,
+      "gzip": 8045,
+      "brotli": 7174
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationStudio-DUJYQJxv.js",
+      "bytes": 47596,
+      "gzip": 14173,
+      "brotli": 12238
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationStyleEditor-BK0AK9gy.js",
+      "bytes": 18164,
+      "gzip": 5600,
+      "brotli": 4850
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/InvitationStyleEditor-DQV_Fox3.css",
+      "bytes": 3695,
+      "gzip": 1316,
+      "brotli": 1106
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/io5-b3milcAS.js",
+      "bytes": 45435,
+      "gzip": 10532,
+      "brotli": 8796
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/jsx-runtime-Wy9s6hX0.js",
+      "bytes": 8911,
+      "gzip": 3383,
+      "brotli": 3033
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/khmer-celestial-BhHWmCfe.css",
+      "bytes": 41784,
+      "gzip": 9189,
+      "brotli": 8002
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/khmer-celestial-DWLZlq6L.js",
+      "bytes": 26186,
+      "gzip": 8299,
+      "brotli": 7089
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/khmer-floral-gold-Ch7jrCKn.js",
+      "bytes": 8558,
+      "gzip": 3399,
+      "brotli": 2977
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/khmer-floral-gold-D0dBZ0XE.css",
+      "bytes": 55901,
+      "gzip": 12207,
+      "brotli": 10727
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/KhmerCelestialLayout-xtcb2cd3.js",
+      "bytes": 31881,
+      "gzip": 10198,
+      "brotli": 8844
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/KhmerFloralGoldLayout-hGsbh_Q8.js",
+      "bytes": 51637,
+      "gzip": 17484,
+      "brotli": 15688
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/layers-dn2VuUtx.js",
+      "bytes": 482,
+      "gzip": 279,
+      "brotli": 257
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/layout-dashboard-BXVxEiuj.js",
+      "bytes": 391,
+      "gzip": 234,
+      "brotli": 220
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/lib-DKqfGMZD.js",
+      "bytes": 23212,
+      "gzip": 8115,
+      "brotli": 7073
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/loader-circle-wWmsqaDV.js",
+      "bytes": 205,
+      "gzip": 193,
+      "brotli": 203
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/localDate-D_tAugdn.js",
+      "bytes": 356,
+      "gzip": 251,
+      "brotli": 212
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/localizedContent-BPtF94pE.js",
+      "bytes": 8997,
+      "gzip": 2968,
+      "brotli": 2584
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/LoginPage-BPbLQCcT.js",
+      "bytes": 3769,
+      "gzip": 1596,
+      "brotli": 1367
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/mail-BEvm0P9D.js",
+      "bytes": 253,
+      "gzip": 226,
+      "brotli": 198
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/map-BtfO4Uj9.js",
+      "bytes": 465,
+      "gzip": 295,
+      "brotli": 280
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/mapPresets-BkyINy53.js",
+      "bytes": 3787,
+      "gzip": 1478,
+      "brotli": 1241
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/mediaApi-qHt0erW9.js",
+      "bytes": 3207,
+      "gzip": 1074,
+      "brotli": 913
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/mediaLibraryModel-mEEr4ePo.js",
+      "bytes": 1315,
+      "gzip": 664,
+      "brotli": 578
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/message-circle-heart-DlGxIvU_.js",
+      "bytes": 423,
+      "gzip": 307,
+      "brotli": 283
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/minus-BUwbHLqS.js",
+      "bytes": 157,
+      "gzip": 160,
+      "brotli": 139
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/Modal-CPMz-hmB.js",
+      "bytes": 4798,
+      "gzip": 1974,
+      "brotli": 1749
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/Modal-Jynf-Qp7.css",
+      "bytes": 2976,
+      "gzip": 1112,
+      "brotli": 926
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/MotionConfigContext-CluVpD3A.js",
+      "bytes": 55920,
+      "gzip": 20439,
+      "brotli": 18725
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/notificationsApi-Bwrpw7Uz.js",
+      "bytes": 459,
+      "gzip": 275,
+      "brotli": 229
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/NotificationsPage-CHAlT3AJ.css",
+      "bytes": 2135,
+      "gzip": 816,
+      "brotli": 661
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/NotificationsPage-k9uvCH01.js",
+      "bytes": 5758,
+      "gzip": 2210,
+      "brotli": 1896
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/openingConfig-V494-HbQ.js",
+      "bytes": 2104,
+      "gzip": 994,
+      "brotli": 864
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/organizationApi-C8SzCDsi.js",
+      "bytes": 465,
+      "gzip": 265,
+      "brotli": 232
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/OrganizationDetailPage-6ByZvXLM.js",
+      "bytes": 19211,
+      "gzip": 5811,
+      "brotli": 4979
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/OrganizationPage-mPvGZDas.js",
+      "bytes": 8019,
+      "gzip": 2774,
+      "brotli": 2367
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/OrganizationPage-rqLKavvu.css",
+      "bytes": 7967,
+      "gzip": 1935,
+      "brotli": 1611
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaidTemplatesPage-CQZXDN80.js",
+      "bytes": 9134,
+      "gzip": 2791,
+      "brotli": 2368
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/palette-CmOQPUUD.js",
+      "bytes": 550,
+      "gzip": 305,
+      "brotli": 278
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentCancelPage-Du5UPErF.js",
+      "bytes": 1405,
+      "gzip": 655,
+      "brotli": 547
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentHistoryPage-RdFOKBcP.js",
+      "bytes": 3125,
+      "gzip": 1223,
+      "brotli": 1036
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentPages-CtMCt73q.css",
+      "bytes": 26071,
+      "gzip": 5065,
+      "brotli": 4384
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentReceiptPage-Jp14kOlY.js",
+      "bytes": 3417,
+      "gzip": 1298,
+      "brotli": 1098
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/paymentService-8aiwCpRs.js",
+      "bytes": 1007,
+      "gzip": 351,
+      "brotli": 290
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/paymentStatus-Ca9Sc1nv.js",
+      "bytes": 2417,
+      "gzip": 866,
+      "brotli": 717
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentStatusPage-C6N0TuNr.js",
+      "bytes": 17721,
+      "gzip": 5282,
+      "brotli": 4519
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PaymentSuccessPage-Cl_8qBdL.js",
+      "bytes": 4884,
+      "gzip": 1787,
+      "brotli": 1464
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/pencil-RJR14nLM.js",
+      "bytes": 316,
+      "gzip": 250,
+      "brotli": 235
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/planningApi-B4YcOiXD.js",
+      "bytes": 770,
+      "gzip": 289,
+      "brotli": 255
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/previewMessaging-a6DG3MSn.css",
+      "bytes": 4632,
+      "gzip": 1381,
+      "brotli": 1158
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/previewMessaging-BvjRp8zZ.js",
+      "bytes": 25569,
+      "gzip": 10662,
+      "brotli": 9402
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PricingPage-Bj2bT0OL.js",
+      "bytes": 11640,
+      "gzip": 3555,
+      "brotli": 2982
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ProfilePage-BllFxWDS.js",
+      "bytes": 13194,
+      "gzip": 3461,
+      "brotli": 3004
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/program-B_KDOsp3.js",
+      "bytes": 3511,
+      "gzip": 1704,
+      "brotli": 1500
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ProgramTimeline-CTCRCZCW.css",
+      "bytes": 12870,
+      "gzip": 3287,
+      "brotli": 2838
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ProgramTimeline-YSzgoFu3.js",
+      "bytes": 21515,
+      "gzip": 8170,
+      "brotli": 7191
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/prop-types-CSvbPeQ-.js",
+      "bytes": 810,
+      "gzip": 505,
+      "brotli": 427
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/proxy-4uqr5Owt.js",
+      "bytes": 78720,
+      "gzip": 24707,
+      "brotli": 22035
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/PublicInvitationPage-fQjfAJXN.js",
+      "bytes": 24445,
+      "gzip": 8155,
+      "brotli": 7167
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/qr-code-BkWIctgA.js",
+      "bytes": 690,
+      "gzip": 337,
+      "brotli": 317
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/QrPage-CuTZfzOJ.css",
+      "bytes": 2822,
+      "gzip": 1061,
+      "brotli": 859
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/QrPage-rc3O8oiH.js",
+      "bytes": 7208,
+      "gzip": 3028,
+      "brotli": 2565
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/QuotaProgress-v4NLLrYu.js",
+      "bytes": 1197,
+      "gzip": 707,
+      "brotli": 593
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/react-dom-g7hNCJoM.js",
+      "bytes": 3864,
+      "gzip": 1393,
+      "brotli": 1211
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/refresh-cw-Ca3m3Dup.js",
+      "bytes": 361,
+      "gzip": 253,
+      "brotli": 228
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RegisterPage-CfjpMrmX.js",
+      "bytes": 6124,
+      "gzip": 2196,
+      "brotli": 1904
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/reportsApi-CHKpMUFc.js",
+      "bytes": 873,
+      "gzip": 525,
+      "brotli": 420
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ResetPasswordPage-D2gPGQ5j.js",
+      "bytes": 7141,
+      "gzip": 2509,
+      "brotli": 2145
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RibbonOpening-eSAyFCOh.js",
+      "bytes": 3758,
+      "gzip": 1432,
+      "brotli": 1239
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RoyalGardenCinematicLayout-B-D9kq3s.css",
+      "bytes": 95663,
+      "gzip": 19074,
+      "brotli": 15854
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RoyalGardenCinematicLayout-DmINw96W.js",
+      "bytes": 70720,
+      "gzip": 21908,
+      "brotli": 19312
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/rsvpApi-BG7yJHjA.js",
+      "bytes": 1037,
+      "gzip": 411,
+      "brotli": 343
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RsvpContainer-BPigWn4y.js",
+      "bytes": 7560,
+      "gzip": 2507,
+      "brotli": 2123
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RsvpDashboardPage-D2kxKaGr.js",
+      "bytes": 13906,
+      "gzip": 4269,
+      "brotli": 3835
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/RsvpDashboardPage-DHTw8OjT.css",
+      "bytes": 7521,
+      "gzip": 2082,
+      "brotli": 1768
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/save-BGNRUap4.js",
+      "bytes": 367,
+      "gzip": 254,
+      "brotli": 238
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ScheduleList-DmI0KI6f.js",
+      "bytes": 1145,
+      "gzip": 481,
+      "brotli": 409
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/search-sdVUzAfb.js",
+      "bytes": 214,
+      "gzip": 194,
+      "brotli": 201
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SeatingFloorPlan-CdbZk0WQ.css",
+      "bytes": 17235,
+      "gzip": 4070,
+      "brotli": 3580
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SeatingFloorPlan-IXDYhciL.js",
+      "bytes": 22638,
+      "gzip": 7076,
+      "brotli": 6210
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SeatingPage-BUsbccIe.js",
+      "bytes": 16677,
+      "gzip": 5008,
+      "brotli": 4503
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SeatingPage-CsgqTI34.css",
+      "bytes": 5186,
+      "gzip": 1511,
+      "brotli": 1277
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/share-2-BEJ_2Nea.js",
+      "bytes": 397,
+      "gzip": 261,
+      "brotli": 239
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/shared-CAHj_odM.js",
+      "bytes": 326,
+      "gzip": 230,
+      "brotli": 189
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SilkHeritageLayout-H8mHa4sN.css",
+      "bytes": 25415,
+      "gzip": 5303,
+      "brotli": 4656
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SilkHeritageLayout-KRwdQnmB.js",
+      "bytes": 24293,
+      "gzip": 7943,
+      "brotli": 6858
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SiteAnimations-D6jIc5kO.css",
+      "bytes": 2566,
+      "gzip": 1104,
+      "brotli": 950
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SiteAnimations-DszVf2fb.js",
+      "bytes": 3554,
+      "gzip": 1550,
+      "brotli": 1369
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SocialAuthButtons-CJUPn_G1.js",
+      "bytes": 15471,
+      "gzip": 6225,
+      "brotli": 5321
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/studioMedia-DZiP6fDx.js",
+      "bytes": 1743,
+      "gzip": 877,
+      "brotli": 779
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SubscriptionPackagesPage-CI5Er5LL.css",
+      "bytes": 16160,
+      "gzip": 3556,
+      "brotli": 3066
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/SubscriptionPackagesPage-CYgtlB8h.js",
+      "bytes": 36828,
+      "gzip": 10282,
+      "brotli": 8897
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateBoilerplateLayout-DpYkwSmM.js",
+      "bytes": 14002,
+      "gzip": 4357,
+      "brotli": 3741
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateBoilerplateLayout-KsL0tCMp.css",
+      "bytes": 4380,
+      "gzip": 1441,
+      "brotli": 1241
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/templateCatalogApi-B2atPAZo.js",
+      "bytes": 792,
+      "gzip": 477,
+      "brotli": 411
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateCheckoutPage-BKs2yc7Y.js",
+      "bytes": 9070,
+      "gzip": 3199,
+      "brotli": 2702
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateDemoPage-BCTWfph8.js",
+      "bytes": 156,
+      "gzip": 147,
+      "brotli": 116
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateExperience-CBO02WZV.js",
+      "bytes": 126648,
+      "gzip": 33602,
+      "brotli": 28045
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateExperience-CXdJEP-7.css",
+      "bytes": 104612,
+      "gzip": 20144,
+      "brotli": 17077
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateGift-CmC1dMF8.js",
+      "bytes": 5729,
+      "gzip": 2760,
+      "brotli": 2329
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateImage-Dgr5Cmfp.js",
+      "bytes": 636,
+      "gzip": 442,
+      "brotli": 374
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/templateModel-DF-6G93a.js",
+      "bytes": 4072,
+      "gzip": 1760,
+      "brotli": 1518
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplateRsvp-DDo_qT4M.js",
+      "bytes": 10923,
+      "gzip": 4583,
+      "brotli": 4054
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/templates-CFCVfUoY.css",
+      "bytes": 7049,
+      "gzip": 2029,
+      "brotli": 1747
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/templates-Yp4t9JVV.js",
+      "bytes": 12550,
+      "gzip": 4615,
+      "brotli": 4023
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplatesFeature-B-H6E5DG.js",
+      "bytes": 146,
+      "gzip": 140,
+      "brotli": 115
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TemplatesPage-BAvjy9MX.js",
+      "bytes": 158,
+      "gzip": 152,
+      "brotli": 113
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/templateTypography-D2aSXzJ5.js",
+      "bytes": 461,
+      "gzip": 345,
+      "brotli": 304
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ticket-Bz_Q0bYW.js",
+      "bytes": 361,
+      "gzip": 244,
+      "brotli": 222
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TicketActions-BgTX_LU1.js",
+      "bytes": 17394,
+      "gzip": 6997,
+      "brotli": 6107
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TicketActions-dpxtvUX1.css",
+      "bytes": 7502,
+      "gzip": 2004,
+      "brotli": 1704
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TicketDesigner-eQcgiQS6.js",
+      "bytes": 14289,
+      "gzip": 4941,
+      "brotli": 4294
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TicketModal-BPdXiXCz.js",
+      "bytes": 1608,
+      "gzip": 927,
+      "brotli": 809
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TimePicker-CzHWaJEl.js",
+      "bytes": 8925,
+      "gzip": 2877,
+      "brotli": 2461
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/TimePicker-WdylPF6N.css",
+      "bytes": 5265,
+      "gzip": 1504,
+      "brotli": 1261
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/trash-CFx6BrYV.js",
+      "bytes": 386,
+      "gzip": 254,
+      "brotli": 240
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/triangle-alert-DcfJLe8V.js",
+      "bytes": 332,
+      "gzip": 252,
+      "brotli": 235
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ui-IgIEnlbW.js",
+      "bytes": 6663,
+      "gzip": 2489,
+      "brotli": 2130
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ui-OA1_yMLQ.css",
+      "bytes": 8560,
+      "gzip": 1936,
+      "brotli": 1626
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/upload-7TWEfXGF.js",
+      "bytes": 270,
+      "gzip": 220,
+      "brotli": 193
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useAccessError-BZbsvM4i.js",
+      "bytes": 304,
+      "gzip": 232,
+      "brotli": 188
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useBackendMessages-lc8e6dek.js",
+      "bytes": 106675,
+      "gzip": 26262,
+      "brotli": 21963
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useClickOutside-D-aSKM02.js",
+      "bytes": 287,
+      "gzip": 214,
+      "brotli": 170
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useLanguageStore-mmn9Okko.js",
+      "bytes": 1006,
+      "gzip": 568,
+      "brotli": 518
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/user-plus-BFPmHxgW.js",
+      "bytes": 350,
+      "gzip": 260,
+      "brotli": 231
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/users-CZYN77kL.js",
+      "bytes": 346,
+      "gzip": 250,
+      "brotli": 225
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useT-DLToPaow.js",
+      "bytes": 725,
+      "gzip": 473,
+      "brotli": 415
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useUiCopy-nahFYZIp.js",
+      "bytes": 215,
+      "gzip": 191,
+      "brotli": 159
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/useWeddingStore-CNKo3flo.js",
+      "bytes": 905,
+      "gzip": 415,
+      "brotli": 365
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/uuid-C0vvs8Si.js",
+      "bytes": 520,
+      "gzip": 319,
+      "brotli": 270
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/vectorExport-VCYmNhda.js",
+      "bytes": 4588,
+      "gzip": 2190,
+      "brotli": 1979
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/VenuesPage-BdSJIpo8.js",
+      "bytes": 19313,
+      "gzip": 5425,
+      "brotli": 4634
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WeddingGiftPage-CD0v9otC.js",
+      "bytes": 18921,
+      "gzip": 6110,
+      "brotli": 5467
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WeddingGiftPage-CyrzWBzp.css",
+      "bytes": 15991,
+      "gzip": 3575,
+      "brotli": 3113
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WeddingPreviewPage-eUBIvMa9.js",
+      "bytes": 2586,
+      "gzip": 1322,
+      "brotli": 1138
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WeddingSite-Bvo1Olw9.js",
+      "bytes": 1377,
+      "gzip": 819,
+      "brotli": 717
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WeddingSite-l0_oLjVb.css",
+      "bytes": 61017,
+      "gzip": 12541,
+      "brotli": 10806
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/weddingStorage-DJXjYQZX.js",
+      "bytes": 3328,
+      "gzip": 1556,
+      "brotli": 1336
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WishesPage-CAaxGRhy.css",
+      "bytes": 4567,
+      "gzip": 1384,
+      "brotli": 1168
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WishesPage-CD3CnV2v.js",
+      "bytes": 8579,
+      "gzip": 3256,
+      "brotli": 2828
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WithJoyPortalLayout-B9Y__2pR.js",
+      "bytes": 20750,
+      "gzip": 5653,
+      "brotli": 4872
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/WithJoyPortalLayout-Cox7hMc5.css",
+      "bytes": 7668,
+      "gzip": 2112,
+      "brotli": 1782
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/workspace-ui-B0ZAnjY1.css",
+      "bytes": 7262,
+      "gzip": 1810,
+      "brotli": 1519
+    },
+    {
+      "stage": "after",
+      "app": "user",
+      "file": "assets/ថ្ងៃដែលរង់ចាំ-EL9I3BZ5.js",
+      "bytes": 162,
+      "gzip": 111,
+      "brotli": 111
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminDashboardPage-C4mMrrbt.js",
+      "bytes": 33795,
+      "gzip": 7713,
+      "brotli": 6688
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminLanguageProvider-BvRtNR54.js",
+      "bytes": 50574,
+      "gzip": 13853,
+      "brotli": 11995
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminNotFoundPage-C122wHJ1.js",
+      "bytes": 1230,
+      "gzip": 743,
+      "brotli": 586
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminNotificationsPage-BFpb7Pam.js",
+      "bytes": 21544,
+      "gzip": 5835,
+      "brotli": 5031
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminPackagesPage-CSbHJqJy.js",
+      "bytes": 57368,
+      "gzip": 12842,
+      "brotli": 11072
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminPaymentsPage-bLPCPPC3.js",
+      "bytes": 13352,
+      "gzip": 4277,
+      "brotli": 3660
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminReportsPage-D9CzHweh.css",
+      "bytes": 24827,
+      "gzip": 5273,
+      "brotli": 4562
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminReportsPage-Y6DMXmAv.js",
+      "bytes": 68846,
+      "gzip": 20570,
+      "brotli": 17771
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/adminService-BD0yhiBB.js",
+      "bytes": 55809,
+      "gzip": 20081,
+      "brotli": 18122
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminSystemLogsPage-Bon_EzBy.js",
+      "bytes": 14562,
+      "gzip": 3956,
+      "brotli": 3418
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminTemplateEditPage-DKzqC4SA.css",
+      "bytes": 4888,
+      "gzip": 1404,
+      "brotli": 1179
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminTemplateEditPage-OSMLcTcd.js",
+      "bytes": 238057,
+      "gzip": 56236,
+      "brotli": 45466
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminTemplatesPage-CDstzzdU.js",
+      "bytes": 46658,
+      "gzip": 10288,
+      "brotli": 8921
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminUI-CDVwcGni.js",
+      "bytes": 8053,
+      "gzip": 3019,
+      "brotli": 2614
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminUserDetailPage-fXL8ZT4Q.js",
+      "bytes": 8022,
+      "gzip": 2656,
+      "brotli": 2306
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/AdminUsersPage-Bj6JgX0o.js",
+      "bytes": 13083,
+      "gzip": 4323,
+      "brotli": 3786
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/ApiMonitorPage-CcorPUQ0.js",
+      "bytes": 171444,
+      "gzip": 33450,
+      "brotli": 26407
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/arrow-left-DdOaFbcI.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 163
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/arrow-right-CpHamTh3.js",
+      "bytes": 205,
+      "gzip": 186,
+      "brotli": 186
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/auditSanitizer-SwLxg3cE.js",
+      "bytes": 1653,
+      "gzip": 900,
+      "brotli": 795
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/check-Dt6soMXU.js",
+      "bytes": 164,
+      "gzip": 166,
+      "brotli": 152
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/chevron-right-ubztWdX9.js",
+      "bytes": 170,
+      "gzip": 166,
+      "brotli": 157
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/circle-alert-3yJuDEW9.js",
+      "bytes": 315,
+      "gzip": 228,
+      "brotli": 202
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/circle-check-DOzTiSNH.js",
+      "bytes": 250,
+      "gzip": 216,
+      "brotli": 194
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/circle-x-CqB4Vmru.js",
+      "bytes": 268,
+      "gzip": 215,
+      "brotli": 194
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/clock-97zHbrUY.js",
+      "bytes": 209,
+      "gzip": 191,
+      "brotli": 169
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/copy-Cc8LyrUI.js",
+      "bytes": 276,
+      "gzip": 236,
+      "brotli": 210
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/createLucideIcon-B4zn7OBl.js",
+      "bytes": 4182,
+      "gzip": 1880,
+      "brotli": 1703
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/crown-CHnGqGYq.js",
+      "bytes": 402,
+      "gzip": 282,
+      "brotli": 261
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/download-Bf3Moeyj.js",
+      "bytes": 553,
+      "gzip": 321,
+      "brotli": 299
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/external-link-BejgCa5u.js",
+      "bytes": 291,
+      "gzip": 230,
+      "brotli": 195
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/eye-DL5-EzKj.js",
+      "bytes": 296,
+      "gzip": 229,
+      "brotli": 207
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/file-text-vdqLZeWQ.js",
+      "bytes": 425,
+      "gzip": 277,
+      "brotli": 254
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/format-DxCPDTVf.js",
+      "bytes": 911,
+      "gzip": 456,
+      "brotli": 401
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/globe-CwKfbyDW.js",
+      "bytes": 684,
+      "gzip": 381,
+      "brotli": 352
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/hooks-B3tKxHNp.js",
+      "bytes": 1412,
+      "gzip": 718,
+      "brotli": 637
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/index-DcfzvqBW.js",
+      "bytes": 284587,
+      "gzip": 89597,
+      "brotli": 77266
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/index-DjX8BpD3.css",
+      "bytes": 195448,
+      "gzip": 28489,
+      "brotli": 21706
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/layout-grid-Qrzg9fYC.js",
+      "bytes": 386,
+      "gzip": 221,
+      "brotli": 204
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/LoginPage-D6e7B3DA.js",
+      "bytes": 7931,
+      "gzip": 2778,
+      "brotli": 2375
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/mail-CgZeHGxZ.js",
+      "bytes": 253,
+      "gzip": 225,
+      "brotli": 198
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/rotate-ccw-fKQAQylm.js",
+      "bytes": 595,
+      "gzip": 356,
+      "brotli": 323
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/rotate-cw-D7ltkn4J.js",
+      "bytes": 241,
+      "gzip": 213,
+      "brotli": 190
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/runtime-DGY1CSM0.js",
+      "bytes": 865,
+      "gzip": 492,
+      "brotli": 451
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/shield-check-KmBgPiwe.js",
+      "bytes": 360,
+      "gzip": 276,
+      "brotli": 268
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/sliders-vertical-b4zt9euj.js",
+      "bytes": 482,
+      "gzip": 275,
+      "brotli": 244
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/sparkles-uql9vgI9.js",
+      "bytes": 552,
+      "gzip": 321,
+      "brotli": 309
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/table-DD5YHQ-w.js",
+      "bytes": 472,
+      "gzip": 295,
+      "brotli": 265
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/trash-Be3DzCOa.js",
+      "bytes": 386,
+      "gzip": 253,
+      "brotli": 242
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/trending-up-BpaH4i6O.js",
+      "bytes": 215,
+      "gzip": 196,
+      "brotli": 170
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/triangle-alert-nTe2MV0o.js",
+      "bytes": 332,
+      "gzip": 251,
+      "brotli": 236
+    },
+    {
+      "stage": "after",
+      "app": "admin",
+      "file": "assets/ui-CuchgSbj.js",
+      "bytes": 16208,
+      "gzip": 4765,
+      "brotli": 4096
+    }
+  ],
+  "samples": [
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 95.79999999981374,
+      "load": 267.79999999981374,
+      "fcp": null,
+      "lcp": null,
+      "cls": 0,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 53.5,
+      "load": 55.299999999813735,
+      "fcp": 116,
+      "lcp": 116,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 63.3000000002794,
+      "load": 65.10000000009313,
+      "fcp": null,
+      "lcp": null,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 43,
+      "load": 44.60000000009313,
+      "fcp": 108,
+      "lcp": 108,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 75.29999999981374,
+      "load": 77.10000000009313,
+      "fcp": 160,
+      "lcp": 160,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "home",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 53.09999999962747,
+      "load": 53.1999999997206,
+      "fcp": 112,
+      "lcp": 112,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 71.59999999962747,
+      "load": 71.59999999962747,
+      "fcp": 184,
+      "lcp": 488,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 40.60000000009313,
+      "load": 40.60000000009313,
+      "fcp": 76,
+      "lcp": 404,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 135.60000000009313,
+      "load": 135.60000000009313,
+      "fcp": 244,
+      "lcp": 540,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 94.1999999997206,
+      "load": 94.1999999997206,
+      "fcp": 164,
+      "lcp": 476,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 97.39999999990687,
+      "load": 97.39999999990687,
+      "fcp": 220,
+      "lcp": 532,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "create-event",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 159.40000000037253,
+      "load": 159.5,
+      "fcp": 208,
+      "lcp": 520,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 59.799999999813735,
+      "load": 59.799999999813735,
+      "fcp": 104,
+      "lcp": 116,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 50.59999999962747,
+      "load": 50.6999999997206,
+      "fcp": 64,
+      "lcp": 76,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 64.39999999990687,
+      "load": 64.39999999990687,
+      "fcp": 104,
+      "lcp": 116,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 45.799999999813735,
+      "load": 45.799999999813735,
+      "fcp": 56,
+      "lcp": 72,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 47,
+      "load": 47,
+      "fcp": 88,
+      "lcp": 88,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-dashboard",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 45.799999999813735,
+      "load": 46.799999999813735,
+      "fcp": 68,
+      "lcp": 80,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 72.10000000009313,
+      "load": 72.20000000018626,
+      "fcp": 108,
+      "lcp": 480,
+      "cls": 0.014218009478672985,
+      "resources": 32
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 59.5,
+      "load": 59.5,
+      "fcp": 76,
+      "lcp": 428,
+      "cls": 0.014218009478672985,
+      "resources": 32
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 64.1999999997206,
+      "load": 64.1999999997206,
+      "fcp": 96,
+      "lcp": 96,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 47.89999999990687,
+      "load": 49,
+      "fcp": 56,
+      "lcp": 392,
+      "cls": 0.014218009478672985,
+      "resources": 32
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 53.6999999997206,
+      "load": 53.6999999997206,
+      "fcp": 84,
+      "lcp": 84,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "before",
+      "group": "admin-template-edit",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 61.299999999813735,
+      "load": 61.39999999990687,
+      "fcp": 72,
+      "lcp": 424,
+      "cls": 0.014218009478672985,
+      "resources": 32
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 90.79999999981374,
+      "load": 90.89999999990687,
+      "fcp": 124,
+      "lcp": 568,
+      "cls": 0.001119105764514666,
+      "resources": 116
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 91.70000000018626,
+      "load": 91.8000000002794,
+      "fcp": 132,
+      "lcp": 472,
+      "cls": 0.00413360833770321,
+      "resources": 116
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 71.8000000002794,
+      "load": 71.8000000002794,
+      "fcp": 112,
+      "lcp": 460,
+      "cls": 0.00413360833770321,
+      "resources": 116
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 64.60000000009313,
+      "load": 64.60000000009313,
+      "fcp": 96,
+      "lcp": 448,
+      "cls": 0.001119105764514666,
+      "resources": 116
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 66.20000000018626,
+      "load": 66.3000000002794,
+      "fcp": 104,
+      "lcp": 104,
+      "cls": 0.00413360833770321,
+      "resources": 115
+    },
+    {
+      "stage": "before",
+      "group": "khmer-floral-gold",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 65.8000000002794,
+      "load": 67.3000000002794,
+      "fcp": 80,
+      "lcp": 464,
+      "cls": 0.001119105764514666,
+      "resources": 116
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 111.09999999962747,
+      "load": 113.29999999981374,
+      "fcp": 208,
+      "lcp": 208,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 42,
+      "load": 43.799999999813735,
+      "fcp": null,
+      "lcp": null,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 75.89999999990687,
+      "load": 77.79999999981374,
+      "fcp": 168,
+      "lcp": 168,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 148.6999999997206,
+      "load": 150.29999999981374,
+      "fcp": 204,
+      "lcp": 204,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 70.6999999997206,
+      "load": 72.39999999990687,
+      "fcp": 164,
+      "lcp": 164,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "home",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 179.79999999981374,
+      "load": 181.5,
+      "fcp": 248,
+      "lcp": 248,
+      "cls": 0.0005204499792376861,
+      "resources": 30
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 68.10000000009313,
+      "load": 68.10000000009313,
+      "fcp": 168,
+      "lcp": 188,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 38.5,
+      "load": 39.700000000186265,
+      "fcp": 84,
+      "lcp": 408,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 62.700000000186265,
+      "load": 62.700000000186265,
+      "fcp": 180,
+      "lcp": 480,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 44.8000000002794,
+      "load": 46.3000000002794,
+      "fcp": 88,
+      "lcp": 416,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 81.5,
+      "load": 81.60000000009313,
+      "fcp": 196,
+      "lcp": 208,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "create-event",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 51,
+      "load": 51,
+      "fcp": 100,
+      "lcp": 444,
+      "cls": 0,
+      "resources": 65
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 44.39999999990687,
+      "load": 45.60000000009313,
+      "fcp": 96,
+      "lcp": 96,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 26.299999999813735,
+      "load": 27.399999999906868,
+      "fcp": 36,
+      "lcp": 36,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 37.60000000009313,
+      "load": 39,
+      "fcp": 88,
+      "lcp": 88,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 25,
+      "load": 26.299999999813735,
+      "fcp": 40,
+      "lcp": 40,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 36,
+      "load": 37.200000000186265,
+      "fcp": 84,
+      "lcp": 84,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-dashboard",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 22,
+      "load": 23.09999999962747,
+      "fcp": 40,
+      "lcp": 40,
+      "cls": 0,
+      "resources": 21
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 38.5,
+      "load": 38.5,
+      "fcp": 76,
+      "lcp": 76,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 36.799999999813735,
+      "load": 38.10000000009313,
+      "fcp": 48,
+      "lcp": 48,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 38.200000000186265,
+      "load": 38.3000000002794,
+      "fcp": 64,
+      "lcp": 64,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 42.5,
+      "load": 42.5,
+      "fcp": 60,
+      "lcp": 396,
+      "cls": 0.014218009478672985,
+      "resources": 32
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 36.8000000002794,
+      "load": 36.8000000002794,
+      "fcp": 68,
+      "lcp": 360,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "after",
+      "group": "admin-template-edit",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 35.10000000009313,
+      "load": 36.299999999813735,
+      "fcp": 44,
+      "lcp": 44,
+      "cls": 0.014218009478672985,
+      "resources": 31
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 1,
+      "condition": "cold",
+      "domContentLoaded": 73.39999999990687,
+      "load": 73.39999999990687,
+      "fcp": 116,
+      "lcp": 116,
+      "cls": 0.00413360833770321,
+      "resources": 115
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 1,
+      "condition": "warm",
+      "domContentLoaded": 42.299999999813735,
+      "load": 43.799999999813735,
+      "fcp": 72,
+      "lcp": 72,
+      "cls": 0.00413360833770321,
+      "resources": 115
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 2,
+      "condition": "cold",
+      "domContentLoaded": 98.39999999990687,
+      "load": 98.39999999990687,
+      "fcp": 144,
+      "lcp": 544,
+      "cls": 0.00643073222090094,
+      "resources": 116
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 2,
+      "condition": "warm",
+      "domContentLoaded": 51.200000000186265,
+      "load": 53.10000000009313,
+      "fcp": 80,
+      "lcp": 440,
+      "cls": 0.001119105764514666,
+      "resources": 116
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 3,
+      "condition": "cold",
+      "domContentLoaded": 65.89999999990687,
+      "load": 65.89999999990687,
+      "fcp": 96,
+      "lcp": 96,
+      "cls": 0.00413360833770321,
+      "resources": 115
+    },
+    {
+      "stage": "after",
+      "group": "khmer-floral-gold",
+      "trial": 3,
+      "condition": "warm",
+      "domContentLoaded": 59.60000000009313,
+      "load": 61.200000000186265,
+      "fcp": 72,
+      "lcp": 440,
+      "cls": 0.001119105764514666,
+      "resources": 118
+    }
+  ]
+}

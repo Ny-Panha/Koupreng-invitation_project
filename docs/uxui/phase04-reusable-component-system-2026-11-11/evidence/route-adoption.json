@@ -1,0 +1,2304 @@
+[
+  {
+    "routeId": "SCOPE-001",
+    "app": "frontend-user",
+    "pattern": "/templates/:id/preview",
+    "featureGroup": "template-demo",
+    "primaryPhase": "10",
+    "sourceOwnerOrAlias": "WeddingSite preview (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-002",
+    "app": "frontend-user",
+    "pattern": "/create/wedding",
+    "featureGroup": "create-event",
+    "primaryPhase": "11",
+    "sourceOwnerOrAlias": "Create-event redirect (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-003",
+    "app": "frontend-user",
+    "pattern": "/event/create",
+    "featureGroup": "create-event",
+    "primaryPhase": "11",
+    "sourceOwnerOrAlias": "Create-event redirect (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-004",
+    "app": "frontend-user",
+    "pattern": "/dashboard/events/create",
+    "featureGroup": "create-event",
+    "primaryPhase": "11",
+    "sourceOwnerOrAlias": "Create-event redirect (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-005",
+    "app": "frontend-user",
+    "pattern": "/create/wedding/:id",
+    "featureGroup": "invitation",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "LegacyBuilder numeric redirect / local editor (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-006",
+    "app": "frontend-user",
+    "pattern": "/event/:id/manage",
+    "featureGroup": "invitation",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "LegacyBuilder numeric redirect / local editor (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-007",
+    "app": "frontend-user",
+    "pattern": "/event/:draftId",
+    "featureGroup": "local-preview",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "WeddingPreviewPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-008",
+    "app": "frontend-user",
+    "pattern": "/preview/:draftId",
+    "featureGroup": "local-preview",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "WeddingPreviewPage alias (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-009",
+    "app": "frontend-user",
+    "pattern": "/payments/:orderCode/status",
+    "featureGroup": "payment-status",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentStatusPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-010",
+    "app": "frontend-user",
+    "pattern": "/payments/success",
+    "featureGroup": "payment-return",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentSuccessPage server status (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-011",
+    "app": "frontend-user",
+    "pattern": "/payments/return",
+    "featureGroup": "payment-return",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentSuccessPage return alias (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-012",
+    "app": "frontend-user",
+    "pattern": "/payments/cancel",
+    "featureGroup": "payment-cancel",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentCancelPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-013",
+    "app": "frontend-user",
+    "pattern": "/w/:slug",
+    "featureGroup": "public-invitation",
+    "primaryPhase": "16",
+    "sourceOwnerOrAlias": "PublicInvitationPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-014",
+    "app": "frontend-user",
+    "pattern": "/i/:slug",
+    "featureGroup": "public-invitation",
+    "primaryPhase": "16",
+    "sourceOwnerOrAlias": "PublicInvitationPage alias (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-015",
+    "app": "frontend-user",
+    "pattern": "/",
+    "featureGroup": "home",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "HomePage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-016",
+    "app": "frontend-user",
+    "pattern": "/templates",
+    "featureGroup": "catalog",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "TemplatesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-017",
+    "app": "frontend-user",
+    "pattern": "/templates/:templateId/checkout",
+    "featureGroup": "checkout",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "TemplateCheckoutPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-018",
+    "app": "frontend-user",
+    "pattern": "/pricing",
+    "featureGroup": "pricing",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "PricingPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-019",
+    "app": "frontend-user",
+    "pattern": "/contact",
+    "featureGroup": "contact",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "ContactPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-020",
+    "app": "frontend-user",
+    "pattern": "/venues",
+    "featureGroup": "venues",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "VenuesPage catalog (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-021",
+    "app": "frontend-user",
+    "pattern": "/venues/:id",
+    "featureGroup": "venue-detail",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "VenuesPage selected/detail state (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-022",
+    "app": "frontend-user",
+    "pattern": "/about",
+    "featureGroup": "contact",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "Navigate to /contact (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-023",
+    "app": "frontend-user",
+    "pattern": "/help",
+    "featureGroup": "contact",
+    "primaryPhase": "07",
+    "sourceOwnerOrAlias": "Navigate to /contact (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-024",
+    "app": "frontend-user",
+    "pattern": "/templates/:id",
+    "featureGroup": "template-demo",
+    "primaryPhase": "10",
+    "sourceOwnerOrAlias": "TemplateDemoPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-025",
+    "app": "frontend-user",
+    "pattern": "/templates/:id/demo",
+    "featureGroup": "template-demo",
+    "primaryPhase": "10",
+    "sourceOwnerOrAlias": "TemplateDemoPage alias (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-026",
+    "app": "frontend-user",
+    "pattern": "/login",
+    "featureGroup": "auth-login",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "LoginPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-027",
+    "app": "frontend-user",
+    "pattern": "/register",
+    "featureGroup": "auth-register",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "RegisterPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-028",
+    "app": "frontend-user",
+    "pattern": "/forgot-password",
+    "featureGroup": "auth-forgot",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "ForgotPasswordPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-029",
+    "app": "frontend-user",
+    "pattern": "/reset-password",
+    "featureGroup": "auth-reset",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "ResetPasswordPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-030",
+    "app": "frontend-user",
+    "pattern": "/app/events",
+    "featureGroup": "events",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "EventsPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-031",
+    "app": "frontend-user",
+    "pattern": "/app/events/new",
+    "featureGroup": "create-event",
+    "primaryPhase": "11",
+    "sourceOwnerOrAlias": "EventCreatePage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-032",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId",
+    "featureGroup": "dashboard",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "DashboardPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-033",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/invitation",
+    "featureGroup": "invitation",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "EventInvitation / WeddingEditor or EventDetails (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-034",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/tickets/design",
+    "featureGroup": "ticket",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "TicketDesigner (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-035",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/settings",
+    "featureGroup": "settings",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "EventDetails (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-036",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/team",
+    "featureGroup": "team",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "EventTeamPanel (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-037",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/analytics",
+    "featureGroup": "analytics",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "AttendanceAnalytics (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-038",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/preview",
+    "featureGroup": "preview",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "InvitationPreviewPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-039",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/guests",
+    "featureGroup": "guests",
+    "primaryPhase": "17",
+    "sourceOwnerOrAlias": "GuestsPage (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-040",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/rsvp",
+    "featureGroup": "rsvp",
+    "primaryPhase": "18",
+    "sourceOwnerOrAlias": "RsvpDashboardPage (leaf)",
+    "componentFamiliesPresent": [
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-041",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/gifts",
+    "featureGroup": "gifts",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "WeddingGiftPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-042",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/budget",
+    "featureGroup": "budget",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "ExpensesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-043",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/seating",
+    "featureGroup": "seating",
+    "primaryPhase": "19",
+    "sourceOwnerOrAlias": "SeatingPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-044",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/check-in",
+    "featureGroup": "check-in",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "InvitationCheckInPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-045",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/reports",
+    "featureGroup": "reports",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "FinancialReport (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-046",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/delivery",
+    "featureGroup": "delivery",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "InvitationDeliveryPage (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-047",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/media",
+    "featureGroup": "media",
+    "primaryPhase": "14",
+    "sourceOwnerOrAlias": "InvitationMediaPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-048",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/qr",
+    "featureGroup": "qr",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "QrPage (leaf)",
+    "componentFamiliesPresent": [
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-049",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/wishes",
+    "featureGroup": "wishes",
+    "primaryPhase": "18",
+    "sourceOwnerOrAlias": "WishesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-050",
+    "app": "frontend-user",
+    "pattern": "/app/events/:eventId/assistant",
+    "featureGroup": "assistant",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "AiAssistantPage (leaf)",
+    "componentFamiliesPresent": [
+      "form-field",
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "form-field",
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-051",
+    "app": "frontend-user",
+    "pattern": "/app/profile",
+    "featureGroup": "profile",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "ProfilePage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-052",
+    "app": "frontend-user",
+    "pattern": "/app/change-password",
+    "featureGroup": "password",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "ChangePasswordPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-053",
+    "app": "frontend-user",
+    "pattern": "/app/notifications",
+    "featureGroup": "notifications",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "NotificationsPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-054",
+    "app": "frontend-user",
+    "pattern": "/app/packages",
+    "featureGroup": "packages",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "SubscriptionPackagesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-055",
+    "app": "frontend-user",
+    "pattern": "/app/payments",
+    "featureGroup": "payments",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentHistoryPage (leaf)",
+    "componentFamiliesPresent": [
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-056",
+    "app": "frontend-user",
+    "pattern": "/app/payments/:orderCode",
+    "featureGroup": "receipt",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "PaymentReceiptPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-057",
+    "app": "frontend-user",
+    "pattern": "/app/organizations",
+    "featureGroup": "organizations",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "OrganizationPage (leaf)",
+    "componentFamiliesPresent": [
+      "form-field",
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "form-field",
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-058",
+    "app": "frontend-user",
+    "pattern": "/app/organizations/:organizationId",
+    "featureGroup": "organization-detail",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "OrganizationDetailPage (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-059",
+    "app": "frontend-user",
+    "pattern": "/app/templates/paid",
+    "featureGroup": "paid-templates",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "PaidTemplatesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-060",
+    "app": "frontend-user",
+    "pattern": "/dashboard/profile",
+    "featureGroup": "profile",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/profile (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-061",
+    "app": "frontend-user",
+    "pattern": "/dashboard/change-password",
+    "featureGroup": "password",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/change-password (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-062",
+    "app": "frontend-user",
+    "pattern": "/dashboard/notifications",
+    "featureGroup": "notifications",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/notifications (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-063",
+    "app": "frontend-user",
+    "pattern": "/dashboard/packages",
+    "featureGroup": "packages",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/packages (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-064",
+    "app": "frontend-user",
+    "pattern": "/dashboard/payments",
+    "featureGroup": "payments",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/payments (alias/redirect)",
+    "componentFamiliesPresent": [
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-065",
+    "app": "frontend-user",
+    "pattern": "/dashboard/payments/:orderCode",
+    "featureGroup": "receipt",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/payments/:orderCode (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-066",
+    "app": "frontend-user",
+    "pattern": "/dashboard/organizations",
+    "featureGroup": "organizations",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/organizations (alias/redirect)",
+    "componentFamiliesPresent": [
+      "form-field",
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "form-field",
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-067",
+    "app": "frontend-user",
+    "pattern": "/dashboard/organizations/:organizationId",
+    "featureGroup": "organization-detail",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/organizations/:organizationId (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-068",
+    "app": "frontend-user",
+    "pattern": "/dashboard/templates/paid",
+    "featureGroup": "paid-templates",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "AccountRedirect to /app/templates/paid (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-069",
+    "app": "frontend-user",
+    "pattern": "/dashboard",
+    "featureGroup": "dashboard",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-070",
+    "app": "frontend-user",
+    "pattern": "/dashboard/events",
+    "featureGroup": "events",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "to /app/events (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-071",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations",
+    "featureGroup": "events",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "to /app/events (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-072",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/new",
+    "featureGroup": "create-event",
+    "primaryPhase": "11",
+    "sourceOwnerOrAlias": "to /app/events/new (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-073",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/design",
+    "featureGroup": "legacy-unsaved-editor",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "InvitationEditPage local editor (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-074",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/edit",
+    "featureGroup": "legacy-unsaved-editor",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "InvitationEditPage local editor (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-075",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:id/edit",
+    "featureGroup": "invitation",
+    "primaryPhase": "13",
+    "sourceOwnerOrAlias": "LegacyEditor numeric redirect / local editor (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-076",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:id/preview",
+    "featureGroup": "preview",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "LegacyEditor numeric redirect / local preview (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-077",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:id",
+    "featureGroup": "dashboard",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-078",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/guests",
+    "featureGroup": "guests",
+    "primaryPhase": "17",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to guests (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-079",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/rsvp",
+    "featureGroup": "rsvp",
+    "primaryPhase": "18",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to rsvp (leaf)",
+    "componentFamiliesPresent": [
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-080",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/gifts",
+    "featureGroup": "gifts",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to gifts (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-081",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/budget",
+    "featureGroup": "budget",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to budget (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-082",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/seating",
+    "featureGroup": "seating",
+    "primaryPhase": "19",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to seating (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-083",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/check-in",
+    "featureGroup": "check-in",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to check-in (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-084",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/reports",
+    "featureGroup": "reports",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to reports (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-085",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/qr",
+    "featureGroup": "qr",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to qr (leaf)",
+    "componentFamiliesPresent": [
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-086",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/wishes",
+    "featureGroup": "wishes",
+    "primaryPhase": "18",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to wishes (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-087",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/assistant",
+    "featureGroup": "assistant",
+    "primaryPhase": "23",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to assistant (leaf)",
+    "componentFamiliesPresent": [
+      "form-field",
+      "loading-button"
+    ],
+    "adoptedHere": [
+      "form-field",
+      "loading-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-088",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/delivery",
+    "featureGroup": "delivery",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to delivery (leaf)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-089",
+    "app": "frontend-user",
+    "pattern": "/dashboard/invitations/:invitationId/media",
+    "featureGroup": "media",
+    "primaryPhase": "14",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to media (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-090",
+    "app": "frontend-user",
+    "pattern": "/dashboard/guests",
+    "featureGroup": "guests",
+    "primaryPhase": "17",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to guests (alias/redirect)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-091",
+    "app": "frontend-user",
+    "pattern": "/dashboard/rsvp",
+    "featureGroup": "rsvp",
+    "primaryPhase": "18",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to rsvp (alias/redirect)",
+    "componentFamiliesPresent": [
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-092",
+    "app": "frontend-user",
+    "pattern": "/dashboard/gifts",
+    "featureGroup": "gifts",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to gifts (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-093",
+    "app": "frontend-user",
+    "pattern": "/dashboard/budget",
+    "featureGroup": "budget",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to budget (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-094",
+    "app": "frontend-user",
+    "pattern": "/dashboard/seating",
+    "featureGroup": "seating",
+    "primaryPhase": "19",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to seating (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-095",
+    "app": "frontend-user",
+    "pattern": "/dashboard/check-in",
+    "featureGroup": "check-in",
+    "primaryPhase": "20",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to check-in (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-096",
+    "app": "frontend-user",
+    "pattern": "/dashboard/reports",
+    "featureGroup": "reports",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to reports (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-097",
+    "app": "frontend-user",
+    "pattern": "/dashboard/delivery",
+    "featureGroup": "delivery",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to delivery (alias/redirect)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-098",
+    "app": "frontend-user",
+    "pattern": "/dashboard/media",
+    "featureGroup": "media",
+    "primaryPhase": "14",
+    "sourceOwnerOrAlias": "InvitationScopedRedirect to media (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-099",
+    "app": "frontend-user",
+    "pattern": "/dashboard/expenses",
+    "featureGroup": "budget",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "Redirect to budget (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-100",
+    "app": "frontend-user",
+    "pattern": "/dashboard/share",
+    "featureGroup": "delivery",
+    "primaryPhase": "15",
+    "sourceOwnerOrAlias": "Redirect to delivery (alias/redirect)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-101",
+    "app": "frontend-user",
+    "pattern": "/events",
+    "featureGroup": "events",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "Redirect to /app/events (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-102",
+    "app": "frontend-user",
+    "pattern": "/event/list",
+    "featureGroup": "events",
+    "primaryPhase": "12",
+    "sourceOwnerOrAlias": "Redirect to /app/events (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-103",
+    "app": "frontend-user",
+    "pattern": "/guests",
+    "featureGroup": "guests",
+    "primaryPhase": "17",
+    "sourceOwnerOrAlias": "Redirect to guests (alias/redirect)",
+    "componentFamiliesPresent": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "responsive-table",
+      "search-input",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-104",
+    "app": "frontend-user",
+    "pattern": "/expenses",
+    "featureGroup": "budget",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "Redirect to budget (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-105",
+    "app": "frontend-user",
+    "pattern": "/gift",
+    "featureGroup": "gifts",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "Redirect to gifts (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-106",
+    "app": "frontend-user",
+    "pattern": "/gifts",
+    "featureGroup": "gifts",
+    "primaryPhase": "21",
+    "sourceOwnerOrAlias": "Redirect to gifts (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-107",
+    "app": "frontend-user",
+    "pattern": "/reports",
+    "featureGroup": "reports",
+    "primaryPhase": "22",
+    "sourceOwnerOrAlias": "Redirect to reports (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-108",
+    "app": "frontend-user",
+    "pattern": "/profile",
+    "featureGroup": "profile",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "Redirect to /app/profile (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-109",
+    "app": "frontend-user",
+    "pattern": "/templates/browse",
+    "featureGroup": "catalog",
+    "primaryPhase": "09",
+    "sourceOwnerOrAlias": "BrowseTemplatesPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-110",
+    "app": "frontend-user",
+    "pattern": "/templates/browse/:id",
+    "featureGroup": "template-demo",
+    "primaryPhase": "10",
+    "sourceOwnerOrAlias": "HostTemplateDemoPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-111",
+    "app": "frontend-user",
+    "pattern": "*",
+    "featureGroup": "not-found",
+    "primaryPhase": "06",
+    "sourceOwnerOrAlias": "NotFoundPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-112",
+    "app": "frontend-admin",
+    "pattern": "/login",
+    "featureGroup": "auth-login",
+    "primaryPhase": "08",
+    "sourceOwnerOrAlias": "LoginPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-113",
+    "app": "frontend-admin",
+    "pattern": "/templates/new",
+    "featureGroup": "admin-template-create",
+    "primaryPhase": "25",
+    "sourceOwnerOrAlias": "AdminTemplateEditPage fullscreen create (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-114",
+    "app": "frontend-admin",
+    "pattern": "/templates/:templateId",
+    "featureGroup": "admin-template-edit",
+    "primaryPhase": "25",
+    "sourceOwnerOrAlias": "AdminTemplateEditPage fullscreen edit (leaf)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-115",
+    "app": "frontend-admin",
+    "pattern": "/",
+    "featureGroup": "admin-dashboard",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Index Navigate to /dashboard (alias/redirect)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-116",
+    "app": "frontend-admin",
+    "pattern": "/dashboard",
+    "featureGroup": "admin-dashboard",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminDashboardPage (leaf)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-117",
+    "app": "frontend-admin",
+    "pattern": "/users",
+    "featureGroup": "admin-users",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminUsersPage (leaf)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-118",
+    "app": "frontend-admin",
+    "pattern": "/users/:userId",
+    "featureGroup": "admin-user-detail",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminUserDetailPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-119",
+    "app": "frontend-admin",
+    "pattern": "/templates",
+    "featureGroup": "admin-templates",
+    "primaryPhase": "25",
+    "sourceOwnerOrAlias": "AdminTemplatesPage (leaf)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge",
+      "stat-card",
+      "toast"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge",
+      "stat-card",
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-120",
+    "app": "frontend-admin",
+    "pattern": "/payments",
+    "featureGroup": "admin-payments",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminPaymentsPage (leaf)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-121",
+    "app": "frontend-admin",
+    "pattern": "/packages",
+    "featureGroup": "admin-packages",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminPackagesPage (leaf)",
+    "componentFamiliesPresent": [
+      "stat-card",
+      "toast"
+    ],
+    "adoptedHere": [
+      "stat-card",
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-122",
+    "app": "frontend-admin",
+    "pattern": "/notifications",
+    "featureGroup": "admin-notifications",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminNotificationsPage (leaf)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-123",
+    "app": "frontend-admin",
+    "pattern": "/system-logs",
+    "featureGroup": "admin-logs",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminSystemLogsPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-124",
+    "app": "frontend-admin",
+    "pattern": "/reports",
+    "featureGroup": "admin-reports",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "AdminReportsPage (leaf)",
+    "componentFamiliesPresent": [
+      "action-button"
+    ],
+    "adoptedHere": [
+      "action-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-125",
+    "app": "frontend-admin",
+    "pattern": "/dev/api-monitor",
+    "featureGroup": "admin-monitor",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "ApiMonitorPage (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-126",
+    "app": "frontend-admin",
+    "pattern": "/admin",
+    "featureGroup": "admin-dashboard",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /dashboard (alias/redirect)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-127",
+    "app": "frontend-admin",
+    "pattern": "/admin/dashboard",
+    "featureGroup": "admin-dashboard",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /dashboard (alias/redirect)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-128",
+    "app": "frontend-admin",
+    "pattern": "/admin/users",
+    "featureGroup": "admin-users",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /users (alias/redirect)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-129",
+    "app": "frontend-admin",
+    "pattern": "/admin/templates",
+    "featureGroup": "admin-templates",
+    "primaryPhase": "25",
+    "sourceOwnerOrAlias": "Navigate to /templates (alias/redirect)",
+    "componentFamiliesPresent": [
+      "action-button",
+      "status-badge",
+      "stat-card",
+      "toast"
+    ],
+    "adoptedHere": [
+      "action-button",
+      "status-badge",
+      "stat-card",
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-130",
+    "app": "frontend-admin",
+    "pattern": "/admin/payments",
+    "featureGroup": "admin-payments",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /payments (alias/redirect)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-131",
+    "app": "frontend-admin",
+    "pattern": "/admin/packages",
+    "featureGroup": "admin-packages",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /packages (alias/redirect)",
+    "componentFamiliesPresent": [
+      "stat-card",
+      "toast"
+    ],
+    "adoptedHere": [
+      "stat-card",
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-132",
+    "app": "frontend-admin",
+    "pattern": "/admin/notifications",
+    "featureGroup": "admin-notifications",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /notifications (alias/redirect)",
+    "componentFamiliesPresent": [
+      "toast"
+    ],
+    "adoptedHere": [
+      "toast"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-133",
+    "app": "frontend-admin",
+    "pattern": "/admin/reports",
+    "featureGroup": "admin-reports",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /reports (alias/redirect)",
+    "componentFamiliesPresent": [
+      "action-button"
+    ],
+    "adoptedHere": [
+      "action-button"
+    ],
+    "coveredStates": "focused primitive unit",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "PARTIAL",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-134",
+    "app": "frontend-admin",
+    "pattern": "/admin/system-logs",
+    "featureGroup": "admin-logs",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /system-logs (alias/redirect)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  },
+  {
+    "routeId": "SCOPE-135",
+    "app": "frontend-admin",
+    "pattern": "*",
+    "featureGroup": "admin-not-found",
+    "primaryPhase": "24",
+    "sourceOwnerOrAlias": "Navigate to /dashboard (leaf)",
+    "componentFamiliesPresent": [
+      "NOT VERIFIED - route-specific inventory remains"
+    ],
+    "adoptedHere": [],
+    "coveredStates": "NOT TESTED in Phase 04",
+    "testedViewportLocaleMode": "fixture capture if in before/after manifest; otherwise NOT TESTED",
+    "status": "DEFERRED",
+    "deferredWork": "full source import graph and all states in primary phase"
+  }
+]

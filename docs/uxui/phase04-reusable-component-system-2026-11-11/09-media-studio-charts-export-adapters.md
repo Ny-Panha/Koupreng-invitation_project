@@ -1,0 +1,5 @@
+# 09 — media, Studio, charts and export adapters
+
+No upload, media MIME/size/ownership, chart metric, report calculation, CSV/print payload, preview origin/session or editor JSON serialization code was changed. The current user `MediaImage` and creator media flows, admin Template Studio, report export controls and metric renderers retain domain ownership. Admin `StatCard` consumes shared theme roles, but does not compute a new number. Admin report refresh was exercised on the actual reports route without fixture writes.
+
+The Studio browser check confirms toolbar visibility, Preview via pointer and Edit via Enter at 844×390 in both desktop/mobile projects. The 52-screen capture includes admin template edit and twelve renderer keys at two widths. Pixel changes on four renderer families are marked review required in [13](13-visual-evidence-and-performance.md); no invitation artwork source changed. Actual upload flows, live catalog, saved unknown JSON roundtrips, chart/print semantics under live data and all export variants remain separate verification gates.

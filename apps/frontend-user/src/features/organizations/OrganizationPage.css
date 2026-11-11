@@ -6,7 +6,7 @@
   min-height: calc(100vh - var(--host-nav-offset, 110px));
   padding: 24px 20px 80px;
   font-family: 'Kantumruy Pro', sans-serif;
-  color: var(--kp-dark, #1e293b);
+  color: var(--ui-theme-ink);
 }
 
 .k-org-container {
@@ -21,7 +21,7 @@
   gap: 8px;
   font-size: 0.85rem;
   margin-bottom: 20px;
-  color: #64748b;
+  color: var(--ui-theme-muted);
   flex-wrap: wrap;
 }
 
@@ -29,23 +29,23 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #7d6443;
+  color: var(--ui-theme-link);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .k-org-breadcrumb-link:hover {
-  color: #b0926a;
+  color: var(--ui-theme-gold);
 }
 
 .k-org-breadcrumb-sep {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--ui-theme-muted);
 }
 
 .k-org-breadcrumb-active {
-  color: #1e293b;
+  color: var(--ui-theme-ink);
   font-weight: 700;
 }
 
@@ -54,8 +54,8 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 250, 245, 0.95) 100%);
-  border: 1.5px solid rgba(176, 146, 106, 0.3);
+  background: var(--ui-theme-surface);
+  border: 1.5px solid var(--ui-theme-border);
   border-radius: 20px;
   padding: 32px 36px;
   box-shadow: 0 10px 30px rgba(125, 100, 67, 0.08);
@@ -68,9 +68,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #fdf6ec;
-  border: 1px solid #f2d8b3;
-  color: #b0926a;
+  background: var(--ui-theme-gold-soft);
+  border: 1px solid var(--ui-theme-gold);
+  color: var(--ui-theme-link);
   padding: 4px 12px;
   border-radius: 999px;
   font-size: 0.75rem;
@@ -82,7 +82,7 @@
 .k-org-header-title {
   font-family: 'Moul', serif;
   font-size: clamp(1.4rem, 3.5vw, 1.85rem);
-  color: #7d6443;
+  color: var(--ui-theme-link);
   margin: 0 0 10px;
   display: flex;
   align-items: center;
@@ -102,7 +102,7 @@
 }
 
 .k-org-header-desc {
-  color: #64748b;
+  color: var(--ui-theme-muted);
   font-size: 0.925rem;
   margin: 0;
   max-width: 640px;

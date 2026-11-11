@@ -6,18 +6,18 @@
 }
 
 .k-form-label {
-  font-family: var(--font-sans);
+  font-family: var(--ui-font-management);
   font-size: var(--text-sm, 0.875rem);
   font-weight: var(--weight-semibold, 600);
-  color: var(--brand-text, #1e293b);
+  color: var(--ui-theme-ink);
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  line-height: 1.6;
+  line-height: var(--ui-leading-khmer);
 }
 
 .k-form-required {
-  color: var(--status-danger-fg, #dc2626);
+  color: var(--ui-theme-danger);
 }
 
 .k-form-control-wrap {
@@ -29,39 +29,48 @@
 .k-form-control-wrap textarea,
 .k-form-control-wrap select {
   width: 100%;
-  font-family: var(--font-sans);
+  font-family: var(--ui-font-management);
   font-size: var(--text-base, 1rem);
-  min-height: 48px;
+  min-height: max(48px, var(--ui-control-min-height));
   padding: 0.625rem 0.875rem;
-  border-radius: var(--radius-md, 10px);
-  border: 1px solid var(--ui-control-border);
-  background: var(--brand-surface, #ffffff);
-  color: var(--brand-text, #1e293b);
+  border-radius: var(--ui-radius-control);
+  border: 1px solid var(--ui-theme-control-border);
+  background: var(--ui-theme-surface);
+  color: var(--ui-theme-ink);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  line-height: 1.75;
+  line-height: var(--ui-leading-khmer);
 }
 
 .k-form-control-wrap input:focus,
 .k-form-control-wrap textarea:focus,
 .k-form-control-wrap select:focus {
-  outline: 3px solid var(--ui-focus);
+  outline: 3px solid var(--ui-theme-focus);
   outline-offset: 2px;
-  border-color: var(--ui-focus);
+  border-color: var(--ui-theme-focus);
 }
 
 .k-form-field-has-error .k-form-control-wrap input,
 .k-form-field-has-error .k-form-control-wrap textarea,
 .k-form-field-has-error .k-form-control-wrap select {
-  border-color: var(--status-danger-fg, #dc2626);
+  border-color: var(--ui-theme-danger);
 }
 
 .k-form-error {
   font-size: var(--text-xs, 0.75rem);
-  color: var(--status-danger-fg, #dc2626);
+  color: var(--ui-theme-danger);
   font-weight: var(--weight-medium, 500);
 }
 
 .k-form-helper {
   font-size: var(--text-xs, 0.75rem);
-  color: var(--ui-muted, var(--brand-text-muted, #526071));
+  color: var(--ui-theme-muted);
+}
+
+@media (forced-colors: active) {
+  .k-form-control-wrap input:focus,
+  .k-form-control-wrap textarea:focus,
+  .k-form-control-wrap select:focus { outline-color: Highlight; }
+  .k-form-field-has-error .k-form-control-wrap input,
+  .k-form-field-has-error .k-form-control-wrap textarea,
+  .k-form-field-has-error .k-form-control-wrap select { border-color: Mark; }
 }

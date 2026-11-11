@@ -43,3 +43,10 @@
   background: var(--status-neutral-bg, #f1f5f9);
   color: var(--status-neutral-fg, #475569);
 }
+
+/* Management badges follow the app palette; invitation artwork keeps its own colors. */
+.dash-wrapper .k-badge-success { background: var(--ui-theme-success-soft); color: var(--ui-theme-success); }
+.dash-wrapper .k-badge-warning { background: var(--ui-theme-warning-soft); color: var(--ui-theme-warning); }
+.dash-wrapper .k-badge-danger { background: var(--ui-theme-danger-soft); color: var(--ui-theme-danger); }
+.dash-wrapper .k-badge-info { background: var(--ui-theme-info-soft); color: var(--ui-theme-info); }
+.dash-wrapper .k-badge-neutral { background: var(--ui-theme-subtle); color: var(--ui-theme-muted); }

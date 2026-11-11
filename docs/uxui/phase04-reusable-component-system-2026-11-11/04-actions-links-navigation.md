@@ -1,0 +1,7 @@
+# 04 — actions, links and navigation
+
+Admin `ActionButton` now defaults to `type="button"`, which prevents report refresh and other non-submit actions from accidentally submitting a containing form. Explicit `type="submit"` remains supported. The danger variant uses Phase 03 danger foreground, soft background and border roles in light/dark mode; primary/ghost behavior remains as it was. Tests submit an actual form and confirm both cases. The admin reports browser regression clicks the real refresh control, verifies its type, and observes no fixture mutation in desktop and mobile Chromium.
+
+User `LoadingButton` reports `aria-busy="true"` during pending work while retaining native disabled behavior and its visible label. The organization create flow and assistant use this existing primitive. Unit coverage checks click blocking. Icon buttons and route links retain their current names/destinations; no global replacement was attempted. User/admin navigation shells and Studio switches were inspected, and the Studio Edit/Preview switch was exercised in both browser projects. Unused admin `FilterTabs` needs a proper roving-tab/arrow-key contract before it is placed on a route; adding behavior to an unused export would not establish route adoption.
+
+Pending: complete action/link size, pressed, denied, long-label and forced-color audits on all C1/C4 routes in their owning phases. No route or authorization boundary changed.

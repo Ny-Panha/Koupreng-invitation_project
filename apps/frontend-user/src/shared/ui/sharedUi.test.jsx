@@ -11,6 +11,7 @@ import {
   StatusBadge,
   LoadingButton,
   SearchInput,
+  ResponsiveTable,
 } from "./index";
 
 describe("Shared UI Primitives", () => {
@@ -110,8 +111,17 @@ describe("Shared UI Primitives", () => {
 
       const btn = screen.getByRole("button", { name: "Save" });
       expect(btn).toBeDisabled();
+      expect(btn).toHaveAttribute("aria-busy", "true");
       fireEvent.click(btn);
       expect(handleClick).not.toHaveBeenCalled();
+    });
+
+    it("keeps pending payment separate from paid and exposes a scrollable table to the keyboard", () => {
+      render(<><StatusBadge status="PAID_PENDING_REVIEW" /><ResponsiveTable ariaLabel="Organization members"><thead><tr><th>Member</th></tr></thead><tbody><tr><td>Sophea</td></tr></tbody></ResponsiveTable></>);
+      expect(screen.getByText("Pending review").closest(".k-status-badge")).toHaveClass("k-badge-warning");
+      const region = screen.getByRole("region", { name: "Organization members" });
+      expect(region).toHaveAttribute("tabindex", "0");
+      expect(screen.getByRole("table", { name: "Organization members" })).toBeInTheDocument();
     });
 
     it("renders SearchInput and triggers onChange and onClear", () => {

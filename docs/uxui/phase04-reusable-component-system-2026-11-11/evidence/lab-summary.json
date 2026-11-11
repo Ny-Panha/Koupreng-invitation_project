@@ -1,0 +1,1037 @@
+{
+  "browser": "156.0.8078.4",
+  "method": {
+    "viewport": "390x844",
+    "motion": "reduce",
+    "network": "default loopback",
+    "cpu": "unthrottled"
+  },
+  "routes": [
+    {
+      "group": "home",
+      "condition": "cold",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 77.10000000009313,
+        "min": 65.10000000009313,
+        "max": 267.79999999981374
+      },
+      "fcp": {
+        "count": 1,
+        "median": 160,
+        "min": 160,
+        "max": 160
+      },
+      "lcp": {
+        "count": 1,
+        "median": 160,
+        "min": 160,
+        "max": 160
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.0005204499792376861,
+        "min": 0,
+        "max": 0.0005204499792376861
+      }
+    },
+    {
+      "group": "home",
+      "condition": "cold",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 77.79999999981374,
+        "min": 72.39999999990687,
+        "max": 113.29999999981374
+      },
+      "fcp": {
+        "count": 3,
+        "median": 168,
+        "min": 164,
+        "max": 208
+      },
+      "lcp": {
+        "count": 3,
+        "median": 168,
+        "min": 164,
+        "max": 208
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.0005204499792376861,
+        "min": 0.0005204499792376861,
+        "max": 0.0005204499792376861
+      }
+    },
+    {
+      "group": "home",
+      "condition": "warm",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 53.1999999997206,
+        "min": 44.60000000009313,
+        "max": 55.299999999813735
+      },
+      "fcp": {
+        "count": 3,
+        "median": 112,
+        "min": 108,
+        "max": 116
+      },
+      "lcp": {
+        "count": 3,
+        "median": 112,
+        "min": 108,
+        "max": 116
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.0005204499792376861,
+        "min": 0.0005204499792376861,
+        "max": 0.0005204499792376861
+      }
+    },
+    {
+      "group": "home",
+      "condition": "warm",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 150.29999999981374,
+        "min": 43.799999999813735,
+        "max": 181.5
+      },
+      "fcp": {
+        "count": 2,
+        "median": 248,
+        "min": 204,
+        "max": 248
+      },
+      "lcp": {
+        "count": 2,
+        "median": 248,
+        "min": 204,
+        "max": 248
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.0005204499792376861,
+        "min": 0.0005204499792376861,
+        "max": 0.0005204499792376861
+      }
+    },
+    {
+      "group": "create-event",
+      "condition": "cold",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 97.39999999990687,
+        "min": 71.59999999962747,
+        "max": 135.60000000009313
+      },
+      "fcp": {
+        "count": 3,
+        "median": 220,
+        "min": 184,
+        "max": 244
+      },
+      "lcp": {
+        "count": 3,
+        "median": 532,
+        "min": 488,
+        "max": 540
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "create-event",
+      "condition": "cold",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 68.10000000009313,
+        "min": 62.700000000186265,
+        "max": 81.60000000009313
+      },
+      "fcp": {
+        "count": 3,
+        "median": 180,
+        "min": 168,
+        "max": 196
+      },
+      "lcp": {
+        "count": 3,
+        "median": 208,
+        "min": 188,
+        "max": 480
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "create-event",
+      "condition": "warm",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 94.1999999997206,
+        "min": 40.60000000009313,
+        "max": 159.5
+      },
+      "fcp": {
+        "count": 3,
+        "median": 164,
+        "min": 76,
+        "max": 208
+      },
+      "lcp": {
+        "count": 3,
+        "median": 476,
+        "min": 404,
+        "max": 520
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "create-event",
+      "condition": "warm",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 46.3000000002794,
+        "min": 39.700000000186265,
+        "max": 51
+      },
+      "fcp": {
+        "count": 3,
+        "median": 88,
+        "min": 84,
+        "max": 100
+      },
+      "lcp": {
+        "count": 3,
+        "median": 416,
+        "min": 408,
+        "max": 444
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "admin-dashboard",
+      "condition": "cold",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 59.799999999813735,
+        "min": 47,
+        "max": 64.39999999990687
+      },
+      "fcp": {
+        "count": 3,
+        "median": 104,
+        "min": 88,
+        "max": 104
+      },
+      "lcp": {
+        "count": 3,
+        "median": 116,
+        "min": 88,
+        "max": 116
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "admin-dashboard",
+      "condition": "cold",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 39,
+        "min": 37.200000000186265,
+        "max": 45.60000000009313
+      },
+      "fcp": {
+        "count": 3,
+        "median": 88,
+        "min": 84,
+        "max": 96
+      },
+      "lcp": {
+        "count": 3,
+        "median": 88,
+        "min": 84,
+        "max": 96
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "admin-dashboard",
+      "condition": "warm",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 46.799999999813735,
+        "min": 45.799999999813735,
+        "max": 50.6999999997206
+      },
+      "fcp": {
+        "count": 3,
+        "median": 64,
+        "min": 56,
+        "max": 68
+      },
+      "lcp": {
+        "count": 3,
+        "median": 76,
+        "min": 72,
+        "max": 80
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "admin-dashboard",
+      "condition": "warm",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 26.299999999813735,
+        "min": 23.09999999962747,
+        "max": 27.399999999906868
+      },
+      "fcp": {
+        "count": 3,
+        "median": 40,
+        "min": 36,
+        "max": 40
+      },
+      "lcp": {
+        "count": 3,
+        "median": 40,
+        "min": 36,
+        "max": 40
+      },
+      "cls": {
+        "count": 3,
+        "median": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "group": "admin-template-edit",
+      "condition": "cold",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 64.1999999997206,
+        "min": 53.6999999997206,
+        "max": 72.20000000018626
+      },
+      "fcp": {
+        "count": 3,
+        "median": 96,
+        "min": 84,
+        "max": 108
+      },
+      "lcp": {
+        "count": 3,
+        "median": 96,
+        "min": 84,
+        "max": 480
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.014218009478672985,
+        "min": 0.014218009478672985,
+        "max": 0.014218009478672985
+      }
+    },
+    {
+      "group": "admin-template-edit",
+      "condition": "cold",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 38.3000000002794,
+        "min": 36.8000000002794,
+        "max": 38.5
+      },
+      "fcp": {
+        "count": 3,
+        "median": 68,
+        "min": 64,
+        "max": 76
+      },
+      "lcp": {
+        "count": 3,
+        "median": 76,
+        "min": 64,
+        "max": 360
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.014218009478672985,
+        "min": 0.014218009478672985,
+        "max": 0.014218009478672985
+      }
+    },
+    {
+      "group": "admin-template-edit",
+      "condition": "warm",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 59.5,
+        "min": 49,
+        "max": 61.39999999990687
+      },
+      "fcp": {
+        "count": 3,
+        "median": 72,
+        "min": 56,
+        "max": 76
+      },
+      "lcp": {
+        "count": 3,
+        "median": 424,
+        "min": 392,
+        "max": 428
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.014218009478672985,
+        "min": 0.014218009478672985,
+        "max": 0.014218009478672985
+      }
+    },
+    {
+      "group": "admin-template-edit",
+      "condition": "warm",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 38.10000000009313,
+        "min": 36.299999999813735,
+        "max": 42.5
+      },
+      "fcp": {
+        "count": 3,
+        "median": 48,
+        "min": 44,
+        "max": 60
+      },
+      "lcp": {
+        "count": 3,
+        "median": 48,
+        "min": 44,
+        "max": 396
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.014218009478672985,
+        "min": 0.014218009478672985,
+        "max": 0.014218009478672985
+      }
+    },
+    {
+      "group": "khmer-floral-gold",
+      "condition": "cold",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 71.8000000002794,
+        "min": 66.3000000002794,
+        "max": 90.89999999990687
+      },
+      "fcp": {
+        "count": 3,
+        "median": 112,
+        "min": 104,
+        "max": 124
+      },
+      "lcp": {
+        "count": 3,
+        "median": 460,
+        "min": 104,
+        "max": 568
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.00413360833770321,
+        "min": 0.001119105764514666,
+        "max": 0.00413360833770321
+      }
+    },
+    {
+      "group": "khmer-floral-gold",
+      "condition": "cold",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 73.39999999990687,
+        "min": 65.89999999990687,
+        "max": 98.39999999990687
+      },
+      "fcp": {
+        "count": 3,
+        "median": 116,
+        "min": 96,
+        "max": 144
+      },
+      "lcp": {
+        "count": 3,
+        "median": 116,
+        "min": 96,
+        "max": 544
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.00413360833770321,
+        "min": 0.00413360833770321,
+        "max": 0.00643073222090094
+      }
+    },
+    {
+      "group": "khmer-floral-gold",
+      "condition": "warm",
+      "stage": "before",
+      "load": {
+        "count": 3,
+        "median": 67.3000000002794,
+        "min": 64.60000000009313,
+        "max": 91.8000000002794
+      },
+      "fcp": {
+        "count": 3,
+        "median": 96,
+        "min": 80,
+        "max": 132
+      },
+      "lcp": {
+        "count": 3,
+        "median": 464,
+        "min": 448,
+        "max": 472
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.001119105764514666,
+        "min": 0.001119105764514666,
+        "max": 0.00413360833770321
+      }
+    },
+    {
+      "group": "khmer-floral-gold",
+      "condition": "warm",
+      "stage": "after",
+      "load": {
+        "count": 3,
+        "median": 53.10000000009313,
+        "min": 43.799999999813735,
+        "max": 61.200000000186265
+      },
+      "fcp": {
+        "count": 3,
+        "median": 72,
+        "min": 72,
+        "max": 80
+      },
+      "lcp": {
+        "count": 3,
+        "median": 440,
+        "min": 72,
+        "max": 440
+      },
+      "cls": {
+        "count": 3,
+        "median": 0.001119105764514666,
+        "min": 0.001119105764514666,
+        "max": 0.00413360833770321
+      }
+    }
+  ],
+  "entries": [
+    {
+      "app": "user",
+      "stage": "before",
+      "initialAssets": [
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/index-BthmFj7w.js",
+          "bytes": 472266,
+          "gzip": 139973,
+          "brotli": 117898
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/jsx-runtime-Wy9s6hX0.js",
+          "bytes": 8911,
+          "gzip": 3383,
+          "brotli": 3033
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/react-dom-g7hNCJoM.js",
+          "bytes": 3864,
+          "gzip": 1393,
+          "brotli": 1211
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/useLanguageStore-mmn9Okko.js",
+          "bytes": 1006,
+          "gzip": 568,
+          "brotli": 518
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/useUiCopy-nahFYZIp.js",
+          "bytes": 215,
+          "gzip": 191,
+          "brotli": 159
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/prop-types-CSvbPeQ-.js",
+          "bytes": 810,
+          "gzip": 505,
+          "brotli": 427
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/io5-b3milcAS.js",
+          "bytes": 45435,
+          "gzip": 10532,
+          "brotli": 8796
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/createLucideIcon-iAjGl61D.js",
+          "bytes": 3088,
+          "gzip": 1480,
+          "brotli": 1340
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/chevron-down-DxRDuKka.js",
+          "bytes": 168,
+          "gzip": 165,
+          "brotli": 151
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/Modal-CPMz-hmB.js",
+          "bytes": 4798,
+          "gzip": 1974,
+          "brotli": 1749
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/MotionConfigContext-CluVpD3A.js",
+          "bytes": 55920,
+          "gzip": 20439,
+          "brotli": 18725
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/proxy-4uqr5Owt.js",
+          "bytes": 78720,
+          "gzip": 24707,
+          "brotli": 22035
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/catalogPolicy-O2nCERmB.js",
+          "bytes": 1007,
+          "gzip": 521,
+          "brotli": 446
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/ថ្ងៃដែលរង់ចាំ-EL9I3BZ5.js",
+          "bytes": 162,
+          "gzip": 111,
+          "brotli": 111
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/Instrumental Wedding Music (VioSounds Cover)-dvp3gij_.js",
+          "bytes": 97,
+          "gzip": 117,
+          "brotli": 87
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/httpClient-ecMDaaxJ.js",
+          "bytes": 54207,
+          "gzip": 19992,
+          "brotli": 18128
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/authApi-CuYpX8K0.js",
+          "bytes": 1070,
+          "gzip": 422,
+          "brotli": 363
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/templateCatalogApi-B2atPAZo.js",
+          "bytes": 792,
+          "gzip": 477,
+          "brotli": 411
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/Modal-Jynf-Qp7.css",
+          "bytes": 2976,
+          "gzip": 1112,
+          "brotli": 926
+        },
+        {
+          "stage": "before",
+          "app": "user",
+          "file": "assets/index-DzAlWHCO.css",
+          "bytes": 225829,
+          "gzip": 41280,
+          "brotli": 34102
+        }
+      ],
+      "allCssJs": {
+        "count": 273,
+        "bytes": 4186008,
+        "gzip": 1192998
+      }
+    },
+    {
+      "app": "user",
+      "stage": "after",
+      "initialAssets": [
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/index-DEoCpkJZ.js",
+          "bytes": 472288,
+          "gzip": 139992,
+          "brotli": 117799
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/jsx-runtime-Wy9s6hX0.js",
+          "bytes": 8911,
+          "gzip": 3383,
+          "brotli": 3033
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/react-dom-g7hNCJoM.js",
+          "bytes": 3864,
+          "gzip": 1393,
+          "brotli": 1211
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/useLanguageStore-mmn9Okko.js",
+          "bytes": 1006,
+          "gzip": 568,
+          "brotli": 518
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/useUiCopy-nahFYZIp.js",
+          "bytes": 215,
+          "gzip": 191,
+          "brotli": 159
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/prop-types-CSvbPeQ-.js",
+          "bytes": 810,
+          "gzip": 505,
+          "brotli": 427
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/io5-b3milcAS.js",
+          "bytes": 45435,
+          "gzip": 10532,
+          "brotli": 8796
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/createLucideIcon-iAjGl61D.js",
+          "bytes": 3088,
+          "gzip": 1480,
+          "brotli": 1340
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/chevron-down-DxRDuKka.js",
+          "bytes": 168,
+          "gzip": 165,
+          "brotli": 151
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/Modal-CPMz-hmB.js",
+          "bytes": 4798,
+          "gzip": 1974,
+          "brotli": 1749
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/MotionConfigContext-CluVpD3A.js",
+          "bytes": 55920,
+          "gzip": 20439,
+          "brotli": 18725
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/proxy-4uqr5Owt.js",
+          "bytes": 78720,
+          "gzip": 24707,
+          "brotli": 22035
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/catalogPolicy-O2nCERmB.js",
+          "bytes": 1007,
+          "gzip": 521,
+          "brotli": 446
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/ថ្ងៃដែលរង់ចាំ-EL9I3BZ5.js",
+          "bytes": 162,
+          "gzip": 111,
+          "brotli": 111
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/Instrumental Wedding Music (VioSounds Cover)-dvp3gij_.js",
+          "bytes": 97,
+          "gzip": 117,
+          "brotli": 87
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/httpClient-ecMDaaxJ.js",
+          "bytes": 54207,
+          "gzip": 19992,
+          "brotli": 18128
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/authApi-CuYpX8K0.js",
+          "bytes": 1070,
+          "gzip": 422,
+          "brotli": 363
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/templateCatalogApi-B2atPAZo.js",
+          "bytes": 792,
+          "gzip": 477,
+          "brotli": 411
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/Modal-Jynf-Qp7.css",
+          "bytes": 2976,
+          "gzip": 1112,
+          "brotli": 926
+        },
+        {
+          "stage": "after",
+          "app": "user",
+          "file": "assets/index-ZxQMkZv3.css",
+          "bytes": 225864,
+          "gzip": 41258,
+          "brotli": 34076
+        }
+      ],
+      "allCssJs": {
+        "count": 273,
+        "bytes": 4187527,
+        "gzip": 1193235
+      }
+    },
+    {
+      "app": "admin",
+      "stage": "before",
+      "initialAssets": [
+        {
+          "stage": "before",
+          "app": "admin",
+          "file": "assets/index-McFVwmNK.js",
+          "bytes": 284587,
+          "gzip": 89598,
+          "brotli": 77393
+        },
+        {
+          "stage": "before",
+          "app": "admin",
+          "file": "assets/AdminLanguageProvider-BvRtNR54.js",
+          "bytes": 50574,
+          "gzip": 13853,
+          "brotli": 11995
+        },
+        {
+          "stage": "before",
+          "app": "admin",
+          "file": "assets/createLucideIcon-B4zn7OBl.js",
+          "bytes": 4182,
+          "gzip": 1880,
+          "brotli": 1703
+        },
+        {
+          "stage": "before",
+          "app": "admin",
+          "file": "assets/adminService-BD0yhiBB.js",
+          "bytes": 55809,
+          "gzip": 20081,
+          "brotli": 18122
+        },
+        {
+          "stage": "before",
+          "app": "admin",
+          "file": "assets/index-SYkljhQF.css",
+          "bytes": 194309,
+          "gzip": 28241,
+          "brotli": 21494
+        }
+      ],
+      "allCssJs": {
+        "count": 52,
+        "bytes": 1353122,
+        "gzip": 342737
+      }
+    },
+    {
+      "app": "admin",
+      "stage": "after",
+      "initialAssets": [
+        {
+          "stage": "after",
+          "app": "admin",
+          "file": "assets/index-DcfzvqBW.js",
+          "bytes": 284587,
+          "gzip": 89597,
+          "brotli": 77266
+        },
+        {
+          "stage": "after",
+          "app": "admin",
+          "file": "assets/AdminLanguageProvider-BvRtNR54.js",
+          "bytes": 50574,
+          "gzip": 13853,
+          "brotli": 11995
+        },
+        {
+          "stage": "after",
+          "app": "admin",
+          "file": "assets/createLucideIcon-B4zn7OBl.js",
+          "bytes": 4182,
+          "gzip": 1880,
+          "brotli": 1703
+        },
+        {
+          "stage": "after",
+          "app": "admin",
+          "file": "assets/adminService-BD0yhiBB.js",
+          "bytes": 55809,
+          "gzip": 20081,
+          "brotli": 18122
+        },
+        {
+          "stage": "after",
+          "app": "admin",
+          "file": "assets/index-DjX8BpD3.css",
+          "bytes": 195448,
+          "gzip": 28489,
+          "brotli": 21706
+        }
+      ],
+      "allCssJs": {
+        "count": 52,
+        "bytes": 1354296,
+        "gzip": 342986
+      }
+    }
+  ]
+}

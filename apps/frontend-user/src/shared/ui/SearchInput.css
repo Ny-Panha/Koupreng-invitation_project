@@ -9,45 +9,61 @@
 .k-search-icon {
   position: absolute;
   left: 0.75rem;
-  color: var(--ui-muted, var(--brand-text-muted, #526071));
+  color: var(--ui-theme-muted);
   font-size: 1.125rem;
   pointer-events: none;
 }
 
 .k-search-input {
   width: 100%;
-  font-family: var(--font-sans);
+  min-height: var(--ui-control-min-height);
+  font-family: var(--ui-font-management);
   font-size: var(--text-sm, 0.875rem);
-  padding: 0.5rem 2.25rem 0.5rem 2.375rem;
+  padding: 0.5rem 3rem 0.5rem 2.375rem;
   border-radius: var(--radius-pill, 999px);
-  border: 1px solid var(--brand-border, #e7e7ee);
-  background: var(--brand-surface, #ffffff);
-  color: var(--brand-text, #1e293b);
+  border: 1px solid var(--ui-theme-control-border);
+  background: var(--ui-theme-surface);
+  color: var(--ui-theme-ink);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .k-search-input:focus {
-  outline: none;
-  border-color: var(--brand-primary, #6b6bc4);
-  box-shadow: 0 0 0 3px var(--brand-ring, rgba(107, 107, 196, 0.25));
+  outline: 3px solid var(--ui-theme-focus);
+  outline-offset: 2px;
+  border-color: var(--ui-theme-focus);
 }
 
 .k-search-clear-btn {
   position: absolute;
+  top: 50%;
   right: 0.625rem;
+  transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--ui-muted, var(--brand-text-muted, #526071));
+  color: var(--ui-theme-muted);
   font-size: 1.125rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: var(--ui-control-min-height);
+  min-width: var(--ui-control-min-height);
   padding: 0.125rem;
 }
 
 .k-search-clear-btn:hover {
-  color: var(--brand-text, #1e293b);
+  color: var(--ui-theme-ink);
+}
+
+.k-search-clear-btn:focus-visible {
+  outline: 3px solid var(--ui-theme-focus);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+@media (forced-colors: active) {
+  .k-search-input:focus,
+  .k-search-clear-btn:focus-visible { outline-color: Highlight; }
 }
 
 .k-search-input::-webkit-search-cancel-button { -webkit-appearance: none; }

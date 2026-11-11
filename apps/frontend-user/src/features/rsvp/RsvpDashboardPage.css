@@ -5,7 +5,7 @@
 }
 .rsvp-header, .rsvp-toolbar, .rsvp-wishes-head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
 .rsvp-header-info { flex: 1; min-width: min(100%, 260px); }
-.rsvp-kicker { display: block; color: var(--ws-gold-dark, #926c34); font-size: 13px; font-weight: 750; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+.rsvp-kicker { display: block; color: var(--ui-theme-link); font-size: 13px; font-weight: 750; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
 .rsvp-header h1 { margin: 0 0 6px; font-size: clamp(26px, 2.8vw, 34px); font-weight: 800; line-height: 1.45; color: #2a1f10; }
 .rsvp-subtitle { color: var(--ws-muted, #657269); font-size: 15px; margin: 0; }
 .rsvp-back-btn, .rsvp-return-btn { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; padding: 8px 16px; border: 1px solid #eadfce; border-radius: 12px; background: #ffffff; color: #2a1f10; text-decoration: none; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }

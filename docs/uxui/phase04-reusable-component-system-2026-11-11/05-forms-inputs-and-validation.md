@@ -1,0 +1,5 @@
+# 05 — forms, inputs and validation
+
+The existing user `FormField` keeps native input/select/textarea labels and caller descriptions; errors set `aria-invalid` and connect to the same control. Composite controls remain a named group, so the wrapper does not invent a label association. Its shared control, label, helper/error and focus styling now consumes Phase 03 management roles, including forced-color outlines and Khmer line height. `SearchInput` also uses management roles and gives the clear control a 44px target. The targeted existing tests pass. Organization create uses `FormField` with required validation and `LoadingButton type="submit"`; the Phase 04 button change does not alter this explicit submit.
+
+Admin date/time pickers and Studio controls were inventoried, not rewritten. No API validation, MIME check, media ownership, or stored form schema changed. The browser fixture checks Studio panel return in short landscape and the responsive scan covers 320–1920 widths. Native Khmer IME, copy review, read-only/busy/denied/long-error states, and full field variants remain open. Those are not inferred from the passing unit tests.

@@ -1,0 +1,7 @@
+# 07 — feedback, status, loading and error states
+
+Admin errors in `Toast.jsx` now remain visible until dismissed. Its surface and severity border use theme roles, with a forced-color border and reduced-motion override. The dismiss control has a Khmer or English accessible name based on the admin language provider. Informational toasts retain their 3.5-second timeout. Focused tests advance timers, check the error alert and close action, then verify informational dismissal. This applies to current templates, packages, payments, notifications, users and Studio consumers through the shared export.
+
+Admin status badges use canonical success, danger, warning, gold and neutral tokens. Their status classification and labels were not changed: `PAID_PENDING_REVIEW` remains warning, and `PAID` remains success. The user `StatusBadge` source similarly keeps those distinct states; badges under the owner `.dash-wrapper` use semantic management colors while invitation renderer badges keep their artwork colors. Unit tests check both. A visual badge is a presentation of service state; it does not verify a transaction or grant an entitlement. Manual gifts remain distinct from provider payment; no backend code changed.
+
+Other loading/empty/error primitives remain inventoried and tested only where existing suites cover them. A future audit must check stale-data messaging, offline recovery, denied actions and cross-app notification queuing on real service conditions. No synthetic success was added for an unavailable service.

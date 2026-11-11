@@ -1,11 +1,13 @@
 import { useEffect } from "react";
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export default function Toast({ toast, onClose }) {
+    const { lang } = useAdminLanguage();
     useEffect(() => {
         if (!toast) return undefined;
-        // Don't auto-dismiss error alerts too quickly so users have time to read and act
-        const duration = toast.type === "error" ? 6000 : 3500;
-        const id = setTimeout(onClose, duration);
+        // Operational errors stay available until the user dismisses them.
+        if (toast.type === "error") return undefined;
+        const id = setTimeout(onClose, 3500);
         return () => clearTimeout(id);
     }, [toast, onClose]);
 
@@ -35,7 +37,7 @@ export default function Toast({ toast, onClose }) {
                         lineHeight: 1,
                         padding: "0 4px",
                     }}
-                    aria-label="Dismiss notification"
+                    aria-label={lang === "km" ? "បិទការជូនដំណឹង" : "Dismiss notification"}
                 >
                     ×
                 </button>

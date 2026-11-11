@@ -1,0 +1,12 @@
+# 17 — Phase 05 motion platform handoff
+
+Phase 05 should begin from this Phase 04 commit and the Phase 03 canonical tokens, after confirming the actual `main` HEAD and reading the dedicated Phase 05 prompt. This is a handoff, not Phase 05 implementation.
+
+1. Reconcile current route/component graph. Read [component register](evidence/component-register.json), [route ledger](evidence/route-adoption.json), Phase 03 motion/type tokens and Phase 02 IA. Resolve textual candidates through actual imports before deleting or replacing any primitive. Retain every `DEFERRED` route owner.
+2. Establish a motion budget for management shells, Studio and guest renderer families separately. Define meaningful entrance/feedback/overlay timing, interruption and reduced-motion behavior. Keep invitation artwork identity and opening interaction controls. Avoid animation that implies a payment, RSVP, delivery or save succeeded.
+3. Review pending Phase 04 component gaps that motion depends on: safe action busy/pressed states, menu/tab keyboard movement, overlay focus return, toast timing, skeleton announcements and table scroll discoverability. Add tests at real consuming routes before broad motion adoption.
+4. Build deterministic before/after fixture captures and a fixture timing control for the four renderer families with pixel variance. Compare 320/390/768/1440/1920, short landscape, Khmer/English and light/dark. Keep native Khmer, screen reader and physical touch as separate gates until observed.
+5. Run current token parity, both route inventory tests, full unit/lint/build and the new `phase04-components.spec.js`. Preserve the `phase02-foundations.spec.js` 26/6 final known-red result as a baseline; QA-NEW-01/02/03 require their own copy/QA decision and stronger assertion design, not silent deletion.
+6. Measure before/after bundle and realistic cold/warm browser outcomes with at least three valid samples, controlled CPU/network where possible. Revisit the home warm 53.2→150.3 ms local deviation and incomplete FCP/LCP samples before attributing a regression. Do not present local results as field p75 CWV or INP.
+
+Preserve authorization, server-owned price/entitlement, USD/KHR separation, preview origin/session checks, unknown JSON roundtrips, the 48 existing migration SQL files and existing vendor license restrictions. Phase 05 owner should record exact approvals for any new library/asset and leave optional capabilities outside scope. This handoff is ready for the later dedicated prompt, with Phase 04 open gates explicitly retained.

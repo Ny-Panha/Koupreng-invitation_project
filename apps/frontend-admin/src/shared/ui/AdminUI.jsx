@@ -59,7 +59,7 @@ export function StatCard({
   return (
     <article
       style={style}
-      className={`group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-850 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-amber-500/40 cursor-default ${className}`.trim()}
+      className={`group relative overflow-hidden rounded-2xl border border-[var(--ui-theme-border)] bg-[var(--ui-theme-surface)] p-5 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--ui-theme-gold)] cursor-default ${className}`.trim()}
     >
       {/* Top subtle rim highlight */}
       <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-slate-200/60 dark:via-white/10 to-transparent" />
@@ -76,7 +76,7 @@ export function StatCard({
       </div>
 
       <div className="flex items-baseline gap-2 mt-2">
-        <strong className="block text-2xl font-black tracking-tight text-slate-900 dark:text-zinc-100 transition-colors group-hover:text-amber-600 dark:group-hover:text-amber-400 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
+        <strong className="block text-2xl font-black tracking-tight text-[var(--ui-theme-ink)] transition-colors group-hover:text-[var(--ui-theme-gold)] animate-text-reveal" style={{ animationDelay: "0.14s" }}>
           {displayValue}
         </strong>
         {trend && (
@@ -141,11 +141,11 @@ export function StatusBadge({ status, tone }) {
       : "gray");
 
   const badgeStyles = {
-    green: "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 border-emerald-500/20",
-    red: "bg-rose-500/10 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400 border-rose-500/20",
-    amber: "bg-amber-500/10 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 border-amber-500/20",
-    gold: "bg-amber-500/15 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 border-amber-500/30 font-bold",
-    gray: "bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400 border-slate-200 dark:border-zinc-700",
+    green: "bg-[var(--ui-theme-success-soft)] text-[var(--ui-theme-success)] border-[var(--ui-theme-success)]",
+    red: "bg-[var(--ui-theme-danger-soft)] text-[var(--ui-theme-danger)] border-[var(--ui-theme-danger)]",
+    amber: "bg-[var(--ui-theme-warning-soft)] text-[var(--ui-theme-warning)] border-[var(--ui-theme-warning)]",
+    gold: "bg-[var(--ui-theme-gold-soft)] text-[var(--ui-theme-gold)] border-[var(--ui-theme-gold)] font-bold",
+    gray: "bg-[var(--ui-theme-subtle)] text-[var(--ui-theme-muted)] border-[var(--ui-theme-border)]",
   };
 
   return (
@@ -170,11 +170,12 @@ export function ActionButton({ variant = "ghost", size, className = "", ...props
     ghost:
       "border border-border bg-card text-card-foreground hover:bg-secondary",
     danger:
-      "bg-rose-500/10 text-rose-600 border border-rose-500/20 hover:bg-rose-500 hover:text-white dark:bg-rose-500/20 dark:text-rose-400",
+      "bg-[var(--ui-theme-danger-soft)] text-[var(--ui-theme-danger)] border border-[var(--ui-theme-danger)] hover:brightness-95",
   };
 
   return (
     <button
+      type="button"
       className={`${base} ${sizeStyles} ${variants[variant] || variants.ghost} ${className}`.trim()}
       {...props}
     />

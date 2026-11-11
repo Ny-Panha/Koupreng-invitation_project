@@ -1,0 +1,7 @@
+# 01 — starting source and baseline
+
+At T0, `main` and `origin/main` matched `1dc4b24b9d3049c3fd147ee545cb3b6b39738cf9`; `git status --short` was empty. Both manifests show React 19, Vite 8 and Tailwind 4. The current Batch 12 contract matrix has 135 leaves: 111 user and 24 admin, 62 named groups or 63 app/group pairs because `auth-login` appears twice. Phase 02 ownership rows reconcile one-to-one with those leaves in `generate-inventory.py`.
+
+Before edits, token parity passed; focused user route/token/shared UI tests passed 5 files/19 tests and admin route/layout tests passed 2 files/8 tests. The local before harness captured 52 of 52 fictional fixture screenshots with zero page errors. The existing `phase02-foundations.spec.js` baseline produced **19 PASS, 13 FAIL, 0 SKIP** across two Chromium projects. Failure classes include Studio/fixture selectors, invitation opening controls, contrast checks, and the short-landscape iframe ratio. This differs from the prior historical 26/6 account and is the current run's truth. See [14](14-exact-tests-and-known-failure-register.md).
+
+The existing Phase 03 canonical source is `apps/frontend-user/src/shared/styles/semantic-tokens.css`; the admin mirror is generated. Both share the `--ui-theme-*` roles. Shared JSX modules and admin `AdminUI.jsx` exports were inspected before edits. Current migrations remain 48 SQL files. No real ABA, Telegram, email, guest data, or production MySQL was used.

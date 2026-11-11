@@ -84,26 +84,38 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #0f172a;
-  color: #ffffff;
+  background: var(--ui-theme-inverse);
+  color: var(--ui-theme-inverse-ink);
   padding: 12px 18px;
   border-radius: 12px;
   font-size: 13px;
   font-weight: 600;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--ui-theme-shadow);
   z-index: 100;
-  border-left: 4px solid #f59e0b;
+  border-left: 4px solid var(--ui-theme-gold);
+  max-width: min(360px, calc(100vw - 32px));
+  overflow-wrap: anywhere;
   animation: fadeIn 0.2s ease-out;
 }
 
 .dark .toast {
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-left: 4px solid #f59e0b;
+  border: 1px solid var(--ui-theme-border);
+  border-left: 4px solid var(--ui-theme-gold);
 }
 
 .toast-error {
-  border-left-color: #ef4444 !important;
+  background: var(--ui-theme-danger-soft);
+  color: var(--ui-theme-danger);
+  border-left-color: var(--ui-theme-danger) !important;
+}
+
+@media (forced-colors: active) {
+  .toast { border: 1px solid CanvasText; }
+  .toast-error { border-left-color: Mark !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { animation: none; }
 }
 
 /* Drawer overlay & Drawer */
