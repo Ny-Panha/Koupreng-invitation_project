@@ -25,7 +25,7 @@ const NAV_DICTIONARY = {
     createEvent: "បង្កើតកម្មវិធី",
     packages: "កញ្ចប់សេវាកម្ម",
     browseTemplates: "ស្វែងរកគំរូ",
-    myInvitation: "គំរូធៀប",
+    myInvitation: "គំរូសំបុត្រអញ្ជើញ",
     paidTemplates: "គំរូដែលបានទិញ",
     paymentHistory: "ប្រវត្តិការទូទាត់",
     financialReports: "របាយការណ៍ហិរញ្ញវត្ថុ",

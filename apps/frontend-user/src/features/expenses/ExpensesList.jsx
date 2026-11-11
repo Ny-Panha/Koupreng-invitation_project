@@ -60,12 +60,12 @@ export function ExpensesList() {
             {/* Hero */}
             <header className="dash-page-header">
                 <div className="exp-hero-content">
-                    <span className="exp-hero-tag">{t ? t("kicker") : "Budget & Expense Planner"}</span>
+                    <span className="exp-hero-tag">{t ? t("kicker") : (lang === "en" ? "Budget & Expense Planner" : "គ្រប់គ្រងចំណាយ")}</span>
                     <h1 className="exp-title">
                         <IoWalletOutline aria-hidden="true" />
-                        {t ? t("title") : "Budget Planning & Expenses"}
+                        {t ? t("title") : (lang === "en" ? "Budget Planning & Expenses" : "គម្រោងថវិកា និងចំណាយ")}
                     </h1>
-                    <p className="exp-subtitle">{t ? t("subtitle") : "Plan wedding expenses, record deposits, and monitor your total budget."}</p>
+                    <p className="exp-subtitle">{t ? t("subtitle") : (lang === "en" ? "Plan event expenses, record deposits, and monitor your total budget." : "រៀបចំផែនការចំណាយ កត់ត្រាប្រាក់កក់ និងតាមដានថវិកាសរុបនៃកម្មវិធីរបស់អ្នក។")}</p>
                 </div>
                 <button
                     type="button"

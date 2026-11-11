@@ -245,10 +245,10 @@ export default function DashboardFeature() {
   const publicationStatus = eventStatus(invitation, english);
   const preparation = [
     { done: Boolean(invitation?.title && stats.eventDate && stats.venue && invitation?.eventTime), module: "settings", title: label("Complete event details", "បំពេញព័ត៌មានកម្មវិធី") },
-    { done: Boolean(invitation?.templateId || invitation?.templateCode), module: "invitation", title: label("Choose your invitation", "ជ្រើសរើសធៀបអញ្ជើញ") },
+    { done: Boolean(invitation?.templateId || invitation?.templateCode), module: "invitation", title: label("Choose your invitation", "ជ្រើសរើសសំបុត្រអញ្ជើញ") },
     { done: stats.status === "PUBLISHED", module: "invitation", title: label("Review and publish", "ពិនិត្យ និងផ្សព្វផ្សាយ") },
     { done: stats.guestTotal > 0, module: "guests", title: label("Add your guests", "បន្ថែមបញ្ជីភ្ញៀវ") },
-    { done: Number(state.dashboard?.deliverySent) > 0, module: "delivery", title: label("Send invitations", "ផ្ញើធៀបអញ្ជើញ") },
+    { done: Number(state.dashboard?.deliverySent) > 0, module: "delivery", title: label("Send invitations", "ផ្ញើសំបុត្រអញ្ជើញ") },
   ];
   const nextStep = preparation.find(step => !step.done);
   const primaryAction = stats.status === "PUBLISHED"
@@ -256,7 +256,7 @@ export default function DashboardFeature() {
       ? { module: "guests", title: label("Add your guests", "បន្ថែមបញ្ជីភ្ញៀវ") }
       : Number(state.dashboard?.deliverySent) > 0
         ? { module: "rsvp", title: label("Track responses", "តាមដានការឆ្លើយតប") }
-        : { module: "delivery", title: label("Share invitations", "ចែករំលែកធៀបអញ្ជើញ") }
+        : { module: "delivery", title: label("Share invitations", "ចែករំលែកសំបុត្រអញ្ជើញ") }
     : nextStep || { module: "invitation", title: label("Continue editing", "បន្តកែសម្រួល") };
 
   // Live Countdown Effect
@@ -298,7 +298,7 @@ export default function DashboardFeature() {
     if (!slug) return;
     const url = `${window.location.origin}/w/${slug}`;
     try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 2200); }
-    catch { setActionError(label("Could not copy the invitation link. Please try again.", "មិនអាចចម្លងតំណធៀបបានទេ។ សូមព្យាយាមម្ដងទៀត។")); }
+    catch { setActionError(label("Could not copy the invitation link. Please try again.", "មិនអាចចម្លងតំណសំបុត្រអញ្ជើញបានទេ។ សូមព្យាយាមម្ដងទៀត។")); }
   };
 
   const handlePublishToggle = async () => {
@@ -402,7 +402,7 @@ export default function DashboardFeature() {
           <div className="overview-publication">
             {stats.status === "PUBLISHED" ? (
               <button type="button" className="workspace-button" onClick={handlePublishToggle} disabled={publishing}>
-                {publishing ? label("Updating…", "កំពុងកែប្រែ…") : label("Unpublish invitation", "ផ្អាកផ្សាយធៀប")}
+                {publishing ? label("Updating…", "កំពុងកែប្រែ…") : label("Unpublish invitation", "ផ្អាកផ្សាយសំបុត្រអញ្ជើញ")}
               </button>
             ) : (
               <Link className="workspace-button" to={`${eventPath(stats.id,'invitation')}?mode=guided`}>
@@ -506,7 +506,7 @@ export default function DashboardFeature() {
         <h2>{label("Plan the event day", "រៀបចំថ្ងៃកម្មវិធី")}</h2>
         <div className="overview-tool-grid">
           {[
-            ["delivery", Send, label("Delivery", "ការផ្ញើធៀប")],
+            ["delivery", Send, label("Delivery", "ការផ្ញើសំបុត្រអញ្ជើញ")],
             ["tickets/design", Palette, label("Digital tickets", "កាតឌីជីថល")],
             ["check-in", ScanLine, label("Check-in", "កត់ត្រាវត្តមាន")],
             ["seating", Users, label("Seating", "រៀបកៅអី")],

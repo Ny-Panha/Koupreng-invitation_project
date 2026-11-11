@@ -25,10 +25,10 @@ export default function AssistantResult({
     try {
       await navigator.clipboard.writeText(editedText);
       setCopied(true);
-      toast.success("បានចម្លងអត្ថបទរួចរាល់ / Copied to clipboard");
+      toast.success(en ? "Copied to clipboard" : "បានចម្លងអត្ថបទរួចរាល់");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error("មិនអាចចម្លងអត្ថបទបានទេ");
+      toast.error(en ? "Could not copy text" : "មិនអាចចម្លងអត្ថបទបានទេ");
     }
   };
 
@@ -97,7 +97,7 @@ export default function AssistantResult({
             className="pe-primary-btn"
             onClick={() => onApply(editedText)}
           >
-            {copy("យកទៅប្រើក្នុងធៀប", "Apply to invitation")}
+            {copy("យកទៅប្រើក្នុងសំបុត្រអញ្ជើញ", "Apply to invitation")}
           </LoadingButton>
         )}
       </div>

@@ -246,7 +246,7 @@ export function EventCard({
             <p style={{ margin: 0, flex: 1 }}>
               {premiumAccessRequired
                 ? (en ? "Premium access required to save this template." : "ត្រូវការសិទ្ធិបុព្វលាភ ដើម្បីរក្សាទុកគំរូនេះ។")
-                : (en ? "Changes are stored on this device. Open the invitation to review and save them online." : "ការកែប្រែបានរក្សាទុកក្នុងឧបករណ៍នេះ។ បើកធៀបដើម្បីពិនិត្យ និងរក្សាទុកលើអ៊ីនធឺណិត។")}
+                : (en ? "Changes are stored on this device. Open the invitation to review and save them online." : "ការកែប្រែបានរក្សាទុកក្នុងឧបករណ៍នេះ។ បើកសំបុត្រអញ្ជើញដើម្បីពិនិត្យ និងរក្សាទុកលើអ៊ីនធឺណិត។")}
             </p>
             {onReviewAccess && (
               <button

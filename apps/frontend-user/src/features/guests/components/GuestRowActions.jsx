@@ -17,7 +17,7 @@ export default function GuestRowActions({ guest, saving, onShowQr, onShowTicket,
   return (
     <div className="guest-row-actions">
       {onShowQr && !isEditing && <button type="button" className="guest-invite-button" disabled={saving} onClick={() => onShowQr(guest)} title={label("showQr", "បង្ហាញ QR Code")}>
-        <QrCode size={16} aria-hidden="true" /><span>{label("invitationAction", "ធៀបអញ្ជើញ")}</span>
+        <QrCode size={16} aria-hidden="true" /><span>{label("invitationAction", "សំបុត្រអញ្ជើញ")}</span>
       </button>}
       <button type="button" className="guest-icon-button" disabled={saving} onClick={isEditing ? onSave : () => onEdit(guest)} aria-label={isEditing ? label("save", "រក្សាទុក") : label("edit", "កែប្រែ")} title={isEditing ? label("save", "រក្សាទុក") : label("edit", "កែប្រែ")}>
         {isEditing ? <Check size={17} aria-hidden="true" /> : <Pencil size={16} aria-hidden="true" />}
@@ -48,12 +48,12 @@ export default function GuestRowActions({ guest, saving, onShowQr, onShowTicket,
                 } catch (e) {
                   if (e.name !== "AbortError") throw e;
                 }
-              })} title={en ? "Share via apps..." : "ចែករំលែកតាមកម្មវិធី..."} aria-label={en ? `Share invitation for ${guest.name}` : `ចែករំលែកធៀបសម្រាប់ ${guest.name}`}>
+              })} title={en ? "Share via apps..." : "ចែករំលែកតាមកម្មវិធី..."} aria-label={en ? `Share invitation for ${guest.name}` : `ចែករំលែកសំបុត្រអញ្ជើញសម្រាប់ ${guest.name}`}>
                 <Share2 size={16} aria-hidden="true" />{en ? "Share via apps..." : "ចែករំលែកតាមកម្មវិធី..."}
               </button>
             )}
-            {inviteUrl && <a href={`https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(shareMessage || "")}`} target="_blank" rel="noopener noreferrer" aria-disabled={saving || undefined} onClick={event => { if (saving) event.preventDefault(); else act(onMarkAsSent); }} title={en ? "Share via Telegram" : "ចែករំលែកតាម Telegram"} aria-label={en ? `Share invitation for ${guest.name} via Telegram` : `ចែករំលែកធៀបសម្រាប់ ${guest.name} តាម Telegram`}><Send size={16} aria-hidden="true" />{en ? "Share via Telegram" : "ចែករំលែកតាម Telegram"}</a>}
-            {inviteUrl && <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent((shareMessage ? `${shareMessage}\n` : '') + inviteUrl)}`} target="_blank" rel="noopener noreferrer" aria-disabled={saving || undefined} onClick={event => { if (saving) event.preventDefault(); else act(onMarkAsSent); }} title={en ? "Share via WhatsApp" : "ចែករំលែកតាម WhatsApp"} aria-label={en ? `Share invitation for ${guest.name} via WhatsApp` : `ចែករំលែកធៀបសម្រាប់ ${guest.name} តាម WhatsApp`}><MessageSquare size={16} aria-hidden="true" />{en ? "Share via WhatsApp" : "ចែករំលែកតាម WhatsApp"}</a>}
+            {inviteUrl && <a href={`https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(shareMessage || "")}`} target="_blank" rel="noopener noreferrer" aria-disabled={saving || undefined} onClick={event => { if (saving) event.preventDefault(); else act(onMarkAsSent); }} title={en ? "Share via Telegram" : "ចែករំលែកតាម Telegram"} aria-label={en ? `Share invitation for ${guest.name} via Telegram` : `ចែករំលែកសំបុត្រអញ្ជើញសម្រាប់ ${guest.name} តាម Telegram`}><Send size={16} aria-hidden="true" />{en ? "Share via Telegram" : "ចែករំលែកតាម Telegram"}</a>}
+            {inviteUrl && <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent((shareMessage ? `${shareMessage}\n` : '') + inviteUrl)}`} target="_blank" rel="noopener noreferrer" aria-disabled={saving || undefined} onClick={event => { if (saving) event.preventDefault(); else act(onMarkAsSent); }} title={en ? "Share via WhatsApp" : "ចែករំលែកតាម WhatsApp"} aria-label={en ? `Share invitation for ${guest.name} via WhatsApp` : `ចែករំលែកសំបុត្រអញ្ជើញសម្រាប់ ${guest.name} តាម WhatsApp`}><MessageSquare size={16} aria-hidden="true" />{en ? "Share via WhatsApp" : "ចែករំលែកតាម WhatsApp"}</a>}
             {onCopyLink && <button type="button" disabled={saving} onClick={() => act(async () => { if (await onCopyLink(shareMessage, guest)) await onMarkAsSent?.(guest); })}><Copy size={16} aria-hidden="true" />{label("copyMessage", "ចម្លងសារអញ្ជើញ")}</button>}
             {onMarkAsSent && needsInvitation(guest) && <button type="button" disabled={saving} onClick={() => act(onMarkAsSent)} title={en ? "Mark as shared (manual record)" : "សម្គាល់ថាបានចែករំលែក (កត់ត្រាដោយដៃ)"}><Send size={16} aria-hidden="true" />{label("markAsSent", "សម្គាល់ថាបានផ្ញើ")}</button>}
             {onDelete && <button type="button" className="guest-danger-action" disabled={saving} onClick={() => act(onDelete)}><Trash2 size={16} aria-hidden="true" />{label("delete", "លុប")}</button>}

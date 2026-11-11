@@ -1,16 +1,41 @@
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { budgetMoney, currencyAmounts, isMixedBudget } from "../currencyTotals";
 
 export default function BudgetSummaryCards({ budget }) {
+  const isEn = useLanguageStore((state) => state.lang) === "en";
   const mixed = isMixedBudget(budget);
   const money = (value) => budgetMoney(value, budget?.currency || "USD");
+
   const cards = [
-    { label: "Total budget", value: mixed ? `${budget?.totalBudget ?? "Unavailable"} (currency unspecified)` : money(budget?.totalBudget), note: "ថវិកាសរុប" },
-    { label: "Estimated", value: mixed ? currencyAmounts(budget?.estimatedByCurrency) : money(budget?.totalEstimated), note: "ការប៉ាន់ប្រមាណ" },
-    { label: "Actual", value: mixed ? currencyAmounts(budget?.actualByCurrency) : money(budget?.totalActual), note: "ចំណាយពិតប្រាកដ" },
     {
-      label: mixed ? "Budget comparison" : budget?.overBudget ? "Over budget" : "Remaining",
+      label: isEn ? "Total budget" : "ថវិកាសរុប",
+      value: mixed
+        ? `${budget?.totalBudget ?? (isEn ? "Unavailable" : "មិនមាន")} (${isEn ? "currency unspecified" : "មិនបានបញ្ជាក់រូបិយប័ណ្ណ"})`
+        : money(budget?.totalBudget),
+      note: isEn ? "Target budget" : "គោលដៅថវិកា",
+    },
+    {
+      label: isEn ? "Estimated" : "ការប៉ាន់ប្រមាណ",
+      value: mixed ? currencyAmounts(budget?.estimatedByCurrency) : money(budget?.totalEstimated),
+      note: isEn ? "Estimated spending" : "ចំណាយគ្រោងទុក",
+    },
+    {
+      label: isEn ? "Actual" : "ចំណាយជាក់ស្តែង",
+      value: mixed ? currencyAmounts(budget?.actualByCurrency) : money(budget?.totalActual),
+      note: isEn ? "Actual spending" : "ចំណាយបានទូទាត់",
+    },
+    {
+      label: mixed
+        ? isEn ? "Budget comparison" : "ការប្រៀបធៀបថវិកា"
+        : budget?.overBudget
+        ? isEn ? "Over budget" : "លើសថវិកា"
+        : isEn ? "Remaining" : "នៅសល់",
       value: mixed ? "Comparison unavailable" : money(budget?.remainingBudget),
-      note: budget?.overBudget ? "លើសថវិកា" : "នៅសល់",
+      note: mixed
+        ? isEn ? "Mixed currency" : "រូបិយប័ណ្ណចម្រុះ"
+        : budget?.overBudget
+        ? isEn ? "Exceeded target" : "លើសពីគោលដៅ"
+        : isEn ? "Available funds" : "ថវិកាអាចប្រើបាន",
       danger: !mixed && budget?.overBudget,
     },
   ];

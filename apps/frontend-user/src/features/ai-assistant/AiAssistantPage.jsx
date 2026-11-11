@@ -96,10 +96,10 @@ export default function AiAssistantPage() {
           toInvitationStoryUpdate(invitation, appliedText),
         );
       }
-      toast.success("បានរក្សាទុកក្នុងផ្នែករឿងរ៉ាវ / Saved to invitation story");
+      toast.success(en ? "Saved to invitation story" : "បានរក្សាទុកក្នុងផ្នែករឿងរ៉ាវជោគជ័យ");
       navigate(`/dashboard/invitations/${invitationId}/edit`);
     } catch {
-      toast.error("មិនអាចរក្សាទុកអត្ថបទបានទេ");
+      toast.error(en ? "Could not save text" : "មិនអាចរក្សាទុកអត្ថបទបានទេ");
     }
   };
 
@@ -111,7 +111,7 @@ export default function AiAssistantPage() {
           className="pe-ai-back-link"
         >
           <IoArrowBackOutline aria-hidden="true" />
-          <span>{copy("ត្រឡប់ទៅការកែប្រែធៀប", "Back to invitation editor")}</span>
+          <span>{copy("ត្រឡប់ទៅផ្ទាំងកែសម្រួលសំបុត្រអញ្ជើញ", "Back to invitation editor")}</span>
         </Link>
       </div>
 

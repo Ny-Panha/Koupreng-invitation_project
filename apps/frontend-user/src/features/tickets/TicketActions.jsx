@@ -37,10 +37,10 @@ export default function TicketActions({ ticket, ready, languageMode }) {
       <button type="button" disabled={!ready || busy} onClick={() => perform(() => download(2))}><Download size={18} aria-hidden="true" />{en ? "Download PNG · 2×" : "ទាញយក PNG · 2×"}</button>
       <button type="button" disabled={!ready || busy} onClick={() => perform(() => download(3))}>PNG · 3×</button>
       <button type="button" disabled={!ready || busy} onClick={() => perform(share)}><Share2 size={18} aria-hidden="true" />{en ? "Share" : "ចែករំលែក"}</button>
-      <button type="button" disabled={busy} onClick={() => perform(async () => { if (!await copyText(ticket.invitationUrl)) throw new Error("Copy is unavailable. Please download the ticket to share it."); setMessage(en ? "Invitation link copied" : "បានចម្លងតំណធៀប"); })}><Copy size={18} aria-hidden="true" />{en ? "Copy invitation link" : "ចម្លងតំណធៀប"}</button>
+      <button type="button" disabled={busy} onClick={() => perform(async () => { if (!await copyText(ticket.invitationUrl)) throw new Error("Copy is unavailable. Please download the ticket to share it."); setMessage(en ? "Invitation link copied" : "បានចម្លងតំណសំបុត្រអញ្ជើញ"); })}><Copy size={18} aria-hidden="true" />{en ? "Copy invitation link" : "ចម្លងតំណសំបុត្រអញ្ជើញ"}</button>
       <a href={`https://t.me/share/url?url=${encodeURIComponent(ticket.invitationUrl)}`} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Telegram</a>
     </div>
-    <p>{ticket.kind === "GUEST" ? (en ? "Share this personal ticket only with its guest." : "កាត និងតំណនេះសម្រាប់ភ្ញៀវនេះតែប៉ុណ្ណោះ។") : (en ? "This QR opens the general invitation. Use a personal ticket for guest check-in." : "QR នេះបើកធៀបទូទៅ។ ប្រើកាតផ្ទាល់ខ្លួនសម្រាប់ការកត់ត្រាវត្តមានភ្ញៀវ។")}</p>
+    <p>{ticket.kind === "GUEST" ? (en ? "Share this personal ticket only with its guest." : "កាត និងតំណនេះសម្រាប់ភ្ញៀវនេះតែប៉ុណ្ណោះ។") : (en ? "This QR opens the general invitation. Use a personal ticket for guest check-in." : "QR នេះបើកសំបុត្រអញ្ជើញទូទៅ។ ប្រើកាតផ្ទាល់ខ្លួនសម្រាប់ការកត់ត្រាវត្តមានភ្ញៀវ។")}</p>
     <p role="status" aria-live="polite">{busy ? (en ? "Preparing…" : "កំពុងរៀបចំ…") : message}</p>
   </div>;
 }

@@ -16,8 +16,8 @@ export function WishList({ wishes, onDelete, deletingId }) {
         </h3>
         <p className="wishes-empty-desc">
           {en
-            ? "When your invited guests send wedding wishes through your digital invitation, they will appear here."
-            : "នៅពេលដែលភ្ញៀវកិត្តិយសផ្ញើសារជូនពរតាមរយៈធៀបអញ្ជើញឌីជីថលរបស់អ្នក សារទាំងនោះនឹងបង្ហាញនៅទីនេះ។"}
+            ? "When your invited guests send wishes through your digital invitation, they will appear here."
+            : "នៅពេលដែលភ្ញៀវកិត្តិយសផ្ញើសារជូនពរតាមរយៈសំបុត្រអញ្ជើញឌីជីថលរបស់អ្នក សារទាំងនោះនឹងបង្ហាញនៅទីនេះ។"}
         </p>
       </div>
     );

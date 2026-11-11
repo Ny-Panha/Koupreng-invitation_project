@@ -136,9 +136,9 @@ export function EventsFeature() {
         <main className="events-page workspace-page">
             <header className="events-page-header">
                 <div>
-                    <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "ធៀបអញ្ជើញ"}`}</span>
+                    <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "សំបុត្រអញ្ជើញ"}`}</span>
                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
-                    <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលធៀប តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
+                    <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលសំបុត្រអញ្ជើញ តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
                 </div>
                 <div className="events-header-actions">
                     {/* View Mode Toggle: List vs Calendar */}
@@ -315,7 +315,7 @@ export function EventsFeature() {
                         {t("emptyTitle") || (en ? "No Events Yet" : "មិនទាន់មានកម្មវិធីនៅឡើយទេ")}
                     </div>
                     <div className="events-empty-desc">
-                        {t("emptySubtitle") || (en ? "Create your first digital invitation event to get started." : "ចាប់ផ្ដើមដោយបង្កើតកម្មវិធី និងធៀបអញ្ជើញឌីជីថលដំបូងរបស់អ្នក។")}
+                        {t("emptySubtitle") || (en ? "Create your first digital invitation event to get started." : "ចាប់ផ្ដើមដោយបង្កើតកម្មវិធី និងសំបុត្រអញ្ជើញឌីជីថលដំបូងរបស់អ្នក។")}
                     </div>
                     <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-empty-action">
                         + {emptyActionText}

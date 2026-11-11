@@ -142,8 +142,8 @@ export default function WishesPage({ invitationId: propInvitationId }) {
                     ? "Share your invitation"
                     : "Review your invitation"
                   : workspace.event.status === "PUBLISHED"
-                  ? "ចែករំលែកធៀបរបស់អ្នក"
-                  : "ពិនិត្យធៀបរបស់អ្នក"}
+                  ? "ចែករំលែកសំបុត្រអញ្ជើញរបស់អ្នក"
+                  : "ពិនិត្យសំបុត្រអញ្ជើញរបស់អ្នក"}
               </Link>
             </div>
           )}

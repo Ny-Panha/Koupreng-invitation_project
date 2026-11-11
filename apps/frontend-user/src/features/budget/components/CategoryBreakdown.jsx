@@ -1,7 +1,9 @@
-import { BUDGET_CATEGORIES } from "../budgetCategories";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { BUDGET_CATEGORIES, budgetCategoryLabel } from "../budgetCategories";
 import { budgetMoney } from "../currencyTotals";
 
 export default function CategoryBreakdown({ items = [] }) {
+  const isEn = useLanguageStore((state) => state.lang) === "en";
   if (!items.length) return null;
 
   const categoryTotals = {};
@@ -16,30 +18,32 @@ export default function CategoryBreakdown({ items = [] }) {
     totalByCurrency[currency] = (totalByCurrency[currency] || 0) + amount;
   });
 
-  const categories = Object.keys(totalByCurrency).flatMap((currency) => BUDGET_CATEGORIES.map((cat) => {
-    const totalSpending = totalByCurrency[currency];
-    const amount = categoryTotals[`${currency}:${cat.value}`] || 0;
-    const percentage = totalSpending > 0 ? Math.round((amount / totalSpending) * 100) : 0;
-    return {
-      ...cat,
-      currency,
-      amount,
-      percentage,
-    };
-  })).filter((c) => c.amount > 0);
+  const categories = Object.keys(totalByCurrency).flatMap((currency) =>
+    BUDGET_CATEGORIES.map((cat) => {
+      const totalSpending = totalByCurrency[currency];
+      const amount = categoryTotals[`${currency}:${cat.value}`] || 0;
+      const percentage = totalSpending > 0 ? Math.round((amount / totalSpending) * 100) : 0;
+      return {
+        ...cat,
+        currency,
+        amount,
+        percentage,
+      };
+    })
+  ).filter((c) => c.amount > 0);
 
   if (!categories.length) return null;
 
   return (
     <div style={{ background: "var(--brand-surface)", padding: "1.25rem", borderRadius: "var(--radius-xl)", border: "1px solid var(--brand-border)" }}>
       <h3 style={{ margin: "0 0 1rem 0", fontSize: "1rem", fontWeight: "700" }}>
-        ចំណាយតាមប្រភព / Spending by Category
+        {isEn ? "Spending by Category" : "ចំណាយតាមប្រភេទ"}
       </h3>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
         {categories.map((c) => (
           <div key={`${c.currency}:${c.value}`}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem", fontWeight: "600", marginBottom: "0.25rem" }}>
-              <span>{c.label}</span>
+              <span>{budgetCategoryLabel(c.value, isEn)}</span>
               <span>{budgetMoney(c.amount, c.currency)} ({c.percentage}% of {c.currency})</span>
             </div>
             <div style={{ background: "rgba(107, 107, 196, 0.1)", borderRadius: "999px", height: "8px", overflow: "hidden" }}>

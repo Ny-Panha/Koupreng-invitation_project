@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BUDGET_CATEGORIES } from "../budgetCategories";
+import { useLanguageStore } from "@/stores/useLanguageStore";
+import { BUDGET_CATEGORIES, budgetCategoryLabel } from "../budgetCategories";
 
 function money(value, currency = "USD") {
   const formatted = Number(value || 0).toLocaleString(undefined, {
@@ -21,6 +22,7 @@ function editable(item) {
 }
 
 export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
+  const isEn = useLanguageStore((state) => state.lang) === "en";
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState(null);
 
@@ -44,7 +46,13 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
   };
 
   if (!items?.length) {
-    return <div className="budget-empty">No budget items yet. Add your first wedding expense above.</div>;
+    return (
+      <div className="budget-empty">
+        {isEn
+          ? "No budget items yet. Add your first event expense above."
+          : "មិនទាន់មានទិន្នន័យចំណាយនៅឡើយទេ។ សូមបន្ថែមមុខទំនិញចំណាយដំបូងរបស់អ្នកខាងលើ។"}
+      </div>
+    );
   }
 
   return (
@@ -52,14 +60,14 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
       <table className="budget-table">
         <thead>
           <tr>
-            <th>Category</th>
-            <th>Item</th>
-            <th>Currency</th>
-            <th>Estimated</th>
-            <th>Actual</th>
-            <th>Vendor</th>
-            <th>Notes</th>
-            <th>Actions</th>
+            <th>{isEn ? "Category" : "ប្រភេទ"}</th>
+            <th>{isEn ? "Item" : "មុខទំនិញ"}</th>
+            <th>{isEn ? "Currency" : "រូបិយប័ណ្ណ"}</th>
+            <th>{isEn ? "Estimated" : "ប៉ាន់ប្រមាណ"}</th>
+            <th>{isEn ? "Actual" : "ជាក់ស្តែង"}</th>
+            <th>{isEn ? "Vendor" : "អ្នកផ្គត់ផ្គង់"}</th>
+            <th>{isEn ? "Notes" : "សម្គាល់"}</th>
+            <th>{isEn ? "Actions" : "សកម្មភាព"}</th>
           </tr>
         </thead>
         <tbody>
@@ -69,25 +77,42 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
               <tr key={item.id}>
                 <td>
                   {editing ? (
-                    <select value={draft.category} onChange={(event) => updateDraft("category", event.target.value)}>
-                      {BUDGET_CATEGORIES.map((category) => (
-                        <option key={category.value} value={category.value}>{category.value}</option>
+                    <select
+                      value={draft.category}
+                      onChange={(event) => updateDraft("category", event.target.value)}
+                    >
+                      {BUDGET_CATEGORIES.map((c) => (
+                        <option key={c.value} value={c.value}>
+                          {isEn ? c.labelEn : c.labelKm}
+                        </option>
                       ))}
                     </select>
-                  ) : item.category}
+                  ) : (
+                    budgetCategoryLabel(item.category, isEn)
+                  )}
                 </td>
                 <td>
                   {editing ? (
-                    <input value={draft.itemName} onChange={(event) => updateDraft("itemName", event.target.value)} />
-                  ) : item.itemName}
+                    <input
+                      value={draft.itemName}
+                      onChange={(event) => updateDraft("itemName", event.target.value)}
+                    />
+                  ) : (
+                    <strong>{item.itemName}</strong>
+                  )}
                 </td>
                 <td>
                   {editing ? (
-                    <select value={draft.currency} onChange={(event) => updateDraft("currency", event.target.value)}>
-                      <option value="USD">USD ($)</option>
-                      <option value="KHR">KHR (៛)</option>
+                    <select
+                      value={draft.currency}
+                      onChange={(event) => updateDraft("currency", event.target.value)}
+                    >
+                      <option value="USD">USD</option>
+                      <option value="KHR">KHR</option>
                     </select>
-                  ) : item.currency || "USD"}
+                  ) : (
+                    item.currency || "USD"
+                  )}
                 </td>
                 <td>
                   {editing ? (
@@ -98,7 +123,9 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
                       value={draft.estimatedCost}
                       onChange={(event) => updateDraft("estimatedCost", event.target.value)}
                     />
-                  ) : money(item.estimatedCost, item.currency)}
+                  ) : (
+                    money(item.estimatedCost, item.currency)
+                  )}
                 </td>
                 <td>
                   {editing ? (
@@ -109,36 +136,68 @@ export default function BudgetItemTable({ items, onUpdate, onDelete, saving }) {
                       value={draft.actualCost}
                       onChange={(event) => updateDraft("actualCost", event.target.value)}
                     />
-                  ) : money(item.actualCost, item.currency)}
+                  ) : (
+                    money(item.actualCost, item.currency)
+                  )}
                 </td>
                 <td>
                   {editing ? (
-                    <input value={draft.vendorName} onChange={(event) => updateDraft("vendorName", event.target.value)} />
-                  ) : item.vendorName || "—"}
+                    <input
+                      value={draft.vendorName}
+                      onChange={(event) => updateDraft("vendorName", event.target.value)}
+                    />
+                  ) : (
+                    item.vendorName || "—"
+                  )}
                 </td>
                 <td>
                   {editing ? (
-                    <input value={draft.notes} onChange={(event) => updateDraft("notes", event.target.value)} />
-                  ) : item.notes || "—"}
+                    <input
+                      value={draft.notes}
+                      onChange={(event) => updateDraft("notes", event.target.value)}
+                    />
+                  ) : (
+                    item.notes || "—"
+                  )}
                 </td>
                 <td>
                   <div className="budget-row-actions">
                     {editing ? (
                       <>
-                        <button type="button" className="dash-btn" onClick={() => save(item.id)} disabled={saving}>
-                          Save
+                        <button
+                          type="button"
+                          className="dash-btn"
+                          onClick={() => save(item.id)}
+                          disabled={saving}
+                        >
+                          {isEn ? "Save" : "រក្សាទុក"}
                         </button>
-                        <button type="button" className="dash-btn" onClick={() => setEditingId(null)} disabled={saving}>
-                          Cancel
+                        <button
+                          type="button"
+                          className="dash-btn"
+                          onClick={() => setEditingId(null)}
+                          disabled={saving}
+                        >
+                          {isEn ? "Cancel" : "បោះបង់"}
                         </button>
                       </>
                     ) : (
                       <>
-                        <button type="button" className="dash-btn" onClick={() => startEdit(item)} disabled={saving}>
-                          Edit
+                        <button
+                          type="button"
+                          className="dash-btn"
+                          onClick={() => startEdit(item)}
+                          disabled={saving}
+                        >
+                          {isEn ? "Edit" : "កែប្រែ"}
                         </button>
-                        <button type="button" className="dash-btn budget-danger-btn" onClick={() => onDelete(item.id)} disabled={saving}>
-                          Delete
+                        <button
+                          type="button"
+                          className="dash-btn budget-danger-btn"
+                          onClick={() => onDelete(item.id)}
+                          disabled={saving}
+                        >
+                          {isEn ? "Delete" : "លុប"}
                         </button>
                       </>
                     )}

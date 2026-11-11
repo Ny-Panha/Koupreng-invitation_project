@@ -1,5 +1,5 @@
 export const featureNames = {
-  PREMIUM_TEMPLATES: ['គំរូបុព្វលាភ','Premium templates'], QR_INVITATIONS: ['QR ធៀបអញ្ជើញ','Invitation QR'],
+  PREMIUM_TEMPLATES: ['គំរូបុព្វលាភ','Premium templates'], QR_INVITATIONS: ['QR សំបុត្រអញ្ជើញ','Invitation QR'],
   QR_CHECK_IN: ['ការកត់ត្រាវត្តមានតាម QR','QR check-in'], SEATING: ['ការរៀបចំកន្លែងអង្គុយ','Seating'],
   ADVANCED_ANALYTICS: ['របាយការណ៍កម្រិតខ្ពស់','Advanced analytics'], CUSTOM_BRANDING: ['អត្តសញ្ញាណផ្ទាល់ខ្លួន','Custom branding'],
   TEAM_MEMBERS: ['សមាជិកក្រុម','Team members'], AI_ASSISTANT: ['ជំនួយការ AI','AI assistant'], GUEST_IMPORT: ['ការនាំចូលភ្ញៀវ','Guest import'],

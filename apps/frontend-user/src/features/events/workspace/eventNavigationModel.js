@@ -3,14 +3,14 @@ import { Armchair, ChartColumn, ClipboardCheck, Eye, Gift, Images, LayoutDashboa
 // Every destination maps to an existing child route in hostRoutes.jsx.
 export const PRIMARY_EVENT_LINKS = [
   { path: "", en: "Dashboard", km: "ផ្ទាំងគ្រប់គ្រង", Icon: LayoutDashboard },
-  { path: "invitation", en: "Invitation Studio", km: "រចនាធៀបអញ្ជើញ", Icon: Palette },
+  { path: "invitation", en: "Invitation Studio", km: "រចនាសំបុត្រអញ្ជើញ", Icon: Palette },
   { path: "guests", en: "Guests", km: "បញ្ជីភ្ញៀវ", Icon: Users },
   { path: "rsvp", en: "RSVP", km: "ការឆ្លើយតប", Icon: ClipboardCheck },
-  { path: "delivery", en: "Delivery", km: "ការផ្ញើធៀប", Icon: Send },
+  { path: "delivery", en: "Delivery", km: "ការផ្ញើសំបុត្រអញ្ជើញ", Icon: Send },
 ];
 
 export const EVENT_LINK_GROUPS = [
-  { key: "invitation", en: "Invitation", km: "ធៀបអញ្ជើញ", items: [
+  { key: "invitation", en: "Invitation", km: "សំបុត្រអញ្ជើញ", items: [
     { path: "tickets/design", en: "Digital tickets", km: "កាតអញ្ជើញឌីជីថល", Icon: Ticket },
     { path: "preview", en: "Preview", km: "មើលជាមុន", Icon: Eye },
     { path: "media", en: "Media", km: "រូបភាព", Icon: Images },

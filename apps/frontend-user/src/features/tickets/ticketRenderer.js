@@ -110,7 +110,7 @@ export async function renderTicket(canvas, ticket, scale = 2) {
   ctx.restore();
   text(ctx, [ticket.eventDate, ticket.eventTime?.slice(0, 5)].filter(Boolean).join(" · "), 300, 382, { size: 18, maxLines: 1 });
   text(ctx, ticket.venueName || "", 300, 414, { size: 16, maxLines: 2 });
-  text(ctx, ticket.kind === "GUEST" ? (english ? 'Reserved for' : "ជូនចំពោះ · Reserved for") : (english ? 'General invitation' : "ធៀបអញ្ជើញទូទៅ · General invitation"), 300, 474, { size: 13, maxLines: 1, color: design.accent });
+  text(ctx, ticket.kind === "GUEST" ? (english ? 'Reserved for' : "ជូនចំពោះ · Reserved for") : (english ? 'General invitation' : "សំបុត្រអញ្ជើញទូទៅ · General invitation"), 300, 474, { size: 13, maxLines: 1, color: design.accent });
   text(ctx, ticket.guestName || (english ? 'You and your family' : "លោកអ្នក និងក្រុមគ្រួសារ"), 300, 510, { size: 24, maxLines: 3, family: FONTS[design.font], lineHeight: 1.7 });
   const details = [ticket.tableName && `${english ? 'Table' : 'តុ / Table'} ${ticket.tableName}`, ticket.seatNumber && `Seat ${ticket.seatNumber}`, ticket.seatCount && `${english ? 'Guests' : 'ភ្ញៀវ / Guests'} ${ticket.seatCount}`, ticket.group].filter(Boolean).join(" · ");
   text(ctx, details, 300, 616, { size: 13, maxLines: 1 });
