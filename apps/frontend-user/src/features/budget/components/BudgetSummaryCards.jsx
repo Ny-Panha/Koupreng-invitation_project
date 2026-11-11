@@ -30,7 +30,7 @@ export default function BudgetSummaryCards({ budget }) {
         : budget?.overBudget
         ? isEn ? "Over budget" : "លើសថវិកា"
         : isEn ? "Remaining" : "នៅសល់",
-      value: mixed ? "Comparison unavailable" : money(budget?.remainingBudget),
+      value: mixed ? (isEn ? "Comparison unavailable" : "មិនអាចប្រៀបធៀបបាន") : money(budget?.remainingBudget),
       note: mixed
         ? isEn ? "Mixed currency" : "រូបិយប័ណ្ណចម្រុះ"
         : budget?.overBudget

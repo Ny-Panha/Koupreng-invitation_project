@@ -20,7 +20,7 @@
 .k-responsive-table th {
   padding: 0.875rem 1.25rem;
   background: var(--brand-surface-2, #f8f8fd);
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
   font-weight: var(--weight-bold, 700);
   font-size: var(--text-xs, 0.75rem);
   text-transform: uppercase;

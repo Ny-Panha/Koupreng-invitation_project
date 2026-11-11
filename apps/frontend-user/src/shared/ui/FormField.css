@@ -63,5 +63,5 @@
 
 .k-form-helper {
   font-size: var(--text-xs, 0.75rem);
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
 }

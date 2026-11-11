@@ -9,7 +9,7 @@ export default function BudgetProgress({ budget }) {
       <p role="status">
         {isEn
           ? "Budget comparison unavailable: USD and KHR amounts remain separate. The budget goal currency is not recorded; no exchange rate is applied."
-          : "មិនអាចប្រៀបធៀបថវិកាបានទេ (Comparison unavailable)៖ ចំនួនទឹកប្រាក់ USD និង KHR ត្រូវរក្សាដាច់ដោយឡែកពីគ្នា។ មិនមានការអនុវត្តអត្រាប្តូរប្រាក់ទេ។"}
+          : "មិនអាចប្រៀបធៀបថវិកាបានទេ៖ ចំនួនទឹកប្រាក់ USD និង KHR ត្រូវរក្សាដាច់ដោយឡែកពីគ្នា។ មិនមានការអនុវត្តអត្រាប្តូរប្រាក់ទេ។"}
       </p>
     );
   }

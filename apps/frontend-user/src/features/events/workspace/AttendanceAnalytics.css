@@ -193,3 +193,12 @@
     padding: 14px;
   }
 }
+
+@media (max-width: 360px) {
+  .analytics-totals {
+    grid-template-columns: 1fr;
+  }
+  .analytics-range {
+    padding: 12px;
+  }
+}

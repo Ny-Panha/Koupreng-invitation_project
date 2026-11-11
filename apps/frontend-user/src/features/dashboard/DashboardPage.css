@@ -9,7 +9,7 @@
   --brand-border-warm: #eadfce;
   --brand-surface: #ffffff;
   --brand-text: #1e293b;
-  --brand-text-muted: #7a8799;
+  --brand-text-muted: #526071;
   display: flex;
   flex-direction: column;
   gap: var(--space-6, 24px);
@@ -58,6 +58,7 @@
 .overview-activity { list-style: none; padding: 0; display: grid; gap: 12px; }
 @media (max-width: 1279px) { .overview-columns { grid-template-columns: minmax(0,1fr); } }
 @media (max-width: 599px) { .overview-hero { grid-template-columns: minmax(0,1fr); } .overview-cover { min-height: 120px; max-height: 180px; } .overview-hero-content { padding: 20px; } .overview-actions .workspace-button { width: 100%; } }
+@media (max-width: 360px) { .overview-tool-grid { grid-template-columns: 1fr; } .overview-metrics { grid-template-columns: 1fr; } .pe-dashboard-page { padding: 16px 12px 32px; } }
 
 /* Header */
 .pe-dashboard-page .dash-page-header {

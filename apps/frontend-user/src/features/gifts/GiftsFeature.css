@@ -1095,6 +1095,12 @@
   .wg-sum-value { font-size: 19px; line-height: 1.5; overflow-wrap: anywhere; }
 }
 
+@media (max-width: 360px) {
+  .wg-summary { grid-template-columns: 1fr; }
+  .wg-page, .wp-page { width: calc(100% - 24px); }
+  .wg-hero, .wp-hero { padding: 20px 16px; border-radius: 16px; }
+}
+
 @media (max-width: 768px) {
   .wg-table .wg-inline-form-row td { display: block; text-align: left; }
   .wg-table .wg-inline-form-row td::before { display: block; margin-bottom: 8px; }

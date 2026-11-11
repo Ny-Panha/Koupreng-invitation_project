@@ -9,7 +9,7 @@
 .k-search-icon {
   position: absolute;
   left: 0.75rem;
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
   font-size: 1.125rem;
   pointer-events: none;
 }
@@ -37,7 +37,7 @@
   right: 0.625rem;
   background: transparent;
   border: none;
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
   font-size: 1.125rem;
   cursor: pointer;
   display: flex;

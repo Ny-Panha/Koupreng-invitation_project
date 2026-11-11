@@ -60,14 +60,14 @@
 
 .k-modal-subtitle {
   font-size: var(--text-sm, 0.875rem);
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
   margin-top: 0.25rem;
 }
 
 .k-modal-close-btn {
   background: transparent;
   border: none;
-  color: var(--brand-text-muted, #7a8799);
+  color: var(--ui-muted, var(--brand-text-muted, #526071));
   padding: 0.375rem;
   border-radius: var(--radius-pill, 999px);
   cursor: pointer;

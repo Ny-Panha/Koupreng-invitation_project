@@ -1354,3 +1354,9 @@
   .exp-sum-label { font-size: 14px; line-height: 1.7; }
   .exp-sum-value { font-size: 19px; line-height: 1.5; overflow-wrap: anywhere; }
 }
+
+@media (max-width: 360px) {
+  .exp-summary { grid-template-columns: 1fr; }
+  .exp-page, .ep-page { width: calc(100% - 24px); }
+  .exp-hero, .ep-hero { padding: 20px 16px; border-radius: 16px; }
+}

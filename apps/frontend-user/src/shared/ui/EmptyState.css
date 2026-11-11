@@ -36,7 +36,7 @@
 
 .k-empty-description {
   font-size: 1rem;
-  color: var(--ws-muted, var(--brand-text-muted, #7a8799));
+  color: var(--ws-muted, var(--brand-text-muted, #526071));
   max-width: 380px;
   margin-bottom: 1.25rem;
 }

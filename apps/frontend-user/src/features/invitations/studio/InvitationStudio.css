@@ -229,6 +229,12 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
   .studio-guide-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .studio-guide-steps button { justify-content: flex-start; }
 }
+@media (max-width: 360px) {
+  .studio-guide-steps { grid-template-columns: 1fr; }
+  .studio-action { padding: 6px 8px; font-size: 12px; }
+  .studio-mobile-tabs button { font-size: 13px; padding: 6px 8px; }
+  .studio-toolbar-actions { justify-content: center; }
+}
 @media (max-width: 767px) {
   .invitation-studio { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
   .studio-toolbar-actions { position: fixed; z-index: 70; bottom: 0; left: 0; right: 0; width: auto; display: flex; justify-content: flex-end; padding: 10px max(12px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--ws-canvas, #fbf6ee); border-top: 1px solid var(--ws-border, #e5e0d5); }
@@ -236,6 +242,9 @@ html:has(.dash-wrapper--studio), body:has(.dash-wrapper--studio), #root:has(.das
   .studio-more-panel { top: auto; bottom: calc(100% + 8px); }
   .studio-guide { padding: 12px; }
   .studio-save-status { white-space: normal; }
+}
+@media (min-width: 2560px) {
+  .invitation-studio { max-width: 2400px; margin-inline: auto; }
 }
 .studio-program-row { border-bottom: 1px solid #e8e2d8; padding-bottom: 16px; margin-bottom: 16px; }
 .studio-program-row .pe-label { display: grid; gap: 6px; min-width: 0; }
