@@ -16,7 +16,7 @@ export default function RecentInvitationsCard({ lang = "km", invitations = [] })
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                {lang === "en" ? "Recent Invitations" : "សំបុត្រអញ្ជើញថ្មីៗ (Recent Invitations)"}
+                {lang === "en" ? "Recent Invitations" : "សំបុត្រអញ្ជើញថ្មីៗ"}
               </h3>
 
             </div>

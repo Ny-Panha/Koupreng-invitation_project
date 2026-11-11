@@ -268,7 +268,7 @@ export default function AdminDashboardPage() {
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-2">
                 <Users className="h-4 w-4 text-cyan-500" />
-                <span>{t("dashboard.recentUsers", "អ្នកប្រើប្រាស់ថ្មីៗ (Recent Users)")}</span>
+                <span>{t("dashboard.recentUsers", "អ្នកប្រើប្រាស់ថ្មីៗ")}</span>
               </h3>
               <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                 {t("dashboard.recentUsersSub", "គណនីដែលបានចុះឈ្មោះចុងក្រោយ")}
@@ -338,7 +338,7 @@ export default function AdminDashboardPage() {
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-2">
                 <CreditCard className="h-4 w-4 text-emerald-500" />
-                <span>{t("dashboard.recentPayments", "ការទូទាត់ថ្មីៗ (Recent Payments)")}</span>
+                <span>{t("dashboard.recentPayments", "ការទូទាត់ថ្មីៗ")}</span>
               </h3>
               <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                 {t("dashboard.recentPaymentsSub", "ប្រតិបត្តិការទូទាត់ចុងក្រោយក្នុងប្រព័ន្ធ")}

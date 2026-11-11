@@ -19,6 +19,8 @@ export function ErrorState({ message, onRetry }) {
     );
 }
 
-export function Empty({ label = "មិនមានទិន្នន័យ" }) {
-    return <div className="state">📭 {label}</div>;
+export function Empty({ label }) {
+    const { lang } = useAdminLanguage();
+    const text = label || (lang === 'en' ? 'No records found' : 'មិនមានទិន្នន័យ');
+    return <div className="state">📭 {text}</div>;
 }

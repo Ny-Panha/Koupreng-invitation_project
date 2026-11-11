@@ -1,6 +1,7 @@
 import { RefreshCw, AlertCircle, Inbox } from "lucide-react";
 import AnimatedNumber from "./AnimatedNumber";
 import { AdminSkeleton } from './AdminSkeleton';
+import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 
 export { AnimatedNumber };
 
@@ -129,11 +130,11 @@ export function StatusBadge({ status, tone }) {
 
   const variant =
     tone ||
-    (["ACTIVE", "PAID", "DELIVERED", "OK", "PUBLISHED", "SUCCESS"].includes(normalized)
+    (["ACTIVE", "PAID", "DELIVERED", "OK", "PUBLISHED", "SUCCESS", "COMPLETED", "VERIFIED"].includes(normalized)
       ? "green"
       : ["FAILED", "REJECTED", "CANCELLED", "SUSPENDED", "ERROR", "CRITICAL"].includes(normalized)
       ? "red"
-      : ["PENDING", "WARNING", "DRAFT", "REPORTED", "IN_PROGRESS"].includes(normalized)
+      : ["PENDING", "WARNING", "DRAFT", "REPORTED", "IN_PROGRESS", "REVIEW_REQUIRED", "PAID_PENDING_REVIEW"].includes(normalized)
       ? "amber"
       : normalized === "PREMIUM"
       ? "gold"
@@ -221,7 +222,7 @@ export function FilterTabs({ items, active, onChange }) {
   );
 }
 
-export function DataTable({ columns, rows, getRowKey, emptyLabel = "មិនមានទិន្នន័យទេ", className = "" }) {
+export function DataTable({ columns, rows, getRowKey, emptyLabel, className = "" }) {
   if (!rows?.length) return <EmptyState label={emptyLabel} />;
 
   return (
@@ -263,11 +264,16 @@ export function LoadingState({ label, layout = 'table' }) {
   return <AdminSkeleton label={label} layout={layout} />;
 }
 
-export function ErrorStateView({ message = "មិនអាចទាញយកទិន្នន័យបានទេ", onRetry }) {
+export function ErrorStateView({ message, onRetry }) {
+  const { lang } = useAdminLanguage();
+  const isEn = lang === "en";
+  const fallbackMsg = isEn ? "Unable to retrieve data" : "មិនអាចទាញយកទិន្នន័យបានទេ";
+  const retryText = isEn ? "Retry" : "ព្យាយាមម្តងទៀត";
+
   return (
     <div className="flex flex-col items-center justify-center p-10 text-center rounded-2xl border border-rose-500/20 bg-rose-500/5 dark:bg-rose-950/20">
       <AlertCircle className="h-8 w-8 text-rose-500 mb-2" />
-      <p className="text-sm font-semibold text-rose-600 dark:text-rose-400">{message}</p>
+      <p className="text-sm font-semibold text-rose-600 dark:text-rose-400">{message || fallbackMsg}</p>
       {onRetry && (
         <ActionButton
           variant="ghost"
@@ -276,18 +282,21 @@ export function ErrorStateView({ message = "មិនអាចទាញយកទ
           onClick={onRetry}
         >
           <RefreshCw className="h-3.5 w-3.5" />
-          <span>ព្យាយាមម្តងទៀត</span>
+          <span>{retryText}</span>
         </ActionButton>
       )}
     </div>
   );
 }
 
-export function EmptyState({ label = "មិនមានទិន្នន័យទេ" }) {
+export function EmptyState({ label }) {
+  const { lang } = useAdminLanguage();
+  const fallback = lang === "en" ? "No data available" : "មិនមានទិន្នន័យទេ";
+
   return (
     <div className="flex flex-col items-center justify-center p-10 text-center rounded-2xl border border-dashed border-slate-200 dark:border-zinc-800">
       <Inbox className="h-8 w-8 text-slate-300 dark:text-zinc-600 mb-2" />
-      <span className="text-xs font-semibold text-muted-foreground">{label}</span>
+      <span className="text-xs font-semibold text-muted-foreground">{label || fallback}</span>
     </div>
   );
 }

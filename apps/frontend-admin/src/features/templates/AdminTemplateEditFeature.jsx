@@ -241,29 +241,37 @@ const THEME_PRESETS = [
 const DECORATIVE_FRAMES = [
   {
     id: "none",
-    name: "គ្មានក្បាច់ (None)",
+    name: "គ្មានក្បាច់",
+    nameEn: "None",
     desc: "មិនប្រើស៊ុមលើ",
+    descEn: "No top arch frame",
     icon: "⭕",
     previewUrl: "",
   },
   {
     id: "lotus-gold",
-    name: "ក្បាច់ផ្កាឈូកមាស (Lotus Gold Arch)",
+    name: "ក្បាច់ផ្កាឈូកមាស",
+    nameEn: "Lotus Gold Arch",
     desc: "ក្បាច់រាជឈូកខ្មែរពណ៌មាសឆ្អិនឆ្អៅ",
+    descEn: "Traditional Khmer lotus arch in radiant gold",
     icon: "🪷",
     previewUrl: "/templates/cover-khmer-golden-wedding/cover-preview.svg",
   },
   {
     id: "celestial-arch",
-    name: "ស៊ុមទេវតាផ្កាយមាស (Celestial Arch)",
+    name: "ស៊ុមទេវតាផ្កាយមាស",
+    nameEn: "Celestial Arch",
     desc: "ស៊ុមផ្កា & ពន្លឺផ្កាយមាសប្រណិត",
+    descEn: "Botanical florals with radiant gold star sparkles",
     icon: "🌸",
     previewUrl: "/templates/silk-heritage/woven-ornament.svg",
   },
   {
     id: "royal-palace",
-    name: "ក្បាច់ក្បាលរាជរដ្ឋ (Royal Palace Crown)",
+    name: "ក្បាច់ក្បាលរាជរដ្ឋ",
+    nameEn: "Royal Palace Crown",
     desc: "ក្បាច់ឆ្លាក់បុរាណបែបព្រះបរមរាជវាំង",
+    descEn: "Ancient palace crown arch carving",
     icon: "👑",
     previewUrl: "/templates/cover-khmer-golden-wedding/cover-bg.svg",
   },
@@ -273,40 +281,50 @@ const DECORATIVE_FRAMES = [
 const BACKGROUND_TEXTURES = [
   {
     id: "none",
-    name: "ពណ៌ធម្មតា (Solid Color)",
+    name: "ពណ៌ធម្មតា",
+    nameEn: "Solid Color",
     desc: "ប្រើពណ៌ Background ធម្មតាគ្មាន Texture",
+    descEn: "Standard background color without texture",
     icon: "⬜",
     bgPattern: "",
     bgSize: "",
   },
   {
     id: "ivory-paper",
-    name: "ក្រដាសភ្លុកបុរាណ (Ivory Paper)",
+    name: "ក្រដាសភ្លុកបុរាណ",
+    nameEn: "Ivory Paper",
     desc: "អារម្មណ៍ក្រដាសសំបុត្រអញ្ជើញបុរាណបែបធម្មជាតិ",
+    descEn: "Natural vintage invitation paper texture",
     icon: "📜",
     bgPattern: "radial-gradient(#d4af37 0.75px, transparent 0.75px)",
     bgSize: "16px 16px",
   },
   {
     id: "silk-texture",
-    name: "សូត្រមង្គលភ្លុក (Silk Heritage)",
+    name: "សូត្រមង្គលភ្លុក",
+    nameEn: "Silk Heritage",
     desc: "ក្បាច់ត្បាញសរសៃសូត្រខ្មែរប្រណិត",
+    descEn: "Exquisite woven Khmer silk pattern",
     icon: "🧵",
     bgPattern: "linear-gradient(45deg, rgba(212,175,55,0.06) 25%, transparent 25%), linear-gradient(-45deg, rgba(212,175,55,0.06) 25%, transparent 25%)",
     bgSize: "20px 20px",
   },
   {
     id: "gold-foil-dust",
-    name: "ធូលីមាសចាំង (Gold Dust Sparkle)",
+    name: "ធូលីមាសចាំង",
+    nameEn: "Gold Dust Sparkle",
     desc: "ពន្លឺធូលីមាសរាយប៉ាយលើផ្ទៃខាងក្រោយ",
+    descEn: "Subtle gold foil dust dispersed across background",
     icon: "✨",
     bgPattern: "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.12) 0%, transparent 60%)",
     bgSize: "100% 100%",
   },
   {
     id: "velvet-royal",
-    name: "កម្ញីក្រហមរាជវាំង (Royal Velvet)",
+    name: "កម្ញីក្រហមរាជវាំង",
+    nameEn: "Royal Velvet",
     desc: "ផ្ទៃស្រាលបែបក្រណាត់កម្ញីទន់រលោង",
+    descEn: "Rich royal velvet fabric texture",
     icon: "🍷",
     bgPattern: "radial-gradient(ellipse at top, rgba(139,30,45,0.18), transparent 70%)",
     bgSize: "100% 100%",
@@ -662,6 +680,7 @@ function VisualKhmerFontPicker({
 
 export default function AdminTemplateEditPage() {
   const { lang, t } = useAdminLanguage();
+  const isEn = lang === "en";
   const { templateId } = useParams();
   const isNew = !templateId || templateId === "new" || templateId === "undefined";
   const navigate = useNavigate();
@@ -2230,13 +2249,15 @@ export default function AdminTemplateEditPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {DECORATIVE_FRAMES.map((frame) => {
                           const isSelected = (form.decorativeFrame || "none") === frame.id;
+                          const displayName = isEn ? (frame.nameEn || frame.name) : frame.name;
+                          const displayDesc = isEn ? (frame.descEn || frame.desc) : frame.desc;
                           return (
                             <button
                               key={frame.id}
                               type="button"
                               onClick={() => {
                                 setField("decorativeFrame", frame.id);
-                                show(`បានជ្រើសរើសក្បាច់: ${frame.name}`, "success");
+                                show(isEn ? `Selected arch: ${displayName}` : `បានជ្រើសរើសក្បាច់: ${displayName}`, "success");
                               }}
                               className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer ${
                                 isSelected
@@ -2251,21 +2272,21 @@ export default function AdminTemplateEditPage() {
                                   </div>
                                   <div>
                                     <h4 className={`text-xs font-bold ${isSelected ? "text-amber-300" : "text-zinc-100"}`}>
-                                      {frame.name}
+                                      {displayName}
                                     </h4>
                                     <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
-                                      {frame.desc}
+                                      {displayDesc}
                                     </p>
                                   </div>
                                 </div>
                                 {isSelected ? (
                                   <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-lg shrink-0">
                                     <Check className="h-3 w-3" />
-                                    <span>ប្រើ</span>
+                                    <span>{isEn ? "Applied" : "ប្រើ"}</span>
                                   </span>
                                 ) : (
                                   <span className="text-[10px] text-zinc-500 group-hover:text-amber-400 px-2 py-0.5 rounded-lg border border-transparent shrink-0">
-                                    ជ្រើស
+                                    {isEn ? "Select" : "ជ្រើស"}
                                   </span>
                                 )}
                               </div>
@@ -2281,20 +2302,22 @@ export default function AdminTemplateEditPage() {
                         <div className="flex items-center justify-between mb-1">
                           <h3 className="text-sm font-bold text-white flex items-center gap-2">
                             <Layers className="h-4 w-4 text-amber-500" />
-                            <span>ក្រដាស និង Texture ផ្ទៃខាងក្រោយ (Background Textures)</span>
+                            <span>{isEn ? "Paper & Background Textures" : "ក្រដាស និង Texture ផ្ទៃខាងក្រោយ"}</span>
                           </h3>
                           <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
                             {form.backgroundTexture || "none"}
                           </span>
                         </div>
                         <p className="text-xs text-zinc-400">
-                          ប្តូរ Texture ផ្ទៃខាងក្រោយដើម្បីបង្កើនភាពប្រណិតដូចសំបុត្រអញ្ជើញបោះពុម្ពពិតៗ។
+                          {isEn ? "Change background texture for authentic wedding stationery paper feel." : "ប្តូរ Texture ផ្ទៃខាងក្រោយដើម្បីបង្កើនភាពប្រណិតដូចសំបុត្រអញ្ជើញបោះពុម្ពពិតៗ។"}
                         </p>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {BACKGROUND_TEXTURES.map((tex) => {
                           const isSelected = (form.backgroundTexture || "none") === tex.id;
+                          const displayName = isEn ? (tex.nameEn || tex.name) : tex.name;
+                          const displayDesc = isEn ? (tex.descEn || tex.desc) : tex.desc;
                           return (
                             <button
                               key={tex.id}
@@ -2304,7 +2327,7 @@ export default function AdminTemplateEditPage() {
                                 if (tex.bgPattern) {
                                   setField("bgPattern", tex.bgPattern);
                                 }
-                                show(`បានជ្រើសរើស Texture: ${tex.name}`, "success");
+                                show(isEn ? `Selected texture: ${displayName}` : `បានជ្រើសរើស Texture: ${displayName}`, "success");
                               }}
                               className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer overflow-hidden ${
                                 isSelected
@@ -2325,21 +2348,21 @@ export default function AdminTemplateEditPage() {
                                   </div>
                                   <div>
                                     <h4 className={`text-xs font-bold ${isSelected ? "text-amber-300" : "text-zinc-100"}`}>
-                                      {tex.name}
+                                      {displayName}
                                     </h4>
                                     <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
-                                      {tex.desc}
+                                      {displayDesc}
                                     </p>
                                   </div>
                                 </div>
                                 {isSelected ? (
                                   <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-lg shrink-0">
                                     <Check className="h-3 w-3" />
-                                    <span>ប្រើ</span>
+                                    <span>{isEn ? "Applied" : "ប្រើ"}</span>
                                   </span>
                                 ) : (
                                   <span className="text-[10px] text-zinc-500 group-hover:text-amber-400 px-2 py-0.5 rounded-lg border border-transparent shrink-0">
-                                    ជ្រើស
+                                    {isEn ? "Select" : "ជ្រើស"}
                                   </span>
                                 )}
                               </div>

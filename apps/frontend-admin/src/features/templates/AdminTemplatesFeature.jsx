@@ -409,13 +409,13 @@ export default function AdminTemplatesPage() {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
-              <option value="ALL">{lang === "en" ? "All Categories" : "គ្រប់ប្រភេទ (All Categories)"}</option>
-              <option value="TRADITIONAL">{lang === "en" ? "Traditional Khmer" : "ប្រពៃណីខ្មែរ (Traditional)"}</option>
-              <option value="MODERN">{lang === "en" ? "Modern Minimal" : "សម័យទំនើប (Modern)"}</option>
-              <option value="LUXURY">{lang === "en" ? "Luxury Royal" : "ប្រណិត (Luxury Royal)"}</option>
-              <option value="MINIMALIST">{lang === "en" ? "Minimalist" : "សាមញ្ញ (Minimalist)"}</option>
-              <option value="FLORAL">{lang === "en" ? "Floral Garden" : "ផ្កាស្រស់ (Floral Garden)"}</option>
-              <option value="OTHER">{lang === "en" ? "Other" : "ផ្សេងៗ (Other)"}</option>
+              <option value="ALL">{lang === "en" ? "All Categories" : "គ្រប់ប្រភេទ"}</option>
+              <option value="TRADITIONAL">{lang === "en" ? "Traditional Khmer" : "ប្រពៃណីខ្មែរ"}</option>
+              <option value="MODERN">{lang === "en" ? "Modern Minimal" : "សម័យទំនើប"}</option>
+              <option value="LUXURY">{lang === "en" ? "Luxury Royal" : "ប្រណិត"}</option>
+              <option value="MINIMALIST">{lang === "en" ? "Minimalist" : "សាមញ្ញ"}</option>
+              <option value="FLORAL">{lang === "en" ? "Floral Garden" : "ផ្កាស្រស់"}</option>
+              <option value="OTHER">{lang === "en" ? "Other" : "ផ្សេងៗ"}</option>
             </select>
 
             {/* Type Select (Free / Premium) */}
@@ -427,7 +427,7 @@ export default function AdminTemplatesPage() {
               onChange={(e) => setTypeFilter(e.target.value)}
             >
               <option value="ALL">{lang === "en" ? "All Pricing Types" : "ប្រភេទតម្លៃទាំងអស់"}</option>
-              <option value="FREE">{lang === "en" ? "Free" : "ឥតគិតថ្លៃ (Free)"}</option>
+              <option value="FREE">{lang === "en" ? "Free" : "ឥតគិតថ្លៃ"}</option>
               <option value="PREMIUM">Premium 👑</option>
             </select>
 
@@ -440,8 +440,8 @@ export default function AdminTemplatesPage() {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="ALL">{lang === "en" ? "All Statuses" : "ស្ថានភាពទាំងអស់"}</option>
-              <option value="ACTIVE">{lang === "en" ? "Active" : "ដំណើរការ (Active)"}</option>
-              <option value="INACTIVE">{lang === "en" ? "Inactive" : "បានបិទ (Inactive)"}</option>
+              <option value="ACTIVE">{lang === "en" ? "Active" : "ដំណើរការ"}</option>
+              <option value="INACTIVE">{lang === "en" ? "Inactive" : "បានបិទ"}</option>
             </select>
 
             {/* View Mode Toggle */}

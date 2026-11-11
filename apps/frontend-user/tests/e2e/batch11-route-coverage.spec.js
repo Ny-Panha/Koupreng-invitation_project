@@ -11,6 +11,8 @@ test("unknown route fallback recovers in both applications", async ({ page }) =>
   await expect(page.getByRole("heading", { name: "404", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Back to home", exact: true })).toHaveAttribute("href", "/");
   await page.goto("http://127.0.0.1:4174/__batch11_missing_route__");
+  await expect(page.getByText("404")).toBeVisible();
+  await page.getByRole("link", { name: "Return to Dashboard" }).click();
   await expect(page).toHaveURL("http://127.0.0.1:4174/login?next=%2Fdashboard");
   await expect(page.locator('input[autocomplete="username"]')).toBeVisible();
 });

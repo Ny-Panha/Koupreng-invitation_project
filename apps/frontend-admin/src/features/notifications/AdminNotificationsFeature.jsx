@@ -304,8 +304,8 @@ export default function AdminNotificationsPage() {
                 disabled={busy}
                 onChange={(e) => setField("type", e.target.value)}
               >
-                <option value="SYSTEM_ALERT">SYSTEM_ALERT (Platform Alert)</option>
-                <option value="ADMIN_NOTICE">ADMIN_NOTICE (Policy & Update)</option>
+                <option value="SYSTEM_ALERT">{lang === "en" ? "System Alert" : "ការជូនដំណឹងប្រព័ន្ធ"}</option>
+                <option value="ADMIN_NOTICE">{lang === "en" ? "Admin Notice" : "សេចក្តីជូនដំណឹង Admin"}</option>
               </select>
             </div>
 
@@ -323,9 +323,9 @@ export default function AdminNotificationsPage() {
                 disabled={busy}
                 onChange={(e) => setField("channel", e.target.value)}
               >
-                <option value="SYSTEM">SYSTEM (In-App Bell & Dashboard)</option>
-                <option value="EMAIL">EMAIL (Email Delivery)</option>
-                <option value="TELEGRAM">TELEGRAM (Merchant Bot Alert)</option>
+                <option value="SYSTEM">{lang === "en" ? "System (In-App)" : "ប្រព័ន្ធក្នុងកម្មវិធី (System)"}</option>
+                <option value="EMAIL">{lang === "en" ? "Email Delivery" : "ផ្ញើតាមអ៊ីមែល (Email)"}</option>
+                <option value="TELEGRAM">{lang === "en" ? "Telegram Merchant Alert" : "Telegram Alert"}</option>
               </select>
             </div>
 

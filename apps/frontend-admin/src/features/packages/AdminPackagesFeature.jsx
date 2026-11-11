@@ -81,8 +81,8 @@ function getPlanCheckoutStatus(plan) {
 const FEATURE_LIST = [
   {
     key: "premiumTemplatesEnabled",
-    label: "គំរូ Premium (Templates)",
-    labelKm: "គំរូ Premium (Templates)",
+    label: "គំរូ Premium",
+    labelKm: "គំរូ Premium",
     labelEn: "Premium Templates",
     sublabel: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតសំបុត្រអញ្ជើញលំដាប់ប្រណិត",
     sublabelKm: "បើកសិទ្ធិប្រើប្រាស់ម៉ូតសំបុត្រអញ្ជើញលំដាប់ប្រណិត",
@@ -91,8 +91,8 @@ const FEATURE_LIST = [
   },
   {
     key: "qrInvitationsEnabled",
-    label: "សំបុត្រអញ្ជើញ QR (QR Invitations)",
-    labelKm: "សំបុត្រអញ្ជើញ QR (QR Invitations)",
+    label: "សំបុត្រអញ្ជើញ QR",
+    labelKm: "សំបុត្រអញ្ជើញ QR",
     labelEn: "QR Invitations",
     sublabel: "ចែករំលែកសំបុត្រអញ្ជើញតាម QR Code និងតំណភ្ជាប់",
     sublabelKm: "ចែករំលែកសំបុត្រអញ្ជើញតាម QR Code និងតំណភ្ជាប់",
@@ -101,8 +101,8 @@ const FEATURE_LIST = [
   },
   {
     key: "qrCheckInEnabled",
-    label: "ស្កេន QR ពេលចូលរោង (Check-in)",
-    labelKm: "ស្កេន QR ពេលចូលរោង (Check-in)",
+    label: "ស្កេន QR ពិនិត្យវត្តមាន",
+    labelKm: "ស្កេន QR ពិនិត្យវត្តមាន",
     labelEn: "QR Guest Check-in",
     sublabel: "ប្រព័ន្ធស្កេនពិនិត្យវត្តមានភ្ញៀវនៅមុខរោងការ",
     sublabelKm: "ប្រព័ន្ធស្កេនពិនិត្យវត្តមានភ្ញៀវនៅមុខរោងការ",
@@ -111,8 +111,8 @@ const FEATURE_LIST = [
   },
   {
     key: "seatingEnabled",
-    label: "រៀបចំតុភ្ញៀវ (Seating Chart)",
-    labelKm: "រៀបចំតុភ្ញៀវ (Seating Chart)",
+    label: "រៀបចំតុភ្ញៀវ",
+    labelKm: "រៀបចំតុភ្ញៀវ",
     labelEn: "Seating Chart",
     sublabel: "រៀបចំលេខតុ និងប្លង់អង្គុយសម្រាប់ភ្ញៀវកិត្តិយស",
     sublabelKm: "រៀបចំលេខតុ និងប្លង់អង្គុយសម្រាប់ភ្ញៀវកិត្តិយស",
@@ -121,8 +121,8 @@ const FEATURE_LIST = [
   },
   {
     key: "advancedAnalyticsEnabled",
-    label: "របាយការណ៍លម្អិត (Analytics)",
-    labelKm: "របាយការណ៍លម្អិត (Analytics)",
+    label: "របាយការណ៍លម្អិត",
+    labelKm: "របាយការណ៍លម្អិត",
     labelEn: "Advanced Analytics",
     sublabel: "ស្ថិតិការបើកមើលសំបុត្រអញ្ជើញ និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
     sublabelKm: "ស្ថិតិការបើកមើលសំបុត្រអញ្ជើញ និងចំនួនភ្ញៀវ RSVP ជាក់ស្តែង",
@@ -131,8 +131,8 @@ const FEATURE_LIST = [
   },
   {
     key: "teamMembersEnabled",
-    label: "សមាជិកក្រុម (Team Collaboration)",
-    labelKm: "សមាជិកក្រុម (Team Collaboration)",
+    label: "សមាជិកក្រុមសហការ",
+    labelKm: "សមាជិកក្រុមសហការ",
     labelEn: "Team Collaboration",
     sublabel: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំសំបុត្រអញ្ជើញរួមគ្នា",
     sublabelKm: "អាច Invite សមាជិកគ្រួសារជួយរៀបចំសំបុត្រអញ្ជើញរួមគ្នា",
@@ -141,8 +141,8 @@ const FEATURE_LIST = [
   },
   {
     key: "aiAssistantEnabled",
-    label: "ជំនួយការ AI (AI Assistant)",
-    labelKm: "ជំនួយការ AI (AI Assistant)",
+    label: "ជំនួយការ AI",
+    labelKm: "ជំនួយការ AI",
     labelEn: "AI Assistant",
     sublabel: "ជំនួយការឆ្លាតវៃជួយសរសេរពាក្យជូនពរ និងរៀបកាលវិភាគ",
     sublabelKm: "ជំនួយការឆ្លាតវៃជួយសរសេរពាក្យជូនពរ និងរៀបកាលវិភាគ",
