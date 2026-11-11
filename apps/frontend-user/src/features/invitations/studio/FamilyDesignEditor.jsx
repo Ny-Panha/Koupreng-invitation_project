@@ -4,6 +4,7 @@ import { COUPLE_LAYOUTS } from '../../templates/shared/invitationFeatures';
 import { CoupleMonogram } from '../../templates/shared/FamilyNames';
 import { useRef, useState } from 'react';
 import { exportVector } from '../../templates/shared/vectorExport';
+import { getFamilySectionConfig } from '@/shared/utils/eventPlaceholders';
 
 const pair = () => ({ km: '', en: '' });
 
@@ -15,8 +16,10 @@ const LAYOUT_OPTIONS = {
   centered: ['Centered couple', 'ចំកណ្តាលទំព័រ'],
 };
 
-export function FamilyDesignEditor({ form, locale = 'km', onChange, supported, english }) {
+export function FamilyDesignEditor({ form, locale = 'km', onChange, supported, english, eventType }) {
   const isEn = typeof english === 'boolean' ? english : (locale === 'en');
+  const activeEventType = eventType || form.eventType || 'WEDDING';
+  const familyConfig = getFamilySectionConfig(activeEventType, isEn ? 'en' : 'km');
   const groups = form.familyGroupsV1 || [];
   const patchGroup = (side, values) => {
     const group = groups.find(item => item.side === side) || { side, label: pair(), members: [] };
@@ -36,22 +39,18 @@ export function FamilyDesignEditor({ form, locale = 'km', onChange, supported, e
         {isEn ? 'Name placement' : 'ការរៀបចំទីតាំងឈ្មោះ'}
         <select value={form.coupleLayout || 'template-default'} onChange={e => onChange('coupleLayout', e.target.value)}>
           {COUPLE_LAYOUTS.map(key => (
-            <option key={key} value={key}>{LAYOUT_OPTIONS[key]?.[isEn ? 0 : 1] || key}</option>
+            <option key={key} value={key}>{familyConfig.layouts?.[key] || LAYOUT_OPTIONS[key]?.[isEn ? 0 : 1] || key}</option>
           ))}
         </select>
       </label>
 
       {['groom', 'bride'].map(side => {
         const group = groups.find(item => item.side === side);
-        const sideLegend = isEn
-          ? (side === 'groom' ? 'First partner / groom family' : 'Second partner / bride family')
-          : (side === 'groom' ? 'ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)' : 'ក្រុមគ្រួសារខាងកូនក្រមុំ (ដៃគូទី២)');
-
+        const sideLegend = side === 'groom' ? familyConfig.sideGroomLegend : familyConfig.sideBrideLegend;
         const partnerHonorificLabel = isEn ? `Partner honorific (${locale})` : `ងារកិត្តិយសដៃគូ (${langLabel})`;
         const familyLabelText = isEn ? `Family label (${locale})` : `ស្លាកឈ្មោះក្រុមគ្រួសារ (${langLabel})`;
-        const familyLabelPlaceholder = isEn
-          ? (side === 'groom' ? "e.g. Groom's family" : "e.g. Bride's family")
-          : (side === 'groom' ? 'ឧ. ក្រុមគ្រួសារខាងកូនកំលោះ' : 'ឧ. ក្រុមគ្រួសារខាងកូនក្រមុំ');
+        const familyLabelPlaceholder = side === 'groom' ? familyConfig.sideGroomLabelPlaceholder : familyConfig.sideBrideLabelPlaceholder;
+        const partnerHonorificPlaceholder = side === 'groom' ? familyConfig.sideGroomHonorificPlaceholder : familyConfig.sideBrideHonorificPlaceholder;
 
         return (
           <fieldset key={side}>
@@ -61,7 +60,7 @@ export function FamilyDesignEditor({ form, locale = 'km', onChange, supported, e
               <input
                 maxLength={100}
                 value={form.localizedContentV1?.[locale]?.[`${side}Honorific`] ?? (locale === 'km' ? form[`${side}Honorific`] || '' : '')}
-                placeholder={isEn ? 'e.g. Mr., Ms., H.E.' : 'ឧ. លោក, កញ្ញា, ឯកឧត្តម'}
+                placeholder={partnerHonorificPlaceholder}
                 onChange={e => onChange(`${side}Honorific`, e.target.value)}
               />
             </label>
@@ -78,14 +77,16 @@ export function FamilyDesignEditor({ form, locale = 'km', onChange, supported, e
 
             {group?.members.map(member => (
               <fieldset key={member.id}>
-                <legend>{isEn ? 'Host' : 'អ្នករៀបចំ / អាណាព្យាបាល'}</legend>
+                <legend>{familyConfig.hostLegend || (isEn ? 'Host' : 'អ្នករៀបចំ / អាណាព្យាបាល')}</legend>
                 {['name', 'honorific', 'relationship'].map(key => {
                   const fieldLabel = isEn
                     ? `${key} (${locale})`
                     : `${key === 'name' ? 'ឈ្មោះ' : key === 'honorific' ? 'ងារកិត្តិយស' : 'ទំនាក់ទំនង'} (${langLabel})`;
-                  const fieldPlaceholder = isEn
-                    ? (key === 'name' ? 'e.g. Sokha Chhim' : key === 'honorific' ? 'e.g. Mr., Mrs.' : 'e.g. Father, Mother')
-                    : (key === 'name' ? 'ឧ. ឈឹម សុខា' : key === 'honorific' ? 'ឧ. លោក, លោកស្រី' : 'ឧ. ឪពុក, ម្តាយ, អាណាព្យាបាល');
+                  const fieldPlaceholder = key === 'name'
+                    ? familyConfig.hostNamePlaceholder
+                    : key === 'honorific'
+                      ? familyConfig.hostHonorificPlaceholder
+                      : familyConfig.hostRelationshipPlaceholder;
 
                   return (
                     <label key={key}>
@@ -184,7 +185,8 @@ export function MonogramEditor({ value, onChange, entitled, supported, english =
       await exportVector(preview.current.querySelector('svg'), { format, name: 'decorative-couple-monogram', color: config.color });
       setExportStatus(isEn ? `${format.toUpperCase()} monogram exported.` : `បានទាញយកតែម ${format.toUpperCase()} ដោយជោគជ័យ។`);
     } catch (error) {
-      setExportStatus(error.message);
+      console.error('Monogram export error:', error);
+      setExportStatus(isEn ? 'Could not export monogram. Please try again.' : 'មិនអាចទាញយកតែមបានទេ សូមព្យាយាមម្ដងទៀត។');
     }
   };
 

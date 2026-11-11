@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getEventExamples, getFieldHelpers, getEventFieldLabels, EVENT_EXAMPLES } from './eventPlaceholders';
+import { getEventExamples, getFieldHelpers, getEventFieldLabels, getFamilySectionConfig, EVENT_EXAMPLES } from './eventPlaceholders';
 
 describe('eventPlaceholders', () => {
   it('provides wedding examples with Khmer ឧ. and English e.g. prefixes', () => {
@@ -60,5 +60,33 @@ describe('eventPlaceholders', () => {
     const kmAnniversaryLabels = getEventFieldLabels('ANNIVERSARY', 'km');
     expect(kmAnniversaryLabels.groom).toBe('ឈ្មោះស្វាមី');
     expect(kmAnniversaryLabels.bride).toBe('ឈ្មោះភរិយា');
+  });
+
+  it('provides event-specific family section configurations and layout options', () => {
+    const kmWeddingFamily = getFamilySectionConfig('WEDDING', 'km');
+    expect(kmWeddingFamily.sideGroomLegend).toBe('ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)');
+    expect(kmWeddingFamily.sideBrideLegend).toBe('ក្រុមគ្រួសារខាងកូនក្រមុំ (ដៃគូទី២)');
+    expect(kmWeddingFamily.layouts['groom-left']).toBe('កូនកំលោះខាងឆ្វេង / កូនក្រមុំខាងស្តាំ');
+
+    const enCorporateFamily = getFamilySectionConfig('CORPORATE', 'en');
+    expect(enCorporateFamily.sideGroomLegend).toBe('Host organization / Leadership');
+    expect(enCorporateFamily.sideBrideLegend).toBe('Partners / Co-organizers');
+    expect(enCorporateFamily.sideGroomLabelPlaceholder).toBe('e.g. Organizing committee');
+    expect(enCorporateFamily.layouts['groom-left']).toBe('Host org left / co-hosts right');
+
+    const kmBirthdayFamily = getFamilySectionConfig('BIRTHDAY', 'km');
+    expect(kmBirthdayFamily.sideGroomLegend).toBe('ក្រុមគ្រួសារម្ចាស់ខួប / អ្នករៀបចំចម្បង');
+    expect(kmBirthdayFamily.sideGroomLabelPlaceholder).toBe('ឧ. ក្រុមគ្រួសារម្ចាស់ខួប');
+
+    const kmEngagementFamily = getFamilySectionConfig('ENGAGEMENT', 'km');
+    expect(kmEngagementFamily.sideGroomLegend).toBe('ក្រុមគ្រួសារខាងកូនកំលោះ (គូដណ្តឹង)');
+    expect(kmEngagementFamily.sideBrideLegend).toBe('ក្រុមគ្រួសារខាងកូនក្រមុំ (គូដណ្តឹង)');
+
+    const enAnniversaryFamily = getFamilySectionConfig('ANNIVERSARY', 'en');
+    expect(enAnniversaryFamily.sideGroomLegend).toBe("Husband's family (first partner)");
+    expect(enAnniversaryFamily.sideBrideLegend).toBe("Wife's family (second partner)");
+
+    const fallbackFamily = getFamilySectionConfig('NON_EXISTENT_TYPE', 'en');
+    expect(fallbackFamily.sideGroomLegend).toBe('First partner / groom family');
   });
 });

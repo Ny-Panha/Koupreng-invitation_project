@@ -133,3 +133,134 @@ test('invitation studio renders complete Khmer localization, authentic placehold
   expect(saved.familyGroupsV1[0].members[0].name.km).toBe('ឈឹម សុខា ពិសិដ្ឋ');
   expect(saved.coupleMonogram.text).toBe('វ & ស');
 });
+
+test('true bilingual switching (KM -> EN -> KM -> EN) verifies UI controls, placeholders, and preserves authored content', async ({ page }, info) => {
+  const state = await phase9Fixtures(page, {
+    lang: 'km',
+    content: {
+      title: 'ពិធីមង្គលការរបស់ វីរៈ និង សុម៉ាលី',
+      groomName: 'វីរៈ',
+      brideName: 'សុម៉ាលី',
+      messageText: 'សូមគោរពអញ្ជើញ',
+      photos: [],
+      schedule: [],
+      storyChapters: [],
+      party: [],
+      faq: []
+    }
+  });
+  state.events.set(101, { ...state.events.get(101), languageMode: 'KH' });
+  await page.route('**/api/v1/invitations/101/access', route => route.fulfill({
+    json: {
+      data: {
+        owner: true,
+        permissions: ['MANAGE_INVITATION'],
+        ownerFeatures: ['COUPLE_MONOGRAM', 'ILLUSTRATED_VENUE_MAP']
+      }
+    }
+  }));
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/app/events/101/invitation');
+
+  // --- PASS 1: KHMER (KM) INITIAL STATE ---
+  await expect(page.getByRole('button', { name: 'រក្សាទុក', exact: true })).toBeVisible();
+  await expect(page.locator('.app-language-toggle').first()).toHaveAttribute('aria-checked', 'false');
+
+  // Verify Khmer in Family panel
+  await section(page, 'eventInformation', 'family');
+  await expect(page.getByRole('heading', { name: 'ការរៀបចំក្រុមគ្រួសារ និងឈ្មោះ' })).toBeVisible();
+  await expect(page.getByLabel('ការរៀបចំទីតាំងឈ្មោះ')).toBeVisible();
+  await expect(page.locator('legend').filter({ hasText: 'ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '+ បន្ថែមអ្នករៀបចំ', exact: true }).first()).toBeVisible();
+
+  // Add host and verify Khmer placeholders
+  await page.getByRole('button', { name: '+ បន្ថែមអ្នករៀបចំ', exact: true }).first().click();
+  await page.getByPlaceholder('ឧ. ឈឹម សុខា').first().fill('ឈឹម សុខា');
+  await page.getByPlaceholder('ឧ. លោក, លោកស្រី').first().fill('លោក');
+
+  // Verify Khmer in Monogram panel
+  await section(page, 'designCover', 'cover');
+  await expect(page.getByRole('heading', { name: 'តែមអក្សរកាត់គូស្នេហ៍ · Premium' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'អក្សរកាត់រង្វង់មូល' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'ផ្កាពងក្រពើ' })).toBeVisible();
+  await expect(page.getByLabel('បើកដំណើរការតែមអក្សរកាត់')).toBeVisible();
+  await page.getByLabel('បើកដំណើរការតែមអក្សរកាត់').check();
+  await page.getByPlaceholder('ឧ. វ & ស').fill('វ & ស');
+  await expect(page.getByRole('button', { name: 'ទាញយកតែម SVG' })).toBeVisible();
+
+  // Verify Khmer in Wording Presets
+  await section(page, 'eventInformation', 'invitation');
+  await expect(page.getByLabel('ជម្រើសឃ្លាគំរូ').first()).toBeVisible();
+  await expect(page.locator('option[value="formal"]').first()).toHaveText('ពិធីមង្គលការផ្លូវការតាមប្រពៃណី');
+
+  // --- SWITCH 1: KHMER -> ENGLISH (KM -> EN) ---
+  await page.locator('.app-language-toggle').first().click();
+  await expect(page.locator('.app-language-toggle').first()).toHaveAttribute('aria-checked', 'true');
+
+  // Verify English UI chrome
+  await expect(page.getByRole('button', { name: 'Save', exact: true })).toBeVisible();
+
+  // Verify English Family panel
+  await section(page, 'eventInformation', 'family');
+  await expect(page.getByRole('heading', { name: 'Family and name arrangement' })).toBeVisible();
+  await expect(page.getByLabel('Name placement')).toBeVisible();
+  await expect(page.locator('legend').filter({ hasText: 'First partner / groom family' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Add host', exact: true }).first()).toBeVisible();
+  // Verify authored host name persisted without corruption across language switch
+  await expect(page.locator('input[value="ឈឹម សុខា"]')).toBeVisible();
+
+  // Verify English Monogram panel
+  await section(page, 'designCover', 'cover');
+  await expect(page.getByRole('heading', { name: 'Couple monogram · Premium' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Round initials' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Oval petals' })).toBeVisible();
+  await expect(page.getByLabel('Enable monogram')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Export monogram SVG' })).toBeVisible();
+  // Verify authored monogram text persisted
+  await expect(page.locator('input[value="វ & ស"]')).toBeVisible();
+
+  // Verify English Wording Presets
+  await section(page, 'eventInformation', 'invitation');
+  await expect(page.getByLabel('Editable wording preset').first()).toBeVisible();
+  await expect(page.locator('option[value="formal"]').first()).toHaveText('Traditional formal wedding');
+
+  // --- SWITCH 2: ENGLISH -> KHMER (EN -> KM) ---
+  await page.locator('.app-language-toggle').first().click();
+  await expect(page.locator('.app-language-toggle').first()).toHaveAttribute('aria-checked', 'false');
+
+  // Verify Khmer UI chrome restored
+  await expect(page.getByRole('button', { name: 'រក្សាទុក', exact: true })).toBeVisible();
+
+  // Verify Khmer Family restored
+  await section(page, 'eventInformation', 'family');
+  await expect(page.getByRole('heading', { name: 'ការរៀបចំក្រុមគ្រួសារ និងឈ្មោះ' })).toBeVisible();
+  await expect(page.getByLabel('ការរៀបចំទីតាំងឈ្មោះ')).toBeVisible();
+  await expect(page.locator('legend').filter({ hasText: 'ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)' })).toBeVisible();
+  await expect(page.locator('input[value="ឈឹម សុខា"]')).toBeVisible();
+
+  // Verify Khmer Monogram restored
+  await section(page, 'designCover', 'cover');
+  await expect(page.getByRole('heading', { name: 'តែមអក្សរកាត់គូស្នេហ៍ · Premium' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'អក្សរកាត់រង្វង់មូល' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'ទាញយកតែម SVG' })).toBeVisible();
+  await expect(page.locator('input[value="វ & ស"]')).toBeVisible();
+
+  // --- SWITCH 3: KHMER -> ENGLISH (KM -> EN) ---
+  await page.locator('.app-language-toggle').first().click();
+  await expect(page.locator('.app-language-toggle').first()).toHaveAttribute('aria-checked', 'true');
+  await expect(page.getByRole('button', { name: 'Save', exact: true })).toBeVisible();
+
+  // Capture bilingual screenshot evidence
+  if (info.project.name.includes('chromium')) {
+    const evidenceDir = new URL('../../../../docs/phase12/evidence/after', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+    await fs.mkdir(evidenceDir, { recursive: true });
+    await page.screenshot({ path: `${evidenceDir}/bilingual-switching-${info.project.name}.png`, fullPage: true });
+  }
+
+  // Save and assert persisted integrity
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(page.locator('.studio-save-status')).toHaveAttribute('data-phase', 'saved');
+  const savedPayload = JSON.parse(state.events.get(101).contentJson);
+  expect(savedPayload.familyGroupsV1[0].members[0].name.km).toBe('ឈឹម សុខា');
+  expect(savedPayload.coupleMonogram.text).toBe('វ & ស');
+});

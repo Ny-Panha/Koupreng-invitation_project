@@ -192,7 +192,60 @@ Following the initial terminology pass, an in-depth source and screenshot audit 
 
 ---
 
-## 7. Safe Git Delivery & Remote Verification
+## 7. Final Acceptance, Event-Type Specialization & True Bilingual Switching Pass
+
+### 7.1 Event-Type Aware Family & Host Layouts
+In `apps/frontend-user/src/shared/utils/eventPlaceholders.js` and `FamilyDesignEditor.jsx`, comprehensive event-type specialization was implemented for `FAMILY_SECTION_CONFIG` across all 6 core ceremonies:
+- **WEDDING:** Groom / Bride family legends (`ក្រុមគ្រួសារខាងកូនកំលោះ (ដៃគូទី១)` / `ក្រុមគ្រួសារខាងកូនក្រមុំ (ដៃគូទី២)`), placeholders `ឧ. លោក, កញ្ញា, ឯកឧត្តម`.
+- **ENGAGEMENT:** Fiancé / Fiancée family legends (`ក្រុមគ្រួសារខាងកូនកំលោះ (គូដណ្តឹង)` / `ក្រុមគ្រួសារខាងកូនក្រមុំ (គូដណ្តឹង)`).
+- **ANNIVERSARY:** Husband / Wife legends (`ក្រុមគ្រួសារខាងស្វាមី (ដៃគូទី១)` / `ក្រុមគ្រួសារខាងភរិយា (ដៃគូទី២)`).
+- **BIRTHDAY:** Celebrant family / primary host (`ក្រុមគ្រួសារម្ចាស់ខួប / អ្នករៀបចំចម្បង`) and co-hosts (`អ្នករួមរៀបចំ ឬក្រុមគ្រួសារបន្ថែម`).
+- **CORPORATE:** Host organization / Leadership (`ស្ថាប័នម្ចាស់ផ្ទះ / ថ្នាក់ដឹកនាំ`) and partners (`ដៃគូសហការ / អ្នករួមរៀបចំ`), placeholders `ឧ. គណៈកម្មការរៀបចំកម្មវិធី`.
+- **OTHER:** Primary host / Organizer (`អ្នករៀបចំចម្បង / ម្ចាស់ផ្ទះ`) and co-hosts (`អ្នករួមរៀបចំ / ភ្ញៀវកិត្តិយស`).
+
+### 7.2 Safe Monogram Vector Export Error Handling
+In `FamilyDesignEditor.jsx`, the vector export catch block was hardened:
+- Leaking raw exception text was replaced with polite localized status feedback:
+  * Khmer: `មិនអាចទាញយកតែមបានទេ សូមព្យាយាមម្ដងទៀត។`
+  * English: `Could not export monogram. Please try again.`
+- Technical diagnostics are safely logged to `console.error` without leaking implementation details to the interface.
+
+### 7.3 Admin Template Studio Bilingual Polish
+In `AdminTemplateEditFeature.jsx`, the Brand Mark Monogram section was updated with full bilingual parity via `useAdminLanguage()`:
+- Heading: `Gold Brand Mark (Monogram)` / `ស្លាកសញ្ញាមាស (Brand Mark Monogram)`
+- Status badge: `Active` / `Disabled` (`កំពុងបើក` / `បានបិទ`)
+- Helper text: `Displayed at the top of the cover` / `បង្ហាញនៅផ្នែកខាងលើនៃ Cover`
+- Tooltips & Actions: `Enable Logo` / `Disable` (`បើកប្រើ Logo` / `បិទ`)
+
+### 7.4 True Khmer/English Switching Verification (KM -> EN -> KM -> EN)
+An automated Playwright end-to-end test was authored and verified in `apps/frontend-user/tests/e2e/phase12-studio.spec.js`:
+`true bilingual switching (KM -> EN -> KM -> EN) verifies UI controls, placeholders, and preserves authored content`
+- Executed on both **Desktop Chromium** (1440px) and **Mobile Chromium** (390px).
+- Verifies:
+  1. **Pass 1 (KM):** Khmer Save button (`រក្សាទុក`), Khmer Family arrangement headings, legends, placeholders (`ឧ.`), Monogram styles, and Wording Presets.
+  2. **Switch 1 (KM -> EN):** All chrome re-renders in English (`Save`, `Family and name arrangement`, `First partner / groom family`, `Editable wording preset`), while authored Khmer content (`ឈឹម សុខា`, `វ & ស`) remains strictly preserved without corruption.
+  3. **Switch 2 (EN -> KM):** Restores all Khmer labels while retaining all user edits.
+  4. **Switch 3 (KM -> EN):** Restores English UI, saves to backend, and asserts JSON payload persistence.
+- Complete visual evidence captured in `docs/phase12/evidence/after/`:
+  * `bilingual-switching-desktop-chromium.png` (123.75 kB)
+  * `bilingual-switching-mobile-chromium.png` (413.16 kB)
+  * `khmer-studio-complete-desktop-chromium.png` (356.80 kB)
+  * `khmer-studio-complete-mobile-chromium.png` (1.89 MB)
+
+### 7.5 Final Verified Quality Gates
+| Subsystem / Gate | Command Executed | Result | Details |
+| :--- | :--- | :--- | :--- |
+| **Frontend User Vitest** | `npm --prefix apps/frontend-user test -- --run` | **100% PASSED** | 213 test files, 1,469 tests passed, 0 failures (58.68s) |
+| **Frontend Admin Vitest** | `npm --prefix apps/frontend-admin test` | **100% PASSED** | 33 test files, 192 tests passed, 0 failures (18.63s) |
+| **Frontend User ESLint** | `npm --prefix apps/frontend-user run lint` | **100% PASSED** | 0 errors, 0 warnings (exit code 0) |
+| **Frontend Admin ESLint** | `npm --prefix apps/frontend-admin run lint` | **100% PASSED** | 0 errors, 0 warnings (exit code 0) |
+| **Frontend User Build** | `npm --prefix apps/frontend-user run build` | **100% PASSED** | Vite production build clean (1.88s) |
+| **Frontend Admin Build** | `npm --prefix apps/frontend-admin run build` | **100% PASSED** | Vite production build clean (6.88s) |
+| **Playwright Studio E2E** | `phase12-studio.spec.js --workers=1` | **100% PASSED** | 10/10 tests passed (Desktop & Mobile Chromium, 1.3m) |
+
+---
+
+## 8. Safe Git Delivery & Remote Verification
 
 - **Commit Scope:** Clean, verified source and report modifications.
 - **Target Branch:** `origin/main`

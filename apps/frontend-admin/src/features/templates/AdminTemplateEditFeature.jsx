@@ -2729,25 +2729,25 @@ export default function AdminTemplateEditPage() {
                                       />
                                     ) : (
                                       <div className="flex flex-col items-center justify-center text-[9px] font-bold text-zinc-500">
-                                        <span>បិទ</span>
+                                        <span>{lang === "en" ? "Off" : "បិទ"}</span>
                                       </div>
                                     )}
                                   </div>
                                   <div className="min-w-0">
                                     <div className="flex items-center gap-2">
                                       <span className="block text-xs font-bold text-zinc-100 whitespace-nowrap">
-                                        ស្លាកសញ្ញាមាស (Brand Mark Monogram)
+                                        {lang === "en" ? "Gold Brand Mark (Monogram)" : "ស្លាកសញ្ញាមាស (Brand Mark Monogram)"}
                                       </span>
                                       <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border shrink-0 ${
                                         isBrandMarkActive
                                           ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
                                           : "text-zinc-500 border-zinc-800 bg-zinc-900"
                                       }`}>
-                                        {isBrandMarkActive ? "កំពុងបើក" : "បានបិទ"}
+                                        {isBrandMarkActive ? (lang === "en" ? "Active" : "កំពុងបើក") : (lang === "en" ? "Disabled" : "បានបិទ")}
                                       </span>
                                     </div>
                                     <span className="block text-[10px] text-zinc-400">
-                                      បង្ហាញនៅផ្នែកខាងលើនៃ Cover
+                                      {lang === "en" ? "Displayed at the top of the cover" : "បង្ហាញនៅផ្នែកខាងលើនៃ Cover"}
                                     </span>
                                   </div>
                                 </div>
@@ -2773,10 +2773,10 @@ export default function AdminTemplateEditPage() {
                                         type="button"
                                         onClick={() => setForm((prev) => ({ ...prev, showBrandMark: false, brandMark: "" }))}
                                         className="flex items-center gap-1 text-[11px] font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 hover:text-rose-300 px-2 py-1 rounded-lg border border-rose-500/20 transition cursor-pointer"
-                                        title="បិទមិនប្រើស្លាកសញ្ញានេះ"
+                                        title={lang === "en" ? "Disable this mark" : "បិទមិនប្រើស្លាកសញ្ញានេះ"}
                                       >
                                         <Trash2 className="h-3 w-3" />
-                                        <span>បិទ</span>
+                                        <span>{lang === "en" ? "Disable" : "បិទ"}</span>
                                       </button>
                                     </>
                                   ) : (
@@ -2790,7 +2790,7 @@ export default function AdminTemplateEditPage() {
                                       className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/15 hover:bg-amber-500/25 px-2.5 py-1 rounded-lg border border-amber-500/30 transition cursor-pointer"
                                     >
                                       <Plus className="h-3 w-3" />
-                                      <span>បើកប្រើ Logo</span>
+                                      <span>{lang === "en" ? "Enable Logo" : "បើកប្រើ Logo"}</span>
                                     </button>
                                   )}
 
@@ -2813,6 +2813,7 @@ export default function AdminTemplateEditPage() {
                                     className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                                       isBrandMarkActive ? "bg-amber-500" : "bg-zinc-700"
                                     }`}
+                                    title={isBrandMarkActive ? (lang === "en" ? "Click to disable" : "ចុចដើម្បីបិទ") : (lang === "en" ? "Click to enable" : "ចុចដើម្បីបើក")}
                                     title={isBrandMarkActive ? "ចុចដើម្បីបិទ" : "ចុចដើម្បីបើក"}
                                   >
                                     <span

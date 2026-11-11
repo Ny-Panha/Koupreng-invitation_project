@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import IllustratedMapEditor from '../../invitations/studio/IllustratedMapDesignerModal';
-import { MonogramEditor } from '../../invitations/studio/FamilyDesignEditor';
+import { FamilyDesignEditor, MonogramEditor } from '../../invitations/studio/FamilyDesignEditor';
 import LocaleChecklist from '../../invitations/studio/LocaleChecklist';
 import { translationSection } from '../../invitations/studio/localeNavigation';
 import ProgramTimeline from './ProgramTimeline';
@@ -79,5 +79,29 @@ describe('Phase 12 route, program and authoring refinements', () => {
     expect(cleanVector(svg).children).toHaveLength(0);
     rect.removeAttribute('data-editor-only'); rect.setAttribute('fill', 'url(https://example.test/resource)');
     expect(() => cleanVector(svg)).toThrow('external or executable');
+  });
+  it('renders event-type aware legends and options in FamilyDesignEditor', () => {
+    const form = {
+      coupleLayout: 'template-default',
+      eventType: 'CORPORATE',
+      familyGroupsV1: [],
+      localizedContentV1: { en: {}, km: {} },
+    };
+    const { rerender } = render(
+      <FamilyDesignEditor form={form} supported={true} english={true} eventType="CORPORATE" onChange={() => {}} />
+    );
+    expect(screen.getByText('Host organization / Leadership')).toBeInTheDocument();
+    expect(screen.getByText('Partners / Co-organizers')).toBeInTheDocument();
+
+    rerender(
+      <FamilyDesignEditor form={form} supported={true} english={false} eventType="CORPORATE" onChange={() => {}} />
+    );
+    expect(screen.getByText('ស្ថាប័នម្ចាស់ផ្ទះ / ថ្នាក់ដឹកនាំ')).toBeInTheDocument();
+    expect(screen.getByText('ដៃគូសហការ / អ្នករួមរៀបចំ')).toBeInTheDocument();
+
+    rerender(
+      <FamilyDesignEditor form={form} supported={true} english={false} eventType="BIRTHDAY" onChange={() => {}} />
+    );
+    expect(screen.getByText('ក្រុមគ្រួសារម្ចាស់ខួប / អ្នករៀបចំចម្បង')).toBeInTheDocument();
   });
 });
