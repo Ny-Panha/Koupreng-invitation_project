@@ -1,0 +1,1378 @@
+[
+  {
+    "group": "home",
+    "conditions": "single cold context; desktop Chromium 4x CPU, 150ms latency, 1.6Mbps down; 390x844 DPR2; reduced motion; fictional APIs; external blocked; idle local fixture run; not field CWV",
+    "metrics": {
+      "lcp": {
+        "startTime": 2872,
+        "size": 27600,
+        "element": "P"
+      },
+      "cls": 0.0006281292852868626,
+      "longTasks": [
+        {
+          "start": 2389.9000000003725,
+          "duration": 140
+        },
+        {
+          "start": 2533.2999999998137,
+          "duration": 313
+        }
+      ],
+      "paint": [
+        {
+          "name": "first-paint",
+          "startTime": 1560
+        },
+        {
+          "name": "first-contentful-paint",
+          "startTime": 2872
+        }
+      ],
+      "resources": [
+        {
+          "path": "/color-mode.js",
+          "transferSize": 652,
+          "encodedBodySize": 352,
+          "duration": 180.20000000018626,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/js/telegram-web-app.js",
+          "transferSize": 0,
+          "encodedBodySize": 0,
+          "duration": 11.700000000186265,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/index-DIt3t7xi.js",
+          "transferSize": 140293,
+          "encodedBodySize": 139993,
+          "duration": 2170.5999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-Wy9s6hX0.js",
+          "transferSize": 3683,
+          "encodedBodySize": 3383,
+          "duration": 240.5,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/react-dom-g7hNCJoM.js",
+          "transferSize": 1693,
+          "encodedBodySize": 1393,
+          "duration": 240,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useLanguageStore-mmn9Okko.js",
+          "transferSize": 1306,
+          "encodedBodySize": 1006,
+          "duration": 186,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useUiCopy-nahFYZIp.js",
+          "transferSize": 515,
+          "encodedBodySize": 215,
+          "duration": 192.20000000018626,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/prop-types-CSvbPeQ-.js",
+          "transferSize": 1110,
+          "encodedBodySize": 810,
+          "duration": 367.5,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/io5-b3milcAS.js",
+          "transferSize": 10832,
+          "encodedBodySize": 10532,
+          "duration": 602.3000000007451,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-iAjGl61D.js",
+          "transferSize": 1780,
+          "encodedBodySize": 1480,
+          "duration": 444,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/chevron-down-DxRDuKka.js",
+          "transferSize": 468,
+          "encodedBodySize": 168,
+          "duration": 522.3999999994412,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-CPMz-hmB.js",
+          "transferSize": 2274,
+          "encodedBodySize": 1974,
+          "duration": 585.5,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/MotionConfigContext-CluVpD3A.js",
+          "transferSize": 20739,
+          "encodedBodySize": 20439,
+          "duration": 1010.6000000005588,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/proxy-4uqr5Owt.js",
+          "transferSize": 25007,
+          "encodedBodySize": 24707,
+          "duration": 1215.2999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/catalogPolicy-O2nCERmB.js",
+          "transferSize": 1307,
+          "encodedBodySize": 1007,
+          "duration": 759.1999999992549,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/%E1%9E%90%E1%9F%92%E1%9E%84%E1%9F%83%E1%9E%8A%E1%9F%82%E1%9E%9B%E1%9E%9A%E1%9E%84%E1%9F%8B%E1%9E%85%E1%9E%B6%E1%9F%86-EL9I3BZ5.js",
+          "transferSize": 462,
+          "encodedBodySize": 162,
+          "duration": 789,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Instrumental%20Wedding%20Music%20(VioSounds%20Cover)-dvp3gij_.js",
+          "transferSize": 397,
+          "encodedBodySize": 97,
+          "duration": 946,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/httpClient-ecMDaaxJ.js",
+          "transferSize": 20292,
+          "encodedBodySize": 19992,
+          "duration": 1307.5,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/authApi-CuYpX8K0.js",
+          "transferSize": 722,
+          "encodedBodySize": 422,
+          "duration": 1119.1000000005588,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/templateCatalogApi-B2atPAZo.js",
+          "transferSize": 1092,
+          "encodedBodySize": 792,
+          "duration": 1182.2000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-Jynf-Qp7.css",
+          "transferSize": 1412,
+          "encodedBodySize": 1112,
+          "duration": 347.5,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/index-DcTmMduy.css",
+          "transferSize": 40894,
+          "encodedBodySize": 40594,
+          "duration": 1150.2000000001863,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "transferSize": 37232,
+          "encodedBodySize": 36932,
+          "duration": 1651,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/templates/khmer-floral-gold/phone-preview-880.webp",
+          "transferSize": 278622,
+          "encodedBodySize": 278322,
+          "duration": 3283.2999999998137,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/CormorantGaramond.woff2",
+          "transferSize": 24620,
+          "encodedBodySize": 24320,
+          "duration": 685.8000000007451,
+          "initiatorType": "css"
+        },
+        {
+          "path": "/branding/webp/koupreng-logo-256w.webp",
+          "transferSize": 20170,
+          "encodedBodySize": 19870,
+          "duration": 480.80000000074506,
+          "initiatorType": "img"
+        },
+        {
+          "path": "/api/v1/templates",
+          "transferSize": 635,
+          "encodedBodySize": 335,
+          "duration": 6.7000000001862645,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/public/packages",
+          "transferSize": 1237,
+          "encodedBodySize": 937,
+          "duration": 5.5,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/me/entitlements",
+          "transferSize": 1283,
+          "encodedBodySize": 983,
+          "duration": 4.5,
+          "initiatorType": "xmlhttprequest"
+        }
+      ]
+    }
+  },
+  {
+    "group": "create-event",
+    "conditions": "single cold context; desktop Chromium 4x CPU, 150ms latency, 1.6Mbps down; 390x844 DPR2; reduced motion; fictional APIs; external blocked; idle local fixture run; not field CWV",
+    "metrics": {
+      "lcp": {
+        "startTime": 3916,
+        "size": 12987,
+        "element": "H1"
+      },
+      "cls": 0,
+      "longTasks": [
+        {
+          "start": 1849.7999999998137,
+          "duration": 141
+        },
+        {
+          "start": 2652.5,
+          "duration": 103
+        }
+      ],
+      "paint": [
+        {
+          "name": "first-paint",
+          "startTime": 1380
+        },
+        {
+          "name": "first-contentful-paint",
+          "startTime": 2760
+        }
+      ],
+      "resources": [
+        {
+          "path": "/color-mode.js",
+          "transferSize": 652,
+          "encodedBodySize": 352,
+          "duration": 184.30000000074506,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/js/telegram-web-app.js",
+          "transferSize": 0,
+          "encodedBodySize": 0,
+          "duration": 11.200000000186265,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/index-DIt3t7xi.js",
+          "transferSize": 140293,
+          "encodedBodySize": 139993,
+          "duration": 1635.2000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-Wy9s6hX0.js",
+          "transferSize": 3683,
+          "encodedBodySize": 3383,
+          "duration": 271,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/react-dom-g7hNCJoM.js",
+          "transferSize": 1693,
+          "encodedBodySize": 1393,
+          "duration": 229.20000000018626,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useLanguageStore-mmn9Okko.js",
+          "transferSize": 1306,
+          "encodedBodySize": 1006,
+          "duration": 183.09999999962747,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useUiCopy-nahFYZIp.js",
+          "transferSize": 515,
+          "encodedBodySize": 215,
+          "duration": 196.90000000037253,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/prop-types-CSvbPeQ-.js",
+          "transferSize": 1110,
+          "encodedBodySize": 810,
+          "duration": 371,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/io5-b3milcAS.js",
+          "transferSize": 10832,
+          "encodedBodySize": 10532,
+          "duration": 606.0999999996275,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-iAjGl61D.js",
+          "transferSize": 1780,
+          "encodedBodySize": 1480,
+          "duration": 479.8999999994412,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/chevron-down-DxRDuKka.js",
+          "transferSize": 468,
+          "encodedBodySize": 168,
+          "duration": 526.7000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-CPMz-hmB.js",
+          "transferSize": 2274,
+          "encodedBodySize": 1974,
+          "duration": 590.2999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/MotionConfigContext-CluVpD3A.js",
+          "transferSize": 20739,
+          "encodedBodySize": 20439,
+          "duration": 1050.7000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/proxy-4uqr5Owt.js",
+          "transferSize": 25007,
+          "encodedBodySize": 24707,
+          "duration": 1208.7999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/catalogPolicy-O2nCERmB.js",
+          "transferSize": 1307,
+          "encodedBodySize": 1007,
+          "duration": 764.2000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/%E1%9E%90%E1%9F%92%E1%9E%84%E1%9F%83%E1%9E%8A%E1%9F%82%E1%9E%9B%E1%9E%9A%E1%9E%84%E1%9F%8B%E1%9E%85%E1%9E%B6%E1%9F%86-EL9I3BZ5.js",
+          "transferSize": 462,
+          "encodedBodySize": 162,
+          "duration": 795.2999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Instrumental%20Wedding%20Music%20(VioSounds%20Cover)-dvp3gij_.js",
+          "transferSize": 397,
+          "encodedBodySize": 97,
+          "duration": 953.6999999992549,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/httpClient-ecMDaaxJ.js",
+          "transferSize": 20292,
+          "encodedBodySize": 19992,
+          "duration": 1317.6000000005588,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/authApi-CuYpX8K0.js",
+          "transferSize": 722,
+          "encodedBodySize": 422,
+          "duration": 1143.2999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/templateCatalogApi-B2atPAZo.js",
+          "transferSize": 1092,
+          "encodedBodySize": 792,
+          "duration": 1223.0999999996275,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-Jynf-Qp7.css",
+          "transferSize": 1412,
+          "encodedBodySize": 1112,
+          "duration": 351,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/index-DcTmMduy.css",
+          "transferSize": 40894,
+          "encodedBodySize": 40594,
+          "duration": 1126.2000000001863,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/SiteAnimations-AXvwS5aG.js",
+          "transferSize": 1848,
+          "encodedBodySize": 1548,
+          "duration": 222.6000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/SiteAnimations-D6jIc5kO.css",
+          "transferSize": 1404,
+          "encodedBodySize": 1104,
+          "duration": 206,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/ChatBot-D-ltJzK3.js",
+          "transferSize": 3100,
+          "encodedBodySize": 2800,
+          "duration": 247.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ChatBot-BL96F1Mk.css",
+          "transferSize": 1585,
+          "encodedBodySize": 1285,
+          "duration": 214.5,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/api/v1/me/entitlements",
+          "transferSize": 1283,
+          "encodedBodySize": 983,
+          "duration": 3.7000000001862645,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/templates",
+          "transferSize": 635,
+          "encodedBodySize": 335,
+          "duration": 2,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/assets/HostShell-ke-zFwaW.js",
+          "transferSize": 4129,
+          "encodedBodySize": 3829,
+          "duration": 207.30000000074506,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/chart-column-HFsnCLDd.js",
+          "transferSize": 615,
+          "encodedBodySize": 315,
+          "duration": 175.29999999981374,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/gem-BgV0Nu7W.js",
+          "transferSize": 674,
+          "encodedBodySize": 374,
+          "duration": 332.8999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/palette-CmOQPUUD.js",
+          "transferSize": 850,
+          "encodedBodySize": 550,
+          "duration": 348.30000000074506,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/useBackendMessages-lc8e6dek.js",
+          "transferSize": 26562,
+          "encodedBodySize": 26262,
+          "duration": 489.29999999981374,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/HostShell-D3UXP9TK.css",
+          "transferSize": 3450,
+          "encodedBodySize": 3150,
+          "duration": 315.20000000018626,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/workspace-ui-B0ZAnjY1.css",
+          "transferSize": 2110,
+          "encodedBodySize": 1810,
+          "duration": 330.5,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/fonts/silk-heritage/KantumruyPro.woff2",
+          "transferSize": 77148,
+          "encodedBodySize": 76848,
+          "duration": 1090.3999999994412,
+          "initiatorType": "css"
+        },
+        {
+          "path": "/branding/webp/koupreng-logo-256w.webp",
+          "transferSize": 20170,
+          "encodedBodySize": 19870,
+          "duration": 516.8999999994412,
+          "initiatorType": "img"
+        },
+        {
+          "path": "/assets/EventCreatePage-CjI1-1k3.js",
+          "transferSize": 13206,
+          "encodedBodySize": 12906,
+          "duration": 406.79999999981374,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/arrow-left-Co9bFwqD.js",
+          "transferSize": 505,
+          "encodedBodySize": 205,
+          "duration": 185.20000000018626,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/arrow-right-CjmE3qHL.js",
+          "transferSize": 505,
+          "encodedBodySize": 205,
+          "duration": 186.70000000018626,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/calendar-C1JtYLha.js",
+          "transferSize": 595,
+          "encodedBodySize": 295,
+          "duration": 199.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/camera-C5-R6UP4.js",
+          "transferSize": 676,
+          "encodedBodySize": 376,
+          "duration": 392.70000000018626,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/circle-alert-DAJ0l-jr.js",
+          "transferSize": 615,
+          "encodedBodySize": 315,
+          "duration": 562.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/clock-CYcN1Ohb.js",
+          "transferSize": 509,
+          "encodedBodySize": 209,
+          "duration": 578.1000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/external-link-Cyqe121L.js",
+          "transferSize": 591,
+          "encodedBodySize": 291,
+          "duration": 642,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/image-PgfDdNte.js",
+          "transferSize": 609,
+          "encodedBodySize": 309,
+          "duration": 672.9000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/pencil-RJR14nLM.js",
+          "transferSize": 616,
+          "encodedBodySize": 316,
+          "duration": 736.2999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/refresh-cw-Ca3m3Dup.js",
+          "transferSize": 661,
+          "encodedBodySize": 361,
+          "duration": 751.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/trash-CFx6BrYV.js",
+          "transferSize": 686,
+          "encodedBodySize": 386,
+          "duration": 813.4000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/upload-7TWEfXGF.js",
+          "transferSize": 570,
+          "encodedBodySize": 270,
+          "duration": 845.0999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/users-CZYN77kL.js",
+          "transferSize": 646,
+          "encodedBodySize": 346,
+          "duration": 907.6000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/invitationApi-CfbbPcdS.js",
+          "transferSize": 1061,
+          "encodedBodySize": 761,
+          "duration": 908.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/weddingStorage-DJXjYQZX.js",
+          "transferSize": 1856,
+          "encodedBodySize": 1556,
+          "duration": 985.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/eventFields-uQ6QlnAc.js",
+          "transferSize": 1621,
+          "encodedBodySize": 1321,
+          "duration": 1016.6000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/QuotaProgress-8cIn9O6a.js",
+          "transferSize": 1005,
+          "encodedBodySize": 705,
+          "duration": 1032,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/mediaApi-qHt0erW9.js",
+          "transferSize": 1374,
+          "encodedBodySize": 1074,
+          "duration": 1046.7000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/paymentService-8aiwCpRs.js",
+          "transferSize": 1307,
+          "encodedBodySize": 1007,
+          "duration": 1077.199999999255,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/uuid-C0vvs8Si.js",
+          "transferSize": 820,
+          "encodedBodySize": 520,
+          "duration": 1077,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/EventFields-CzdatgUH.js",
+          "transferSize": 1431,
+          "encodedBodySize": 1131,
+          "duration": 1153.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/eventPlaceholders-BvP-szOJ.js",
+          "transferSize": 5018,
+          "encodedBodySize": 4718,
+          "duration": 1200.2000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/EventCreatePage-C3OFDRFo.css",
+          "transferSize": 5062,
+          "encodedBodySize": 4762,
+          "duration": 459,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "transferSize": 37232,
+          "encodedBodySize": 36932,
+          "duration": 818.1000000005588,
+          "initiatorType": "css"
+        },
+        {
+          "path": "/api/v1/i18n/messages",
+          "transferSize": 324,
+          "encodedBodySize": 24,
+          "duration": 1.699999999254942,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/me/subscriptions/current",
+          "transferSize": 313,
+          "encodedBodySize": 13,
+          "duration": 3.7999999998137355,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/templates/recommendations",
+          "transferSize": 678,
+          "encodedBodySize": 378,
+          "duration": 2.2999999998137355,
+          "initiatorType": "xmlhttprequest"
+        }
+      ]
+    }
+  },
+  {
+    "group": "public-invitation",
+    "conditions": "single cold context; desktop Chromium 4x CPU, 150ms latency, 1.6Mbps down; 390x844 DPR2; reduced motion; fictional APIs; external blocked; idle local fixture run; not field CWV",
+    "metrics": {
+      "lcp": {
+        "startTime": 4764,
+        "size": 6460,
+        "element": "H1"
+      },
+      "cls": 0,
+      "longTasks": [
+        {
+          "start": 1833.300000000745,
+          "duration": 124
+        },
+        {
+          "start": 1960.2000000001863,
+          "duration": 83
+        }
+      ],
+      "paint": [
+        {
+          "name": "first-paint",
+          "startTime": 1360
+        },
+        {
+          "name": "first-contentful-paint",
+          "startTime": 2092
+        }
+      ],
+      "resources": [
+        {
+          "path": "/color-mode.js",
+          "transferSize": 652,
+          "encodedBodySize": 352,
+          "duration": 181.30000000074506,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/js/telegram-web-app.js",
+          "transferSize": 0,
+          "encodedBodySize": 0,
+          "duration": 10.699999999254942,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/index-DIt3t7xi.js",
+          "transferSize": 140293,
+          "encodedBodySize": 139993,
+          "duration": 1628.1000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/jsx-runtime-Wy9s6hX0.js",
+          "transferSize": 3683,
+          "encodedBodySize": 3383,
+          "duration": 243,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/react-dom-g7hNCJoM.js",
+          "transferSize": 1693,
+          "encodedBodySize": 1393,
+          "duration": 226.79999999981374,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useLanguageStore-mmn9Okko.js",
+          "transferSize": 1306,
+          "encodedBodySize": 1006,
+          "duration": 181.5,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/useUiCopy-nahFYZIp.js",
+          "transferSize": 515,
+          "encodedBodySize": 215,
+          "duration": 195,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/prop-types-CSvbPeQ-.js",
+          "transferSize": 1110,
+          "encodedBodySize": 810,
+          "duration": 366.8999999994412,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/io5-b3milcAS.js",
+          "transferSize": 10832,
+          "encodedBodySize": 10532,
+          "duration": 585.4000000003725,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/createLucideIcon-iAjGl61D.js",
+          "transferSize": 1780,
+          "encodedBodySize": 1480,
+          "duration": 442.59999999962747,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/chevron-down-DxRDuKka.js",
+          "transferSize": 468,
+          "encodedBodySize": 168,
+          "duration": 520.7999999998137,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-CPMz-hmB.js",
+          "transferSize": 2274,
+          "encodedBodySize": 1974,
+          "duration": 584.4000000003725,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/MotionConfigContext-CluVpD3A.js",
+          "transferSize": 20739,
+          "encodedBodySize": 20439,
+          "duration": 1026,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/proxy-4uqr5Owt.js",
+          "transferSize": 25007,
+          "encodedBodySize": 24707,
+          "duration": 1214.9000000003725,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/catalogPolicy-O2nCERmB.js",
+          "transferSize": 1307,
+          "encodedBodySize": 1007,
+          "duration": 771.4000000003725,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/%E1%9E%90%E1%9F%92%E1%9E%84%E1%9F%83%E1%9E%8A%E1%9F%82%E1%9E%9B%E1%9E%9A%E1%9E%84%E1%9F%8B%E1%9E%85%E1%9E%B6%E1%9F%86-EL9I3BZ5.js",
+          "transferSize": 462,
+          "encodedBodySize": 162,
+          "duration": 770.6999999992549,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Instrumental%20Wedding%20Music%20(VioSounds%20Cover)-dvp3gij_.js",
+          "transferSize": 397,
+          "encodedBodySize": 97,
+          "duration": 961.6000000005588,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/httpClient-ecMDaaxJ.js",
+          "transferSize": 20292,
+          "encodedBodySize": 19992,
+          "duration": 1291.7000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/authApi-CuYpX8K0.js",
+          "transferSize": 722,
+          "encodedBodySize": 422,
+          "duration": 1149.5999999996275,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/templateCatalogApi-B2atPAZo.js",
+          "transferSize": 1092,
+          "encodedBodySize": 792,
+          "duration": 1197.2000000001863,
+          "initiatorType": "other"
+        },
+        {
+          "path": "/assets/Modal-Jynf-Qp7.css",
+          "transferSize": 1412,
+          "encodedBodySize": 1112,
+          "duration": 346.79999999981374,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/index-DcTmMduy.css",
+          "transferSize": 40894,
+          "encodedBodySize": 40594,
+          "duration": 1132.5999999996275,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/SiteAnimations-AXvwS5aG.js",
+          "transferSize": 1848,
+          "encodedBodySize": 1548,
+          "duration": 290.09999999962747,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/SiteAnimations-D6jIc5kO.css",
+          "transferSize": 1404,
+          "encodedBodySize": 1104,
+          "duration": 257.5,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/PublicInvitationPage-DG7Uxdf-.js",
+          "transferSize": 8453,
+          "encodedBodySize": 8153,
+          "duration": 301.59999999962747,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ticket-Bz_Q0bYW.js",
+          "transferSize": 661,
+          "encodedBodySize": 361,
+          "duration": 221.79999999981374,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/weddingStorage-DJXjYQZX.js",
+          "transferSize": 1856,
+          "encodedBodySize": 1556,
+          "duration": 267.79999999981374,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/invitationApi-CfbbPcdS.js",
+          "transferSize": 1061,
+          "encodedBodySize": 761,
+          "duration": 251.3999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/mediaApi-qHt0erW9.js",
+          "transferSize": 1374,
+          "encodedBodySize": 1074,
+          "duration": 819.2999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/localizedContent-BPtF94pE.js",
+          "transferSize": 3268,
+          "encodedBodySize": 2968,
+          "duration": 896.8999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TemplateExperience-DBBbDsun.js",
+          "transferSize": 33896,
+          "encodedBodySize": 33596,
+          "duration": 1400.3999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/program-B_KDOsp3.js",
+          "transferSize": 2004,
+          "encodedBodySize": 1704,
+          "duration": 943.8999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/previewMessaging-PNSO0Ktq.js",
+          "transferSize": 10960,
+          "encodedBodySize": 10660,
+          "duration": 1195.4000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/uuid-C0vvs8Si.js",
+          "transferSize": 820,
+          "encodedBodySize": 520,
+          "duration": 1038,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/previewMessaging-a6DG3MSn.css",
+          "transferSize": 1681,
+          "encodedBodySize": 1381,
+          "duration": 390.8999999994412,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/CinematicVideoOpening-BYU3XYmn.js",
+          "transferSize": 4696,
+          "encodedBodySize": 4396,
+          "duration": 1177.2000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/mail-BEvm0P9D.js",
+          "transferSize": 553,
+          "encodedBodySize": 253,
+          "duration": 1130.1000000005588,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/CinematicVideoOpening-DI2lfRqW.css",
+          "transferSize": 4898,
+          "encodedBodySize": 4598,
+          "duration": 436,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/TemplateRsvp-DpSgFFTD.js",
+          "transferSize": 4883,
+          "encodedBodySize": 4583,
+          "duration": 1284,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TemplateGift-Db4mWyR1.js",
+          "transferSize": 3060,
+          "encodedBodySize": 2760,
+          "duration": 1346.3999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/InvitationLabel-C2yDwcPL.js",
+          "transferSize": 2998,
+          "encodedBodySize": 2698,
+          "duration": 1393.699999999255,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TemplateImage-o6cwXPYu.js",
+          "transferSize": 936,
+          "encodedBodySize": 636,
+          "duration": 1361.7000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/lib-DKqfGMZD.js",
+          "transferSize": 8415,
+          "encodedBodySize": 8115,
+          "duration": 1503.199999999255,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ui-BiIYarmb.js",
+          "transferSize": 2776,
+          "encodedBodySize": 2476,
+          "duration": 1502.7000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ui-BUvqafO6.css",
+          "transferSize": 2065,
+          "encodedBodySize": 1765,
+          "duration": 447.40000000037253,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/eventPresentation-st0VK6LJ.js",
+          "transferSize": 526,
+          "encodedBodySize": 226,
+          "duration": 1503.5999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TimePicker-DClSKtMM.js",
+          "transferSize": 3175,
+          "encodedBodySize": 2875,
+          "duration": 1532.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TimePicker-WdylPF6N.css",
+          "transferSize": 1804,
+          "encodedBodySize": 1504,
+          "duration": 445.30000000074506,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/InvitationBranding-Cw6X0kQA.js",
+          "transferSize": 4443,
+          "encodedBodySize": 4143,
+          "duration": 1595.5,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ProgramTimeline-CKCQxpg6.js",
+          "transferSize": 8469,
+          "encodedBodySize": 8169,
+          "duration": 1626.8999999994412,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/chevron-left-BUDSM_O6.js",
+          "transferSize": 470,
+          "encodedBodySize": 170,
+          "duration": 1672.9000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ProgramTimeline-CTCRCZCW.css",
+          "transferSize": 3587,
+          "encodedBodySize": 3287,
+          "duration": 474.29999999981374,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/InvitationBranding-DPjhi_gm.css",
+          "transferSize": 673,
+          "encodedBodySize": 373,
+          "duration": 457.09999999962747,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/openingConfig-V494-HbQ.js",
+          "transferSize": 1294,
+          "encodedBodySize": 994,
+          "duration": 1669.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/khmer-celestial-fPTYP6FU.js",
+          "transferSize": 8597,
+          "encodedBodySize": 8297,
+          "duration": 1732.5999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/templateTypography-D2aSXzJ5.js",
+          "transferSize": 761,
+          "encodedBodySize": 461,
+          "duration": 1700.2999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/khmer-celestial-BhHWmCfe.css",
+          "transferSize": 9489,
+          "encodedBodySize": 9189,
+          "duration": 580.8999999994412,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/mapPresets-BkyINy53.js",
+          "transferSize": 1778,
+          "encodedBodySize": 1478,
+          "duration": 1763.4000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/RibbonOpening-QKjiGMum.js",
+          "transferSize": 1729,
+          "encodedBodySize": 1429,
+          "duration": 1795.0999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-IXDYhciL.js",
+          "transferSize": 7376,
+          "encodedBodySize": 7076,
+          "duration": 1919.9000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/useBackendMessages-lc8e6dek.js",
+          "transferSize": 26562,
+          "encodedBodySize": 26262,
+          "duration": 2062.9000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/SeatingFloorPlan-CdbZk0WQ.css",
+          "transferSize": 4370,
+          "encodedBodySize": 4070,
+          "duration": 625.5999999996275,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/TemplateExperience-CXdJEP-7.css",
+          "transferSize": 20444,
+          "encodedBodySize": 20144,
+          "duration": 845.9000000003725,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/invitationDraftAdapter-D6tu4Z-4.js",
+          "transferSize": 3710,
+          "encodedBodySize": 3410,
+          "duration": 1919.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/draftToTemplate-CCkEt2Wx.js",
+          "transferSize": 3290,
+          "encodedBodySize": 2990,
+          "duration": 1949.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/rsvpApi-BG7yJHjA.js",
+          "transferSize": 711,
+          "encodedBodySize": 411,
+          "duration": 1933.7999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/galleryStorage-hdbuO4NG.js",
+          "transferSize": 968,
+          "encodedBodySize": 668,
+          "duration": 1965.4000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TicketModal-qfVaYVUK.js",
+          "transferSize": 1227,
+          "encodedBodySize": 927,
+          "duration": 2092.0999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TicketActions-KQghlO91.js",
+          "transferSize": 7296,
+          "encodedBodySize": 6996,
+          "duration": 2154.4000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/copy-DXssfycg.js",
+          "transferSize": 576,
+          "encodedBodySize": 276,
+          "duration": 2107.2000000001863,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/download-BRsF9N4w.js",
+          "transferSize": 572,
+          "encodedBodySize": 272,
+          "duration": 2122.9000000003725,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/share-2-BEJ_2Nea.js",
+          "transferSize": 697,
+          "encodedBodySize": 397,
+          "duration": 2137.2999999998137,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/hostPlanningStorage-C53eoEYx.js",
+          "transferSize": 977,
+          "encodedBodySize": 677,
+          "duration": 2230.899999999441,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/TicketActions-dpxtvUX1.css",
+          "transferSize": 2304,
+          "encodedBodySize": 2004,
+          "duration": 635.7000000001863,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/useWeddingStore-CNKo3flo.js",
+          "transferSize": 1205,
+          "encodedBodySize": 905,
+          "duration": 2260.199999999255,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/InvitationPages-z4Ie7dql.css",
+          "transferSize": 8230,
+          "encodedBodySize": 7930,
+          "duration": 714.7999999998137,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/assets/ChatBot-D-ltJzK3.js",
+          "transferSize": 3100,
+          "encodedBodySize": 2800,
+          "duration": 2280.5999999996275,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/ChatBot-BL96F1Mk.css",
+          "transferSize": 1585,
+          "encodedBodySize": 1285,
+          "duration": 675.1000000005588,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/fonts/marketing/DMSans-Latin.woff2",
+          "transferSize": 37232,
+          "encodedBodySize": 36932,
+          "duration": 1266.2999999998137,
+          "initiatorType": "css"
+        },
+        {
+          "path": "/api/v1/me/entitlements",
+          "transferSize": 1283,
+          "encodedBodySize": 983,
+          "duration": 4.099999999627471,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/templates",
+          "transferSize": 635,
+          "encodedBodySize": 335,
+          "duration": 2.1000000005587935,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/invitations/my",
+          "transferSize": 873,
+          "encodedBodySize": 573,
+          "duration": 4.900000000372529,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/public/invitations/audit-event",
+          "transferSize": 822,
+          "encodedBodySize": 522,
+          "duration": 3.900000000372529,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/api/v1/public/invitations/audit-event/media",
+          "transferSize": 311,
+          "encodedBodySize": 11,
+          "duration": 3,
+          "initiatorType": "xmlhttprequest"
+        },
+        {
+          "path": "/assets/EventEssentialLayout-DwPI8dCr.js",
+          "transferSize": 1959,
+          "encodedBodySize": 1659,
+          "duration": 204.90000000037253,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/eventFields-uQ6QlnAc.js",
+          "transferSize": 1621,
+          "encodedBodySize": 1321,
+          "duration": 219.20000000018626,
+          "initiatorType": "script"
+        },
+        {
+          "path": "/assets/EventWorkspace-cFAQ1hDI.css",
+          "transferSize": 3410,
+          "encodedBodySize": 3110,
+          "duration": 234.40000000037253,
+          "initiatorType": "link"
+        },
+        {
+          "path": "/api/v1/public/invitations/audit-event/wishes",
+          "transferSize": 311,
+          "encodedBodySize": 11,
+          "duration": 1.400000000372529,
+          "initiatorType": "xmlhttprequest"
+        }
+      ]
+    }
+  }
+]
