@@ -79,6 +79,14 @@ describe("EventsFeature View Modes & Period Filters", () => {
     expect(screen.getByRole("button", { name: "Calendar view" })).toHaveAttribute("aria-pressed", "true");
   });
 
+  it('uses the visible Khmer list label as its accessible name', async () => {
+    useLanguageStore.setState({ lang: 'km' });
+    render(<MemoryRouter initialEntries={['/app/events']}><EventsFeature /></MemoryRouter>);
+    await screen.findByText('Upcoming Royal Wedding');
+    const list = screen.getByRole('button', { name: 'បញ្ជី', exact: true });
+    expect(list).toHaveAttribute('aria-pressed', 'true');
+  });
+
   it("filters upcoming and past events via period tabs", async () => {
     render(
       <MemoryRouter initialEntries={["/app/events"]}>
