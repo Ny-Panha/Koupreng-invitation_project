@@ -2450,6 +2450,31 @@
     pointer-events: none;
 }
 
+.tx-root .tx-gate__skip {
+    position: absolute;
+    top: max(64px, calc(env(safe-area-inset-top) + 64px));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 20;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: #fff9eb;
+    background: rgb(31 20 19 / 76%);
+    cursor: pointer;
+    font: inherit;
+}
+
+.tx-root .tx-gate.is-opening .tx-gate__skip {
+    pointer-events: auto;
+}
+
+.tx-root .tx-gate__skip:focus-visible {
+    outline: 3px solid #fff9eb;
+    outline-offset: 3px;
+}
+
 .tx-root .tx-gate__media {
     inset: 0;
     transform: none;

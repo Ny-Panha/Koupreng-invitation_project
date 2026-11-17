@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import TemplateExperience from "./TemplateExperience";
 import TemplateOpeningGate from "./components/sections/TemplateOpeningGate";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 function setReducedMotion(matches) {
     window.matchMedia = vi.fn().mockImplementation(() => ({
@@ -160,6 +161,31 @@ describe("TemplateExperience opening gate", () => {
         fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
         await waitFor(() => expect(document.querySelector(".tx-experience")).toBeInTheDocument());
         expect(screen.getByText("សូមគោរពអញ្ជើញ")).toBeVisible();
+    });
+
+    it("lets a guest skip the opening without starting music", async () => {
+        const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+        renderExperience();
+        fireEvent.click(screen.getByRole("button", { name: "រំលងការបើក" }));
+        await waitFor(() => expect(document.querySelector(".tx-experience")).toBeInTheDocument());
+        expect(play).not.toHaveBeenCalled();
+        expect(document.activeElement).toHaveClass("tx-experience");
+    });
+
+    it("uses the invitation locale for Skip when the site locale is Khmer", () => {
+        useLanguageStore.getState().setLang("km");
+        renderExperience({ content: content({ languageMode: "EN" }) });
+        expect(screen.getByRole("button", { name: "Skip opening" })).toBeVisible();
+    });
+
+    it("allows Skip while a normal-motion ceremony is in progress", async () => {
+        setReducedMotion(false);
+        const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+        renderExperience();
+        fireEvent.click(screen.getByRole("button", { name: "បើកសំបុត្រអញ្ជើញ" }));
+        fireEvent.click(screen.getByRole("button", { name: "រំលងការបើក" }));
+        await waitFor(() => expect(document.querySelector(".tx-experience")).toBeInTheDocument());
+        expect(play).toHaveBeenCalledTimes(1);
     });
 
     it("keeps disabled optional sections hidden", async () => {

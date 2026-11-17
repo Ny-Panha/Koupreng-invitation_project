@@ -1,5 +1,12 @@
 @import "tailwindcss";
 @import "./application-tokens.css";
+
+/* Feedback changes color/opacity only; action geometry stays fixed. */
+.ui-motion-action {
+  transition: background-color var(--ui-duration-feedback) var(--ui-ease-standard),
+              color var(--ui-duration-feedback) var(--ui-ease-standard),
+              opacity var(--ui-duration-feedback) var(--ui-ease-standard);
+}
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face { font-family: "DM Sans"; src: url('/fonts/management/DMSans-Latin.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
@@ -275,38 +282,13 @@ html, body, #root {
   will-change: opacity, transform;
 }
 
-/* Typography elements automatically inherit gentle text-reveal */
+/* Operational headings and data stay readable from the first paint. */
 .page-title,
 .page-head h1,
 .page-head h2,
 h1.page-title,
 h2.page-title {
   display: inline-block;
-  animation: text-reveal 0.52s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
-  will-change: opacity, transform, filter;
-}
-
-.page-subtitle,
-.page-head p {
-  animation: text-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
-  will-change: opacity, transform, filter;
-}
-
-.card > h2,
-.card > h3,
-.card-header h2,
-.card-header h3 {
-  animation: text-reveal 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
-}
-
-.admin-feature-card strong,
-.stat-card-value {
-  animation: text-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
-}
-
-.admin-feature-card span,
-.stat-card-label {
-  animation: text-reveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.09s both;
 }
 
 /* ============================================================
@@ -320,50 +302,6 @@ h2.page-title {
 .page-transition > * {
   width: 100%;
 }
-
-/* Automatically cascade sections, feature grids, cards, forms, and tables inside any active page */
-.page-transition > * > *:not(.pointer-events-none):not(dialog):not(.modal-backdrop) {
-  animation: cascade-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-  will-change: opacity, transform;
-}
-
-.page-transition > * > *:nth-child(1) { animation-delay: 0.03s; }
-.page-transition > * > *:nth-child(2) { animation-delay: 0.08s; }
-.page-transition > * > *:nth-child(3) { animation-delay: 0.13s; }
-.page-transition > * > *:nth-child(4) { animation-delay: 0.18s; }
-.page-transition > * > *:nth-child(5) { animation-delay: 0.23s; }
-.page-transition > * > *:nth-child(6) { animation-delay: 0.28s; }
-.page-transition > * > *:nth-child(7) { animation-delay: 0.33s; }
-.page-transition > * > *:nth-child(8) { animation-delay: 0.38s; }
-
-/* Micro-stagger for admin feature cards & grid cards */
-.admin-feature-grid > article,
-.grid > .card,
-.grid > .tavola-glass-card {
-  animation: cascade-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.admin-feature-grid > article:nth-child(1) { animation-delay: 0.07s; }
-.admin-feature-grid > article:nth-child(2) { animation-delay: 0.11s; }
-.admin-feature-grid > article:nth-child(3) { animation-delay: 0.15s; }
-.admin-feature-grid > article:nth-child(4) { animation-delay: 0.19s; }
-
-/* Micro-stagger for table data rows on page load */
-table.data tbody tr,
-.table-wrap tbody tr,
-table.w-full tbody tr {
-  animation: row-cascade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-table.data tbody tr:nth-child(1), .table-wrap tbody tr:nth-child(1), table.w-full tbody tr:nth-child(1) { animation-delay: 0.07s; }
-table.data tbody tr:nth-child(2), .table-wrap tbody tr:nth-child(2), table.w-full tbody tr:nth-child(2) { animation-delay: 0.10s; }
-table.data tbody tr:nth-child(3), .table-wrap tbody tr:nth-child(3), table.w-full tbody tr:nth-child(3) { animation-delay: 0.13s; }
-table.data tbody tr:nth-child(4), .table-wrap tbody tr:nth-child(4), table.w-full tbody tr:nth-child(4) { animation-delay: 0.16s; }
-table.data tbody tr:nth-child(5), .table-wrap tbody tr:nth-child(5), table.w-full tbody tr:nth-child(5) { animation-delay: 0.19s; }
-table.data tbody tr:nth-child(6), .table-wrap tbody tr:nth-child(6), table.w-full tbody tr:nth-child(6) { animation-delay: 0.22s; }
-table.data tbody tr:nth-child(7), .table-wrap tbody tr:nth-child(7), table.w-full tbody tr:nth-child(7) { animation-delay: 0.25s; }
-table.data tbody tr:nth-child(8), .table-wrap tbody tr:nth-child(8), table.w-full tbody tr:nth-child(8) { animation-delay: 0.28s; }
-table.data tbody tr:nth-child(9), .table-wrap tbody tr:nth-child(9), table.w-full tbody tr:nth-child(9) { animation-delay: 0.31s; }
-table.data tbody tr:nth-child(10), .table-wrap tbody tr:nth-child(10), table.w-full tbody tr:nth-child(10) { animation-delay: 0.34s; }
 
 /* Accessibility: respect user prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {

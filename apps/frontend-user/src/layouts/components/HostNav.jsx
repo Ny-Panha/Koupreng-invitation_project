@@ -136,9 +136,11 @@ export default function HostNav() {
       const focusables = mobileNavRef.current?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
-      if (focusables && focusables.length > 0) {
-        focusables[0].focus();
-      }
+      // Let React remove the closed drawer's inert state before moving focus.
+      // Cancel on rapid dismissal.
+      const focusFrame = window.requestAnimationFrame(() => {
+        focusables?.[0]?.focus();
+      });
 
       const handleTrapTab = (e) => {
         if (e.key !== "Tab" || !focusables || focusables.length === 0) return;
@@ -159,6 +161,7 @@ export default function HostNav() {
 
       document.addEventListener("keydown", handleTrapTab);
       return () => {
+        window.cancelAnimationFrame(focusFrame);
         document.removeEventListener("keydown", handleTrapTab);
         document.body.style.overflow = "";
       };
@@ -179,8 +182,13 @@ export default function HostNav() {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   }, [location.pathname]);
 
-  const closeMobileMenu = useCallback(() => {
+  const closeMobileMenu = useCallback((event) => {
     setMobileMenuOpen(false);
+    // Explicit dismissal returns focus before the drawer becomes inert.
+    if (event?.currentTarget?.tagName === "BUTTON" ||
+        event?.currentTarget?.classList?.contains("host-mobile-overlay")) {
+      hamburgerRef.current?.focus();
+    }
   }, []);
 
   const getNavLabel = useCallback((key) => {

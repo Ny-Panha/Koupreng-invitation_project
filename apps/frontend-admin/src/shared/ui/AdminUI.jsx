@@ -7,24 +7,24 @@ export { AnimatedNumber };
 
 export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 animate-cascade" style={{ animationDelay: "0.04s" }}>
-      <div className="animate-zoom-in" style={{ animationDelay: "0.06s" }}>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
         {eyebrow && (
-          <p className="text-sm font-bold text-[var(--ui-action-hover)] dark:text-primary mb-1 animate-text-reveal" style={{ animationDelay: "0.04s" }}>
+          <p className="text-sm font-bold text-[var(--ui-action-hover)] dark:text-primary mb-1">
             {eyebrow}
           </p>
         )}
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-relaxed animate-text-reveal" style={{ animationDelay: "0.08s" }}>
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-relaxed">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-sm text-muted-foreground mt-1 animate-text-reveal" style={{ animationDelay: "0.14s" }}>
+          <p className="text-sm text-muted-foreground mt-1">
             {subtitle}
           </p>
         )}
       </div>
       {actions && (
-        <div className="flex items-center gap-2.5 flex-wrap animate-zoom-in" style={{ animationDelay: "0.16s" }}>
+        <div className="flex items-center gap-2.5 flex-wrap">
           {actions}
         </div>
       )}
@@ -41,7 +41,7 @@ export function StatCard({
   trend,
   badge,
   progress,
-  className = "animate-cascade",
+  className = "",
   style = {},
 }) {
   const toneClasses = {
@@ -59,33 +59,33 @@ export function StatCard({
   return (
     <article
       style={style}
-      className={`group relative overflow-hidden rounded-2xl border border-[var(--ui-theme-border)] bg-[var(--ui-theme-surface)] p-5 shadow-xs backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--ui-theme-gold)] cursor-default ${className}`.trim()}
+      className={`group relative overflow-hidden rounded-2xl border border-[var(--ui-theme-border)] bg-[var(--ui-theme-surface)] p-5 shadow-xs cursor-default ${className}`.trim()}
     >
       {/* Top subtle rim highlight */}
       <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-slate-200/60 dark:via-white/10 to-transparent" />
       
       <div className="flex items-start justify-between gap-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate animate-text-reveal" style={{ animationDelay: "0.08s" }}>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate">
           {label}
         </span>
         {Icon && (
-          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${selectedTone} transition-all duration-300 group-hover:scale-110 shadow-xs animate-zoom-in`} style={{ animationDelay: "0.10s" }}>
+          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${selectedTone} shadow-xs`}>
             <Icon className="h-4 w-4" />
           </div>
         )}
       </div>
 
       <div className="flex items-baseline gap-2 mt-2">
-        <strong className="block text-2xl font-black tracking-tight text-[var(--ui-theme-ink)] transition-colors group-hover:text-[var(--ui-theme-gold)] animate-text-reveal" style={{ animationDelay: "0.14s" }}>
+        <strong className="block text-2xl font-black tracking-tight text-[var(--ui-theme-ink)]">
           {displayValue}
         </strong>
         {trend && (
-          <span className="inline-flex items-center text-[11px] font-bold text-emerald-600 dark:text-emerald-400 animate-zoom-in" style={{ animationDelay: "0.18s" }}>
+          <span className="inline-flex items-center text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
             {trend}
           </span>
         )}
         {badge && (
-          <span className="ml-auto rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-400 animate-zoom-in" style={{ animationDelay: "0.20s" }}>
+          <span className="ml-auto rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-400">
             {badge}
           </span>
         )}
@@ -106,8 +106,6 @@ export function StatCard({
               }`}
               style={{
                 width: `${Math.min(Math.max(Number(progress) || 0, 0), 100)}%`,
-                transition: "width 1s cubic-bezier(0, 0, 0.2, 1) 0.2s",
-                willChange: "width",
               }}
             />
           </div>
@@ -115,7 +113,7 @@ export function StatCard({
       )}
 
       {note && (
-        <p className="text-xs text-muted-foreground mt-2 font-medium truncate animate-text-reveal" style={{ animationDelay: "0.22s" }}>
+        <p className="text-xs text-muted-foreground mt-2 font-medium truncate">
           {note}
         </p>
       )}
@@ -161,7 +159,7 @@ export function StatusBadge({ status, tone }) {
 
 export function ActionButton({ variant = "ghost", size, className = "", ...props }) {
   const base =
-    "inline-flex min-h-11 items-center justify-center gap-1.5 font-semibold transition-all rounded-xl cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50 disabled:cursor-not-allowed";
+    "ui-motion-action inline-flex min-h-11 items-center justify-center gap-1.5 font-semibold rounded-xl cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-50 disabled:cursor-not-allowed";
   const sizeStyles = size === "sm" ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-xs sm:text-sm";
 
   const variants = {

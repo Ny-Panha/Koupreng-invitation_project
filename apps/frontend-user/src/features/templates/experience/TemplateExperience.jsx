@@ -2,7 +2,7 @@ import { PageSkeleton } from '@/shared/ui/LoadingState';
 import { InvitationLocaleContext } from '../shared/invitationLocaleContext';
 import { invitationFeatureFields } from '../shared/invitationFeatures';
 import CinematicOpeningProvider from "../shared/Openings/CinematicOpeningProvider";
-import { useCinematicOpening } from "../shared/Openings/cinematicOpeningContext";
+import { useCinematicOpening, useCinematicPlayback } from "../shared/Openings/cinematicOpeningContext";
 import { normalizeProgram } from "../shared/program";
 import { createElement, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -334,6 +334,7 @@ function WeddingTemplateExperience({
 
     const reducedMotion = usePrefersReducedMotion();
     const startCinematic = useCinematicOpening();
+    const cinematicPlayback = useCinematicPlayback();
     const [musicAudioRef, musicController] = useTemplateMusicController(content.music);
     const rootRef = useRef(null);
     const contentRef = useRef(null);
@@ -443,9 +444,6 @@ function WeddingTemplateExperience({
     const handleOpen = useCallback(() => {
         if (openingInFlightRef.current || gateState !== "closed") return;
         openingInFlightRef.current = true;
-        if (document.activeElement instanceof HTMLElement) {
-            document.activeElement.blur();
-        }
         setGateState("opening");
         let duration = 460;
         if (openingStyle === "curtain" || openingStyle === "CURTAIN") duration = 1300;
@@ -454,12 +452,33 @@ function WeddingTemplateExperience({
         else if (openingStyle === "ribbon-untie" || openingStyle === "RIBBON_UNTIE") duration = 300;
         else if (openingStyle === "cinematic-video" || openingStyle === "CINEMATIC_VIDEO") duration = 300;
 
+        // Audio playback must be requested during the guest's click, before
+        // the ceremony timer loses browser user activation.
+        if (!startCinematic(() => void musicController.play(), reducedMotion ? 0 : duration)) {
+            void musicController.play();
+        }
+
         openingTimerRef.current = window.setTimeout(() => {
-            if (!startCinematic(() => void musicController.play())) void musicController.play();
+            openingTimerRef.current = null;
             setGateState("opened");
             setHeroOpened(false);
         }, reducedMotion ? 0 : duration);
     }, [gateState, musicController, reducedMotion, openingStyle, startCinematic]);
+
+    const handleSkip = useCallback(() => {
+        if (openingTimerRef.current !== null) {
+            window.clearTimeout(openingTimerRef.current);
+            openingTimerRef.current = null;
+        }
+        openingInFlightRef.current = false;
+        cinematicPlayback.stop();
+        setGateState("opened");
+        setHeroOpened(false);
+    }, [cinematicPlayback]);
+
+    useEffect(() => {
+        if (reducedMotion && gateState === "opening") handleSkip();
+    }, [gateState, handleSkip, reducedMotion]);
 
     useEffect(() => () => {
         if (openingTimerRef.current !== null) {
@@ -658,6 +677,7 @@ function WeddingTemplateExperience({
                         content={content}
                         lockDocumentScroll={!preview}
                         onOpen={handleOpen}
+                        onSkip={handleSkip}
                         state={gateState}
                     />
                 ) : (

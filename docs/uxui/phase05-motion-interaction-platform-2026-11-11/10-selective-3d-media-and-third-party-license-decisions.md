@@ -1,0 +1,7 @@
+# 10 — selective 3D, media, and third-party decisions
+
+**NO-GO for a new 3D engine or global animation package in Phase 05.** The named guest effects already use CSS perspective/transforms, existing media, and Framer Motion in the user app. There is no measured requirement that 2D cannot meet, no approved new asset rights, and no low-end phone GPU/memory evidence for a new scene. The admin app needs no animation runtime. This decision leaves future opt-in individual scenes possible after the Phase 10/16 evidence gates; it does not reject the aesthetic vision.
+
+Candidate references—Animate UI, Badtz UI, Lightswind UI, Kokonut UI, Untitled UI, shadcn/ui, React Bits, Aceternity UI, Magic UI, and Skiper UI—remain **references only**. The existing [license ledger](../../design/THIRD_PARTY_UI_LICENSES.md) governs any vendored adaptation. Current upstream rights, export/builder permissions, accessibility, bundle changes, and device behavior were not revalidated for adoption in this phase. **Zero packages, components, assets, or media files were added or copied.** No current license claim is made about mutable upstream terms.
+
+A later named proposal needs: interaction storyboard and static HTML fallback; commercial/edit/export and notice proof; package tree and initial/route payload difference; low-end phone frame/memory/decoding measurements; touch/keyboard/reduced-motion and immediate Skip; iOS/in-app browser behavior. Until all are available, use the existing static cover or CSS composition.

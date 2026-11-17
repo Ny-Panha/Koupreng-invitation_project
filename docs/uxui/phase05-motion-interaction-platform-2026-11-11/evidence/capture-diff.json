@@ -1,0 +1,459 @@
+{
+  "count": 52,
+  "screens": [
+    {
+      "name": "home-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "home-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "catalog-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "catalog-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "auth-login-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "auth-login-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "create-event-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "create-event-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "dashboard-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "dashboard-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "guests-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "guests-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "rsvp-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "rsvp-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "home-390-dark.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "auth-login-390-dark.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "dashboard-390-dark.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "khmer-floral-gold-390-light.png",
+      "changedPixels": 7749,
+      "totalPixels": 329160,
+      "changedPercent": 2.354,
+      "bounds": [
+        7,
+        48,
+        378,
+        829
+      ]
+    },
+    {
+      "name": "khmer-floral-gold-1440-light.png",
+      "changedPixels": 20866,
+      "totalPixels": 1296000,
+      "changedPercent": 1.61,
+      "bounds": [
+        13,
+        0,
+        1415,
+        885
+      ]
+    },
+    {
+      "name": "royal-garden-cinematic-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "royal-garden-cinematic-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "silk-heritage-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "silk-heritage-1440-light.png",
+      "changedPixels": 95926,
+      "totalPixels": 1296000,
+      "changedPercent": 7.402,
+      "bounds": [
+        0,
+        66,
+        1440,
+        900
+      ]
+    },
+    {
+      "name": "template-boilerplate-390-light.png",
+      "changedPixels": 4,
+      "totalPixels": 329160,
+      "changedPercent": 0.001,
+      "bounds": [
+        17,
+        817,
+        373,
+        819
+      ]
+    },
+    {
+      "name": "template-boilerplate-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "khmer-celestial-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "khmer-celestial-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "the-digital-yes-wedding-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "the-digital-yes-wedding-1440-light.png",
+      "changedPixels": 9145,
+      "totalPixels": 1296000,
+      "changedPercent": 0.706,
+      "bounds": [
+        51,
+        27,
+        1397,
+        880
+      ]
+    },
+    {
+      "name": "emerald-canva-luxe-wedding-390-light.png",
+      "changedPixels": 11769,
+      "totalPixels": 329160,
+      "changedPercent": 3.575,
+      "bounds": [
+        128,
+        256,
+        263,
+        391
+      ]
+    },
+    {
+      "name": "emerald-canva-luxe-wedding-1440-light.png",
+      "changedPixels": 24,
+      "totalPixels": 1296000,
+      "changedPercent": 0.002,
+      "bounds": [
+        667,
+        317,
+        720,
+        416
+      ]
+    },
+    {
+      "name": "withjoy-modern-portal-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "withjoy-modern-portal-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "bliss-editorial-wedding-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "bliss-editorial-wedding-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "khmer-golden-canva-inspired-wedding-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "khmer-golden-canva-inspired-wedding-1440-light.png",
+      "changedPixels": 179880,
+      "totalPixels": 1296000,
+      "changedPercent": 13.88,
+      "bounds": [
+        505,
+        81,
+        935,
+        861
+      ]
+    },
+    {
+      "name": "event-essential-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "event-essential-1440-light.png",
+      "changedPixels": 2432,
+      "totalPixels": 1296000,
+      "changedPercent": 0.188,
+      "bounds": [
+        13,
+        13,
+        1415,
+        883
+      ]
+    },
+    {
+      "name": "koupreng-demo-wedding-390-light.png",
+      "changedPixels": 4112,
+      "totalPixels": 329160,
+      "changedPercent": 1.249,
+      "bounds": [
+        276,
+        64,
+        378,
+        108
+      ]
+    },
+    {
+      "name": "koupreng-demo-wedding-1440-light.png",
+      "changedPixels": 4112,
+      "totalPixels": 1296000,
+      "changedPercent": 0.317,
+      "bounds": [
+        1326,
+        64,
+        1428,
+        108
+      ]
+    },
+    {
+      "name": "admin-login-390-light.png",
+      "changedPixels": 19,
+      "totalPixels": 329160,
+      "changedPercent": 0.006,
+      "bounds": [
+        262,
+        55,
+        355,
+        58
+      ]
+    },
+    {
+      "name": "admin-login-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "admin-dashboard-390-light.png",
+      "changedPixels": 29439,
+      "totalPixels": 329160,
+      "changedPercent": 8.944,
+      "bounds": [
+        15,
+        98,
+        374,
+        835
+      ]
+    },
+    {
+      "name": "admin-dashboard-1440-light.png",
+      "changedPixels": 45162,
+      "totalPixels": 1296000,
+      "changedPercent": 3.485,
+      "bounds": [
+        112,
+        18,
+        1408,
+        900
+      ]
+    },
+    {
+      "name": "admin-users-390-light.png",
+      "changedPixels": 23140,
+      "totalPixels": 329160,
+      "changedPercent": 7.03,
+      "bounds": [
+        15,
+        100,
+        375,
+        844
+      ]
+    },
+    {
+      "name": "admin-users-1440-light.png",
+      "changedPixels": 19749,
+      "totalPixels": 1296000,
+      "changedPercent": 1.524,
+      "bounds": [
+        112,
+        18,
+        1408,
+        635
+      ]
+    },
+    {
+      "name": "admin-template-edit-390-light.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "admin-template-edit-1440-light.png",
+      "changedPixels": 0,
+      "totalPixels": 1296000,
+      "changedPercent": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "admin-dashboard-390-dark.png",
+      "changedPixels": 29371,
+      "totalPixels": 329160,
+      "changedPercent": 8.923,
+      "bounds": [
+        15,
+        19,
+        374,
+        835
+      ]
+    },
+    {
+      "name": "admin-users-390-dark.png",
+      "changedPixels": 23345,
+      "totalPixels": 329160,
+      "changedPercent": 7.092,
+      "bounds": [
+        15,
+        19,
+        375,
+        844
+      ]
+    },
+    {
+      "name": "admin-template-edit-390-dark.png",
+      "changedPixels": 0,
+      "totalPixels": 329160,
+      "changedPercent": 0.0,
+      "bounds": null
+    }
+  ]
+}

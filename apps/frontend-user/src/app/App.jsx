@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRouter from "./router";
 import ScrollToTop from "./ScrollToTop";
 import { AuthProvider, QueryProvider, ThemeProvider } from "./providers";
-import RouteMotion from "../shared/animations/RouteMotion";
 import SupportWidget from "../shared/ui/SupportWidget";
 import RouteFontLoader from "../shared/fonts/RouteFontLoader";
 import ToastContainer from "../shared/ui/ToastContainer";
@@ -49,7 +48,6 @@ function App() {
             <EntitlementProvider>
             <RouteFontLoader />
             <ScrollToTop />
-            <RouteMotion />
             <div className="app-container">
               <AppRouter />
             </div>

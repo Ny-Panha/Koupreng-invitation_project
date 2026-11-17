@@ -102,8 +102,8 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="relative space-y-6">
-      {/* 1. Page Header with Realtime Service Clock (Cascade Delay: 0s) */}
-      <div className="animate-cascade" style={{ animationDelay: "0s" }}>
+      {/* Page header with realtime service clock */}
+      <div>
         <RefreshStatus active={refreshing} error={Boolean(error && data)} onRetry={reload} />
       <AdminPageHeader
           eyebrow={t("dashboard.eyebrow", "ទិដ្ឋភាពទូទៅនៃប្រព័ន្ធ")}
@@ -123,8 +123,8 @@ export default function AdminDashboardPage() {
         />
       </div>
 
-      {/* 2. Continuous Right-to-Left Running Ticker Banner (Cascade Delay: 0.05s) */}
-      <div className="animate-cascade" style={{ animationDelay: "0.05s" }}>
+      {/* Continuous right-to-left running ticker banner */}
+      <div>
         <LiveTickerBanner
           data={data}
           analytics={analytics}
@@ -134,10 +134,10 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* 3. Hero Centerpiece: Tavola 12-col Dual Layout (Live Service Chart + Pass Queue) */}
-      <section className="space-y-4 animate-cascade" style={{ animationDelay: "0.10s" }}>
+      <section className="space-y-4">
         {/* Section Header with Khmer Title & Tavola Summary Pills */}
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-          <div className="animate-zoom-in" style={{ animationDelay: "0.12s" }}>
+          <div>
             <div className="flex items-center gap-2">
               <span className="p-1.5 rounded-lg bg-amber-500/10 text-amber-500">
                 <TrendingUp className="h-5 w-5" />
@@ -159,8 +159,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3 flex-wrap">
             {/* Pill 1: Revenue Today */}
             <div
-              style={{ animationDelay: "0.16s" }}
-              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md animate-zoom-in"
+              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-400">
                 <CreditCard className="h-3.5 w-3.5" />
@@ -182,8 +181,7 @@ export default function AdminDashboardPage() {
 
             {/* Pill 2: RSVP Confirmed */}
             <div
-              style={{ animationDelay: "0.20s" }}
-              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md animate-zoom-in"
+              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-800 dark:text-emerald-300">
                 <Users className="h-3.5 w-3.5" />
@@ -200,8 +198,7 @@ export default function AdminDashboardPage() {
 
             {/* Pill 3: Avg per Invitation */}
             <div
-              style={{ animationDelay: "0.24s" }}
-              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md animate-zoom-in"
+              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/90 dark:bg-[#121622]/90 border border-slate-200/80 dark:border-slate-800/80 shadow-xs backdrop-blur-md"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
                 <Mail className="h-3.5 w-3.5" />
@@ -222,14 +219,14 @@ export default function AdminDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           {/* Left Column (7 cols): Live Service Trend Chart + Core Metrics Box directly underneath */}
           <div className="lg:col-span-7 xl:col-span-7 flex flex-col gap-5">
-            <div className="animate-cascade" style={{ animationDelay: "0.22s" }}>
+            <div>
               <AnimatedTrendChart
                 lang={lang}
                 report={analytics.revenue}
                 loading={analytics.revenue === undefined}
               />
             </div>
-            <div className="animate-cascade" style={{ animationDelay: "0.28s" }}>
+            <div>
               <CoreMetricsBox
                 data={data}
                 lang={lang}
@@ -241,10 +238,10 @@ export default function AdminDashboardPage() {
 
           {/* Right Column (5 cols): Recent Invitations Card + Conversion & Health Box directly underneath */}
           <div className="lg:col-span-5 xl:col-span-5 flex flex-col gap-5">
-            <div className="animate-cascade" style={{ animationDelay: "0.24s" }}>
+            <div>
               <RecentInvitationsCard lang={lang} invitations={data.recentInvitations} />
             </div>
-            <div className="animate-cascade" style={{ animationDelay: "0.32s" }}>
+            <div>
               <ConversionHealthBox
                 loading={isAnalyticsLoading}
                 analytics={analytics}
@@ -258,10 +255,9 @@ export default function AdminDashboardPage() {
 
       {/* Tables Grid with Tavola Glass & Hover Polish */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Users Card (Cascade Delay: 0.91s) */}
+        {/* Recent users */}
         <div
-          style={{ animationDelay: "0.91s" }}
-          className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:shadow-md hover:border-amber-500/30 animate-cascade"
+          className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:shadow-md hover:border-amber-500/30"
         >
           <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
           <div className="flex items-center justify-between mb-4">
@@ -270,7 +266,7 @@ export default function AdminDashboardPage() {
                 <Users className="h-4 w-4 text-cyan-500" />
                 <span>{t("dashboard.recentUsers", "អ្នកប្រើប្រាស់ថ្មីៗ")}</span>
               </h3>
-              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5">
                 {t("dashboard.recentUsersSub", "គណនីដែលបានចុះឈ្មោះចុងក្រោយ")}
               </p>
             </div>
@@ -287,16 +283,16 @@ export default function AdminDashboardPage() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60">
                 <tr>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colName", "ឈ្មោះ")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colEmail", "អ៊ីមែល")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colRole", "តួនាទី")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colStatus", "ស្ថានភាព")}
                   </th>
                 </tr>
@@ -328,10 +324,9 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Recent Payments Card (Cascade Delay: 0.98s) */}
+        {/* Recent payments */}
         <div
-          style={{ animationDelay: "0.98s" }}
-          className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:shadow-md hover:border-amber-500/30 animate-cascade"
+          className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-5 shadow-xs dark:border-zinc-800 dark:bg-[#111114]/90 backdrop-blur-md transition-all duration-300 hover:shadow-md hover:border-amber-500/30"
         >
           <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
           <div className="flex items-center justify-between mb-4">
@@ -340,7 +335,7 @@ export default function AdminDashboardPage() {
                 <CreditCard className="h-4 w-4 text-emerald-500" />
                 <span>{t("dashboard.recentPayments", "ការទូទាត់ថ្មីៗ")}</span>
               </h3>
-              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5">
                 {t("dashboard.recentPaymentsSub", "ប្រតិបត្តិការទូទាត់ចុងក្រោយក្នុងប្រព័ន្ធ")}
               </p>
             </div>
@@ -357,16 +352,16 @@ export default function AdminDashboardPage() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60">
                 <tr>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colOrderCode", "Order Code")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colStatus", "ស្ថានភាព")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colAmount", "ចំនួនទឹកប្រាក់")}
                   </th>
-                  <th className="px-3 py-2.5 font-bold text-slate-500 dark:text-zinc-400">
+                  <th className="px-3 py-2.5 font-bold text-slate-600 dark:text-zinc-400">
                     {t("dashboard.colDate", "កាលបរិច្ឆេទ")}
                   </th>
                 </tr>
@@ -383,7 +378,7 @@ export default function AdminDashboardPage() {
                     <td className="px-3 py-2.5 font-semibold text-emerald-800 dark:text-emerald-300">
                       {formatMoney(p.paidAmount ?? p.amount, p.currency)}
                     </td>
-                    <td className="px-3 py-2.5 text-slate-500 dark:text-zinc-400 text-[11px]">
+                    <td className="px-3 py-2.5 text-slate-600 dark:text-zinc-400 text-[11px]">
                       {formatDateTime(p.paidAt)}
                     </td>
                   </tr>

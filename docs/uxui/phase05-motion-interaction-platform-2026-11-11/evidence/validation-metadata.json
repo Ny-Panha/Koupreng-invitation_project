@@ -1,0 +1,22 @@
+{
+  "sourceSha": "f26c83293f01a2845fde37fccaa5dd0fbe03737e",
+  "generatedAt": "2026-11-17T11:32:12.922Z",
+  "parsing": "@babel/parser JSX/TS, relative and @/ resolution, CSS @import; unresolved dynamic expressions recorded",
+  "scannedFiles": 802,
+  "parsedFiles": 802,
+  "motionOwnerFiles": 207,
+  "currentRouteContracts": 135,
+  "groups": 62,
+  "byApp": {
+    "frontend-user": 111,
+    "frontend-admin": 24
+  },
+  "unresolvedImports": 0,
+  "rendererFamilies": 10,
+  "rendererAliases": 38,
+  "sharedRendererIds": [
+    "event-essential",
+    "koupreng-demo-wedding"
+  ],
+  "fallback": "DefaultTemplateLayout"
+}

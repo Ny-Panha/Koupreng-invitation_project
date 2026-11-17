@@ -11,7 +11,8 @@
   font-weight: var(--weight-semibold, 600);
   line-height: var(--ui-leading-khmer);
   position: relative;
-  transition: opacity 0.15s ease, background 0.15s ease;
+  transition: opacity var(--ui-duration-feedback) var(--ui-ease-standard),
+              background var(--ui-duration-feedback) var(--ui-ease-standard);
 }
 
 .k-btn-loading {

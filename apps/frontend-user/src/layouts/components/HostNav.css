@@ -448,7 +448,7 @@
   display: none;
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
   width: min(300px, calc(100vw - 40px));
   height: 100dvh;
   background: rgba(253, 250, 246, 0.96);
@@ -458,8 +458,9 @@
   z-index: 3100;
   padding: max(24px, env(safe-area-inset-top, 24px)) 20px max(24px, env(safe-area-inset-bottom, 24px));
   box-sizing: border-box;
-  transition: right var(--ui-duration-overlay) cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -8px 0 32px rgba(42, 31, 16, 0.12);
+  transform: translateX(100%);
+  transition: transform var(--ui-duration-overlay) var(--ui-ease-enter);
+  box-shadow: none;
   overflow-y: auto;
   overscroll-behavior-y: contain;
   pointer-events: none;
@@ -467,7 +468,8 @@
 }
 
 .host-mobile-menu.open {
-  right: 0;
+  transform: translateX(0);
+  box-shadow: -8px 0 32px rgba(42, 31, 16, 0.12);
   pointer-events: auto;
 }
 

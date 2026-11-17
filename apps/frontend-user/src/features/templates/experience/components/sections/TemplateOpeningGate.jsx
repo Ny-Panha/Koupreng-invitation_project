@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
+import { useInvitationLocale } from "@/features/templates/shared/invitationLocaleContext";
 import { DEFAULT_OPENING_COPY } from '../../config/openingConfig';
 import TemplateImage from "../shared/TemplateImage";
 import RibbonOpening from "@/features/templates/shared/Openings/RibbonOpening";
@@ -448,9 +449,14 @@ export default function TemplateOpeningGate({
     content,
     lockDocumentScroll = true,
     onOpen,
+    onSkip,
     state = "closed",
 }) {
+    const siteLang = useLanguageStore((store) => store.lang);
+    const invitationLang = useInvitationLocale();
+    const lang = /^en$/i.test(invitationLang) ? "en" : /^(km|kh)$/i.test(invitationLang) ? "km" : siteLang;
     const reduced = usePrefersReducedMotion();
+    const skipRef = useRef(null);
     const videoRef = useRef(null);
     const [videoFailed, setVideoFailed] = useState(false);
     const openingVideoUrl = videoUrl(content.openingVideo);
@@ -472,8 +478,12 @@ export default function TemplateOpeningGate({
     }, [lockDocumentScroll]);
 
     useEffect(() => {
+        if (state === "opening" && onSkip) skipRef.current?.focus({ preventScroll: true });
+    }, [onSkip, state]);
+
+    useEffect(() => {
         const video = videoRef.current;
-        if (!video || !openingVideoUrl) return undefined;
+        if (!video || !openingVideoUrl || reduced) return undefined;
         let active = true;
         const playPromise = video.play?.();
         if (playPromise?.catch) {
@@ -485,17 +495,15 @@ export default function TemplateOpeningGate({
         return () => {
             active = false;
             video.pause?.();
-            video.removeAttribute("src");
-            video.load?.();
         };
-    }, [openingVideoUrl]);
+    }, [openingVideoUrl, reduced]);
 
     const motionProps = reduced
-        ? { initial: false, animate: { opacity: 1 }, exit: { opacity: 0 } }
+        ? { initial: false, animate: { opacity: 1 }, exit: { opacity: 0, transition: { duration: 0 } } }
         : {
             initial: { opacity: 0, scale: 1.015 },
             animate: { opacity: 1, scale: state === "opening" ? 1.025 : 1 },
-            exit: { opacity: 0, scale: 1.04 },
+            exit: { opacity: 0, transition: { duration: 0 } },
             transition: { duration: state === "opening" ? 0.42 : 0.65, ease: [0.22, 1, 0.36, 1] },
         };
 
@@ -577,6 +585,11 @@ export default function TemplateOpeningGate({
                     onOpen={onOpen}
                     preview={state !== "closed"}
                 />
+            )}
+            {onSkip && (
+                <button ref={skipRef} type="button" className="tx-gate__skip" onClick={onSkip}>
+                    {lang === "en" ? "Skip opening" : "រំលងការបើក"}
+                </button>
             )}
         </motion.section>
     );

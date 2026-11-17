@@ -38,7 +38,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.4;
-  animation: k-toast-slide-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: k-toast-slide-in var(--ui-duration-reveal) var(--ui-ease-enter);
   overflow-wrap: anywhere;
   word-break: break-word;
 }

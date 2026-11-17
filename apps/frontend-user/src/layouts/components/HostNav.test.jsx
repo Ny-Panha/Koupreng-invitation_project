@@ -129,12 +129,15 @@ describe("HostNav component", () => {
 
     const hamburger = screen.getByRole("button", { name: "Main menu" });
     expect(hamburger).toHaveAttribute("aria-expanded", "false");
+    const mobileDrawer = document.getElementById("host-mobile-navigation");
+    expect(mobileDrawer).toHaveAttribute("inert");
+    expect(mobileDrawer).toHaveAttribute("aria-hidden", "true");
 
     fireEvent.click(hamburger);
     expect(hamburger).toHaveAttribute("aria-expanded", "true");
-
-    const mobileDrawer = document.getElementById("host-mobile-navigation");
     expect(mobileDrawer).toHaveClass("open");
+    expect(mobileDrawer).not.toHaveAttribute("inert");
+    expect(mobileDrawer).toHaveAttribute("aria-hidden", "false");
 
     // Click close button inside drawer
     const closeBtn = screen.getByRole("button", { name: "Close menu" });
@@ -142,5 +145,7 @@ describe("HostNav component", () => {
 
     expect(hamburger).toHaveAttribute("aria-expanded", "false");
     expect(mobileDrawer).not.toHaveClass("open");
+    expect(mobileDrawer).toHaveAttribute("inert");
+    expect(hamburger).toHaveFocus();
   });
 });

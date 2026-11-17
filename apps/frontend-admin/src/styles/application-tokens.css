@@ -37,8 +37,15 @@
   --ui-shadow-panel: 0 4px 20px rgb(31 36 33 / 6%);
   --ui-shadow-overlay: 0 16px 56px rgb(31 36 33 / 18%);
   --ui-ease-standard: cubic-bezier(.2, .7, .3, 1);
+  --ui-ease-enter: cubic-bezier(.16, 1, .3, 1);
+  --ui-ease-exit: cubic-bezier(.4, 0, 1, 1);
+  --ui-duration-press: 120ms;
   --ui-duration-feedback: 160ms;
   --ui-duration-overlay: 200ms;
+  --ui-duration-reveal: 240ms;
+  --ui-duration-ceremony: 700ms;
+  --ui-motion-distance: 8px;
+  --ui-motion-scale: .985;
 
   /* Management chrome only. Legacy --ui-* values above remain stable for
      invitation artwork and older components outside the management shells. */
@@ -161,5 +168,13 @@
   --ui-theme-border-strong: #829883;
 }
 @media (prefers-reduced-motion: reduce) {
-  :root { --ui-duration-feedback: 0ms; --ui-duration-overlay: 0ms; }
+  :root {
+    --ui-duration-press: 0ms;
+    --ui-duration-feedback: 0ms;
+    --ui-duration-overlay: 0ms;
+    --ui-duration-reveal: 0ms;
+    --ui-duration-ceremony: 0ms;
+    --ui-motion-distance: 0px;
+    --ui-motion-scale: 1;
+  }
 }

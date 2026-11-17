@@ -1,80 +1,65 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+const mediaQuery = "(prefers-reduced-motion: reduce)";
+const reduced = () => typeof window !== "undefined" &&
+  Boolean(window.matchMedia?.(mediaQuery)?.matches);
+const subscribe = (notify) => {
+  const query = window.matchMedia?.(mediaQuery);
+  query?.addEventListener("change", notify);
+  return () => query?.removeEventListener("change", notify);
+};
 
 /**
- * easeOutExpo easing function:
- * f(t) = t === 1 ? 1 : 1 - 2^(-10 * t)
+ * Numeric display. Static by default so operational and financial totals
+ * always show their authoritative value. `animate` is opt-in for nonfinancial
+ * counts; runtime reduced-motion changes snap to the final value.
  */
-function easeOutExpo(t) {
-  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-}
-
 export default function AnimatedNumber({
   value = 0,
   prefix = "",
   suffix = "",
   decimals = 0,
   duration = 1200,
+  animate = false,
   className = "",
 }) {
-  const target =
-    typeof value === "number"
-      ? value
-      : parseFloat(String(value ?? 0).replace(/[^0-9.-]/g, "")) || 0;
-
-  const isTestEnv = import.meta.env.MODE === "test" || globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-
-  const [current, setCurrent] = useState(isTestEnv ? target : 0);
-  const startTimestampRef = useRef(null);
-  const frameRef = useRef(null);
+  const target = typeof value === "number"
+    ? value
+    : parseFloat(String(value ?? 0).replace(/[^0-9.-]/g, "")) || 0;
+  const prefersReducedMotion = useSyncExternalStore(subscribe, reduced, () => true);
+  const shouldAnimate = animate && !prefersReducedMotion;
+  const [current, setCurrent] = useState(() => shouldAnimate ? 0 : target);
+  const currentRef = useRef(current);
 
   useEffect(() => {
-    if (isTestEnv) {
+    if (!shouldAnimate || duration <= 0) {
+      currentRef.current = target;
       setCurrent(target);
-      return;
+      return undefined;
     }
 
-    if (target === 0) {
-      setCurrent(0);
-      return;
-    }
-
-    startTimestampRef.current = null;
-
+    const from = currentRef.current;
+    let frame;
+    let started;
     const tick = (now) => {
-      if (!startTimestampRef.current) startTimestampRef.current = now;
-      const elapsed = now - startTimestampRef.current;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutExpo(progress);
-
-      setCurrent(target * eased);
-
-      if (progress < 1) {
-        frameRef.current = requestAnimationFrame(tick);
-      } else {
-        setCurrent(target);
-      }
+      started ??= now;
+      const progress = Math.min((now - started) / duration, 1);
+      const eased = progress === 1 ? 1 : 1 - 2 ** (-10 * progress);
+      currentRef.current = from + (target - from) * eased;
+      setCurrent(currentRef.current);
+      if (progress < 1) frame = requestAnimationFrame(tick);
     };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [duration, shouldAnimate, target]);
 
-    frameRef.current = requestAnimationFrame(tick);
+  const displayed = shouldAnimate ? current : target;
+  const formattedNumber = decimals > 0
+    ? displayed.toLocaleString(undefined, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })
+    : Math.round(displayed).toLocaleString();
 
-    return () => {
-      if (frameRef.current) cancelAnimationFrame(frameRef.current);
-    };
-  }, [target, duration, isTestEnv]);
-
-  const formattedNumber =
-    decimals > 0
-      ? current.toLocaleString(undefined, {
-          minimumFractionDigits: decimals,
-          maximumFractionDigits: decimals,
-        })
-      : Math.round(current).toLocaleString();
-
-  return (
-    <span className={className}>
-      {prefix}
-      {formattedNumber}
-      {suffix}
-    </span>
-  );
+  return <span className={className}>{prefix}{formattedNumber}{suffix}</span>;
 }
