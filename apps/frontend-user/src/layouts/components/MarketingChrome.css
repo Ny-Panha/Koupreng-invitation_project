@@ -461,3 +461,9 @@
     scroll-behavior: auto !important; 
   }
 }
+
+/* Keep fixed navigation clear of browser safe areas at every padding breakpoint. */
+.kp-header { padding-block-start: max(var(--kp-shell-top, 14px), env(safe-area-inset-top)); padding-inline-start: max(var(--kp-shell-gutter, 24px), env(safe-area-inset-left)); padding-inline-end: max(var(--kp-shell-gutter, 24px), env(safe-area-inset-right)); }
+.kp-header--scrolled { --kp-shell-top: 8px; }
+@media (max-width: 600px) { .kp-header { --kp-shell-top: 8px; --kp-shell-gutter: 12px; } }
+@media (max-width: 359px) { .kp-header { --kp-shell-gutter: 8px; } }

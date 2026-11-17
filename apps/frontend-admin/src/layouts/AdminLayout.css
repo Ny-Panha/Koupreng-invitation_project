@@ -10,7 +10,6 @@
 .admin-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-height: 44px; margin-block: -8px 16px; color: var(--muted-foreground); font-size: 13px; overflow-wrap: anywhere; }
 .admin-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
 .admin-breadcrumb [aria-current] { color: var(--foreground); }
-.admin-header { padding-block-start: max(12px, env(safe-area-inset-top)); padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right)); }
 .admin-mobile-links { overscroll-behavior: contain; }
 .admin-mobile-links a span { min-width: 0; overflow-wrap: anywhere; }
 .admin-header-brand, .admin-header-actions, .admin-brand-link { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -83,3 +82,7 @@
   }
 }
 @media print { .admin-header, .admin-dock, .admin-dialog, .admin-skip-link { display: none; } }
+
+/* Apply after responsive padding shorthands so notches remain protected. */
+.admin-header { padding-block-start: max(var(--admin-header-top, 12px), env(safe-area-inset-top)); padding-inline-start: max(var(--admin-header-gutter, 24px), env(safe-area-inset-left)); padding-inline-end: max(var(--admin-header-gutter, 24px), env(safe-area-inset-right)); }
+@media (max-width: 767px) { .admin-header { --admin-header-top: 10px; --admin-header-gutter: 16px; } }

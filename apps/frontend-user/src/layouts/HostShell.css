@@ -1,5 +1,5 @@
 .dash-wrapper {
-  --host-nav-offset: clamp(104px, 8vw, 132px);
+  --host-nav-offset: calc(clamp(104px, 8vw, 132px) + env(safe-area-inset-top, 0px));
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -17,7 +17,7 @@
 .dash-wrapper.dash-wrapper--studio { --host-nav-offset: 0px; }
 
 /* Event management owns one fluid shell; public and account pages keep theirs. */
-.dash-wrapper.dash-wrapper--event { --host-nav-offset: 80px; }
+.dash-wrapper.dash-wrapper--event { --host-nav-offset: calc(80px + env(safe-area-inset-top, 0px)); }
 .dash-wrapper--event > .dash-main-scroll { overflow: visible; }
 .dash-wrapper--event .host-header-wrapper { padding: 8px 0; background: var(--ui-canvas); border: 0; box-shadow: none; }
 .dash-wrapper--event .host-header-container { width: calc(100% - 32px); max-width: none; height: 56px; padding-inline: 20px; border-radius: 16px; background: var(--ui-surface); box-shadow: none; }
@@ -101,6 +101,8 @@
 
 @media (max-width: 768px) {
   .dash-wrapper {
-    --host-nav-offset: 96px;
+    --host-nav-offset: calc(96px + env(safe-area-inset-top, 0px));
   }
 }
+
+.dash-wrapper .host-header-wrapper { padding-block-start: max(8px, env(safe-area-inset-top)); padding-inline-start: env(safe-area-inset-left); padding-inline-end: env(safe-area-inset-right); box-sizing: border-box; }
