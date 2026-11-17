@@ -66,6 +66,11 @@
     z-index: 1;
 }
 
+.auth-page.auth-page--centered { min-height: 100vh; min-height: 100dvh; padding-block: max(24px, env(safe-area-inset-top)) max(32px, env(safe-area-inset-bottom)); }
+.auth-top-bar { flex-wrap: wrap; gap: 12px; }
+.auth-preferences { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-inline-start: auto; }
+.auth-shell :is(a,button,input):focus-visible { outline: 3px solid var(--ui-theme-focus); outline-offset: 3px; }
+
 
 
 .auth-top-bar {

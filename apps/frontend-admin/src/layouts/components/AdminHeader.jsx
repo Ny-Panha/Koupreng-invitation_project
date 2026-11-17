@@ -42,10 +42,10 @@ export default function AdminHeader({ onShowSidebar, isMobileOpen, isDark, onTog
 
   return <header className="admin-header">
     <div className="admin-header-brand">
-      <button type="button" className="admin-icon-button admin-mobile-toggle" onClick={onShowSidebar} aria-label={en ? "Open navigation" : "បើកម៉ឺនុយ"} aria-expanded={isMobileOpen} aria-controls={isMobileOpen ? "admin-mobile-navigation" : undefined}><Menu size={22} aria-hidden="true" /></button>
+      <button type="button" className="admin-icon-button admin-mobile-toggle" onClick={event => { event.currentTarget.focus(); onShowSidebar(); }} aria-label={en ? "Open navigation" : "បើកម៉ឺនុយ"} aria-expanded={isMobileOpen} aria-controls={isMobileOpen ? "admin-mobile-navigation" : undefined}><Menu size={22} aria-hidden="true" /></button>
       <NavLink to="/dashboard" className="admin-brand-link" aria-label={en ? "Koupreng dashboard" : "ផ្ទាំងគ្រប់គ្រងគូព្រេង"}><BrandLogo variant="compact" responsiveIcon priority decorative /></NavLink>
     </div>
-    <button type="button" className="admin-search-trigger" onClick={onSearch} aria-haspopup="dialog"><Search size={18} aria-hidden="true" /><span>{en ? "Find a page in your workspace" : "ស្វែងរកទំព័រនៅក្នុងកន្លែងធ្វើការ"}</span></button>
+    <button type="button" className="admin-search-trigger" onClick={event => { event.currentTarget.focus(); onSearch(); }} aria-haspopup="dialog"><Search size={18} aria-hidden="true" /><span>{en ? "Find a page in your workspace" : "ស្វែងរកទំព័រនៅក្នុងកន្លែងធ្វើការ"}</span></button>
     <div className="admin-header-actions">
       <span className="admin-clock" title={en ? "Cambodia time" : "ម៉ោងកម្ពុជា"}>{timeString}<small>{en ? "Phnom Penh" : "ភ្នំពេញ"}</small></span>
       <button type="button" className="admin-icon-button admin-notifications" onClick={() => navigate("/notifications")} aria-label={en ? "Notifications" : "ការជូនដំណឹង"}><Bell size={20} aria-hidden="true" /></button>

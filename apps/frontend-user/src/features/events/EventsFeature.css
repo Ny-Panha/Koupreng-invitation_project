@@ -1515,7 +1515,7 @@
     align-items: center;
     gap: 4px;
     background: #fbf5ec;
-    color: #926c34;
+    color: var(--ui-theme-warning);
     border: 1px solid rgba(195, 162, 107, 0.3);
     padding: 2px 8px;
     border-radius: 6px;

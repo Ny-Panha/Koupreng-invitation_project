@@ -33,7 +33,7 @@ export default function HostShell() {
                     <HostNav />
                 </>
             )}
-            <div id="host-main-content" className="dash-main-scroll">
+            <div id="host-main-content" className="dash-main-scroll" tabIndex={-1}>
                 <Suspense fallback={<RouteLoadingSkeleton />}>
                     <Outlet />
                 </Suspense>

@@ -5,6 +5,9 @@
 .event-workspace-loading { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 200px; }
 .event-workspace.is-collapsed { --event-nav-width: 72px; }
 .event-workspace-main, .event-workspace-content { min-width: 0; }
+.event-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; min-height: 44px; padding-block: 4px 12px; font-size: 13px; line-height: 1.8; color: var(--ui-theme-muted); overflow-wrap: anywhere; }
+.event-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; color: var(--ui-theme-link); text-decoration: underline; text-underline-offset: 4px; }
+.event-breadcrumb [aria-current] { color: var(--ui-theme-ink); }
 .event-workspace-sidebar { position: sticky; top: calc(var(--host-nav-offset, 0px) + 16px); height: calc(100dvh - var(--host-nav-offset, 0px) - 32px); min-height: 0; display: flex; flex-direction: column; background: var(--ws-surface); border: 1px solid var(--ws-border); border-radius: 16px; box-shadow: 0 4px 24px rgb(24 57 41 / 3%); transition: width var(--ui-duration-overlay); }
 .event-navigation-header { flex: 0 0 auto; padding: 20px 16px 18px; border-bottom: 1px solid var(--ws-border); min-width: 0; }
 .event-context-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--ws-muted); font-size: 13px; font-weight: 600; line-height: 1.8; }

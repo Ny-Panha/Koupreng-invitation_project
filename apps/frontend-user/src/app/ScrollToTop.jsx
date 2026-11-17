@@ -1,9 +1,18 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigationType } from "react-router-dom";
 import { useLanguageStore } from "../stores/useLanguageStore";
 
 function getPageTitle(pathname, lang) {
   const isEn = lang === "en";
+  const accountTitles = {
+    '/app/profile': ['Account Profile', 'គណនីផ្ទាល់ខ្លួន'],
+    '/app/notifications': ['Notifications', 'ការជូនដំណឹង'],
+    '/app/packages': ['Packages & access', 'កញ្ចប់សេវាកម្ម'],
+    '/app/payments': ['Payment History', 'ប្រវត្តិការទូទាត់'],
+    '/app/templates/paid': ['Paid Templates', 'គំរូដែលបានទិញ'],
+    '/app/organizations': ['Organizations', 'ស្ថាប័ន'],
+  };
+  if (accountTitles[pathname]) return `${accountTitles[pathname][isEn ? 0 : 1]} | ${isEn ? 'Koupreng' : 'គូព្រេង'}`;
   if (!pathname || pathname === "/" || pathname === "") {
     return isEn ? "Koupreng - Digital Invitation" : "គូព្រេង - សំបុត្រអញ្ជើញឌីជីថល";
   }
@@ -36,30 +45,60 @@ function getPageTitle(pathname, lang) {
 }
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, key, hash } = useLocation();
+  const navigationType = useNavigationType();
   const lang = useLanguageStore((state) => state.lang);
+  const positions = useRef(new Map());
+  const previous = useRef(null);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-
     document.title = getPageTitle(pathname, lang);
-
-    // Assistive technology focus orientation: gently focus h1 or main if present
-    const timer = setTimeout(() => {
-      const heading = document.querySelector("main h1, .dash-main h1, h1");
-      if (heading && !document.activeElement?.matches?.("input, select, textarea, button")) {
-        if (!heading.hasAttribute("tabindex")) {
-          heading.setAttribute("tabindex", "-1");
-        }
-      }
-    }, 50);
-
-    return () => clearTimeout(timer);
   }, [pathname, lang]);
+
+  useEffect(() => {
+    // Published/demo invitations own their focus, scroll and cinematic gates.
+    const managed = pathname === '/' || /^\/(?:login|register|forgot-password|reset-password|pricing|contact|venues|app|dashboard)(?:\/|$)/.test(pathname) || pathname === '/templates';
+    const changed = previous.current !== null && previous.current.pathname !== pathname;
+    const sameDocument = previous.current?.pathname === pathname && previous.current?.hash === hash;
+    previous.current = { pathname, hash };
+    if (!managed) return;
+    const oldRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    const targetTop = navigationType === 'POP' ? positions.current.get(key) ?? window.scrollY : sameDocument ? window.scrollY : 0;
+    let frame;
+    const ready = () => {
+      const main = document.querySelector('#marketing-content, #host-main-content, #auth-content');
+      if (!main || !main.getClientRects().length || main.querySelector('.k-loading-region[aria-busy="true"]')) return;
+      // A suspended destination can retain its shell while its page is loading.
+      if (!main.querySelector('h1, form, [role="alert"]')) return;
+      // An alias or slow API may settle after the user has already started a
+      // task. Late route orientation must not steal a field/table's focus.
+      const active = document.activeElement;
+      const engaged = active !== main && main.contains(active) && active.tabIndex >= 0;
+      let anchor;
+      try { anchor = hash && document.getElementById(decodeURIComponent(hash.slice(1))); }
+      catch { /* An invalid fragment must not break route navigation. */ }
+      if (!engaged) {
+        if (anchor) anchor.scrollIntoView();
+        else window.scrollTo({ top: targetTop, left: 0, behavior: 'instant' });
+        if (changed) main.focus({ preventScroll: true });
+      }
+      observer.disconnect();
+    };
+    const observer = new MutationObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(ready); });
+    observer.observe(document.getElementById('root') || document.body, { childList: true, subtree: true });
+    frame = requestAnimationFrame(ready);
+    const remember = () => {
+      positions.current.set(key, window.scrollY);
+      if (positions.current.size > 100) positions.current.delete(positions.current.keys().next().value);
+    };
+    window.addEventListener('scroll', remember, { passive: true });
+    return () => {
+      observer.disconnect(); cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', remember);
+      window.history.scrollRestoration = oldRestoration;
+    };
+  }, [key, pathname, hash, navigationType]);
 
   return null;
 };

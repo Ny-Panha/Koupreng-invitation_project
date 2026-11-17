@@ -147,7 +147,7 @@ export function EventsFeature() {
                             type="button"
                             className={`events-view-btn ${view === "list" ? "is-active" : ""}`}
                             onClick={() => updateFilter("view", "")}
-                            aria-label={en ? "List view" : "ទិដ្ឋភាពបញ្ជី"}
+                            aria-label={en ? "List view" : undefined}
                             aria-pressed={view === "list"}
                         >
                             <LayoutList size={16} aria-hidden="true" />

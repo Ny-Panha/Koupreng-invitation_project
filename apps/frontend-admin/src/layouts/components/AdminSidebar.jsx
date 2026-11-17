@@ -14,7 +14,7 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
   const mobileItems = filterAdminNavigation(items, query);
   return <>
     <aside className="admin-dock" aria-label={en ? "Admin sidebar" : "របាររដ្ឋបាល"}>
-      <button type="button" className="admin-icon-button admin-dock-tool" onClick={onSearch} aria-label={en ? "Find an admin page" : "ស្វែងរកទំព័ររដ្ឋបាល"} title={en ? "Find a page" : "ស្វែងរកទំព័រ"}><Search size={19} aria-hidden="true" /></button>
+      <button type="button" className="admin-icon-button admin-dock-tool" onClick={event => { event.currentTarget.focus(); onSearch(); }} aria-label={en ? "Find an admin page" : "ស្វែងរកទំព័ររដ្ឋបាល"} title={en ? "Find a page" : "ស្វែងរកទំព័រ"}><Search size={19} aria-hidden="true" /></button>
       <nav aria-label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"}>
         {items.map(({ to, icon: Icon, label, exact }) => <div className="admin-dock-item" key={to}><NavLink to={to} end={exact} aria-label={label} onClick={onNavigate}><Icon size={19} aria-hidden="true" /></NavLink><span className="admin-dock-tooltip" aria-hidden="true">{label}</span></div>)}
       </nav>

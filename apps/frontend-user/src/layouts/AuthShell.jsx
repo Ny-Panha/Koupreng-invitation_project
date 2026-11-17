@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
  */
 export default function AuthShell() {
     return (
-        <main className="auth-shell">
+        <main className="auth-shell" id="auth-content" tabIndex={-1}>
             <Outlet />
         </main>
     );

@@ -128,6 +128,10 @@ function VerifiedWorkspace({ eventId }) {
       {!focusedStudio && <a className="event-skip-link" href="#event-module-content">{en ? "Skip to event content" : "ទៅមាតិកាកម្មវិធី"}</a>}
       {!overlay && <aside className="event-workspace-sidebar"><EventNavigation {...navProps} /></aside>}
       <div className="event-workspace-main" ref={mainPanel}>
+        {!focusedStudio && <nav className="event-breadcrumb" aria-label={en ? 'Event breadcrumb' : 'ទីតាំងកម្មវិធី'}>
+          <Link to="/app/events">{en ? 'My Events' : 'កម្មវិធីរបស់ខ្ញុំ'}</Link><span aria-hidden="true">/</span>
+          {currentModule ? <><Link to={eventPath(eventId)}>{state.event.title}</Link><span aria-hidden="true">/</span><span aria-current="page">{activeModuleLabel}</span></> : <span aria-current="page">{state.event.title}</span>}
+        </nav>}
         {focusedStudio ? <div id="invitation-studio-toolbar" className="studio-toolbar-mount" /> : <header className="event-workspace-header" role="presentation">
           <button type="button" ref={menuTrigger} className="event-mobile-nav-toggle" onClick={() => setMobileDrawerOpen(true)}
             aria-label={en ? "Toggle modules menu" : "បើកម៉ឺនុយមុខងារ"} aria-expanded={mobileDrawerOpen} aria-haspopup="dialog" aria-controls={mobileDrawerOpen ? "event-module-navigation" : undefined}>

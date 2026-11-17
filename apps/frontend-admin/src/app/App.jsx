@@ -39,7 +39,7 @@ function AdminTitleAndFocus() {
     else if (pathname.startsWith("/notifications")) title = isEn ? "Notifications | Koupreng Admin" : "ការជូនដំណឹង | គូព្រេង Admin";
     else if (pathname.startsWith("/system-logs")) title = isEn ? "System Audit Logs | Koupreng Admin" : "កំណត់ហេតុប្រព័ន្ធ | គូព្រេង Admin";
     else if (pathname.startsWith("/reports")) title = isEn ? "Platform Reports | Koupreng Admin" : "របាយការណ៍ប្រព័ន្ធ | គូព្រេង Admin";
-    else if (pathname.startsWith("/api-monitor")) title = isEn ? "API Monitor | Koupreng Admin" : "ត្រួតពិនិត្យ API | គូព្រេង Admin";
+    else if (pathname.startsWith("/dev/api-monitor")) title = isEn ? "API Monitor | Koupreng Admin" : "ត្រួតពិនិត្យ API | គូព្រេង Admin";
     else if (pathname.startsWith("/login")) title = isEn ? "Admin Login | Koupreng" : "ចូលប្រព័ន្ធ Admin | គូព្រេង";
 
     document.title = title;

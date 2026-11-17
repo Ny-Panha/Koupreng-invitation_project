@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useLanguageStore } from "../../../stores/useLanguageStore";
 import "../AuthPage.css";
 import BrandLogo from "@/shared/branding/BrandLogo";
+import DisplayPreferences from '@/shared/preferences/DisplayPreferences';
 
 export default function AuthLayout({ children }) {
   const { lang, setLang } = useLanguageStore();
@@ -21,12 +22,14 @@ export default function AuthLayout({ children }) {
             <ArrowLeft size={16} aria-hidden="true" />
             <span>{copy("ត្រឡប់ទៅទំព័រដើម", "Back to home")}</span>
           </Link>
-          <div className="auth-lang-pill" role="group" aria-label="Language selection">
+          <div className="auth-preferences">
+          <div className="auth-lang-pill" role="group" aria-label={copy("ជ្រើសរើសភាសា", "Language selection")}>
             <button
               type="button"
               className={`auth-lang-btn${lang === "km" ? " active" : ""}`}
               onClick={() => setLang("km")}
               aria-pressed={lang === "km"}
+              lang="km"
             >
               ភាសាខ្មែរ
             </button>
@@ -36,9 +39,12 @@ export default function AuthLayout({ children }) {
               className={`auth-lang-btn${lang === "en" ? " active" : ""}`}
               onClick={() => setLang("en")}
               aria-pressed={lang === "en"}
+              lang="en"
             >
               English
             </button>
+          </div>
+          <DisplayPreferences language={false} compact />
           </div>
         </div>
 

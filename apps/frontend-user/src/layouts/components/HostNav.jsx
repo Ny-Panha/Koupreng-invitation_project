@@ -72,6 +72,7 @@ export default function HostNav() {
   const profileTriggerRef = useRef(null);
   const profileMenuRef = useRef(null);
   const mobileNavRef = useRef(null);
+  const mobileDialogRef = useRef(null);
   const hamburgerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -129,18 +130,19 @@ export default function HostNav() {
     };
   }, [profileOpen, mobileMenuOpen]);
 
-  // Focus trap and scroll prevention when mobile menu is open
+  // Native modality isolates the background. Keep the existing Tab loop, with
+  // one owner for scroll locking and synchronous focus after inert is removed.
   useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    const trigger = hamburgerRef.current;
     if (mobileMenuOpen) {
+      const previousOverflow = document.body.style.overflow;
+      dialog.showModal();
       document.body.style.overflow = "hidden";
       const focusables = mobileNavRef.current?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
-      // Let React remove the closed drawer's inert state before moving focus.
-      // Cancel on rapid dismissal.
-      const focusFrame = window.requestAnimationFrame(() => {
-        focusables?.[0]?.focus();
-      });
+      focusables?.[0]?.focus();
 
       const handleTrapTab = (e) => {
         if (e.key !== "Tab" || !focusables || focusables.length === 0) return;
@@ -161,14 +163,29 @@ export default function HostNav() {
 
       document.addEventListener("keydown", handleTrapTab);
       return () => {
-        window.cancelAnimationFrame(focusFrame);
         document.removeEventListener("keydown", handleTrapTab);
-        document.body.style.overflow = "";
+        dialog.close();
+        document.body.style.overflow = previousOverflow;
+        if (!trigger?.getClientRects().length) document.querySelector('.host-nav-links a[aria-current="page"], .host-nav-links a')?.focus();
       };
-    } else {
-      document.body.style.overflow = "";
     }
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setProfileOpen(false);
+  }, [location.key]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1201px)");
+    const closeAtDesktop = () => {
+      if (desktop.matches) {
+        setMobileMenuOpen(false);
+      }
+    };
+    desktop.addEventListener("change", closeAtDesktop);
+    return () => desktop.removeEventListener("change", closeAtDesktop);
+  }, []);
 
   const dynamicNavItems = [
     { labelKey: "events", path: "/app/events", Icon: CalendarDays },
@@ -365,7 +382,7 @@ export default function HostNav() {
               type="button"
               className={`host-hamburger-btn${mobileMenuOpen ? " open" : ""}`}
               ref={hamburgerRef}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={event => { event.currentTarget.focus(); setMobileMenuOpen(!mobileMenuOpen); }}
               aria-label={language === "en" ? "Main menu" : "ម៉ឺនុយចម្បង"}
               aria-expanded={mobileMenuOpen}
               aria-controls="host-mobile-navigation"
@@ -378,14 +395,10 @@ export default function HostNav() {
         </header>
       </div>
 
-      {/* Mobile Drawer Overlay */}
-      <div
-        className={`host-mobile-overlay${mobileMenuOpen ? " visible" : ""}`}
-        onClick={closeMobileMenu}
-        aria-hidden="true"
-      />
-
-      {/* Mobile Slide-Out Drawer Navigation */}
+      <dialog ref={mobileDialogRef} className="host-navigation-dialog"
+        aria-label={language === "en" ? "Main menu" : "ម៉ឺនុយចម្បង"}
+        onCancel={event => { event.preventDefault(); closeMobileMenu(); hamburgerRef.current?.focus(); }}
+        onClick={event => { if (event.target === event.currentTarget) { closeMobileMenu(); hamburgerRef.current?.focus(); } }}>
       <nav
         ref={mobileNavRef}
         id="host-mobile-navigation"
@@ -475,6 +488,7 @@ export default function HostNav() {
           <span>{navText("logout") || (language === "en" ? "Sign Out" : "ចាកចេញ")}</span>
         </button>
       </nav>
+      </dialog>
     </>
   );
 }

@@ -104,6 +104,7 @@ client_secret*.json
 /output/playwright/phase02-foundations/
 /output/playwright/uxui-phase04-2026-11-11/
 /output/playwright/uxui-phase05-2026-11-11/
+/output/playwright/uxui-phase06-2026-11-17/
 /output/playwright/phase05-baseline/
 
 # Browser traces are local; reviewed Studio screenshots live under output/playwright/next-studio-ux.

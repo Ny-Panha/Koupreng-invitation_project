@@ -11,7 +11,7 @@
 .studio-device-switch button { min-width: 0; padding-inline: 8px; justify-content: center; }
 .studio-device-switch span { white-space: normal; line-height: 1.65; }
 .studio-toolbar-actions { min-width: 0; max-width: 100%; flex-wrap: wrap; }
-.studio-panel-switch { display: flex; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--ui-studio-border); flex-shrink: 0; }
+.studio-panel-switch { position: sticky; top: 0; z-index: 20; background: var(--ui-studio-canvas); display: flex; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--ui-studio-border); flex-shrink: 0; }
 .studio-panel-switch button { flex: 1; min-height: 44px; padding: 8px; border: 1px solid var(--ui-studio-border); border-radius: var(--ui-radius-control); color: var(--ui-studio-muted); }
 .studio-panel-switch button[aria-pressed=true] { color: var(--ui-studio-on-accent); background: var(--ui-studio-accent); border-color: var(--ui-studio-accent); }
 .template-studio-workspace { display: flex; flex: 1; min-height: 0; min-width: 0; position: relative; }
@@ -54,9 +54,9 @@
   .template-studio-toolbar p { display: none; }
   .template-studio-toolbar .h-6 { display: none; }
   .studio-panel-switch { padding: 4px 12px; }
-  .studio-panel-switch button { min-height: 38px; padding: 4px 8px; font-size: 13px; }
+  .studio-panel-switch button { min-height: 44px; padding: 4px 8px; font-size: 13px; }
   .studio-section-tabs { gap: 2px; }
-  .studio-section-tabs button { min-height: 38px; padding: 4px 8px; font-size: 12px; }
+  .studio-section-tabs button { min-height: 44px; padding: 4px 8px; font-size: 12px; }
   .template-studio-workspace { flex: 1 0 auto; min-height: 280px; }
   .studio-controls-scroll { padding: 12px; }
 }

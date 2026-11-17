@@ -473,6 +473,16 @@
   pointer-events: auto;
 }
 
+/* Browser-managed background inertness, with the same drawer DOM when closed. */
+.host-navigation-dialog { padding: 0; border: 0; margin: 0 0 0 auto; inset: 0; width: min(340px, calc(100vw - 24px)); max-width: none; height: 100vh; height: 100dvh; max-height: none; background: var(--ui-theme-surface); color: var(--ui-theme-ink); overflow: visible; }
+.host-navigation-dialog:not([open]) { display: none; }
+.host-navigation-dialog::backdrop { background: var(--ui-theme-overlay); }
+.host-navigation-dialog .host-mobile-menu { position: static; display: flex; width: 100%; height: 100%; transform: none; border: 0; border-radius: 0; box-shadow: none; background: var(--ui-theme-surface); color: var(--ui-theme-ink); backdrop-filter: none; }
+.host-navigation-dialog .host-mobile-menu > * { flex-shrink: 0; }
+.host-navigation-dialog .host-mobile-menu :is(a,button) { overflow-wrap: anywhere; }
+.host-navigation-dialog .host-mobile-menu-item { color: var(--ui-theme-ink); }
+.host-navigation-dialog .host-mobile-menu-item[aria-current=page] { color: var(--ui-theme-action); background: var(--ui-theme-subtle); }
+
 .host-mobile-header {
   display: flex;
   align-items: center;

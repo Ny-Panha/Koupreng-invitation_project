@@ -69,7 +69,6 @@ export default function Header() {
 
   return (
     <>
-      <a className="kp-skip" href="#marketing-content">{copy("ទៅកាន់មាតិកា", "Skip to content")}</a>
       <header className={`kp-header${scrolled ? " kp-header--scrolled" : ""}`}>
         <div className="kp-header-inner">
           <Link to="/" className="kp-brand" aria-label={copy("គូព្រេង · ទំព័រដើម", "Koupreng · Home")}>
@@ -80,7 +79,7 @@ export default function Header() {
           </nav>
           <div className="kp-desktop-actions">{languageControl}<DisplayPreferences language={false}/>{account}</div>
           <div className="kp-mobile-preferences"><DisplayPreferences compact /></div>
-          <button className="kp-menu-trigger" type="button" aria-label={copy("បើកម៉ឺនុយ", "Open navigation menu")} aria-expanded={menuOpen} aria-controls="public-mobile-navigation" onClick={() => { dialog.current.showModal(); setMenuOpen(true); }}><Menu size={22} aria-hidden="true" /></button>
+          <button className="kp-menu-trigger" type="button" aria-label={copy("បើកម៉ឺនុយ", "Open navigation menu")} aria-expanded={menuOpen} aria-controls="public-mobile-navigation" onClick={event => { event.currentTarget.focus(); dialog.current.showModal(); setMenuOpen(true); }}><Menu size={22} aria-hidden="true" /></button>
         </div>
       </header>
       {/* Native modality, Escape and focus return; explicit Tab wrap stays inside. */}

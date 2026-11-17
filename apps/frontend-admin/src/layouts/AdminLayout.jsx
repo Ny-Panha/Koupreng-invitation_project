@@ -1,10 +1,11 @@
 import { AdminSkeleton } from '../shared/ui/AdminSkeleton';
 import { Suspense, useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
 import AdminNavigationSearch from "./components/AdminNavigationSearch";
 import { useAdminLanguage } from "../app/providers/AdminLanguageProvider";
+import { adminNavigation } from './components/adminNavigation';
 import "./AdminLayout.css";
 
 export default function AdminLayout() {
@@ -12,10 +13,18 @@ export default function AdminLayout() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const { lang } = useAdminLanguage();
+  const currentPage = adminNavigation(lang).find(item => item.exact ? location.pathname === item.to : location.pathname === item.to || location.pathname.startsWith(`${item.to}/`));
 
   useEffect(() => {
     setIsMobileOpen(false);
     setIsSearchOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // Dialog cleanup may restore its trigger; orient only actual route changes
+    // after that native close step. Locale/theme edits keep the user's focus.
+    const frame = requestAnimationFrame(() => document.getElementById('admin-main')?.focus({ preventScroll: true }));
+    return () => cancelAnimationFrame(frame);
   }, [location.pathname]);
 
   const [isDark, setIsDark] = useState(() => {
@@ -75,6 +84,10 @@ export default function AdminLayout() {
         />
 
         <main id="admin-main" tabIndex={-1} className="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <nav className="admin-breadcrumb" aria-label={lang === 'en' ? 'Breadcrumb' : 'ទីតាំងទំព័រ'}>
+            <Link to="/dashboard">{lang === 'en' ? 'Workspace' : 'កន្លែងធ្វើការ'}</Link>
+            {currentPage && <><span aria-hidden="true">/</span><span aria-current="page">{currentPage.label}</span></>}
+          </nav>
           <div
             key={location.pathname}
             className="w-full max-w-full min-w-0 page-transition"

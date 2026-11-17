@@ -1683,7 +1683,7 @@ export default function AdminTemplateEditPage() {
         >
           {/* Studio Navigation Tabs - Clean 5 Symmetrical Tabs on 1 Single Row */}
           <div className="border-b border-zinc-800/80 bg-zinc-950/80 p-3">
-            <div className="studio-section-tabs rounded-2xl border border-zinc-800/80 bg-zinc-900/50 p-1.5">
+            <div className="studio-section-tabs rounded-2xl border border-zinc-800/80 bg-zinc-900/50 p-1.5" role="group" aria-label={lang === 'en' ? 'Authoring sections' : 'ផ្នែកកែសម្រួល'}>
               {[
                 { id: "theme", label: lang === "en" ? "Theme & Styles" : "រចនាបថ", icon: Palette },
                 { id: "couple", label: lang === "en" ? "Couple Info" : "សាមីខ្លួន", icon: Heart },
@@ -1722,6 +1722,7 @@ export default function AdminTemplateEditPage() {
 
           {/* Tab Content Panels (Scrollable) */}
           <div className="studio-controls-scroll space-y-6">
+            <h2 className="sr-only">{lang === 'en' ? 'Invitation editor' : 'កែសម្រួលសំបុត្រអញ្ជើញ'}</h2>
             {/* TAB 1: THEME & APPEARANCE (Styles + Cover) */}
             {activeTab === "theme" && (
               <div className="space-y-6 animate-in fade-in">
