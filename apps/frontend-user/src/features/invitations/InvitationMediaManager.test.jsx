@@ -68,7 +68,9 @@ describe('InvitationMediaManager', () => {
       expect(screen.getByRole('button', { name: /រូបគម្រប|cover/i })).toBeInTheDocument();
     });
 
-    expect(screen.getByText('cover.jpg')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('cover.jpg')).toBeInTheDocument();
+    });
   });
 
   it('switches category when tab is clicked', async () => {
