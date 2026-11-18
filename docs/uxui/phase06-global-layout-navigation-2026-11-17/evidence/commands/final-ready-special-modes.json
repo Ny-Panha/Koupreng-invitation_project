@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-ready-special-modes",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/probe-special-modes.mjs",
+    "startedAt":  "2026-11-18T06:09:28.0224468Z",
+    "durationSeconds":  25.092845699999998,
+    "exitCode":  0,
+    "sourceSha":  "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-ready-special-modes.log"
+}

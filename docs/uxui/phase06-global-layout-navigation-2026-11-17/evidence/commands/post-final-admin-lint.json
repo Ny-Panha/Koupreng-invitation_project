@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-final-admin-lint",
+    "command":  "npm --prefix apps/frontend-admin run lint",
+    "startedAt":  "2026-11-18T02:50:23.0542796Z",
+    "durationSeconds":  27.2416096,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-final-admin-lint.log"
+}

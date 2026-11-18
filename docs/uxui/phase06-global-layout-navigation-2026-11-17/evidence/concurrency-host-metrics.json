@@ -1,0 +1,268 @@
+﻿{
+    "completionId":  "post-table-default-68",
+    "method":  "Read-only WMI OS/CPU + owned Playwright headless browser process aggregates, sampled approximately every two seconds",
+    "limits":  "Sampling is observational and adds minor host overhead; CPU correlation alone is not source causality",
+    "rows":  [
+                 {
+                     "at":  "2026-11-18T03:19:15.0133111Z",
+                     "freePhysicalKiB":  5397012,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  31,
+                     "browserProcesses":  0,
+                     "browserWorkingSetBytes":  null,
+                     "browserCpuSeconds":  null
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:17.4789691Z",
+                     "freePhysicalKiB":  5309680,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  34,
+                     "browserProcesses":  0,
+                     "browserWorkingSetBytes":  null,
+                     "browserCpuSeconds":  null
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:20.5760473Z",
+                     "freePhysicalKiB":  3523312,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  97,
+                     "browserProcesses":  40,
+                     "browserWorkingSetBytes":  2266169344,
+                     "browserCpuSeconds":  7.9375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:23.7835415Z",
+                     "freePhysicalKiB":  2318568,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  49,
+                     "browserProcesses":  47,
+                     "browserWorkingSetBytes":  3463012352,
+                     "browserCpuSeconds":  20.28125
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:26.9441478Z",
+                     "freePhysicalKiB":  1952792,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  48,
+                     "browserProcesses":  51,
+                     "browserWorkingSetBytes":  4049100800,
+                     "browserCpuSeconds":  29.875
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:29.9759402Z",
+                     "freePhysicalKiB":  1762708,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  47,
+                     "browserProcesses":  54,
+                     "browserWorkingSetBytes":  4597968896,
+                     "browserCpuSeconds":  38.484375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:32.9167534Z",
+                     "freePhysicalKiB":  1346804,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  47,
+                     "browserProcesses":  59,
+                     "browserWorkingSetBytes":  5411708928,
+                     "browserCpuSeconds":  48.484375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:36.2774289Z",
+                     "freePhysicalKiB":  1084916,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  62,
+                     "browserProcesses":  60,
+                     "browserWorkingSetBytes":  5765885952,
+                     "browserCpuSeconds":  60.21875
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:39.8538739Z",
+                     "freePhysicalKiB":  1298444,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  48,
+                     "browserProcesses":  60,
+                     "browserWorkingSetBytes":  5818331136,
+                     "browserCpuSeconds":  74.34375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:44.0793096Z",
+                     "freePhysicalKiB":  1195712,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  49,
+                     "browserProcesses":  60,
+                     "browserWorkingSetBytes":  5878554624,
+                     "browserCpuSeconds":  94.734375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:47.7558790Z",
+                     "freePhysicalKiB":  1252440,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  38,
+                     "browserProcesses":  62,
+                     "browserWorkingSetBytes":  6178680832,
+                     "browserCpuSeconds":  112.71875
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:50.7828064Z",
+                     "freePhysicalKiB":  1307724,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  47,
+                     "browserProcesses":  64,
+                     "browserWorkingSetBytes":  6487728128,
+                     "browserCpuSeconds":  122.859375
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:53.7690804Z",
+                     "freePhysicalKiB":  1241180,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  46,
+                     "browserProcesses":  65,
+                     "browserWorkingSetBytes":  6756343808,
+                     "browserCpuSeconds":  132.0625
+                 },
+                 {
+                     "at":  "2026-11-18T03:19:57.2619361Z",
+                     "freePhysicalKiB":  1123360,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  45,
+                     "browserProcesses":  67,
+                     "browserWorkingSetBytes":  7124676608,
+                     "browserCpuSeconds":  146.171875
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:00.2944605Z",
+                     "freePhysicalKiB":  885252,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  49,
+                     "browserProcesses":  75,
+                     "browserWorkingSetBytes":  8177139712,
+                     "browserCpuSeconds":  156.8125
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:02.8918649Z",
+                     "freePhysicalKiB":  1016640,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  45,
+                     "browserProcesses":  74,
+                     "browserWorkingSetBytes":  8004354048,
+                     "browserCpuSeconds":  159.171875
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:05.8831526Z",
+                     "freePhysicalKiB":  4923364,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  87,
+                     "browserProcesses":  38,
+                     "browserWorkingSetBytes":  2411851776,
+                     "browserCpuSeconds":  31.890625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:08.7288503Z",
+                     "freePhysicalKiB":  3733776,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  65,
+                     "browserProcesses":  45,
+                     "browserWorkingSetBytes":  3546681344,
+                     "browserCpuSeconds":  41.84375
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:11.7990968Z",
+                     "freePhysicalKiB":  3227780,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  56,
+                     "browserProcesses":  47,
+                     "browserWorkingSetBytes":  4178472960,
+                     "browserCpuSeconds":  48.390625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:14.6097425Z",
+                     "freePhysicalKiB":  2758664,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  56,
+                     "browserProcesses":  54,
+                     "browserWorkingSetBytes":  5193515008,
+                     "browserCpuSeconds":  57.15625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:17.5076504Z",
+                     "freePhysicalKiB":  2271364,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  48,
+                     "browserProcesses":  55,
+                     "browserWorkingSetBytes":  5572657152,
+                     "browserCpuSeconds":  66.3125
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:20.1312676Z",
+                     "freePhysicalKiB":  1957204,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  52,
+                     "browserProcesses":  63,
+                     "browserWorkingSetBytes":  6603087872,
+                     "browserCpuSeconds":  74.40625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:23.2417055Z",
+                     "freePhysicalKiB":  1602096,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  47,
+                     "browserProcesses":  63,
+                     "browserWorkingSetBytes":  7292219392,
+                     "browserCpuSeconds":  86.25
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:26.1564676Z",
+                     "freePhysicalKiB":  1373340,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  60,
+                     "browserProcesses":  67,
+                     "browserWorkingSetBytes":  7828033536,
+                     "browserCpuSeconds":  94.390625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:29.1656666Z",
+                     "freePhysicalKiB":  1251148,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  53,
+                     "browserProcesses":  73,
+                     "browserWorkingSetBytes":  8805421056,
+                     "browserCpuSeconds":  104.078125
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:32.2559792Z",
+                     "freePhysicalKiB":  1439584,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  54,
+                     "browserProcesses":  73,
+                     "browserWorkingSetBytes":  8646443008,
+                     "browserCpuSeconds":  113.515625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:35.2475586Z",
+                     "freePhysicalKiB":  2207584,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  63,
+                     "browserProcesses":  67,
+                     "browserWorkingSetBytes":  7038025728,
+                     "browserCpuSeconds":  96.390625
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:37.8083868Z",
+                     "freePhysicalKiB":  6585788,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  50,
+                     "browserProcesses":  0,
+                     "browserWorkingSetBytes":  null,
+                     "browserCpuSeconds":  null
+                 },
+                 {
+                     "at":  "2026-11-18T03:20:40.2237702Z",
+                     "freePhysicalKiB":  7566276,
+                     "totalPhysicalKiB":  16474168,
+                     "cpuPercent":  14,
+                     "browserProcesses":  0,
+                     "browserWorkingSetBytes":  null,
+                     "browserCpuSeconds":  null
+                 }
+             ]
+}

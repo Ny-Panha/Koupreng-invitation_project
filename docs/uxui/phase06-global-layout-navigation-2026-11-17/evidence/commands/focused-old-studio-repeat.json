@@ -1,0 +1,13 @@
+﻿{
+    "id":  "focused-old-studio-repeat",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/phase05-motion.spec.js --grep=panel.handoff --repeat-each=5 --workers=2 --reporter=line --output=../../output/playwright/uxui-phase06-2026-11-17/focused-old-studio-repeat",
+    "startedAt":  "2026-11-18T03:17:39.7778922Z",
+    "durationSeconds":  10.6553206,
+    "exitCode":  0,
+    "sourceSha":  "3a02004430519ea4b9dc782821aacb4207b0b8b9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/focused-old-studio-repeat.log"
+}

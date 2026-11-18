@@ -1,0 +1,70 @@
+{
+  "observedAt": "2026-11-18T06:16:53.290430+00:00",
+  "baselineSha": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+  "remoteSha": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "changedTrackedFiles": [
+    ".gitignore",
+    "apps/frontend-admin/src/app/App.jsx",
+    "apps/frontend-admin/src/app/phase06ShellInventory.test.jsx",
+    "apps/frontend-admin/src/features/templates/AdminTemplateEditFeature.jsx",
+    "apps/frontend-admin/src/features/templates/TemplateStudio.css",
+    "apps/frontend-admin/src/layouts/AdminLayout.css",
+    "apps/frontend-admin/src/layouts/AdminLayout.jsx",
+    "apps/frontend-admin/src/layouts/components/AdminHeader.jsx",
+    "apps/frontend-admin/src/layouts/components/AdminSidebar.jsx",
+    "apps/frontend-admin/src/pages/notFound/AdminNotFoundPage.jsx",
+    "apps/frontend-user/playwright.phase06.config.js",
+    "apps/frontend-user/src/app/ScrollToTop.jsx",
+    "apps/frontend-user/src/app/phase06ShellInventory.test.jsx",
+    "apps/frontend-user/src/features/auth/AuthPage.css",
+    "apps/frontend-user/src/features/auth/components/AuthLayout.jsx",
+    "apps/frontend-user/src/features/events/EventsFeature.css",
+    "apps/frontend-user/src/features/events/EventsFeature.jsx",
+    "apps/frontend-user/src/features/events/EventsViewModes.test.jsx",
+    "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+    "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationMediaManager.test.jsx",
+    "apps/frontend-user/src/features/marketing/NotFoundFeature.jsx",
+    "apps/frontend-user/src/layouts/AuthShell.jsx",
+    "apps/frontend-user/src/layouts/HostShell.css",
+    "apps/frontend-user/src/layouts/HostShell.jsx",
+    "apps/frontend-user/src/layouts/components/Header.jsx",
+    "apps/frontend-user/src/layouts/components/HostNav.css",
+    "apps/frontend-user/src/layouts/components/HostNav.jsx",
+    "apps/frontend-user/src/layouts/components/MarketingChrome.css",
+    "apps/frontend-user/src/shared/ui/ResponsiveTable.jsx",
+    "apps/frontend-user/src/shared/ui/ResponsiveTable.test.jsx",
+    "apps/frontend-user/tests/e2e/phase06-layout-navigation.spec.js",
+    "apps/frontend-user/tests/e2e/support/phase06Fixtures.js",
+    "scripts/qa/phase06ShellInventory.mjs"
+  ],
+  "protectedCategoryChanges": {
+    "backendAndTelegram": [],
+    "dependencies": [],
+    "migrations": [],
+    "templateArtworkFontsRegistry": [],
+    "originalBrowserContracts": []
+  },
+  "trackedSqlFiles": 51,
+  "originalBrowserFileHashes": {
+    "apps/frontend-user/tests/e2e/phase02-foundations.spec.js": {
+      "baselineSha256": "af288c8a5075a95054170efadcddc9887ba3ecd9d29e7323bf508368a88d552f",
+      "currentSha256": "af288c8a5075a95054170efadcddc9887ba3ecd9d29e7323bf508368a88d552f"
+    },
+    "apps/frontend-user/tests/e2e/phase04-components.spec.js": {
+      "baselineSha256": "66c03ddeaf4eb11d499dd05a60d1dafdc2f3753d4042bf03be47b2dee1cb2c1e",
+      "currentSha256": "66c03ddeaf4eb11d499dd05a60d1dafdc2f3753d4042bf03be47b2dee1cb2c1e"
+    },
+    "apps/frontend-user/tests/e2e/phase05-motion.spec.js": {
+      "baselineSha256": "65512875de8ee0fea712793774a900efcac2749f30aa7e5cdcb7f2293fbc0c06",
+      "currentSha256": "65512875de8ee0fea712793774a900efcac2749f30aa7e5cdcb7f2293fbc0c06"
+    }
+  },
+  "verdict": "SOURCE VERIFIED",
+  "limits": [
+    "Source comparison only; does not certify live provider, data, migration execution, production prices, guest records or actual service security",
+    "Route factories and unit/browser evidence separately verify retained guard, unknown-JSON and preview contracts with fictional fixtures"
+  ],
+  "flywayMigrationSqlFiles": 48
+}

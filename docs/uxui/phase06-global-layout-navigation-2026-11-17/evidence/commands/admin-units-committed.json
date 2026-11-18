@@ -1,0 +1,20 @@
+﻿{
+    "id":  "admin-units-committed",
+    "command":  "npm --prefix apps/frontend-admin test",
+    "startedAt":  "2026-11-17T12:31:37.2547649Z",
+    "durationSeconds":  23.8661319,
+    "exitCode":  0,
+    "sourceSha":  "4b39fb18a8a39b8b2398fb53b2d7ae2154c54b6a",
+    "dirty":  [
+                  " M apps/frontend-user/src/features/events/EventsViewModes.test.jsx",
+                  "?? apps/frontend-admin/src/app/phase06ShellInventory.test.jsx",
+                  "?? apps/frontend-user/playwright.phase06.config.js",
+                  "?? apps/frontend-user/src/app/phase06ShellInventory.test.jsx",
+                  "?? apps/frontend-user/tests/e2e/phase06-layout-navigation.spec.js",
+                  "?? apps/frontend-user/tests/e2e/support/phase06Fixtures.js",
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/",
+                  "?? scripts/qa/phase06ShellInventory.mjs"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/admin-units-committed.log"
+}

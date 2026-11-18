@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-capture-aligned-origin",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/capture-visual.mjs after --only=admin-login,admin-dashboard,admin-users,admin-template-edit",
+    "startedAt":  "2026-11-18T01:38:29.9570230Z",
+    "durationSeconds":  40.952843,
+    "exitCode":  0,
+    "sourceSha":  "db42851429fc0c36c0a50b41d329cdee83edf1c9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-capture-aligned-origin.log"
+}

@@ -1,0 +1,13 @@
+﻿{
+    "id":  "diagnose-auth-layout-shift",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/diagnose-auth-shift.mjs",
+    "startedAt":  "2026-11-18T01:30:03.2172659Z",
+    "durationSeconds":  19.032050299999998,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/diagnose-auth-layout-shift.log"
+}

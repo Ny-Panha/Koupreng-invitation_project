@@ -1,0 +1,13 @@
+﻿{
+    "id":  "performance-diagnostics",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/measure-lab.mjs --diagnostics",
+    "startedAt":  "2026-11-18T01:21:55.1839360Z",
+    "durationSeconds":  450.7530404,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/performance-diagnostics.log"
+}

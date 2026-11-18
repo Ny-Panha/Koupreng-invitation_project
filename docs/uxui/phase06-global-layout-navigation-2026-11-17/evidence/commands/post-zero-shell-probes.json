@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-zero-shell-probes",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/probe-shells.mjs after",
+    "startedAt":  "2026-11-18T02:43:25.1558983Z",
+    "durationSeconds":  80.0239663,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-zero-shell-probes.log"
+}

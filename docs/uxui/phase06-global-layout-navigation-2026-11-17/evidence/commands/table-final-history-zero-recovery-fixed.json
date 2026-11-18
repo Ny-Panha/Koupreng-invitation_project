@@ -1,0 +1,13 @@
+﻿{
+    "id":  "table-final-history-zero-recovery-fixed",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/probe-history-zero.mjs",
+    "startedAt":  "2026-11-18T03:26:54.4797908Z",
+    "durationSeconds":  6.4511664999999994,
+    "exitCode":  0,
+    "sourceSha":  "3a02004430519ea4b9dc782821aacb4207b0b8b9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/table-final-history-zero-recovery-fixed.log"
+}

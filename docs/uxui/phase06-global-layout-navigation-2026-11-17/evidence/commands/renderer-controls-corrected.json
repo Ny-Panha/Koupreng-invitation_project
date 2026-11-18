@@ -1,0 +1,14 @@
+﻿{
+    "id":  "renderer-controls-corrected",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/review-renderers.mjs --only=template-boilerplate,khmer-celestial --headless-only",
+    "startedAt":  "2026-11-17T12:56:17.9047769Z",
+    "durationSeconds":  52.459606799999996,
+    "exitCode":  0,
+    "sourceSha":  "13fb564e53952934d178d4fb50d6f92d724ed852",
+    "dirty":  [
+                  " M apps/frontend-user/tests/e2e/support/phase06Fixtures.js",
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/renderer-controls-corrected.log"
+}

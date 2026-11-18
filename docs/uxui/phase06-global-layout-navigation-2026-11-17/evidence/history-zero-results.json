@@ -1,0 +1,89 @@
+{
+  "rows": [
+    {
+      "engine": "chromium",
+      "motion": "reduce",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:09.323Z",
+      "browser": "156.0.8078.4",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    },
+    {
+      "engine": "chromium",
+      "motion": "no-preference",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:09.750Z",
+      "browser": "156.0.8078.4",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    },
+    {
+      "engine": "webkit",
+      "motion": "reduce",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:10.303Z",
+      "browser": "27.2",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    },
+    {
+      "engine": "webkit",
+      "motion": "no-preference",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:11.145Z",
+      "browser": "27.2",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    },
+    {
+      "engine": "firefox",
+      "motion": "reduce",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:12.994Z",
+      "browser": "157.0",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    },
+    {
+      "engine": "firefox",
+      "motion": "no-preference",
+      "sha": "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+      "observedAt": "2026-11-18T03:31:14.265Z",
+      "browser": "157.0",
+      "viewport": {
+        "width": 1440,
+        "height": 700
+      },
+      "status": "CROSS-ENGINE VERIFIED",
+      "catalogScroll": 300,
+      "restored": 0
+    }
+  ],
+  "scope": "First home visit at zero → catalog scroll → Back; three installed engines, two motion preferences"
+}

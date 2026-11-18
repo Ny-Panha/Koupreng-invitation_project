@@ -1,0 +1,13 @@
+﻿{
+    "id":  "temporary-font-parser",
+    "command":  "python -m pip install --target output/playwright/uxui-phase06-2026-11-17/qa-fonttools fonttools[woff]",
+    "startedAt":  "2026-11-18T01:30:48.1996741Z",
+    "durationSeconds":  16.8969846,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/temporary-font-parser.log"
+}

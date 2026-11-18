@@ -1,0 +1,857 @@
+{
+  "rows": [
+    {
+      "worker": 0,
+      "trial": 1,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 36,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 480.19999999925494,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 494.69999999925494,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 518.5999999996275,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 1,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 31,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 519.2999999988824,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 526.7999999988824,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 549.1999999992549,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 0,
+      "trial": 2,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 32,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 451,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 459.19999999925494,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 487.2999999988824,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 2,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 35,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 447.5,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 455.59999999962747,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 475.5,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 0,
+      "trial": 3,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 34,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 439.90000000037253,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 448.2000000011176,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 475.7000000011176,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 3,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 37,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 447.7999999988824,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 455,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 480.3999999985099,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 0,
+      "trial": 4,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 34,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 430.40000000037253,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 445.09999999962747,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 472.40000000037253,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 4,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 35,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 451.5,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 458.59999999962747,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 478.40000000037253,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 0,
+      "trial": 5,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 33,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 484.09999999962747,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 492,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 524.3000000007451,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 5,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 34,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 482.09999999962747,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 491.2999999988824,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 525.1999999992549,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 0,
+      "trial": 6,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 37,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 477.09999999962747,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 497.59999999962747,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 531.4000000003725,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "trial": 6,
+      "before": {
+        "scroll": 0,
+        "scrollWidth": 586,
+        "width": 212,
+        "overflow": "auto",
+        "direction": "ltr",
+        "behavior": "auto",
+        "focused": true,
+        "hasFocus": true
+      },
+      "first": "PASS",
+      "after": {
+        "scroll": 33,
+        "focused": true,
+        "hasFocus": true
+      },
+      "events": [
+        {
+          "kind": "window.scrollTo",
+          "at": 538.3999999985099,
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "role": null,
+            "tabIndex": -1
+          },
+          "hasFocus": true,
+          "args": [
+            {
+              "top": 0,
+              "left": 0,
+              "behavior": "instant"
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 550.0999999996275,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "target": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          }
+        },
+        {
+          "kind": "keydown",
+          "key": "ArrowRight",
+          "at": 588.1999999992549,
+          "active": {
+            "tag": "DIV",
+            "id": "",
+            "role": "region",
+            "tabIndex": 0
+          },
+          "hasFocus": true,
+          "trusted": true,
+          "prevented": false
+        }
+      ]
+    }
+  ],
+  "method": "Two separate Chromium workers, six cold contexts each; original native key behavior observed, then one foreground retry only after a failure; diagnostic scrollTo wrapper forwards unchanged arguments"
+}

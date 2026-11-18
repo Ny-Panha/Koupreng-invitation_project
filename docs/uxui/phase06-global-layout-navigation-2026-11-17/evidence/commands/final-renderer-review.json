@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-renderer-review",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/review-renderers.mjs",
+    "startedAt":  "2026-11-18T02:16:52.5075918Z",
+    "durationSeconds":  102.02803399999999,
+    "exitCode":  0,
+    "sourceSha":  "6bfc10a52acc01eb84463b203fa4a67dc8f02245",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-renderer-review.log"
+}

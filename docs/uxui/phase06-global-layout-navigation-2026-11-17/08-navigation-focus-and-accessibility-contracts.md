@@ -1,0 +1,11 @@
+# 08 — navigation focus and accessibility contracts
+
+Public, owner and operational admin shells retain their canonical main skip links; authentication has a ready main focus target and no repeated navigation block. Exact active anchors use `aria-current`. Native dialogs isolate backgrounds and retain a coherent Tab boundary. Existing user Modal stack, inert restoration, Escape ownership, iframe handling and trigger return remain the component contract. No replacement focus manager was introduced.
+
+New destinations focus ready main content; current input/table engagement takes precedence over delayed route orientation. This fixed a reproduced organization-table regression: the unchanged Phase 04 ArrowRight scroll test initially failed 2/5 repeats, then passed 5/5 after the orientation guard. No table assertion was weakened. Query-only updates and locale changes do not reset typing or scroll.
+
+The baseline broad scan found countdown text at 4.38:1, a redundant Khmer name mismatch, and two Studio heading-order findings. Fixes use existing semantic warning roles, visible Khmer label naming and a missing section heading. Final shell scans: **12 scans / 0 findings**. New auth and system-page scans, existing AU contrast tests and manual focus/hit checks provide additional bounded proof. Native Khmer terms and AT narration remain unapproved.
+
+The final repeat found another table operability gap: the first native horizontal key could leave a still-focused scroll region at zero (8/10 original repeats passed). ResponsiveTable now handles unmodified Left/Right only when the overflowing region itself receives the key; child controls, modified shortcuts and vertical arrows retain their behavior. Its focused unit test and the unchanged original browser assertion then passed **20/20** repeats. No assertion, table role or caller API was weakened.
+
+Named scrollable table regions, field descriptions, loading/disabled native buttons, persistent dismissible error toasts and server-owned status labels retain their full unit coverage and selected real consumers. Unused DataTable/FilterTabs declarations are not counted as runtime adoption. Specialized domain states are identified separately. Automated axe and geometry do not establish full WCAG 2.2 AA conformance.

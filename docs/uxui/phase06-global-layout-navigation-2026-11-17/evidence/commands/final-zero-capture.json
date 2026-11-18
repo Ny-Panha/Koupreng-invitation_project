@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-zero-capture",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/capture-visual.mjs after",
+    "startedAt":  "2026-11-18T02:21:02.3079755Z",
+    "durationSeconds":  154.95393239999999,
+    "exitCode":  0,
+    "sourceSha":  "595091fad8e89e5f52cfcbf69605f7ce084087fd",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-zero-capture.log"
+}

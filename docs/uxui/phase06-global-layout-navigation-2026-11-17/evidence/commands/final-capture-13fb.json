@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-capture-13fb",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/capture-visual.mjs after",
+    "startedAt":  "2026-11-17T12:46:50.6402501Z",
+    "durationSeconds":  158.2295973,
+    "exitCode":  0,
+    "sourceSha":  "13fb564e53952934d178d4fb50d6f92d724ed852",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-capture-13fb.log"
+}

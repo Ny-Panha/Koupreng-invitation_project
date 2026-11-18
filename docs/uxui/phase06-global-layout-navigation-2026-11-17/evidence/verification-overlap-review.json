@@ -1,0 +1,49 @@
+{
+  "windows": [
+    {
+      "id": "final-ready-cross-engine-content-ready",
+      "start": "2026-11-18T05:40:10.301562+00:00",
+      "end": "2026-11-18T05:46:26.770300+00:00",
+      "exitCode": 0,
+      "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8"
+    },
+    {
+      "id": "final-ready-cross-engine-content-ready-resumed",
+      "start": "2026-11-18T05:40:57.739469+00:00",
+      "end": "2026-11-18T05:48:40.825797+00:00",
+      "exitCode": 1,
+      "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8"
+    },
+    {
+      "id": "final-ready-post-safearea-combined",
+      "start": "2026-11-18T05:46:28.390053+00:00",
+      "end": "2026-11-18T05:48:19.347107+00:00",
+      "exitCode": 0,
+      "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8"
+    }
+  ],
+  "overlaps": [
+    {
+      "first": "final-ready-cross-engine-content-ready",
+      "second": "final-ready-cross-engine-content-ready-resumed",
+      "seconds": 329.030831
+    },
+    {
+      "first": "final-ready-cross-engine-content-ready-resumed",
+      "second": "final-ready-post-safearea-combined",
+      "seconds": 110.957054
+    }
+  ],
+  "verdict": "REVIEW REQUIRED \u2014 duplicate verification shared preview ports; unsuitable as an isolated stability comparison",
+  "observedResults": {
+    "originalMatrix": "132/132 passed",
+    "combined": "68/68 passed",
+    "duplicateMatrix": "129/132 passed: mobile WebKit Silk hit-test timeout, Firefox connection refusal and teardown timeout"
+  },
+  "classification": {
+    "connectionRefusal": "Shared server lifecycle changed during overlapping suites; fixture orchestration failure",
+    "teardown": "Timeout retained; scheduling/lifecycle causality not conclusively isolated",
+    "silkHitTest": "Five normal-click geometry observations are separate in renderer-hit-diagnosis.json; no universal paint-cause conclusion"
+  },
+  "correction": "One serial final collector follows suite completion. Do not run another suite on its ports during capture, benchmark or probes."
+}

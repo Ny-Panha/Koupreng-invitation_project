@@ -1,0 +1,1674 @@
+{
+  "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+  "rows": [
+    {
+      "group": "home",
+      "app": "frontend-user",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 109.078125,
+        "paddingTop": 44,
+        "paddingLeft": 12,
+        "paddingRight": 12
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/home-safe-portrait.png"
+    },
+    {
+      "group": "home",
+      "app": "frontend-user",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 103.796875,
+        "paddingTop": 14,
+        "paddingLeft": 44,
+        "paddingRight": 44
+      },
+      "document": {
+        "width": 844,
+        "viewport": 844,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/home-safe-landscape.png"
+    },
+    {
+      "group": "home",
+      "app": "frontend-user",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 73.078125,
+        "paddingTop": 8,
+        "paddingLeft": 12,
+        "paddingRight": 12
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/home-forced-colors.png"
+    },
+    {
+      "group": "home",
+      "app": "frontend-user",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 73.078125,
+        "paddingTop": 8,
+        "paddingLeft": 12,
+        "paddingRight": 12
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/home-text-spacing.png"
+    },
+    {
+      "group": "home",
+      "app": "frontend-user",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 73.078125,
+        "paddingTop": 8,
+        "paddingLeft": 12,
+        "paddingRight": 12
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/home-font-fallback.png"
+    },
+    {
+      "group": "auth-login",
+      "app": "frontend-user",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 12,
+        "y": 44,
+        "width": 366,
+        "height": 46,
+        "paddingTop": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ចូលគណនី",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/auth-login-safe-portrait.png"
+    },
+    {
+      "group": "auth-login",
+      "app": "frontend-user",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 202,
+        "y": 24,
+        "width": 440,
+        "height": 46,
+        "paddingTop": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 844,
+        "viewport": 844,
+        "forcedColors": false
+      },
+      "actionName": "ចូលគណនី",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/auth-login-safe-landscape.png"
+    },
+    {
+      "group": "auth-login",
+      "app": "frontend-user",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 12,
+        "y": 24,
+        "width": 366,
+        "height": 46,
+        "paddingTop": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "ចូលគណនី",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/auth-login-forced-colors.png"
+    },
+    {
+      "group": "auth-login",
+      "app": "frontend-user",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 12,
+        "y": 24,
+        "width": 366,
+        "height": 46,
+        "paddingTop": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ចូលគណនី",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/auth-login-text-spacing.png"
+    },
+    {
+      "group": "auth-login",
+      "app": "frontend-user",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 12,
+        "y": 24,
+        "width": 366,
+        "height": 46,
+        "paddingTop": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ចូលគណនី",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/auth-login-font-fallback.png"
+    },
+    {
+      "group": "events",
+      "app": "frontend-user",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 111,
+        "paddingTop": 44,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/events-safe-portrait.png"
+    },
+    {
+      "group": "events",
+      "app": "frontend-user",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 99,
+        "paddingTop": 8,
+        "paddingLeft": 44,
+        "paddingRight": 44
+      },
+      "document": {
+        "width": 844,
+        "viewport": 844,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/events-safe-landscape.png"
+    },
+    {
+      "group": "events",
+      "app": "frontend-user",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 75,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/events-forced-colors.png"
+    },
+    {
+      "group": "events",
+      "app": "frontend-user",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "longLabel": "ពិធីមង្គលការរបស់ ដារ៉ា និង សុភា · Dara & Sophea — ក្រុមគ្រួសារជាទីស្រឡាញ់",
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 75,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/events-text-spacing.png"
+    },
+    {
+      "group": "events",
+      "app": "frontend-user",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 75,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/events-font-fallback.png"
+    },
+    {
+      "group": "dashboard",
+      "app": "frontend-user",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 108,
+        "paddingTop": 44,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/dashboard-safe-portrait.png"
+    },
+    {
+      "group": "dashboard",
+      "app": "frontend-user",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 72,
+        "paddingTop": 8,
+        "paddingLeft": 44,
+        "paddingRight": 44
+      },
+      "document": {
+        "width": 844,
+        "viewport": 844,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/dashboard-safe-landscape.png"
+    },
+    {
+      "group": "dashboard",
+      "app": "frontend-user",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/dashboard-forced-colors.png"
+    },
+    {
+      "group": "dashboard",
+      "app": "frontend-user",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "longLabel": "ពិធីមង្គលការរបស់ ដារ៉ា និង សុភា · Dara & Sophea — ក្រុមគ្រួសារជាទីស្រឡាញ់",
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/dashboard-text-spacing.png"
+    },
+    {
+      "group": "dashboard",
+      "app": "frontend-user",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "faces": []
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 8,
+        "paddingLeft": 0,
+        "paddingRight": 0
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "ម៉ឺនុយចម្បង",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/dashboard-font-fallback.png"
+    },
+    {
+      "group": "admin-dashboard",
+      "app": "frontend-admin",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 101.046875,
+        "paddingTop": 44,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-dashboard-safe-portrait.png"
+    },
+    {
+      "group": "admin-dashboard",
+      "app": "frontend-admin",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 80,
+        "paddingTop": 12,
+        "paddingLeft": 44,
+        "paddingRight": 44
+      },
+      "document": {
+        "width": 844,
+        "viewport": 844,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-dashboard-safe-landscape.png"
+    },
+    {
+      "group": "admin-dashboard",
+      "app": "frontend-admin",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 10,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-dashboard-forced-colors.png"
+    },
+    {
+      "group": "admin-dashboard",
+      "app": "frontend-admin",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 10,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-dashboard-text-spacing.png"
+    },
+    {
+      "group": "admin-dashboard",
+      "app": "frontend-admin",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "error": "A network error occurred."
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 72,
+        "paddingTop": 10,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "បើកម៉ឺនុយ",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-dashboard-font-fallback.png"
+    },
+    {
+      "group": "admin-template-edit",
+      "app": "frontend-admin",
+      "kind": "safe-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "insets": {
+        "top": 44,
+        "left": 0,
+        "right": 0,
+        "bottom": 34
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 230.59375,
+        "paddingTop": 44,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "កែសម្រួល",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-template-edit-safe-portrait.png"
+    },
+    {
+      "group": "admin-template-edit",
+      "app": "frontend-admin",
+      "kind": "safe-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "REVIEW REQUIRED",
+      "errors": [],
+      "insets": {
+        "top": 0,
+        "left": 44,
+        "right": 44,
+        "bottom": 21
+      },
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 123,
+        "paddingTop": 6,
+        "paddingLeft": 12,
+        "paddingRight": 12
+      },
+      "reason": "expect(received).toBeGreaterThanOrEqual(expected)\n\nExpected: >= 44\nReceived:    12"
+    },
+    {
+      "group": "admin-template-edit",
+      "app": "frontend-admin",
+      "kind": "forced-colors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 198.59375,
+        "paddingTop": 12,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": true
+      },
+      "actionName": "កែសម្រួល",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-template-edit-forced-colors.png"
+    },
+    {
+      "group": "admin-template-edit",
+      "app": "frontend-admin",
+      "kind": "text-spacing",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "faces": [
+            {
+              "family": "DM Sans",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Kantumruy Pro",
+          "faces": [
+            {
+              "family": "Kantumruy Pro",
+              "status": "loaded",
+              "weight": "100 900"
+            }
+          ]
+        },
+        {
+          "name": "Moul",
+          "faces": [
+            {
+              "family": "Moul",
+              "status": "loaded",
+              "weight": "400"
+            }
+          ]
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 225.171875,
+        "paddingTop": 12,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "កែសម្រួល",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-template-edit-text-spacing.png"
+    },
+    {
+      "group": "admin-template-edit",
+      "app": "frontend-admin",
+      "kind": "font-fallback",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha": "e0ce7728dcc004f6e90fb8f9893c7f19706ff68f",
+      "status": "FIXTURE VERIFIED",
+      "errors": [],
+      "fontLoads": [
+        {
+          "name": "DM Sans",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Kantumruy Pro",
+          "error": "A network error occurred."
+        },
+        {
+          "name": "Moul",
+          "error": "A network error occurred."
+        }
+      ],
+      "header": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 198.59375,
+        "paddingTop": 12,
+        "paddingLeft": 16,
+        "paddingRight": 16
+      },
+      "document": {
+        "width": 390,
+        "viewport": 390,
+        "forcedColors": false
+      },
+      "actionName": "កែសម្រួល",
+      "screenshot": "output/playwright/uxui-phase06-2026-11-17/special-modes/admin-template-edit-font-fallback.png"
+    }
+  ],
+  "limits": [
+    "CDP safe-area and forced-colors emulation are not a real device/OS/AT certificate",
+    "Font loading/fallback and geometry are not native Khmer glyph or phrasing review",
+    "No physical keyboard or browser chrome was simulated by shrinking viewport"
+  ]
+}

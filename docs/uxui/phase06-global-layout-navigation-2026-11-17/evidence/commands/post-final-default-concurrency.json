@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-final-default-concurrency",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/phase04-components.spec.js tests/e2e/phase05-motion.spec.js tests/e2e/phase06-layout-navigation.spec.js --reporter=line --output=../../output/playwright/uxui-phase06-2026-11-17/post-final-default-concurrency",
+    "startedAt":  "2026-11-18T02:55:28.9050815Z",
+    "durationSeconds":  84.277913599999991,
+    "exitCode":  1,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-final-default-concurrency.log"
+}

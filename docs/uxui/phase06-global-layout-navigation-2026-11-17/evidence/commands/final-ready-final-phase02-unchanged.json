@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-ready-final-phase02-unchanged",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/phase02-foundations.spec.js --workers=2 --reporter=line --output=../../output/playwright/uxui-phase06-2026-11-17/final-ready-phase02",
+    "startedAt":  "2026-11-18T05:48:19.8600337Z",
+    "durationSeconds":  115.00638049999999,
+    "exitCode":  1,
+    "sourceSha":  "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-ready-final-phase02-unchanged.log"
+}

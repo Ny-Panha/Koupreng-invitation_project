@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-zero-renderer-review",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/review-renderers.mjs",
+    "startedAt":  "2026-11-18T02:45:12.3637140Z",
+    "durationSeconds":  98.190886999999989,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-zero-renderer-review.log"
+}

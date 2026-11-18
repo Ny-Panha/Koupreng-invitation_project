@@ -1,0 +1,12 @@
+{
+  "id": "performance-final",
+  "command": "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/measure-lab.mjs",
+  "sourceSha": "13fb564e53952934d178d4fb50d6f92d724ed852",
+  "status": "INTERRUPTED",
+  "exitCode": null,
+  "startedAt": null,
+  "durationSeconds": null,
+  "log": "output/playwright/uxui-phase06-2026-11-17/commands/performance-final.log",
+  "archive": "output/playwright/uxui-phase06-2026-11-17/lab-first-interrupted-attempt.json",
+  "qualification": "Before-only attempt did not complete across resumed session. Exact command and retained output are known; no completion/start/duration claimed."
+}

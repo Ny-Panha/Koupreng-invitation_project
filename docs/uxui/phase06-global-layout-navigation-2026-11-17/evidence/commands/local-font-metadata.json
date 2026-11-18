@@ -1,0 +1,13 @@
+﻿{
+    "id":  "local-font-metadata",
+    "command":  "python docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/audit-local-fonts.py",
+    "startedAt":  "2026-11-18T01:31:43.4420847Z",
+    "durationSeconds":  0.4855314,
+    "exitCode":  0,
+    "sourceSha":  "db42851429fc0c36c0a50b41d329cdee83edf1c9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/local-font-metadata.log"
+}

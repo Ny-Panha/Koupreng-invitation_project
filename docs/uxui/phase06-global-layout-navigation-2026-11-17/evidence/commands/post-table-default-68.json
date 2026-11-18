@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-table-default-68",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- tests/e2e/phase04-components.spec.js tests/e2e/phase05-motion.spec.js tests/e2e/phase06-layout-navigation.spec.js --reporter=line --output=../../output/playwright/uxui-phase06-2026-11-17/post-table-default-68",
+    "startedAt":  "2026-11-18T03:19:16.9334168Z",
+    "durationSeconds":  81.0871251,
+    "exitCode":  1,
+    "sourceSha":  "3a02004430519ea4b9dc782821aacb4207b0b8b9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-table-default-68.log"
+}

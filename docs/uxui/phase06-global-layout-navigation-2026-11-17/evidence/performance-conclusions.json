@@ -1,0 +1,711 @@
+{
+  "sourceOfCurrentBuild": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+  "finalSamples": 624,
+  "finalErrors": [],
+  "finalAllMetricsValid": true,
+  "historicalSixConditions": [
+    {
+      "condition": {
+        "surface": "cinematic-invitation",
+        "width": 1440,
+        "motion": "no-preference",
+        "cache": "warm"
+      },
+      "metrics": {
+        "load": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 241.5,
+              "min": 219.5999999998603,
+              "max": 271.5999999998603
+            },
+            "after": {
+              "valid": 3,
+              "median": 229.39999999990687,
+              "min": 218.20000000018626,
+              "max": 231.20000000018626
+            },
+            "delta": -12.100000000093132,
+            "percent": -5.01035196691227,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 471.5,
+              "min": 178.3000000002794,
+              "max": 697.2999999998137
+            },
+            "after": {
+              "valid": 5,
+              "median": 426,
+              "min": 205.10000000009313,
+              "max": 689.5
+            },
+            "delta": -45.5,
+            "percent": -9.650053022269352,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 214,
+              "min": 191.79999999981374,
+              "max": 2185.9000000003725
+            },
+            "after": {
+              "valid": 3,
+              "median": 205.70000000018626,
+              "min": 198.39999999990687,
+              "max": 234.89999999990687
+            },
+            "delta": -8.299999999813735,
+            "percent": -3.878504672810157,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 196.39999999990687,
+              "min": 180,
+              "max": 209.79999999981374
+            },
+            "after": {
+              "valid": 5,
+              "median": 208.29999999981374,
+              "min": 198.1999999997206,
+              "max": 242.60000000009313
+            },
+            "delta": 11.899999999906868,
+            "percent": 6.059063136411665,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        },
+        "fcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 136,
+              "min": 132,
+              "max": 152
+            },
+            "after": {
+              "valid": 3,
+              "median": 136,
+              "min": 128,
+              "max": 168
+            },
+            "delta": 0,
+            "percent": 0.0,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 260,
+              "min": 116,
+              "max": 336
+            },
+            "after": {
+              "valid": 5,
+              "median": 208,
+              "min": 132,
+              "max": 368
+            },
+            "delta": -52,
+            "percent": -20.0,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 136,
+              "min": 128,
+              "max": 2100
+            },
+            "after": {
+              "valid": 3,
+              "median": 132,
+              "min": 128,
+              "max": 132
+            },
+            "delta": -4,
+            "percent": -2.941176470588235,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 136,
+              "min": 128,
+              "max": 136
+            },
+            "after": {
+              "valid": 5,
+              "median": 128,
+              "min": 124,
+              "max": 136
+            },
+            "delta": -8,
+            "percent": -5.88235294117647,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "NO REPEAT DIAGNOSTIC TRIGGER"
+    },
+    {
+      "condition": {
+        "surface": "create-event",
+        "width": 390,
+        "motion": "no-preference",
+        "cache": "warm"
+      },
+      "metrics": {
+        "lcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 748,
+              "min": 740,
+              "max": 752
+            },
+            "after": {
+              "valid": 3,
+              "median": 752,
+              "min": 744,
+              "max": 760
+            },
+            "delta": 4,
+            "percent": 0.53475935828877,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 748,
+              "min": 732,
+              "max": 764
+            },
+            "after": {
+              "valid": 5,
+              "median": 764,
+              "min": 732,
+              "max": 776
+            },
+            "delta": 16,
+            "percent": 2.13903743315508,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 724,
+              "min": 712,
+              "max": 764
+            },
+            "after": {
+              "valid": 3,
+              "median": 732,
+              "min": 728,
+              "max": 808
+            },
+            "delta": 8,
+            "percent": 1.1049723756906076,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 732,
+              "min": 712,
+              "max": 768
+            },
+            "after": {
+              "valid": 5,
+              "median": 716,
+              "min": 712,
+              "max": 744
+            },
+            "delta": -16,
+            "percent": -2.185792349726776,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "NO REPEAT DIAGNOSTIC TRIGGER"
+    },
+    {
+      "condition": {
+        "surface": "create-event",
+        "width": 390,
+        "motion": "reduce",
+        "cache": "warm"
+      },
+      "metrics": {
+        "lcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 512,
+              "min": 476,
+              "max": 512
+            },
+            "after": {
+              "valid": 3,
+              "median": 528,
+              "min": 524,
+              "max": 536
+            },
+            "delta": 16,
+            "percent": 3.125,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 540,
+              "min": 516,
+              "max": 588
+            },
+            "after": {
+              "valid": 5,
+              "median": 508,
+              "min": 496,
+              "max": 592
+            },
+            "delta": -32,
+            "percent": -5.9259259259259265,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 528,
+              "min": 476,
+              "max": 532
+            },
+            "after": {
+              "valid": 3,
+              "median": 472,
+              "min": 468,
+              "max": 496
+            },
+            "delta": -56,
+            "percent": -10.606060606060606,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 488,
+              "min": 464,
+              "max": 520
+            },
+            "after": {
+              "valid": 5,
+              "median": 484,
+              "min": 476,
+              "max": 560
+            },
+            "delta": -4,
+            "percent": -0.819672131147541,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "NO REPEAT DIAGNOSTIC TRIGGER"
+    },
+    {
+      "condition": {
+        "surface": "create-event",
+        "width": 1440,
+        "motion": "no-preference",
+        "cache": "warm"
+      },
+      "metrics": {
+        "lcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 472,
+              "min": 184,
+              "max": 488
+            },
+            "after": {
+              "valid": 3,
+              "median": 592,
+              "min": 496,
+              "max": 632
+            },
+            "delta": 120,
+            "percent": 25.423728813559322,
+            "verdict": "REVIEW REQUIRED"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 512,
+              "min": 504,
+              "max": 600
+            },
+            "after": {
+              "valid": 5,
+              "median": 496,
+              "min": 488,
+              "max": 552
+            },
+            "delta": -16,
+            "percent": -3.125,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 496,
+              "min": 492,
+              "max": 496
+            },
+            "after": {
+              "valid": 3,
+              "median": 496,
+              "min": 488,
+              "max": 496
+            },
+            "delta": 0,
+            "percent": 0.0,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 484,
+              "min": 484,
+              "max": 512
+            },
+            "after": {
+              "valid": 5,
+              "median": 484,
+              "min": 464,
+              "max": 500
+            },
+            "delta": 0,
+            "percent": 0.0,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "NO REPEAT DIAGNOSTIC TRIGGER"
+    },
+    {
+      "condition": {
+        "surface": "create-event",
+        "width": 1440,
+        "motion": "reduce",
+        "cache": "cold"
+      },
+      "metrics": {
+        "lcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 1652,
+              "min": 1604,
+              "max": 1664
+            },
+            "after": {
+              "valid": 3,
+              "median": 1684,
+              "min": 1648,
+              "max": 1764
+            },
+            "delta": 32,
+            "percent": 1.937046004842615,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 1696,
+              "min": 1684,
+              "max": 1760
+            },
+            "after": {
+              "valid": 5,
+              "median": 1736,
+              "min": 1660,
+              "max": 1784
+            },
+            "delta": 40,
+            "percent": 2.358490566037736,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 1716,
+              "min": 1688,
+              "max": 1784
+            },
+            "after": {
+              "valid": 3,
+              "median": 1692,
+              "min": 1668,
+              "max": 1704
+            },
+            "delta": -24,
+            "percent": -1.3986013986013985,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 1676,
+              "min": 1664,
+              "max": 1684
+            },
+            "after": {
+              "valid": 5,
+              "median": 1656,
+              "min": 1584,
+              "max": 1704
+            },
+            "delta": -20,
+            "percent": -1.1933174224343674,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "NO REPEAT DIAGNOSTIC TRIGGER"
+    },
+    {
+      "condition": {
+        "surface": "rsvp",
+        "width": 390,
+        "motion": "no-preference",
+        "cache": "warm"
+      },
+      "metrics": {
+        "lcp": {
+          "preAuthThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 900,
+              "min": 900,
+              "max": 916
+            },
+            "after": {
+              "valid": 3,
+              "median": 900,
+              "min": 884,
+              "max": 900
+            },
+            "delta": 0,
+            "percent": 0.0,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "preAuthFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 944,
+              "min": 696,
+              "max": 1044
+            },
+            "after": {
+              "valid": 5,
+              "median": 952,
+              "min": 596,
+              "max": 980
+            },
+            "delta": 8,
+            "percent": 0.847457627118644,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalThreeTrials": {
+            "before": {
+              "valid": 3,
+              "median": 916,
+              "min": 700,
+              "max": 964
+            },
+            "after": {
+              "valid": 3,
+              "median": 912,
+              "min": 880,
+              "max": 912
+            },
+            "delta": -4,
+            "percent": -0.43668122270742354,
+            "verdict": "NO DIAGNOSTIC TRIGGER"
+          },
+          "finalFiveAlternatingTrials": {
+            "before": {
+              "valid": 5,
+              "median": 636,
+              "min": 632,
+              "max": 896
+            },
+            "after": {
+              "valid": 5,
+              "median": 900,
+              "min": 880,
+              "max": 932
+            },
+            "delta": 264,
+            "percent": 41.509433962264154,
+            "verdict": "REVIEW REQUIRED"
+          }
+        }
+      },
+      "finalVerdict": "NO CURRENT DIAGNOSTIC TRIGGER",
+      "finalRepeatVerdict": "REVIEW REQUIRED"
+    }
+  ],
+  "preAuthDiagnosticSamples": 220,
+  "preAuthDiagnosticTimingTriggers": [],
+  "authShift": {
+    "firstBuildCLS": 0.04837550732325109,
+    "baselineCLS": 0.006246490420251117,
+    "threeTrialCandidateCLS": 0.004912288582915927,
+    "finalMeasuredConditions": [
+      {
+        "motion": "no-preference",
+        "cache": "cold",
+        "before": {
+          "valid": 3,
+          "median": 0.006246490420251117,
+          "min": 0.006246490420251117,
+          "max": 0.006246490420251117
+        },
+        "after": {
+          "valid": 3,
+          "median": 0.004912288582915927,
+          "min": 0.004912288582915927,
+          "max": 0.004912288582915927
+        },
+        "delta": -0.00133420183733519,
+        "percent": -21.35922330097087,
+        "verdict": "NO DIAGNOSTIC TRIGGER"
+      },
+      {
+        "motion": "no-preference",
+        "cache": "warm",
+        "before": {
+          "valid": 3,
+          "median": 0.006246490420251117,
+          "min": 0.006246490420251117,
+          "max": 0.006246490420251117
+        },
+        "after": {
+          "valid": 3,
+          "median": 0.004912288582915927,
+          "min": 0.004912288582915927,
+          "max": 0.004912288582915927
+        },
+        "delta": -0.00133420183733519,
+        "percent": -21.35922330097087,
+        "verdict": "NO DIAGNOSTIC TRIGGER"
+      },
+      {
+        "motion": "reduce",
+        "cache": "cold",
+        "before": {
+          "valid": 3,
+          "median": 0.006246490420251117,
+          "min": 0.006246490420251117,
+          "max": 0.006246490420251117
+        },
+        "after": {
+          "valid": 3,
+          "median": 0.004912288582915927,
+          "min": 0.004912288582915927,
+          "max": 0.004912288582915927
+        },
+        "delta": -0.00133420183733519,
+        "percent": -21.35922330097087,
+        "verdict": "NO DIAGNOSTIC TRIGGER"
+      },
+      {
+        "motion": "reduce",
+        "cache": "warm",
+        "before": {
+          "valid": 3,
+          "median": 0.006246490420251117,
+          "min": 0.006246490420251117,
+          "max": 0.006246490420251117
+        },
+        "after": {
+          "valid": 3,
+          "median": 0.004912288582915927,
+          "min": 0.004912288582915927,
+          "max": 0.004912288582915927
+        },
+        "delta": -0.00133420183733519,
+        "percent": -21.35922330097087,
+        "verdict": "NO DIAGNOSTIC TRIGGER"
+      }
+    ],
+    "rootCauseEvidence": "auth-layout-shift-diagnosis.json records actual layout-shift sources and a pre-render CSS isolation experiment",
+    "fix": "Reserve two mobile toolbar rows before font metrics settle; db428514"
+  },
+  "currentDiagnosticTriggers": [
+    {
+      "surface": "invitation",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "warm",
+      "metric": "lcp",
+      "delta": 556,
+      "percent": 110.31746031746033,
+      "beforeRange": [
+        492,
+        1376
+      ],
+      "afterRange": [
+        712,
+        1376
+      ],
+      "verdict": "REVIEW REQUIRED"
+    }
+  ],
+  "adjudication": "Budget flags are diagnostic review items. Only a reproduced causal source defect justifies a code fix; overlapping ranges and non-repeating medians do not prove one. Final current flags remain explicitly visible.",
+  "limits": [
+    "Actual per-navigation resource/HTML transfer is distinct from emitted bundle totals; nested cross-origin resources may require a separate network-session inventory",
+    "Medians and ranges do not establish causality or field p75",
+    "Cache-valid fixture HTTP server differs from historical routed lab warm navigation",
+    "No field INP, actual device GPU or production radio data measured"
+  ],
+  "finalFiveRoundReview": {
+    "samples": 140,
+    "errors": [],
+    "groups": 14,
+    "allMetricsValid": true,
+    "currentTriggers": [
+      {
+        "surface": "rsvp",
+        "width": 390,
+        "motion": "no-preference",
+        "cache": "warm",
+        "metric": "lcp",
+        "delta": 264,
+        "percent": 41.509433962264154,
+        "beforeRange": [
+          632,
+          896
+        ],
+        "afterRange": [
+          880,
+          932
+        ],
+        "verdict": "REVIEW REQUIRED"
+      }
+    ],
+    "method": "Five alternating before/after rounds of all final primary trigger dimensions plus all six historical groups. Supplemental observations remain separate from the primary 624 matrix."
+  }
+}

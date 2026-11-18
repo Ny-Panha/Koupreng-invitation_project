@@ -1,0 +1,262 @@
+{
+  "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+  "generatedAt": "2026-11-18T05:40:31.088Z",
+  "parsing": "@babel/parser JSX/TS, relative and @/ resolution, CSS @import; unresolved dynamic expressions recorded",
+  "scannedFiles": 802,
+  "parsedFiles": 802,
+  "motionOwnerFiles": 208,
+  "currentRouteContracts": 135,
+  "groups": 62,
+  "byApp": {
+    "frontend-user": 111,
+    "frontend-admin": 24
+  },
+  "unresolvedImports": 0,
+  "rendererFamilies": 10,
+  "rendererAliases": 38,
+  "sharedRendererIds": [
+    "event-essential",
+    "koupreng-demo-wedding"
+  ],
+  "fallback": "DefaultTemplateLayout",
+  "observedAt": "2026-11-18T05:40:31.723Z",
+  "branch": "main",
+  "startSha": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "currentSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+  "remoteSha": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "dirty": [
+    "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+  ],
+  "appPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "node": "v26.12.1",
+  "selectedComponentAPIs": [
+    {
+      "source": "apps/frontend-user/src/shared/ui/FormField.jsx",
+      "signatures": [
+        "export default function FormField({\n  label,\n  htmlFor,\n  required = false,\n  error,\n  helperText,\n  children,\n  className = \"\",\n}) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-user/src/shared/ui/LoadingButton.jsx",
+      "signatures": [
+        "export default function LoadingButton({\n  children,\n  isLoading = false,\n  disabled = false,\n  type = \"button\",\n  className = \"\",\n  onClick,\n  ...props\n}) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-user/src/shared/ui/Modal.jsx",
+      "signatures": [
+        "export default function Modal({\n  isOpen,\n  onClose,\n  title,\n  subtitle,\n  children,\n  footer,\n  size = \"md\", // 'sm' | 'md' | 'lg' | 'xl' | 'full'\n  closeOnBackdropClick = true,\n  closeOnEscape = true,\n  ariaLabel,\n  closeLabel,\n  showHeader = true,\n  className = \"\",\n  backdropClassName = \"\",\n  initialFocusRef,\n}) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-user/src/shared/ui/ResponsiveTable.jsx",
+      "signatures": [
+        "export default function ResponsiveTable({\n  children,\n  className = \"\",\n  containerClassName = \"\",\n  ariaLabel = \"Data Table\",\n}) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-user/src/shared/ui/SearchInput.jsx",
+      "signatures": [
+        "export default function SearchInput({\n  value = \"\",\n  onChange,\n  onClear,\n  placeholder,\n  ariaLabel,\n  clearLabel,\n  className = \"\",\n  disabled = false,\n}) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/Toast.jsx",
+      "signatures": [
+        "export default function Toast({ toast, onClose }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    },
+    {
+      "source": "apps/frontend-admin/src/shared/ui/AdminUI.jsx",
+      "signatures": [
+        "export function AdminPageHeader({ title, subtitle, actions, eyebrow }) {",
+        "export function StatCard({\n  label,\n  value,\n  note,\n  icon: Icon,\n  tone = \"amber\",\n  trend,\n  badge,\n  progress,\n  className = \"\",\n  style = {},\n}) {",
+        "export function StatusBadge({ status, tone }) {",
+        "export function ActionButton({ variant = \"ghost\", size, className = \"\", ...props }) {",
+        "export function SearchInput({ value, onChange, placeholder = \"ស្វែងរក...\" }) {",
+        "export function FilterTabs({ items, active, onChange }) {",
+        "export function DataTable({ columns, rows, getRowKey, emptyLabel, className = \"\" }) {",
+        "export function LoadingState({ label, layout = 'table' }) {",
+        "export function ErrorStateView({ message, onRetry }) {",
+        "export function EmptyState({ label }) {"
+      ]
+    }
+  ],
+  "installedVersions": {
+    "react": "19.3.1",
+    "vite": "8.3.5",
+    "vitest": "5.0.5",
+    "@playwright/test": "1.64.1",
+    "@axe-core/playwright": "4.14.0"
+  },
+  "baseline": {
+    "routes": 135,
+    "groups": 62,
+    "aliases": 38,
+    "dedicatedFamilies": 10
+  },
+  "routeDrift": [],
+  "unassignedRoutes": 0,
+  "routes": 135,
+  "appGroupPairs": 63,
+  "migrationSqlFiles": 48,
+  "instructions": {
+    "primary": "koupreng-premium-ux",
+    "supporting": [
+      "koupreng-qa-release",
+      "playwright"
+    ],
+    "push": "NOT AUTHORIZED",
+    "deployment": "NOT AUTHORIZED"
+  }
+}

@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-ready-post-final-user-lint",
+    "command":  "npm --prefix apps/frontend-user run lint",
+    "startedAt":  "2026-11-18T03:32:08.5845713Z",
+    "durationSeconds":  73.2419963,
+    "exitCode":  0,
+    "sourceSha":  "fefe5f62cb8d8d6554c15e022271f8fd40fd7864",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-ready-post-final-user-lint.log"
+}

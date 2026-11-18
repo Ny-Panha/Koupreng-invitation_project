@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-ready-performance-compare",
+    "command":  "python docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/compare-performance.py",
+    "startedAt":  "2026-11-18T06:03:24.9515379Z",
+    "durationSeconds":  0.2605877,
+    "exitCode":  0,
+    "sourceSha":  "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-ready-performance-compare.log"
+}

@@ -1,0 +1,32 @@
+{
+  "reports": 20,
+  "routes": 135,
+  "appGroupPairs": 63,
+  "carryoverEntries": 57,
+  "checkedJson": [
+    "source-snapshot",
+    "route-shell-adoption",
+    "shell-consumer-graph",
+    "carryover-closure-ledger",
+    "responsive-focus-results",
+    "before-manifest",
+    "after-manifest",
+    "capture-diff",
+    "renderer-visibility-review",
+    "performance-comparison",
+    "performance-diagnostic-review",
+    "rsvp-paint-diagnosis",
+    "rsvp-paint-review",
+    "final-build-assets",
+    "qa-command-results",
+    "interaction-profile",
+    "visual-review",
+    "preservation-audit",
+    "verification-overlap-review"
+  ],
+  "errors": [],
+  "limits": [
+    "Link checks are local existence checks, not semantic acceptance",
+    "Ignored images and command logs remain local; portable indexes identify their paths"
+  ]
+}

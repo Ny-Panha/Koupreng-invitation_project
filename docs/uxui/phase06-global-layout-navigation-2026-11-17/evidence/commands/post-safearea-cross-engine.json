@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-safearea-cross-engine",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase06.config.js --reporter=line --workers=2 --output=../../output/playwright/uxui-phase06-2026-11-17/post-safearea-cross-engine",
+    "startedAt":  "2026-11-18T02:50:50.6121604Z",
+    "durationSeconds":  217.3367936,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-safearea-cross-engine.log"
+}

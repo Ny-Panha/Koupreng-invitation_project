@@ -1,0 +1,13 @@
+﻿{
+    "id":  "summarize-final-performance",
+    "command":  "python docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/summarize-lab.py",
+    "startedAt":  "2026-11-18T01:21:53.7160240Z",
+    "durationSeconds":  0.2679097,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/summarize-final-performance.log"
+}

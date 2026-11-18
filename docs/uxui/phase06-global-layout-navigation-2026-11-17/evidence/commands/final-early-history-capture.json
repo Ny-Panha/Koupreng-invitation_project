@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-early-history-capture",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/capture-visual.mjs after --only=home,catalog",
+    "startedAt":  "2026-11-18T02:26:56.9942410Z",
+    "durationSeconds":  8.9218019,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-early-history-capture.log"
+}

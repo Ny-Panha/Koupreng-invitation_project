@@ -1,0 +1,18 @@
+import json
+from pathlib import Path
+E=Path(__file__).resolve().parent
+read=lambda n:json.loads((E/n).read_text(encoding='utf-8'))
+current=read('performance-comparison.json');old=read('performance-comparison.pre-auth-shift.json');diagnostic=read('performance-diagnostic-review.pre-auth-shift.json')
+final_diagnostic=read('performance-diagnostic-review.json')
+identity=lambda r:(r['surface'],r['width'],r['motion'],r['cache'])
+historical=[]
+for row in current['historicalReview']:
+ prior=next(x for x in old['comparisons'] if identity(x)==identity(row))
+ repeated=next(x for x in diagnostic['comparisons'] if identity(x)==identity(row))
+ final_repeated=next(x for x in final_diagnostic['comparisons'] if identity(x)==identity(row))
+ historical.append({'condition':dict(zip(['surface','width','motion','cache'],identity(row))),'metrics':{name:{'preAuthThreeTrials':prior['metrics'][name],'preAuthFiveAlternatingTrials':repeated['metrics'][name],'finalThreeTrials':row['metrics'][name],'finalFiveAlternatingTrials':final_repeated['metrics'][name]} for name in row['historicalReviewMetrics']},'finalVerdict':'REVIEW REQUIRED' if any(row['metrics'][name]['verdict']=='REVIEW REQUIRED' for name in row['historicalReviewMetrics']) else 'NO CURRENT DIAGNOSTIC TRIGGER','finalRepeatVerdict':'REVIEW REQUIRED' if any(final_repeated['metrics'][name]['verdict']=='REVIEW REQUIRED' for name in row['historicalReviewMetrics']) else 'NO REPEAT DIAGNOSTIC TRIGGER'})
+auth=[r for r in current['comparisons'] if r['surface']=='auth-login' and r['width']==390]
+result={'sourceOfCurrentBuild':current.get('provenance',{}).get('builds',{}).get('after',{}).get('sourceSha'),'finalSamples':current['samples'],'finalErrors':current['errors'],'finalAllMetricsValid':current['allMetricsHaveExpectedSamples'],'historicalSixConditions':historical,'preAuthDiagnosticSamples':diagnostic['samples'],'preAuthDiagnosticTimingTriggers':[r for r in diagnostic['currentReviewTriggers'] if r['metric'] in ['load','fcp','lcp']],'authShift':{'firstBuildCLS':.04837550732325109,'baselineCLS':.006246490420251117,'threeTrialCandidateCLS':.004912288582915927,'finalMeasuredConditions':[{'motion':r['motion'],'cache':r['cache'],**r['metrics']['cls']} for r in auth],'rootCauseEvidence':'auth-layout-shift-diagnosis.json records actual layout-shift sources and a pre-render CSS isolation experiment','fix':'Reserve two mobile toolbar rows before font metrics settle; db428514'},'currentDiagnosticTriggers':current['currentReviewTriggers'],'adjudication':'Budget flags are diagnostic review items. Only a reproduced causal source defect justifies a code fix; overlapping ranges and non-repeating medians do not prove one. Final current flags remain explicitly visible.','limits':current['limits']}
+result['finalFiveRoundReview']={'samples':final_diagnostic['samples'],'errors':final_diagnostic['errors'],'groups':final_diagnostic['matchedConditionGroups'],'allMetricsValid':final_diagnostic['allMetricsHaveExpectedSamples'],'currentTriggers':final_diagnostic['currentReviewTriggers'],'method':'Five alternating before/after rounds of all final primary trigger dimensions plus all six historical groups. Supplemental observations remain separate from the primary 624 matrix.'}
+(E/'performance-conclusions.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'sixHistoricalGroups':len(historical),'historicalReviewRequired':sum(r['finalVerdict']=='REVIEW REQUIRED' for r in historical),'finalReviewTriggers':len(current['currentReviewTriggers']),'authCLS':[r['after']['median'] for r in result['authShift']['finalMeasuredConditions']]}))

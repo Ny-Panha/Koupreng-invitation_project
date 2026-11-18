@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-auth-final-missing-pairs",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/measure-lab.mjs --retry-errors",
+    "startedAt":  "2026-11-18T02:14:07.2237072Z",
+    "durationSeconds":  33.3189083,
+    "exitCode":  0,
+    "sourceSha":  "6bfc10a52acc01eb84463b203fa4a67dc8f02245",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-auth-final-missing-pairs.log"
+}

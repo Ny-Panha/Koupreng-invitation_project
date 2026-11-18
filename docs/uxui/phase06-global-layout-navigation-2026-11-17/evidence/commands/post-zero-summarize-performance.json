@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-zero-summarize-performance",
+    "command":  "python docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/summarize-lab.py",
+    "startedAt":  "2026-11-18T02:42:58.4520151Z",
+    "durationSeconds":  0.29250129999999996,
+    "exitCode":  0,
+    "sourceSha":  "ec39af0d5b2e57c6e5733c1e1322f676c5f58713",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-zero-summarize-performance.log"
+}

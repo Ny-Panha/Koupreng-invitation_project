@@ -1,0 +1,3470 @@
+{
+  "samples": 220,
+  "errors": [],
+  "recoveredErrors": [
+    {
+      "stage": "before",
+      "name": "home",
+      "width": 1440,
+      "motion": "no-preference",
+      "trial": 1,
+      "reason": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4173/\", waiting until \"load\"\u001b[22m\n"
+    }
+  ],
+  "retryArchive": "lab-diagnostic-retry-input.json",
+  "matchedConditionGroups": 22,
+  "allMetricsHaveThreeValidSamples": true,
+  "allMetricsHaveExpectedSamples": true,
+  "method": {
+    "viewports": [
+      "390x844",
+      "1440x900"
+    ],
+    "dpr": 1,
+    "cpu": "Chromium CDP 2x throttle",
+    "network": "CDP 20ms latency, 10Mbps down, 5Mbps up; loopback static + fictional API server",
+    "cache": "new context cold, second navigation warm; page.route replaced by server mocks so HTTP cache remains enabled; cache hits explicitly recorded",
+    "motions": [
+      "reduce",
+      "no-preference"
+    ],
+    "repeats": 5,
+    "schedule": "Five rounds with before/after stage order alternating by round; selected diagnostic and six historical dimensions",
+    "clock": "Date wall clock fixed 2026-11-11T12:00:00Z; performance clock native"
+  },
+  "historicalConditionGroups": 6,
+  "historicalMetricTriggers": 7,
+  "historicalReview": [
+    {
+      "surface": "cinematic-invitation",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 471.5,
+            "min": 178.3000000002794,
+            "max": 697.2999999998137
+          },
+          "after": {
+            "valid": 5,
+            "median": 426,
+            "min": 205.10000000009313,
+            "max": 689.5
+          },
+          "delta": -45.5,
+          "percent": -9.650053022269352,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 260,
+            "min": 116,
+            "max": 336
+          },
+          "after": {
+            "valid": 5,
+            "median": 208,
+            "min": 132,
+            "max": 368
+          },
+          "delta": -52,
+          "percent": -20.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 564,
+            "min": 272,
+            "max": 716
+          },
+          "after": {
+            "valid": 5,
+            "median": 460,
+            "min": 252,
+            "max": 708
+          },
+          "delta": -104,
+          "percent": -18.439716312056735,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 10471,
+            "min": 10471,
+            "max": 10471
+          },
+          "after": {
+            "valid": 5,
+            "median": 10471,
+            "min": 10471,
+            "max": 10471
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "load",
+        "fcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          105,
+          105,
+          105,
+          105,
+          105
+        ],
+        "after": [
+          105,
+          105,
+          105,
+          105,
+          105
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 183.79999999981374,
+            "min": 159.59999999962747,
+            "max": 204.10000000009313
+          },
+          "after": {
+            "valid": 5,
+            "median": 170.20000000018626,
+            "min": 151.8000000002794,
+            "max": 194.10000000009313
+          },
+          "delta": -13.599999999627471,
+          "percent": -7.39934711623572,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 176,
+            "min": 160,
+            "max": 184
+          },
+          "after": {
+            "valid": 5,
+            "median": 168,
+            "min": 148,
+            "max": 188
+          },
+          "delta": -8,
+          "percent": -4.545454545454546,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 748,
+            "min": 732,
+            "max": 764
+          },
+          "after": {
+            "valid": 5,
+            "median": 764,
+            "min": 732,
+            "max": 776
+          },
+          "delta": 16,
+          "percent": 2.13903743315508,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ],
+        "after": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 217,
+            "min": 172.20000000018626,
+            "max": 289.70000000018626
+          },
+          "after": {
+            "valid": 5,
+            "median": 163.5,
+            "min": 140.60000000009313,
+            "max": 257.6999999997206
+          },
+          "delta": -53.5,
+          "percent": -24.65437788018433,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 176,
+            "min": 164,
+            "max": 252
+          },
+          "after": {
+            "valid": 5,
+            "median": 152,
+            "min": 128,
+            "max": 240
+          },
+          "delta": -24,
+          "percent": -13.636363636363635,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 540,
+            "min": 516,
+            "max": 588
+          },
+          "after": {
+            "valid": 5,
+            "median": 508,
+            "min": 496,
+            "max": 592
+          },
+          "delta": -32,
+          "percent": -5.9259259259259265,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ],
+        "after": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 174.20000000018626,
+            "min": 172.90000000037253,
+            "max": 210.20000000018626
+          },
+          "after": {
+            "valid": 5,
+            "median": 171.29999999981374,
+            "min": 151.79999999981374,
+            "max": 198.8000000002794
+          },
+          "delta": -2.900000000372529,
+          "percent": -1.664753157502542,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 168,
+            "min": 160,
+            "max": 192
+          },
+          "after": {
+            "valid": 5,
+            "median": 160,
+            "min": 144,
+            "max": 184
+          },
+          "delta": -8,
+          "percent": -4.761904761904762,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 512,
+            "min": 504,
+            "max": 600
+          },
+          "after": {
+            "valid": 5,
+            "median": 496,
+            "min": 488,
+            "max": 552
+          },
+          "delta": -16,
+          "percent": -3.125,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ],
+        "after": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "reduce",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 941.4000000003725,
+            "min": 934.9000000003725,
+            "max": 977
+          },
+          "after": {
+            "valid": 5,
+            "median": 962.6999999997206,
+            "min": 932.7999999998137,
+            "max": 976.1999999997206
+          },
+          "delta": 21.299999999348074,
+          "percent": 2.262587635366438,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1132,
+            "min": 1108,
+            "max": 1184
+          },
+          "after": {
+            "valid": 5,
+            "median": 1140,
+            "min": 1112,
+            "max": 1280
+          },
+          "delta": 8,
+          "percent": 0.7067137809187279,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1696,
+            "min": 1684,
+            "max": 1760
+          },
+          "after": {
+            "valid": 5,
+            "median": 1736,
+            "min": 1660,
+            "max": 1784
+          },
+          "delta": 40,
+          "percent": 2.358490566037736,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1387117,
+            "min": 1387117,
+            "max": 1387117
+          },
+          "after": {
+            "valid": 5,
+            "median": 1391261,
+            "min": 1391261,
+            "max": 1391261
+          },
+          "delta": 4144,
+          "percent": 0.2987491321928864,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.0033425390089163237,
+            "min": 0.003334249614197531,
+            "max": 0.0035539374624914263
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.0033259602194787375,
+            "min": 0.003317670824759945,
+            "max": 0.0033259602194787375
+          },
+          "delta": -1.6578789437586214e-05,
+          "percent": -0.4959938954597625,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "after": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "surface": "rsvp",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 221.40000000037253,
+            "min": 154.20000000018626,
+            "max": 250.29999999981374
+          },
+          "after": {
+            "valid": 5,
+            "median": 193.10000000009313,
+            "min": 161.90000000037253,
+            "max": 228.89999999990687
+          },
+          "delta": -28.300000000279397,
+          "percent": -12.78229448971625,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 128,
+            "min": 100,
+            "max": 136
+          },
+          "after": {
+            "valid": 5,
+            "median": 132,
+            "min": 96,
+            "max": 148
+          },
+          "delta": 4,
+          "percent": 3.125,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 944,
+            "min": 696,
+            "max": 1044
+          },
+          "after": {
+            "valid": 5,
+            "median": 952,
+            "min": 596,
+            "max": 980
+          },
+          "delta": 8,
+          "percent": 0.847457627118644,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 15202,
+            "min": 15202,
+            "max": 15202
+          },
+          "after": {
+            "valid": 5,
+            "median": 15202,
+            "min": 15202,
+            "max": 15202
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.rsvp-count-context"
+        ],
+        "after": [
+          "p.rsvp-count-context"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ],
+        "after": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ]
+      }
+    }
+  ],
+  "currentReviewTriggers": [
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metric": "cls",
+      "delta": 0.04212901690299997,
+      "percent": 674.4429922827982,
+      "beforeRange": [
+        0.006246490420251117,
+        0.006246490420251117
+      ],
+      "afterRange": [
+        0.04837550732325109,
+        0.04837550732325109
+      ],
+      "verdict": "REVIEW REQUIRED"
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metric": "cls",
+      "delta": 0.04212901690299997,
+      "percent": 674.4429922827982,
+      "beforeRange": [
+        0.006246490420251117,
+        0.006246490420251117
+      ],
+      "afterRange": [
+        0.04837550732325109,
+        0.04837550732325109
+      ],
+      "verdict": "REVIEW REQUIRED"
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "cold",
+      "metric": "cls",
+      "delta": 0.04212901690299997,
+      "percent": 674.4429922827982,
+      "beforeRange": [
+        0.006246490420251117,
+        0.006246490420251117
+      ],
+      "afterRange": [
+        0.04837550732325109,
+        0.04837550732325109
+      ],
+      "verdict": "REVIEW REQUIRED"
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "warm",
+      "metric": "cls",
+      "delta": 0.04212901690299997,
+      "percent": 674.4429922827982,
+      "beforeRange": [
+        0.006246490420251117,
+        0.006246490420251117
+      ],
+      "afterRange": [
+        0.04837550732325109,
+        0.04837550732325109
+      ],
+      "verdict": "REVIEW REQUIRED"
+    },
+    {
+      "surface": "dashboard",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metric": "cls",
+      "delta": 0.08969136952311267,
+      "percent": 456.8567074901818,
+      "beforeRange": [
+        0,
+        0.12889798630183297
+      ],
+      "afterRange": [
+        0.01616155670055445,
+        0.1254841640865603
+      ],
+      "verdict": "REVIEW REQUIRED"
+    }
+  ],
+  "comparisons": [
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 959.1999999997206,
+            "min": 932.2000000001863,
+            "max": 990.0999999996275
+          },
+          "after": {
+            "valid": 5,
+            "median": 955.8000000002794,
+            "min": 922.3000000002794,
+            "max": 1004.3999999999069
+          },
+          "delta": -3.3999999994412065,
+          "percent": -0.35446205165160516,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1032,
+            "min": 996,
+            "max": 1116
+          },
+          "after": {
+            "valid": 5,
+            "median": 1024,
+            "min": 992,
+            "max": 1072
+          },
+          "delta": -8,
+          "percent": -0.7751937984496124,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1376,
+            "min": 1320,
+            "max": 1428
+          },
+          "after": {
+            "valid": 5,
+            "median": 1344,
+            "min": 1332,
+            "max": 1420
+          },
+          "delta": -32,
+          "percent": -2.3255813953488373,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1263088,
+            "min": 1263088,
+            "max": 1263088
+          },
+          "after": {
+            "valid": 5,
+            "median": 1265867,
+            "min": 1265867,
+            "max": 1265867
+          },
+          "delta": 2779,
+          "percent": 0.22001634090419672,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.006246490420251117,
+            "min": 0.006246490420251117,
+            "max": 0.006246490420251117
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.04837550732325109,
+            "min": 0.04837550732325109,
+            "max": 0.04837550732325109
+          },
+          "delta": 0.04212901690299997,
+          "percent": 674.4429922827982,
+          "verdict": "REVIEW REQUIRED"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 113,
+            "min": 75.29999999981374,
+            "max": 131.5
+          },
+          "after": {
+            "valid": 5,
+            "median": 111.39999999990687,
+            "min": 99.60000000009313,
+            "max": 155.3000000002794
+          },
+          "delta": -1.6000000000931323,
+          "percent": -1.4159292036222408,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 92,
+            "min": 76,
+            "max": 108
+          },
+          "after": {
+            "valid": 5,
+            "median": 92,
+            "min": 88,
+            "max": 116
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 432,
+            "min": 420,
+            "max": 484
+          },
+          "after": {
+            "valid": 5,
+            "median": 444,
+            "min": 444,
+            "max": 464
+          },
+          "delta": 12,
+          "percent": 2.7777777777777777,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 9764,
+            "min": 9764,
+            "max": 9764
+          },
+          "after": {
+            "valid": 5,
+            "median": 9764,
+            "min": 9764,
+            "max": 9764
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.006246490420251117,
+            "min": 0.006246490420251117,
+            "max": 0.006246490420251117
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.04837550732325109,
+            "min": 0.04837550732325109,
+            "max": 0.04837550732325109
+          },
+          "delta": 0.04212901690299997,
+          "percent": 674.4429922827982,
+          "verdict": "REVIEW REQUIRED"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          33,
+          33,
+          33,
+          33,
+          33
+        ],
+        "after": [
+          33,
+          33,
+          33,
+          33,
+          33
+        ]
+      }
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 949.1000000000931,
+            "min": 932,
+            "max": 1047.7000000001863
+          },
+          "after": {
+            "valid": 5,
+            "median": 966.2999999998137,
+            "min": 928.8999999999069,
+            "max": 991.2999999998137
+          },
+          "delta": 17.199999999720603,
+          "percent": 1.8122431777177237,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1020,
+            "min": 1000,
+            "max": 1212
+          },
+          "after": {
+            "valid": 5,
+            "median": 1040,
+            "min": 996,
+            "max": 1104
+          },
+          "delta": 20,
+          "percent": 1.9607843137254901,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1352,
+            "min": 1324,
+            "max": 1540
+          },
+          "after": {
+            "valid": 5,
+            "median": 1356,
+            "min": 1324,
+            "max": 1424
+          },
+          "delta": 4,
+          "percent": 0.2958579881656805,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1263088,
+            "min": 1263088,
+            "max": 1263088
+          },
+          "after": {
+            "valid": 5,
+            "median": 1265867,
+            "min": 1265867,
+            "max": 1265867
+          },
+          "delta": 2779,
+          "percent": 0.22001634090419672,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.006246490420251117,
+            "min": 0.006246490420251117,
+            "max": 0.006246490420251117
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.04837550732325109,
+            "min": 0.04837550732325109,
+            "max": 0.04837550732325109
+          },
+          "delta": 0.04212901690299997,
+          "percent": 674.4429922827982,
+          "verdict": "REVIEW REQUIRED"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "auth-login",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 125.20000000018626,
+            "min": 115.6999999997206,
+            "max": 346.6999999997206
+          },
+          "after": {
+            "valid": 5,
+            "median": 127.3000000002794,
+            "min": 112.29999999981374,
+            "max": 136.89999999990687
+          },
+          "delta": 2.1000000000931323,
+          "percent": 1.6773162940016038,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 104,
+            "min": 100,
+            "max": 264
+          },
+          "after": {
+            "valid": 5,
+            "median": 108,
+            "min": 96,
+            "max": 112
+          },
+          "delta": 4,
+          "percent": 3.8461538461538463,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 456,
+            "min": 432,
+            "max": 640
+          },
+          "after": {
+            "valid": 5,
+            "median": 464,
+            "min": 432,
+            "max": 468
+          },
+          "delta": 8,
+          "percent": 1.7543859649122806,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 9764,
+            "min": 9764,
+            "max": 9764
+          },
+          "after": {
+            "valid": 5,
+            "median": 9764,
+            "min": 9764,
+            "max": 9764
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.006246490420251117,
+            "min": 0.006246490420251117,
+            "max": 0.006246490420251117
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.04837550732325109,
+            "min": 0.04837550732325109,
+            "max": 0.04837550732325109
+          },
+          "delta": 0.04212901690299997,
+          "percent": 674.4429922827982,
+          "verdict": "REVIEW REQUIRED"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          33,
+          33,
+          33,
+          33,
+          33
+        ],
+        "after": [
+          33,
+          33,
+          33,
+          33,
+          33
+        ]
+      }
+    },
+    {
+      "surface": "cinematic-invitation",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 948.3999999999069,
+            "min": 936,
+            "max": 971.2999999998137
+          },
+          "after": {
+            "valid": 5,
+            "median": 966.6000000000931,
+            "min": 951.7000000001863,
+            "max": 989.8999999999069
+          },
+          "delta": 18.200000000186265,
+          "percent": 1.9190215099312582,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1036,
+            "min": 1012,
+            "max": 1052
+          },
+          "after": {
+            "valid": 5,
+            "median": 1048,
+            "min": 1032,
+            "max": 1080
+          },
+          "delta": 12,
+          "percent": 1.1583011583011582,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 2440,
+            "min": 2424,
+            "max": 2480
+          },
+          "after": {
+            "valid": 5,
+            "median": 2476,
+            "min": 2152,
+            "max": 2488
+          },
+          "delta": 36,
+          "percent": 1.4754098360655739,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 3692905,
+            "min": 3692905,
+            "max": 3692905
+          },
+          "after": {
+            "valid": 5,
+            "median": 3695243,
+            "min": 3695243,
+            "max": 3695243
+          },
+          "delta": 2338,
+          "percent": 0.06331059152618332,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 4.179526748971193e-05,
+            "min": 4.179526748971193e-05,
+            "max": 4.179526748971193e-05
+          },
+          "after": {
+            "valid": 5,
+            "median": 4.179526748971193e-05,
+            "min": 4.179526748971193e-05,
+            "max": 4.179526748971193e-05
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "cinematic-invitation",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 471.5,
+            "min": 178.3000000002794,
+            "max": 697.2999999998137
+          },
+          "after": {
+            "valid": 5,
+            "median": 426,
+            "min": 205.10000000009313,
+            "max": 689.5
+          },
+          "delta": -45.5,
+          "percent": -9.650053022269352,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 260,
+            "min": 116,
+            "max": 336
+          },
+          "after": {
+            "valid": 5,
+            "median": 208,
+            "min": 132,
+            "max": 368
+          },
+          "delta": -52,
+          "percent": -20.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 564,
+            "min": 272,
+            "max": 716
+          },
+          "after": {
+            "valid": 5,
+            "median": 460,
+            "min": 252,
+            "max": 708
+          },
+          "delta": -104,
+          "percent": -18.439716312056735,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 10471,
+            "min": 10471,
+            "max": 10471
+          },
+          "after": {
+            "valid": 5,
+            "median": 10471,
+            "min": 10471,
+            "max": 10471
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "load",
+        "fcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          105,
+          105,
+          105,
+          105,
+          105
+        ],
+        "after": [
+          105,
+          105,
+          105,
+          105,
+          105
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 948.7000000001863,
+            "min": 922.5,
+            "max": 981.7999999998137
+          },
+          "after": {
+            "valid": 5,
+            "median": 969.1000000000931,
+            "min": 939,
+            "max": 978
+          },
+          "delta": 20.399999999906868,
+          "percent": 2.1503109518185792,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1140,
+            "min": 1100,
+            "max": 1344
+          },
+          "after": {
+            "valid": 5,
+            "median": 1172,
+            "min": 1100,
+            "max": 1292
+          },
+          "delta": 32,
+          "percent": 2.807017543859649,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1904,
+            "min": 1876,
+            "max": 1992
+          },
+          "after": {
+            "valid": 5,
+            "median": 1912,
+            "min": 1872,
+            "max": 1952
+          },
+          "delta": 8,
+          "percent": 0.42016806722689076,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1384205,
+            "min": 1384205,
+            "max": 1384205
+          },
+          "after": {
+            "valid": 5,
+            "median": 1388349,
+            "min": 1388349,
+            "max": 1388349
+          },
+          "delta": 4144,
+          "percent": 0.2993776210893618,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.002023821659499205,
+            "min": 0.002023821659499205,
+            "max": 0.002767920508126675
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.002023821659499205,
+            "min": 0.002023821659499205,
+            "max": 0.0020500265216241943
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 183.79999999981374,
+            "min": 159.59999999962747,
+            "max": 204.10000000009313
+          },
+          "after": {
+            "valid": 5,
+            "median": 170.20000000018626,
+            "min": 151.8000000002794,
+            "max": 194.10000000009313
+          },
+          "delta": -13.599999999627471,
+          "percent": -7.39934711623572,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 176,
+            "min": 160,
+            "max": 184
+          },
+          "after": {
+            "valid": 5,
+            "median": 168,
+            "min": 148,
+            "max": 188
+          },
+          "delta": -8,
+          "percent": -4.545454545454546,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 748,
+            "min": 732,
+            "max": 764
+          },
+          "after": {
+            "valid": 5,
+            "median": 764,
+            "min": 732,
+            "max": 776
+          },
+          "delta": 16,
+          "percent": 2.13903743315508,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ],
+        "after": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 953.7999999998137,
+            "min": 920.3999999999069,
+            "max": 1052.3999999999069
+          },
+          "after": {
+            "valid": 5,
+            "median": 952.7999999998137,
+            "min": 949.8000000002794,
+            "max": 974.6000000000931
+          },
+          "delta": -1.0,
+          "percent": -0.1048437827637026,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1140,
+            "min": 1080,
+            "max": 1584
+          },
+          "after": {
+            "valid": 5,
+            "median": 1136,
+            "min": 1124,
+            "max": 1324
+          },
+          "delta": -4,
+          "percent": -0.3508771929824561,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1668,
+            "min": 1652,
+            "max": 1820
+          },
+          "after": {
+            "valid": 5,
+            "median": 1668,
+            "min": 1616,
+            "max": 1688
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1384205,
+            "min": 1384205,
+            "max": 1384205
+          },
+          "after": {
+            "valid": 5,
+            "median": 1388349,
+            "min": 1388349,
+            "max": 1388349
+          },
+          "delta": 4144,
+          "percent": 0.2993776210893618,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.002030372875030452,
+            "min": 0,
+            "max": 0.0020434753060929473
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.002030372875030452,
+            "min": 0,
+            "max": 0.0020369240905616995
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 390,
+      "motion": "reduce",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 217,
+            "min": 172.20000000018626,
+            "max": 289.70000000018626
+          },
+          "after": {
+            "valid": 5,
+            "median": 163.5,
+            "min": 140.60000000009313,
+            "max": 257.6999999997206
+          },
+          "delta": -53.5,
+          "percent": -24.65437788018433,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 176,
+            "min": 164,
+            "max": 252
+          },
+          "after": {
+            "valid": 5,
+            "median": 152,
+            "min": 128,
+            "max": 240
+          },
+          "delta": -24,
+          "percent": -13.636363636363635,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 540,
+            "min": 516,
+            "max": 588
+          },
+          "after": {
+            "valid": 5,
+            "median": 508,
+            "min": 496,
+            "max": 592
+          },
+          "delta": -32,
+          "percent": -5.9259259259259265,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.workspace-muted"
+        ],
+        "after": [
+          "p.workspace-muted"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ],
+        "after": [
+          57,
+          57,
+          57,
+          57,
+          57
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 954.7000000001863,
+            "min": 951.1000000000931,
+            "max": 988
+          },
+          "after": {
+            "valid": 5,
+            "median": 956.2999999998137,
+            "min": 950.2999999998137,
+            "max": 968.1000000000931
+          },
+          "delta": 1.599999999627471,
+          "percent": 0.16759191365111123,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1164,
+            "min": 1104,
+            "max": 1336
+          },
+          "after": {
+            "valid": 5,
+            "median": 1128,
+            "min": 1116,
+            "max": 1328
+          },
+          "delta": -36,
+          "percent": -3.0927835051546393,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1756,
+            "min": 1660,
+            "max": 1844
+          },
+          "after": {
+            "valid": 5,
+            "median": 1736,
+            "min": 1712,
+            "max": 1792
+          },
+          "delta": -20,
+          "percent": -1.1389521640091116,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1387117,
+            "min": 1387117,
+            "max": 1387117
+          },
+          "after": {
+            "valid": 5,
+            "median": 1391261,
+            "min": 1391261,
+            "max": 1391261
+          },
+          "delta": 4144,
+          "percent": 0.2987491321928864,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.003334249614197531,
+            "min": 0.0002003053264853395,
+            "max": 0.00356222685721022
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.0033259602194787375,
+            "min": 0.003317670824759945,
+            "max": 0.003334249614197531
+          },
+          "delta": -8.28939471879354e-06,
+          "percent": -0.24861350162557,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "after": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 174.20000000018626,
+            "min": 172.90000000037253,
+            "max": 210.20000000018626
+          },
+          "after": {
+            "valid": 5,
+            "median": 171.29999999981374,
+            "min": 151.79999999981374,
+            "max": 198.8000000002794
+          },
+          "delta": -2.900000000372529,
+          "percent": -1.664753157502542,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 168,
+            "min": 160,
+            "max": 192
+          },
+          "after": {
+            "valid": 5,
+            "median": 160,
+            "min": 144,
+            "max": 184
+          },
+          "delta": -8,
+          "percent": -4.761904761904762,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 512,
+            "min": 504,
+            "max": 600
+          },
+          "after": {
+            "valid": 5,
+            "median": 496,
+            "min": 488,
+            "max": 552
+          },
+          "delta": -16,
+          "percent": -3.125,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ],
+        "after": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "reduce",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 941.4000000003725,
+            "min": 934.9000000003725,
+            "max": 977
+          },
+          "after": {
+            "valid": 5,
+            "median": 962.6999999997206,
+            "min": 932.7999999998137,
+            "max": 976.1999999997206
+          },
+          "delta": 21.299999999348074,
+          "percent": 2.262587635366438,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1132,
+            "min": 1108,
+            "max": 1184
+          },
+          "after": {
+            "valid": 5,
+            "median": 1140,
+            "min": 1112,
+            "max": 1280
+          },
+          "delta": 8,
+          "percent": 0.7067137809187279,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1696,
+            "min": 1684,
+            "max": 1760
+          },
+          "after": {
+            "valid": 5,
+            "median": 1736,
+            "min": 1660,
+            "max": 1784
+          },
+          "delta": 40,
+          "percent": 2.358490566037736,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1387117,
+            "min": 1387117,
+            "max": 1387117
+          },
+          "after": {
+            "valid": 5,
+            "median": 1391261,
+            "min": 1391261,
+            "max": 1391261
+          },
+          "delta": 4144,
+          "percent": 0.2987491321928864,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.0033425390089163237,
+            "min": 0.003334249614197531,
+            "max": 0.0035539374624914263
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.0033259602194787375,
+            "min": 0.003317670824759945,
+            "max": 0.0033259602194787375
+          },
+          "delta": -1.6578789437586214e-05,
+          "percent": -0.4959938954597625,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "after": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "surface": "create-event",
+      "width": 1440,
+      "motion": "reduce",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 173.59999999962747,
+            "min": 149.79999999981374,
+            "max": 216.6999999997206
+          },
+          "after": {
+            "valid": 5,
+            "median": 176.5,
+            "min": 159.39999999990687,
+            "max": 195.60000000009313
+          },
+          "delta": 2.900000000372529,
+          "percent": 1.6705069126605716,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 164,
+            "min": 148,
+            "max": 200
+          },
+          "after": {
+            "valid": 5,
+            "median": 168,
+            "min": 156,
+            "max": 204
+          },
+          "delta": 4,
+          "percent": 2.4390243902439024,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 504,
+            "min": 488,
+            "max": 616
+          },
+          "after": {
+            "valid": 5,
+            "median": 508,
+            "min": 496,
+            "max": 532
+          },
+          "delta": 4,
+          "percent": 0.7936507936507936,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "after": {
+            "valid": 5,
+            "median": 11401,
+            "min": 11401,
+            "max": 11401
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "h1."
+        ],
+        "after": [
+          "h1."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ],
+        "after": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ]
+      }
+    },
+    {
+      "surface": "dashboard",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 962,
+            "min": 932.3999999999069,
+            "max": 979.4000000003725
+          },
+          "after": {
+            "valid": 5,
+            "median": 945.6000000000931,
+            "min": 921.6000000000931,
+            "max": 1003
+          },
+          "delta": -16.399999999906868,
+          "percent": -1.7047817047720237,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1040,
+            "min": 1024,
+            "max": 1108
+          },
+          "after": {
+            "valid": 5,
+            "median": 1028,
+            "min": 1008,
+            "max": 1120
+          },
+          "delta": -12,
+          "percent": -1.153846153846154,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 2084,
+            "min": 1896,
+            "max": 2196
+          },
+          "after": {
+            "valid": 5,
+            "median": 1960,
+            "min": 1892,
+            "max": 2060
+          },
+          "delta": -124,
+          "percent": -5.950095969289827,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1381134,
+            "min": 1381134,
+            "max": 1381134
+          },
+          "after": {
+            "valid": 5,
+            "median": 1386266,
+            "min": 1386266,
+            "max": 1386266
+          },
+          "delta": 5132,
+          "percent": 0.3715787171990553,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.019632275952748315,
+            "min": 0,
+            "max": 0.12889798630183297
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.10932364547586099,
+            "min": 0.01616155670055445,
+            "max": 0.1254841640865603
+          },
+          "delta": 0.08969136952311267,
+          "percent": 456.8567074901818,
+          "verdict": "REVIEW REQUIRED"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "dashboard",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 199.90000000037253,
+            "min": 161.20000000018626,
+            "max": 529.6000000000931
+          },
+          "after": {
+            "valid": 5,
+            "median": 148.09999999962747,
+            "min": 123.39999999990687,
+            "max": 202.8000000002794
+          },
+          "delta": -51.80000000074506,
+          "percent": -25.912956478563544,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 116,
+            "min": 104,
+            "max": 228
+          },
+          "after": {
+            "valid": 5,
+            "median": 112,
+            "min": 88,
+            "max": 128
+          },
+          "delta": -4,
+          "percent": -3.4482758620689653,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1000,
+            "min": 932,
+            "max": 1256
+          },
+          "after": {
+            "valid": 5,
+            "median": 752,
+            "min": 588,
+            "max": 1040
+          },
+          "delta": -248,
+          "percent": -24.8,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 15021,
+            "min": 15021,
+            "max": 15021
+          },
+          "after": {
+            "valid": 5,
+            "median": 15021,
+            "min": 15021,
+            "max": 15021
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.019575378915827103,
+            "min": 0,
+            "max": 0.019632275952748315
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.01616155670055445,
+            "min": 0.01616155670055445,
+            "max": 0.016218453737475658
+          },
+          "delta": -0.0034138222152726543,
+          "percent": -17.439367227331203,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "img."
+        ],
+        "after": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          65,
+          65,
+          65,
+          65,
+          65
+        ],
+        "after": [
+          65,
+          65,
+          65,
+          65,
+          65
+        ]
+      }
+    },
+    {
+      "surface": "home",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 1086.7999999998137,
+            "min": 1067.5,
+            "max": 1166.2999999998137
+          },
+          "after": {
+            "valid": 5,
+            "median": 1085,
+            "min": 1067.3999999999069,
+            "max": 1123.3999999999069
+          },
+          "delta": -1.7999999998137355,
+          "percent": -0.16562384981726574,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1288,
+            "min": 1252,
+            "max": 1448
+          },
+          "after": {
+            "valid": 5,
+            "median": 1280,
+            "min": 1260,
+            "max": 1368
+          },
+          "delta": -8,
+          "percent": -0.6211180124223602,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1288,
+            "min": 1252,
+            "max": 1448
+          },
+          "after": {
+            "valid": 5,
+            "median": 1280,
+            "min": 1260,
+            "max": 1368
+          },
+          "delta": -8,
+          "percent": -0.6211180124223602,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1401730,
+            "min": 1401730,
+            "max": 1401730
+          },
+          "after": {
+            "valid": 5,
+            "median": 1404068,
+            "min": 1404068,
+            "max": 1404068
+          },
+          "delta": 2338,
+          "percent": 0.16679389040685438,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.0016685589752406574,
+            "min": 0.0016685589752406574,
+            "max": 0.0016685589752406574
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.0016685589752406574,
+            "min": 0.0016685589752406574,
+            "max": 0.0016685589752406574
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "after": [
+          "img."
+        ],
+        "before": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "home",
+      "width": 1440,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 179.1999999997206,
+            "min": 173.29999999981374,
+            "max": 231.89999999990687
+          },
+          "after": {
+            "valid": 5,
+            "median": 157,
+            "min": 153.6999999997206,
+            "max": 218.5
+          },
+          "delta": -22.199999999720603,
+          "percent": -12.38839285700626,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 164,
+            "min": 160,
+            "max": 212
+          },
+          "after": {
+            "valid": 5,
+            "median": 140,
+            "min": 136,
+            "max": 204
+          },
+          "delta": -24,
+          "percent": -14.634146341463413,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 164,
+            "min": 160,
+            "max": 212
+          },
+          "after": {
+            "valid": 5,
+            "median": 140,
+            "min": 136,
+            "max": 204
+          },
+          "delta": -24,
+          "percent": -14.634146341463413,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 10409,
+            "min": 10409,
+            "max": 10409
+          },
+          "after": {
+            "valid": 5,
+            "median": 10409,
+            "min": 10409,
+            "max": 10409
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.0016685589752406574,
+            "min": 0.0016685589752406574,
+            "max": 0.0016685589752406574
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.0016685589752406574,
+            "min": 0.0016685589752406574,
+            "max": 0.0016685589752406574
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "after": [
+          "img."
+        ],
+        "before": [
+          "img."
+        ]
+      },
+      "cacheHits": {
+        "after": [
+          29,
+          29,
+          29,
+          29,
+          29
+        ],
+        "before": [
+          29,
+          29,
+          29,
+          29,
+          29
+        ]
+      }
+    },
+    {
+      "surface": "invitation",
+      "width": 1440,
+      "motion": "reduce",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 962.1000000000931,
+            "min": 928.7000000001863,
+            "max": 980.7000000001863
+          },
+          "after": {
+            "valid": 5,
+            "median": 957.1000000000931,
+            "min": 950.7999999998137,
+            "max": 965.3999999999069
+          },
+          "delta": -5.0,
+          "percent": -0.5196964972455582,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1132,
+            "min": 1068,
+            "max": 1288
+          },
+          "after": {
+            "valid": 5,
+            "median": 1120,
+            "min": 1116,
+            "max": 1136
+          },
+          "delta": -12,
+          "percent": -1.0600706713780919,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1132,
+            "min": 1068,
+            "max": 3296
+          },
+          "after": {
+            "valid": 5,
+            "median": 1120,
+            "min": 1116,
+            "max": 1136
+          },
+          "delta": -12,
+          "percent": -1.0600706713780919,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 3348621,
+            "min": 2620333,
+            "max": 3348621
+          },
+          "after": {
+            "valid": 5,
+            "median": 3047809,
+            "min": 2805809,
+            "max": 3353769
+          },
+          "delta": -300812,
+          "percent": -8.98316053085733,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.061498344599301265,
+            "min": 0.05817238437982253,
+            "max": 0.06153979157289523
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.061498344599301265,
+            "min": 0.061218050733024686,
+            "max": 0.06153150217817644
+          },
+          "delta": 0.0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "div.chat-greeting-bubble",
+          "span.studio-section-title"
+        ],
+        "after": [
+          "div.chat-greeting-bubble"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "after": [
+          60,
+          60,
+          60,
+          60,
+          60
+        ]
+      }
+    },
+    {
+      "surface": "invitation",
+      "width": 1440,
+      "motion": "reduce",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 277.09999999962747,
+            "min": 161.5,
+            "max": 339.20000000018626
+          },
+          "after": {
+            "valid": 5,
+            "median": 177.1999999997206,
+            "min": 122.6999999997206,
+            "max": 339.29999999981374
+          },
+          "delta": -99.89999999990687,
+          "percent": -36.05196679900439,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 272,
+            "min": 160,
+            "max": 336
+          },
+          "after": {
+            "valid": 5,
+            "median": 172,
+            "min": 128,
+            "max": 328
+          },
+          "delta": -100,
+          "percent": -36.76470588235294,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1208,
+            "min": 692,
+            "max": 1444
+          },
+          "after": {
+            "valid": 5,
+            "median": 1160,
+            "min": 640,
+            "max": 1444
+          },
+          "delta": -48,
+          "percent": -3.9735099337748347,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 30569,
+            "min": 30569,
+            "max": 210573
+          },
+          "after": {
+            "valid": 5,
+            "median": 30569,
+            "min": 30569,
+            "max": 336205
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.05817238437982253,
+            "min": 0.057883801118827155,
+            "max": 0.05817238437982253
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.057883801118827155,
+            "min": 0.057883801118827155,
+            "max": 0.05817238437982253
+          },
+          "delta": -0.0002885832609953731,
+          "percent": -0.4960829164421703,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "span.studio-section-title"
+        ],
+        "after": [
+          "span.studio-section-title"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          207,
+          210,
+          210,
+          210,
+          210
+        ],
+        "after": [
+          208,
+          208,
+          210,
+          209,
+          210
+        ]
+      }
+    },
+    {
+      "surface": "rsvp",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "cold",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 946.2000000001863,
+            "min": 938.1999999997206,
+            "max": 963.8999999999069
+          },
+          "after": {
+            "valid": 5,
+            "median": 955.5,
+            "min": 939.7000000001863,
+            "max": 968.8999999999069
+          },
+          "delta": 9.299999999813735,
+          "percent": 0.9828788839370011,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 1028,
+            "min": 1016,
+            "max": 1056
+          },
+          "after": {
+            "valid": 5,
+            "median": 1036,
+            "min": 1020,
+            "max": 1044
+          },
+          "delta": 8,
+          "percent": 0.7782101167315175,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 1916,
+            "min": 1864,
+            "max": 2084
+          },
+          "after": {
+            "valid": 5,
+            "median": 1928,
+            "min": 1876,
+            "max": 2256
+          },
+          "delta": 12,
+          "percent": 0.6263048016701461,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 1355508,
+            "min": 1355508,
+            "max": 1355508
+          },
+          "after": {
+            "valid": 5,
+            "median": 1360640,
+            "min": 1360640,
+            "max": 1360640
+          },
+          "delta": 5132,
+          "percent": 0.37860344608810864,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0.10932312854313167,
+            "min": 0,
+            "max": 0.10932429180852511
+          },
+          "after": {
+            "valid": 5,
+            "median": 0.10932381356237426,
+            "min": 0.06564326795314722,
+            "max": 0.10932471158013499
+          },
+          "delta": 6.850192425938983e-07,
+          "percent": 0.0006266004748699038,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [],
+      "lcpElements": {
+        "before": [
+          "p.rsvp-count-context"
+        ],
+        "after": [
+          "p.rsvp-count-context"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "surface": "rsvp",
+      "width": 390,
+      "motion": "no-preference",
+      "cache": "warm",
+      "metrics": {
+        "load": {
+          "before": {
+            "valid": 5,
+            "median": 221.40000000037253,
+            "min": 154.20000000018626,
+            "max": 250.29999999981374
+          },
+          "after": {
+            "valid": 5,
+            "median": 193.10000000009313,
+            "min": 161.90000000037253,
+            "max": 228.89999999990687
+          },
+          "delta": -28.300000000279397,
+          "percent": -12.78229448971625,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "fcp": {
+          "before": {
+            "valid": 5,
+            "median": 128,
+            "min": 100,
+            "max": 136
+          },
+          "after": {
+            "valid": 5,
+            "median": 132,
+            "min": 96,
+            "max": 148
+          },
+          "delta": 4,
+          "percent": 3.125,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "lcp": {
+          "before": {
+            "valid": 5,
+            "median": 944,
+            "min": 696,
+            "max": 1044
+          },
+          "after": {
+            "valid": 5,
+            "median": 952,
+            "min": 596,
+            "max": 980
+          },
+          "delta": 8,
+          "percent": 0.847457627118644,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "initialRequestBytes": {
+          "before": {
+            "valid": 5,
+            "median": 15202,
+            "min": 15202,
+            "max": 15202
+          },
+          "after": {
+            "valid": 5,
+            "median": 15202,
+            "min": 15202,
+            "max": 15202
+          },
+          "delta": 0,
+          "percent": 0.0,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        },
+        "cls": {
+          "before": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "valid": 5,
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "delta": 0,
+          "percent": null,
+          "verdict": "NO DIAGNOSTIC TRIGGER"
+        }
+      },
+      "historicalReviewMetrics": [
+        "lcp"
+      ],
+      "lcpElements": {
+        "before": [
+          "p.rsvp-count-context"
+        ],
+        "after": [
+          "p.rsvp-count-context"
+        ]
+      },
+      "cacheHits": {
+        "before": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ],
+        "after": [
+          59,
+          59,
+          59,
+          59,
+          59
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Actual per-navigation resource/HTML transfer is distinct from emitted bundle totals; nested cross-origin resources may require a separate network-session inventory",
+    "Medians and ranges do not establish causality or field p75",
+    "Cache-valid fixture HTTP server differs from historical routed lab warm navigation",
+    "No field INP, actual device GPU or production radio data measured"
+  ]
+}

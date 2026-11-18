@@ -1,0 +1,13 @@
+﻿{
+    "id":  "post-auth-aligned-final-performance",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/measure-lab.mjs --restart",
+    "startedAt":  "2026-11-18T01:39:31.5517441Z",
+    "durationSeconds":  2068.3447604,
+    "exitCode":  0,
+    "sourceSha":  "db42851429fc0c36c0a50b41d329cdee83edf1c9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/post-auth-aligned-final-performance.log"
+}

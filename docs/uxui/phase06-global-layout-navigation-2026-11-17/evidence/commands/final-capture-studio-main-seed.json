@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-capture-studio-main-seed",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/capture-visual.mjs after --only=admin-template-edit",
+    "startedAt":  "2026-11-18T01:36:59.5975810Z",
+    "durationSeconds":  7.6718024,
+    "exitCode":  0,
+    "sourceSha":  "db42851429fc0c36c0a50b41d329cdee83edf1c9",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-capture-studio-main-seed.log"
+}

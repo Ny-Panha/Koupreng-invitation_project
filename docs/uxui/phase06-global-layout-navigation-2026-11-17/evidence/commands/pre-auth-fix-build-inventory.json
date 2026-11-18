@@ -1,0 +1,13 @@
+﻿{
+    "id":  "pre-auth-fix-build-inventory",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/inventory-build-assets.mjs",
+    "startedAt":  "2026-11-18T01:30:48.1996741Z",
+    "durationSeconds":  24.9723267,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/pre-auth-fix-build-inventory.log"
+}

@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-evidence-token-parity",
+    "command":  "node scripts/sync-design-tokens.cjs --check",
+    "startedAt":  "2026-11-18T06:16:52.5652720Z",
+    "durationSeconds":  0.1539441,
+    "exitCode":  0,
+    "sourceSha":  "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-evidence-token-parity.log"
+}

@@ -1,0 +1,13 @@
+﻿{
+    "id":  "final-ready-cross-engine-content-ready-resumed",
+    "command":  "npm --prefix apps/frontend-user run test:e2e -- --config=playwright.phase06.config.js --workers=2 --reporter=line --output=../../output/playwright/uxui-phase06-2026-11-17/final-ready-cross-engine-content-ready-resumed",
+    "startedAt":  "2026-11-18T05:40:57.7394699Z",
+    "durationSeconds":  463.08632769999997,
+    "exitCode":  1,
+    "sourceSha":  "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  "http://127.0.0.1:4173",
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/final-ready-cross-engine-content-ready-resumed.log"
+}

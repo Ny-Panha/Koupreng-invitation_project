@@ -1,0 +1,14 @@
+﻿{
+    "id":  "media-ready-regression",
+    "command":  "npm --prefix apps/frontend-user test -- src/features/invitations/InvitationMediaManager.test.jsx",
+    "startedAt":  "2026-11-18T03:30:57.2960387Z",
+    "durationSeconds":  1.7462757999999998,
+    "exitCode":  0,
+    "sourceSha":  "3a02004430519ea4b9dc782821aacb4207b0b8b9",
+    "dirty":  [
+                  " M apps/frontend-user/src/features/invitations/InvitationMediaManager.test.jsx",
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/media-ready-regression.log"
+}

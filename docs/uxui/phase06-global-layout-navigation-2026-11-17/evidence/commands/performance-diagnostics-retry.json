@@ -1,0 +1,13 @@
+﻿{
+    "id":  "performance-diagnostics-retry",
+    "command":  "node docs/uxui/phase06-global-layout-navigation-2026-11-17/evidence/measure-lab.mjs --diagnostics --retry-errors",
+    "startedAt":  "2026-11-18T01:29:45.5572962Z",
+    "durationSeconds":  13.7687169,
+    "exitCode":  0,
+    "sourceSha":  "21520b56ac07408818b20b502374a436867398ae",
+    "dirty":  [
+                  "?? docs/uxui/phase06-global-layout-navigation-2026-11-17/"
+              ],
+    "previewOrigin":  null,
+    "log":  "output/playwright/uxui-phase06-2026-11-17/commands/performance-diagnostics-retry.log"
+}

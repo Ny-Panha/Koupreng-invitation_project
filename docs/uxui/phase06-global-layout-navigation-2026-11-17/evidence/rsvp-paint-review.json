@@ -1,0 +1,153 @@
+{
+  "sourceSha": "e0a331ff4f4c0f3a7a0764cbaf588a83de18c2f8",
+  "samples": 24,
+  "comparisons": [
+    {
+      "mode": "primary-snapshot",
+      "cache": "cold",
+      "before": {
+        "values": [
+          1836,
+          1956,
+          1856
+        ],
+        "median": 1856
+      },
+      "after": {
+        "values": [
+          1892,
+          1880,
+          1900
+        ],
+        "median": 1892
+      },
+      "delta": 36,
+      "percent": 1.9396551724137931,
+      "trigger": false,
+      "fontReadyAfterContentMs": {
+        "before": [
+          11.5,
+          1.5,
+          1.2999999998137355
+        ],
+        "after": [
+          1.3999999999068677,
+          1.7000000001862645,
+          1.1000000000931323
+        ]
+      }
+    },
+    {
+      "mode": "primary-snapshot",
+      "cache": "warm",
+      "before": {
+        "values": [
+          880,
+          652,
+          900
+        ],
+        "median": 880
+      },
+      "after": {
+        "values": [
+          928,
+          880,
+          896
+        ],
+        "median": 896
+      },
+      "delta": 16,
+      "percent": 1.8181818181818181,
+      "trigger": false,
+      "fontReadyAfterContentMs": {
+        "before": [
+          1.3999999999068677,
+          1.2999999998137355,
+          1.2000000001862645
+        ],
+        "after": [
+          1.6000000000931323,
+          2.3999999999068677,
+          1.1999999997206032
+        ]
+      }
+    },
+    {
+      "mode": "consume-ready-frames",
+      "cache": "cold",
+      "before": {
+        "values": [
+          2164,
+          2184,
+          2192
+        ],
+        "median": 2184
+      },
+      "after": {
+        "values": [
+          2156,
+          1860,
+          1896
+        ],
+        "median": 1896
+      },
+      "delta": -288,
+      "percent": -13.186813186813188,
+      "trigger": false,
+      "fontReadyAfterContentMs": {
+        "before": [
+          24.699999999720603,
+          42.5,
+          39.200000000186265
+        ],
+        "after": [
+          27.799999999813735,
+          23.899999999906868,
+          30.299999999813735
+        ]
+      }
+    },
+    {
+      "mode": "consume-ready-frames",
+      "cache": "warm",
+      "before": {
+        "values": [
+          620,
+          952,
+          896
+        ],
+        "median": 896
+      },
+      "after": {
+        "values": [
+          584,
+          880,
+          896
+        ],
+        "median": 880
+      },
+      "delta": -16,
+      "percent": -1.7857142857142856,
+      "trigger": false,
+      "fontReadyAfterContentMs": {
+        "before": [
+          25.299999999813735,
+          26.5,
+          24.0
+        ],
+        "after": [
+          23.299999999813735,
+          36.3000000002794,
+          36.60000000009313
+        ]
+      }
+    }
+  ],
+  "verdict": "REVIEW REQUIRED \u2014 no LCP change-budget flag in this supplemental cohort; the earlier five-round RSVP flag remains recorded. Paint variability exists in both stages, so a causal production regression is not established.",
+  "nextAction": "Performance QA: review trace/filmstrip and real-browser font/API readiness on an isolated adequately resourced runner before accepting the timing gate. Preserve all three cohorts and the exact capture method.",
+  "limits": [
+    "Supplemental paint scheduling is not equivalent to the primary 624 matrix",
+    "A screenshot-dependent LCP timing difference does not certify field behavior or prove a code-level regression",
+    "No CSS, font, template, data or production source patched for this diagnosis"
+  ]
+}
