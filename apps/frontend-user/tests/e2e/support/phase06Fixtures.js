@@ -5,12 +5,16 @@ export async function openPhase06Fixture(page, group, { app = 'frontend-user', l
   if (!contract) throw new Error(`No fixture for ${app}/${group}`);
   const state = await installRouteContractFixtures(page, contract, { lang });
   await page.addInitScript(({ mode, anonymous }) => {
+    if (location.origin === 'null') return;
     localStorage.setItem('theme', mode);
     localStorage.setItem('koupreng.colorMode', mode);
     if (anonymous) for (const store of [localStorage, sessionStorage]) {
       store.removeItem('koupreng.auth'); store.removeItem('koupreng.admin.auth');
     }
   }, { mode, anonymous });
+  if (group === 'template-demo' && path === '/templates/template-boilerplate') {
+    await page.route('**/api/v1/templates/slug/template-boilerplate', route => route.fulfill({json:{data:{id:903,code:'template-boilerplate',slug:'template-boilerplate',name:'Phase 06 starter fixture',status:'ACTIVE',category:'OTHER',premium:false,price:0}}}));
+  }
   if (group === 'admin-template-edit') {
     const template = { id: 30, code: 'event-essential', name: 'Navigation fixture', status: 'ACTIVE', category: 'MINIMALIST', premium: false,
       description: JSON.stringify({ invitationTitle: 'Preview celebration', extension: { retained: true } }) };
