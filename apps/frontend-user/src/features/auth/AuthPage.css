@@ -837,7 +837,12 @@
     }
     .auth-top-bar {
         margin-bottom: 16px;
+        /* Reserve both preference rows before local Khmer fonts settle. */
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
     }
+    .auth-preferences { align-self: flex-end; }
 }
 
 @media (max-width: 360px) {
