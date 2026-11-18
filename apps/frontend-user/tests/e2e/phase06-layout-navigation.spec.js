@@ -200,6 +200,10 @@ test('public Back restores an unscrolled entry at zero', async ({ page }) => {
 test('public Back restores catalog scroll and locale never resets it', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await open(page, 'home');
+  await page.locator('.kp-landing h1').waitFor();
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  expect(await page.evaluate(() => document.documentElement.scrollHeight - innerHeight)).toBeGreaterThan(500);
   await page.evaluate(() => window.scrollTo(0, 500));
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(400);
   await page.locator('.kp-desktop-actions .kp-language button').first().click();
