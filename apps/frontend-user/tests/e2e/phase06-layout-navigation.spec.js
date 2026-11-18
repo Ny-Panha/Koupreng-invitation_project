@@ -180,13 +180,17 @@ test('Studio keyboard resizer, preview destination and five sections survive des
 test('public Back restores an unscrolled entry at zero', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 700 });
   const state = await open(page, 'home');
+  await page.locator('.kp-landing h1').waitFor();
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   await page.locator('.kp-header').getByRole('link', { name: 'Templates', exact: true }).click();
   await expect(page).toHaveURL(/\/templates$/);
-  await page.locator('#marketing-content h1').waitFor();
+  await page.locator('.tp-title').waitFor();
   await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await page.evaluate(() => scrollTo(0, 300));
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(100);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(resolve)));
+  expect(await page.evaluate(() => scrollY)).toBe(300);
   await page.goBack();
   await expect(page).toHaveURL('http://127.0.0.1:4173/');
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);

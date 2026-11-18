@@ -65,6 +65,14 @@ const ScrollToTop = () => {
     const oldRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
     const targetTop = navigationType === 'POP' ? positions.current.get(key) ?? window.scrollY : sameDocument ? window.scrollY : 0;
+    const rememberPosition = (top) => {
+      positions.current.set(key, top);
+      if (positions.current.size > 100) positions.current.delete(positions.current.keys().next().value);
+    };
+    const remember = () => rememberPosition(window.scrollY);
+    // Store before destination readiness too: a quick navigation can leave an
+    // entry at zero without producing either a scroll or a ready-page frame.
+    rememberPosition(targetTop);
     let frame;
     const ready = () => {
       const main = document.querySelector('#marketing-content, #host-main-content, #auth-content');
@@ -91,10 +99,6 @@ const ScrollToTop = () => {
     const observer = new MutationObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(ready); });
     observer.observe(document.getElementById('root') || document.body, { childList: true, subtree: true });
     frame = requestAnimationFrame(ready);
-    const remember = () => {
-      positions.current.set(key, window.scrollY);
-      if (positions.current.size > 100) positions.current.delete(positions.current.keys().next().value);
-    };
     window.addEventListener('scroll', remember, { passive: true });
     return () => {
       observer.disconnect(); cancelAnimationFrame(frame);
