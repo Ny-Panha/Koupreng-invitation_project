@@ -3,6 +3,14 @@ import { routeContracts, installRouteContractFixtures } from './batch12RouteCont
 export async function openPhase06Fixture(page, group, { app = 'frontend-user', lang = 'en', path, mode = 'light', anonymous = false } = {}) {
   const contract = routeContracts.find(row => row.group === group && row.application === app);
   if (!contract) throw new Error(`No fixture for ${app}/${group}`);
+  // These fixture sessions/preferences belong to the main app. Sandboxed
+  // previews retain their own document authority and must not receive seeds.
+  const addMainInit = page.addInitScript.bind(page);
+  page.addInitScript = (script, arg) => {
+    const content = typeof script === 'function' ? `(${script.toString()})(${JSON.stringify(arg)})`
+      : typeof script === 'string' ? script : script?.content;
+    return content ? addMainInit({ content: `if(window===window.top){${content}\n}` }) : addMainInit(script, arg);
+  };
   const state = await installRouteContractFixtures(page, contract, { lang });
   await page.addInitScript(({ mode, anonymous }) => {
     if (location.origin === 'null') return;
