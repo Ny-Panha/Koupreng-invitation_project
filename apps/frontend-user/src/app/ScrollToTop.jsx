@@ -83,6 +83,9 @@ const ScrollToTop = () => {
         else window.scrollTo({ top: targetTop, left: 0, behavior: 'instant' });
         if (changed) main.focus({ preventScroll: true });
       }
+      // A visited entry at zero may never fire a scroll event. Record its
+      // initial position too, so Back cannot borrow the next page's offset.
+      remember();
       observer.disconnect();
     };
     const observer = new MutationObserver(() => { cancelAnimationFrame(frame); frame = requestAnimationFrame(ready); });
