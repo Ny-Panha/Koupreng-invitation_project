@@ -88,12 +88,12 @@ export const mediaService = {
     api
       .get(`/v1/public/invitations/${encodeURIComponent(slug)}/media${toQuery(publicParams(params))}`, { skipAuth: true })
       .then(unwrap),
-  uploadCover: (invitationId, file, onUploadProgress) => {
+  uploadCover: (invitationId, file, onUploadProgress, options) => {
     if (isLocalDraftId(invitationId)) {
       const fileUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       return Promise.resolve({ id: "local-cover", fileUrl, mediaType: "COVER_IMAGE" });
     }
-    return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file), { onUploadProgress }).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file), { ...options, onUploadProgress }).then(unwrap);
   },
   uploadGallery: (invitationId, files, sortOrder, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {

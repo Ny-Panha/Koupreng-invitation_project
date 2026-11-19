@@ -24,14 +24,14 @@ export const invitationService = {
     templateId: Number(templateId) || null,
     visibility: "PRIVATE",
   }).then(unwrap),
-  get: (id) => {
+  get: (id, options) => {
     if (isLocalDraftId(id)) {
       const draft = getDraft(id);
       if (draft) return Promise.resolve(draft);
     }
-    return api.get(`/v1/invitations/${id}`).then(unwrap);
+    return api.get(`/v1/invitations/${id}`, options).then(unwrap);
   },
-  create: (data) => api.post("/v1/invitations", data).then(unwrap),
+  create: (data, options) => api.post("/v1/invitations", data, options).then(unwrap),
   update: (id, data, options) => {
     if (isLocalDraftId(id)) {
       return Promise.resolve(saveDraft({ ...data, id }));

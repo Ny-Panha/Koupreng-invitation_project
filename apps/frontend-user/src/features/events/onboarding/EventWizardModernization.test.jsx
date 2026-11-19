@@ -63,7 +63,7 @@ afterEach(cleanup);
 describe("Phase 04 Event Creation Multi-Step Wizard Modernization", () => {
   it("renders the 4-step progress stepper with accessible labels and ARIA attributes", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     // Progress bar
     const progressTrack = screen.getByRole("progressbar");
@@ -91,7 +91,7 @@ describe("Phase 04 Event Creation Multi-Step Wizard Modernization", () => {
 
   it("navigates forward using next step transition buttons", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     // Step 1 next button
     const nextToDetails = screen.getByRole("button", { name: "Next: Event essentials" });
@@ -114,7 +114,7 @@ describe("Phase 04 Event Creation Multi-Step Wizard Modernization", () => {
 
   it("renders live review summary in Step 4 reflecting entered wedding details", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     fireEvent.click(screen.getByRole("button", { name: "Wedding", exact: true }));
     fill("title", "Koupreng Royal Wedding");
@@ -127,7 +127,7 @@ describe("Phase 04 Event Creation Multi-Step Wizard Modernization", () => {
     fill("googleMapUrl", "https://maps.google.com/?q=sokha");
 
     // Select template
-    fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
 
     // Review card checks
     expect(screen.getAllByText("Koupreng Royal Wedding").length).toBeGreaterThanOrEqual(1);
@@ -144,7 +144,7 @@ describe("Phase 04 Event Creation Multi-Step Wizard Modernization", () => {
 
   it("allows jump-to-step editing via edit buttons on the review card", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     const editTypeBtn = screen.getByRole("button", { name: "Edit event type" });
     const editDetailsBtn = screen.getByRole("button", { name: "Edit event details" });

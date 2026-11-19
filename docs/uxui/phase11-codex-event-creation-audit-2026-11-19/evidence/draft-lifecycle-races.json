@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "storageKey": "koupreng.onboarding.<verified user.id>",
+  "scope": "sessionStorage, current tab session; no browser-restart/cloud durability promise",
+  "states": [
+    "NEW",
+    "EDITING",
+    "LOCAL_SAVED",
+    "STORAGE_DENIED",
+    "CORRUPT",
+    "RETURNING",
+    "PENDING_BACKEND_CREATE",
+    "BACKEND_CREATED",
+    "MEDIA_PENDING",
+    "SERVER_SAVED",
+    "ACCOUNT_CHANGED",
+    "AUTH_EXPIRED"
+  ],
+  "identity": "Keyed user/token/auth-status component; immediate store subscriber aborts owned requests; stale completion guards survive mocked non-cancellable promises. No undefined identity key.",
+  "checkpoints": [
+    "request UUID and immutable submitted payload synchronously persisted before POST",
+    "acknowledged event ID synchronously persisted before upload",
+    "restored pending ID verified through authenticated GET userId before upload or continuation",
+    "successful acknowledged operation clears setup; failed operation retains work"
+  ],
+  "tests": [
+    "N11-03",
+    "N11-04",
+    "N11-07",
+    "N11-08",
+    "N11-12",
+    "N11-24",
+    "N11-25"
+  ],
+  "limits": [
+    "No wizard draft TTL or invented old underscore-key migration: deployed key never changed.",
+    "Storage denied + refresh loses local recovery identity; disclosed explicitly, not a duplicate guarantee.",
+    "Photos remain File objects in memory only; reselect after reload.",
+    "Cookie/native/provider breadth remains inherited AUTH scope."
+  ]
+}

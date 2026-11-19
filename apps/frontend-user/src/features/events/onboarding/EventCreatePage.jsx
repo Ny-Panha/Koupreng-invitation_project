@@ -2,7 +2,7 @@ import { feedback } from "@/shared/feedback/feedback";
 import QuotaProgress from '@/shared/access/QuotaProgress';
 import { useAccountEntitlements } from '@/shared/access/entitlementContext';
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useBeforeUnload, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -32,6 +32,7 @@ import subscriptionService from "@/features/subscriptions/subscriptionService";
 import { paymentService } from "@/features/payments/paymentService";
 import { packagePrice } from "@/features/marketing/model/packagePresentation";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { eventPath } from "../workspace/eventRoutes";
 import { EVENT_TYPES, STYLE_LABELS, eventPayload } from "./eventFields.js";
@@ -51,11 +52,34 @@ const TYPE_ICONS = {
   OTHER: PartyPopper
 };
 
+function readSetup(key) {
+  try {
+    const value = JSON.parse(sessionStorage.getItem(key));
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const form = value.form && typeof value.form === "object" && !Array.isArray(value.form)
+      ? Object.fromEntries(Object.entries(value.form).filter(([, item]) => typeof item === "string")) : {};
+    return { ...value, form };
+  } catch { return {}; }
+}
+
+function mergeSetupJson(raw, values) {
+  const parsed = raw ? JSON.parse(raw) : {};
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("Existing setup data cannot be safely updated. Open the saved event workspace.");
+  return JSON.stringify({ ...parsed, ...values });
+}
+
 export default function EventCreatePage() {
+  const { user, authStatus } = useAuth();
+  const token = useAuthStore(state => state.accessToken);
+  // A new authority gets a new component lifetime before its private UI can paint.
+  if (user?.id == null) return null;
+  return <EventCreateSession key={JSON.stringify([user.id, token, authStatus])} user={user} />;
+}
+
+function EventCreateSession({ user }) {
   const uiCopy = useUiCopy();
   const en = useLanguageStore(state => state.lang) === "en";
   const copy = (kh, english) => en ? english : kh;
-  const { user } = useAuth();
   const account = useAccountEntitlements();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -75,21 +99,24 @@ export default function EventCreatePage() {
   }, [hasUrlTemplate, setSearchParams]);
 
   const storageKey = `koupreng.onboarding.${user?.id}`;
-  const [initial] = useState(() => { try { return JSON.parse(sessionStorage.getItem(storageKey)) || {}; } catch { return {}; } });
+  const [initial] = useState(() => readSetup(storageKey));
   const [type, setType] = useState(EVENT_TYPES.some(row => row[0] === initial.type) ? initial.type : "WEDDING");
   const [style, setStyle] = useState(initial.style || "");
   const [language, setLanguage] = useState(initial.language || (en ? "EN" : "KH"));
   const [price, setPrice] = useState(initial.price || "ALL");
   const [templateId, setTemplateId] = useState(initialRequestedKey || (hasUrlTemplate ? "" : initial.templateId) || "");
   const [form, setForm] = useState(initial.form || {});
-  const [requestId] = useState(() => initial.requestId || generateSecureUuid());
+  const [requestId] = useState(() => /^[a-f\d]{8}(-[a-f\d]{4}){3}-[a-f\d]{12}$/i.test(initial.requestId || "") ? initial.requestId : generateSecureUuid());
   const [catalog, setCatalog] = useState([]);
   const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [intentNotice, setIntentNotice] = useState(hasUrlTemplate && !urlTemplateKey ? "invalid" : "");
   const [recommendations, setRecommendations] = useState([]);
   const [browsingDesigns, setBrowsingDesigns] = useState(false);
   const [plan, setPlan] = useState(null);
-  const [access, setAccess] = useState({});
+  const [accessRetry, setAccessRetry] = useState(0);
+  const [accessState, setAccessState] = useState(null);
+  const access = accessState?.source === recommendations && accessState?.attempt === accessRetry ? accessState.values : {};
+  const accessFailures = accessState?.source === recommendations && accessState?.attempt === accessRetry ? accessState.failures : [];
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -101,9 +128,35 @@ export default function EventCreatePage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState(null);
-  const [photoFocalPoint, setPhotoFocalPoint] = useState("center");
+  const [photoFocalPoint, setPhotoFocalPoint] = useState(["top", "center", "bottom"].includes(initial.photoFocalPoint) ? initial.photoFocalPoint : "center");
   const [photoError, setPhotoError] = useState("");
-  const [pendingEventId, setPendingEventId] = useState(null);
+  const [pendingEventId, setPendingEventId] = useState(() => /^[1-9]\d*$/.test(String(initial.pendingEventId || "")) ? initial.pendingEventId : null);
+  const [createAttempt, setCreateAttempt] = useState(initial.createAttempt && typeof initial.createAttempt === "object" && initial.createAttempt.clientRequestId === requestId ? initial.createAttempt : null);
+  const [creationMode, setCreationMode] = useState(initial.creationMode === "draft" ? "draft" : "create");
+  const [pendingVerified, setPendingVerified] = useState(false);
+  const active = useRef(false);
+  const requestController = useRef(null);
+  const [authority] = useState(() => {
+    const state = useAuthStore.getState();
+    return { userId: state.user?.id, token: state.accessToken, status: state.authStatus };
+  });
+  const isCurrent = () => {
+    const state = useAuthStore.getState();
+    return active.current && state.user?.id === authority.userId && state.accessToken === authority.token && state.authStatus === authority.status;
+  };
+  useLayoutEffect(() => {
+    active.current = true;
+    const controller = new AbortController();
+    requestController.current = controller;
+    const unsubscribe = useAuthStore.subscribe(state => {
+      if (state.user?.id !== authority.userId || state.accessToken !== authority.token || state.authStatus !== authority.status) {
+        active.current = false;
+        controller.abort();
+      }
+    });
+    return () => { active.current = false; controller.abort(); unsubscribe(); };
+  }, [authority]);
+  const [draftRestoredHasDetails] = useState(() => Boolean(initial.form && Object.keys(initial.form).length > 0));
 
   useEffect(() => {
     return () => {
@@ -121,16 +174,18 @@ export default function EventCreatePage() {
   const step3Ref = useRef(null);
   const step4Ref = useRef(null);
   const dirty = Object.values(form).some(value => !!value);
+  const [focusRequest, setFocusRequest] = useState(null);
+  const scrollBehavior = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  useLayoutEffect(() => {
+    if (!focusRequest) return;
+    const target = document.getElementById(focusRequest.id);
+    target?.focus({ preventScroll: true });
+    target?.scrollIntoView?.({ behavior: scrollBehavior(), block: "center" });
+  }, [focusRequest]);
 
-  const scrollToStep = (stepNumber) => {
+  const scrollToStep = (stepNumber, id) => {
     setCurrentStep(stepNumber);
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref];
-    const target = refs[stepNumber - 1]?.current;
-    if (target && typeof target.scrollIntoView === "function") {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    setFocusRequest({ id: id || ["step-1-type", "step-2-details", "step-3-design", "step-4-review"][stepNumber - 1] });
   };
 
   useEffect(() => {
@@ -139,10 +194,22 @@ export default function EventCreatePage() {
 
   useBeforeUnload(event => { if (dirty && !saved.current) { event.preventDefault(); event.returnValue = ""; } });
 
+  const persistSetup = (overrides = {}) => {
+    try {
+      sessionStorage.setItem(
+        storageKey,
+        JSON.stringify({ type, style, language, price, templateId, form, requestId, pendingEventId, photoFocalPoint, createAttempt, creationMode, ...overrides })
+      );
+      setStorageError(false);
+    } catch {
+      setStorageError(true);
+    }
+  };
   useEffect(() => {
-    try { sessionStorage.setItem(storageKey, JSON.stringify({ type, style, language, price, templateId, form, requestId })); setStorageError(false); }
-    catch { setStorageError(true); }
-  }, [storageKey, type, style, language, price, templateId, form, requestId]);
+    persistSetup();
+    // Persist only this keyed session's state. Synchronous checkpoints precede network writes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageKey, type, style, language, price, templateId, form, requestId, pendingEventId, photoFocalPoint, createAttempt, creationMode]);
 
   useEffect(() => {
     let active = true;
@@ -211,10 +278,15 @@ export default function EventCreatePage() {
   useEffect(() => {
     let active = true;
     const premium = recommendations.map(row => row.template).filter(template => template.premium || Number(template.price) > 0);
-    Promise.allSettled(premium.map(template => paymentService.templateAccess(template.id).then(result => [template.id, result.hasAccess === true])))
-      .then(results => { if (active) setAccess(Object.fromEntries(results.filter(result => result.status === "fulfilled").map(result => result.value))); });
+    Promise.allSettled(premium.map(template => paymentService.templateAccess(template.id).then(result => {
+      if (typeof result?.hasAccess !== "boolean") throw new Error("Access could not be verified");
+      return [template.id, result.hasAccess];
+    })))
+      .then(results => { if (active) setAccessState({ source: recommendations, attempt: accessRetry,
+        values: Object.fromEntries(results.filter(result => result.status === "fulfilled").map(result => result.value)),
+        failures: results.flatMap((result, index) => result.status === "rejected" ? [premium[index].id] : []) }); });
     return () => { active = false; };
-  }, [recommendations]);
+  }, [recommendations, accessRetry]);
 
   const styles = [...new Set(catalog.filter(item => item.supportedEventTypes?.includes(type)).map(item => item.category))].filter(Boolean);
   const selectedTemplate = !loading && recommendations.find(row => String(row.template.id) === String(templateId))?.template;
@@ -223,8 +295,8 @@ export default function EventCreatePage() {
 
   const completedSteps = [];
   if (type) completedSteps.push(1);
-  if (form.title?.trim() && (submitted === "draft" || (form.eventDate && form.venueName && (photoFile || submitted === "draft")))) completedSteps.push(2);
-  if (templateId) completedSteps.push(3);
+  if (!Object.keys(validateEventForm(form, type, { en })).length && photoFile) completedSteps.push(2);
+  if (selectedTemplate && (!(selectedTemplate.premium || Number(selectedTemplate.price) > 0) || access[selectedTemplate.id] === true)) completedSteps.push(3);
 
   const getParticipantsSummary = () => {
     if (type === "WEDDING") {
@@ -239,15 +311,35 @@ export default function EventCreatePage() {
   };
 
   const changeType = value => {
+    if (pendingEventId || createAttempt) return;
     intentConsumed.current = true;
     intentTemplate.current = null;
     clearTemplateIntent();
     clearUrlIntent();
     setType(value); setTemplateId(""); setStyle(""); setTouched({}); setSubmitted(null); setError(""); setPhotoError("");
-    setForm(current => ({ ...current, hostName: current.hostName || current.groomName || "", partnerName: current.partnerName || current.brideName || "", groomName: current.groomName || current.hostName || "", brideName: current.brideName || current.partnerName || "" }));
+    setForm(current => {
+      const next = { ...current };
+      const isCoupleType = ["WEDDING", "ENGAGEMENT", "ANNIVERSARY"].includes(value);
+      next.hostName = current.hostName || current.groomName || "";
+      if (isCoupleType) {
+        if (value === "WEDDING") {
+          next.groomName = current.groomName || current.hostName || "";
+          next.brideName = current.brideName || current.partnerName || "";
+        } else {
+          next.hostName = current.hostName || current.groomName || "";
+          next.partnerName = current.partnerName || current.brideName || "";
+        }
+      } else {
+        next.partnerName = "";
+        next.groomName = "";
+        next.brideName = "";
+      }
+      return next;
+    });
   };
 
   const selectTemplate = id => {
+    if (pendingEventId || createAttempt) return;
     intentConsumed.current = true;
     intentTemplate.current = null;
     clearTemplateIntent();
@@ -257,47 +349,45 @@ export default function EventCreatePage() {
     setBrowsingDesigns(false);
   };
 
-  const save = async mode => {
-    if (submitting.current) return;
+  const save = async (mode, continueWithoutPhoto = false) => {
+    if (submitting.current || !isCurrent()) return;
+    if (pendingEventId || createAttempt) mode = creationMode;
     setSubmitted(mode); setError(""); setPhotoError("");
-    const validation = validateEventForm(form, type, { draft: mode === "draft", en });
+    const validation = pendingEventId || createAttempt ? {} : validateEventForm(form, type, { draft: mode === "draft", en });
     const firstError = Object.keys(validation)[0];
     if (firstError) {
-      setCurrentStep(2);
-      const errorEl = document.getElementById(`event-${firstError}`);
-      errorEl?.focus();
-      errorEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+      scrollToStep(2, `event-${firstError}`);
       return;
     }
-    if (mode !== "draft" && !photoFile) {
-      setCurrentStep(2);
+    if (!continueWithoutPhoto && (mode !== "draft" || pendingEventId) && !photoFile) {
       const msg = copy(
         "សូមជ្រើសរើសរូបថតកម្មវិធីដើម្បីបង្កើត។",
         "An event photo is required to complete event creation."
       );
       setPhotoError(msg);
       setError(msg);
-      const photoEl = document.getElementById("event-photo-upload");
-      photoEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+      scrollToStep(2, "event-photo-picker");
       return;
     }
-    if (selectedTemplate && access[selectedTemplate.id] === false) {
-      setCurrentStep(3);
+    if (!pendingEventId && !createAttempt && selectedTemplate && (selectedTemplate.premium || Number(selectedTemplate.price) > 0) && access[selectedTemplate.id] !== true) {
       setError(copy("គំរូនេះត្រូវការសិទ្ធិប្រើប្រាស់។ សូមជ្រើសគំរូឥតគិតថ្លៃ ឬទិញសិទ្ធិជាមុន។", "This template requires access. Choose a free template or purchase access first."));
-      templateSection.current?.focus();
-      templateSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToStep(3);
       return;
     }
-    if (mode !== "draft" && !selectedTemplate) {
-      setCurrentStep(3);
+    if (!pendingEventId && !createAttempt && mode !== "draft" && !selectedTemplate) {
       setError(copy("សូមជ្រើសរើសគំរូសមស្របមុនបង្កើតកម្មវិធី។", "Choose a compatible template before creating your event."));
-      templateSection.current?.focus();
-      templateSection.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToStep(3);
       return;
     }
     submitting.current = true; setSaving(true);
     try {
       let eventId = pendingEventId;
+      if (eventId && !pendingVerified) {
+        const event = await invitationService.get(eventId, { signal: requestController.current.signal });
+        if (!isCurrent()) return;
+        if (String(event?.id) !== String(eventId) || String(event?.userId) !== String(user.id)) throw new Error(copy("មិនអាចផ្ទៀងផ្ទាត់ម្ចាស់កម្មវិធីបានទេ។ សូមបើកកម្មវិធីរបស់ខ្ញុំ។", "Event ownership could not be verified. Open My Events to recover."));
+        setPendingVerified(true);
+      }
       if (!eventId) {
         const details = { ...form, title: form.title.trim(), eventDate: form.eventDate || undefined, eventTime: form.eventTime || undefined };
         if (type !== "WEDDING") { details.groomName = ""; details.brideName = ""; }
@@ -306,32 +396,48 @@ export default function EventCreatePage() {
         if (photoFocalPoint && photoFocalPoint !== "center") {
           designOverrides.coverFocalPoint = photoFocalPoint;
         }
-        if (selectedTemplate?.code === "event-essential" && form.storyText) details.contentJson = JSON.stringify({ messageText: form.storyText });
+        if (selectedTemplate?.code === "event-essential" && form.storyText) details.contentJson = mergeSetupJson(details.contentJson, { messageText: form.storyText });
         if (Object.keys(designOverrides).length > 0) {
-          details.designJson = JSON.stringify(designOverrides);
+          details.designJson = mergeSetupJson(details.designJson, designOverrides);
         }
-        const event = await invitationService.create({ ...eventPayload(details, type), templateId: selectedTemplate?.id || undefined, languageMode: language, visibility: "PRIVATE", clientRequestId: requestId });
+        const payload = { ...(createAttempt ? eventPayload(createAttempt, createAttempt.eventType) : { ...eventPayload(details, type), templateId: selectedTemplate?.id || undefined, languageMode: language }), visibility: "PRIVATE", clientRequestId: requestId };
+        if (!EVENT_TYPES.some(row => row[0] === payload.eventType)) throw new Error(copy("សូមជ្រើសរើសប្រភេទកម្មវិធីត្រឹមត្រូវ។", "Choose a supported event type."));
+        setCreateAttempt(payload); setCreationMode(mode);
+        persistSetup({ createAttempt: payload, creationMode: mode });
+        const event = await invitationService.create(payload, { signal: requestController.current.signal });
+        if (!isCurrent()) return;
         if (!/^[1-9]\d*$/.test(String(event?.id || ""))) throw new Error(copy("ម៉ាស៊ីនមេមិនបានបញ្ជាក់កម្មវិធី។", "The server did not return an event ID. Retry safely."));
+        if (event.userId != null && String(event.userId) !== String(user.id)) throw new Error(copy("មិនអាចផ្ទៀងផ្ទាត់ម្ចាស់កម្មវិធីបានទេ។", "The server returned a different event owner."));
         eventId = event.id;
+        setPendingVerified(true);
         setPendingEventId(eventId);
+        persistSetup({ pendingEventId: eventId, createAttempt: payload, creationMode: mode });
       }
 
-      if (photoFile && eventId) {
+      if (!continueWithoutPhoto && photoFile && eventId) {
         try {
-          await mediaService.uploadCover(eventId, photoFile);
+          await mediaService.uploadCover(eventId, photoFile, undefined, { signal: requestController.current.signal });
+          if (!isCurrent()) return;
         } catch (uploadErr) {
+          if (!isCurrent()) return;
           feedback.explain(uploadErr);
           setError(copy("បានបង្កើតកម្មវិធីរួចរាល់ ប៉ុន្តែការបញ្ចូលរូបថតមិនជោគជ័យ។ សូមចុច 'ព្យាយាមបញ្ចូលរូបថតម្ដងទៀត'។", "Event created successfully, but photo upload failed. Please click 'Retry photo upload'."));
           return;
         }
       }
 
+      if (!isCurrent()) return;
       saved.current = true;
       clearTemplateIntent();
       try { sessionStorage.removeItem(storageKey); } catch { /* A successful backend save must still open its workspace. */ }
-      navigate(mode === "draft" ? eventPath(eventId) : `${eventPath(eventId)}/invitation?mode=guided`, { replace: true });
-    } catch (err) { feedback.explain(err); setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event.")); }
-    finally { if (!saved.current) { submitting.current = false; setSaving(false); } }
+      navigate(mode === "draft" && !continueWithoutPhoto ? eventPath(eventId) : `${eventPath(eventId)}/invitation?mode=guided`, { replace: true });
+    } catch (err) { if (isCurrent()) {
+      if (!pendingEventId && [400, 422].includes(err.status)) {
+        setCreateAttempt(null); persistSetup({ createAttempt: null });
+      }
+      feedback.explain(err); setError(err.message || copy("មិនអាចរក្សាទុកកម្មវិធីបានទេ។", "Could not save your event."));
+    } }
+    finally { if (isCurrent() && !saved.current) { submitting.current = false; setSaving(false); } }
   };
 
   const stepsMeta = [
@@ -358,7 +464,7 @@ export default function EventCreatePage() {
             <div
               className="event-wizard-progress-bar"
               role="progressbar"
-              aria-label={copy("វឌ្ឍនភាពនៃការបង្កើតកម្មវិធី", "Event creation progress")}
+              aria-label={copy("ជំហានរុករកកម្មវិធី", "Event setup navigation progress")}
               aria-valuenow={currentStep * 25}
               aria-valuemin={0}
               aria-valuemax={100}
@@ -377,6 +483,7 @@ export default function EventCreatePage() {
                   className={`event-wizard-step-btn ${isActive ? "is-active" : ""} ${isCompleted ? "is-completed" : ""}`}
                   aria-current={isActive ? "step" : undefined}
                   onClick={() => scrollToStep(step.id)}
+                  disabled={saving}
                 >
                   <span className="event-wizard-step-num" aria-hidden="true">
                     {isCompleted ? <Check size={14} strokeWidth={2.5} /> : step.id}
@@ -391,6 +498,46 @@ export default function EventCreatePage() {
 
       {account.verified && <QuotaProgress usage={account.value?.quotas?.invitations} resource="invitations" scope="ACCOUNT" />}
 
+              {pendingEventId && (
+                <div className="event-retry-banner workspace-notice" role="alert">
+                  <p>
+                    {pendingVerified ? copy(
+                      "កម្មវិធីរបស់អ្នកត្រូវបានបង្កើតរួចហើយ ប៉ុន្តែរូបថតមិនទាន់បញ្ចូលបានសម្រេច។",
+                      "Your event was created, but the photo upload did not finish."
+                    ) : copy("សូមផ្ទៀងផ្ទាត់កម្មវិធីដែលបានរក្សាទុក។ ជ្រើសរើសរូបថតគម្របឡើងវិញដើម្បីព្យាយាមម្ដងទៀត។", "A saved event ID needs verification. Reselect your cover photo to retry, or continue after ownership is checked.")}
+                  </p>
+                  <div className="event-retry-actions" style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
+                    <button
+                      type="button"
+                      className="workspace-button primary"
+                      disabled={saving}
+                      onClick={() => save("create")}
+                    >
+                      <RefreshCw size={14} aria-hidden="true" />
+                      <span>{copy("ព្យាយាមបញ្ចូលរូបថតម្ដងទៀត", "Retry photo upload")}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="workspace-button"
+                      disabled={saving}
+                      onClick={() => save(creationMode, true)}
+                    >
+                      <span>{copy("បន្តទៅកាន់សំបុត្រអញ្ជើញ", "Continue to invitation")}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div role="alert" className="workspace-notice">
+                  <p>{error}</p>
+                  <p>{copy("ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុក។ អ្នកអាចព្យាយាមរក្សាទុកម្ដងទៀតបាន។", "Your details are retained. You can retry saving safely.")}</p>
+                </div>
+              )}
+      {Boolean(createAttempt || pendingEventId) && <p className="workspace-notice" role="status">{copy("???????????????????????????????????? ????????????????????????????????????????????", "Retry uses your original submitted details. Edit the saved event in its workspace after recovery.")}</p>}
+      {submitted && Object.keys(allErrors).length > 0 && <div className="workspace-notice event-error-summary" role="alert" aria-label={copy("??????????????????", "Check event details")}>
+        <p>{copy("??????????????????????????", "Check these event details:")}</p>
+        <ul>{Object.entries(allErrors).map(([key, message]) => <li key={key}><button type="button" onClick={() => scrollToStep(2, `event-${key}`)}>{message}</button></li>)}</ul>
+      </div>}
       <form noValidate onSubmit={event => { event.preventDefault(); save("create"); }} aria-busy={saving} className="event-create-layout">
         <fieldset disabled={saving} className="event-create-sections">
           
@@ -398,6 +545,7 @@ export default function EventCreatePage() {
           <section
             ref={step1Ref}
             id="step-1-type"
+            tabIndex={-1}
             className={`workspace-section event-step-section step-1 ${currentStep === 1 ? "is-step-active" : "is-step-inactive"}`}
             aria-labelledby="event-type-title"
           >
@@ -419,6 +567,7 @@ export default function EventCreatePage() {
                     key={value}
                     aria-pressed={type === value}
                     onClick={() => changeType(value)}
+                    disabled={Boolean(pendingEventId || createAttempt)}
                   >
                     <Icon size={24} aria-hidden="true" />
                     <span>{en ? english : kh}</span>
@@ -443,6 +592,7 @@ export default function EventCreatePage() {
           <section
             ref={step2Ref}
             id="step-2-details"
+            tabIndex={-1}
             className={`workspace-section event-step-section step-2 ${currentStep === 2 ? "is-step-active" : "is-step-inactive"}`}
             aria-labelledby="event-information-title"
           >
@@ -465,31 +615,35 @@ export default function EventCreatePage() {
               onBlur={key => setTouched(current => ({ ...current, [key]: true }))}
               draft={submitted === "draft"}
               grouped={true}
+              disabled={Boolean(pendingEventId || createAttempt)}
             />
+            {Boolean(draftRestoredHasDetails && !photoFile && !pendingEventId) && (
+              <p className="workspace-notice event-draft-photo-notice" role="status">
+                {copy(
+                  "ចំណាំ៖ រូបថតមិនត្រូវបានរក្សាទុកក្នុងព្រាងនៃកម្មវិធីរុករកទេ។ សូមជ្រើសរើសរូបថតគម្របឡើងវិញមុនបង្កើតកម្មវិធី។",
+                  "Photos are not stored in browser session drafts. Please select a cover photo before creating."
+                )}
+              </p>
+            )}
             <EventPhotoUpload
               file={photoFile}
               previewUrl={photoPreviewUrl}
               focalPoint={photoFocalPoint}
               eventType={type}
               onFileChange={(file, url) => {
-                if (photoPreviewUrl && photoPreviewUrl.startsWith("blob:")) {
-                  URL.revokeObjectURL(photoPreviewUrl);
-                }
                 setPhotoFile(file);
                 setPhotoPreviewUrl(url);
                 setPhotoError("");
               }}
               onFocalPointChange={setPhotoFocalPoint}
               onRemove={() => {
-                if (photoPreviewUrl && photoPreviewUrl.startsWith("blob:")) {
-                  URL.revokeObjectURL(photoPreviewUrl);
-                }
                 setPhotoFile(null);
                 setPhotoPreviewUrl(null);
               }}
               error={photoError}
               required={submitted !== "draft"}
               disabled={saving}
+              focalDisabled={Boolean(pendingEventId || createAttempt)}
               en={en}
             />
             <details className="workspace-section event-additional">
@@ -499,6 +653,7 @@ export default function EventCreatePage() {
                 <textarea
                   rows={4}
                   maxLength={5000}
+                  disabled={Boolean(pendingEventId || createAttempt)}
                   value={form.storyText || ""}
                   onChange={event => setForm(current => ({ ...current, storyText: event.target.value }))}
                   placeholder={copy("សរសេរសារជូនភ្ញៀវរបស់អ្នក…", "A few words to welcome your guests…")}
@@ -548,14 +703,14 @@ export default function EventCreatePage() {
               <div className="event-preferences">
                 <label>
                   {copy("រចនាប័ទ្ម", "Design style")}
-                  <select value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}>
+                  <select disabled={Boolean(pendingEventId || createAttempt)} value={style} onChange={event => { intentTemplate.current = null; setStyle(event.target.value); }}>
                     <option value="">{copy("គ្រប់រចនាប័ទ្ម", "All available styles")}</option>
                     {styles.map(value => <option key={value} value={value}>{STYLE_LABELS[value]?.[en ? 1 : 0] || value}</option>)}
                   </select>
                 </label>
                 <label>
                   {copy("ភាសាសំបុត្រអញ្ជើញ", "Invitation language")}
-                  <select value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}>
+                  <select disabled={Boolean(pendingEventId || createAttempt)} value={language} onChange={event => { intentTemplate.current = null; setLanguage(event.target.value); }}>
                     <option value="KH">{uiCopy("ភាសាខ្មែរ", "Khmer")}</option>
                     <option value="EN">{uiCopy("ភាសាអង់គ្លេស", "English")}</option>
                     <option value="BOTH">{uiCopy("ភាសាខ្មែរ និងអង់គ្លេស", "Khmer and English")}</option>
@@ -563,7 +718,7 @@ export default function EventCreatePage() {
                 </label>
                 <label>
                   {copy("តម្លៃគំរូ", "Template price")}
-                  <select value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}>
+                  <select disabled={Boolean(pendingEventId || createAttempt)} value={price} onChange={event => { intentTemplate.current = null; setPrice(event.target.value); }}>
                     <option value="ALL">{copy("គ្រប់តម្លៃ", "All prices")}</option>
                     <option value="FREE">{copy("ឥតគិតថ្លៃ", "Free")}</option>
                     <option value="PREMIUM">{copy("គំរូបង់ប្រាក់", "Premium")}</option>
@@ -651,16 +806,49 @@ export default function EventCreatePage() {
                             >
                               {copy("មើលជាមុន", "Preview")}
                             </a>
-                            {access[template.id] === false ? (
-                              <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">
-                                {copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}
-                              </a>
+                            {(template.premium || Number(template.price) > 0) ? (
+                              access[template.id] === true ? (
+                                <button
+                                  className="workspace-button"
+                                  type="button"
+                                  aria-pressed={String(templateId) === String(template.id)}
+                                  aria-label={`${String(templateId) === String(template.id) ? copy("បានជ្រើសរើស", "Selected") : copy("ជ្រើសរើស", "Select")} ${template.name}`}
+                                  onClick={() => selectTemplate(template.id)}
+                                >
+                                  {String(templateId) === String(template.id) ? (
+                                    <>
+                                      <Check size={16} aria-hidden="true" />
+                                      {copy("បានជ្រើសរើស", "Selected")}
+                                    </>
+                                  ) : (
+                                    copy("ជ្រើសរើស", "Select")
+                                  )}
+                                </button>
+                              ) : access[template.id] === false ? (
+                                <a href={`/templates/${template.id}/checkout`} target="_blank" rel="noreferrer">
+                                  {copy("ទិញសិទ្ធិ (ផ្ទាំងថ្មី)", "Get access (new tab)")}
+                                </a>
+                              ) : accessFailures.includes(template.id) ? (
+                                <button className="workspace-button" type="button" onClick={() => setAccessRetry(value => value + 1)}>
+                                  {copy("មិនអាចផ្ទៀងផ្ទាត់សិទ្ធិ។ ព្យាយាមម្ដងទៀត", "Access unavailable. Retry access")}
+                                </button>
+                              ) : (
+                                <button
+                                  className="workspace-button"
+                                  type="button"
+                                  disabled
+                                  aria-busy="true"
+                                  aria-label={`${copy("កំពុងផ្ទៀងផ្ទាត់សិទ្ធិ", "Verifying access for")} ${template.name}`}
+                                >
+                                  {copy("កំពុងផ្ទៀងផ្ទាត់សិទ្ធិ…", "Verifying access…")}
+                                </button>
+                              )
                             ) : (
                               <button
                                 className="workspace-button"
                                 type="button"
                                 aria-pressed={String(templateId) === String(template.id)}
-                                aria-label={`${copy("ជ្រើសរើស", "Select")} ${template.name}`}
+                                aria-label={`${String(templateId) === String(template.id) ? copy("បានជ្រើសរើស", "Selected") : copy("ជ្រើសរើស", "Select")} ${template.name}`}
                                 onClick={() => selectTemplate(template.id)}
                               >
                                 {String(templateId) === String(template.id) ? (
@@ -704,6 +892,7 @@ export default function EventCreatePage() {
           <section
             ref={step4Ref}
             id="step-4-review"
+            tabIndex={-1}
             className={`workspace-section event-step-section event-review-section step-4 ${currentStep === 4 ? "is-step-active" : "is-step-inactive"}`}
             aria-labelledby="event-review-title"
           >
@@ -912,60 +1101,20 @@ export default function EventCreatePage() {
             </div>
 
             <div className="event-create-final">
-              {pendingEventId && (
-                <div className="event-retry-banner workspace-notice" role="alert">
-                  <p>
-                    {copy(
-                      "កម្មវិធីរបស់អ្នកត្រូវបានបង្កើតរួចហើយ ប៉ុន្តែរូបថតមិនទាន់បញ្ចូលបានសម្រេច។",
-                      "Your event was created, but the photo upload did not finish."
-                    )}
-                  </p>
-                  <div className="event-retry-actions" style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
-                    <button
-                      type="button"
-                      className="workspace-button primary"
-                      disabled={saving}
-                      onClick={() => save("create")}
-                    >
-                      <RefreshCw size={14} aria-hidden="true" />
-                      <span>{copy("ព្យាយាមបញ្ចូលរូបថតម្ដងទៀត", "Retry photo upload")}</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="workspace-button"
-                      disabled={saving}
-                      onClick={() => {
-                        saved.current = true;
-                        clearTemplateIntent();
-                        try { sessionStorage.removeItem(storageKey); } catch { /* Session cleanup is best effort. */ }
-                        navigate(`${eventPath(pendingEventId)}/invitation?mode=guided`, { replace: true });
-                      }}
-                    >
-                      <span>{copy("បន្តទៅកាន់សំបុត្រអញ្ជើញ", "Continue to invitation")}</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-              {error && (
-                <div role="alert" className="workspace-notice">
-                  <p>{error}</p>
-                  <p>{copy("ព័ត៌មានរបស់អ្នកនៅតែរក្សាទុក។ អ្នកអាចព្យាយាមរក្សាទុកម្ដងទៀតបាន។", "Your details are retained. You can retry saving safely.")}</p>
-                </div>
-              )}
               <p className="workspace-muted">
                 {copy("កម្មវិធីនឹងត្រូវរក្សាទុកជាឯកជន។ បន្ថែមភ្ញៀវ និងផ្សព្វផ្សាយពីកន្លែងគ្រប់គ្រងកម្មវិធី។", "Your event starts as a private draft. Add guests and publish from its workspace.")}
               </p>
               <div className="event-create-actions">
-                <button className="workspace-button" type="button" disabled={saving} onClick={() => save("draft")}>
+                <button className="workspace-button" type="button" disabled={saving || Boolean((pendingEventId || createAttempt) && creationMode !== "draft")} onClick={() => save("draft")}>
                   {copy("រក្សាទុកព្រាង", "Save draft")}
                 </button>
-                <button className="workspace-button primary" type="submit" disabled={saving || loading}>
+                <button className="workspace-button primary" type="submit" disabled={saving || loading || Boolean((pendingEventId || createAttempt) && creationMode === "draft")}>
                   {saving ? copy("កំពុងរក្សាទុក…", "Saving…") : copy("បង្កើតកម្មវិធី", "Create event")}
                 </button>
               </div>
               <p className="event-save-note" role="status">
                 {storageError
-                  ? copy("កម្មវិធីរុករកមិនអាចរក្សាទុកព័ត៌មានក្នុងផ្ទាំងនេះបានទេ។ សូមរក្សាទុកព្រាងមុនចាកចេញ។", "This browser cannot retain your setup. Save a draft before leaving.")
+                  ? copy("កម្មវិធីរុករកមិនអាចរក្សាទុកព័ត៌មានបានទេ។ សូមកុំបិទផ្ទាំងនេះពេលរក្សាទុក។", "This browser cannot retain your setup or retry identity. Keep this tab open while saving; refresh recovery is unavailable.")
                   : copy("ព័ត៌មានត្រូវបានរក្សាទុកក្នុងផ្ទាំងនេះ ខណៈអ្នកកំពុងបំពេញ។", "Your setup is kept in this tab while you work.")}
               </p>
             </div>
@@ -1043,7 +1192,7 @@ export default function EventCreatePage() {
             <button
               type="button"
               className="event-mobile-nav-btn draft"
-              disabled={saving}
+              disabled={saving || Boolean((pendingEventId || createAttempt) && creationMode !== "draft")}
               onClick={() => save("draft")}
             >
               <span>{saving && submitted === "draft" ? copy("កំពុងរក្សា…", "Saving…") : copy("រក្សាពង្រាង", "Save Draft")}</span>
@@ -1051,7 +1200,7 @@ export default function EventCreatePage() {
             <button
               type="button"
               className="event-mobile-nav-btn create"
-              disabled={saving}
+              disabled={saving || Boolean((pendingEventId || createAttempt) && creationMode === "draft")}
               onClick={() => save("create")}
             >
               <span>{saving && submitted === "create" ? copy("កំពុងបង្កើត…", "Creating…") : copy("បង្កើតកម្មវិធី", "Create Event")}</span>

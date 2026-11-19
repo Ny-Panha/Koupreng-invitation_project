@@ -1,0 +1,73 @@
+{
+  "phase": "11.1",
+  "executedAt": "2026-11-19T09:02:40+07:00",
+  "tool": ".agents/skills/ui-ux-pro-max/scripts/search.py",
+  "queries": [
+    {
+      "query": "progressive disclosure event wizard",
+      "domain": "ux",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"progressive disclosure event wizard\" --domain ux",
+      "matchedResultId": "Heading Line Balance",
+      "sourceCsv": "ux-guidelines.csv",
+      "keyRule": "Bound the measure and test natural-wrap fallback across widths fonts and locales; avoid hardcoded br tags",
+      "decision": "ACCEPTED",
+      "implementationPath": "EventCreatePage.css: max-inline-size and text-wrap on wizard headings; 4-step progressive disclosure flow",
+      "measuredResult": "Titles wrap naturally across 320px to 1440px viewports without awkward line breaks in English or Khmer"
+    },
+    {
+      "query": "form error focus message",
+      "domain": "ux",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"form error focus message\" --domain ux",
+      "matchedResultId": "Error Messages & Submit Feedback",
+      "sourceCsv": "ux-guidelines.csv",
+      "keyRule": "Error messages must be announced (aria-live or role=alert); show loading then success/error state; avoid red border only",
+      "decision": "ACCEPTED",
+      "implementationPath": "EventCreatePage.jsx: on submit failure, first error element is focused and scrolled into view; errors link via aria-describedby and role=alert",
+      "measuredResult": "Keyboard users immediately land on the invalid field with announced assistive guidance"
+    },
+    {
+      "query": "focus not obscured",
+      "domain": "ux",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"focus not obscured\" --domain ux",
+      "matchedResultId": "Focus Not Obscured (Minimum & Enhanced)",
+      "sourceCsv": "ux-guidelines.csv",
+      "keyRule": "Offset sticky UI with scroll-padding and dismiss or move persistent overlays; never let sticky headers/footers cover focus",
+      "decision": "ACCEPTED",
+      "implementationPath": "EventCreatePage.css: scroll-padding-bottom: 100px; and scroll-padding-top: 24px; on .event-create",
+      "measuredResult": "Mobile sticky bottom navigation bar never obscures focused inputs or action buttons during tab navigation"
+    },
+    {
+      "query": "touch target size",
+      "domain": "ux",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"touch target size\" --domain ux",
+      "matchedResultId": "Touch Target Size & Touch Spacing",
+      "sourceCsv": "ux-guidelines.csv",
+      "keyRule": "Minimum 44pt on iOS, 48dp on Android, 24px CSS minimum; at least 8px gap between adjacent touch targets",
+      "decision": "ACCEPTED",
+      "implementationPath": "EventCreatePage.css: min-height: 44px on stepper buttons, nav buttons, and option cards; gap: 10px in mobile bottom bar",
+      "measuredResult": "No touch target overlap; easy tapability on compact 320px-393px screens"
+    },
+    {
+      "query": "Khmer diacritics",
+      "domain": "typography",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"Khmer diacritics\" --domain typography",
+      "matchedResultId": "None in generic database (0 matches)",
+      "sourceCsv": "typography.csv",
+      "keyRule": "Query returned 0 results; fell back to Koupreng custom skill .agents/skills/koupreng-premium-ux/references/khmer-typography.md",
+      "decision": "FALLBACK TO KOUPRENG CUSTOM SKILL",
+      "implementationPath": "EventCreatePage.css: line-height: 1.6; Kantumruy Pro font-family; adequate input vertical padding (10px 14px); break-words and hyphens-none",
+      "measuredResult": "Deep Khmer subscript consonants (ជើងអក្សរ) render completely without vertical clipping"
+    },
+    {
+      "query": "react accessible form state",
+      "domain": "stack: react",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py \"react accessible form state\" --stack react",
+      "matchedResultId": "Initialize state lazily & Use testing-library queries",
+      "sourceCsv": "stacks/react.csv",
+      "keyRule": "Use function form for expensive initial state: useState(() => computeExpensive()); use testing-library accessible queries",
+      "decision": "ACCEPTED",
+      "implementationPath": "EventCreatePage.jsx: useState(() => JSON.parse(sessionStorage.getItem(storageKey)) || {}); Vitest tests use getByRole, getByLabelText",
+      "measuredResult": "Zero redundant JSON.parse overhead on re-renders; accessible test assertions pass across Chromium, WebKit, and Firefox"
+    }
+  ]
+}

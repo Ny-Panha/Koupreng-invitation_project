@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "queries": [
+    {
+      "id": "ux-focus",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py focus-not-obscured --domain ux",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:55:58.361738+00:00",
+      "endedAt": "2026-11-19T02:55:58.671540+00:00",
+      "durationSeconds": 0.31,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-focus.log",
+      "logSha256": "ad4d078933b9a1c70a9e116107eaa61c8acbca2abec253fea0546e6758cec4ef",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "ux-errors",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py error-summary-validation --domain ux",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:55:58.786498+00:00",
+      "endedAt": "2026-11-19T02:55:59.028302+00:00",
+      "durationSeconds": 0.242,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-errors.log",
+      "logSha256": "8a06dc3ca72147a1411cfc54f963cf049ca266a7f2b2f054d12ee08335ebaa79",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "ux-disclosure",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py progressive-disclosure --domain ux",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:55:59.129710+00:00",
+      "endedAt": "2026-11-19T02:55:59.370494+00:00",
+      "durationSeconds": 0.241,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-disclosure.log",
+      "logSha256": "173f2519cf2f595ea322300b73950c4618aaf77443a9eaa06e9650e3a52305f3",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "ux-khmer",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py Khmer-diacritics --domain typography",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:55:59.475063+00:00",
+      "endedAt": "2026-11-19T02:55:59.727844+00:00",
+      "durationSeconds": 0.253,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-khmer.log",
+      "logSha256": "00b3b7d2b0f06c45c9e8fdbdb648359f5bdcd727aff3b3fda59071f1b23d9826",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "ux-disclosure-retry",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py 'form complexity' --domain ux",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:56:23.343498+00:00",
+      "endedAt": "2026-11-19T02:56:23.587916+00:00",
+      "durationSeconds": 0.244,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-disclosure-retry.log",
+      "logSha256": "0ff0e7b4e5ece0055ad6c6c03422854e1c8164bfb8eaece343cf6a8f598a2e51",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "ux-khmer-retry",
+      "command": "python .agents/skills/ui-ux-pro-max/scripts/search.py 'Khmer' --domain typography",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T02:56:23.684199+00:00",
+      "endedAt": "2026-11-19T02:56:23.921809+00:00",
+      "durationSeconds": 0.238,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/ux-khmer-retry.log",
+      "logSha256": "517126cc701b829d95c6cdf437993eebffbf4d4f3692b268a193c48ae867be70",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "exit 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    }
+  ],
+  "applied": [
+    {
+      "query": "focus-not-obscured",
+      "match": "Minimum AA and enhanced AAA correctly distinguished",
+      "application": "After-reveal focus, scroll-margin, reduced-motion scroll, keyboard bounds assertions"
+    },
+    {
+      "query": "error-summary-validation",
+      "match": "Focusable summary / inline association / role alert",
+      "application": "Top summary buttons reveal and focus each field; inline errors preserved"
+    },
+    {
+      "query": "progressive-disclosure",
+      "match": "Off-topic heading wrapping; rejected",
+      "application": "No database-supported disclosure claim after one narrower retry; general UX heuristics only"
+    },
+    {
+      "query": "Khmer-diacritics then Khmer",
+      "match": "Zero typography matches on both tries",
+      "application": "Fallback to project Khmer typography skill; no invented search finding"
+    }
+  ]
+}

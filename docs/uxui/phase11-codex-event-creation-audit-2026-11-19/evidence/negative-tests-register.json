@@ -1,0 +1,475 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "records": [
+    {
+      "id": "N11-01",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it.each(EVENT_TYPES.flatMap(([type])=>['en','km'].map(lang=>[type,lang])))('N11-01/14 actual %s enum creates PRIVATE with %s UI',async(type,lang)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-02",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-02 type changes retain common details and clear inapplicable names',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-03",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-03 never writes A private data into B storage even transiently',async()=>{",
+        "it('N11-03 absent identity writes no undefined draft key',()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-04",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-04 late A create cannot upload or navigate after B mounts',async()=>{",
+        "it('N11-04 same-account bearer renewal invalidates late create work',async()=>{",
+        "it('N11-04 real deferred Axios dispatch never sends A draft with B credentials',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex",
+        "red-deferred-credentials"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-05",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-05 overlapping draft/create submits produce one PRIVATE POST',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-06",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "test('N11-06/07 real request interception: POST, upload failure, reload, owner check and reselect without second POST',async({page},testInfo)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-07",
+      "priority": "P1",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-08",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-08 ambiguous POST retry keeps the exact client request identity',async()=>{",
+        "test('N11-08 response lost retry reuses original payload and client request ID',async({page})=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "source trace + existing request retry test"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-09",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-09 restored event ID is owner-checked before any media write',async()=>{",
+        "test('N11-09/30 validation reveals details before focusing first error; reduced motion and forced colors',async({page},testInfo)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex",
+        "before-focus-corrected"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-10",
+      "priority": "P1",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-10 late premium grant from A never unlocks B',async()=>{",
+        "it('N11-10 rejected access can retry while verified free templates stay selectable',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-11",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-12",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-12 storage denied discloses unavailable recovery rather than saved success',async()=>{",
+        "it.each(['null','[]','{\"form\":null}','{\"form\":\"bad\"}'])('N11-12 structurally corrupt storage %s recovers without crashing',async(value)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-13",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-14",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-14 calendar/time/url and long Khmer validation preserve input',()=>{",
+        "it.each(['http://maps.google.com/?q=fixture','https://example.test/maps','https://fixture@maps.google.com/?q=fixture'])('N11-14 rejects directions URL rejected by backend: %s',url=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-maps-contract"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-15",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-15 empty image is rejected before object URL allocation',()=>{",
+        "it.each([[5*1024*1024,true],[5*1024*1024+1,false]])('N11-15 exact photo boundary %s accepted=%s', (size,accepted)=>{",
+        "it.each([['fixture.exe','image/png'],['fixture.heic','image/heic'],['fixture.svg','image/svg+xml']])('N11-15 unsupported %s rejected before preview', (name,type)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-16",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it.each([null,{}, {id:0}, {id:'local-draft'}, {id:501,userId:8}])('N11-16 invalid acknowledgment %j never uploads or navigates',async(response)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-17",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-18",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-19",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-20",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-20 revokes each preview once on replace/remove without retaining File bytes',async()=>{",
+        "test('N11-20/21/22 loaded bilingual themes and review Axe with contrast enabled', async ({page},testInfo)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex",
+        "after-browser-pilot and controlled-all-engines"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-21",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-22",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "test('N11-22 denied and unavailable templates are truthful loaded Axe states',async({page},testInfo)=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-23",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "test('N11-23 keyboard-only stepper, native chooser, design and creation remain reachable',async({page})=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-24",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-24 explicit 400 permits correcting the request without losing details',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-25",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-25 late A upload cannot navigate or clear B draft',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-26",
+      "priority": "P2",
+      "addedCodexTest": true,
+      "testTitles": [
+        "it('N11-26 focal/message overlays preserve unknown authored JSON',async()=>{"
+      ],
+      "status": "EXECUTED — SEE COMMANDS",
+      "note": "Added Codex executable assertions; fixtures/interceptions unless real Axios adapter is specifically named.",
+      "beforeProof": [
+        "red-codex"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "Frontend QA"
+    },
+    {
+      "id": "N11-27",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "DevOps / canonical research owner"
+    },
+    {
+      "id": "N11-28",
+      "priority": "P2",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "DevOps / canonical research owner"
+    },
+    {
+      "id": "N11-29",
+      "priority": "P3",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [
+        "authoritative source/document reconciliation"
+      ],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "DevOps / canonical research owner"
+    },
+    {
+      "id": "N11-30",
+      "priority": "P3",
+      "addedCodexTest": false,
+      "testTitles": [],
+      "status": "SOURCE / EXISTING TEST / EXTERNAL",
+      "note": "Covered by referenced existing suites/source review or remains explicitly unrun; no invented new test.",
+      "beforeProof": [],
+      "afterProof": [
+        "exact-test-command-results.json"
+      ],
+      "owner": "DevOps / canonical research owner"
+    }
+  ],
+  "newFiles": [
+    "Phase11CodexRegression.test.jsx",
+    "Phase11RequestAuthority.test.jsx",
+    "phase11-codex.spec.js"
+  ],
+  "mockBoundary": "Browser API routes and local Axios adapter are explicit. H2 backend tests are independent and narrower than live MySQL."
+}

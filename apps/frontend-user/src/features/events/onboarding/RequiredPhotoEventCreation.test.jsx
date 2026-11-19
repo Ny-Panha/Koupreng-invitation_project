@@ -94,7 +94,7 @@ afterEach(cleanup);
 describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
   it("blocks event creation when photo is not selected and presents validation error", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     // Fill details without attaching a photo
     fill("title", "Koupreng Royal Celebration");
@@ -105,7 +105,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     fill("venueName", "Grand Palace Ballroom");
 
     // Select template
-    fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
 
     // Click Create Event
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
@@ -127,7 +127,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
 
   it("permits saving an incomplete draft without requiring a photo", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     fill("title", "Draft Event Without Photo");
 
@@ -141,7 +141,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
 
   it("creates event and sequentially uploads cover photo when valid photo is provided", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     fill("title", "Koupreng Royal Celebration");
     fill("groomName", "Kosal");
@@ -154,7 +154,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     expect(photo).not.toBeNull();
 
     // Select template
-    fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
 
     // Click Create Event
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
@@ -165,7 +165,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     expect(invitationService.create).toHaveBeenCalledOnce();
 
     // Verify mediaService.uploadCover called with the created event ID 201
-    expect(mediaService.uploadCover).toHaveBeenCalledWith(201, expect.any(File));
+    expect(mediaService.uploadCover).toHaveBeenCalledWith(201, expect.any(File), undefined, expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 
   it("handles cover upload failure gracefully and retries without creating a duplicate event", async () => {
@@ -173,7 +173,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     mediaService.uploadCover.mockRejectedValueOnce(new Error("Storage unavailable"));
 
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     fill("title", "Retry Event Test");
     fill("groomName", "Dara");
@@ -183,7 +183,7 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     fill("venueName", "Phnom Penh Hotel");
 
     attachPhoto("portrait.jpg");
-    fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
 
     // First attempt
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
@@ -211,6 +211,6 @@ describe("Required Event Photo Onboarding & Sequential Upload Flow", () => {
     expect(invitationService.create).toHaveBeenCalledTimes(1);
     // Cover upload called again with the same event ID 201
     expect(mediaService.uploadCover).toHaveBeenCalledTimes(2);
-    expect(mediaService.uploadCover).toHaveBeenLastCalledWith(201, expect.any(File));
+    expect(mediaService.uploadCover).toHaveBeenLastCalledWith(201, expect.any(File), undefined, expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 });

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "validatedAt": "2026-11-19T07:24:55.444639+00:00",
+  "passed": true,
+  "errors": [],
+  "markdownCount": 27,
+  "jsonCountAfterWriting": 25,
+  "gateCount": 40,
+  "gateCounts": {
+    "VERIFIED — LOCAL": 20,
+    "PARTIALLY COMPLETE": 19,
+    "BLOCKED — EXTERNAL": 1
+  },
+  "historicalCount": 57,
+  "capturesChecked": 127,
+  "localMarkdownLinksValid": true,
+  "externalLinks": [
+    "https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44439374315"
+  ],
+  "externalLinkScope": "GitHub run was retrieved using connected tools; external URLs are not represented as new HTTP probes by this validator.",
+  "knownEvidenceLimits": [
+    "Original before-build hash absent",
+    "Physical/native/provider/RUM gates remain unverified",
+    "Historical and CI failures retained"
+  ],
+  "jsonSha256ExcludingSelf": {
+    "attributed-changes-rollback.json": "6d074ce9bd973a7cac3269fd8043cd6270c9756044ecadb8219b19b09f593913",
+    "axe-contrast-results.json": "4a7a3bcff2e82028842cea5658be0e24aa8c367060c9af7b64ab5d0870d49ce5",
+    "backend-contract-snapshot.json": "0f820bdf88eb4ed505047345568b4ad4a93ca2f0be563590ef9779e260ff9658",
+    "browser-coverage.json": "33bb1f65b636f78807abaf1d682b245bf1e3b9f8ac3294ccef3ff8820bd22a54",
+    "claim-register.json": "79bf9571a95b38409c8a839e7aa0d0ed1e51526ecb7f73c67bcc5ae6cb62a458",
+    "defect-register.json": "2dfab73540be3563dc8efbd4db4712a6e670593427864fa1aa04b7ce52d6ca09",
+    "draft-lifecycle-races.json": "4cbcecc2c3d6f37ec81d968cf7f2634b7b7bc3a6753e3253273d34b0223f63f3",
+    "event-type-compatibility.json": "597c34e2450a2bed0c82aab7cd818bfa96a43d16cae5918a7494b57d5aadcffb",
+    "exact-test-command-results.json": "ff127766bfa313d5d106c11416e7cc4134b194394ea97103c782ce210048205a",
+    "f11-independent-40-gates.json": "73fe9a5d1a42fc1d27c0f874f83bb7330a6c559d6d14763e2dd5fc1e18c6042a",
+    "git-worktree-baseline.json": "d529061f5153cffbd1079c510d5b51598ed8687db39926787acf011fed876bd4",
+    "github-actions-triage.json": "c54f4d02b5ee1cbed636734ca7f765667176e28bd119cfaab50c0fde41950412",
+    "historical-57-plus-new-ledger.json": "6c17d4d443acc44e3172a69398b4f08833dce8c4044265da0bc218aa6f6f1a4c",
+    "negative-tests-register.json": "62a772243ed7b95fee5bb61d864218dbd529b6066c46385acfee03a8e04ae061",
+    "performance-compare.json": "13b61cbeef033aebeee81ca26e21bceb14334bde94343db79ff0443a6e3d1249",
+    "request-idempotency-matrix.json": "62d5876c8efdfd78419583c69996e9bda4886ca93bf364074732a451061c5f90",
+    "route-state-matrix.json": "517272e7f5aeee6583f13ece75a53df2967a075f65cd19075205a788d0de8b55",
+    "source-operations-and-sha.json": "f7f7459bc20fc71a650d7a09d00d41962ce21085f00ef1968d01ac2e56582e46",
+    "template-intent-entitlement-matrix.json": "b608a31937444bdce05fc49b93a9397c8bf854933219ca91d490ac3a11db1838",
+    "ten-library-canonical-matrix.json": "38eb8d0f2ec2a834fda615bdf0d75ca229d03ec4496e3aafeb2b8cfbb50e48b6",
+    "upload-recovery-matrix.json": "585aee8581424d6b90e62dde7c88682af6e589446db78faa2802bbffdc958c32",
+    "ux-law-traceability.json": "459956738c59d05a45c8397bd5ee2121a2dc44745271bf3d7ca8f1254dea6efe",
+    "ux-pro-max-search-results.json": "cba3650c726183f400d5970906fbdbdb0b85acd38ae016d16f8b27f2dcdbe253",
+    "visual-manifest.json": "a0e002937871e1ccc959409e8371b928520623368cc1cbd02086a10d18e67d25"
+  }
+}

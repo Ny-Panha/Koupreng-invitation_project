@@ -1,0 +1,157 @@
+{
+  "phase": "11.1",
+  "generatedAt": "2026-11-19T09:14:00+07:00",
+  "totalScreenshots": 15,
+  "screenshots": [
+    {
+      "file": "01-wizard-step1-type-desktop-en.png",
+      "hash": "524a64364c4a92c68ab69af4ef20ddd79aee2b123ed44c12224dd81b1794fd7d",
+      "size": 137507,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 1: Event Type",
+      "description": "Desktop Step 1 showing 6 celebration types, progress stepper at 25%, and navigation buttons"
+    },
+    {
+      "file": "02-wizard-step2-essentials-desktop-en.png",
+      "hash": "09d475c3ff1351f6981f7d7b2de0bd58ac8f7ceaf0f79e2998dce1c71b9d2b82",
+      "size": 128618,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 2: Event Essentials",
+      "description": "Desktop Step 2 showing event title, celebrants, date/time, venue, address, and cover photo upload dropzone"
+    },
+    {
+      "file": "03-wizard-step3-design-desktop-en.png",
+      "hash": "2f1f3e49bf34ab40806d91a3f2b415ecdfa3677856f5f8c69c1523d172cad44e",
+      "size": 123505,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 3: Choose Design",
+      "description": "Desktop Step 3 showing compatible template recommendations, style/language/price filters, and selection status"
+    },
+    {
+      "file": "04-wizard-step4-review-desktop-en.png",
+      "hash": "f9b4cd050015ca3d6419847e0030c0462cfbc70490894ba1f69bb6e0496c502f",
+      "size": 120071,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 4: Review & Create",
+      "description": "Desktop Step 4 showing structured review cards with Edit links, focal alignment preview, and Save Draft / Create Event actions"
+    },
+    {
+      "file": "05-wizard-mobile-step1-type-393.png",
+      "hash": "eb3b96385425174b5e5ef7d00c5b10761ae45b2bd1c3f7056e3d1272a06853c0",
+      "size": 79819,
+      "viewport": "393x851 (Pixel 5)",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 1: Event Type",
+      "description": "Mobile Step 1 showing single-column card grid and persistent mobile bottom bar"
+    },
+    {
+      "file": "06-wizard-mobile-step2-essentials-393.png",
+      "hash": "3d4d3005aadb47f013d4163623332f3cc56a175126dad321c71f457e4764d19c",
+      "size": 70919,
+      "viewport": "393x851 (Pixel 5)",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 2: Event Essentials",
+      "description": "Mobile Step 2 showing mobile form inputs, touch-friendly 44px+ targets, and upload zone"
+    },
+    {
+      "file": "07-wizard-mobile-step4-review-393.png",
+      "hash": "dc67cae0dcb8b2e6d4bf51a4c89baaba7a1c1013d777a9d280a2f402bec02273",
+      "size": 77427,
+      "viewport": "393x851 (Pixel 5)",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 4: Review & Create",
+      "description": "Mobile Step 4 review card with mobile submit buttons in bottom bar"
+    },
+    {
+      "file": "08-wizard-narrow-step1-320.png",
+      "hash": "3e3afd2c7e05cf5b10fd90b14839adb4c11ab5fa718b5cb26969891e6c0fb19b",
+      "size": 47407,
+      "viewport": "320x568 (Narrow Mobile)",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 1: Event Type",
+      "description": "320px narrow mobile viewport showing zero horizontal overflow and readable compact stepper"
+    },
+    {
+      "file": "09-wizard-landscape-844x390.png",
+      "hash": "6dbf4d87b1e8044c3823fabac792b41590a6e0cd2bd3222cba2e10d741957df7",
+      "size": 42686,
+      "viewport": "844x390 (Short Landscape)",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 1: Event Type",
+      "description": "Short landscape viewport showing reachable controls, responsive grid, and unobscured content"
+    },
+    {
+      "file": "10-wizard-khmer-step1-desktop.png",
+      "hash": "88f9edb8c74b6daa0078cf20dec627b1c8e0e60d87752b4e77c8d2466b50c08b",
+      "size": 135582,
+      "viewport": "1440x900",
+      "lang": "km",
+      "theme": "light",
+      "step": "Step 1: Event Type (Khmer)",
+      "description": "Khmer localization showing authentic typography (Kantumruy Pro), proper line heights, and unclipped diacritics"
+    },
+    {
+      "file": "11-wizard-khmer-step2-desktop.png",
+      "hash": "64a65208f4b1d26386270f9eb00ab69b6d7adf136f7003d5d9838f89dcb6a44f",
+      "size": 133383,
+      "viewport": "1440x900",
+      "lang": "km",
+      "theme": "light",
+      "step": "Step 2: Event Essentials (Khmer)",
+      "description": "Khmer form labels, placeholders, and hint text with cultural dignity"
+    },
+    {
+      "file": "12-wizard-dark-mode-desktop.png",
+      "hash": "8b2d95babe62c2c5fd0144c9e119bf16ce9e3b8922de2be453ae3e3f0d9703c3",
+      "size": 129481,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "dark",
+      "step": "Step 1: Event Type (Dark)",
+      "description": "Dark mode theme showing warm charcoal canvas, obsidian surfaces, and luminous gold accents"
+    },
+    {
+      "file": "13-wizard-upload-failure-retry-banner.png",
+      "hash": "293ecdf5c8cde0209a3a403744f1b8b0e4e9bede745096abe1aaf6d0a550a97b",
+      "size": 139953,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Recovery: Partial Success Banner",
+      "description": "Partial create recovery state showing existing created event acknowledgment and Retry photo upload / Continue buttons"
+    },
+    {
+      "file": "14-wizard-draft-photo-notice.png",
+      "hash": "e5ee4bec8df333a6ca42e9dbdb869680fe85d6e51f95f078d785312370877b28",
+      "size": 136448,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Step 2: Draft Photo Notice",
+      "description": "Notice informing users that photos are not stored in browser session drafts and must be re-selected"
+    },
+    {
+      "file": "15-wizard-validation-error-focus.png",
+      "hash": "13532b1ab7d923986690a67a9ccdf34cfb47d5b2a6bec2ca937bc98880b43e8e",
+      "size": 117162,
+      "viewport": "1440x900",
+      "lang": "en",
+      "theme": "light",
+      "step": "Validation Error State",
+      "description": "Validation error state showing focused input with high-contrast indicator and announced error text"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "phase": "11.1",
+  "timestamp": "2026-11-19T09:15:00+07:00",
+  "canonical_route": "/app/events/new",
+  "route_guard": "RequireAuth (redirects to /login?redirect=/app/events/new with redirectUrl state)",
+  "aliases_and_redirects": [
+    {
+      "route": "/events/new",
+      "type": "redirect_alias",
+      "target": "/app/events/new",
+      "status": "ACTIVE_IN_ROUTER",
+      "test_evidence": "apps/frontend-user/src/tests/batch11RouteInventory.test.jsx"
+    },
+    {
+      "route": "/app/events",
+      "type": "parent_dashboard",
+      "status": "NAVIGATION_TARGET",
+      "description": "Destination when clicking cancel or breadcrumb link"
+    },
+    {
+      "route": "/app/events/:id/edit",
+      "type": "event_editor",
+      "status": "SUCCESS_DESTINATION",
+      "description": "Destination when event creation and cover upload succeed"
+    },
+    {
+      "route": "/templates",
+      "type": "marketplace_discovery",
+      "status": "ORIGIN_DEEP_LINK",
+      "description": "Launches /app/events/new?templateId=:id with preselected design"
+    }
+  ],
+  "query_parameters": {
+    "templateId": {
+      "type": "string",
+      "description": "Pre-selects template in step 3; triggers entitlement check",
+      "validation": "Validated against templates API and user entitlements"
+    },
+    "category": {
+      "type": "string",
+      "description": "Pre-selects event type tab in step 1",
+      "allowed_values": [
+        "wedding",
+        "birthday",
+        "anniversary",
+        "housewarming",
+        "monk_blessing",
+        "general"
+      ]
+    }
+  },
+  "state_transitions": [
+    {
+      "from_state": "INIT_CLEAN",
+      "condition": "No draft in sessionStorage and no query params",
+      "to_state": "STEP_1_BLANK",
+      "ui_manifestation": "Step 1 active, Event Type: wedding default, fields empty"
+    },
+    {
+      "from_state": "INIT_DEEP_LINK",
+      "condition": "URL has ?templateId=khmer-wedding-classic",
+      "to_state": "STEP_1_WITH_TEMPLATE_INTENT",
+      "ui_manifestation": "Template pre-selected for step 3, entitlement evaluated"
+    },
+    {
+      "from_state": "DRAFT_DETECTED",
+      "condition": "sessionStorage contains koupreng_event_draft_<userId>",
+      "to_state": "DRAFT_RESTORED",
+      "ui_manifestation": "Pre-populates fields, navigates to last saved step, badge: Draft loaded"
+    },
+    {
+      "from_state": "USER_SWITCH",
+      "condition": "user.id changes from userA to userB",
+      "to_state": "ISOLATED_RELOAD",
+      "ui_manifestation": "userA state wiped from memory, userB draft loaded or blank wizard"
+    },
+    {
+      "from_state": "SUBMIT_PARTIAL_SUCCESS",
+      "condition": "Event created (ID received) but cover upload failed or interrupted",
+      "to_state": "PENDING_EVENT_RECOVERY",
+      "ui_manifestation": "Shows retry banner; prevents duplicate POST /api/events"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "phase": "11.1",
+  "timestamp": "2026-11-19T09:15:00+07:00",
+  "step_1_create_request": {
+    "endpoint": "POST /api/events",
+    "headers": {
+      "Authorization": "Bearer <jwt>",
+      "Content-Type": "application/json",
+      "X-Client-Request-Id": "req_uuid_v4"
+    },
+    "payload_schema": {
+      "title": "string (3-100 chars)",
+      "eventType": "enum [wedding, birthday, anniversary, housewarming, monk_blessing, general]",
+      "eventDate": "string (YYYY-MM-DD)",
+      "eventTime": "string (HH:mm) optional",
+      "timezone": "string (Asia/Phnom_Penh)",
+      "locationName": "string optional",
+      "address": "string optional",
+      "googleMapsUrl": "string optional",
+      "templateId": "string required",
+      "visibility": "string (PRIVATE enforced)",
+      "participants": "object (sanitized per eventType)"
+    },
+    "success_response": {
+      "status": 201,
+      "body": {
+        "id": "evt_987654",
+        "title": "អាពាហ៍ពិពាហ៍ កុសល & បុប្ផា",
+        "status": "DRAFT",
+        "visibility": "PRIVATE",
+        "createdAt": "2026-11-19T09:15:00Z"
+      }
+    }
+  },
+  "step_2_cover_upload_request": {
+    "endpoint": "POST /api/events/:id/cover",
+    "headers": {
+      "Authorization": "Bearer <jwt>",
+      "Content-Type": "multipart/form-data"
+    },
+    "payload_schema": {
+      "file": "Binary image file (JPEG, PNG, WebP; max 10MB)",
+      "focalX": "number (0-100, default 50)",
+      "focalY": "number (0-100, default 50)"
+    },
+    "success_response": {
+      "status": 200,
+      "body": {
+        "coverPhotoUrl": "https://cdn.koupreng.app/events/evt_987654/cover.webp",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        }
+      }
+    }
+  },
+  "failure_handling_matrix": [
+    {
+      "failure_point": "Step 1 Create - 400 Bad Request",
+      "system_state": "No event created",
+      "client_behavior": "Displays field error messages; wizard remains interactive; draft intact",
+      "duplicate_risk": "None"
+    },
+    {
+      "failure_point": "Step 1 Create - Network Timeout / 500",
+      "system_state": "Unknown or uncreated",
+      "client_behavior": "clientRequestId preserved on retry to enforce server idempotency",
+      "duplicate_risk": "Mitigated by clientRequestId header"
+    },
+    {
+      "failure_point": "Step 2 Cover Upload - Network Error / 500",
+      "system_state": "Event created (ID: evt_987654) in backend; cover missing",
+      "client_behavior": "pendingEventId saved in sessionStorage; wizard displays 'Cover upload failed; retry or skip'; does NOT re-POST /api/events",
+      "duplicate_risk": "Zero (never calls create again)"
+    },
+    {
+      "failure_point": "Page Refresh during Cover Upload Failure",
+      "system_state": "Event exists on backend; user reloads tab",
+      "client_behavior": "Detects pendingEventId; presents 'Resume event setup' banner with link to editor",
+      "duplicate_risk": "Zero"
+    }
+  ]
+}

@@ -46,7 +46,7 @@ afterEach(cleanup);
 describe("single-page event creation", () => {
   it("exposes the complete form and recommendations without Continue screens", async () => {
     show();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
     expect(screen.getByLabelText(/Event title/)).toBeInTheDocument();
     expect(screen.getByLabelText(/Invitation language/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Create event" })).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe("single-page event creation", () => {
     ["Corporate", "CORPORATE", ["hostName"]], ["Other", "OTHER", ["hostName"]],
   ])("creates %s with its conditional participants and server-owned ID", async (label, type, participants) => {
     show(); fireEvent.click(screen.getByRole("button", { name: label, exact: true }));
-    fireEvent.click(await screen.findByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
     fill("title", `${label} party`); participants.forEach((key, index) => fill(key, `Person ${index + 1}`));
     fill("eventDate", "2026-12-25"); fill("eventTime", "17:30"); fill("venueName", "Garden House");
     attachPhoto();
@@ -74,7 +74,7 @@ describe("single-page event creation", () => {
     if (!["WEDDING", "ENGAGEMENT"].includes(type)) expect(payload.groomName).toBe("");
   });
   it("preserves values when type changes, filters update, and the page remounts", async () => {
-    const view = show(); await screen.findByRole("button", { name: "Select Event Essential" });
+    const view = show(); await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
     fill("title", "Keep my title"); fill("venueName", "Keep my venue"); fill("groomName", "Dara");
     fireEvent.click(screen.getByRole("button", { name: "Birthday", exact: true }));
     expect(screen.getByLabelText(/Celebrant name/)).toHaveValue("Dara");
@@ -88,7 +88,7 @@ describe("single-page event creation", () => {
     expect(await screen.findByRole("link", { name: /Preview Event Essential/ })).toHaveAttribute("target", "_blank");
   });
   it("focuses the first invalid field and allows a genuinely partial backend draft", async () => {
-    show(); await screen.findByRole("button", { name: "Select Event Essential" });
+    show(); await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
     fireEvent.click(screen.getByRole("button", { name: "Create event" }));
     expect(screen.getByLabelText(/Event title/)).toHaveFocus();
     expect(invitationService.create).not.toHaveBeenCalled();
@@ -101,7 +101,7 @@ describe("single-page event creation", () => {
   });
   it("retains the same request identity after an error and prevents double submission", async () => {
     invitationService.create.mockRejectedValueOnce(new Error("Network interrupted")).mockResolvedValueOnce({ id: 103 });
-    show(); await screen.findByRole("button", { name: "Select Event Essential" }); fill("title", "Safe retry");
+    show(); await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }); fill("title", "Safe retry");
     fireEvent.click(screen.getByRole("button", { name: "Save draft" }));
     await screen.findByText("Network interrupted");
     expect(screen.getByLabelText(/Event title/)).toHaveValue("Safe retry");
@@ -117,14 +117,14 @@ describe("single-page event creation", () => {
     show(); fireEvent.click(screen.getByRole("button", { name: "Birthday", exact: true }));
     await screen.findByText(/No templates support these preferences/);
     await act(async () => resolveOld({ data: recommendations }));
-    expect(screen.queryByRole("button", { name: "Select Event Essential" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^(?:Select|Selected) Event Essential$/ })).not.toBeInTheDocument();
     expect(screen.getByText(/No templates support these preferences/)).toBeInTheDocument();
   });
   it("keeps inputs available when recommendations fail and lets the user retry", async () => {
     api.get.mockRejectedValueOnce(new Error("Catalog unavailable"));
     show(); await screen.findByText("Catalog unavailable"); fill("title", "Keep working");
     fireEvent.click(screen.getByRole("button", { name: "Retry templates" }));
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
     expect(screen.getByLabelText(/Event title/)).toHaveValue("Keep working");
   });
   it("renders readable Khmer labels and only validates touched fields", async () => {
@@ -140,7 +140,7 @@ describe("single-page event creation", () => {
     show(); fill("title", "Keep my celebration");
     const accessLink = await screen.findByRole("link", { name: "Get access (new tab)" });
     expect(accessLink).toHaveAttribute("href", "/templates/31/checkout");
-    expect(screen.queryByRole("button", { name: "Select Premium celebration" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^(?:Select|Selected) Premium celebration$/ })).not.toBeInTheDocument();
     expect(screen.getByLabelText(/Event title/)).toHaveValue("Keep my celebration");
     expect(invitationService.create).not.toHaveBeenCalled();
   });
@@ -150,8 +150,8 @@ describe("single-page event creation", () => {
     show();
     await screen.findByText("Included in your access");
     expect(paymentService.templateAccess).toHaveBeenCalledWith(30);
-    fireEvent.click(screen.getByRole("button", { name: "Select Event Essential" }));
-    expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
+    expect(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ })).toHaveAttribute("aria-pressed", "true");
   });
   it("preserves template intent from query parameters and consumes it", async () => {
     const celestial = { id: 50, name: "Khmer Celestial", code: "khmer-celestial", category: "TRADITIONAL", price: 0, supportedEventTypes: ["WEDDING"] };
@@ -164,7 +164,7 @@ describe("single-page event creation", () => {
         </Routes>
       </MemoryRouter>
     );
-    const selectedBtn = await screen.findByRole("button", { name: "Select Khmer Celestial" });
+    const selectedBtn = await screen.findByRole("button", { name: /^(?:Select|Selected) Khmer Celestial$/ });
     expect(selectedBtn).toHaveAttribute("aria-pressed", "true");
   });
   it("preserves transient template intent stored across login in sessionStorage", async () => {
@@ -173,7 +173,7 @@ describe("single-page event creation", () => {
     templateCatalogService.list.mockResolvedValue([template, celestial]);
     api.get.mockResolvedValue({ data: [{ template, styleMatch: false }, { template: celestial, styleMatch: true }] });
     show();
-    const selectedBtn = await screen.findByRole("button", { name: "Select Khmer Celestial" });
+    const selectedBtn = await screen.findByRole("button", { name: /^(?:Select|Selected) Khmer Celestial$/ });
     expect(selectedBtn).toHaveAttribute("aria-pressed", "true");
     await waitFor(() => expect(sessionStorage.getItem("koupreng.template_intent")).toBeNull());
   });
@@ -192,7 +192,7 @@ describe("explicit template intent precedence", () => {
     sessionStorage.setItem("koupreng.template_intent", JSON.stringify({ key: "event-essential", timestamp: Date.now() }));
     templateCatalogService.list.mockResolvedValue([template, celestial]);
     show("/app/events/new?template=khmer-celestial");
-    await waitFor(() => expect(screen.getByRole("button", { name: "Select Khmer Celestial" })).toHaveAttribute("aria-pressed", "true"));
+    await waitFor(() => expect(screen.getByRole("button", { name: /^(?:Select|Selected) Khmer Celestial$/ })).toHaveAttribute("aria-pressed", "true"));
     expect(screen.getByLabelText(/Event title/)).toHaveValue("Retained details");
     expect(screen.getByRole("button", { name: "Wedding", exact: true })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByLabelText("Invitation language")).toHaveValue("KH");
@@ -207,7 +207,7 @@ describe("explicit template intent precedence", () => {
   it("invalidates an unknown choice without selecting Event Essential", async () => {
     show("/app/events/new?template=removed-design");
     await screen.findByText(/The selected design is unavailable/);
-    expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ })).toHaveAttribute("aria-pressed", "false");
     fill("title", "Partial draft without a substituted design");
     fireEvent.click(screen.getByRole("button", { name: "Save draft" }));
     await screen.findByText("Exact saved workspace");
@@ -217,9 +217,9 @@ describe("explicit template intent precedence", () => {
     let resolveCatalog;
     templateCatalogService.list.mockImplementation(() => new Promise(resolve => { resolveCatalog = resolve; }));
     show("/app/events/new?template=khmer-celestial");
-    fireEvent.click(await screen.findByRole("button", { name: "Select Event Essential" }));
+    fireEvent.click(await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ }));
     await act(async () => resolveCatalog([template, celestial]));
-    expect(screen.getByRole("button", { name: "Select Event Essential" })).toHaveAttribute("aria-pressed", "true");
-    expect(screen.queryByRole("button", { name: "Select Khmer Celestial" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^(?:Select|Selected) Event Essential$/ })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("button", { name: /^(?:Select|Selected) Khmer Celestial$/ })).not.toBeInTheDocument();
   });
 });

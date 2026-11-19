@@ -13,8 +13,12 @@ export function validateEventForm(form, type, { draft = false, en = true } = {})
   }
   if (form.eventTime && !/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(form.eventTime)) errors.eventTime = en ? "Enter a valid time." : "សូមបញ្ចូលម៉ោងត្រឹមត្រូវ។";
   if (form.googleMapUrl) {
-    try { if (!["https:", "http:"].includes(new URL(form.googleMapUrl).protocol)) throw new Error(); }
-    catch { errors.googleMapUrl = en ? "Enter a full http or https map link." : "សូមបញ្ចូលតំណផែនទី http ឬ https ត្រឹមត្រូវ។"; }
+    try {
+      const url = new URL(form.googleMapUrl);
+      const hosts = ["google.com", "www.google.com", "maps.google.com", "google.com.kh", "www.google.com.kh", "maps.google.com.kh", "goo.gl", "maps.app.goo.gl"];
+      if (url.protocol !== "https:" || url.username || url.password || !hosts.includes(url.hostname)) throw new Error();
+    }
+    catch { errors.googleMapUrl = en ? "Enter a valid HTTPS Google Maps link." : "សូមបញ្ចូលតំណ Google Maps ដែលមាន HTTPS ត្រឹមត្រូវ។"; }
   }
   return errors;
 }

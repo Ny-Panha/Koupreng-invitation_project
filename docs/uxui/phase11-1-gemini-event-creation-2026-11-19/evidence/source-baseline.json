@@ -1,0 +1,40 @@
+{
+  "phase": "11.1",
+  "name": "Event Creation, Onboarding, Draft-Safe Wizard and Template-to-Create Continuation",
+  "timestamp": "2026-11-19T09:14:00+07:00",
+  "git": {
+    "branch": "main",
+    "localHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+    "originMain": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+    "treeState": "clean baseline before edits, narrow edits strictly confined to Phase 11.1 files",
+    "gitLogTop": [
+      "0cf4755b feat(uxui): preserve phases 07-10 and audited renderer repairs",
+      "2429b765 docs(uxui): reconcile phase06 evidence and cross-phase gates",
+      "e0a331ff test(navigation): require home content before scroll assertions",
+      "fefe5f62 test(media): await assets before asserting loaded content",
+      "3a020044 fix(a11y): support horizontal keys on focused table regions"
+    ]
+  },
+  "environment": {
+    "nodeVersion": "v26.12.1",
+    "npmVersion": "11.20.0",
+    "os": "Windows PowerShell (x64)"
+  },
+  "ciObservation": {
+    "githubActionsRunId": "44439374315",
+    "gitleaksJobStatus": "Failed (exit code 1, redacted findings artifact)",
+    "securityTriageStatus": "Discreetly escalated to Security/DevOps owner; no credential disclosure detected in local diffs; scanner rules unchanged; not release-cleared"
+  },
+  "sourceContracts": {
+    "canonicalRoute": "/app/events/new",
+    "legacyAliases": [
+      "/create/wedding",
+      "/event/create",
+      "/dashboard/events/create",
+      "/dashboard/invitations/new"
+    ],
+    "guardedLegacyBuilder": "/create/wedding/:id",
+    "destinationDraft": "/app/events/:eventId",
+    "destinationFinal": "/app/events/:eventId/invitation?mode=guided"
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "historicalProvenance": {
+    "userLeaves": 111,
+    "adminLeaves": 24,
+    "groups": 62,
+    "note": "Source-inventory provenance, not a new count of browser journeys."
+  },
+  "routes": [
+    {
+      "entry": "/app/events/new",
+      "guard": "RequireAuth → HostLayout",
+      "states": "new, restored, error, template queries",
+      "continuation": "/app/events/:id or /app/events/:id/invitation?mode=guided",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/event/create",
+      "guard": "redirect → canonical guard",
+      "states": "legacy",
+      "continuation": "/app/events/new",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/create/wedding",
+      "guard": "redirect → canonical guard",
+      "states": "legacy",
+      "continuation": "/app/events/new",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/dashboard/events/create",
+      "guard": "redirect → canonical guard",
+      "states": "legacy",
+      "continuation": "/app/events/new",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/dashboard/invitations/new",
+      "guard": "guarded host redirect",
+      "states": "legacy",
+      "continuation": "/app/events/new",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/create/wedding/:id",
+      "guard": "RequireAuth → LegacyBuilder",
+      "states": "numeric owned ID → invitation; local legacy builder retained",
+      "continuation": "guarded existing route",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/templates",
+      "guard": "public catalog + safe templateUsePath",
+      "states": "anonymous login next; signed-in intent",
+      "continuation": "/app/events/new?template=<stable identity>",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/app/events",
+      "guard": "RequireAuth",
+      "states": "owner list",
+      "continuation": "/app/events/new",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/app/events/:eventId",
+      "guard": "RequireAuth + event ownership context",
+      "states": "acknowledged server event",
+      "continuation": "workspace",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    },
+    {
+      "entry": "/app/events/:eventId/invitation",
+      "guard": "RequireAuth + event access",
+      "states": "guided continuation",
+      "continuation": "supported editor",
+      "queryVariants": [
+        "template",
+        "templateCode",
+        "templateId",
+        "tpl"
+      ],
+      "draftSource": "per-user sessionStorage; server ID ownership rechecked on recovery",
+      "authExpiry": "RequireAuth preserves encoded next; entered session draft remains account-scoped",
+      "testProof": [
+        "batch11RouteInventory.test.jsx in full suites",
+        "phase11-codex.spec.js"
+      ]
+    }
+  ],
+  "unsupportedClaims": [
+    "/events/new is not an implemented creation alias",
+    "/app/events/:id/edit is not wizard continuation"
+  ]
+}

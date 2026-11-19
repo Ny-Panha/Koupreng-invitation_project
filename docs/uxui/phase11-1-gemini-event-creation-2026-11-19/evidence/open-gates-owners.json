@@ -1,0 +1,26 @@
+{
+  "phase": "11.1",
+  "timestamp": "2026-11-19T09:15:00+07:00",
+  "open_or_review_gates": [
+    {
+      "gate_id": "F11.1-02",
+      "requirement": "GitHub CI/Secret Scan status reported accurately with secure owner escalation",
+      "status": "REVIEW REQUIRED",
+      "reason": "Host environment lacks GitHub CLI (gh) binary to poll live workflow runs. Local repository tree, commit history, and Gitleaks rules verified clean; final confirmation requires remote GitHub Actions workflow check.",
+      "assigned_owner": "DevOps / Security Owner",
+      "target_resolution_phase": "Phase 11.2 / Pre-release"
+    }
+  ],
+  "deferred_features": [
+    {
+      "feature": "Live Cloud Draft Auto-Sync",
+      "reason": "Out of scope for Phase 11.1 frontend wizard (requires backend draft staging table). Local sessionStorage draft implemented with full account isolation.",
+      "owner": "Backend Engineering Team"
+    },
+    {
+      "feature": "Direct ABA PayWay Checkout from Template Selection Step",
+      "reason": "Template purchase occurs in marketplace modal or billing flow. Phase 11.1 wizard safely disables unowned premium templates and directs user to marketplace.",
+      "owner": "Payment & Commerce Team"
+    }
+  ]
+}

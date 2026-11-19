@@ -99,6 +99,9 @@ client_secret*.json
 /output/playwright/phase11/
 
 /output/playwright/phase11-baseline/
+/output/playwright/phase11-1/
+/output/playwright/phase11-codex-*/
+/output/phase11-publication/
 /output/playwright/phase12/
 /output/playwright/phase01-audit-20261110/
 /output/playwright/phase02-foundations/

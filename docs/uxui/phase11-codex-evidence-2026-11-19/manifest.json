@@ -1,0 +1,3508 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-19T07:21:01.536568+00:00",
+  "archive": "evidence.zip",
+  "archiveSha256": "6292de26ff16b5ff1e829975c17b4c3c86b58beb1d9a10ca35a4f53e0858c916",
+  "archiveBytes": 33326627,
+  "uncompressedBytes": 40990326,
+  "auditSourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "auditBuildSHA": "3397443054c919b16c0239eddf822544e457a792f22be25c1d68242fa73bad54",
+  "files": [
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-dark-details.json",
+      "bytes": 978,
+      "sha256": "ef1950cffb95baa72495c75e8235c8d4b948ccf21f23646bbe1dc44d9d8101cc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-dark-details.png",
+      "bytes": 156284,
+      "sha256": "2a5037a22312f9450c9cd570ef158fa70f0120016db243c4045aee26032c1c79"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-dark-review.json",
+      "bytes": 976,
+      "sha256": "7f8250e233aef094af73ea0e73d8ceac004ff60952d6c517fccb80293df987ef"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-dark-review.png",
+      "bytes": 124746,
+      "sha256": "f4f6716018a8b4e98d14f52bb4aee449c59eccfe87342db2711d3174c19e9d9b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-details.json",
+      "bytes": 980,
+      "sha256": "b82733b2066dc58bff962b936ee6f2f0fd40fe633504c1186c6f42cf3c7dcee2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-details.png",
+      "bytes": 157798,
+      "sha256": "27a614c28a23a39ff59e94c2819c9289ca620f8b10750c9b362c466767aa2f1b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-forced-colors.json",
+      "bytes": 1004,
+      "sha256": "e6e64ffaeb472df427861e900df394709259f29d1ad40b76f09aacd94ee679a8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-forced-colors.png",
+      "bytes": 129708,
+      "sha256": "c7710b9226ccab3a5e6f9603c842535cb5820f5a88aafce8456fadb1102de9f9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-invalid-details.json",
+      "bytes": 1008,
+      "sha256": "ccfe2bbc6d8d3c65a9932a4521a4c0a3507836cfed2e027a29b6f04818f81fae"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-invalid-details.png",
+      "bytes": 169619,
+      "sha256": "4e8b92584e4241213f1c386b356ea5f2d941faa342c56e3f7aa45923c6263361"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-premium-denied.json",
+      "bytes": 991,
+      "sha256": "f1db1c07ee2785f037e8dedaa8ca9cc27938c69af001a1d9d29380943a2853c7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-premium-denied.png",
+      "bytes": 83554,
+      "sha256": "2e0af5652f79dc2de944cb62da96fc76ded9c5817e660affdb51a2c6119e3617"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-recovered-file-missing.json",
+      "bytes": 1042,
+      "sha256": "199e95dcd4df26a9ad2b3ee3defb35b4c64fc9e502e4cb6bd916a54c1e228ac4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-recovered-file-missing.png",
+      "bytes": 110710,
+      "sha256": "7fe2eaa75d6c88e7e77799ce8b6503d470c92089ee7104ddbaf6e486fd3ed0c9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-review.json",
+      "bytes": 978,
+      "sha256": "edd0cb2de6b5db88cd4b03322b64d15c51793dc238d72c2caee9dad01ea18865"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-review.png",
+      "bytes": 128950,
+      "sha256": "0ff44f7ad87aed368e9717a5a7c3ba180717ad47ef050a852c2186e0ccb59576"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-templates-unavailable.json",
+      "bytes": 1005,
+      "sha256": "68eb033ffe446b75b2217dba8fbe522395c5a7e52efe3c8640a25a13b983b93b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-templates-unavailable.png",
+      "bytes": 65178,
+      "sha256": "48c8e4e56f2225ebf0626f9de7da93cf43cb7e8d52eb68f6944ff93d4b81af06"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-upload-failure.json",
+      "bytes": 1026,
+      "sha256": "1bf88d9a09416d01376412ca74b34108da158da1ddb4ccd76bf26072f47f8b11"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-en-light-upload-failure.png",
+      "bytes": 159055,
+      "sha256": "28851fcbcc6a913a2b1eb612721a0a329268af80053a30f0184f03c17bf2cafc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-dark-details.json",
+      "bytes": 978,
+      "sha256": "62d0364e4c8cf77d7b3c67a4eca9a005a81e62c14ed0cb8deea085f328ee3837"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-dark-details.png",
+      "bytes": 156923,
+      "sha256": "ba6244fd39f271fb857fe9f743669db2592c0063d7c483533be22fb7cda99cb3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-dark-review.json",
+      "bytes": 976,
+      "sha256": "b6c7c5218c351a50eaceca58dd96af5a76691d1e75624c9a5a1b8ddd974037d7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-dark-review.png",
+      "bytes": 125032,
+      "sha256": "173f283629c352f791d31c4cfb6858c4d619b55f63e40d96f37b1f153059bcec"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-light-details.json",
+      "bytes": 980,
+      "sha256": "26e022ae93682335d767a5224973536f0c1c0178830aeb421ea2af32aa6a22e3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-light-details.png",
+      "bytes": 159128,
+      "sha256": "19fb8640602925d765196935cb4fff01d597ac7e5d84e2b008f68404f2ce3914"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-light-review.json",
+      "bytes": 978,
+      "sha256": "08f984df0f8515f4caacba54060d73092981f4ef82ab73a5b8834be22af15b37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-320-km-light-review.png",
+      "bytes": 129304,
+      "sha256": "7fbd1c3313503b22df0f5e4b64bd60a0695d3a0f030cc9ee4834d6753ff10be9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-dark-details.json",
+      "bytes": 978,
+      "sha256": "c103c05215b222ac54ce622fa0a7efa6711054f292c5ca3f4c818ad1a4e78183"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-dark-details.png",
+      "bytes": 163987,
+      "sha256": "cd434c93b0b53743fd131f36ac0c0b6dac0fb9efb1950f6a7abda967e6936417"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-dark-review.json",
+      "bytes": 976,
+      "sha256": "c22b1031a42e2ccd121be74f6950606146319237c78ea117ab69380eca54428e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-dark-review.png",
+      "bytes": 132100,
+      "sha256": "f30f643342c2e6e5272d41a02b302823f9370d2ba03b1e970481fbadc0e814ef"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-details.json",
+      "bytes": 980,
+      "sha256": "ecb70fe93b404017b74d551bf8e1ab27c7e46e498f59ccb00dc551c34e69a34f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-details.png",
+      "bytes": 164891,
+      "sha256": "8a62c40ae5dbcaf5ef94f44f47e23ddb33647f30f3bf819a6e0ec63b40a5d1c2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-forced-colors.json",
+      "bytes": 1004,
+      "sha256": "aa82d256bee69f58b7c1e88f8a8749aa08fe2a39f700290654bd6ea8d1eb4907"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-forced-colors.png",
+      "bytes": 137274,
+      "sha256": "6989d5397e3e87fabd4c4e74ac2c4959cf40204d618faaad978f0cf7e12a7e9c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-invalid-details.json",
+      "bytes": 1008,
+      "sha256": "b1e4983899a0cfda77340e283485361586de7e98586dea75888d9cc240bfe60b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-invalid-details.png",
+      "bytes": 179950,
+      "sha256": "07b3b6e514c3cabb005dd9d69bec60eab4f7f62221b8750874aa5507b6eae251"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-premium-denied.json",
+      "bytes": 991,
+      "sha256": "5f7bf4ca7a2c2dca44e8c2a5aa7d9c6e53cf1b449320257a37fd18341216056c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-premium-denied.png",
+      "bytes": 89117,
+      "sha256": "b89a20903ab573797de55d367767ccdc7aabffdd73facbf88817f8b68d0a8b7e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-recovered-file-missing.json",
+      "bytes": 1042,
+      "sha256": "9a88c8b8e5690c8012d9137732a5afadd22dcfb22d540c3e3d76ba89dfa9efbf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-recovered-file-missing.png",
+      "bytes": 107471,
+      "sha256": "a3a28abd42c0af2ff0d4a2ccb95f0fd51c8c0e2c47cb0e813b252fc7d1fcb686"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-review.json",
+      "bytes": 978,
+      "sha256": "3f2348f32e30f71f0d71424f9487deb1aee4558002bcf4b7cb8cf09822fe3d4d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-review.png",
+      "bytes": 135893,
+      "sha256": "5cde328790ccc01d0c658c8163a218ef13fad4a824fd12c57dde5961251e7910"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-templates-unavailable.json",
+      "bytes": 1005,
+      "sha256": "d62e2901404e54c424ef0b1149669283e94a94d0b922647e55dbde68dd0b0cb4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-templates-unavailable.png",
+      "bytes": 74185,
+      "sha256": "12a3c19a9eb7ab88c08a6914878b0e37944c9c2e421d0bcd47b77d50769a94c4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-upload-failure.json",
+      "bytes": 1026,
+      "sha256": "b90492e1263e9c44714ad2911b9a461e3ef3d6b1ab6d6831570ffd043006d117"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-en-light-upload-failure.png",
+      "bytes": 160104,
+      "sha256": "98bc3c8d880b26f081195a76782fe7f697cac64e840425f79510376649cd0dd8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-dark-details.json",
+      "bytes": 978,
+      "sha256": "f9afe1583f0f35c3e256c6d2622844b94a537a3458c3576e4fbe60287f1fe715"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-dark-details.png",
+      "bytes": 167313,
+      "sha256": "c1b5d2ff96ba00a824b1a095584cb04ef64b8cf4dee33244d671650b2d0b8302"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-dark-review.json",
+      "bytes": 976,
+      "sha256": "53e479104fa2df05f9da351843884754b23190587718cb0ed54da774b6dcbe5e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-dark-review.png",
+      "bytes": 134349,
+      "sha256": "8388a496be00bc1d99d32a64a36268920c3f2e03d351f89bb0a9563eda5a4c04"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-light-details.json",
+      "bytes": 980,
+      "sha256": "14bbacfa8bd38714e6c129e54599cc09651ee2236c9e492cd0643271c13cc826"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-light-details.png",
+      "bytes": 169606,
+      "sha256": "4c64768af1ad92ba1384a4c7c5eff3177ae76e56d119c241ad4b6dc85ac6f915"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-light-review.json",
+      "bytes": 978,
+      "sha256": "9a20a3ccf137bb51d9fec07e6da379f37e42924e071089f2ee08998cfb40cd8d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-360-km-light-review.png",
+      "bytes": 138105,
+      "sha256": "63267461d2187763a3f6bdf20ed696a419d6ed5a83fadcd7598cc40b9c8d7264"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-dark-details.json",
+      "bytes": 978,
+      "sha256": "ce950947315eefd5565378bb1a27f3b8634e5af78b6e358fa59df706c5202845"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-dark-details.png",
+      "bytes": 164445,
+      "sha256": "ec1b510a9fc49100e19f400ddd8ca5d6ad8a364755ace08dc7c2ee507874f731"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-dark-review.json",
+      "bytes": 976,
+      "sha256": "937a0810f513e69c52427ffac5e56a9c24705c6e75704edd42ce4e891421f178"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-dark-review.png",
+      "bytes": 130240,
+      "sha256": "1bf233d42b78920b989d32e741a8bb5303cda9a90295fa6315ec2d996712fd41"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-details.json",
+      "bytes": 980,
+      "sha256": "a6231df82526c910d917473b8410ca39cda821a4d3f9705297f4f467b3514bf3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-details.png",
+      "bytes": 166843,
+      "sha256": "3497a559f56740d519eb2b94d53b6e66afc052b22e2ee5f174aa605374144b2c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-forced-colors.json",
+      "bytes": 1004,
+      "sha256": "0d5d206e17a85f1730d9b1da12a0976f4934706ed19f82fdddea06c2128388a1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-forced-colors.png",
+      "bytes": 136480,
+      "sha256": "82d4bd19a21e58189b77a720d7c6730c66d7f45562db350dd2fba18395b01617"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-invalid-details.json",
+      "bytes": 1008,
+      "sha256": "6992d3c4513c4e086ccb6da7b783d7db0d38394711d17046f21d98e738042e83"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-invalid-details.png",
+      "bytes": 180343,
+      "sha256": "4ceda51b7be7b2eab27b7db0978ffe9367ea1ea0eb4d85ba708ad1c196a00b93"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-premium-denied.json",
+      "bytes": 991,
+      "sha256": "19f004d7b99e8e8cfe9b3f05849246b65a6397bdc58e4d6ae98924a97f5954f1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-premium-denied.png",
+      "bytes": 91873,
+      "sha256": "411341eb2a931abf1ae44fce6d2a1f10d64cb1dadf86da8e2703cf89eb252c6f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-recovered-file-missing.json",
+      "bytes": 1042,
+      "sha256": "d75965e4f60efa1dd3b84ee8b7d5a0c42e8586085388560fea6638aae0310fe0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-recovered-file-missing.png",
+      "bytes": 109674,
+      "sha256": "d8f487570d0c056215946ed280f4dfaa0602574cc4db9532d7265becab4dd053"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-review.json",
+      "bytes": 978,
+      "sha256": "159580a5e8927d8a42ab23a453b8e229951c661d451e0b1a562ed84f6134255e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-review.png",
+      "bytes": 133283,
+      "sha256": "d7091d12f178edbce23c21e44847c3b66d1148a5e41ad73c68f80f51a9c167f9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-templates-unavailable.json",
+      "bytes": 1005,
+      "sha256": "597a3a08f29a1c3668d8087fdd0918dbebe2d1b13e6447a9ceb7e87c38532925"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-templates-unavailable.png",
+      "bytes": 72487,
+      "sha256": "975b5fda5ef373b20009a69f2a9834de33d9345a9333bf711fdcd3ec267ea6e0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-upload-failure.json",
+      "bytes": 1026,
+      "sha256": "77397368556947afaabda27198b6bd87399ed00e675cd0536d0b5d85a806b70d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-en-light-upload-failure.png",
+      "bytes": 164543,
+      "sha256": "3a0b5df6179399f41e8ffd8dc3a11f2e4b888bf1ebbbc400f287822c695f71c2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-dark-details.json",
+      "bytes": 978,
+      "sha256": "c8c4ae066e8cc1d4515d0f67c9bdbe152619a4b1c13793d975945d9a13c2bf56"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-dark-details.png",
+      "bytes": 166534,
+      "sha256": "029fc1214cce1f426aef06ec7025e66d3c4139e410f5a7ee7b5e74094991bf70"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-dark-review.json",
+      "bytes": 976,
+      "sha256": "dcacc8ad39fa886be0b711a2fc4905855730664a1bae71fb2c817121c25add81"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-dark-review.png",
+      "bytes": 133815,
+      "sha256": "575b840edb520b990c58b9ecd8cbaf796d443e98efcb946eb2c0110e33da9cf9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-light-details.json",
+      "bytes": 980,
+      "sha256": "791c6023ec42a182fb7bbd1fb05ba106139b10fedc5f9b66db79acad57a4a40b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-light-details.png",
+      "bytes": 169510,
+      "sha256": "7001190d59ea4479b4219f48fe41cb4b7a16afe1a862c04bff467af83498e80d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-light-review.json",
+      "bytes": 978,
+      "sha256": "bb3ac5f694721a13c1ac9e72d144bcbce33565bfa12e888f36d4158fe9f91bfc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-393-km-light-review.png",
+      "bytes": 136919,
+      "sha256": "865e88dc4f5f857040ab0ef37628c96430fed805bb74de17e6f71c63ca8a7aab"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-dark-details.json",
+      "bytes": 983,
+      "sha256": "134d1b926da94e5f3ff3320714c9cddc31517f95cb82f4b54567ebe353bca357"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-dark-details.png",
+      "bytes": 400754,
+      "sha256": "7a29ba6ae296cce7c2f63aff227be518c457476233f0a920a2af5b329370b64d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-dark-review.json",
+      "bytes": 981,
+      "sha256": "fca82788e5bb60993d0e2069d230ba601f47dff5ef67cde35843a4dd11542de2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-dark-review.png",
+      "bytes": 397020,
+      "sha256": "94d6d02d2ebfbd947a98f0cd95e8c5e553878ad402570df598dfb4aad49e72df"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-details.json",
+      "bytes": 985,
+      "sha256": "0f2aee701e56a8bab891122673b9c88377da38c0552c53ebc70a7b671e29891a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-details.png",
+      "bytes": 402207,
+      "sha256": "2d85fb7314225686a2cdb81826b2f4f7881a2307d8316d9285c0bf2abec4f8d8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-forced-colors.json",
+      "bytes": 1009,
+      "sha256": "317100a95b727156cf85d66cf3eee0386dd9f2a322c16e7afc60f6888182782c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-forced-colors.png",
+      "bytes": 307997,
+      "sha256": "c427d50bc1a3c3f24dfe934fddef9d711bb5ebd52c8370ae30b86abc1a82f44e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-invalid-details.json",
+      "bytes": 1013,
+      "sha256": "0982fefe6fa7397c2f7c194b03d45371aa0905752d1374a675d38ed3de76a72d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-invalid-details.png",
+      "bytes": 409238,
+      "sha256": "43c50f23ba4901f64564b8ae4e0d6f54366ef5498ddfc0c61c5b9aedd49d218f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-premium-denied.json",
+      "bytes": 996,
+      "sha256": "10c0aa4cb0a83030ad6339af82666735e91a10ba4aebaab0ed73b4b45ccbaa36"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-premium-denied.png",
+      "bytes": 407033,
+      "sha256": "c808a4e58c549c682dd22eb2a7c1a2db2d9c2fbae6990ef95b006da8c54f61f3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-recovered-file-missing.json",
+      "bytes": 1047,
+      "sha256": "ca4d51af56ce733486ac54969b2a6a6232e53c15ee0b42e4e572207daa5165e0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-recovered-file-missing.png",
+      "bytes": 417781,
+      "sha256": "0b13b6be945034e9fa75c58e8f415964b76b3d386dbd649f02c8d9bdc106ec75"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-review.json",
+      "bytes": 983,
+      "sha256": "d7239743b19251bc90ec3dfcf3c0656893743dddbf3352c4b0dd678ee6c9f00c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-review.png",
+      "bytes": 396395,
+      "sha256": "2a3f1e37bf667b3692b8c925fad489e6607fd6124f2da560d923067f38c5dc3e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-templates-unavailable.json",
+      "bytes": 1010,
+      "sha256": "9593e0d90165cc33071cd31364438cd5d5cbf9cf67331b6e9e7d112b1027150b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-templates-unavailable.png",
+      "bytes": 384245,
+      "sha256": "90e8dc35bb624bf3c6bcf74b774da55de00b0caa11f887af2ed4471af1d2366e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-upload-failure.json",
+      "bytes": 1031,
+      "sha256": "c10cdfa1455b567a2f296cab656474ea8bf8afa6b8974dfdec8d9217b76083e2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-en-light-upload-failure.png",
+      "bytes": 422110,
+      "sha256": "a1812c1cf14b2203ff88c1e7758a1260f90b2312aab41139d99046d9d92383f6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-dark-details.json",
+      "bytes": 983,
+      "sha256": "881f643ba7d11294bb6fad4b1fea085c21ef652da6599378be11d64cc0b65974"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-dark-details.png",
+      "bytes": 406170,
+      "sha256": "dea1ca6631e3e56dd88fdd94ba6196afd90ad85698b658051d40afc211538951"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-dark-review.json",
+      "bytes": 981,
+      "sha256": "75078b345604cca462f188b6e9fb3e62244a2d0f13b9976030dfdff45a5525bd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-dark-review.png",
+      "bytes": 402952,
+      "sha256": "21efb258d82febcab36f487d5211a941c1719898afb99ad0527215f2d57510c8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-light-details.json",
+      "bytes": 985,
+      "sha256": "7ca220171ded715fa0c3d937fe921e05e2787e0c48e4f3d44114add5cf6a0d77"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-light-details.png",
+      "bytes": 407675,
+      "sha256": "5244d26a7374066b1b08dccdbe7ea48ee772649de6b5ef638d22215d61597946"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-light-review.json",
+      "bytes": 983,
+      "sha256": "2af903ac22f829d6018e646c07ae9de5556c6e041100421ea3d1ec22fac6bb06"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-desktop-km-light-review.png",
+      "bytes": 403658,
+      "sha256": "4fda31941600b0667b52e1c69f2f9dec3299797bc5d8d79b95ddf083a0dfc64e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-dark-details.json",
+      "bytes": 984,
+      "sha256": "526d31412a31d756225dbfcbabb1a03cc6ede80277da14c263a7ef26d52638e4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-dark-details.png",
+      "bytes": 336165,
+      "sha256": "9709bac7a594f1576be7f95a7092e3b4c693807671eba13b92891c1101d3461e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-dark-review.json",
+      "bytes": 982,
+      "sha256": "bfc2dbe838a832d338758d3b3a1371e6c74d411f877d155dac391d0441a23b63"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-dark-review.png",
+      "bytes": 338315,
+      "sha256": "f92eab7e1a6feb5f1b3668e4174c76817b780e2fd9094e90df84a7ab5b83c815"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-details.json",
+      "bytes": 986,
+      "sha256": "cc0013d0b173cfc930af15900662e16d839b9cfec00ae1e22ee77937af5cc80d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-details.png",
+      "bytes": 344056,
+      "sha256": "9745acd5e1c2656891932a3f302845a487f17a7482d1812c91047e7882d2dae9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-forced-colors.json",
+      "bytes": 1010,
+      "sha256": "c4bed58144922805c7050ef3876c3ba9ab350cd4a8403776d699c7bcf07d5385"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-forced-colors.png",
+      "bytes": 262386,
+      "sha256": "4d18f2841c31f0cc7f6a587434e1d373f38d0e696eb45813ddebdbe7f948efa5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-invalid-details.json",
+      "bytes": 1014,
+      "sha256": "f8e64a728a89449eecf9aa99cb11e043d64d2bc90a82cfda7692ba15be5e4a7a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-invalid-details.png",
+      "bytes": 355344,
+      "sha256": "e45274e74233951a49a03228204a9b8c75b71f99e8ee1d7714bb1f43d50942d7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-premium-denied.json",
+      "bytes": 997,
+      "sha256": "f3d33f0685e0ce5d86f0f738813ee305b08d575a7e739e9b5d4ca0bfcf43dc1b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-premium-denied.png",
+      "bytes": 348433,
+      "sha256": "0233a011ba60222d087ac15271ad884112d897605e18d7e0a2db50fe2e05cb27"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-recovered-file-missing.json",
+      "bytes": 1048,
+      "sha256": "8c22d1363c9c905a5cf9a075fd72cba1817b2148c63643719a8c74d1540aab8c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-recovered-file-missing.png",
+      "bytes": 365316,
+      "sha256": "a6350d33bde360e8ea2af2bc939d52d43e73a5221469e172b70c7be001f4c30b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-review.json",
+      "bytes": 984,
+      "sha256": "88190015ba7b6ea44c027e6a388f172e4735436b50541e57455777e2e775d546"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-review.png",
+      "bytes": 341699,
+      "sha256": "0c2569ef3d3783df734fa35018a159871866a761a275311171e6bf3e885fa4d1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-templates-unavailable.json",
+      "bytes": 1011,
+      "sha256": "93a238ea19c3c9a1c8c60beb98ec468b7ba0595ed84d1fed30ee08f3a664da00"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-templates-unavailable.png",
+      "bytes": 331794,
+      "sha256": "8045fed4e329c294c43a5c1b1bc739c5a3869111c812f02140bb1dc0d5018ac5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-upload-failure.json",
+      "bytes": 1032,
+      "sha256": "d1756c554ab539aa67c75fa9e28a5e94c9d91aa340800cbca9cab2cb5f65eefe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-en-light-upload-failure.png",
+      "bytes": 369327,
+      "sha256": "f6c14ec0c480443864428c9b5bc6a8f72ff051b8661bdf99d35bac5b95471bab"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-dark-details.json",
+      "bytes": 984,
+      "sha256": "4aa8b688a01cd70170aa490ade9189a34522f4f8a30b582d4bd4b95350a428a5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-dark-details.png",
+      "bytes": 342291,
+      "sha256": "07d63b728746bfaffec685affea812966a40f0470b6e016b69775379a2ee71bb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-dark-review.json",
+      "bytes": 982,
+      "sha256": "2e10e8c12803815f0851e8189fce61daf3d5c6d5b8ce84d2f335ea0d4413f4b3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-dark-review.png",
+      "bytes": 343823,
+      "sha256": "ae5d2d27008f95b51732664018f49cf9e34778879276c8d9a095ac006eebba5e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-light-details.json",
+      "bytes": 986,
+      "sha256": "f9fa96b42ffaf8817bb7f03f38beadc55826bc1732aa7d290ffde0f1c4b6e298"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-light-details.png",
+      "bytes": 348677,
+      "sha256": "dcc299a90209e12e03e7620969b0ea98400f1d05cfc49635749951e1bb59fef3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-light-review.json",
+      "bytes": 984,
+      "sha256": "5335b14fddf06fcd9dc16bfc6eac53cb0ca3cc31a71f56ed9c2f7cce70a45e47"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-landscape-km-light-review.png",
+      "bytes": 349432,
+      "sha256": "bfc3b3cd8614900450c69ac2a17afbca9530aed0682f065ba2f29f909d8cb0ea"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-dark-details.json",
+      "bytes": 980,
+      "sha256": "d40f8733f4f3a512da2f6a9eb4f5b089d7c71c11a3c30ca8985d9094edb504db"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-dark-details.png",
+      "bytes": 343785,
+      "sha256": "43981017520e5b4de0505f7f93031015ce7a791827419eea0c2ff6083d274cb9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-dark-review.json",
+      "bytes": 978,
+      "sha256": "8fe6de32f343f163aa6b3d0a7ffdae43fd0114e52030cbd90aa1f480516e5f19"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-dark-review.png",
+      "bytes": 342663,
+      "sha256": "136abe4292b3c1c0af4e7dbc49c131fd8a8b493353f011b40ce3ae5b606cb617"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-details.json",
+      "bytes": 982,
+      "sha256": "a1f1d49405353c42e237343d1106aef3bf5af6a1b8f902bb27f620dc28e18d0d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-details.png",
+      "bytes": 349080,
+      "sha256": "a4cb828403a9af4cd22a0c1a368a4f18ce4492c70b0ddcdf560036884f1c9508"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-forced-colors.json",
+      "bytes": 1006,
+      "sha256": "c77e8e24289c5a7b727c015784f4fa8e2f8e290f3d8f546929ecb17b0f71b5f0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-forced-colors.png",
+      "bytes": 264571,
+      "sha256": "6fb37e8897d7867c9d66a85545cd545971415dae26a5b67e90a3d787b1b902eb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-invalid-details.json",
+      "bytes": 1010,
+      "sha256": "f9e6e4dfade940723cbc9bdbb168f061a694a210476d48cc6cc3df6c6cdcf0e5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-invalid-details.png",
+      "bytes": 357897,
+      "sha256": "158800c7006a6ae307682a2f3ccc3beb2dae1383bdb943358ba30b3b0984cf88"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-premium-denied.json",
+      "bytes": 993,
+      "sha256": "ffd2f712a7e57b13e6ef0c1039feea008ae367d5a28ed5f1ff01e733575d4445"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-premium-denied.png",
+      "bytes": 352048,
+      "sha256": "a733c6b17ffedf4c259a8c9b916abf34a0bf288f67740ce5b8587456a5caa516"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-recovered-file-missing.json",
+      "bytes": 1044,
+      "sha256": "78a0027f20c5c0accad71f8373eddceabad57c2199b3d89c077f551211e1b217"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-recovered-file-missing.png",
+      "bytes": 369940,
+      "sha256": "f7f4b0796fa8939b3092ae8c56b2d3e94d05b118a640bf51a0ec468cc09c8f64"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-review.json",
+      "bytes": 980,
+      "sha256": "e915d4aa19c9203d6b8549482b1e58bc25cfa70027bfddc26cd0b43fd4b5a33c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-review.png",
+      "bytes": 345638,
+      "sha256": "fa69dcc5dad65d26996ad09ab207ae7ba84ebcf2ef70d9bbac301bd44635e421"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-templates-unavailable.json",
+      "bytes": 1007,
+      "sha256": "8e9ce91cf3c4fb8cdcc61d46f9de5ec536438904670f1a407d43bc993538275e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-templates-unavailable.png",
+      "bytes": 335543,
+      "sha256": "c56b9bb3cef9463b5d148ac67f632249efaf28806204baaa63992df8be823dff"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-upload-failure.json",
+      "bytes": 1028,
+      "sha256": "3786234057c4966ba3047e5a3fc9c1429aa4d9cf7de94f640a8ce81532302dab"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-en-light-upload-failure.png",
+      "bytes": 375414,
+      "sha256": "7c71ad603fc7f6e3ecf0d7fcb05de5e2c74b0b604b31d384d6ec8fa411ea10c8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-dark-details.json",
+      "bytes": 980,
+      "sha256": "e6343a38cf0ae3447265d795eda4d75eafa65c205a45da17588552e208477f7c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-dark-details.png",
+      "bytes": 346647,
+      "sha256": "b6c308262422170bf401034f0345526d13c1d2414721d60e1de3a0d85898727d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-dark-review.json",
+      "bytes": 978,
+      "sha256": "74f9adc67ad694d343ebc0bad12d3d19437032168845fb7fcbe4ca71c52e2500"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-dark-review.png",
+      "bytes": 345654,
+      "sha256": "9bcc8879ea1eccc831ba28e8cfc8d27b3aea35a1abc6f164716542cdefcfec9f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-light-details.json",
+      "bytes": 982,
+      "sha256": "4c9c15a6c083d62dadf3e98f84096b6b20d76ee39ff329e2409a91fc8f69a8ee"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-light-details.png",
+      "bytes": 350807,
+      "sha256": "8a3d34120d0fb32a2d850987074ba3881d1a0f60fb3dc6a1801eb72c1e4ba12f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-light-review.json",
+      "bytes": 980,
+      "sha256": "2c20fdcd9e571d3099716e5b86429a594e6ccc5232525f2131a90754bd9405c3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-short-km-light-review.png",
+      "bytes": 350607,
+      "sha256": "e4f2e619e829031872278fe1a8fc6ed0ca424dfbe5f8a408877f35cce86250d4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-dark-details.json",
+      "bytes": 982,
+      "sha256": "4961c5122a0edba362e3984ade149a88414acd2c6e4cec92da4716d7b510290d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-dark-details.png",
+      "bytes": 172329,
+      "sha256": "4bfd6e6bb4abb675caa5718f46be463f90f93bcd1282a32cdb177c89ed76dd16"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-dark-review.json",
+      "bytes": 980,
+      "sha256": "7eee76cc8d384aceccecb2689b6bd2696d0f6862467f2b971cc9d4e19e3b3427"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-dark-review.png",
+      "bytes": 124315,
+      "sha256": "1f0028f0e1fe7359c2918008cb81a6f9095f18169605a21b527d3836a69d034b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-details.json",
+      "bytes": 984,
+      "sha256": "f9af81c205424cfff53ec13006319eacb07b60df00baba333174c9c535d178cf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-details.png",
+      "bytes": 173240,
+      "sha256": "19b10df657fcc1192246c41433c6dd59922fc4ad65ee19d8a5ff3aff27e39fb5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-forced-colors.json",
+      "bytes": 1008,
+      "sha256": "9d0295e6cc472dcbade36ce2e28cef32aa1cab527d3acc5346007c052245c72d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-forced-colors.png",
+      "bytes": 145474,
+      "sha256": "6d1bac5ec57f8577599dbf870504d752b75b24de5c6b0953f1b0942dc5f207a7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-invalid-details.json",
+      "bytes": 1012,
+      "sha256": "c6ad9f73161e5dca2c55a74d75c659681d86268002b77cb40c9a249eba7d15db"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-invalid-details.png",
+      "bytes": 194714,
+      "sha256": "20743bb59905d8877ea7c4f8b6da0f2319ca86da2ce4fd6531428a5d54c6ab0a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-premium-denied.json",
+      "bytes": 995,
+      "sha256": "442ef44053db9724d4e612279c32a4220b0ba2023002025d670a0ba188de99e4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-premium-denied.png",
+      "bytes": 97738,
+      "sha256": "68f5846f95f2d79c860cffaf0fadaff614a3ffc1bda09bff10ad7dd3d7b9a869"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-recovered-file-missing.json",
+      "bytes": 1046,
+      "sha256": "cfe986c0409aa8889c99a3a754436b2dae13be8846830c097177ac28f921295b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-recovered-file-missing.png",
+      "bytes": 124318,
+      "sha256": "bb03616375ec95cd8fe7526c2378b711bf58c6a244cd00b5d2e92803ed8e22f5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-review.json",
+      "bytes": 982,
+      "sha256": "1994fa0298d01d7f771d9919d96a8c833f36442b3409a4e08f81e3d880b6576c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-review.png",
+      "bytes": 127481,
+      "sha256": "ac11156c6f31dd6c18ca9feac2bada3fc14626d62950f240e6b5060fe9e21a51"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-templates-unavailable.json",
+      "bytes": 1009,
+      "sha256": "28175550a9ae8352e5d95432af8f107e069a465ca18df9b7c76db608083a29ca"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-templates-unavailable.png",
+      "bytes": 86582,
+      "sha256": "a2eb305462ee30c72c499a097f4848d1d7974291461e5f9bf0895becba428402"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-upload-failure.json",
+      "bytes": 1030,
+      "sha256": "c1aec8bf243c04c27b8472fa973511e13cd5068b4c54f4516d5ae05c7d9d676d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-en-light-upload-failure.png",
+      "bytes": 166837,
+      "sha256": "f187c672823eaa5c09e6a1b84303ec79f7d888e0d513d915a6b17641bc5fe5e3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-dark-details.json",
+      "bytes": 982,
+      "sha256": "1a633684e6595b792765bf79ca1a8874d32a7bd39e067953f12fd9b7c5f19849"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-dark-details.png",
+      "bytes": 172738,
+      "sha256": "296671006803c316200eee112058a14540e58d1b007ecd95aa21580aa0915a57"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-dark-review.json",
+      "bytes": 980,
+      "sha256": "94eff889ebc6027d70ee717a0b90bb7298a238d28508551cda113c4ed6344b49"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-dark-review.png",
+      "bytes": 128677,
+      "sha256": "84595e84ea3239edc9c101daba345503075d7b4b9a20ed356813411f8dae43a9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-light-details.json",
+      "bytes": 984,
+      "sha256": "2180433ace50c3ca225004cce18f19d71bebfe1332a233b182df91debc67f2ae"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-light-details.png",
+      "bytes": 176546,
+      "sha256": "742febae46728cbae180aff0af79166501ea974791229efa053437819a778365"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-light-review.json",
+      "bytes": 982,
+      "sha256": "15879be52c4a083fb9dc102ea844a4a27827bf7382d75ac25b14cd371d2db52b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/chromium-tablet-km-light-review.png",
+      "bytes": 132110,
+      "sha256": "35db446f62d49eb293f5c5b59432e3511eb6e88789f11d7e2126ad6939c05f4e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-dark-details.json",
+      "bytes": 972,
+      "sha256": "5579867e331459717661391a9eeb6ba5138f669e95abdddb5dd8d80338a28487"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-dark-details.png",
+      "bytes": 151678,
+      "sha256": "f132816eae6bf15dd24861d0b8fa1dd10a8896e3c011c638809d0cfedd296978"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-dark-review.json",
+      "bytes": 970,
+      "sha256": "e372a224ce934d6ffc5098f18bb8b47aa3aaac03d890de7c74de06fc9fab44e9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-dark-review.png",
+      "bytes": 118995,
+      "sha256": "542d78ef7ceedb3681ab472cdf4c0fe607b3cc06f696c9d986c3252f4d43d38d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-details.json",
+      "bytes": 974,
+      "sha256": "e4d41ed33f0596ea822b1f7c97f3a440f5367e8613a84ac416d2e431403848fc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-details.png",
+      "bytes": 159117,
+      "sha256": "3b91ebde5cdc1c1332e6c78f3705096b33d55a3a5d3d7151ac35246d490fa979"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-forced-colors.json",
+      "bytes": 998,
+      "sha256": "3e9bba4ab2740e36cc99ad19e04eaf02c294e54da0e179abd449a552dae9a519"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-forced-colors.png",
+      "bytes": 148566,
+      "sha256": "a42881083567db80182790120bffbac049f3bb7acf90a133eb15b01897ac06c3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-invalid-details.json",
+      "bytes": 1002,
+      "sha256": "76c14bd53d05c1fe9726f949dcbe523eed8d0e4ca4b8e96d4b179ed4990ec1c2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-invalid-details.png",
+      "bytes": 167890,
+      "sha256": "316db900317655e76b02619e0a03863cdd834c0f940dfbabea56acc0639357e6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-premium-denied.json",
+      "bytes": 985,
+      "sha256": "2cb34c044c51e3a6929ce9a8f6b6708358537e8aebd705a7adfe229ed54c25d0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-premium-denied.png",
+      "bytes": 89759,
+      "sha256": "fdffbcb595aee4e8d2c02df5159c20e27e7e55c68ddf0dfc3110d44a09f09d96"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-recovered-file-missing.json",
+      "bytes": 1036,
+      "sha256": "51d63685a99c550626075ae4b60ccd9484e9ecf16da9664e98a9b121d928d393"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-recovered-file-missing.png",
+      "bytes": 100821,
+      "sha256": "0e0ff4e4c8ab3fbce4c77d8652110791159e123bf23d84e74b3a2694d55bb993"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-review.json",
+      "bytes": 972,
+      "sha256": "79859146be96829d57d016b52539738339b7d94b5a667c92684715fc3100e052"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-review.png",
+      "bytes": 126135,
+      "sha256": "2b6e9efe9797d407878d5c98ac6ec23b9a9f7a7d67964408f85d68ef8f71ac02"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-templates-unavailable.json",
+      "bytes": 999,
+      "sha256": "8a96bca0aacc343a0c5912509eb534b38b08f940164dfe48a8315f0f8251d95c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-templates-unavailable.png",
+      "bytes": 71433,
+      "sha256": "e6fba8de437c64971ae2c9f9a3cdbb6b0b791be86b64ce2b3f384a55b59db690"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-upload-failure.json",
+      "bytes": 1020,
+      "sha256": "2b23d955b07108f4d153a1b461d232586caa1074ff74d362082b92cc4b093a20"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-en-light-upload-failure.png",
+      "bytes": 147667,
+      "sha256": "82ca7e74b4fa9bd0d7bc7eae93e8899326648ace15d999bb2525fbc35f0a2f54"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-dark-details.json",
+      "bytes": 972,
+      "sha256": "bfd483e79d1fac6beb75bba5c97d6048a308ad23399587e89983e9231b4ecf6b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-dark-details.png",
+      "bytes": 155034,
+      "sha256": "4dcf361444741d78bdbbd52d424c9efaaf665f8466a1c7297f21bd17edcc5c8d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-dark-review.json",
+      "bytes": 970,
+      "sha256": "c57c7e16e77ab2eb5e0c8bb7ef54f50c0ba3f0e1cd0aa4ec198e83fc563929d7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-dark-review.png",
+      "bytes": 123075,
+      "sha256": "cacde52a2ce3143772f7a30d42b933cf6a8f6cd3fb92cef5c5e6552df86fffc3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-light-details.json",
+      "bytes": 974,
+      "sha256": "19b44519c5fcc2b7f5bad6104a39df59303bff1419a20dd9539a3755305a9c1b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-light-details.png",
+      "bytes": 161266,
+      "sha256": "6ff530d8675bb61503676a61af4584bbc19aa2dfde59a5f5c10446f040928307"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-light-review.json",
+      "bytes": 972,
+      "sha256": "345078116dab5c996fa8d81bdad33238095f20158006a55a8b19316d4cdb15cc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/firefox-km-light-review.png",
+      "bytes": 129873,
+      "sha256": "fbd8e471704ce073b0809309cef528f58cb11fa0b20a8dee26e516a0b5879a31"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-dark-details.json",
+      "bytes": 970,
+      "sha256": "e41947cd2faaffc0b914f786d5b938b56cded1466a6b7e5838cdb03f3ae7a337"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-dark-details.png",
+      "bytes": 138850,
+      "sha256": "b10a771156dd3311aab409491b16c196d79e6d66c985f3eefc92dc31b5ebe6ac"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-dark-review.json",
+      "bytes": 968,
+      "sha256": "670950aa1a400f6ed8129e49d091ec8bd558b3b2b6645776fd3dc4e8d7cc2ed2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-dark-review.png",
+      "bytes": 107905,
+      "sha256": "2bf8bfbe1b1c52de189a586dc8be72125ceeb83fccbc546b19a2860b12d794ee"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-details.json",
+      "bytes": 972,
+      "sha256": "d11c0811f2b06bd26d856534fb054bf90912055270a185f1cfbfa10bb0998483"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-details.png",
+      "bytes": 142325,
+      "sha256": "1a69ea16bcda2d0478bfdc476f476c0828e43cb7991b67936861961c9ad7810f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-forced-colors.json",
+      "bytes": 996,
+      "sha256": "f0ec4dddecbcbe0c59d005eb7f3c899c53aeee10664fbce9570a7e872b7f806b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-forced-colors.png",
+      "bytes": 151723,
+      "sha256": "65c971f770890b14b6bbe80c2b4de01fc7cb9ab761b9b5c62df9ef7962ac8503"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-invalid-details.json",
+      "bytes": 1000,
+      "sha256": "b4555ad1ed10118582f93fd52a97ff7a14a35f7f9c38b1b76dab0b820ca5cbe1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-invalid-details.png",
+      "bytes": 151723,
+      "sha256": "65c971f770890b14b6bbe80c2b4de01fc7cb9ab761b9b5c62df9ef7962ac8503"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-premium-denied.json",
+      "bytes": 983,
+      "sha256": "3fd681c869ef25cf7713e4030935639732a2b6e0c3acf62c992987fc22bd2be6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-premium-denied.png",
+      "bytes": 84472,
+      "sha256": "82af7fb6200285f78cb391ac660c51a30a0e209fe6a592548cd501e5d84229c0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-recovered-file-missing.json",
+      "bytes": 1034,
+      "sha256": "a724dc467d18e808ce2165044798471d13a85587071608e809df90a38d2fa422"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-recovered-file-missing.png",
+      "bytes": 96177,
+      "sha256": "cae8a95f3c7bb7a78a7021c4fe6fd860516ea65df0e2659143861bbdfe4c4e4c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-review.json",
+      "bytes": 970,
+      "sha256": "ddbfd082d80c59a731d97031dbe2733eea74f05106123cf4dd48f7a9772d1147"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-review.png",
+      "bytes": 114511,
+      "sha256": "5d46a6085d182982cf1aa239bc1b93cfc028deb4b9ffc352d4b11bd58f3a49d0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-templates-unavailable.json",
+      "bytes": 997,
+      "sha256": "4d302c7f6d882efbcb78a3764e02b88e2e4522d16ec3ab86d9c196ddfea19b8c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-templates-unavailable.png",
+      "bytes": 67804,
+      "sha256": "fc38e605a50ec6782e9955e5f4d76507e06ea13f56685d53009df25421ffde70"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-upload-failure.json",
+      "bytes": 1018,
+      "sha256": "804f359e9dc1d501c857f84166687bc21ad99655def311e396fb1696636b3298"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-en-light-upload-failure.png",
+      "bytes": 139758,
+      "sha256": "8df8311707026f401758bcbdd1e8ae0b36d4fe0a033c0f1959383ae5d9635923"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-dark-details.json",
+      "bytes": 970,
+      "sha256": "828d1ca0f68c9e0bac7fb78caf36a82102cfa7ef3edff3ed00d07d898fe6c1f3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-dark-details.png",
+      "bytes": 134227,
+      "sha256": "8c9fa03d1accfb0ce594c903276232e751ce0f76ed4e9d7c75c89825e07dfbc8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-dark-review.json",
+      "bytes": 968,
+      "sha256": "10e717cd1659bac1c4fe353d88d1f9475beade09741ba52912f3ea2f47126bee"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-dark-review.png",
+      "bytes": 109687,
+      "sha256": "facd252de88ab5a498b14d9a49fa45d376005354c80ebecadb6d26c595adf327"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-light-details.json",
+      "bytes": 972,
+      "sha256": "6978ccdec230468d6737be2096294010cceda87c23635ab918e8a1d838b7874b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-light-details.png",
+      "bytes": 141352,
+      "sha256": "b0b9966a083768d6ee7316cf3b6ca4d9955b638d3cb1ffcd20339e7e8e3b0b4c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-light-review.json",
+      "bytes": 970,
+      "sha256": "a857130ef387395f39e24a87926b3b06145f7723731fd5790088cf09b3e96761"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/after-captures/webkit-km-light-review.png",
+      "bytes": 115994,
+      "sha256": "574805230dbe924eadb8246aafdebac82800044e436c405b012d6158b8674286"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/audit.py",
+      "bytes": 3530,
+      "sha256": "4710c8a761ed5e7eaf88e21fce33d968ba6233484b9f8552896ad2788ec0a5a8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/baseline.json",
+      "bytes": 1953039,
+      "sha256": "801d581aa36b66f1b309b134dad65c3b528336448e702f39c6e4bbf0cc383ccd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/before-captures/chromium-393-en-light-invalid-details.json",
+      "bytes": 821,
+      "sha256": "c6a3d6a1354a7d322d7670431e253af820cf713e719c26d623065e4f875440de"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/before-captures/chromium-393-en-light-invalid-details.png",
+      "bytes": 172023,
+      "sha256": "42adeb6ca90e60ccdf55aa569a3c9ffc3b44b93069071f7e604b2aa4423986ff"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/browser-results.json",
+      "bytes": 8565,
+      "sha256": "d25b38200af4743e596addf0e8cb325fa25deec66d846722a147e87a9060007c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/build-output-incident.json",
+      "bytes": 739,
+      "sha256": "e98c2a8a53187f76106e93b4cb9330d351765996e97d5a4f36dd3146662bd0ff"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/playwright.phase11-codex.config.js.patch",
+      "bytes": 1734,
+      "sha256": "39ca326ee3f70c0cf051be5ff75a5e48af7f7d5c209f60a36b77f69784072aa6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/playwright.phase11-history-codex.config.js.patch",
+      "bytes": 676,
+      "sha256": "630d483a3f043203f97693e40fbfd48c7c3675722c3fe65c9ec5bf6852aa3383"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventCreatePage.css.patch",
+      "bytes": 2792,
+      "sha256": "06484a1c2b7d23fe3aabebd4eba0fac40eb8dfe015601b3f259b9107bc8ff6b9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventCreatePage.jsx.patch",
+      "bytes": 40276,
+      "sha256": "a3fde337e9b3c431b9c601e4b7e18f982116ba8400899bfd88bce7dfdee06afd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventCreatePage.test.jsx.patch",
+      "bytes": 9735,
+      "sha256": "53b33645899449c6e84a7ec575d12bd1c24349eb9fc806713b8f3e0665faf082"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/eventCreation.js.patch",
+      "bytes": 1273,
+      "sha256": "840f5e70bd18d14c5c71e845f6dfaa886fa27b7a7a67a2fc26c0a3cecfed891a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventFields.jsx.patch",
+      "bytes": 1970,
+      "sha256": "55e2226763038ca3a7f06a6611b01ae55b85bc59d37a4f2e8769a465d51e4edd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventPhotoUpload.jsx.patch",
+      "bytes": 5002,
+      "sha256": "c8bb66f985029a399330a8aa91d7a1e5a56adfcab7c1176ca7aef680c3e91db5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/EventWizardModernization.test.jsx.patch",
+      "bytes": 2377,
+      "sha256": "4a061adc8a47d78bea187e14423c633e7634aba5040da7f1920e4834c4ce8132"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/MobileWizardRefinement.test.jsx.patch",
+      "bytes": 2065,
+      "sha256": "ce4bc0fee9be01b4a12fb6d705d6e54fadff0d63e4df3b0c040c533fb9e50cf9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/Phase11_1DraftLifecycle.test.jsx.patch",
+      "bytes": 3709,
+      "sha256": "5fec9851a412acc6ba50fe326df6b4fa25961a9680ffbd619834f17fe954e26b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/Phase11_1TemplateIntent.test.jsx.patch",
+      "bytes": 603,
+      "sha256": "68d23e1e8349d3ac5f9e17c2d79d5ac0aeb988b7437794ca44fe8df6b3cdfae7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/Phase11_1WizardRegression.test.jsx.patch",
+      "bytes": 1115,
+      "sha256": "0edff89eb0fa59934bc9c3c13182f04e0898957635596f64178f637c85037635"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/Phase11CodexRegression.test.jsx.patch",
+      "bytes": 16564,
+      "sha256": "f041d88c7d194f7f7ae83eef9f0971c6e9f438aaf09fc50da7c610f500943268"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/Phase11RequestAuthority.test.jsx.patch",
+      "bytes": 2384,
+      "sha256": "a6c98d50137252b05b98bdcc7a34858f0e743b227501bdfb44b61d2c70e2caae"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/events/onboarding/RequiredPhotoEventCreation.test.jsx.patch",
+      "bytes": 3919,
+      "sha256": "91c5f25e72375e45a87c6d99f0abff843931373d3a6cb1426a8be13f8a9c1392"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/invitations/api/invitationApi.js.patch",
+      "bytes": 837,
+      "sha256": "7150c37d2808662d0933663a48a42ab6555813304910a2188c1c2dd850bab8e9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/src/features/invitations/api/mediaApi.js.patch",
+      "bytes": 1030,
+      "sha256": "b8cf067ce8e12592c30a99151938f9ff8ecacac060af752e5426fadf007bb768"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/tests/e2e/phase11-1-screenshots.spec.js.patch",
+      "bytes": 314,
+      "sha256": "4efd4ac8dbc769c763c6c17a5a05119fbb4a88721c790d99ec369c790c067f0c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/tests/e2e/phase11-1-wizard.spec.js.patch",
+      "bytes": 1559,
+      "sha256": "07a27575f2d1bcb313a43a48392dd6c80a0479a949ee21ca159c5be607a0687c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/apps/frontend-user/tests/e2e/phase11-codex.spec.js.patch",
+      "bytes": 16384,
+      "sha256": "05ffc090f8569751a890dcfa39708f02a764b2811313edaa5f71746104390e1a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-diffs/scripts/validate_phase11_codex_evidence.py.patch",
+      "bytes": 8096,
+      "sha256": "937403b040fe2deeb2b354316f06c7f1f03eaeb0f9f38080d2c6d8649b003a04"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/codex-only.patch",
+      "bytes": 124414,
+      "sha256": "c2abfb79ac239d65b986dcf5d7951bd00aaf5eccc873e4b59aed31927063d6f5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/findings-before.json",
+      "bytes": 1628,
+      "sha256": "9508436cb7d01201c899ae0a504beac7792052bc9a0db175190f36439de4c95e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/freeze.py",
+      "bytes": 1388,
+      "sha256": "35d67d6d0bb5c7d2143d82242c9e5a883cb020ce587d5e0811907d99b78d42a5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/frozen-source.json",
+      "bytes": 270795,
+      "sha256": "ac34bcdff9f05e12201b8a7b51240474f66cd55d26107cbad1ac022e3f85f216"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/github-jobs.json",
+      "bytes": 12650,
+      "sha256": "3d0ceb2438ef614c33bc8d62ea1d870f75e4bdb46bd87a00fc53ae21ab9d8258"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/github-secret-sanitized.json",
+      "bytes": 327,
+      "sha256": "fe9f5f8174473281708d329ff0a25e191b146ea8414b31bc1fc1d587fc0c753a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/branding.mjs",
+      "bytes": 4881,
+      "sha256": "4ae4aaffd27be285b3aa93507c8965c59ca46c1392e154a15b0c14b80cfa485f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/package.json",
+      "bytes": 17,
+      "sha256": "6dc1b06d6b093e9cccb20bee06a93836eee0420ae26803ca2ce4065d82f070d1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/performance.mjs",
+      "bytes": 8055,
+      "sha256": "44e9f75026c796019b31ee355eaa764ab45159b5ca230ebb6f32a980791d173f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/phase11-baseline.spec.js",
+      "bytes": 1673,
+      "sha256": "7acb9901ef65351b436010c77fa9e636f6dc7cb5aa73524cc4a5de94a2ef8cd2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/phase11-bilingual.spec.js",
+      "bytes": 6249,
+      "sha256": "05727d0107ed2b739893abb8da197633e954531c24d0241a77d4650b828ba337"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/phase11-features.spec.js",
+      "bytes": 7718,
+      "sha256": "ca948a2364b44251be3ec16b842b6239a4bcc755988c4d2d87cc260968a33c2f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical/phase11-matrix.spec.js",
+      "bytes": 5696,
+      "sha256": "70295c02d9da1efa3850db37a2d2a8a7b02ece819c9be06bd9fa7f52968b6dcf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-adaptations.json",
+      "bytes": 1458,
+      "sha256": "d4a038605efd7c78e484f89f284b1973a386e50de7780b2e25289aa0f159899c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-family-en-1440.png",
+      "bytes": 220084,
+      "sha256": "e7c5122de0b1e13fce4b96d08f19f021c98c959e52b7a0fd024568ef15f699f9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-family-en-390.png",
+      "bytes": 99036,
+      "sha256": "80e8d9201b54120eb8c21555043665e19910a2020170e257f2d0fba38799707d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-family-km-1440.png",
+      "bytes": 289134,
+      "sha256": "756b8e20aa995138bd38b20a4134223066ba26941ef00ff0e57f5e62582074c1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-family-km-390.png",
+      "bytes": 112335,
+      "sha256": "703230d0677924b764cf2ebf4ff403badaa4137c94fd067b94213ba267f90318"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-map-en-1440.png",
+      "bytes": 60017,
+      "sha256": "65f59b9019f67491a94c51d776f6194f85066da5be93856435bfb0c1d099fcd2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-map-en-390.png",
+      "bytes": 58567,
+      "sha256": "116db6a2beb588843bf9f9a868d6a0098380bfd6addf454b6ad5107f611faf5a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-map-km-1440.png",
+      "bytes": 58174,
+      "sha256": "7e5d50e1290d712a2556a2ebdd3d36769b96177d9ff02fc5524e61f70b76abad"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-map-km-390.png",
+      "bytes": 53812,
+      "sha256": "91c4877210192ee72cd749bdf24aacea8ce5daa6d284a21a392df2e4fd2f3e3d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-program-en-1440.png",
+      "bytes": 32427,
+      "sha256": "c4c93931ba08852d85d6b2ad3028a1e70ac3b896def64f1e229351a6f258fbd6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-program-en-390.png",
+      "bytes": 27396,
+      "sha256": "7aef658f793326c9925e1dfe11986090d933750877b4235200e76438b751ac40"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-program-km-1440.png",
+      "bytes": 32826,
+      "sha256": "8c2ba072f6eb7fb833f17ca96b67785236005bbd6736593c033f1e3ba2f24554"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/celestial-program-km-390.png",
+      "bytes": 29216,
+      "sha256": "3385491accaa3a50ae421261785c3bdc56e75f15b15b4e2659e8b393b70a1456"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/guest-locale-en-1440.png",
+      "bytes": 4448,
+      "sha256": "b09e066939300ee2fc7677f54e6c84ce2dc7a4d52b42e0b5f1ddda46a0a09dac"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/guest-locale-en-390.png",
+      "bytes": 4473,
+      "sha256": "e715dbea4ca804c9b80c1862f4b9437ee670b512781e2abfeeb40b40c5238034"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/guest-locale-km-1440.png",
+      "bytes": 4458,
+      "sha256": "615dcb2f37a90150d474583b0f1168821afc7111cffa500125624cfac3b87b76"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/guest-locale-km-390.png",
+      "bytes": 4734,
+      "sha256": "b2cc7d0e70723b334bea49587145a9ba6be43fa06d0cc4a8881f875d4cfe2f8f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/after/monogram-editor-1440.png",
+      "bytes": 305947,
+      "sha256": "73875414bd7bc82695164470c38c89bcd91c6ef02548db54a0c02e343dd95713"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-family-en-1440.png",
+      "bytes": 478091,
+      "sha256": "2c1ed1b53efa0a256819c2b97a0fc2d44794f64a5f650301ba143f2c64c32d40"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-family-en-390.png",
+      "bytes": 197841,
+      "sha256": "d4e6cccd8bdba1450bb3ea46a6436b95c13c4f10cb991ae2a47589c5b6043ee3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-family-km-1440.png",
+      "bytes": 507795,
+      "sha256": "471bdb22244e9c9f749519feef64a4010340bea148aa14d04b5148fbebed3694"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-family-km-390.png",
+      "bytes": 207574,
+      "sha256": "bb311f0ea8e06282967dd212f5f155688e4a86886f6b6e3d83a0541f1b45b3e6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-program-en-1440.png",
+      "bytes": 84841,
+      "sha256": "f8a002cd49fcf61eb8e91edb433cd07cb6e97d478aa55d340f7b49077dca42d3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-program-en-390.png",
+      "bytes": 92707,
+      "sha256": "1abf652ab9c1bd35875a8ca920e32f36bfb08a7c33484baeac9236a32d70a43b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-program-km-1440.png",
+      "bytes": 128284,
+      "sha256": "a4dc301e08ceabfa2e7b7a2c5ba13f07356ae81c81c5dc21c500f25e63c47cc2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-program-km-390.png",
+      "bytes": 139414,
+      "sha256": "a780cfff6976c0b036f455835fae1ffdcd6d6765312036235ef0fe2e64b57cfe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-venue-en-1440.png",
+      "bytes": 602483,
+      "sha256": "a378e0de584b7a1263991399a03a26a369e9194d458b846d28970d8b7e1fffb9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-venue-en-390.png",
+      "bytes": 290337,
+      "sha256": "99249f719faad0571b313d00d62ddaee70e41f8af5eeb46df53f388f34f0f5f2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-venue-km-1440.png",
+      "bytes": 623487,
+      "sha256": "0909c97ff2825cec5935d6949fdd1909c7d81f5c72a1f956a742a7c4d4637b18"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-captures/before/celestial-venue-km-390.png",
+      "bytes": 299655,
+      "sha256": "8a6e13450ad49b10117d212912c2e233bd5c80f635e51345263495215c31d286"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/historical-results.json",
+      "bytes": 130891,
+      "sha256": "869a8fa000db4e7e15eb348ea2060fb96b43c2fb8622a3ff1707fa3b00d48f2d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/admin-build-working.log",
+      "bytes": 4292,
+      "sha256": "81f42bd5e97508c998360c839bbe7afb202d41161682d33d0843c064b2964125"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/after-browser-pilot.log",
+      "bytes": 16605,
+      "sha256": "422bd30a973257fa5b24951ac5db01fcf758fb28007a2007cc77da12d8c42c76"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/after-browser-pilot2.log",
+      "bytes": 13632,
+      "sha256": "893649a7ff777d30f53c0632a756ca9ead787814615f32698712521ea4248c89"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/after-browser-pilot3.log",
+      "bytes": 6775,
+      "sha256": "2a0f011d2e6156f767085014d2c079423a66be5794575b4b998ae55a27d65156"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/after-browser-pilot4.log",
+      "bytes": 1192,
+      "sha256": "20185e95e8e8fe55e88bdec75d55592f64ea2cb557de23de48d5f7898ccd2e8b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/asset-response-final.log",
+      "bytes": 280,
+      "sha256": "cf88af52de04986ee030b364ee02127a975fcd6060f9e5b6fe97e8f076676a3f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/authority-build.log",
+      "bytes": 29957,
+      "sha256": "bab0614e02fe43e18c6be6c467b49e01105047c232b6214ead7898b86a3e4033"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/authority-repaired-onboarding.log",
+      "bytes": 15817,
+      "sha256": "60a2175b94ae6abe816e106c3ad2671d1553a0d83e7d5621d6473c7bf3f84cdf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/before-focus-browser.log",
+      "bytes": 4629,
+      "sha256": "d49ad0d7024ff4ee21a22833e64b3e86b5d99624e21b77ea573cefff06d70825"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/before-focus-corrected.log",
+      "bytes": 4131,
+      "sha256": "28eaab3addee38e3f27f1f46c337d69741e9186cfc91336d510b60574bdc35be"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/complete-build54-controlled.log",
+      "bytes": 10566,
+      "sha256": "0573104076efe30735ee1fcbd4eabe1cbe69f877457460d149b2b814040fc47f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/complete-build54-default.log",
+      "bytes": 10551,
+      "sha256": "38e23987d5170eaf21efd632869a32dfa874a40fe4c35b2f14c2c69cb89a86c1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/complete-repeat-a.log",
+      "bytes": 707,
+      "sha256": "fba4f8824e3446e0f81907e6a00b566698e500bb82fef1d8832d88d3c1cd1377"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/complete-repeat-b.log",
+      "bytes": 707,
+      "sha256": "e8c719399b7ca3d7de8a54c54a823a26c51190394f6e5ff4ebb1c9d3c76f4871"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/controlled-all-engines.log",
+      "bytes": 37368,
+      "sha256": "6054a15aa6c4a0701b98d99d4207f4967aec7dd460b742312df128eef84b2ade"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/cross-phase02.log",
+      "bytes": 24820,
+      "sha256": "3fd97e2869b3d78c46e401b1d3274b5790f71dbdc2c6ceaf2addb1e8185c9c9c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/cross-phase08.log",
+      "bytes": 5201,
+      "sha256": "804447685b2b4038a432c58a887cec677be52d37f756b750bd5b9c05a8727fb7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/cross-phase09.log",
+      "bytes": 12203,
+      "sha256": "8c8ced1862a2e3660a78aa40127f630658e77080282b54631dfe106efa91d054"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/cross-phase10.log",
+      "bytes": 28814,
+      "sha256": "f49332dacfd9444d14cdc23b878bd29a724e530143cdcddb46e9fb4c28c7ebda"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/default54.log",
+      "bytes": 10557,
+      "sha256": "9de451fc5afbfae5d67c58065019fcc0a32bd1cb769c7d726da939e2fb6f1fda"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-admin-lint.log",
+      "bytes": 41,
+      "sha256": "ab5123e1d0fb3e38b732a02ecca441740c4054b6a8a69f2fd7a1d20672308fa6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-admin-tests.log",
+      "bytes": 2896,
+      "sha256": "83c80b5b0b46f08aa89d8385c7a152e39c751e9165db781a1251a16b1b77effb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-diff-check.log",
+      "bytes": 857,
+      "sha256": "fe18050fea00c543b5d47e71f6d7df693009d9eb4e0fbd2903e7a364026e59dc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-final-diff-check.log",
+      "bytes": 857,
+      "sha256": "fe18050fea00c543b5d47e71f6d7df693009d9eb4e0fbd2903e7a364026e59dc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-final-evidence-validation.log",
+      "bytes": 108,
+      "sha256": "54daf27ba13821a7db624abbe715b1757cb1524c9b70bda423562bbde9def8b5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-final-rollback-dryrun.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-tokens.log",
+      "bytes": 38,
+      "sha256": "ef1c815152a5259c561b8d3ae6e4fb9fc286c2e5fc097a98fa0056474454317e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-user-lint.log",
+      "bytes": 40,
+      "sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/delivery-user-tests.log",
+      "bytes": 25856,
+      "sha256": "7f2404f642346c3abd57bdc39770bd933089e7a1fc895bf6d163e581c0f576ea"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/denied-browser-corrected.log",
+      "bytes": 692,
+      "sha256": "29799da09bbb088e938c90382d956385ea94ac074fd9141af3190730cf4849e8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/evidence-integrity-final.log",
+      "bytes": 108,
+      "sha256": "54daf27ba13821a7db624abbe715b1757cb1524c9b70bda423562bbde9def8b5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/expanded-browser-pilot.log",
+      "bytes": 5101,
+      "sha256": "89edb057520952e652c188df2677a7975eef44019a91db204cdd308c02851124"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/expanded-onboarding.log",
+      "bytes": 24200,
+      "sha256": "a4796777c192837fc6e61d42d7b070903acc366a585274552f7a1dd00f2e7a26"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/expanded-repaired.log",
+      "bytes": 304,
+      "sha256": "40926198afe408fbf6af757913a69bb82e6a3b444a852a0d8c66ff2d95438758"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-admin-build.log",
+      "bytes": 4292,
+      "sha256": "18976f68626b383aa78fc2865c10fdb7027b02dd2b7402f7f8e81236aa407e69"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-admin-lint.log",
+      "bytes": 41,
+      "sha256": "ab5123e1d0fb3e38b732a02ecca441740c4054b6a8a69f2fd7a1d20672308fa6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-admin-tests.log",
+      "bytes": 2886,
+      "sha256": "20bb6abc306ee906c619eba1e17bef56772c1ca24fa59f14a0e13eee03a7be2b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-all-engines.log",
+      "bytes": 30446,
+      "sha256": "fcbec00c508d6d7673524a31c94ef8143e7ab3b0e1eb72d0758a0fe60e4b58ad"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-assets-build.log",
+      "bytes": 29225,
+      "sha256": "8cac521139b145870a551561c1d2c3fd4a55b9c1dc3cb7d01e81719d70e042e8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-css-build.log",
+      "bytes": 29225,
+      "sha256": "fd81cbd316683514ba2af1ac3e90614a3799174f69679fd271e255cc1351a3ec"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-integrity-delivery.log",
+      "bytes": 886,
+      "sha256": "656f2aaefd90df78b2cf91158d0edb49ee980ac32c4ac7de5469d405e88a2ce0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-tokens.log",
+      "bytes": 38,
+      "sha256": "ef1c815152a5259c561b8d3ae6e4fb9fc286c2e5fc097a98fa0056474454317e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-user-build.log",
+      "bytes": 29225,
+      "sha256": "994dfe41eb51f15fdbff9be9bc4ffb7e7f3b177e20c0a4fe672045d192c60f04"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-user-lint.log",
+      "bytes": 40,
+      "sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final-user-tests.log",
+      "bytes": 25856,
+      "sha256": "c938df146204a95e273af8fa78452c32f70b2f70ad9e0fac9ecab2740f9eeb21"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/final54-controlled.log",
+      "bytes": 10567,
+      "sha256": "c4a1aac21cf7409cd66b0f163e7d1447eee46766c7368ec72987dfd98603e847"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/fixed-authority-onboarding.log",
+      "bytes": 306,
+      "sha256": "c167f1e434c2e0048ff6cefed9d1261865eb512ab589d4b79d42d2f7b0e7eec6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/forensic-final-base.log",
+      "bytes": 7297,
+      "sha256": "91f1663ad06aeb29522460fa23f4bc88dcc09f3d5e3bcf2089bfdd30550cec10"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-admin-build.log",
+      "bytes": 4292,
+      "sha256": "2c4cc982698ad882d3dc9b77f7a0ee0856ff7be5714eaa5f76ee3df6ad37464c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-admin-lint.log",
+      "bytes": 41,
+      "sha256": "ab5123e1d0fb3e38b732a02ecca441740c4054b6a8a69f2fd7a1d20672308fa6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-admin-tests.log",
+      "bytes": 2886,
+      "sha256": "e1dfd545c3f5665ca561612c4560f0999dd2d610a7c6cc109fcc98cd15723111"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-token-check.log",
+      "bytes": 38,
+      "sha256": "ef1c815152a5259c561b8d3ae6e4fb9fc286c2e5fc097a98fa0056474454317e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-user-build.log",
+      "bytes": 2435,
+      "sha256": "e86e36d966bacca30de3d49829e53352cb24519a0c23d3dcf2f63f24c67fd96c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-user-lint.log",
+      "bytes": 40,
+      "sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/frozen-user-tests.log",
+      "bytes": 32409,
+      "sha256": "461f8710e9fd1e6f32158ea13deaaf1742ba9da677d02752bdcd4041a2f50a6b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/gemini-reconstructed-build.log",
+      "bytes": 29225,
+      "sha256": "eec738e55353b4807e4620e58b1cba1862c1989c017fdb91d3948479fb15181c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/green-onboarding.log",
+      "bytes": 15920,
+      "sha256": "4e768a693db8250a3e2b448cdf56b30d01fca567b0c1d344f5ad8041861fd028"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/guest-ci-reproduction.log",
+      "bytes": 6417,
+      "sha256": "6019cddf56c4ce3aaa3c6d46f3876a12c0b94763dcf8144e8a25d26ef60a2c16"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/head-build.log",
+      "bytes": 29225,
+      "sha256": "0070be28fda9a9f878b4e0096312b7c45cc2cd328dee73fe6a09cce40f4003ea"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/historical-phase11.log",
+      "bytes": 20456,
+      "sha256": "47e18bede75275f2ec84ea153f44d951944f41944585b2e732b53d283c1abd90"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/java-version.log",
+      "bytes": 165,
+      "sha256": "3d3dfd93fbe3ea1a3f68c9b9c9e61603a45db9be0717170d929b0ba39c784fb8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/node-version.log",
+      "bytes": 10,
+      "sha256": "8414c2bd27b97e294970d0f1c728101d493b3594597935181c891c1286e1ab8c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/npm-version.log",
+      "bytes": 8,
+      "sha256": "6784d6c924df1c8341f9f841f5b5b20c37255de3d34f923baebc0a557d5d5201"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/performance-runtime-complete.log",
+      "bytes": 576,
+      "sha256": "03a4a4e784725c2998335ee49946d72ee20f70a9dea58cd7b69bb600f8452c3b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/performance-runtime.log",
+      "bytes": 578,
+      "sha256": "1bd858864793fe1688a93d1432d791bf7c6ac1c5f5b0a79347833074fc54d248"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pilot-build2.log",
+      "bytes": 29225,
+      "sha256": "fd1902045e412b53aab59721b5611747ae000f9c283c48f898335a58cf58a78e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pilot-build3.log",
+      "bytes": 29225,
+      "sha256": "0cf804710a807c10c383a339fff4ddd0603426b28481e46f5b6a32c92a5f2244"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pilot-build4.log",
+      "bytes": 29225,
+      "sha256": "acfcb1dddc37418a530350862966174d3837238090b97d3a9ff403c47381a1d7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pre-build.log",
+      "bytes": 29225,
+      "sha256": "70883572f0123e3dc17676dc97e1c070beeeac476806c1b20750f578d551bb79"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pre-onboarding.log",
+      "bytes": 305,
+      "sha256": "02594146cc0b9881885fe8253a6b01fa12fea724c4cd3bd6c7463427f1c9a164"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/pre-wizard-browser.log",
+      "bytes": 7262,
+      "sha256": "98f062af1dcbdf8cd3508879521eadb4ae04a2d1335afe0bc559ae42fccdea71"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/red-codex.log",
+      "bytes": 15072,
+      "sha256": "8986c12355efff28f9a1c105ffaaf5ee1d87a7496f9d653c29abe708ef96aaad"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/red-deferred-credentials.log",
+      "bytes": 1311,
+      "sha256": "c8964b3b79bf7a38f9b279039ff4dee3b5d905614e33fcce51bc6781cafe1566"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/red-maps-contract.log",
+      "bytes": 2050,
+      "sha256": "31a65e3460d60143cd9eede99b64b70a6cac7b9e9858ee6260231119f98e6693"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/reliability-repeat2.log",
+      "bytes": 1037,
+      "sha256": "7668ea49df466497c47ee748d0d07f32cdccd650ebdfd5785573280742f93cc8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/remote-main-resumed.log",
+      "bytes": 57,
+      "sha256": "ffec7593c42a3b265d1daf0807ede96cfd7a5563372c2ad604b6b3375d1cec5e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/remote-main.log",
+      "bytes": 57,
+      "sha256": "ffec7593c42a3b265d1daf0807ede96cfd7a5563372c2ad604b6b3375d1cec5e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/repaired-onboarding.log",
+      "bytes": 304,
+      "sha256": "9f41dce78c31d176e7eddbc0d3bf79b45805c3eaa7271e8ec80c889e92b62a7d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/revised-onboarding.log",
+      "bytes": 306,
+      "sha256": "56e5bec0d03857f2097a8453505e650f4ef4eed1f9e2769847117fbb814a3048"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/rollback-dry-run-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/rollback-dry-run.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/safe-backend-contracts.log",
+      "bytes": 485119,
+      "sha256": "a58aadac1d0b261b02b641c838c62192ba7c2a85cc90602128155995f398f4b9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/upstream-controlled-final.log",
+      "bytes": 7262,
+      "sha256": "a2c62c78764d8b705e5b164ccb06f7c33ece87650d2bd07ba01e315dbd6a5f53"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/upstream-default-final.log",
+      "bytes": 7247,
+      "sha256": "29052b0bb551c9e855dcccb92bb82ed3847cf5d49a6bd25c39df028b03c55dce"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-disclosure-retry.log",
+      "bytes": 1331,
+      "sha256": "0ff0e7b4e5ece0055ad6c6c03422854e1c8164bfb8eaece343cf6a8f598a2e51"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-disclosure.log",
+      "bytes": 722,
+      "sha256": "173f2519cf2f595ea322300b73950c4618aaf77443a9eaa06e9650e3a52305f3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-errors.log",
+      "bytes": 1809,
+      "sha256": "8a06dc3ca72147a1411cfc54f963cf049ca266a7f2b2f054d12ee08335ebaa79"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-focus.log",
+      "bytes": 1761,
+      "sha256": "ad4d078933b9a1c70a9e116107eaa61c8acbca2abec253fea0546e6758cec4ef"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-khmer-retry.log",
+      "bytes": 370,
+      "sha256": "517126cc701b829d95c6cdf437993eebffbf4d4f3692b268a193c48ae867be70"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/ux-khmer.log",
+      "bytes": 381,
+      "sha256": "00b3b7d2b0f06c45c9e8fdbdb648359f5bdcd727aff3b3fda59071f1b23d9826"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/working-build.log",
+      "bytes": 29225,
+      "sha256": "6a22629066a97499435b1b02b9079b0f92c976254941fc17031fd4d6fb96f4d1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/logs/working-lint.log",
+      "bytes": 2043,
+      "sha256": "ac80523b5e160e4c8560b7056f8f661f0995f6aba5e2cb9e0c453d8d2ca0450a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/manual-visual-review.json",
+      "bytes": 2058,
+      "sha256": "4c822df5434f871349914df6abd560c6eb3efa65364ea3616692019f2d802e6f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/performance-lab-before-complete-assets.json",
+      "bytes": 128095,
+      "sha256": "90023b54660b2442ca481cd130e58a323b1982d9db6c98e95df5ae732c332681"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/performance-lab.json",
+      "bytes": 122469,
+      "sha256": "dfd5d2bd76ecf8361c72a8e2da2add82e3c3040d913a956c4897d7c74b98f5d6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/playwright.phase11-1.config.js",
+      "bytes": 1360,
+      "sha256": "15248ce14a1ba36c4b93297680014b9bfd2c8bbeaf33fd55fac80ec7c9c6fae1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventCreatePage.css",
+      "bytes": 24416,
+      "sha256": "8d7ff3b8f090f2bfff72d69a724001b2610c0387aef56844b7dbec744a2a7749"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventCreatePage.jsx",
+      "bytes": 64949,
+      "sha256": "94e6e38b4711321c50f43a6a87594394eab918bfd3e86efd709780075c33fd15"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventCreatePage.test.jsx",
+      "bytes": 16847,
+      "sha256": "24c7cc81ef23ecfb352c0b0aec3de96f738d6c90ed356562ef5e7379e3cdcdc9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/eventCreation.js",
+      "bytes": 1514,
+      "sha256": "c3401c37867c334f3faa1b284536a4db1d36c255a2da00e4b7e909d84b56d9ed"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventFields.jsx",
+      "bytes": 2916,
+      "sha256": "4b2785adbb06853460ff27af234ec089eb2b3409f876e8a1e26550f0bcc288b8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventPhotoUpload.jsx",
+      "bytes": 11860,
+      "sha256": "9c1a02bb4cc29139aabeeb3da04180eb8004b1d8eea14cd6f141903ef94a01a8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/EventWizardModernization.test.jsx",
+      "bytes": 8217,
+      "sha256": "b4cc2cdb481cf4185fb8ee64c1e1cda6856d8ab01a67be20c2f452ac3ae0c80d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/MobileWizardRefinement.test.jsx",
+      "bytes": 5352,
+      "sha256": "8c3cb525f2fad31f1c57efc2ef9a3083517241fc751dfcac7f76f63f53579089"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/Phase11_1DraftLifecycle.test.jsx",
+      "bytes": 7929,
+      "sha256": "684f2ebde17beb19dff02ac803e2be76c891655d538fc15c6002ef97f45f41d3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/Phase11_1TemplateIntent.test.jsx",
+      "bytes": 3708,
+      "sha256": "4dbe92fd576c9a4d7128d2a7781641312c8e29a7e92737376dfdc89c2f10e6cb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/Phase11_1WizardRegression.test.jsx",
+      "bytes": 7711,
+      "sha256": "8595e6e1b8ce10e9712ef99531a1f1e577fc0ef73bbeacb6c514ee0b4f96de51"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/events/onboarding/RequiredPhotoEventCreation.test.jsx",
+      "bytes": 7979,
+      "sha256": "d91f75bad7341a71b1507890448c660be7439fc26d99019e682d5aa45257fa69"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/invitations/api/invitationApi.js",
+      "bytes": 3090,
+      "sha256": "c67bf6706e3749ce739a0d5b2b47fd1af6557d72d6d591416e63600ba7646182"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/src/features/invitations/api/mediaApi.js",
+      "bytes": 5732,
+      "sha256": "90bce19678b9259412db45c6c61e99d98449fe5f304d699b3284f5eed9994b21"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/tests/e2e/phase11-1-screenshots.spec.js",
+      "bytes": 9889,
+      "sha256": "3370b620707b6fe13240160a1f6a40ac9cfb64d37a3d65fc62ca37384fd69080"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/apps/frontend-user/tests/e2e/phase11-1-wizard.spec.js",
+      "bytes": 12725,
+      "sha256": "fced19e194cb4acf9593da9771c1f633f8cae05e4d59f04cfae97b1eef552c4b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/01-git-baseline-commit-ci-and-preservation.md",
+      "bytes": 2180,
+      "sha256": "9d328ed004cc1fe8aae2fa580fedfdd88239e59e0c561d63f0f229f4f61bac03"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/02-phase11-scope-routes-and-source-contracts.md",
+      "bytes": 2589,
+      "sha256": "77bb5a69e37a9dc64da1210b52cd4b4ffd6f64f233b446f56c17ae1cd2129827"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/03-premium-event-atelier-art-direction.md",
+      "bytes": 2323,
+      "sha256": "b28909f8825058fce7cc9dad4b95c9b110dfb9f73547d83c44c88e43b972cae9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/04-event-type-and-field-semantics.md",
+      "bytes": 2592,
+      "sha256": "f1ca0fbaf1844a475e8a9f73c385d842b8202e03f8601dd08a847e0e24e251cf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/05-four-step-wizard-progress-navigation.md",
+      "bytes": 1770,
+      "sha256": "ba4dcfc640192cbe6bab81464a5e872fb5f049347559f955ec2829e3e956dcb0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/06-new-session-draft-and-resume-lifecycle.md",
+      "bytes": 2366,
+      "sha256": "b7a95d010f52d02db0099529ee4a1ecaba3253eb208f2f25a37b8f1a52123e45"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/07-account-switch-and-sensitive-state-isolation.md",
+      "bytes": 2116,
+      "sha256": "358d23df8734f921f92bed973b47870ecb3d543411d8f8284ab816f7184604db"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/08-validation-khmer-dates-times-and-timezone.md",
+      "bytes": 1701,
+      "sha256": "7b104bb1b63691ab385dbbcf29a641dddef223b077df83b1b76452bfe8bf6dd2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/09-template-intent-recommendation-and-entitlements.md",
+      "bytes": 2072,
+      "sha256": "fa2897ed3d9fd0bb3f5a0b2a08bd7711d06a948b218a4550a4f233bf89e6de0b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/10-template-preview-and-create-continuation.md",
+      "bytes": 1072,
+      "sha256": "1a833c9d62422ed5d8008f6bb1c7b77a298b94769b9bb90b0365a913207e752f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/11-event-creation-idempotency-and-partial-success.md",
+      "bytes": 2637,
+      "sha256": "d83f9f00244d12de237db6fa55b9e9b719842465e738daf87ccd87399a702ca0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/12-cover-photo-upload-preview-focal-and-retry.md",
+      "bytes": 1185,
+      "sha256": "cd7d54d9c9c04132ad3ec2fb65421f9cbbd8f6c22c684e992b1e6230ede27192"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/13-error-empty-loading-denied-and-recovery-states.md",
+      "bytes": 952,
+      "sha256": "d486c31d1bb37755f480a78a05d67287eec6e96b292c3e7c36eb31c7d9c7bdf6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/14-en-km-language-and-cultural-review.md",
+      "bytes": 1369,
+      "sha256": "d69c0af2296795cb62ec9929579c8ae80b18a3ff8a6f3ceff4dd34ea1c037bba"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/15-themes-typography-responsive-motion.md",
+      "bytes": 1852,
+      "sha256": "482f989e6e62c7922da70e1720074ffc4aadb2489095c32bb204e9179a5f01d4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/16-ten-react-ui-libraries-license-and-adoption.md",
+      "bytes": 2103,
+      "sha256": "20534832f15297447cb8bc838298357ca580c5ca4925a65d82c51ad392b5969d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/17-ui-ux-pro-max-search-evidence.md",
+      "bytes": 1824,
+      "sha256": "8e97a68fd28b0c9f5ca7c01e53750748f120ed64a41675267e98404f8cffeff3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/18-popular-ux-laws-to-real-interactions.md",
+      "bytes": 1849,
+      "sha256": "f07b0b54807d518171a4e9fb4d49ec7d69dcca72491da770901975bcdf889a3a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/19-accessibility-keyboard-and-forced-colors.md",
+      "bytes": 1600,
+      "sha256": "04a819f2e3531a12b39fa719a096f7e78a8f9d933bde344a3d08c94804046304"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/20-e2e-unit-mocks-exact-commands-results.md",
+      "bytes": 1690,
+      "sha256": "54655d28e62668b82eb8b98cd4fef33b058bd259bc88339a47a98d0fd2f6f11e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/21-screenshots-visual-before-after-matrix.md",
+      "bytes": 2226,
+      "sha256": "27595e7cfc3458112c238ebeb817c47dabaee6801ca4e5843c81c765d2ff9f6e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/22-performance-bundle-and-reliability.md",
+      "bytes": 964,
+      "sha256": "ec87fdc5414519e9066ca55eec31f6237c2547b5a7adefba0d6d0802898fddc9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/23-security-backend-privacy-guest-preservation.md",
+      "bytes": 933,
+      "sha256": "7acc1df80fce3641dcf8cbf2aac65a3b1755c6694e06493b24994b573ead0d25"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/24-cross-phase-57-plus-auth-and-new-gates.md",
+      "bytes": 1742,
+      "sha256": "13de4e03c29c95f12911781f9f25f44eb963da99377b191fd1b787761604daad"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/25-phase11-1-acceptance-and-phase11-codex-handoff.md",
+      "bytes": 9925,
+      "sha256": "a3ef5583ff0ab7f94373df26d56b242981f0b8e74d6ce4f4db4e6a85a2e63e01"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/acceptance-matrix.json",
+      "bytes": 12365,
+      "sha256": "26dd573a983d83cbda56215d877a4f6461010a50aa9e79ad3d3435caf190d873"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/account-race-tests.json",
+      "bytes": 2063,
+      "sha256": "960a9dc262f71f19774286717870a3e0ea58ed288b5c462919e2478a3aff84cf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/axe-contrast-matrix.json",
+      "bytes": 2349,
+      "sha256": "4f81e1a6105148694351fb76f87e8bafcc228cdf66a0c15304f608c5d680e88d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/browser-coverage.json",
+      "bytes": 1618,
+      "sha256": "650f6feb66b58d28cb1ef4b325a81b25a05aa5844be84a13f95051439272a2b2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/carryover-57.json",
+      "bytes": 17523,
+      "sha256": "654a2aa701e3d585cb2f54b3ad423b797f5d2013b7d29c7ffec290b82838a0a8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/changed-files-attribution.json",
+      "bytes": 3382,
+      "sha256": "7bb202d25fd8f0fd2bcd29748fd6ab2f5bfe788e113fe5cde0ecfca77843571a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/creation-upload-request-matrix.json",
+      "bytes": 3055,
+      "sha256": "3eaba130383194338f2d7d751fa0ce96c8117df6f91091904d66f947e9557868"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/draft-state-transitions.json",
+      "bytes": 2456,
+      "sha256": "f5a48752c86a41a461348ec1c2556109fec154b059e4827cd2437f2d4c9a4965"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/event-type-validation-matrix.json",
+      "bytes": 5685,
+      "sha256": "3f15337c99b2efbc583279b881a4d6764788da973d97e4bfb86c9a42209391f5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/evidence-validation.json",
+      "bytes": 4087,
+      "sha256": "fe12fc90cdb6a9459ba1ef61bbcc8dacd9fdc846d51015e4bd68f21111ba15e0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/new-defect-register.json",
+      "bytes": 2764,
+      "sha256": "9640343df945dda79d1009047199c79cce773de4fd74e5a60e8b569cdfc097eb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/open-gates-owners.json",
+      "bytes": 1252,
+      "sha256": "7348af3778ef078f68e1c8b3db2f231f0c61963ed09b5b058987617b4fb2a084"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/performance-lab.json",
+      "bytes": 812,
+      "sha256": "b61abd79fc6f081b7538f3341709a878562310fa006e44c0bc4c27746c22ae2a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/route-state-matrix.json",
+      "bytes": 2947,
+      "sha256": "e57bda1428a24d752290beb34ff929467c756e81690a6a8fc532655dd1c4aaf3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/01-wizard-step1-type-desktop-en.png",
+      "bytes": 137507,
+      "sha256": "524a64364c4a92c68ab69af4ef20ddd79aee2b123ed44c12224dd81b1794fd7d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/02-wizard-step2-essentials-desktop-en.png",
+      "bytes": 128618,
+      "sha256": "09d475c3ff1351f6981f7d7b2de0bd58ac8f7ceaf0f79e2998dce1c71b9d2b82"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/03-wizard-step3-design-desktop-en.png",
+      "bytes": 123505,
+      "sha256": "2f1f3e49bf34ab40806d91a3f2b415ecdfa3677856f5f8c69c1523d172cad44e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/04-wizard-step4-review-desktop-en.png",
+      "bytes": 120071,
+      "sha256": "f9b4cd050015ca3d6419847e0030c0462cfbc70490894ba1f69bb6e0496c502f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/05-wizard-mobile-step1-type-393.png",
+      "bytes": 79819,
+      "sha256": "eb3b96385425174b5e5ef7d00c5b10761ae45b2bd1c3f7056e3d1272a06853c0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/06-wizard-mobile-step2-essentials-393.png",
+      "bytes": 70919,
+      "sha256": "3d4d3005aadb47f013d4163623332f3cc56a175126dad321c71f457e4764d19c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/07-wizard-mobile-step4-review-393.png",
+      "bytes": 77427,
+      "sha256": "dc67cae0dcb8b2e6d4bf51a4c89baaba7a1c1013d777a9d280a2f402bec02273"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/08-wizard-narrow-step1-320.png",
+      "bytes": 47407,
+      "sha256": "3e3afd2c7e05cf5b10fd90b14839adb4c11ab5fa718b5cb26969891e6c0fb19b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/09-wizard-landscape-844x390.png",
+      "bytes": 42686,
+      "sha256": "6dbf4d87b1e8044c3823fabac792b41590a6e0cd2bd3222cba2e10d741957df7"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/10-wizard-khmer-step1-desktop.png",
+      "bytes": 135582,
+      "sha256": "88f9edb8c74b6daa0078cf20dec627b1c8e0e60d87752b4e77c8d2466b50c08b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/11-wizard-khmer-step2-desktop.png",
+      "bytes": 133383,
+      "sha256": "64a65208f4b1d26386270f9eb00ab69b6d7adf136f7003d5d9838f89dcb6a44f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/12-wizard-dark-mode-desktop.png",
+      "bytes": 129481,
+      "sha256": "8b2d95babe62c2c5fd0144c9e119bf16ce9e3b8922de2be453ae3e3f0d9703c3"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/13-wizard-upload-failure-retry-banner.png",
+      "bytes": 139953,
+      "sha256": "293ecdf5c8cde0209a3a403744f1b8b0e4e9bede745096abe1aaf6d0a550a97b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/14-wizard-draft-photo-notice.png",
+      "bytes": 136448,
+      "sha256": "e5ee4bec8df333a6ca42e9dbdb869680fe85d6e51f95f078d785312370877b28"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots/15-wizard-validation-error-focus.png",
+      "bytes": 117162,
+      "sha256": "13532b1ab7d923986690a67a9ccdf34cfb47d5b2a6bec2ca937bc98880b43e8e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/screenshots-manifest.json",
+      "bytes": 6243,
+      "sha256": "696316c482295ab490f7e8229a9e56e064a760cd01042b603fb21c66e90acab0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/source-baseline.json",
+      "bytes": 1664,
+      "sha256": "e503cdb9b69b4a7251f0ca2c4f9397e1444b1f99744b4ee123868377363f7cc2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/template-continuation-matrix.json",
+      "bytes": 2364,
+      "sha256": "991f288640b341a8b5e5a7a4bcde71d15fc1ec09cf54b63a7fb5a0159f773c3a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/ten-library-decision-matrix.json",
+      "bytes": 6856,
+      "sha256": "7aee8338851f96402b5449a33a01d9c1b719b4ecc08ffde7cc6076132d16a03a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/test-command-results.json",
+      "bytes": 3052,
+      "sha256": "e04eba6f84244ff06979121e19e2d292610b9dd1cd1f53765da62ac792e2e2b6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/ux-law-traceability.json",
+      "bytes": 8461,
+      "sha256": "6537253ed8a786ce27b946d929ecd29056cca970cf036d6314b54654f8b85944"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/evidence/ux-pro-max-queries.json",
+      "bytes": 4642,
+      "sha256": "7282d03f2aacb9266d334471a39d5efda9050b7773c464036fd74f03864e2199"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/docs/uxui/phase11-1-gemini-event-creation-2026-11-19/README.md",
+      "bytes": 9251,
+      "sha256": "3f7991e2c7eacd16afadeb4144543163f8d5d2b1d2bbbd11e01b98e4d589db2e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/scripts/build_phase11_1_evidence.py",
+      "bytes": 46601,
+      "sha256": "7acc33ce4f54a9c8fb4b17bad283f17656eba4956803e8c1f6530492937b643a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/preimages/scripts/generate_phase11_1_docs.py",
+      "bytes": 68645,
+      "sha256": "6572cadd73e20e97f93c4c38a152a14c0154c5904ee77cd0ab4152a7d9b0ab4c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/prepare_history.py",
+      "bytes": 1459,
+      "sha256": "cba3c2b410fdebe290f6c181cb918058741f9d3e05b0f4db11031245efaa9f19"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/reconstruct.py",
+      "bytes": 2050,
+      "sha256": "7fee5290ca8d28dcacfafb38886efa57fb1bdb062d4a17badb77282f17d3ed1a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/reconstructed-gemini-sources.json",
+      "bytes": 123972,
+      "sha256": "2ebd1dfe939273f72d28fa2ede7911d9eae33578ddf3430357e3465430d7ed7d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/reconstructed-head-sources.json",
+      "bytes": 123972,
+      "sha256": "b5655db60d96919057552b2f2333719e05655259c58bcaaf31a198f51727aa89"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/report-package-sha256.json",
+      "bytes": 10897,
+      "sha256": "9d1e778958592f5a4c9a6b514b7672a46dc3509652c42163453e11ce37a341aa"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/report.py",
+      "bytes": 90180,
+      "sha256": "5a1e26e9b642415d5c675609ef4a0a7a0f5efdd3c6001ecaf89fbe2190303da5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/admin-build-working.json",
+      "bytes": 629,
+      "sha256": "5754f20927cbd0cadd48c4201b5e3aad74051f510af16d1ee9d1f19b379ddf5a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot/browser-artifacts/.last-run.json",
+      "bytes": 145,
+      "sha256": "8b9d50dddbabc7b3b22bbb99c9145242322aa94b9d7f8cf6620c1f544e606cbe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot/browser-results.json",
+      "bytes": 60315,
+      "sha256": "6e2425e38ca1de19bc235ae9f79ccad9400f7eca1e03cd4e3eab125a9769fadd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot.json",
+      "bytes": 717,
+      "sha256": "de7796b3cc6272b25ac2266aac41b1813dccbf3f81f688da41fbe0ca98d1fe9e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot2/browser-artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "1c0fdf44f94f2617370860d8255c839d555dd0da222780c6daccaecea58ef7fd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot2/browser-results.json",
+      "bytes": 55933,
+      "sha256": "ebfc2b0e78ec507f94c3d43011601128408d9396e298f917ae1462be74c3f4ec"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot2/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot2.json",
+      "bytes": 719,
+      "sha256": "314fa3511356b5efd5c08cc700d8b636a593470757fb25eb8635cbcd4865de6e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot3/browser-artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "1c0fdf44f94f2617370860d8255c839d555dd0da222780c6daccaecea58ef7fd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot3/browser-results.json",
+      "bytes": 27184,
+      "sha256": "d81574b862bf509ea2a1f9c71480ce6ffdcddbe756a18da94051d78a8e413f99"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot3/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot3.json",
+      "bytes": 719,
+      "sha256": "e2f638b6da423e6811f6e60665ba101d42bc933d28f23f46898dab73e02281e8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot4/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot4/browser-results.json",
+      "bytes": 11858,
+      "sha256": "b9d1da7812aa7509e9f04b98b3f2d04b4f2e5cb2f42b473c03f177c8e9569009"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot4/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/after-browser-pilot4.json",
+      "bytes": 719,
+      "sha256": "24f2121e8cfd3837cdd4430777f4e43832a7c7048c602d4d46f33f1cae0208ca"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/asset-response-final.json",
+      "bytes": 835,
+      "sha256": "ed84fc7ab6ef889c94d961312aa614057980741334a6eb187a0d09eb23678f3a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/authority-build.json",
+      "bytes": 621,
+      "sha256": "87e1c1b1593a78d4e46f90fa3f190453908e34445458b6ae4bf06a2ed4190c6c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/authority-repaired-onboarding.json",
+      "bytes": 678,
+      "sha256": "43ccfb5b72dc29a72ca2655e71af9e3cdedd00aa7ebc189b0965fefc4375108b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/before-focus-browser.json",
+      "bytes": 597,
+      "sha256": "240dddc475569ecc943a8823bb06c976094d5126364c141a8a67fa2e352b3b33"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/before-focus-corrected.json",
+      "bytes": 729,
+      "sha256": "4f72207ce4c02cb48a475ca0fe9937d531fab50d79047c8ffc70c6cb8160d008"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-controlled/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-controlled/browser-results.json",
+      "bytes": 74709,
+      "sha256": "d40f4ec823e2203478b697d870730c6c1dc8d806d07e570937e6297be25e5aef"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-controlled.json",
+      "bytes": 832,
+      "sha256": "4c5fc56852757a02a1a9b81631f95e028a23d03d807a03b9a0178b616525bdbf"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-default/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-default/browser-results.json",
+      "bytes": 74687,
+      "sha256": "3f82754a8680d76349d5716233ff0477ca6033de3c2f35a24db54bb8dcfbdb76"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-build54-default.json",
+      "bytes": 814,
+      "sha256": "c93a4340f86c43948515ce1ba580a0b9be2c13c12db57d02bfe211b02fb3e2c8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-a/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-a/browser-results.json",
+      "bytes": 8574,
+      "sha256": "7cc8dc2a44a2a92cc6a411cfb55835d4098d13221933ed3cd734270e4e93ae9a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-a.json",
+      "bytes": 917,
+      "sha256": "d3bebd16734cd63deb1476c52926efb98e880c453fd99fd4c7f950e580b98a78"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-b/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-b/browser-results.json",
+      "bytes": 8565,
+      "sha256": "d25b38200af4743e596addf0e8cb325fa25deec66d846722a147e87a9060007c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/complete-repeat-b.json",
+      "bytes": 917,
+      "sha256": "334f8d95686ff7d45700326f8a173af19bd61e4047b1492b06847fdf1b3df279"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/controlled-all-engines/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "9df526aaecbf5fdff4e1f3758976f4a5d2e4faae9d5dc555a2d30b7b9eb95547"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/controlled-all-engines/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/controlled-all-engines/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/controlled-all-engines.json",
+      "bytes": 701,
+      "sha256": "3b3c2ab9fd54c579004fa4a1b7a6af2f344788d8b39f827291d31d50d02c0f03"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase02/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase02/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase02.json",
+      "bytes": 673,
+      "sha256": "99b974d19dca4fc7e986ae83a96423666d44b1211b600006b6401e8d2f5f358c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase08/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "9df526aaecbf5fdff4e1f3758976f4a5d2e4faae9d5dc555a2d30b7b9eb95547"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase08/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase08/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase08.json",
+      "bytes": 678,
+      "sha256": "66cff20f7ce4c19474b79cfd31fe632d3ff194c6d00e02b665bc9e2f1424a162"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase09/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "9df526aaecbf5fdff4e1f3758976f4a5d2e4faae9d5dc555a2d30b7b9eb95547"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase09/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase09/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase09.json",
+      "bytes": 672,
+      "sha256": "8eaec5375e32621a424e0ff84d4de18d085f387cf64105748428411b093ebff2"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase10/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "9df526aaecbf5fdff4e1f3758976f4a5d2e4faae9d5dc555a2d30b7b9eb95547"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase10/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase10/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/cross-phase10.json",
+      "bytes": 680,
+      "sha256": "2b276755f541609c99e3e813c3ff537efe27172a0c11467a051479bd75b8ef78"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/default54/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/default54/browser-results.json",
+      "bytes": 74691,
+      "sha256": "efbdb447920ed3d4446fb2479ef249ee908d17ad97fe7e4a2cbef8b1baa8c76f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/default54.json",
+      "bytes": 784,
+      "sha256": "a8b2fc4700bc21690e36a11ef4e61a450ee861706bfbe7a12fbe9c6debd60e68"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-admin-lint.json",
+      "bytes": 750,
+      "sha256": "5f50144a68f380a6658cbb73b4ff3c29fbba65325edc9fd193930ca5d14baefe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-admin-tests.json",
+      "bytes": 747,
+      "sha256": "7700c87d1affdb82234eb2c80c4a909f29456ae627f7ea64abfdf5a3b50aa548"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-diff-check.json",
+      "bytes": 777,
+      "sha256": "dd7ace322f3d9b59e4a5ac146e5855d1fea42a225ec2addb4c64854ffd39b132"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-final-diff-check.json",
+      "bytes": 789,
+      "sha256": "dbd9c3ed6389030dca3dbecccb6bfbd00694125e9378c3103755b123963db2b9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-final-evidence-validation.json",
+      "bytes": 839,
+      "sha256": "c212b0b988cfbf686db4eeaee2b9d50fd10f11b609ddbc361686d787f36155e1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-final-rollback-dryrun.json",
+      "bytes": 870,
+      "sha256": "c593b683490a236152aa74fdf6983f99a238eb756143fee0a6f4824574e6dbe9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-tokens.json",
+      "bytes": 739,
+      "sha256": "a550672979e0260444b22442ce95f38a4644d3861660c1a177fab82644b429ab"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-user-lint.json",
+      "bytes": 747,
+      "sha256": "6491e90211285338cd3625b745f1172879675a1d08d940cd3404be5eab518e7a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/delivery-user-tests.json",
+      "bytes": 744,
+      "sha256": "aa971c6a1a9b7b39a562ab4de255208e0195666f0c85e49fc258b0987a68da79"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/denied-browser-corrected/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/denied-browser-corrected/browser-results.json",
+      "bytes": 8551,
+      "sha256": "0aac115d93d27f94e55f871cc368bdaf198704f1918b0bc9008d833f029389f8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/denied-browser-corrected/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/denied-browser-corrected.json",
+      "bytes": 740,
+      "sha256": "87049109865d7de0464c7ac9705d7cb4fe8052f16dc99541b7101b490208f326"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/evidence-integrity-final.json",
+      "bytes": 820,
+      "sha256": "b42f839cc9d8739c573e06fb8baeb2852f7fed3694fcb663e6e8f1d9f10702a5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-browser-pilot/browser-artifacts/.last-run.json",
+      "bytes": 96,
+      "sha256": "26abc1bfef4e2cfce72fca2b5798185790b1da49cc69c36039ff911afcd25efe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-browser-pilot/browser-results.json",
+      "bytes": 20022,
+      "sha256": "fec9fc96756401ad2a9f2992d1f5d3e1a67efaf35d586565949fe12b9a087879"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-browser-pilot/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-browser-pilot.json",
+      "bytes": 723,
+      "sha256": "12493e9309c3525619904b6f0c195ecf64889d6c9fa0bdeb1353577f4382cd5b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-onboarding.json",
+      "bytes": 658,
+      "sha256": "be3007bae18f56df0a711b31e78df89ceae4f4e0174e4c3cce20cbe298040551"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/expanded-repaired.json",
+      "bytes": 654,
+      "sha256": "5cb11986c4967611da125ad18883a0b9146ce3a5a8f3de53b2302567c4d2e784"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-admin-build.json",
+      "bytes": 625,
+      "sha256": "35ac0e4512b3999f64cfa60b9698299ba39f9640dea1e27b2e28ea2db8da76e6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-admin-lint.json",
+      "bytes": 623,
+      "sha256": "c43cdd2034860a29fc05d1e40b089e42fbbf190d313ff0389aacf7585e8b7dfd"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-admin-tests.json",
+      "bytes": 621,
+      "sha256": "fd81f254566a75c8bdc73d8f5fadb6e928fc027d107314a0bf0dce83a00c6348"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-all-engines/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "cbb28284ae569f77cf3d3748a354e968ff64cc0cd7678a515504c67a59ef58d8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-all-engines/browser-results.json",
+      "bytes": 131591,
+      "sha256": "28eba459b48395fb891cd780e74664fd557cf4a1f21254bf68106637c68e4c8f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-all-engines/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-all-engines.json",
+      "bytes": 691,
+      "sha256": "e4c7da64610f4adbf018106ee156bd8cdbf91bb49565fd0477d3344b4a4fa8f1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-assets-build.json",
+      "bytes": 747,
+      "sha256": "4a268a3a368f9b3cce45a432d5cce510868ff090020cbbd83d8d8c6665f5905f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-css-build.json",
+      "bytes": 680,
+      "sha256": "cf08752406a6c7943739978b37922778e30ecb38af86b44ec6204ebada80c6b5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-integrity-delivery.json",
+      "bytes": 2755,
+      "sha256": "1ffbd04709114d8a6f3a0234f84f64b9f911c4eda8b875dd8372e3e062c55520"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-tokens.json",
+      "bytes": 612,
+      "sha256": "e008c3e9aae4568f9aa34f5f0e62e5368649813ead87d3a0c60141bb19a6f49f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-user-build.json",
+      "bytes": 622,
+      "sha256": "01c9276d89a2480db2036d9a22372f58a67e1bc3f01fd5f600c8bbdd329eef4c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-user-lint.json",
+      "bytes": 620,
+      "sha256": "437fdd91259b410af2a04b0a1d7d3737cd89766fb6cda0c4c5b92adf62544807"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final-user-tests.json",
+      "bytes": 618,
+      "sha256": "d61f30f0452288b1961709ec149c164d159e3835166824cd5c6b0b134b0fbf07"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final54-controlled/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final54-controlled/browser-results.json",
+      "bytes": 74717,
+      "sha256": "e12db5e544372d5e89911d3f8b335173317230d84c502e87c3a86bf890f149cc"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/final54-controlled.json",
+      "bytes": 813,
+      "sha256": "f73fcc888873773e3b01d57d252553daae6e560396321619c0c44ee63c89336a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/fixed-authority-onboarding.json",
+      "bytes": 672,
+      "sha256": "285ab099b42fd20f31840ccd9de07ace1701482472479e5ad4422f2ffb7a2f1f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/forensic-final-base.json",
+      "bytes": 614,
+      "sha256": "866e294af45686308c7850c0a74fce1d3c888a9200be24884ffb1548a7bb74b0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-admin-build.json",
+      "bytes": 748,
+      "sha256": "f095ed691a496f81c0605740af4720e127861d2c76c139ba5482c25fb284c8bb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-admin-lint.json",
+      "bytes": 745,
+      "sha256": "5147dabb0e352ac11d747bc784a24198e5cc4fa31005b3e6dec5c7e4fb88a9c9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-admin-tests.json",
+      "bytes": 744,
+      "sha256": "fd5761bc78058bc721e9e2983f46b19d4d0adfc060267207e0d253df85e3724f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-token-check.json",
+      "bytes": 745,
+      "sha256": "7b9038127bf89aca5265564ee4b9c37486932a1884fe7230d183bf989d55668c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-user-build.json",
+      "bytes": 684,
+      "sha256": "299bc8cebc337722eac644baa560159f4b585f952fb63c646d8a0500e9dc2249"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-user-lint.json",
+      "bytes": 743,
+      "sha256": "9101fd8a3774c589138f4527901e2dc671d5c57e40dc015bccd587c0a95903d8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/frozen-user-tests.json",
+      "bytes": 741,
+      "sha256": "795cf41a45e28aadcaa05806e1f5022cc19b466491b10852ab07b14531cc7419"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/gemini-reconstructed-build.json",
+      "bytes": 706,
+      "sha256": "e0f3d6c5f6ab1d38cfaf42ee0e63eb7e1349780ec72669a0de60a298d1ef0f60"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/green-onboarding.json",
+      "bytes": 501,
+      "sha256": "2b6924e8fb3e0e791e623a9cf6a43fedf7f599746a5479d7bfdec05ef833b6fe"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/guest-ci-reproduction/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/guest-ci-reproduction/browser-results.json",
+      "bytes": 11858,
+      "sha256": "b9d1da7812aa7509e9f04b98b3f2d04b4f2e5cb2f42b473c03f177c8e9569009"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/guest-ci-reproduction/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/guest-ci-reproduction.json",
+      "bytes": 700,
+      "sha256": "22a5a0580f2a430d7ce2151323754a77afad06299e399ffc8b26254bfc160c3a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/head-build.json",
+      "bytes": 672,
+      "sha256": "22999cdee29454b99e7b9e36ade8c28ec8244d12e04c7eefe76344a66e6d598a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/historical-phase11/browser-artifacts/.last-run.json",
+      "bytes": 243,
+      "sha256": "9df526aaecbf5fdff4e1f3758976f4a5d2e4faae9d5dc555a2d30b7b9eb95547"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/historical-phase11/browser-results.json",
+      "bytes": 165755,
+      "sha256": "4b7337badbfa81ce03267c858a5db40b2139f52041b8f77216d0cf68cb798c37"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/historical-phase11/test-results.json",
+      "bytes": 46628,
+      "sha256": "fd05b98bd09edec7f86eb6944aceac2e353d95588f0ea38ae7cd45c12d76f1c6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/historical-phase11.json",
+      "bytes": 697,
+      "sha256": "2123c7004c0f7eec06fe1618aa61b05af5c46e534fe8d8e22ba081d07c721bfb"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/java-version.json",
+      "bytes": 761,
+      "sha256": "4f13fdc6c89ab5dd08d61528e8552f18bafaeeade580f0f051a4d0d1ca5ec4d6"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/node-version.json",
+      "bytes": 582,
+      "sha256": "d4cbc844634fbc16e18c7e6f5ea941b725a2dcc7bda64fdb303a9a55cc61ea14"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/npm-version.json",
+      "bytes": 584,
+      "sha256": "a7a7deb8a24aa17cb4f123f2decda337bfdfe78bec74b1d59933f2cc5574ba17"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/performance-runtime-complete.json",
+      "bytes": 879,
+      "sha256": "10e28d2a2c2ca01b63fda866e7dbed85c01a474c4e80a97a9cef27f0092512ed"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/performance-runtime.json",
+      "bytes": 860,
+      "sha256": "3755069715b96503534c2031872e1f457f5a318741889187b01fa705d42f34f5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pilot-build2.json",
+      "bytes": 614,
+      "sha256": "12b48dc037998ae25f339601180227e9168a8835e1b258a407635879efef970d"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pilot-build3.json",
+      "bytes": 614,
+      "sha256": "5522bd4b2b12c9c0dd358b38a68d1de73da9cb0e60fab0107309f7e69894df2b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pilot-build4.json",
+      "bytes": 614,
+      "sha256": "c3e35ed516cc33e1bf0a970b01e325c9f28f5fbe7704abb104710199e60fc2a1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pre-build.json",
+      "bytes": 457,
+      "sha256": "4d697dea72bde25978cfdcdb70a0e93a997a3473266944ce2f1706eb01cca2c9"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pre-onboarding.json",
+      "bytes": 497,
+      "sha256": "730ca2ed0026b6ccfa5221d4df7ff76eca7d6e2f8113b132be4107bf0fd60d2c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/pre-wizard-browser.json",
+      "bytes": 569,
+      "sha256": "2a4a3fc9664a0ac198ea90c5036959f5c3982a51eabb265c12661c6de8207bb1"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/red-codex.json",
+      "bytes": 518,
+      "sha256": "d690d22c667366fbf2b84c0939d1bf95bf293426a03a57e13e9c4e7a2e474d63"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/red-deferred-credentials.json",
+      "bytes": 701,
+      "sha256": "cd42349f4bf8a5983a4941c8d00c14c40508edd2cea544d62abeeab60653cca8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/red-maps-contract.json",
+      "bytes": 685,
+      "sha256": "cdb2b63eb0b125a6813ea34f985ddaabaca36a1b8034f298674b188e155e7127"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/reliability-repeat2/browser-artifacts/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/reliability-repeat2/browser-results.json",
+      "bytes": 9678,
+      "sha256": "05095293d05fd368568017eecbdb76c39b64ece80f900d5c448547593a4a20e8"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/reliability-repeat2.json",
+      "bytes": 880,
+      "sha256": "84f03ed6211a2bc4d7d3204c9259a926b269cb18ed0c0b139b6db24af99c7c4f"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/remote-main-resumed.json",
+      "bytes": 740,
+      "sha256": "1dfafc09dd8b26e1ffa570951c6cd9b572abf2b0ea6f59c06e836663804a209b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/remote-main.json",
+      "bytes": 603,
+      "sha256": "92d2a13eca165fcb00383bc03a24e5082e6610a533f69cc8836a57bff544235a"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/repaired-onboarding.json",
+      "bytes": 507,
+      "sha256": "9a981bd56a88b7efe9a2e2b1d5e1e8119104280634e36346ad918c00dec436aa"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/revised-onboarding.json",
+      "bytes": 656,
+      "sha256": "33b4b80f10d191e51841ccf29d4be9305a2163a7ce43e94e46b6126befc8fc0e"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/rollback-dry-run-final.json",
+      "bytes": 854,
+      "sha256": "906b3bbe794cb8d31cd78fc3fc9edc95521c5fa183f465ae6aa74437eab559a5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/rollback-dry-run.json",
+      "bytes": 785,
+      "sha256": "6c4b68b68c7eacb6989a74a8e9fe26c9e0fa8f3b7b02a3dbf0270e1293dd1280"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/safe-backend-contracts.json",
+      "bytes": 679,
+      "sha256": "07100876f1d476ab9ea6efcfde941e86ccf3d6cd5f49a6bb8def63a9c997e254"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/upstream-controlled-final/test-results.json",
+      "bytes": 46631,
+      "sha256": "368bc24a1e91cc0fb73181ce4642929937ddf84a8224024a45c233b50386e9d0"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/upstream-controlled-final.json",
+      "bytes": 858,
+      "sha256": "601aea7fb54b87a40070bf76cacb6db17daa2c211dcb56a0ac763bd1039c4d91"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/upstream-default-final/test-results.json",
+      "bytes": 46619,
+      "sha256": "a210ab3990625c032670cc078cd502b875697c3f7f95486bc15ddaf1f3a8e74c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/upstream-default-final.json",
+      "bytes": 840,
+      "sha256": "63e92c89e116cf58ea0177c5fbc77d8a38480fa1b04c710bbf5bfa434d34aa19"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-disclosure-retry.json",
+      "bytes": 666,
+      "sha256": "b26544cb1bcf4662ab4b760070178e4e07c7a2e3ef877a592b6e38301057e267"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-disclosure.json",
+      "bytes": 659,
+      "sha256": "066b135c6ffa52ef3ca1ebe45f741ffc3293f4f45bd08e0d500c69dc933988a5"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-errors.json",
+      "bytes": 653,
+      "sha256": "92527aca9f4f6a2baaa379fffcff8617be726647414d6c921fce2e9b93a08ef4"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-focus.json",
+      "bytes": 644,
+      "sha256": "6ae3cb3166d393d9f97540ede564b9e8aabc7ab877bc02d70e6286e8d0daa1ec"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-khmer-retry.json",
+      "bytes": 654,
+      "sha256": "e04a66a281ee9482cca8208ea0d6c230edc727cfdf2545d4a2886067c010e74b"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/ux-khmer.json",
+      "bytes": 651,
+      "sha256": "150ee2d1908d37e62fc77d23470cedd262d4dd2e9a7b2d498f146fe4a316e5aa"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/working-build.json",
+      "bytes": 616,
+      "sha256": "92d92d8de58639cac5d9f6fdb66b4f62119139c231ee9e9674e7dc82dd05cb95"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/runs/working-lint.json",
+      "bytes": 614,
+      "sha256": "75bfc1076bcc4366a9b24ca03a5910db4b84db1f6b0d6415c16b61b64e18321c"
+    },
+    {
+      "path": "output/playwright/phase11-codex-2026-11-19/upstream-inventory.json",
+      "bytes": 9520,
+      "sha256": "763dc8e53b3ed7dd392e475b87047630e7ec7ffdce4f9a5c7aed1d94517bc5b3"
+    }
+  ],
+  "scope": "Historical fixture evidence only; no current application/build/CI certificate. Original reports remain snapshots.",
+  "excluded": [
+    "Disposable reconstructed source/build directories and their dependency/public junctions",
+    "Duplicate browser trace/artifact binaries and caches; assertion logs and browser result JSON retained",
+    "Environment files, installed dependencies and unrelated phase artifacts"
+  ],
+  "snapshotReports": [
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/01-git-baseline-origin-worktree-and-attribution.md",
+      "sha256": "3492757217575dbba9474677f9446328ff8993c3f477632480b73f4e69687c84"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/02-gemini-claims-source-contract-reconciliation.md",
+      "sha256": "6bc88c7d6e88b7f60906144aaa838382e8f716d1f0824b3a930bfc35bc13b65d"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/03-phase11-route-authorization-and-consumer-matrix.md",
+      "sha256": "a2beae9896db262d34709231a5181e47a01c4d06e7e614bc54946f0cc63e42ea"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/04-backend-event-type-dto-and-payload-compatibility.md",
+      "sha256": "481668a11ff23873f62a7fe5b802e8e98a951c2fe559b9efec54de9119fc2a7e"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/05-four-step-progress-keyboard-and-review-flow.md",
+      "sha256": "ad1dfdb49a8909065f26721c427e4f130f169a458a3a88aa9b03fde1c6777ddc"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/06-draft-storage-account-races-and-migration.md",
+      "sha256": "ac3e8255eb178f1de93b450fc29c6369a91b914ab5d4049811a139ab3257758a"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/07-server-creation-idempotency-duplicate-suppression.md",
+      "sha256": "94fe4d971c33a59d8c87ddf69a360012398861f9de09b0efba18f7bcf6a5d924"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/08-partial-success-reload-cover-retry-ownership.md",
+      "sha256": "eddf4b04355c2cf74f055ce50119ad4cc6b5f3802f0ecf24fc0ec38d664b2c0c"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/09-cover-upload-type-size-focal-and-memory.md",
+      "sha256": "aa60413643b84ff85fc158832a5004fa9f7579ebd3bbbc94d0db2946721ab3c4"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/10-template-intent-recommendation-entitlement.md",
+      "sha256": "66c8f388b94bd3530cc1516d6a0ce1f62c303aad62a1a5d138d44febea824f0c"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/11-save-draft-vs-create-truth-and-workspace-routing.md",
+      "sha256": "43656d793f03932625da8017323664c35af963053835e0eca825a5c130c8c649"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/12-khmer-english-event-semantics-and-timezones.md",
+      "sha256": "9dbf7f6ca37d6925f1f47dd55506f37a968af07ddf336355b82ac8a57da8c31d"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/13-premium-visual-theme-typography-and-motion.md",
+      "sha256": "3c3769ff3037c800c266afd4c491c7e72621e7fadb772886d6fde1907af19065"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/14-a11y-loaded-axe-forced-colors-keyboard-and-focus.md",
+      "sha256": "1571195db41a9edd5dfd0d8188010ece0f095f0f5594e1ff8f6bc93d4e4813e1"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/15-cross-engine-mobile-landscape-zoom-and-safe-area.md",
+      "sha256": "8a6e5af854d1f6102e49fb2d8799635cdedf17698983ee989674c8c01e71347c"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/16-ten-ui-library-license-and-adoption-reconciliation.md",
+      "sha256": "483ad47bc804725c96af2a052e4c37be213dde5679698110d8f1eb98e56b9cc8"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/17-ui-ux-pro-max-queries-and-ux-law-traceability.md",
+      "sha256": "6ff9e844ca13b8ba250ca2bc4eb26b5e049ff267bf7dce79b5816d391d50ca0f"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/18-preview-security-guest-authority-protected-contracts.md",
+      "sha256": "77e011b07e1236176020c39fa46cb19bfab548f1aaceead94fa310eb89d15a7e"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/19-performance-memory-payload-and-concurrency.md",
+      "sha256": "884c9a694168c041e6367c7b415d77a0119d52e972e434d48e7f9e42ff8f4ad4"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/20-github-actions-secret-scan-and-e2e-triage.md",
+      "sha256": "b4e476041691f4c28283ddd1d4e7ef03e7ff8bc045e451d9a1c6441b421d780c"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/21-confirmed-defects-negative-tests-fixes-and-reproduction.md",
+      "sha256": "ff6d860d0413386db34d89a609b94709f93b5cd2462f53f38a6f511d3702c3ca"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/22-exact-test-commands-all-runs-known-failures.md",
+      "sha256": "b3bbacf10a1aba8e9fa0f7667ebfaa5d44fa43cb6674d197056091d302377f48"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/23-independent-f11-1-01-to-40-acceptance-matrix.md",
+      "sha256": "c72154112082686a0a12717d80c31eecb0c6dc96ebb5312ddcd2a498f6167d9a"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/24-cross-phase-57-auth-07-08-09-10-and-new-ledger.md",
+      "sha256": "e8a844ca0818985f2b32a19fa40101f8c4ff377701307e8c840efbce4dc6a19e"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/25-changed-files-preservation-selective-rollback.md",
+      "sha256": "72b43710f7dfe958e01fc960c0c04f1bebf9cc60e3cc27c2fcb691852a3944fb"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/26-phase12-1-gemini-frontend-execution-handoff-and-open-gates.md",
+      "sha256": "d88db43ab2d606513dbc88cc7d000abb4d14cd11154eac088ab48166d0c5bdfe"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/attributed-changes-rollback.json",
+      "sha256": "6d074ce9bd973a7cac3269fd8043cd6270c9756044ecadb8219b19b09f593913"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/axe-contrast-results.json",
+      "sha256": "4a7a3bcff2e82028842cea5658be0e24aa8c367060c9af7b64ab5d0870d49ce5"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/backend-contract-snapshot.json",
+      "sha256": "0f820bdf88eb4ed505047345568b4ad4a93ca2f0be563590ef9779e260ff9658"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/browser-coverage.json",
+      "sha256": "33bb1f65b636f78807abaf1d682b245bf1e3b9f8ac3294ccef3ff8820bd22a54"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/claim-register.json",
+      "sha256": "79bf9571a95b38409c8a839e7aa0d0ed1e51526ecb7f73c67bcc5ae6cb62a458"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/defect-register.json",
+      "sha256": "2dfab73540be3563dc8efbd4db4712a6e670593427864fa1aa04b7ce52d6ca09"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/draft-lifecycle-races.json",
+      "sha256": "4cbcecc2c3d6f37ec81d968cf7f2634b7b7bc3a6753e3253273d34b0223f63f3"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/event-type-compatibility.json",
+      "sha256": "597c34e2450a2bed0c82aab7cd818bfa96a43d16cae5918a7494b57d5aadcffb"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/evidence-validation.json",
+      "sha256": "53d31e9d2897ce978adab9543307e4c34e21a4650bc07daf9cbd10f5ddcbeb88"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/exact-test-command-results.json",
+      "sha256": "ff127766bfa313d5d106c11416e7cc4134b194394ea97103c782ce210048205a"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/f11-independent-40-gates.json",
+      "sha256": "73fe9a5d1a42fc1d27c0f874f83bb7330a6c559d6d14763e2dd5fc1e18c6042a"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/git-worktree-baseline.json",
+      "sha256": "d529061f5153cffbd1079c510d5b51598ed8687db39926787acf011fed876bd4"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/github-actions-triage.json",
+      "sha256": "c54f4d02b5ee1cbed636734ca7f765667176e28bd119cfaab50c0fde41950412"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/historical-57-plus-new-ledger.json",
+      "sha256": "6c17d4d443acc44e3172a69398b4f08833dce8c4044265da0bc218aa6f6f1a4c"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/negative-tests-register.json",
+      "sha256": "62a772243ed7b95fee5bb61d864218dbd529b6066c46385acfee03a8e04ae061"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/performance-compare.json",
+      "sha256": "13b61cbeef033aebeee81ca26e21bceb14334bde94343db79ff0443a6e3d1249"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/request-idempotency-matrix.json",
+      "sha256": "62d5876c8efdfd78419583c69996e9bda4886ca93bf364074732a451061c5f90"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/route-state-matrix.json",
+      "sha256": "517272e7f5aeee6583f13ece75a53df2967a075f65cd19075205a788d0de8b55"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/source-operations-and-sha.json",
+      "sha256": "f7f7459bc20fc71a650d7a09d00d41962ce21085f00ef1968d01ac2e56582e46"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/template-intent-entitlement-matrix.json",
+      "sha256": "b608a31937444bdce05fc49b93a9397c8bf854933219ca91d490ac3a11db1838"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/ten-library-canonical-matrix.json",
+      "sha256": "38eb8d0f2ec2a834fda615bdf0d75ca229d03ec4496e3aafeb2b8cfbb50e48b6"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/upload-recovery-matrix.json",
+      "sha256": "585aee8581424d6b90e62dde7c88682af6e589446db78faa2802bbffdc958c32"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/ux-law-traceability.json",
+      "sha256": "459956738c59d05a45c8397bd5ee2121a2dc44745271bf3d7ca8f1254dea6efe"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/ux-pro-max-search-results.json",
+      "sha256": "cba3650c726183f400d5970906fbdbdb0b85acd38ae016d16f8b27f2dcdbe253"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/evidence/visual-manifest.json",
+      "sha256": "a0e002937871e1ccc959409e8371b928520623368cc1cbd02086a10d18e67d25"
+    },
+    {
+      "path": "docs/uxui/phase11-codex-event-creation-audit-2026-11-19/README.md",
+      "sha256": "4aef61aa7eb254ac6c07513710971860912c28048ee7e5d0797832b8b4e52056"
+    }
+  ]
+}

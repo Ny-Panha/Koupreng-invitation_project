@@ -1,7 +1,7 @@
 import { eventFields } from "./eventFields";
 import { getEventExamples, getFieldHelpers } from "@/shared/utils/eventPlaceholders";
 
-export default function EventFields({ form, setForm, type, en, errors = {}, onBlur, draft = false, grouped = false }) {
+export default function EventFields({ form, setForm, type, en, errors = {}, onBlur, draft = false, grouped = false, disabled = false }) {
   const fields = eventFields(type);
   const examples = getEventExamples(type, en ? "en" : "km");
   const helpers = getFieldHelpers(en ? "en" : "km");
@@ -10,7 +10,7 @@ export default function EventFields({ form, setForm, type, en, errors = {}, onBl
     const hintText = helpers[key];
     const hintId = `event-${key}-hint`;
     const errorId = `event-${key}-error`;
-    const describedBy = [errors[key] ? errorId : undefined, hintText ? hintId : undefined].filter(Boolean).join(" ") || undefined;
+    const describedBy = [errors[key] ? errorId : undefined, hintText && !errors[key] ? hintId : undefined].filter(Boolean).join(" ") || undefined;
     const examplePlaceholder = examples[key] || (inputType === "url" ? "https://maps.app.goo.gl/…" : undefined);
 
     return (
@@ -18,6 +18,7 @@ export default function EventFields({ form, setForm, type, en, errors = {}, onBl
         <span>{en ? english : kh}{required && <span className="event-required" aria-hidden="true"> *</span>}</span>
         <input id={`event-${key}`} name={key} type={inputType} required={required && (!draft || key === "title")} maxLength={key === "venueAddress" ? 1000 : 255}
           placeholder={examplePlaceholder}
+          disabled={disabled}
           aria-invalid={errors[key] ? true : undefined} aria-describedby={describedBy}
           value={form[key] || ""} onBlur={() => onBlur?.(key)} onChange={e => setForm(current => ({ ...current, [key]: e.target.value }))} />
         {hintText && !errors[key] && <span className="workspace-field-hint" id={hintId}>{hintText}</span>}

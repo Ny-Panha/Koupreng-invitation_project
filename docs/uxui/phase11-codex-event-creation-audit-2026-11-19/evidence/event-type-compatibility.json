@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "records": [
+    {
+      "type": "WEDDING",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "groomName",
+        "brideName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    },
+    {
+      "type": "ENGAGEMENT",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "hostName",
+        "partnerName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    },
+    {
+      "type": "BIRTHDAY",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "hostName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    },
+    {
+      "type": "ANNIVERSARY",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "hostName",
+        "partnerName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    },
+    {
+      "type": "CORPORATE",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "hostName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    },
+    {
+      "type": "OTHER",
+      "backendAcceptedEnum": true,
+      "uiLanguages": [
+        "en",
+        "km"
+      ],
+      "fields": [
+        "hostName"
+      ],
+      "testProof": "N11-01/14 parameterized real wizard payload tests; 12 cases",
+      "persistenceLimit": "H2 suite is narrower than a six-type live MySQL journey"
+    }
+  ],
+  "unsupported": [
+    "HOUSEWARMING",
+    "MONK_BLESSING",
+    "GENERAL"
+  ],
+  "roundtrip": "Known participants are projected for selected type; unknown authored JSON retained. No unsupported enum is silently mapped to OTHER."
+}

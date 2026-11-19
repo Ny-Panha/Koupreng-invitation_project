@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Camera, Image as ImageIcon, Trash2, Upload, AlertCircle, RefreshCw } from "lucide-react";
 import "./EventPhotoUpload.css";
 
@@ -54,9 +54,13 @@ export default function EventPhotoUpload({
   error = "",
   required = true,
   disabled = false,
+  focalDisabled = false,
   en = false,
 }) {
   const fileInputRef = useRef(null);
+  const pickerRef = useRef(null);
+  const replaceRef = useRef(null);
+  const focusAfterChange = useRef(null);
   const [dragOver, setDragOver] = useState(false);
   const [internalError, setInternalError] = useState("");
 
@@ -64,10 +68,19 @@ export default function EventPhotoUpload({
   const label = en ? config.labelEn : config.labelKh;
   const hint = en ? config.hintEn : config.hintKh;
   const activeError = error || internalError;
+  useLayoutEffect(() => {
+    if (focusAfterChange.current === "replace" && previewUrl) replaceRef.current?.focus();
+    if (focusAfterChange.current === "picker" && !previewUrl) pickerRef.current?.focus();
+    focusAfterChange.current = null;
+  }, [previewUrl]);
 
   const validateAndHandleFile = (candidateFile) => {
     setInternalError("");
     if (!candidateFile) return;
+    if (candidateFile.size === 0) {
+      setInternalError(en ? "This photo is empty. Choose another image." : "រូបថតនេះគ្មានទិន្នន័យទេ។ សូមជ្រើសរើសរូបភាពផ្សេង។");
+      return;
+    }
 
     // Check for HEIC / HEIF
     const nameLower = candidateFile.name?.toLowerCase() || "";
@@ -87,7 +100,8 @@ export default function EventPhotoUpload({
     }
 
     // Check MIME type
-    if (!ACCEPTED_TYPES.includes(candidateFile.type)) {
+    const extensions = { "image/jpeg": /\.jpe?g$/i, "image/png": /\.png$/i, "image/webp": /\.webp$/i };
+    if (!ACCEPTED_TYPES.includes(candidateFile.type) || !extensions[candidateFile.type]?.test(candidateFile.name)) {
       setInternalError(
         en
           ? "Invalid file format. Please choose a JPG, PNG, or WebP image."
@@ -107,11 +121,13 @@ export default function EventPhotoUpload({
     }
 
     const objectUrl = URL.createObjectURL(candidateFile);
+    focusAfterChange.current = "replace";
     onFileChange(candidateFile, objectUrl);
   };
 
   const handleInputChange = (event) => {
     const selected = event.target.files?.[0];
+    event.target.value = "";
     if (selected) {
       validateAndHandleFile(selected);
     }
@@ -138,6 +154,7 @@ export default function EventPhotoUpload({
   };
 
   const handleRemove = () => {
+    focusAfterChange.current = "picker";
     setInternalError("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -206,7 +223,7 @@ export default function EventPhotoUpload({
                     type="button"
                     className={`event-photo-focal-btn ${focalPoint === point ? "is-active" : ""}`}
                     onClick={() => onFocalPointChange?.(point)}
-                    disabled={disabled}
+                    disabled={disabled || focalDisabled}
                     aria-pressed={focalPoint === point}
                   >
                     {point === "top" ? (en ? "Top" : "លើ") : point === "bottom" ? (en ? "Bottom" : "ក្រោម") : (en ? "Center" : "កណ្ដាល")}
@@ -219,6 +236,7 @@ export default function EventPhotoUpload({
               <button
                 type="button"
                 className="event-photo-btn replace"
+                ref={replaceRef}
                 onClick={() => fileInputRef.current?.click()}
                 disabled={disabled}
               >
@@ -240,11 +258,16 @@ export default function EventPhotoUpload({
       ) : (
         <div
           className={`event-photo-dropzone ${dragOver ? "is-dragover" : ""}`}
+          ref={pickerRef}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => !disabled && fileInputRef.current?.click()}
           role="button"
+          id="event-photo-picker"
+          aria-disabled={disabled}
+          aria-invalid={Boolean(activeError)}
+          aria-describedby={activeError ? "event-photo-error" : undefined}
           tabIndex={0}
           onKeyDown={(e) => {
             if ((e.key === "Enter" || e.key === " ") && !disabled) {
@@ -252,7 +275,6 @@ export default function EventPhotoUpload({
               fileInputRef.current?.click();
             }
           }}
-          aria-label={`${label}. ${hint}. ${en ? "Click or drag and drop to select photo" : "ចុច ឬទម្លាក់រូបភាពដើម្បីជ្រើសរើស"}`}
         >
           <div className="event-photo-dropzone-icon" aria-hidden="true">
             <Upload size={32} />
@@ -279,7 +301,7 @@ export default function EventPhotoUpload({
       />
 
       {activeError && (
-        <div className="event-photo-error-message" role="alert">
+        <div id="event-photo-error" className="event-photo-error-message" role="alert">
           <AlertCircle size={15} aria-hidden="true" />
           <span>{activeError}</span>
         </div>

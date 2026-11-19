@@ -1,0 +1,107 @@
+{
+  "phase": "11.1",
+  "auditDate": "2026-11-19T09:14:00+07:00",
+  "frameworkContext": "React 19 / Vite 8 / Tailwind CSS 4 / Koupreng Design Tokens",
+  "libraries": [
+    {
+      "name": "Animate UI",
+      "officialDocs": "https://animate-ui.com/docs/installation",
+      "license": "MIT + Commons Clause",
+      "patternEvaluated": "Step transitions, inline status pills, accordions",
+      "currentKouprengPrimitive": "Native CSS keyframes (@keyframes fadeInStep) and transition tokens",
+      "decision": "ORIGINAL INSPIRED",
+      "justification": "Commons Clause forbids source redistribution into customer-exportable invitation templates. Koupreng implemented original hardware-accelerated CSS step transitions (250ms cubic-bezier(0.16, 1, 0.3, 1)) without adding extra runtime dependencies or license risk.",
+      "riskAssessment": "Zero runtime overhead; no license conflict"
+    },
+    {
+      "name": "Badtz UI",
+      "officialDocs": "https://www.badtz-ui.com/docs",
+      "license": "MIT with commercial resale restrictions",
+      "patternEvaluated": "Event type selection cards and tactile celebration badges",
+      "currentKouprengPrimitive": "Event type buttons (.event-type-option) with Lucide SVG icons",
+      "decision": "ORIGINAL INSPIRED",
+      "justification": "Badtz UI restricts commercial redistribution. Koupreng designed original, accessible selection cards with 44px+ tap targets, aria-pressed semantics, and gold-honed hover states.",
+      "riskAssessment": "Full license compliance; accessible native buttons"
+    },
+    {
+      "name": "Lightswind UI",
+      "officialDocs": "https://lightswind.com/",
+      "license": "Conflicting site terms vs MIT repo",
+      "patternEvaluated": "Tonal surfaces, warm cream elevations, gentle border treatments",
+      "currentKouprengPrimitive": "Koupreng design tokens (--ws-surface, --ws-border, --ws-gold)",
+      "decision": "ORIGINAL INSPIRED",
+      "justification": "Site terms restrict builders and redistribution. Koupreng uses its own Cambodian ceremonial palette (ivory #fcfbf9, cream #ffffff, soft bronze #967037) natively via CSS custom properties.",
+      "riskAssessment": "No third-party code copied; pure native tokens"
+    },
+    {
+      "name": "Kokonut UI",
+      "officialDocs": "https://kokonutui.com/docs/cards/liquid-glass-card",
+      "license": "MIT (Free subset)",
+      "patternEvaluated": "Media upload dropzone, focal alignment selector, status feedback",
+      "currentKouprengPrimitive": "EventPhotoUpload.jsx with drag-drop and focal point selectors",
+      "decision": "EXISTING REUSE",
+      "justification": "Kokonut UI patterns informed the clean, compact upload card hierarchy and focal buttons in EventPhotoUpload. Free MIT subset principles applied locally without importing unvetted packages.",
+      "riskAssessment": "Clean native React 19 implementation with URL.createObjectURL revocation"
+    },
+    {
+      "name": "Untitled UI",
+      "officialDocs": "https://www.untitledui.com/react/docs/introduction",
+      "license": "MIT (Free subset)",
+      "patternEvaluated": "Field hints, structured review grid, validation error placement, stepper semantics",
+      "currentKouprengPrimitive": "EventFields.jsx, EventCreatePage.jsx review card, EmptyState.jsx vendor primitive",
+      "decision": "EXISTING REUSE",
+      "justification": "Untitled UI patterns for form validation, field hints, and empty states are reused in Koupreng's shared architecture. Review step groups fields by task (People, Date/Time, Location) following Untitled UI UX standards.",
+      "riskAssessment": "WCAG 2.2 AA compliant labels, aria-describedby linkage, aria-invalid attributes"
+    },
+    {
+      "name": "shadcn/ui",
+      "officialDocs": "https://ui.shadcn.com/docs",
+      "license": "MIT",
+      "patternEvaluated": "Progress bar, dialogs, button variants, preference disclosure",
+      "currentKouprengPrimitive": "Native HTML elements with Tailwind 4 styling and shared Accordion/Modal",
+      "decision": "EXISTING REUSE",
+      "justification": "Koupreng adapts shadcn/ui design tokens and component styling directly into native JSX/Tailwind primitives, avoiding bloated Radix runtime dependencies.",
+      "riskAssessment": "Minimal payload, robust focus visible outlines"
+    },
+    {
+      "name": "React Bits",
+      "officialDocs": "https://www.reactbits.dev/get-started/installation",
+      "license": "MIT + Commons Clause",
+      "patternEvaluated": "Gentle skeleton loading, subtle reveal effects",
+      "currentKouprengPrimitive": "Event template skeleton loader (.event-template-skeleton)",
+      "decision": "ORIGINAL INSPIRED",
+      "justification": "React Bits inspiration is implemented via pure CSS pulse animations without GSAP or Canvas overhead, preserving light payload and instant reduced-motion fallback.",
+      "riskAssessment": "Zero JS bundle weight; instant disable under prefers-reduced-motion"
+    },
+    {
+      "name": "Aceternity UI",
+      "officialDocs": "https://ui.aceternity.com/components/3d-card-effect",
+      "license": "Custom proprietary license",
+      "patternEvaluated": "Card elevation, depth cues, badge pills",
+      "currentKouprengPrimitive": "Template cards (.event-template-card) with CSS shadows",
+      "decision": "REJECTED FOR BUILDER / ORIGINAL INSPIRED",
+      "justification": "Aceternity custom license strictly prohibits template and marketplace redistribution. Koupreng uses original CSS box-shadows and subtle gold borders.",
+      "riskAssessment": "100% legal safety; zero proprietary code"
+    },
+    {
+      "name": "Magic UI",
+      "officialDocs": "https://magicui.design/docs/components/number-ticker",
+      "license": "MIT (Free subset)",
+      "patternEvaluated": "Progress percentage animation, quota badges",
+      "currentKouprengPrimitive": "QuotaProgress.jsx and progressbar aria attributes",
+      "decision": "EXISTING REUSE",
+      "justification": "Magic UI metric cues informed QuotaProgress. Stepper progress bar uses native CSS width transitions with accurate aria-valuenow attributes.",
+      "riskAssessment": "Truthful DOM feedback without artificial timers"
+    },
+    {
+      "name": "Skiper UI",
+      "officialDocs": "https://skiper-ui.com/docs/quick-start",
+      "license": "Custom usage terms (Attribution required)",
+      "patternEvaluated": "Persistent mobile bottom navigation bar (.event-mobile-bottom-bar)",
+      "currentKouprengPrimitive": "Native mobile bar with flexbox and safe-area-inset padding",
+      "decision": "ORIGINAL INSPIRED",
+      "justification": "Skiper UI mobile navigation concepts inspired Koupreng's persistent mobile bottom bar. Built with native CSS, safe-area-inset-bottom support, and 44px touch targets.",
+      "riskAssessment": "Fully responsive across iOS/Android viewports without external JS"
+    }
+  ]
+}

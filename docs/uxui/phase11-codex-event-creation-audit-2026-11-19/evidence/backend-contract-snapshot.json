@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-11-19",
+  "sourceSHA": "f09e658658e39ae681c772eac678d6267d94593852a8b0ee871fd9103ea0a0e8",
+  "readOnly": true,
+  "files": [
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/invitation/domain/EventType.java",
+      "sha256": "a8394920ec35027b71ae99f221edf21311edb9493c54f740854365b189d4055e"
+    },
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/invitation/api/dto/InvitationRequest.java",
+      "sha256": "eb7b6437a7c09d992c97d8d779a32f7d4b7674ad4fb6759821e7f838a9894cb8"
+    },
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationService.java",
+      "sha256": "be2c10959a4df803498d41e673ef6fe75a55a986e01af2b7bc1a5ab409b7bd94"
+    },
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/invitation/application/InvitationContentPolicy.java",
+      "sha256": "47cacc56adb3e7166c3046446ffc9ceb9a73508822e6aa7a313a40ec1d786ea8"
+    },
+    {
+      "path": "apps/backend/src/main/java/com/koupreng/backend/media/application/MediaService.java",
+      "sha256": "8927fc318e6c8db6a8a3f6fae829edbf0b2962afeef86552e61379af65db9097"
+    }
+  ],
+  "types": [
+    "WEDDING",
+    "ENGAGEMENT",
+    "BIRTHDAY",
+    "ANNIVERSARY",
+    "CORPORATE",
+    "OTHER"
+  ],
+  "create": {
+    "method": "POST",
+    "path": "/api/v1/invitations",
+    "visibility": "PRIVATE",
+    "requestIdentity": "UUID clientRequestId in body",
+    "owner": "currentUser(authentication), never caller owner ID",
+    "dedupe": "READ_COMMITTED transaction, pessimistic owner row lock, findByUserIdAndClientRequestId; deleted prior request returns 409",
+    "response": "201 API envelope; numeric ID, userId, local date/time; frontend does not fabricate success"
+  },
+  "media": {
+    "path": "/api/v1/invitations/:id/media/cover",
+    "maxBytes": 5242880,
+    "mime": [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ],
+    "ownerCheck": "media upload invokes authenticated invitation access policy"
+  },
+  "maps": "HTTPS, no userinfo, exact backend whitelist; new frontend entry matches. Legacy schemeless server behavior is not newly invented client support.",
+  "testProof": [
+    {
+      "id": "safe-backend-contracts",
+      "command": ".\\apps\\backend\\mvnw.cmd -f apps/backend/pom.xml -Dtest=EventDraftPersistenceTests test",
+      "startedAt": "2026-11-19T02:57:45.137991+00:00",
+      "endedAt": "2026-11-19T02:58:10.662576+00:00",
+      "durationSeconds": 25.525,
+      "exitCode": 0,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/safe-backend-contracts.log",
+      "logSha256": "a58aadac1d0b261b02b641c838c62192ba7c2a85cc90602128155995f398f4b9",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    }
+  ],
+  "limits": [
+    "11 H2 tests are not live MySQL persistence/concurrency or provider verification.",
+    "No backend source, Flyway, payment or auth API changed."
+  ]
+}

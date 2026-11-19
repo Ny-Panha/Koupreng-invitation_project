@@ -1,0 +1,62 @@
+{
+  "phase": "11.1",
+  "timestamp": "2026-11-19T09:15:00+07:00",
+  "storage_key_pattern": "koupreng_event_draft_<userId>",
+  "pending_event_key_pattern": "koupreng_pending_event_<userId>",
+  "schema_version": 2,
+  "fsm_states": [
+    {
+      "id": "UNMOUNTED",
+      "description": "Component not rendered in DOM"
+    },
+    {
+      "id": "INITIALIZING",
+      "description": "Mounting, checking current user.id, inspecting sessionStorage for existing draft"
+    },
+    {
+      "id": "CLEAN_FORM",
+      "description": "No prior draft found; initializing default eventType='wedding', currentStep=1"
+    },
+    {
+      "id": "RESTORED_DRAFT",
+      "description": "Valid JSON draft found for user.id; populated formData, currentStep, selectedTemplateId"
+    },
+    {
+      "id": "EDITING",
+      "description": "User modifies inputs; debounced auto-save triggers at 500ms intervals"
+    },
+    {
+      "id": "PHOTO_ATTACHED",
+      "description": "File object in state, preview Blob URL generated. Notice displayed: Photo in session memory"
+    },
+    {
+      "id": "VALIDATING",
+      "description": "Step navigation or Create clicked; checks required fields; focuses first invalid input"
+    },
+    {
+      "id": "CREATING_EVENT",
+      "description": "POST /api/events in flight; clientRequestId sent; form disabled; loading spinner"
+    },
+    {
+      "id": "EVENT_CREATED_UPLOADING_COVER",
+      "description": "Event ID received! Pending event ID saved to sessionStorage; POST /api/events/:id/cover in flight"
+    },
+    {
+      "id": "COVER_UPLOAD_FAILED",
+      "description": "Cover failed, but event exists. Pending event ID retained. Retry cover upload or skip to dashboard"
+    },
+    {
+      "id": "COMPLETE_SUCCESS",
+      "description": "Event created and cover uploaded. Draft removed from sessionStorage. Navigates to /app/events/:id/edit"
+    },
+    {
+      "id": "ACCOUNT_SWITCHED",
+      "description": "user.id changed; memory reset, old user's draft NOT written; new user's draft loaded"
+    }
+  ],
+  "safety_guarantees": {
+    "anti_overwrite": "prevUserIdRef tracks authenticated subject; unmount/remount does not bleed state",
+    "anti_duplicate": "pendingEventId in sessionStorage ensures page refresh in partial state offers recovery rather than duplicate POST",
+    "quota_handling": "try-catch around sessionStorage.setItem prevents QuotaExceededError crashes"
+  }
+}

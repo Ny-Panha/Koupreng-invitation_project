@@ -1,6 +1,6 @@
 /* Koupreng Event Onboarding - Luxury Khmer Design System */
 
-.event-create {
+.workspace-page.event-create {
   --ws-gold: #967037;
   --ws-gold-dark: #6e4e1f;
   --ws-gold-light: #f7f1e5;
@@ -11,6 +11,100 @@
   --ws-ink: #1f2b24;
   --ws-muted: #5e6f66;
   --ws-emerald: #245740;
+  scroll-padding-top: 24px;
+  scroll-padding-bottom: 100px;
+}
+
+.event-create .event-error-summary button {
+  min-height: 44px;
+  padding: 8px 0;
+  color: inherit;
+  text-align: start;
+  text-decoration: underline;
+}
+
+.event-create [tabindex="-1"],
+.event-create input,
+.event-create textarea {
+  scroll-margin-block: 100px;
+}
+
+.event-create .workspace-button:not(.primary),
+.event-create .event-mobile-nav-btn.prev,
+.event-create .event-mobile-nav-btn.draft,
+.event-create .event-photo-upload-wrapper,
+.event-create .event-template-card,
+.event-create .event-preferences-disclosure,
+.event-create .event-create-summary {
+  background: var(--ws-surface);
+  color: var(--ws-ink);
+}
+
+.event-create .event-photo-label {
+  color: var(--ws-ink);
+}
+
+.event-create .event-photo-hint {
+  color: var(--ws-muted);
+}
+
+.event-create .event-template-card.is-selected {
+  background: var(--ws-gold-light);
+}
+
+.event-create .event-mobile-bottom-bar {
+  background: var(--ws-surface);
+}
+
+.event-create .event-mobile-nav-btn.create {
+  background: #245740;
+  color: #ffffff;
+}
+
+.event-create .event-review-photo-meta {
+  background: var(--ws-canvas);
+}
+
+.event-create .event-type-option {
+  background: var(--ws-surface);
+}
+
+.event-create .event-type-option:hover,
+.event-create .event-type-option[aria-pressed="true"] {
+  background: var(--ws-gold-light);
+}
+
+:root[data-color-mode="dark"] .event-create,
+.dark .event-create {
+  --ws-gold: #c59b4e;
+  --ws-gold-dark: #dfb76c;
+  --ws-gold-light: #2c2518;
+  --ws-surface: #1e2420;
+  --ws-canvas: #141815;
+  --ws-border: #2d3830;
+  --ws-border-strong: #3f4e44;
+  --ws-ink: #f0ede6;
+  --ws-muted: #9eb0a4;
+  --ws-emerald: #91c5a4;
+  color-scheme: dark;
+}
+
+.event-draft-photo-notice {
+  margin-bottom: 16px;
+  background: rgba(185, 139, 66, 0.08);
+  border-left: 3px solid var(--ws-gold, #967037);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: var(--ws-ink, #1f2b24);
+  line-height: 1.5;
+}
+
+:root[data-color-mode="dark"] .event-draft-photo-notice,
+.dark .event-draft-photo-notice {
+  background: rgba(197, 155, 78, 0.12);
+  border-left-color: var(--ws-gold);
+  color: var(--ws-ink);
 }
 
 .event-create-back {
@@ -97,7 +191,7 @@
 }
 
 .event-wizard-step-btn.is-active {
-  background: #ffffff;
+  background: var(--ws-surface);
   border-color: var(--ws-gold);
   color: var(--ws-ink);
   box-shadow: 0 2px 8px rgba(150, 112, 55, 0.15);
@@ -589,7 +683,7 @@
    Step 4 Review Card Styling
    ========================================================================== */
 .event-review-card {
-  background: linear-gradient(170deg, #fdfaf4 0%, #ffffff 60%, #faf6ed 100%);
+  background: var(--ws-canvas);
   border: 1px solid var(--ws-border);
   border-radius: 18px;
   padding: 24px;
@@ -598,7 +692,7 @@
 }
 
 .event-review-group {
-  background: #ffffff;
+  background: var(--ws-surface);
   border: 1px solid var(--ws-border);
   border-radius: 14px;
   padding: 18px 20px;

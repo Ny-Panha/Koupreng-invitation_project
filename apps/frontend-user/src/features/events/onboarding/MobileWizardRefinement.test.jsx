@@ -55,7 +55,7 @@ afterEach(cleanup);
 describe("Workstream B — Premium Mobile Event Creation Wizard Refinement", () => {
   it("renders the persistent mobile bottom navigation bar with Cancel and Next on Step 1", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     const mobileNav = screen.getByRole("region", { name: "Wizard step navigation" });
     expect(mobileNav).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe("Workstream B — Premium Mobile Event Creation Wizard Refinement", () 
 
   it("navigates through steps using the persistent bottom bar and updates active step indicator", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     const mobileNav = screen.getByRole("region", { name: "Wizard step navigation" });
     const mobileNext = mobileNav.querySelector(".event-mobile-nav-btn.next");
@@ -91,7 +91,7 @@ describe("Workstream B — Premium Mobile Event Creation Wizard Refinement", () 
 
   it("renders grouped event essential sections with descriptive fieldset legends", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     // Grouped fieldset legends should be present
     expect(screen.getByText("Event information")).toBeInTheDocument();
@@ -101,7 +101,7 @@ describe("Workstream B — Premium Mobile Event Creation Wizard Refinement", () 
 
   it("presents Save Draft and Create Event in mobile bottom bar on Step 4", async () => {
     renderWizard();
-    await screen.findByRole("button", { name: "Select Event Essential" });
+    await screen.findByRole("button", { name: /^(?:Select|Selected) Event Essential$/ });
 
     // Jump directly to Step 4 via stepper button
     const reviewStepBtn = screen.getByRole("button", { name: /Review & Create/ });
