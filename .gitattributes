@@ -2,3 +2,12 @@
 
 # Preserve the required CRLF line endings in exported calendar files.
 *.ics -text whitespace=cr-at-eol
+
+# Markdown hard breaks intentionally use two trailing spaces.
+*.md whitespace=-blank-at-eol
+
+# Historical audit patches preserve source whitespace and their recorded bytes.
+docs/uxui/**/evidence/*.patch -text -whitespace
+
+# Publication command transcripts retain the exact bytes used by their hashes.
+docs/uxui/phase10-publication-2026-11-19/evidence/command-output/*.txt -text -whitespace

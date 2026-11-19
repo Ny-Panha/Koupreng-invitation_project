@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, it, expect } from "vitest";
 import VenuesFeature from "./VenuesFeature";
 
 describe("VenuesFeature", () => {
   it("renders venues list and opens venue detail dialog via portal", () => {
     render(
-      <MemoryRouter>
-        <VenuesFeature />
+      <MemoryRouter initialEntries={["/venues"]}>
+        <Routes><Route path="/venues/:id?" element={<VenuesFeature />} /></Routes>
       </MemoryRouter>
     );
 

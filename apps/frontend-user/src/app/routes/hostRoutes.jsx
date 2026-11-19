@@ -18,9 +18,9 @@ function LegacyEditor({ preview = false }) {
   if (/^[1-9]\d*$/.test(String(id || ""))) return <InvitationScopedRedirect targetSubPath={preview ? "preview" : "invitation"} />;
   return preview ? <InvitationPreviewPage /> : <InvitationEditPage />;
 }
-function AccountRedirect() {
+function AccountRedirect({ target }) {
   const location = useLocation();
-  return <Navigate to={location.pathname.replace(/^\/dashboard/, "/app") + location.search + location.hash} replace />;
+  return <Navigate to={(target || location.pathname.replace(/^\/dashboard/, "/app")) + location.search + location.hash} replace />;
 }
 
 export function hostRoutes() {
@@ -76,7 +76,7 @@ export function hostRoutes() {
       {["/events", "/event/list"].map(path => <Route key={path} path={path} element={<Navigate to="/app/events" replace />} />)}
       {[["/guests", "guests"], ["/expenses", "budget"], ["/gift", "gifts"], ["/gifts", "gifts"], ["/reports", "reports"]].map(([path, module]) =>
         <Route key={path} path={path} element={<InvitationScopedRedirect targetSubPath={module} />} />)}
-      <Route path="/profile" element={<Navigate to="/app/profile" replace />} />
+      <Route path="/profile" element={<AccountRedirect target="/app/profile" />} />
       <Route path="/templates/browse" element={<BrowseTemplatesPage />} />
     </Route>
     <Route path="/templates/browse/:id" element={<RequireAuth><HostTemplateDemoPage /></RequireAuth>} />

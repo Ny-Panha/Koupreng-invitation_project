@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { QRCode } from "react-qr-code";
 import { rsvpService } from "@/features/rsvp/api/rsvpApi";
 import { invitationService } from "@/features/invitations/api/invitationApi";
@@ -72,7 +72,12 @@ const khmerLabels = {
     copyLink: "ចម្លងតំណភ្ជាប់ QR Pass",
 };
 
-export default function PublicRsvpForm({
+export default function PublicRsvpForm(props) {
+    // Each guest authority owns an independent state lifetime, including async writes.
+    return <GuestRsvpSession key={JSON.stringify([props.slug, props.inviteToken, props.accessToken])} {...props} />;
+}
+
+function GuestRsvpSession({
     slug,
     inviteToken,
     accessToken,
@@ -94,6 +99,11 @@ export default function PublicRsvpForm({
     const [isEditing, setIsEditing] = useState(false);
     const [copied, setCopied] = useState(false);
     const [wishes, setWishes] = useState([]);
+    const sessionActive = useRef(true);
+    useEffect(() => {
+        sessionActive.current = true;
+        return () => { sessionActive.current = false; };
+    }, []);
 
     const loadWishes = useCallback(() => {
         if (!slug || !showPublicWishes) return;
@@ -142,16 +152,10 @@ export default function PublicRsvpForm({
                     }
                 })
                 .catch(() => {
-                    if (storageKey) {
-                        try {
-                            const cached = JSON.parse(localStorage.getItem(storageKey) || "null");
-                            if (cached && (cached.inviteToken === inviteToken || !cached.inviteToken)) {
-                                if (active) setSubmitted(cached);
-                            }
-                        } catch {
-                            // ignore storage error
-                        }
-                    }
+                    // A cached receipt is never authority after a failed guest lookup.
+                    if (active) setError(language === 'kh'
+                        ? 'មិនអាចផ្ទៀងផ្ទាត់សំបុត្រអញ្ជើញបានទេ។ សូមផ្ទុកទំព័រឡើងវិញ ឬទាក់ទងម្ចាស់កម្មវិធី។'
+                        : 'Could not verify this invitation. Reload or ask the host for a new link.');
                 });
         } else if (storageKey) {
             // 2. If no token in URL, check device localStorage if guest already submitted for this slug
@@ -176,7 +180,7 @@ export default function PublicRsvpForm({
         return () => {
             active = false;
         };
-    }, [slug, inviteToken]);
+    }, [slug, inviteToken, language]);
 
     const update = (field, value) => {
         setForm((current) => ({ ...current, [field]: value }));
@@ -194,6 +198,8 @@ export default function PublicRsvpForm({
             const response = inviteToken
                 ? await rsvpService.submitPublicWithToken(slug, inviteToken, payload)
                 : await rsvpService.submitPublic(slug, payload, { accessToken });
+
+            if (!sessionActive.current) return;
 
             const finalToken = response?.inviteToken || inviteToken;
             const submittedData = {
@@ -234,9 +240,9 @@ export default function PublicRsvpForm({
                 loadWishes();
             }
         } catch (err) {
-            setError(err.message || "Could not submit RSVP");
+            if (sessionActive.current) setError(err.message || "Could not submit RSVP");
         } finally {
-            setLoading(false);
+            if (sessionActive.current) setLoading(false);
         }
     };
 

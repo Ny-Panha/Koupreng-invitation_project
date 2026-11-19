@@ -1,0 +1,33 @@
+title = "Koupreng source and audit evidence"
+
+[extend]
+useDefault = true
+
+# Retain every default detector. The generic detector mistakes credential-related
+# filenames followed by file SHA256s for credentials in frozen audit manifests.
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Audit file-path to SHA256 maps, never credential assignments"
+condition = "AND"
+regexTarget = "line"
+paths = ['''(?:^|/)(?:docs/uxui/[^/]+/evidence/[^/]+\.json|[^/]+-source-manifest\.json|current-build-source\.json)$''']
+regexes = ['''^\s*"(?:\.agents|apps|docs|infra|output|scripts)/[^"\r\n]+\.(?:jsx|js|css|cjs|py|md|json|java|sql|yaml|class|png|txt|mjs|conf|map)"\s*:\s*"[0-9a-f]{64}"\s*,?\s*$''']
+
+[[rules.allowlists]]
+description = "Two exact component references in historical route/evidence prose"
+condition = "AND"
+regexTarget = "line"
+paths = ['''(?:^|/)docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/build_report\.py$''', '''(?:^|/)docs/uxui/phase09-codex-marketplace-audit-2026-11-18/evidence/independent-acceptance-matrix\.json$''']
+regexes = [
+  '''^\s*\('/app/change-password','ChangePasswordFeature\.jsx','RequireAuth; server current-user/current-password','auth/change-password','Phase08Regression; C08 password change',\{'anonymous','valid form','invalid client input','success','locale','theme','small viewport'\}\),\s*$''',
+  '''^\s*"evidence": "RequireAuth\.test\.jsx, Phase08Regression\.test\.jsx",?\s*$''',
+]
+
+[[rules.allowlists]]
+description = "Literal carryover-report dictionary key, not a credential"
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(?:^|/)docs/uxui/phase10-codex-renderer-art-audit-2026-11-18/evidence/carryover\.py$''']
+regexes = ['''^phase07_partial_gates$''']

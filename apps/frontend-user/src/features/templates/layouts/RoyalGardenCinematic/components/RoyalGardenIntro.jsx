@@ -79,7 +79,7 @@ export default function RoyalGardenIntro({ sequence, intro, slides, content, tit
       <div className="rg-photo-scrim" style={{ '--rg-overlay': intro.overlay }} />
       {!arriving && <div className="rg-save-date-overlay" data-position={intro.textPosition}>{intro.showSaveTheDate && !hasArtwork && <span>{english ? 'Save the Date' : 'កាលបរិច្ឆេទកម្មវិធី'}</span>}<h1>{names}</h1><p>{date}</p></div>}
     </div>}
-    {!opening && <div className="rg-intro-controls">
+    {<div className="rg-intro-controls">
       {slideshow && <button type="button" aria-label={sequence.paused ? (english ? 'Resume slideshow' : 'បន្តបង្ហាញរូបភាព') : (english ? 'Pause slideshow' : 'ផ្អាកបង្ហាញរូបភាព')} aria-pressed={sequence.paused} onClick={() => sequence.setPaused(!sequence.paused)}>{sequence.paused ? <Play size={18} /> : <Pause size={18} />}</button>}
       <button type="button" onClick={sequence.finish}>{english ? 'Skip intro' : 'រំលង'}<SkipForward size={16} aria-hidden="true" /></button>
     </div>}

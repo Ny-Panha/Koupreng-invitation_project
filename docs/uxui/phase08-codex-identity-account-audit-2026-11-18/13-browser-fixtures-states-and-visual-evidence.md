@@ -1,0 +1,13 @@
+# Fixture and capture provenance
+
+Source `2429b76545b683fad2a0a6f328bee3264875edc3` on `main`, plus preserved dirty Phase07/08 work and Codex overlay. Execution: 18 November 2026, Asia/Bangkok. Overall **PARTIALLY COMPLETE**. NO PUSH / NO COMMIT / NO DEPLOYMENT.
+
+[apps/frontend-user/tests/e2e/support/phase06Fixtures.js:1](../../../apps/frontend-user/tests/e2e/support/phase06Fixtures.js#L1) wraps bounded Batch12 DTOs with fictional identities, local-only resource policy and locale/theme seeds. Unknown API reads501 and unspecified writes405; each auth mutation/error is explicitly intercepted. No backend call is silently given a happy200. [apps/frontend-user/tests/e2e/phase08-codex-regression.spec.js:1](../../../apps/frontend-user/tests/e2e/phase08-codex-regression.spec.js#L1) exercises actual form controls and response handling.
+
+[browser-coverage.json](evidence/browser-coverage.json), [visual-capture-manifest.json](evidence/visual-capture-manifest.json) and per-command artifacts name exact origins, viewports, engine projects, data scope, hashes and logs.24 initial scenes are paired with repaired scenes; later error scenes are after-only. Actual scroll positions explain sticky headers appearing partway through full-page captures.
+
+PNG, trace and command logs under output/phase08-codex-2026-11-18 are **LOCAL — NOT COMMITTED**. Regenerate current captures with `node docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/capture.mjs after after-reproduced`; run tests through audit.py to archive artifacts. Do not regenerate before evidence from repaired code. All identities/tokens are fictional; clear sensitive input controls before captured API-error states.
+
+Current-state regeneration runbook (instructions, not additional test results): first build user with VITE_PUBLIC_APP_URL=http://127.0.0.1:4173 and admin with VITE_USER_APP_URL=http://127.0.0.1:4173. Start `npm --prefix apps/frontend-user run preview -- --host 127.0.0.1 --port 4173 --strictPort` and `npm --prefix apps/frontend-admin run preview -- --host 127.0.0.1 --port 4174 --strictPort` in separate terminals, then run capture.mjs after with a new output tag. Existing screenshots remain local.
+
+Before-state recovery requires an isolated quarantine populated from the recorded HEAD via read-only git show, overlaid with byte-verified initial dirty files in output/phase08-codex-2026-11-18/original. Do not modify the live dirty tree. Preserve the baseline environment and validate the generated build hash against before-visual.json before calling a reconstructed capture a matched baseline. If that hash cannot be reproduced, retain the original hashed PNGs and mark reconstruction unverified. No before shot was fabricated from final code.

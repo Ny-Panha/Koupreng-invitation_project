@@ -23,6 +23,24 @@ vi.mock("@/features/auth/api/authApi", () => ({
 }));
 
 describe("SocialAuthButtons", () => {
+  it('C08-009 retries a blocked Google script after leaving and reopening the form', async () => {
+    delete window.google;
+    const appended = [];
+    const append = document.head.appendChild.bind(document.head);
+    vi.spyOn(document.head, 'appendChild').mockImplementation(node => { appended.push(node); return append(node); });
+    const { default: SocialAuthButtons } = await import('./SocialAuthButtons');
+    const first = render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
+    const script = appended.find(node => node.id === 'google-gsi-script');
+    await act(async () => { script.dispatchEvent(new Event('error')); });
+    expect(await screen.findByRole('alert')).toHaveTextContent('Google script failed');
+    first.unmount();
+    render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
+    const retry = appended.filter(node => node.id === 'google-gsi-script').at(-1);
+    expect(retry).not.toBe(script);
+    await act(async () => { retry.dispatchEvent(new Event('error')); });
+    expect(await screen.findByRole('alert')).toHaveTextContent('Google script failed');
+    expect(login).not.toHaveBeenCalled();
+  });
   beforeEach(() => {
     authenticated = true;
     vi.stubEnv("VITE_GOOGLE_CLIENT_ID", "test-client.apps.googleusercontent.com");

@@ -1,0 +1,3801 @@
+{
+  "method": "Browser capture-phase click timestamp to first rAF with non-inert, nonhidden content box and nonzero computed opacity; automation wall time separate. Missing sample is unmeasured. Local emulation only.",
+  "samples": [
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 309.48379999998724,
+      "browser_click_to_frame_ms": 145.60000000149012,
+      "geometry": {
+        "x": 111.25,
+        "y": 395.5625,
+        "width": 97.5,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 250.45739999999932,
+      "browser_click_to_frame_ms": 91.5,
+      "geometry": {
+        "x": 128.3046875,
+        "y": 445.015625,
+        "width": 103.390625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 227.2158999999956,
+      "browser_click_to_frame_ms": 88.5,
+      "geometry": {
+        "x": 140.046875,
+        "y": 482.109375,
+        "width": 109.90625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 274.488400000002,
+      "browser_click_to_frame_ms": 123.40000000223517,
+      "geometry": {
+        "x": 324.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 220.1999000000069,
+      "browser_click_to_frame_ms": 77.80000000074506,
+      "geometry": {
+        "x": 452.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 333.35899999999674,
+      "browser_click_to_frame_ms": 126.80000000074506,
+      "geometry": {
+        "x": 660.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 249.77569999999832,
+      "browser_click_to_frame_ms": 90.59999999776483,
+      "geometry": {
+        "x": 900.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 197.27590000000782,
+      "browser_click_to_frame_ms": 71.19999999925494,
+      "geometry": {
+        "x": 362.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 268.74640000000363,
+      "browser_click_to_frame_ms": 92.69999999925494,
+      "geometry": {
+        "x": 350.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 210.06980000001204,
+      "browser_click_to_frame_ms": 87.30000000074506,
+      "geometry": {
+        "x": 324.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 50.445400000004156,
+      "browser_click_to_frame_ms": 9.600000001490116,
+      "geometry": {
+        "x": 112.8125,
+        "y": 530.3046875,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 57.55429999999615,
+      "browser_click_to_frame_ms": 7.900000002235174,
+      "geometry": {
+        "x": 132.8125,
+        "y": 530.3046875,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 56.00759999999718,
+      "browser_click_to_frame_ms": 10.100000001490116,
+      "geometry": {
+        "x": 147.8125,
+        "y": 534.1953125,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 55.71719999999914,
+      "browser_click_to_frame_ms": 8.899999998509884,
+      "geometry": {
+        "x": 336.8125,
+        "y": 569.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 62.06789999999455,
+      "browser_click_to_frame_ms": 10.199999999254942,
+      "geometry": {
+        "x": 464.8125,
+        "y": 569.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 56.48660000000382,
+      "browser_click_to_frame_ms": 12.399999998509884,
+      "geometry": {
+        "x": 672.8125,
+        "y": 569.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 58.02169999999751,
+      "browser_click_to_frame_ms": 18.699999999254942,
+      "geometry": {
+        "x": 912.8125,
+        "y": 569.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 65.55309999999008,
+      "browser_click_to_frame_ms": 7.099999997764826,
+      "geometry": {
+        "x": 374.8125,
+        "y": 314.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 68.66730000000098,
+      "browser_click_to_frame_ms": 10.5,
+      "geometry": {
+        "x": 362.8125,
+        "y": 334.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 44.63790000000154,
+      "browser_click_to_frame_ms": 10,
+      "geometry": {
+        "x": 336.8125,
+        "y": 314.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 96.48359999999957,
+      "browser_click_to_frame_ms": 26,
+      "geometry": {
+        "x": 127.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 92.16859999999724,
+      "browser_click_to_frame_ms": 23.199999999254942,
+      "geometry": {
+        "x": 167.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 95.8076000000001,
+      "browser_click_to_frame_ms": 22.600000001490116,
+      "geometry": {
+        "x": 197.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 79.5908999999956,
+      "browser_click_to_frame_ms": 21,
+      "geometry": {
+        "x": 575.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 125.72000000000116,
+      "browser_click_to_frame_ms": 35.400000002235174,
+      "geometry": {
+        "x": 831.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 113.08860000000277,
+      "browser_click_to_frame_ms": 52.600000001490116,
+      "geometry": {
+        "x": 1247.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 133.54010000000562,
+      "browser_click_to_frame_ms": 32.5,
+      "geometry": {
+        "x": 1727.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 119.63820000000123,
+      "browser_click_to_frame_ms": 28.699999999254942,
+      "geometry": {
+        "x": 651.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 127.7323000000033,
+      "browser_click_to_frame_ms": 31.5,
+      "geometry": {
+        "x": 627.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 78.06380000000354,
+      "browser_click_to_frame_ms": 19.600000001490116,
+      "geometry": {
+        "x": 575.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 275.2977999999998,
+      "browser_click_to_frame_ms": 70.19999999925494,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 207.8827000000001,
+      "browser_click_to_frame_ms": 75.80000000074506,
+      "geometry": {
+        "x": 282.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 249.41319999999996,
+      "browser_click_to_frame_ms": 88.59999999776483,
+      "geometry": {
+        "x": 312.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 256.46450000000004,
+      "browser_click_to_frame_ms": 97.20000000298023,
+      "geometry": {
+        "x": 580.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 148.0635999999995,
+      "browser_click_to_frame_ms": 48.900000002235174,
+      "geometry": {
+        "x": 708.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 126.04359999999724,
+      "browser_click_to_frame_ms": 48.599999997764826,
+      "geometry": {
+        "x": 916.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 174.73289999999906,
+      "browser_click_to_frame_ms": 55.80000000074506,
+      "geometry": {
+        "x": 1156.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 132.83770000000004,
+      "browser_click_to_frame_ms": 53.5,
+      "geometry": {
+        "x": 618.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 162.79010000000198,
+      "browser_click_to_frame_ms": 62.69999999925494,
+      "geometry": {
+        "x": 606.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 168.05129999999917,
+      "browser_click_to_frame_ms": 68.19999999925494,
+      "geometry": {
+        "x": 580.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 313.7028,
+      "browser_click_to_frame_ms": 128.30000000074506,
+      "geometry": {
+        "x": 247.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 225.04719999999998,
+      "browser_click_to_frame_ms": 90.19999999925494,
+      "geometry": {
+        "x": 287.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 270.65200000000004,
+      "browser_click_to_frame_ms": 135.5,
+      "geometry": {
+        "x": 317.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 426.65570000000025,
+      "browser_click_to_frame_ms": 186.69999999925494,
+      "geometry": {
+        "x": 651.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 327.96289999999954,
+      "browser_click_to_frame_ms": 138.80000000074506,
+      "geometry": {
+        "x": 779.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 216.9962000000014,
+      "browser_click_to_frame_ms": 100.19999999925494,
+      "geometry": {
+        "x": 987.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 200.72110000000066,
+      "browser_click_to_frame_ms": 103.39999999850988,
+      "geometry": {
+        "x": 1227.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 217.9411,
+      "browser_click_to_frame_ms": 133.39999999850988,
+      "geometry": {
+        "x": 689.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 182.02670000000035,
+      "browser_click_to_frame_ms": 86.69999999925494,
+      "geometry": {
+        "x": 677.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 142.22320000000036,
+      "browser_click_to_frame_ms": 69.30000000074506,
+      "geometry": {
+        "x": 651.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 141.4415999999983,
+      "browser_click_to_frame_ms": 62.400000002235174,
+      "geometry": {
+        "x": 66.578125,
+        "y": 883.375,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 144.36260000000038,
+      "browser_click_to_frame_ms": 65,
+      "geometry": {
+        "x": 86.578125,
+        "y": 860.125,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 91.22599999999875,
+      "browser_click_to_frame_ms": 38.69999999925494,
+      "geometry": {
+        "x": 101.578125,
+        "y": 832.765625,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 144.63820000000123,
+      "browser_click_to_frame_ms": 71.20000000298023,
+      "geometry": {
+        "x": 290.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 193.38390000000072,
+      "browser_click_to_frame_ms": 78.80000000074506,
+      "geometry": {
+        "x": 418.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 195.02330000000075,
+      "browser_click_to_frame_ms": 89.19999999925494,
+      "geometry": {
+        "x": 626.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 200.29750000000058,
+      "browser_click_to_frame_ms": 72.69999999925494,
+      "geometry": {
+        "x": 866.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 218.21099999999933,
+      "browser_click_to_frame_ms": 86.60000000149012,
+      "geometry": {
+        "x": 328.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 179.64660000000003,
+      "browser_click_to_frame_ms": 93.09999999776483,
+      "geometry": {
+        "x": 316.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 174.19809999999416,
+      "browser_click_to_frame_ms": 86.5,
+      "geometry": {
+        "x": 290.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 263.149900000004,
+      "browser_click_to_frame_ms": 126.40000000223517,
+      "geometry": {
+        "x": 214.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 174.8350999999966,
+      "browser_click_to_frame_ms": 53.79999999701977,
+      "geometry": {
+        "x": 254.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 261.3649000000005,
+      "browser_click_to_frame_ms": 93,
+      "geometry": {
+        "x": 284.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 217.31910000000062,
+      "browser_click_to_frame_ms": 66.09999999776483,
+      "geometry": {
+        "x": 662.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 266.90639999999985,
+      "browser_click_to_frame_ms": 75,
+      "geometry": {
+        "x": 918.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 231.25510000000213,
+      "browser_click_to_frame_ms": 62,
+      "geometry": {
+        "x": 1334.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 287.89719999999943,
+      "browser_click_to_frame_ms": 78.69999999925494,
+      "geometry": {
+        "x": 1814.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 167.40610000000015,
+      "browser_click_to_frame_ms": 52.599999997764826,
+      "geometry": {
+        "x": 738.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 820,
+        "height": 430
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 338.85459999999875,
+      "browser_click_to_frame_ms": 118.5,
+      "geometry": {
+        "x": 714.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-chromium",
+      "viewport": {
+        "width": 768,
+        "height": 390
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 187.32359999999608,
+      "browser_click_to_frame_ms": 60.69999999925494,
+      "geometry": {
+        "x": 662.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 386.5691999999981,
+      "browser_click_to_frame_ms": 100,
+      "geometry": {
+        "x": 111.24166870117188,
+        "y": 395.5666809082031,
+        "width": 97.51666259765625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 335.21099999999933,
+      "browser_click_to_frame_ms": 56,
+      "geometry": {
+        "x": 660.61669921875,
+        "y": 555.5499877929688,
+        "width": 118.76666259765625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 137.40049999999974,
+      "browser_click_to_frame_ms": 24,
+      "geometry": {
+        "x": 112.80000305175781,
+        "y": 530.308349609375,
+        "width": 94.38333129882812,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 150.65520000000106,
+      "browser_click_to_frame_ms": 15,
+      "geometry": {
+        "x": 672.7999877929688,
+        "y": 569.4083251953125,
+        "width": 94.38336181640625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 127.04540000000088,
+      "browser_click_to_frame_ms": 33,
+      "geometry": {
+        "x": 127.11666870117188,
+        "y": 16,
+        "width": 176.88333129882812,
+        "height": 46.79999923706055
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 135.53139999999985,
+      "browser_click_to_frame_ms": 33,
+      "geometry": {
+        "x": 1247.11669921875,
+        "y": 16,
+        "width": 176.88330078125,
+        "height": 46.79999923706055
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 362.3891000000003,
+      "browser_click_to_frame_ms": 73,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 193.8173000000006,
+      "browser_click_to_frame_ms": 43,
+      "geometry": {
+        "x": 916.7000122070312,
+        "y": 70,
+        "width": 63.29998779296875,
+        "height": 53.099998474121094
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 365.8287999999993,
+      "browser_click_to_frame_ms": 127,
+      "geometry": {
+        "x": 247.60000610351562,
+        "y": 64,
+        "width": 60.399993896484375,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 163.61309999999958,
+      "browser_click_to_frame_ms": 49,
+      "geometry": {
+        "x": 987.5999755859375,
+        "y": 64,
+        "width": 60.4000244140625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 165.61029999999846,
+      "browser_click_to_frame_ms": 54,
+      "geometry": {
+        "x": 66.55000305175781,
+        "y": 883.433349609375,
+        "width": 186.89999389648438,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 135.70930000000044,
+      "browser_click_to_frame_ms": 36,
+      "geometry": {
+        "x": 626.5499877929688,
+        "y": 954,
+        "width": 186.89996337890625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 420.8190999999988,
+      "browser_click_to_frame_ms": 64,
+      "geometry": {
+        "x": 214.21665954589844,
+        "y": 80,
+        "width": 89.78334045410156,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 338.7550999999985,
+      "browser_click_to_frame_ms": 73,
+      "geometry": {
+        "x": 1334.2166748046875,
+        "y": 80,
+        "width": 89.7833251953125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-firefox-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 657.1505000000034,
+      "browser_click_to_frame_ms": 202,
+      "geometry": {
+        "x": 111.25,
+        "y": 395.5625,
+        "width": 97.28125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 696.7217999999993,
+      "browser_click_to_frame_ms": 111,
+      "geometry": {
+        "x": 660.75,
+        "y": 555.546875,
+        "width": 118.53125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 224.375,
+      "browser_click_to_frame_ms": 26,
+      "geometry": {
+        "x": 112.8125,
+        "y": 530.328125,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 530.5129000000015,
+      "browser_click_to_frame_ms": 25,
+      "geometry": {
+        "x": 672.8125,
+        "y": 569.25,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 336.0630999999994,
+      "browser_click_to_frame_ms": 111,
+      "geometry": {
+        "x": 127.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 396.03419999999824,
+      "browser_click_to_frame_ms": 109,
+      "geometry": {
+        "x": 1247.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 329.40499999999975,
+      "browser_click_to_frame_ms": 74,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 359.65609999999924,
+      "browser_click_to_frame_ms": 82,
+      "geometry": {
+        "x": 916.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 518.4368999999997,
+      "browser_click_to_frame_ms": 180,
+      "geometry": {
+        "x": 247.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 833.8062999999993,
+      "browser_click_to_frame_ms": 192,
+      "geometry": {
+        "x": 987.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 380.04739999999947,
+      "browser_click_to_frame_ms": 112,
+      "geometry": {
+        "x": 66.578125,
+        "y": 883.21875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 477.1707999999999,
+      "browser_click_to_frame_ms": 148,
+      "geometry": {
+        "x": 626.578125,
+        "y": 953.921875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 2878.9977999999974,
+      "browser_click_to_frame_ms": null,
+      "geometry": {
+        "x": 214.734375,
+        "y": 80,
+        "width": 89.265625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "desktop-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 3995.7988000000005,
+      "browser_click_to_frame_ms": null,
+      "geometry": {
+        "x": 1334.734375,
+        "y": 80,
+        "width": 89.265625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-webkit-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 273.15600000000086,
+      "browser_click_to_frame_ms": 105.5,
+      "geometry": {
+        "x": 111.25,
+        "y": 395.5625,
+        "width": 97.5,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 228.07070000000022,
+      "browser_click_to_frame_ms": 99.5,
+      "geometry": {
+        "x": 660.59375,
+        "y": 555.546875,
+        "width": 118.8125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 64.63249999999971,
+      "browser_click_to_frame_ms": 7.899999998509884,
+      "geometry": {
+        "x": 112.8125,
+        "y": 530.3046875,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 78.13550000000032,
+      "browser_click_to_frame_ms": 19.399999998509884,
+      "geometry": {
+        "x": 672.8125,
+        "y": 569.390625,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 106.98139999999967,
+      "browser_click_to_frame_ms": 27.5,
+      "geometry": {
+        "x": 127.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 136.73439999999937,
+      "browser_click_to_frame_ms": 32.600000001490116,
+      "geometry": {
+        "x": 1247.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 284.80999999999995,
+      "browser_click_to_frame_ms": 90.30000000074506,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 221.51890000000003,
+      "browser_click_to_frame_ms": 78.10000000149012,
+      "geometry": {
+        "x": 916.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 236.60939999999937,
+      "browser_click_to_frame_ms": 119.30000000074506,
+      "geometry": {
+        "x": 247.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 264.22270000000026,
+      "browser_click_to_frame_ms": 114,
+      "geometry": {
+        "x": 987.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 168.57370000000083,
+      "browser_click_to_frame_ms": 77.39999999850988,
+      "geometry": {
+        "x": 66.578125,
+        "y": 883.375,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 173.8130999999994,
+      "browser_click_to_frame_ms": 78.69999999925494,
+      "geometry": {
+        "x": 626.578125,
+        "y": 954.046875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 360.8189999999995,
+      "browser_click_to_frame_ms": 154.40000000223517,
+      "geometry": {
+        "x": 214.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 408.70880000000034,
+      "browser_click_to_frame_ms": 98,
+      "geometry": {
+        "x": 1334.25,
+        "y": 80,
+        "width": 89.75,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-chromium-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 435.44660000000295,
+      "browser_click_to_frame_ms": 90,
+      "geometry": {
+        "x": 111.24166870117188,
+        "y": 395.5666809082031,
+        "width": 97.51666259765625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 278.09409999999843,
+      "browser_click_to_frame_ms": 79,
+      "geometry": {
+        "x": 660.61669921875,
+        "y": 555.5499877929688,
+        "width": 118.76666259765625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 115.89959999999701,
+      "browser_click_to_frame_ms": 17,
+      "geometry": {
+        "x": 112.80000305175781,
+        "y": 530.308349609375,
+        "width": 94.38333129882812,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 88.76209999999992,
+      "browser_click_to_frame_ms": 13,
+      "geometry": {
+        "x": 672.7999877929688,
+        "y": 569.4083251953125,
+        "width": 94.38336181640625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 196.73140000000058,
+      "browser_click_to_frame_ms": 47,
+      "geometry": {
+        "x": 127.11666870117188,
+        "y": 16,
+        "width": 176.88333129882812,
+        "height": 46.79999923706055
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 175.08899999999994,
+      "browser_click_to_frame_ms": 40,
+      "geometry": {
+        "x": 1247.11669921875,
+        "y": 16,
+        "width": 176.88330078125,
+        "height": 46.79999923706055
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 465.1168000000007,
+      "browser_click_to_frame_ms": 120,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 161.73610000000008,
+      "browser_click_to_frame_ms": 37,
+      "geometry": {
+        "x": 916.7000122070312,
+        "y": 70,
+        "width": 63.29998779296875,
+        "height": 53.099998474121094
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 343.8606,
+      "browser_click_to_frame_ms": 113,
+      "geometry": {
+        "x": 247.60000610351562,
+        "y": 64,
+        "width": 60.399993896484375,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 235.95010000000002,
+      "browser_click_to_frame_ms": 69,
+      "geometry": {
+        "x": 987.5999755859375,
+        "y": 64,
+        "width": 60.4000244140625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 236.5631999999987,
+      "browser_click_to_frame_ms": 79,
+      "geometry": {
+        "x": 66.55000305175781,
+        "y": 883.433349609375,
+        "width": 186.89999389648438,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 133.639799999999,
+      "browser_click_to_frame_ms": 35,
+      "geometry": {
+        "x": 626.5499877929688,
+        "y": 954,
+        "width": 186.89996337890625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 519.0587000000014,
+      "browser_click_to_frame_ms": 76,
+      "geometry": {
+        "x": 214.21665954589844,
+        "y": 80,
+        "width": 89.78334045410156,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-firefox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 438.8018000000011,
+      "browser_click_to_frame_ms": 79,
+      "geometry": {
+        "x": 1334.2166748046875,
+        "y": 80,
+        "width": 89.7833251953125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-firefox-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 937.0368000000017,
+      "browser_click_to_frame_ms": 138,
+      "geometry": {
+        "x": 111.33332824707031,
+        "y": 395.5625,
+        "width": 97.28125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "cover-khmer-golden-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 946.1761000000042,
+      "browser_click_to_frame_ms": 92,
+      "geometry": {
+        "x": 660.6666870117188,
+        "y": 555.546875,
+        "width": 118.53125,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-cover-khmer-golden-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 585.063900000001,
+      "browser_click_to_frame_ms": 24,
+      "geometry": {
+        "x": 112.8125,
+        "y": 530.2448120117188,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action",
+      "elapsed_ms": 1404.9447,
+      "browser_click_to_frame_ms": 25,
+      "geometry": {
+        "x": 672.8125,
+        "y": 569.4166870117188,
+        "width": 94.375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-emerald-canva-luxe-wedding.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 581.6873000000014,
+      "browser_click_to_frame_ms": 87,
+      "geometry": {
+        "x": 127.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-celestial",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 1236.7654000000002,
+      "browser_click_to_frame_ms": 122,
+      "geometry": {
+        "x": 1247.09375,
+        "y": 16,
+        "width": 176.90625,
+        "height": 46.796875
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-khmer-celestial.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 377.42880000000014,
+      "browser_click_to_frame_ms": 88,
+      "geometry": {
+        "x": 242.25,
+        "y": 70,
+        "width": 57.75,
+        "height": 47.25
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-khmer-floral-gold.json"
+    },
+    {
+      "family": "khmer-floral-gold",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 576.3676000000005,
+      "browser_click_to_frame_ms": 79,
+      "geometry": {
+        "x": 916.6875,
+        "y": 70,
+        "width": 63.3125,
+        "height": 53.09375
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-khmer-floral-gold.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 501.8842999999997,
+      "browser_click_to_frame_ms": 138,
+      "geometry": {
+        "x": 247.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-royal-garden-cinematic.json"
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 1128.0530000000008,
+      "browser_click_to_frame_ms": 106,
+      "geometry": {
+        "x": 987.59375,
+        "y": 64,
+        "width": 60.40625,
+        "height": 48
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-royal-garden-cinematic.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 436.3670999999995,
+      "browser_click_to_frame_ms": 187,
+      "geometry": {
+        "x": 66.578125,
+        "y": 883.21875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-silk-heritage.json"
+    },
+    {
+      "family": "silk-heritage",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 937.1571999999978,
+      "browser_click_to_frame_ms": 212,
+      "geometry": {
+        "x": 626.578125,
+        "y": 953.921875,
+        "width": 186.84375,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-silk-heritage.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 2310.1689000000006,
+      "browser_click_to_frame_ms": null,
+      "geometry": {
+        "x": 214.734375,
+        "y": 80,
+        "width": 89.265625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-the-digital-yes-wedding.json"
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "project": "mobile-webkit",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": "acceptance-frozen",
+      "cover": "opened",
+      "method": "cover action unmounted",
+      "elapsed_ms": 4742.719500000003,
+      "browser_click_to_frame_ms": null,
+      "geometry": {
+        "x": 1334.734375,
+        "y": 80,
+        "width": 89.265625,
+        "height": 44
+      },
+      "evidence": "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/mobile-webkit-the-digital-yes-wedding.json"
+    }
+  ],
+  "browser_sample_count": 136,
+  "p50_ms": 75,
+  "p95_ms": 154.40000000223517,
+  "universal_under_50ms": "NOT ESTABLISHED",
+  "state_matrix": [
+    {
+      "family": "khmer-floral-gold",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "khmer-floral-gold",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-floral-gold.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "royal-garden-cinematic",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-royal-garden-cinematic.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "silk-heritage",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-silk-heritage.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "skipped",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "template-boilerplate",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-template-boilerplate.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "khmer-celestial",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-khmer-celestial.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "the-digital-yes-wedding",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-the-digital-yes-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "emerald-canva-luxe-wedding",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-emerald-canva-luxe-wedding.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "cover_not_loaded",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "cover_ready",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "opening",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "skipped",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "withjoy-modern-portal",
+      "state": "preview_start_closed",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-withjoy-modern-portal.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "cover_not_loaded",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "cover_ready",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "opening",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "skipped",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "bliss-editorial-wedding",
+      "state": "preview_start_closed",
+      "outcome": "N/A — coverless family",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-bliss-editorial-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "cover_not_loaded",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "cover_ready",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "opening",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "skipped",
+      "outcome": "OBSERVED — canonical cover action; exact labels/geometry in rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "open",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "reduced",
+      "outcome": "OBSERVED — canonical demo matrix; see rows",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "interrupted",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "failed_media",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "back_navigation",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "event_change",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    },
+    {
+      "family": "khmer-golden-canva-inspired-wedding",
+      "state": "preview_start_closed",
+      "outcome": "NOT_RUN — family-specific state not exhaustively exercised",
+      "owner": "Renderer frontend QA, Phase16/26",
+      "evidence": [
+        "output/playwright/phase10-codex-2026-11-18/acceptance-frozen/desktop-chromium-cover-khmer-golden-wedding.json"
+      ]
+    }
+  ]
+}

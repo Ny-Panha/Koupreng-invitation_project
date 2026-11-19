@@ -43,7 +43,7 @@ export default function RoyalGardenEntranceScene({ content, intro, presentation,
       </button></div></div>
       <RoyalGardenMotionLayer settings={presentation.motion} reduced={reduced} paused={sequence.paused || sequence.stage === 'PRE_WEDDING_VIDEO'} />
     </div>
-    {!opening && sequence.stage !== 'COVER_EXITING' && <button className="rg-entrance-skip" type="button" onClick={onSkip}>{english ? 'Skip intro' : 'រំលង'}</button>}
+    {sequence.stage !== 'COVER_EXITING' && <button className="rg-entrance-skip" type="button" onClick={onSkip}>{english ? 'Skip intro' : 'រំលង'}</button>}
   </section>;
 }
 

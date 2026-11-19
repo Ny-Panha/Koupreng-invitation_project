@@ -1,0 +1,298 @@
+{
+  "samples": [
+    {
+      "stage": "before",
+      "route": "auth-login",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 88,
+        "median": 92,
+        "max": 92
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 396,
+        "median": 400,
+        "max": 404
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.0052394750043050844,
+        "median": 0.0052394750043050844,
+        "max": 0.0052394750043050844
+      }
+    },
+    {
+      "stage": "before",
+      "route": "auth-login",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 68,
+        "median": 72,
+        "max": 72
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 692,
+        "median": 696,
+        "max": 712
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.00021007984419913622,
+        "median": 0.00021007984419913622,
+        "max": 0.003727521051719183
+      }
+    },
+    {
+      "stage": "before",
+      "route": "auth-reset",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 88,
+        "median": 88,
+        "max": 120
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 412,
+        "median": 420,
+        "max": 424
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.00021007984419913622,
+        "median": 0.00021007984419913622,
+        "max": 0.00021007984419913622
+      }
+    },
+    {
+      "stage": "before",
+      "route": "auth-reset",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 60,
+        "median": 68,
+        "max": 72
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 380,
+        "median": 688,
+        "max": 696
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.00021007984419913622,
+        "median": 0.00021007984419913622,
+        "max": 0.00021007984419913622
+      }
+    },
+    {
+      "stage": "before",
+      "route": "profile",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 88,
+        "median": 92,
+        "max": 92
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 408,
+        "median": 420,
+        "max": 436
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0,
+        "median": 0,
+        "max": 0
+      }
+    },
+    {
+      "stage": "before",
+      "route": "profile",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 56,
+        "median": 68,
+        "max": 72
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 384,
+        "median": 388,
+        "max": 388
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0,
+        "median": 0,
+        "max": 0
+      }
+    },
+    {
+      "stage": "after",
+      "route": "auth-login",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 96,
+        "median": 96,
+        "max": 96
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 412,
+        "median": 416,
+        "max": 424
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.003727521051719183,
+        "median": 0.0052394750043050844,
+        "max": 0.0052394750043050844
+      }
+    },
+    {
+      "stage": "after",
+      "route": "auth-login",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 80,
+        "median": 84,
+        "max": 88
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 388,
+        "median": 404,
+        "max": 720
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.003727521051719183,
+        "median": 0.0052394750043050844,
+        "max": 0.0052394750043050844
+      }
+    },
+    {
+      "stage": "after",
+      "route": "auth-reset",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 108,
+        "median": 116,
+        "max": 144
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 420,
+        "median": 428,
+        "max": 464
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.00021007984419913622,
+        "median": 0.00021007984419913622,
+        "max": 0.00021007984419913622
+      }
+    },
+    {
+      "stage": "after",
+      "route": "auth-reset",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 60,
+        "median": 76,
+        "max": 88
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 380,
+        "median": 384,
+        "max": 712
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0.00021007984419913622,
+        "median": 0.00021007984419913622,
+        "max": 0.00021007984419913622
+      }
+    },
+    {
+      "stage": "after",
+      "route": "profile",
+      "condition": "cold",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 92,
+        "median": 92,
+        "max": 96
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 416,
+        "median": 420,
+        "max": 436
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0,
+        "median": 0,
+        "max": 0
+      }
+    },
+    {
+      "stage": "after",
+      "route": "profile",
+      "condition": "warm",
+      "n": 3,
+      "fcp": {
+        "validSamples": 3,
+        "min": 76,
+        "median": 76,
+        "max": 76
+      },
+      "lcp": {
+        "validSamples": 3,
+        "min": 388,
+        "median": 396,
+        "max": 412
+      },
+      "cls": {
+        "validSamples": 3,
+        "min": 0,
+        "median": 0,
+        "max": 0
+      }
+    }
+  ],
+  "limits": [
+    "Loopback fixture; unthrottled, intercepted resources disable HTTP cache; warm is repeat navigation only",
+    "LCP may be zero if no observation before sample; no field INP, p75 or CPU-throttled claim",
+    "Baseline public preview origin differed; auth/profile sample flows do not use that preview handoff",
+    "Exact all-chunk baseline raw/gzip/Brotli not retained; initial build log has rounded raw/gzip only"
+  ]
+}

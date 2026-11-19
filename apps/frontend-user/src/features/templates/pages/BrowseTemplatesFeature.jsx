@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   IoAddOutline,
   IoCheckmarkCircleOutline,
+  IoCloseCircleOutline,
   IoDiamondOutline,
   IoEyeOutline,
   IoImageOutline,
@@ -242,7 +243,7 @@ export default function BrowseTemplatesFeature() {
         </div>
 
         <div className="tb-search-wrap">
-          <IoSearchOutline />
+          <IoSearchOutline aria-hidden="true" />
           <input
             type="text"
             aria-label={t("searchPlaceholder")}
@@ -251,6 +252,16 @@ export default function BrowseTemplatesFeature() {
             placeholder={t("searchPlaceholder")}
             className="tb-search-input"
           />
+          {searchQuery && (
+            <button
+              type="button"
+              className="tb-search-clear-btn"
+              onClick={() => setSearchQuery("")}
+              aria-label={lang === "en" ? "Clear search" : "សម្អាតការស្វែងរក"}
+            >
+              <IoCloseCircleOutline aria-hidden="true" />
+            </button>
+          )}
         </div>
       </section>
 

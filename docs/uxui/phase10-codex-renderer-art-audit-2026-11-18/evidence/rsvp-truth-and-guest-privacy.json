@@ -1,0 +1,25 @@
+{
+  "before_commands": [
+    "negative-unit",
+    "negative-guest-privacy-confirmed",
+    "negative-hosted-media"
+  ],
+  "repair_commands": [
+    "repaired-guest-privacy",
+    "hosted-media-repair"
+  ],
+  "tests": [
+    "Phase10GuestRsvp.test.jsx:3 privacy +5 HTTP error/retry cases",
+    "Phase10CodexRegression.test.jsx:demo, child delegate, drafts, empty authored media",
+    "PublicRsvpForm.test.jsx and language tests"
+  ],
+  "actual_live_persistence": "EXTERNAL / NOT_RUN; all service responses here are mocked",
+  "no_premature_success": "Existing PublicRsvpForm confirms only after resolved service response; stale old lifetime is ignored",
+  "renderer_demo": "Explicit nonpersistent notice before and after; canonical children unchanged",
+  "privacy_changes": [
+    "authority-keyed form lifetime",
+    "no denied-token cached receipt",
+    "late old submission cannot change new page URL/cache/receipt"
+  ],
+  "backend_schema_payment_changes": false
+}

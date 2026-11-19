@@ -95,6 +95,10 @@
   z-index: 260;
   text-align: center;
   transition: opacity 0.5s, visibility 0.5s;
+  max-width: calc(100vw - 32px);
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .el-curtain-overlay.opened .el-curtain-btn-box {
@@ -140,6 +144,32 @@
 .el-open-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 30px rgba(212, 175, 55, 0.7);
+}
+
+.el-skip-btn {
+  display: block;
+  margin: 0.75rem auto 0;
+  background: transparent;
+  border: none;
+  color: var(--el-gold-light);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem 1rem;
+  transition: opacity 0.2s;
+  outline-offset: 4px;
+}
+
+.el-skip-btn:hover {
+  opacity: 0.85;
+}
+
+.el-skip-btn:focus-visible {
+  outline: 2px solid var(--el-gold-primary);
+  border-radius: 4px;
 }
 
 /* Luxury Card Stage */
@@ -288,4 +318,30 @@
   font-weight: 700;
   color: var(--el-gold-primary);
   min-width: 65px;
+}
+
+@media (max-width: 360px) {
+  .el-card-stage {
+    padding: 0.75rem;
+  }
+  .el-card-face {
+    padding: 1.75rem 1rem;
+  }
+  .el-open-btn {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.25rem;
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .el-curtain-half,
+  .el-curtain-overlay,
+  .el-flipper-card {
+    transition: none !important;
+    animation: none !important;
+  }
+  .el-wax-badge {
+    animation: none !important;
+  }
 }

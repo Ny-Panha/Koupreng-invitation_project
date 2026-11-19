@@ -1,8 +1,10 @@
+import DemoRsvpNotice from "../../../shared/RSVP/DemoRsvpNotice";
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
-import { useState } from "react";
+import { useId, useState } from "react";
 import { CheckCircle2, Send } from "lucide-react";
 
 export default function DigitalYesRsvpModal({ children }) {
+  const rsvpId = useId();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [attendance, setAttendance] = useState("yes");
@@ -35,19 +37,17 @@ export default function DigitalYesRsvpModal({ children }) {
       {submitted ? (
         <div className="p-5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-center animate-fade-in">
           <CheckCircle2 className="h-9 w-9 text-emerald-400 mx-auto mb-2" />
-          <h5 className="text-sm font-bold text-emerald-300"><InvitationLabel value={"អរគុណសម្រាប់ការឆ្លើយតប!"} /></h5>
-          <p className="text-xs text-emerald-200/80 mt-1">
-            ព័ត៌មានត្រូវបានកត់ត្រាដោយជោគជ័យ។ ជួបគ្នាក្នុងថ្ងៃពិសេស!
-          </p>
+          <DemoRsvpNotice completed />
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
+          <DemoRsvpNotice />
           <div>
-            <label className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ឈ្មោះរបស់អ្នក (Your Name) *"} /></label>
+            <label htmlFor={`${rsvpId}-name`} className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ឈ្មោះរបស់អ្នក (Your Name) *"} /></label>
             <input
               type="text"
               required
-              value={name}
+              id={`${rsvpId}-name`} value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="ឧ. លោក សុខ សុវណ្ណ"
               className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.06] border border-amber-400/30 text-amber-100 placeholder:text-amber-200/30 text-xs focus:outline-none focus:border-amber-400 focus:bg-white/[0.09] transition"
@@ -55,10 +55,10 @@ export default function DigitalYesRsvpModal({ children }) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"លេខទូរស័ព្ទ (Phone Number)"} /></label>
+            <label htmlFor={`${rsvpId}-phone`} className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"លេខទូរស័ព្ទ (Phone Number)"} /></label>
             <input
               type="tel"
-              value={phone}
+              id={`${rsvpId}-phone`} value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="012 345 678"
               className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.06] border border-amber-400/30 text-amber-100 placeholder:text-amber-200/30 text-xs focus:outline-none focus:border-amber-400 focus:bg-white/[0.09] transition"
@@ -91,9 +91,9 @@ export default function DigitalYesRsvpModal({ children }) {
 
           {attendance === "yes" && (
             <div>
-              <label className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ចំនួនអ្នកចូលរួម (Number of guests)"} /></label>
+              <label htmlFor={`${rsvpId}-count`} className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ចំនួនអ្នកចូលរួម (Number of guests)"} /></label>
               <select
-                value={count}
+                id={`${rsvpId}-count`} value={count}
                 onChange={(e) => setCount(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-[#20050d] border border-amber-400/30 text-amber-100 text-xs focus:outline-none focus:border-amber-400 transition cursor-pointer"
               >
@@ -107,10 +107,10 @@ export default function DigitalYesRsvpModal({ children }) {
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ពាក្យជូនពរ (Wishes & Blessing)"} /></label>
+            <label htmlFor={`${rsvpId}-wishes`} className="block text-xs font-semibold text-amber-200/90 mb-1.5"><InvitationLabel value={"ពាក្យជូនពរ (Wishes & Blessing)"} /></label>
             <textarea
               rows={3}
-              value={wishes}
+              id={`${rsvpId}-wishes`} value={wishes}
               onChange={(e) => setWishes(e.target.value)}
               placeholder="សូមជូនពរឱ្យគូស្វាមីភរិយាថ្មី មានសុភមង្គល..."
               className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.06] border border-amber-400/30 text-amber-100 placeholder:text-amber-200/30 text-xs focus:outline-none focus:border-amber-400 focus:bg-white/[0.09] resize-none transition"

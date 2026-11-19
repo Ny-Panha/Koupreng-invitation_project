@@ -1,0 +1,35 @@
+{
+  "baselineTimestamp": "2026-11-18T14:30:00Z",
+  "capturedRoutes": [
+    {
+      "route": "/templates",
+      "viewport": "1440x900",
+      "theme": "light",
+      "lang": "en"
+    },
+    {
+      "route": "/templates",
+      "viewport": "390x844",
+      "theme": "light",
+      "lang": "en"
+    },
+    {
+      "route": "/templates",
+      "viewport": "1440x900",
+      "theme": "dark",
+      "lang": "km"
+    },
+    {
+      "route": "/pricing",
+      "viewport": "1440x900",
+      "theme": "light",
+      "lang": "en"
+    },
+    {
+      "route": "/pricing",
+      "viewport": "390x844",
+      "theme": "dark",
+      "lang": "km"
+    }
+  ]
+}

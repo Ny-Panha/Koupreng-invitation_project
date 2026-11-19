@@ -1,0 +1,219 @@
+{
+  "totalGates": 30,
+  "counts": {
+    "VERIFIED — LOCAL": 24,
+    "PARTIALLY COMPLETE": 6
+  },
+  "criteria": [
+    {
+      "id": "F09.1-01",
+      "req": "Dirty Git/13 local commits preserved",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "git status, git log, git diff",
+      "next": "Phase 10.1 Gemini"
+    },
+    {
+      "id": "F09.1-02",
+      "req": "Route & component graph reconciled",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "batch11RouteInventory.test.jsx (both apps passed)",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-03",
+      "req": "Premium editorial art direction",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Playwright spec test 01; unit tests",
+      "next": "Native Khmer cultural copy reviewer"
+    },
+    {
+      "id": "F09.1-04",
+      "req": "Public catalog truthful against DTOs",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "TemplateGrid.jsx, Phase09Templates.test.jsx",
+      "next": "Catalog Admin"
+    },
+    {
+      "id": "F09.1-05",
+      "req": "Search/filter/sort for Khmer & Latin",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Phase09CodexAuditRegression.test.jsx N09-01, N09-22",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-06",
+      "req": "Clear filters & target hit area",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "C09-001 repair, Playwright spec test 02",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-07",
+      "req": "Card identity and stable keys",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "PublicTemplateCard.jsx, Phase09Templates.test.jsx",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-08",
+      "req": "Free/premium/owned distinguished",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Phase09CodexAuditRegression.test.jsx N09-04, N09-06",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-09",
+      "req": "Detail/demo/preview controls",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "TemplateDemoPage.jsx, Playwright spec test 01",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-10",
+      "req": "Trusted preview protocol preserved",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "previewSecurity.test.jsx (7 passed)",
+      "next": "Security Architect"
+    },
+    {
+      "id": "F09.1-11",
+      "req": "10 dedicated renderer families intact",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "eventTemplateMatrix.test.jsx (97 passed)",
+      "next": "Phase 10.1 Gemini"
+    },
+    {
+      "id": "F09.1-12",
+      "req": "Safe return to catalog & creation",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Phase09CodexAuditRegression.test.jsx N09-17",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-13",
+      "req": "Public pricing uses backend packages",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "PricingFeature.test.jsx (15 passed)",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-14",
+      "req": "USD/KHR formatting & missing amount",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Phase09CodexAuditRegression.test.jsx N09-15",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-15",
+      "req": "Feature comparison complete & accessible",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Playwright spec test 04",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-16",
+      "req": "Pricing-to-package transition safe",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "PricingFeature.jsx, Playwright spec test 04",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-17",
+      "req": "/app/packages role & account states",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "SubscriptionPackagesPage.jsx fixtures verified; live provider sandbox uncertified",
+      "next": "Payment QA"
+    },
+    {
+      "id": "F09.1-18",
+      "req": "Checkout quote & return truthful",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "TemplateCheckoutPage.jsx fixtures verified; live ABA webhook uncertified",
+      "next": "Payment QA"
+    },
+    {
+      "id": "F09.1-19",
+      "req": "Session/role negative cases",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "RequireAuth.test.jsx, Phase08Regression.test.jsx",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-20",
+      "req": "KM/EN copy & typography render",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Phase09Templates.test.jsx test 10; native human linguistic signoff pending",
+      "next": "Native Khmer copy reviewer"
+    },
+    {
+      "id": "F09.1-21",
+      "req": "Contrast & dark theme verified",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Playwright spec test 07 (Axe 0 violations with contrast enabled)",
+      "next": "Accessibility QA"
+    },
+    {
+      "id": "F09.1-22",
+      "req": "Responsive 320-1920 & landscape",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Playwright 6 browser projects passed; physical mobile devices uncertified",
+      "next": "Mobile Hardware QA"
+    },
+    {
+      "id": "F09.1-23",
+      "req": "Reduced motion non-blocking",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Playwright spec test 07 with reducedMotion: reduce",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-24",
+      "req": "Axe WCAG 2.2 AA passes (0 violations)",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Axe 0 violations passed; physical VoiceOver/TalkBack uncertified",
+      "next": "Screen Reader QA"
+    },
+    {
+      "id": "F09.1-25",
+      "req": "Performance & payload measured",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Vite build outputs: user 477.66 kB, admin 285.33 kB; lab only",
+      "next": "Performance QA"
+    },
+    {
+      "id": "F09.1-26",
+      "req": "No unlicensed media or fake urgency",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "P09-006 neutral badge, asset review",
+      "next": "Brand Owner"
+    },
+    {
+      "id": "F09.1-27",
+      "req": "Backend, migrations, security preserved",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Protected path diff zero backend modifications",
+      "next": "Security Architect"
+    },
+    {
+      "id": "F09.1-28",
+      "req": "Full test regressions executed",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Vitest user (744 pass) + admin (202 pass) + Playwright (42 pass)",
+      "next": "QA Lead"
+    },
+    {
+      "id": "F09.1-29",
+      "req": "57 carryover + AUTH + Phase 07 retained",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "57-carryover-updated.json preserved with C08-013 open",
+      "next": "Codex"
+    },
+    {
+      "id": "F09.1-30",
+      "req": "22 reports + evidence + handoff ready",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Complete report package in docs/uxui/phase09-codex-marketplace-audit-2026-11-18",
+      "next": "Phase 10.1 Gemini"
+    }
+  ]
+}

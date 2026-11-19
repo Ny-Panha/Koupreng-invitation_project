@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { normalizeTemplateViewModel } from "../../model/templateModel";
+import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { normalizeDressColors } from "../../experience/config/templateExperienceContent";
 import VelvetCurtainOpening from "./components/VelvetCurtainOpening";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
@@ -50,6 +51,10 @@ export default function EmeraldLuxeLayout({
   // Audio Control
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const mainRef = useRef(null);
+  useEffect(() => {
+    if (opened) mainRef.current?.focus({ preventScroll: true });
+  }, [opened]);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
@@ -64,9 +69,11 @@ export default function EmeraldLuxeLayout({
     }
   };
 
+  const reduced = usePrefersReducedMotion();
   const startCinematic = useCinematicOpening();
-  const handleOpenCurtain = () => {
+  const handleOpenCurtain = (skip = false) => {
     setOpened(true);
+    if (skip || reduced) return;
     const playMusic = () => {
     if (audioRef.current) {
       audioRef.current
@@ -191,7 +198,8 @@ export default function EmeraldLuxeLayout({
       {!isCustomGate && (
         <VelvetCurtainOpening
           opened={opened}
-          onOpenCurtain={handleOpenCurtain}
+          onOpenCurtain={() => handleOpenCurtain(false)}
+          onSkip={() => handleOpenCurtain(true)}
           groom={groom}
           bride={bride}
           content={tpl}
@@ -199,6 +207,7 @@ export default function EmeraldLuxeLayout({
       )}
 
       {/* Top Bar for Back / Replay */}
+      <main ref={mainRef} tabIndex={-1} inert={!opened} aria-hidden={!opened}>
       <div style={{ maxWidth: "600px", margin: "1rem auto 0", padding: "0 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         {showBack && (
           <Link to={backTo} style={{ color: "var(--el-gold-primary)", textDecoration: "none", fontSize: "0.85rem" }}>
@@ -351,6 +360,7 @@ export default function EmeraldLuxeLayout({
           ><InvitationLabel value={"ប្រើគំរូនេះ"} /></Link>
         </div>
       )}
+      </main>
     </div>
   );
 }

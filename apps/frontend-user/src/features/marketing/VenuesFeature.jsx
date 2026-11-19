@@ -1,15 +1,16 @@
 import { useUiCopy } from "@/shared/i18n/useUiCopy";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { ScrollReveal } from "../../shared/ui/ScrollReveal";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import { Search, MapPin, Users, Banknote, X } from "lucide-react";
 import { EmptyState } from "@/shared/ui/vendor";
+import { usePrefersReducedMotion } from "../../shared/hooks/usePrefersReducedMotion";
 
 // Import Background ដូច Homepage
 import heroBg from "../../assets/icons/background.png";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+import "./VenuesFeature.css";
 
 const getVenues = (t) => [
   {
@@ -61,30 +62,38 @@ const VenuesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedVenue, setSelectedVenue] = useState(null);
+  const location = useLocation();
+  const reduced = usePrefersReducedMotion();
+  const selectedVenue = id ? venues.find(venue => String(venue.id) === id) || null : null;
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
-
-  useEffect(() => {
-    setSelectedVenue(id ? venues.find((v) => String(v.id) === String(id)) || null : null);
-  }, [id, venues]);
+  const searchRef = useRef(null);
+  const [failedImages, setFailedImages] = useState({});
+  const media = (venue, detail = false) => <>
+    <img src={venue.image} alt="" className={detail ? "venue-modal-img" : "venue-img"}
+      loading={detail ? "eager" : "lazy"} decoding="async" hidden={failedImages[venue.id]}
+      onError={() => setFailedImages(current => ({ ...current, [venue.id]: true }))} />
+    {failedImages[venue.id] && <span className="venue-photo-fallback">{uiCopy("មិនមានរូបភាព", "Photo unavailable")}</span>}
+    <span className="venue-photo-caption">{uiCopy("រូបភាពសម្រាប់បង្ហាញប៉ុណ្ណោះ", "Illustrative photo · not a verified venue photograph")}</span>
+  </>;
 
   const handleOpenVenue = (venue, event) => {
     triggerRef.current = event.currentTarget;
-    setSelectedVenue(venue);
-    navigate(`/venues/${venue.id}`, { replace: true });
+    navigate(`/venues/${venue.id}`, { state: { venueDirectory: true } });
   };
 
   const handleCloseVenue = useCallback(() => {
-    setSelectedVenue(null);
-    navigate("/venues", { replace: true });
-  }, [navigate]);
+    if (location.state?.venueDirectory) navigate(-1);
+    else navigate("/venues", { replace: true });
+  }, [navigate, location.state]);
 
   useEffect(() => {
     if (!selectedVenue) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const dialog = dialogRef.current;
+    const search = searchRef.current;
+    dialog.showModal();
     const focusable = () => [...dialog.querySelectorAll('button:not([disabled]),a[href],input,select,textarea,[tabindex="0"]')];
     focusable()[0]?.focus();
     const handleKeys = (event) => {
@@ -100,8 +109,10 @@ const VenuesPage = () => {
     document.addEventListener("keydown", handleKeys);
     return () => {
       document.removeEventListener("keydown", handleKeys);
+      dialog.close();
       document.body.style.overflow = previousOverflow;
       if (triggerRef.current?.isConnected) triggerRef.current.focus();
+      else search?.focus({ preventScroll: true });
     };
   }, [selectedVenue, handleCloseVenue]);
 
@@ -112,7 +123,7 @@ const VenuesPage = () => {
   );
 
   return (
-    <div className="venues-page-wrapper">
+    <div className="venues-page-wrapper" lang={lang}>
       {/* Background Section ដូច Homepage */}
       <div className="fixed-bg-overlay">
         <div
@@ -124,7 +135,7 @@ const VenuesPage = () => {
 
       <section className="venues-content" aria-label={lang === "en" ? "Venues" : "ទីតាំង"}>
         <div className="container">
-          <ScrollReveal>
+          <div>
             <div className="header-content">
               <motion.span
                 initial={{ opacity: 0, y: 10 }}
@@ -141,21 +152,28 @@ const VenuesPage = () => {
                 <div className="diamond"></div>
                 <span></span>
               </div>
+              <p className="venue-directory-note">{uiCopy("បញ្ជីទីតាំងសម្រាប់ជាឯកសារយោង។ សូមបញ្ជាក់ព័ត៌មាន និងការកក់ដោយផ្ទាល់ជាមួយទីតាំង។", "An editorial starting point. Confirm capacity, prices and availability directly with each venue. Koupreng does not book venues.")}</p>
+              {id && !venues.some(venue => String(venue.id) === id) && <div className="venue-missing" role="status">
+                <h2>{uiCopy("រកមិនឃើញទីតាំង", "Venue not found")}</h2>
+                <Link to="/venues" replace className="view-detail-btn">{uiCopy("មើលទីតាំង", "Browse venues")}</Link>
+              </div>}
 
               {/* Modern Search Bar */}
               <div className="search-box-wrapper">
                 <div className="search-box">
                   <input
+                    ref={searchRef}
                     type="text"
+                    value={searchTerm}
                     aria-label={t("searchPlaceholder")}
                     placeholder={t("searchPlaceholder") || "ស្វែងរកតាមឈ្មោះ ឬទីតាំង..."}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
-                  <button className="btn-search">{t("searchBtn") || "ស្វែងរក"}</button>
+                  <button type="button" className="btn-search" onClick={() => searchRef.current?.focus()}>{t("searchBtn") || "ស្វែងរក"}</button>
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          </div>
 
           {filteredVenues.length === 0 ? (
             <EmptyState
@@ -167,7 +185,7 @@ const VenuesPage = () => {
                   <button
                     type="button"
                     className="kp-button"
-                    onClick={() => setSearchTerm("")}
+                    onClick={() => { setSearchTerm(""); searchRef.current?.focus(); }}
                   >
                     {lang === "en" ? "Clear search" : "សម្អាតការស្វែងរក"}
                   </button>
@@ -176,43 +194,40 @@ const VenuesPage = () => {
             />
           ) : (
             <div className="venues-grid">
-            {filteredVenues.map((venue, i) => (
-              <ScrollReveal key={venue.id} delay={i * 0.1}>
-                <motion.div whileHover={{ y: -10 }} className="venue-card">
+            {filteredVenues.map((venue) => (
+              <div key={venue.id}>
+                <motion.div whileHover={reduced ? undefined : { y: -4 }} className="venue-card">
                   <div className="venue-image-container">
-                    <img
-                      src={venue.image}
-                      alt={venue.name}
-                      className="venue-img"
-                    />
+                    {media(venue)}
                     <div className="venue-tags">
                       {venue.tags.map((tag) => (
-                        <span key={tag} className="tag">
+                        <span key={tag} className="venue-tag">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <div className="img-overlay"></div>
+                    <div className="venue-img-overlay"></div>
                   </div>
 
                   <div className="venue-info">
-                    <h3 className="venue-name">{venue.name}</h3>
+                    <h2 className="venue-name">{venue.name}</h2>
                     <div className="venue-meta">
                       <p>
-                        <span className="icon">📍</span> {venue.location}
+                        <MapPin size={16} aria-hidden="true" /> {venue.location}
                       </p>
                       <p>
-                        <span className="icon">👥</span> {t("capacity") || "ចំណុះ:"} {venue.capacity}
+                        <Users size={16} aria-hidden="true" /> {t("capacity") || "ចំណុះ:"} {venue.capacity}
                       </p>
                       <p>
-                        <span className="icon">💰</span> {t("priceRangeText") || "កម្រិតតម្លៃ:"}{" "}
-                        <span className="gold-text-bold">
+                        <Banknote size={16} aria-hidden="true" /> {t("priceRangeText") || "កម្រិតតម្លៃ:"}{" "}
+                        <span className="venue-gold-text">
                           {venue.priceRange}
                         </span>
                       </p>
                     </div>
                     <button
                       type="button"
+                      aria-haspopup="dialog"
                       onClick={(event) => handleOpenVenue(venue, event)}
                       className="view-detail-btn"
                       style={{ width: "100%", cursor: "pointer" }}
@@ -221,7 +236,7 @@ const VenuesPage = () => {
                     </button>
                   </div>
                 </motion.div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
           )}
@@ -230,15 +245,12 @@ const VenuesPage = () => {
         {/* Venue Detail Modal */}
         {typeof document !== "undefined" &&
           createPortal(
-            <AnimatePresence>
-              {selectedVenue && (
-                <div className="venue-modal-backdrop" onClick={handleCloseVenue}>
+              selectedVenue && (
+                <dialog ref={dialogRef} className="venue-modal-backdrop" aria-modal="true" aria-labelledby="public-venue-title" lang={lang}
+                  onCancel={event => { event.preventDefault(); handleCloseVenue(); }}
+                  onClick={event => { if (event.target === event.currentTarget) handleCloseVenue(); }}>
               <motion.div
-                ref={dialogRef}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="public-venue-title"
-                initial={{ opacity: 0, scale: 0.94, y: 20 }}
+                initial={reduced ? false : { opacity: 0, scale: 0.98, y: 8 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.94, y: 20 }}
                 transition={{ duration: 0.22 }}
@@ -251,17 +263,13 @@ const VenuesPage = () => {
                   onClick={handleCloseVenue}
                   aria-label={uiCopy("បិទព័ត៌មានទីតាំង", "Close venue details")}
                 >
-                  ✕
+                  <X size={18} aria-hidden="true" />
                 </button>
                 <div className="venue-modal-image-wrapper">
-                  <img
-                    src={selectedVenue.image}
-                    alt={selectedVenue.name}
-                    className="venue-modal-img"
-                  />
+                  {media(selectedVenue, true)}
                   <div className="venue-modal-tags">
                     {selectedVenue.tags.map((tag) => (
-                      <span key={tag} className="tag">
+                      <span key={tag} className="venue-tag">
                         {tag}
                       </span>
                     ))}
@@ -272,30 +280,30 @@ const VenuesPage = () => {
                   <h2 id="public-venue-title" className="venue-modal-title">{selectedVenue.name}</h2>
                   <div className="venue-modal-meta-grid">
                     <div className="venue-modal-meta-item">
-                      <span className="meta-icon">📍</span>
+                      <MapPin size={22} aria-hidden="true" />
                       <div>
                         <small>{uiCopy("ទីតាំង", "Location")}</small>
                         <strong>{selectedVenue.location}</strong>
                       </div>
                     </div>
                     <div className="venue-modal-meta-item">
-                      <span className="meta-icon">👥</span>
+                      <Users size={22} aria-hidden="true" />
                       <div>
                         <small>{uiCopy("ចំណុះ", "Capacity")}</small>
                         <strong>{selectedVenue.capacity}</strong>
                       </div>
                     </div>
                     <div className="venue-modal-meta-item">
-                      <span className="meta-icon">💰</span>
+                      <Banknote size={22} aria-hidden="true" />
                       <div>
                         <small>{uiCopy("តម្លៃ", "Price range")}</small>
-                        <strong className="gold-text-bold">{selectedVenue.priceRange}</strong>
+                        <strong className="venue-gold-text">{selectedVenue.priceRange}</strong>
                       </div>
                     </div>
                   </div>
                   <div className="venue-modal-actions">
-                    <Link to="/contact" className="venue-modal-contact-btn" onClick={handleCloseVenue}>
-                      {uiCopy("ទំនាក់ទំនងសាកសួរ", "Inquire about venue")}
+                    <Link to="/contact" className="venue-modal-contact-btn">
+                      {uiCopy("ទំនាក់ទំនង", "Contact Koupreng")}
                     </Link>
                     <button type="button" className="venue-modal-secondary-btn" onClick={handleCloseVenue}>
                       {uiCopy("បិទ", "Close")}
@@ -303,347 +311,11 @@ const VenuesPage = () => {
                   </div>
                 </div>
               </motion.div>
-            </div>
-          )}
-        </AnimatePresence>,
+            </dialog>
+          ),
         document.body
       )}
       </section>
-
-      <style>{`
-        .venues-page-wrapper {
-          min-height: 100vh;
-          background-color: #fffcf7;
-          font-family: 'Kantumruy Pro', sans-serif;
-          position: relative;
-        }
-        .venues-page-wrapper :is(button,input,a):focus-visible { outline: 3px solid #7D6443; outline-offset: 4px; }
-
-        /* Fixed Background Style ដូច Homepage */
-        .fixed-bg-overlay {
-          position: fixed;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
-        }
-        .bg-image {
-          width: 100%;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-        }
-        .bg-gradient-cover {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, rgba(252, 248, 242, 0.4) 0%, rgba(252, 248, 242, 1) 1000%);
-        }
-
-        .venues-content {
-          position: relative;
-          z-index: 10;
-          padding: 160px 20px 100px;
-        }
-
-        .container {
-          max-width: 1300px;
-          margin: 0 auto;
-        }
-        
-        .header-content { text-align: center; margin-bottom: 80px; }
-        
-        .sub-title { 
-          font-size: 11px; 
-          font-weight: 800; 
-          color: #745217; 
-          letter-spacing: 4px; 
-          display: block;
-          margin-bottom: 10px;
-        }
-
-        .main-title { 
-          font-family: 'Moul', serif; 
-          font-size: clamp(28px, 5vw, 45px); 
-          color: #222; 
-          line-height: 1.6;
-        }
-
-        .gold-text { color: #B0926A; margin-left: 15px; }
-
-        .divider-modern { 
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-          gap: 20px; 
-          margin: 25px 0; 
-        }
-        .divider-modern span { width: 80px; height: 1px; background: linear-gradient(to right, transparent, #B0926A, transparent); }
-        .diamond { width: 10px; height: 10px; background: #B0926A; transform: rotate(45deg); box-shadow: 0 0 10px rgba(176,146,106,0.5); }
-
-        /* Search Box ឱ្យស៊ីជាមួយ Modern Theme */
-        .search-box-wrapper { display: flex; justify-content: center; margin-top: 40px; }
-        .search-box { 
-          width: 100%;
-          max-width: 550px; 
-          display: flex; 
-          gap: 5px; 
-          background: white; 
-          padding: 6px; 
-          border-radius: 20px; 
-          box-shadow: 0 15px 35px rgba(176,146,106,0.1); 
-          border: 1px solid white;
-        }
-        .search-box input { 
-          flex: 1; border: none; padding: 12px 20px; outline: none; 
-          font-family: 'Kantumruy Pro'; font-size: 14px; background: transparent; color: #444;
-        }
-        .btn-search { 
-          background: #1a1a1a; color: white; border: none; padding: 10px 35px; 
-          border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s;
-        }
-        .btn-search:hover { background: #B0926A; transform: scale(1.02); }
-
-        /* Venue Grid Style */
-        .venues-grid { 
-          display: grid; 
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-          gap: 40px; 
-        }
-        
-        .venue-card { 
-          background: rgba(255, 255, 255, 0.9); 
-          backdrop-filter: blur(10px);
-          border-radius: 35px; 
-          overflow: hidden; 
-          border: 1px solid white;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-          transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .venue-image-container { 
-          height: 260px; 
-          position: relative; 
-          overflow: hidden; 
-        }
-        .venue-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: 1s;
-        }
-        .venue-card:hover .venue-img { transform: scale(1.1); }
-
-        .img-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
-        }
-
-        .venue-tags { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; z-index: 5; }
-        .tag { 
-          background: white; 
-          color: #745217; 
-          padding: 6px 15px; 
-          border-radius: 50px; 
-          font-size: 11px; 
-          font-weight: 800; 
-          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-          text-transform: uppercase;
-        }
-
-        .venue-info { padding: 30px; text-align: center; }
-        .venue-name { 
-          font-family: 'Moul'; 
-          font-size: 18px; 
-          color: #222; 
-          margin-bottom: 20px; 
-          line-height: 1.6; 
-        }
-        
-        .venue-meta { margin-bottom: 25px; }
-        .venue-meta p { 
-          font-size: 14px; 
-          color: #475569; 
-          margin-bottom: 10px; 
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-        }
-        .gold-text-bold { color: #8c6527; font-weight: 800; }
-        
-        .view-detail-btn { 
-          display: block; 
-          padding: 15px; 
-          background: #f8f8f8;
-          color: #333; 
-          text-decoration: none; 
-          border-radius: 18px; 
-          font-size: 13px; 
-          font-weight: 800; 
-          transition: 0.3s;
-          border: 1px solid #eee;
-        }
-        .view-detail-btn:hover { 
-          background: #1a1a1a; 
-          color: white; 
-          border-color: #1a1a1a;
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        @media (max-width: 768px) {
-          .venues-grid { grid-template-columns: 1fr; }
-          .venues-content { padding-top: 120px; }
-          .main-title { font-size: 24px; }
-        }
-
-        /* Venue Modal Styles */
-        .venue-modal-backdrop {
-          position: fixed;
-          inset: 0;
-          z-index: 4000;
-          background: rgba(15, 12, 9, 0.7);
-          backdrop-filter: blur(8px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-        }
-        .venue-modal-card {
-          position: relative;
-          background: #fff;
-          border-radius: 28px;
-          max-width: 580px;
-          width: 100%;
-          max-height: min(90vh, 90dvh);
-          margin: auto;
-          overflow-y: auto;
-          box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-          border: 1px solid rgba(176, 146, 106, 0.3);
-        }
-        .venue-modal-close {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          z-index: 10;
-          width: 44px;
-          height: 44px;
-          min-width: 44px;
-          min-height: 44px;
-          border-radius: 50%;
-          background: rgba(0, 0, 0, 0.7);
-          color: #fff;
-          border: 2px solid rgba(255, 255, 255, 0.25);
-          font-size: 18px;
-          font-weight: 700;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: 0.2s;
-        }
-        .venue-modal-close:hover {
-          background: rgba(0, 0, 0, 0.9);
-          transform: scale(1.08);
-        }
-        .venue-modal-image-wrapper {
-          position: relative;
-          height: 260px;
-          width: 100%;
-          overflow: hidden;
-          border-radius: 28px 28px 0 0;
-        }
-        .venue-modal-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .venue-modal-tags {
-          position: absolute;
-          bottom: 14px;
-          left: 18px;
-          display: flex;
-          gap: 8px;
-        }
-        .venue-modal-body {
-          padding: 28px;
-        }
-        .venue-modal-kicker {
-          font-size: 11px;
-          font-weight: 800;
-          color: #745217;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-        .venue-modal-title {
-          font-family: 'Moul', serif;
-          font-size: 20px;
-          color: #1a1a1a;
-          margin: 8px 0 20px;
-          line-height: 1.5;
-        }
-        .venue-modal-meta-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-          background: #faf7f2;
-          padding: 16px;
-          border-radius: 18px;
-          margin-bottom: 24px;
-          border: 1px solid rgba(176, 146, 106, 0.15);
-        }
-        .venue-modal-meta-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-        .venue-modal-meta-item .meta-icon {
-          font-size: 22px;
-        }
-        .venue-modal-meta-item small {
-          display: block;
-          font-size: 11px;
-          color: #4b5563;
-        }
-        .venue-modal-meta-item strong {
-          font-size: 14px;
-          color: #222;
-        }
-        .venue-modal-actions {
-          display: flex;
-          gap: 12px;
-        }
-        .venue-modal-contact-btn {
-          flex: 1;
-          text-align: center;
-          padding: 14px 20px;
-          background: linear-gradient(135deg, #B0926A 0%, #7D6443 100%);
-          color: #fff;
-          text-decoration: none;
-          border-radius: 16px;
-          font-weight: 700;
-          font-size: 14px;
-          box-shadow: 0 4px 15px rgba(176, 146, 106, 0.3);
-          transition: 0.2s;
-        }
-        .venue-modal-contact-btn:hover {
-          opacity: 0.92;
-          transform: translateY(-1px);
-        }
-        .venue-modal-secondary-btn {
-          padding: 14px 20px;
-          background: #f1ede6;
-          color: #555;
-          border: none;
-          border-radius: 16px;
-          font-weight: 700;
-          font-size: 14px;
-          cursor: pointer;
-          transition: 0.2s;
-        }
-        .venue-modal-secondary-btn:hover {
-          background: #e5dfd5;
-        }
-      `}</style>
     </div>
   );
 };

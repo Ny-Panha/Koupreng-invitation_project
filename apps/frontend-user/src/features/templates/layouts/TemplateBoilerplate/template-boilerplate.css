@@ -207,6 +207,52 @@
   border-color: var(--tpl-primary);
 }
 
+.tpl-btn-skip {
+  background: transparent;
+  border: none;
+  font-family: var(--tpl-font-khmer);
+  transition: color 0.2s ease, opacity 0.2s ease;
+  outline-offset: 4px;
+}
+
+.tpl-btn-skip:focus-visible {
+  outline: 2px solid var(--tpl-primary);
+  border-radius: 4px;
+}
+
+.tpl-audio-error-banner {
+  position: fixed;
+  bottom: 4.5rem;
+  right: 1.25rem;
+  max-width: 280px;
+  background: rgba(13, 15, 18, 0.95);
+  border: 1px solid var(--tpl-border);
+  color: var(--tpl-secondary);
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 50;
+  line-height: 1.5;
+}
+
+.tpl-nav-bar {
+  border-bottom: 1px solid var(--tpl-border-subtle);
+  background: rgba(13, 15, 18, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 360px) {
+  .tpl-card {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  .tpl-btn-primary {
+    font-size: 0.85rem;
+    padding: 0.65rem 1rem;
+  }
+}
+
 /* Floating Audio Button */
 .tpl-music-toggle {
   position: fixed;

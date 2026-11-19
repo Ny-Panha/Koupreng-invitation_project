@@ -238,6 +238,15 @@
   outline-offset: 2px;
 }
 
+/* Account entry must remain legible in both canonical management themes. */
+.dash-wrapper .host-profile-pill {
+  background: var(--ui-theme-surface);
+  color: var(--ui-theme-ink);
+  border-color: var(--ui-theme-control-border);
+}
+.dash-wrapper .host-profile-pill:hover,
+.dash-wrapper .host-profile-pill.open { background: var(--ui-theme-raised); }
+
 .host-profile-avatar {
   width: 36px;
   height: 36px;

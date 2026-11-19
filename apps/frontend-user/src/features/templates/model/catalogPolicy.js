@@ -32,8 +32,9 @@ export function requiresTemplateAccess(template) {
   return Boolean(template?.premium || template?.isPremium || template?.checkoutEligible || Number(template?.price) > 0);
 }
 
+// CODEX-P09: Include bilingual name fields (nameKm, nameEn) so cross-language queries match seamlessly
 export function matchesTemplateSearch(template, query) {
-  const text = [template.name, template.title, template.code, template.slug, template.style,
+  const text = [template.name, template.nameKm, template.nameEn, template.title, template.code, template.slug, template.style,
     template.category, template.description, template.descriptionEn, template.descriptionKm,
     template.openingStyle, template.presetId].filter(Boolean).join(" ").toLocaleLowerCase();
   return !query.trim() || text.includes(query.trim().toLocaleLowerCase());

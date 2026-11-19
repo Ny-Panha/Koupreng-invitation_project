@@ -1,0 +1,18 @@
+{
+  "dedicatedFamilies": [
+    "silk-heritage",
+    "royal-garden-cinematic",
+    "khmer-floral-gold",
+    "khmer-celestial",
+    "the-digital-yes-wedding",
+    "emerald-canva-luxe-wedding",
+    "withjoy-modern-portal",
+    "bliss-editorial-wedding",
+    "cover-khmer-golden-wedding",
+    "event-essential"
+  ],
+  "aliasesCount": 38,
+  "sharedIdsCount": 2,
+  "fallbackLayout": "TemplateBoilerplateLayout",
+  "resolutionPrecedence": "code / slug > numeric backend ID > fallback"
+}

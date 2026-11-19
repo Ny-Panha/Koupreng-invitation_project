@@ -1,4 +1,5 @@
-import { useState } from "react";
+import DemoRsvpNotice from "./DemoRsvpNotice";
+import { useId, useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 
 /**
@@ -25,6 +26,7 @@ export default function RsvpContainer({
     thankYouDesc: "ការឆ្លើយតបរបស់អ្នកត្រូវបានកត់ត្រាដោយជោគជ័យ។",
   },
 }) {
+  const rsvpId = useId();
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -55,12 +57,7 @@ export default function RsvpContainer({
       {submitted ? (
         <div className="rsvp-submitted-card" style={{ textAlign: "center", padding: "32px 20px" }}>
           <CheckCircle2 size={48} color="#22c55e" style={{ margin: "0 auto 12px" }} />
-          <h3 style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "8px" }}>
-            {labels.thankYou}
-          </h3>
-          <p style={{ fontSize: "0.95rem", opacity: 0.8, marginBottom: "16px" }}>
-            {labels.thankYouDesc}
-          </p>
+          <DemoRsvpNotice completed />
           <button
             type="button"
             onClick={() => setSubmitted(false)}
@@ -78,14 +75,15 @@ export default function RsvpContainer({
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="rsvp-form-grid" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+          <DemoRsvpNotice />
           <div>
-            <label style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
+            <label htmlFor={`${rsvpId}-name`} style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
               ឈ្មោះ / Name *
             </label>
             <input
               type="text"
               required
-              value={form.name}
+              id={`${rsvpId}-name`} value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               placeholder={labels.namePlaceholder}
               style={{
@@ -102,12 +100,12 @@ export default function RsvpContainer({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
+            <label htmlFor={`${rsvpId}-phone`} style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
               លេខទូរស័ព្ទ / Phone
             </label>
             <input
               type="tel"
-              value={form.phone}
+              id={`${rsvpId}-phone`} value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
               placeholder={labels.phonePlaceholder}
               style={{
@@ -125,11 +123,11 @@ export default function RsvpContainer({
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
+              <label htmlFor={`${rsvpId}-attending`} style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
                 ការចូលរួម / Attendance
               </label>
               <select
-                value={form.attending}
+                id={`${rsvpId}-attending`} value={form.attending}
                 onChange={(e) => setForm({ ...form, attending: e.target.value })}
                 style={{
                   width: "100%",
@@ -148,11 +146,11 @@ export default function RsvpContainer({
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
+              <label htmlFor={`${rsvpId}-guestCount`} style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
                 ចំនួនភ្ញៀវ / Guests
               </label>
               <select
-                value={form.guestCount}
+                id={`${rsvpId}-guestCount`} value={form.guestCount}
                 onChange={(e) => setForm({ ...form, guestCount: Number(e.target.value) })}
                 style={{
                   width: "100%",
@@ -175,12 +173,12 @@ export default function RsvpContainer({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
+            <label htmlFor={`${rsvpId}-message`} style={{ display: "block", fontSize: "0.85rem", marginBottom: "4px", opacity: 0.9 }}>
               សារជូនពរ / Wishes
             </label>
             <textarea
               rows={3}
-              value={form.message}
+              id={`${rsvpId}-message`} value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               placeholder={labels.wishes}
               style={{

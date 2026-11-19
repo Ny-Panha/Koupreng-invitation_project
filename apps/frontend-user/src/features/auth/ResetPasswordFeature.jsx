@@ -1,17 +1,30 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { KeyRound, CheckCircle2, ArrowRight, Eye, EyeOff } from "lucide-react";
 import authService from "./api/authApi";
 import AuthLayout from "./components/AuthLayout";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import "./AuthPage.css";
+import { safeAuthRedirect } from './safeRedirect';
+import { isAccountPasswordValid } from './accountPasswordPolicy';
+import AccountPasswordGuidance from './components/AccountPasswordGuidance';
+import { useAuthStore } from '../../stores/useAuthStore';
+import { useT } from '../../shared/i18n/useT';
 
 export default function ResetPasswordPage() {
   const tokenId = useId();
   const passwordId = useId();
   const confirmId = useId();
-  const [searchParams] = useSearchParams();
+  const errorId = useId();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [tokenFromLink, setTokenFromLink] = useState(() => Boolean(searchParams.get('token')));
   const [token, setToken] = useState(searchParams.get("token") || "");
+  useEffect(() => {
+    if (!searchParams.has('token')) return;
+    const clean = new URLSearchParams(searchParams);
+    clean.delete('token');
+    setSearchParams(clean, { replace: true });
+  }, [searchParams, setSearchParams]);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,23 +33,30 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
+  const active = useRef(false);
+  useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
 
   const lang = useLanguageStore((state) => state.lang);
+  const { auth } = useT();
+  const isKm = lang === "km";
   const copy = (km, en) => (lang === "en" ? en : km);
+  const nextTarget = safeAuthRedirect(searchParams.get("next"));
 
   const mismatch = Boolean(confirm) && password !== confirm;
+  const passwordValid = isAccountPasswordValid(password);
 
   const submit = async (event) => {
     event.preventDefault();
+    if (loading || success) return;
     setError("");
     setServerMessage("");
 
-    if (!token.trim()) {
+    if (!token.trim() || token.length > 255) {
       setError(copy("សូមបញ្ចូល Reset Token ពីអ៊ីមែលរបស់អ្នក", "Reset token is required"));
       return;
     }
-    if (password.length < 8) {
-      setError(copy("លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ", "Password must be at least 8 characters"));
+    if (!passwordValid || !confirm) {
+      setError(auth('passwordRequirementsError'));
       return;
     }
     if (mismatch) {
@@ -45,8 +65,10 @@ export default function ResetPasswordPage() {
     }
 
     setLoading(true);
+    const sessionUserId = useAuthStore.getState().user?.id;
     try {
       const response = await authService.resetPassword(token.trim(), password);
+      if (!active.current) return;
       setServerMessage(
         response?.message ||
           copy("បានកំណត់លេខសម្ងាត់ថ្មីដោយជោគជ័យ។", "Password reset successfully.")
@@ -54,12 +76,23 @@ export default function ResetPasswordPage() {
       setSuccess(true);
       setPassword("");
       setConfirm("");
+      setToken('');
+      if (useAuthStore.getState().user?.id === sessionUserId) useAuthStore.getState().invalidateSession(true);
     } catch (err) {
-      setError(err.message || copy("មិនអាចកំណត់លេខសម្ងាត់បានទេ។ សូមពិនិត្យលេខកូដ Token ម្តងទៀត។", "Could not reset password. Please verify the reset token."));
+      if (!active.current) return;
+      setError(
+        err.message ||
+          copy(
+            "មិនអាចកំណត់លេខសម្ងាត់បានទេ។ សូមពិនិត្យលេខកូដ Token ម្តងទៀត។",
+            "Could not reset password. Please verify the reset token."
+          )
+      );
     } finally {
-      setLoading(false);
+      if (active.current) setLoading(false);
     }
   };
+
+  const loginUrl = nextTarget ? `/login?next=${encodeURIComponent(nextTarget)}` : "/login";
 
   return (
     <AuthLayout>
@@ -79,28 +112,36 @@ export default function ResetPasswordPage() {
             </div>
 
             {error && (
-              <p className="auth-error" role="alert">
+              <p id={errorId} className="auth-error" role="alert">
                 {error}
               </p>
             )}
+            {tokenFromLink && <button type="button" className="auth-home-link" onClick={() => { setToken(''); setTokenFromLink(false); setError(''); }} disabled={loading}>
+              {copy('លេខកូដសម្ងាត់ (Reset Token)', 'Enter another reset token')}
+            </button>}
 
-            <form onSubmit={submit} className="auth-form">
-              <div className="auth-field">
+            <form onSubmit={submit} className="auth-form" aria-busy={loading}>
+              {!tokenFromLink && <div className="auth-field">
                 <label htmlFor={tokenId} className="auth-label">
                   {copy("លេខកូដសម្ងាត់ (Reset Token)", "Reset token")}
                 </label>
                 <div className="auth-input-wrap">
                   <input
                     id={tokenId}
-                    type="text"
+                    type="password"
                     value={token}
                     onChange={(event) => setToken(event.target.value)}
                     placeholder={copy("បិទភ្ជាប់លេខកូដពីអ៊ីមែល", "Paste reset token from email")}
                     required
                     className="auth-input"
+                    autoComplete="off"
+                    autoCapitalize="none"
+                    spellCheck={false}
+                    maxLength={255}
+                    aria-describedby={error ? errorId : undefined}
                   />
                 </div>
-              </div>
+              </div>}
 
               <div className="auth-field">
                 <label htmlFor={passwordId} className="auth-label">
@@ -115,22 +156,32 @@ export default function ResetPasswordPage() {
                     placeholder={copy("យ៉ាងតិច ៨ តួអក្សរ", "At least 8 characters")}
                     required
                     minLength={8}
+                    maxLength={100}
                     autoComplete="new-password"
                     aria-describedby="reset-password-hint"
+                    aria-invalid={Boolean(password) && !passwordValid}
                     className="auth-input"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
+                    onMouseDown={(e) => e.preventDefault()}
                     className="auth-eye-btn"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword
+                        ? isKm
+                          ? "លាក់ពាក្យសម្ងាត់"
+                          : "Hide password"
+                        : isKm
+                        ? "បង្ហាញពាក្យសម្ងាត់"
+                        : "Show password"
+                    }
+                    aria-pressed={showPassword}
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                   </button>
                 </div>
-                <p id="reset-password-hint" className="auth-hint">
-                  {copy("លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "Password must be at least 8 characters long.")}
-                </p>
+                <AccountPasswordGuidance id="reset-password-hint" value={password} />
               </div>
 
               <div className="auth-field">
@@ -147,18 +198,30 @@ export default function ResetPasswordPage() {
                     required
                     autoComplete="new-password"
                     className={`auth-input${mismatch ? " error" : ""}`}
+                    aria-invalid={mismatch}
+                    aria-describedby={mismatch ? `${confirmId}-mismatch` : undefined}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirm((prev) => !prev)}
+                    onMouseDown={(e) => e.preventDefault()}
                     className="auth-eye-btn"
-                    aria-label={showConfirm ? "Hide password" : "Show password"}
+                    aria-label={
+                      showConfirm
+                        ? isKm
+                          ? "លាក់ពាក្យសម្ងាត់"
+                          : "Hide password"
+                        : isKm
+                        ? "បង្ហាញពាក្យសម្ងាត់"
+                        : "Show password"
+                    }
+                    aria-pressed={showConfirm}
                   >
-                    {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showConfirm ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                   </button>
                 </div>
                 {mismatch && (
-                  <p className="auth-error-msg" role="status">
+                  <p id={`${confirmId}-mismatch`} className="auth-error-msg" role="status">
                     {copy("លេខសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ", "Passwords do not match")}
                   </p>
                 )}
@@ -167,7 +230,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 className="auth-submit"
-                disabled={loading || Boolean(mismatch) || !token.trim() || password.length < 8}
+                disabled={loading || Boolean(mismatch) || !token.trim() || token.length > 255 || !passwordValid || !confirm}
               >
                 <KeyRound size={16} aria-hidden="true" />
                 <span>
@@ -178,29 +241,29 @@ export default function ResetPasswordPage() {
               </button>
             </form>
 
-            <div className="auth-back" style={{ marginTop: "20px" }}>
-              <Link to="/login" className="auth-home-link">
+            <div className="auth-back">
+              <Link to={loginUrl} className="auth-home-link">
                 <span>{copy("← ត្រឡប់ទៅចូលគណនី", "← Back to sign in")}</span>
               </Link>
             </div>
           </>
         ) : (
           <div className="auth-success" role="status">
-            <div className="auth-success-icon" style={{ width: "64px", height: "64px", background: "rgba(46, 67, 58, 0.1)" }}>
-              <CheckCircle2 size={36} color="#2E433A" aria-hidden="true" />
+            <div className="auth-success-icon">
+              <CheckCircle2 size={36} aria-hidden="true" />
             </div>
 
-            <div style={{ margin: "16px 0 20px" }}>
-              <h2 style={{ fontSize: "20px", fontWeight: "700", color: "#2E433A", marginBottom: "8px" }}>
+            <div className="auth-success-content">
+              <h2 className="auth-success-title">
                 {copy("បានប្តូរលេខសម្ងាត់ដោយជោគជ័យ", "Password updated successfully")}
               </h2>
-              <p style={{ fontSize: "14px", color: "#695D50", lineHeight: "1.7", maxWidth: "360px", margin: "0 auto" }}>
+              <p className="auth-success-desc">
                 {serverMessage}
               </p>
             </div>
 
             <Link
-              to="/login"
+              to={loginUrl}
               className="auth-submit"
               style={{ textDecoration: "none" }}
             >

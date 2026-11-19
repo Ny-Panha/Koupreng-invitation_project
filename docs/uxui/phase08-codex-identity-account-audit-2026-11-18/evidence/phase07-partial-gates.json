@@ -1,0 +1,196 @@
+[
+  {
+    "id": "F03",
+    "gate": "Premium brand system",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Computed sampled contrast and font loading verified; full native Khmer/weight/device art approval remains external.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "/",
+      "/contact",
+      "/venues"
+    ],
+    "testCommandIds": [
+      "delivery-contrast",
+      "delivery-modes"
+    ],
+    "evidenceArtifacts": [
+      "computed-theme-contrast.json",
+      "asset-rights-ledger.json"
+    ]
+  },
+  {
+    "id": "F07",
+    "gate": "Venue list/detail",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Functional states and image policy fixed/tested; exact venue facts and photo rights need directory/content owner approval.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "/venues",
+      "/venues/:id"
+    ],
+    "testCommandIds": [
+      "delivery-phase07"
+    ],
+    "evidenceArtifacts": [
+      "after-manifest.json",
+      "asset-rights-ledger.json"
+    ]
+  },
+  {
+    "id": "F11",
+    "gate": "Accessibility",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Sampled axe and keyboard/contrast run; physical AT and native zoom cannot be certified here.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "home/contact/venues/detail sampled states"
+    ],
+    "testCommandIds": [
+      "delivery-phase07",
+      "delivery-contrast",
+      "delivery-modes"
+    ],
+    "evidenceArtifacts": [
+      "computed-theme-contrast.json",
+      "mode-edge-results.json",
+      "native-zoom-results.json"
+    ]
+  },
+  {
+    "id": "F12",
+    "gate": "Responsive quality",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "25 viewport/reflow points in each main browser/theme/locale case; physical keyboards, native bars and real zoom remain external.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "home/contact/venues/detail at documented widths"
+    ],
+    "testCommandIds": [
+      "delivery-phase07",
+      "delivery-modes"
+    ],
+    "evidenceArtifacts": [
+      "after-manifest.json",
+      "mode-edge-results.json",
+      "native-zoom-results.json"
+    ]
+  },
+  {
+    "id": "F13",
+    "gate": "Localization",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "EN/KM route/state source and rendered samples verified; native terminology, shaping and pronunciation approval remains external.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "EN/KM marketing routes"
+    ],
+    "testCommandIds": [
+      "delivery-phase07",
+      "delivery-captures"
+    ],
+    "evidenceArtifacts": [
+      "after-manifest.json",
+      "asset-rights-ledger.json"
+    ]
+  },
+  {
+    "id": "F14",
+    "gate": "Performance",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Controlled local before/after assets and repeated routed lab comparison; review triggers and field/device limits remain explicit.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "/",
+      "/contact",
+      "/venues"
+    ],
+    "testCommandIds": [
+      "final-lab-before",
+      "final-lab-after",
+      "delivery-assets"
+    ],
+    "evidenceArtifacts": [
+      "performance-comparison.json",
+      "performance-samples.json",
+      "build-assets.json"
+    ]
+  },
+  {
+    "id": "F15",
+    "gate": "Renderer isolation",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "10/38/2/fallback source/unit contracts; Silk retained-CSS computed comparison and Silk/Emerald paint only. Dynamic published catalog/all guest families remain external/domain-owned.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "/templates/silk-heritage",
+      "/templates/emerald-canva-luxe-wedding",
+      "source registry"
+    ],
+    "testCommandIds": [
+      "delivery-phase07",
+      "delivery-user-unit"
+    ],
+    "evidenceArtifacts": [
+      "renderer-registry.json",
+      "before-manifest.json",
+      "after-manifest.json"
+    ]
+  },
+  {
+    "id": "F16",
+    "gate": "Regression reliability",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Current unit/lint/build and browser commands recorded; Phase02 six known red assertions and default-worker instability stay explicit. No historical result relabeled as current.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "Phase02/04/05/06/07 fixture routes"
+    ],
+    "testCommandIds": [
+      "final-phase02",
+      "delivery-combined",
+      "closure-phase06-recovered",
+      "delivery-phase07",
+      "final-default-workers",
+      "skip-isolated-repeat"
+    ],
+    "evidenceArtifacts": [
+      "test-command-results.json"
+    ]
+  },
+  {
+    "id": "F17",
+    "gate": "Business/security preservation",
+    "status": "PARTIALLY COMPLETE",
+    "evidence": "Protected source paths unchanged; guards/preview/entitlement unit contracts retained. No MySQL/provider/payment/live guest integration certificate.",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "scope": "local source + fictional fixture evidence only",
+    "owner": "Phase07 Codex / named external gate owner",
+    "routes": [
+      "protected auth/checkout/guest/Studio contracts"
+    ],
+    "testCommandIds": [
+      "delivery-user-unit",
+      "final-admin-unit"
+    ],
+    "evidenceArtifacts": [
+      "source-preservation.json"
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "backendAuthorityPreserved": true,
+  "abaPayWayReconciliationUntouched": true,
+  "telegramAlertsUntouched": true,
+  "flywayMigrationsCount": 48,
+  "flywayMigrationsUntouched": true,
+  "clientEntitlementSpoofingBlocked": true,
+  "safeRedirectSanitizationActive": true,
+  "openGateC08013Preserved": true
+}

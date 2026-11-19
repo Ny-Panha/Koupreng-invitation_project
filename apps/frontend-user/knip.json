@@ -2,6 +2,7 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
     "scripts/*.mjs",
+    "public/branding/integration/KouprengLogo.tsx",
     "src/features/templates/components/PublicTemplateDevicePreview.jsx",
     "playwright.*.config.js",
     "tests/visual/preview-concepts/main.jsx",

@@ -122,6 +122,7 @@ describe("registration password guidance", () => {
     ["letters only", "abcdefgh"],
     ["numbers only", "12345678"],
     ["no capital letter", "abcdefg1"],
+    ["uppercase symbol outside the DTO uppercase-letter category", "Ⅰabcdef1"],
     ["blank", "        "],
     ["supplementary letters unsupported by the backend", "𝔄𝔄𝔄𝔄1"],
   ])("does not send a %s password to registration", (_, password) => {

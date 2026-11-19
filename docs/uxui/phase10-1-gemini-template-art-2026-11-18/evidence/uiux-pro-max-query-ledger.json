@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "toolPath": ".agents/skills/ui-ux-pro-max/scripts/search.py",
+  "queries": [
+    {
+      "query": "luxury Cambodian wedding invitation editorial botanical",
+      "flags": "--design-system",
+      "findings": "Soft UI Evolution, Rose/Gold palette (#DB2777, #A16207), editorial typography scale"
+    },
+    {
+      "query": "focus not obscured opening skip gallery lightbox",
+      "flags": "--domain ux",
+      "findings": "WCAG 2.2 AA Focus Not Obscured (Minimum), Skip Links to bypass repetitive animation, Escape key modal dismissal"
+    },
+    {
+      "query": "Khmer typography diacritics long headings",
+      "flags": "--domain typography",
+      "findings": "Line-height 1.6+ for Khmer body, balanced display scaling with font-moul"
+    },
+    {
+      "query": "touch target gallery carousel RSVP",
+      "flags": "--domain ux",
+      "findings": "44x44pt mobile comfort target, 8px min spacing, WCAG 2.5.8 24px web min"
+    },
+    {
+      "query": "card responsive interactions",
+      "flags": "--stack react --json",
+      "findings": "React 19 composition patterns, behavior testing, accessibility hooks"
+    }
+  ]
+}

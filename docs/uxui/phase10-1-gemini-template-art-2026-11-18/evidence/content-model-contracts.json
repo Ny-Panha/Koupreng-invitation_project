@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "coreFields": {
+    "groom": "Khmer groom full name (e.g. ជា វណ្ណដា)",
+    "bride": "Khmer bride full name (e.g. សុខ ស្រីពេជ្រ)",
+    "groomEn": "Latin groom name (optional)",
+    "brideEn": "Latin bride name (optional)",
+    "groomParents": "Full parents blessing string or separate father/mother fields",
+    "brideParents": "Full parents blessing string or separate father/mother fields",
+    "dateText": "Formatted Khmer lunar/solar date string",
+    "targetDate": "ISO 8601 target datetime string for countdown",
+    "venue": {
+      "name": "Hall or venue display name",
+      "address": "Street and city address",
+      "mapLink": "Google Maps URL or embedded maps link"
+    },
+    "schedule": "Array of ceremony items with time, title, optional description and location",
+    "programDays": "Structured multi-day ceremonies array for complex Khmer weddings",
+    "gallery": "Array of photo image URLs or media objects",
+    "gift": "QR code URL and bank account payment metadata",
+    "rsvp": "Host-configured guest RSVP responses with attending count and food/wishes",
+    "enabledSections": "Boolean dictionary toggling countdown, schedule, map, gallery, gift, rsvp, dressCode, story"
+  }
+}

@@ -108,11 +108,13 @@ export const useAuthStore = create((set, get) => ({
     set({ user });
   },
 
-  invalidateSession: () => {
+  invalidateSession: (broadcast = false) => {
+    const userId = get().user?.id;
     sessionGeneration += 1;
     clearStoredAuth();
     localStorage.removeItem("koupreng.host.activeEventId");
     set({ user: null, accessToken: null, isAuthenticated: false, authStatus: "anonymous", sessionError: "" });
+    if (broadcast && userId != null) localStorage.setItem("koupreng.auth.logout", JSON.stringify({ userId, at: Date.now() }));
   },
 
   logout: async () => {

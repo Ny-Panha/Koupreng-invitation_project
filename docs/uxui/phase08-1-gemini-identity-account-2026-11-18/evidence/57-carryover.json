@@ -1,0 +1,48 @@
+{
+  "phase": "08.1",
+  "historicalTotal": 57,
+  "statusCounts": {
+    "CLOSED_VERIFIED": 34,
+    "CLOSED_NOT_APPLICABLE": 2,
+    "REVIEW_REQUIRED": 6,
+    "BLOCKED_EXTERNAL": 16,
+    "DEFERRED_DOMAIN_OWNER": 4
+  },
+  "phase08DirectClosures": [
+    {
+      "id": "AUTH-A11Y-01",
+      "title": "Password visibility & accessible announcements",
+      "previousStatus": "REVIEW REQUIRED",
+      "newStatus": "CLOSED — VERIFIED",
+      "evidence": "Eye toggles with aria-label, aria-pressed, onMouseDown caret retention in LoginFeature, RegisterFeature, ResetPasswordFeature, ProfileFeature, ChangePasswordFeature."
+    },
+    {
+      "id": "AUTH-A11Y-02",
+      "title": "Error alert semantic association via aria-describedby",
+      "previousStatus": "REVIEW REQUIRED",
+      "newStatus": "CLOSED — VERIFIED",
+      "evidence": "LoginFeature.jsx dynamic aria-describedby linking to #login-error-alert and aria-invalid=true."
+    },
+    {
+      "id": "AUTH-PWD-01",
+      "title": "Real-time password criteria checklist & confirmation match",
+      "previousStatus": "REVIEW REQUIRED",
+      "newStatus": "CLOSED — VERIFIED",
+      "evidence": "RegisterFeature.jsx & ChangePasswordFeature.jsx 5-criterion rule checklist and confirmation match."
+    },
+    {
+      "id": "AUTH-LIFE-01",
+      "title": "Phone registration vs email recovery discrepancy",
+      "previousStatus": "REVIEW REQUIRED",
+      "newStatus": "CLOSED — VERIFIED",
+      "evidence": "ForgotPasswordFeature.jsx .auth-recovery-hint card with instructions and Telegram support link."
+    },
+    {
+      "id": "AUTH-GUARD-01",
+      "title": "Session verification error recovery",
+      "previousStatus": "REVIEW REQUIRED",
+      "newStatus": "CLOSED — VERIFIED",
+      "evidence": "RequireAuth.jsx accessible error card with ShieldAlert, retry button, and login fallback."
+    }
+  ]
+}

@@ -14,6 +14,20 @@
   --kp-radius-header: 22px;
   --kp-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --kp-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --kp-bg: var(--ui-theme-canvas, #fbf6ee);
+  --kp-surface: var(--ui-theme-surface, #ffffff);
+  --kp-ink: var(--ui-theme-ink, #1f2421);
+  --kp-muted: var(--ui-theme-muted, #59615c);
+  --kp-border: var(--ui-theme-border, #e6dccb);
+  --kp-paper: var(--ui-theme-subtle, #f6f1e9);
+  --kp-gold: var(--ui-theme-gold, #c3a26b);
+  --kp-gold-deep: #926c34;
+  --kp-gold-ink: #77572c;
+  --kp-brand: var(--ui-theme-action, #2e433a);
+  --kp-brand-hover: #22332c;
+  --kp-emerald: #2e433a;
+  --kp-emerald-deep: #22332c;
+  --kp-focus: var(--ui-theme-focus, #0f766e);
 }
 
 .kp-marketing-shell :is(a, button, summary, input, select, textarea):focus-visible {
@@ -21,6 +35,7 @@
   outline-offset: 4px;
 }
 
+.kp-marketing-shell .host-skip-link,
 .kp-skip { 
   position: fixed; 
   top: 12px; 
@@ -28,12 +43,17 @@
   z-index: 4000; 
   padding: 12px 24px; 
   color: #FFFFFF; 
-  background: var(--kp-emerald); 
+  background: var(--kp-brand);
   border-radius: var(--kp-radius-pill);
-  transform: translateY(-150%); 
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transform: translateY(-160%);
   transition: transform 0.25s var(--kp-ease);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
-.kp-skip:focus { transform: translateY(0); }
+.kp-marketing-shell .host-skip-link:focus,
+.kp-skip:focus { transform: translateY(0); outline: 3px solid var(--kp-focus); outline-offset: 4px; }
 
 .kp-header { 
   position: fixed; 
@@ -234,7 +254,8 @@
 .kp-footer { 
   max-width: 1280px; 
   margin: auto; 
-  padding: 80px 40px 32px; 
+  /* Let the last credit scroll clear of the fixed 52px support launcher. */
+  padding: 80px 40px calc(104px + env(safe-area-inset-bottom, 0px));
   color: var(--kp-muted); 
   font-size: 14px; 
   line-height: 1.9; 
@@ -276,7 +297,7 @@
   padding: 14px 28px; 
   border: 1px solid var(--kp-brand); 
   border-radius: var(--kp-radius-pill); 
-  background: var(--kp-brand); 
+  background: var(--kp-brand);
   color: #FFFFFF; 
   font: 600 15px/1.6 var(--kp-font); 
   text-decoration: none; 
@@ -445,7 +466,7 @@
   .kp-marketing-shell { --site-header-offset: 74px; }
   .kp-header { padding: 8px 12px; }
   .kp-header-inner { min-height: 52px; padding: 4px 14px; gap: 12px; border-radius: 18px; }
-  .kp-footer { padding: 56px 24px 28px; font-size: 15px; }
+  .kp-footer { padding: 56px 24px calc(104px + env(safe-area-inset-bottom, 0px)); font-size: 15px; }
   .kp-footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .kp-footer-brand { grid-column: 1 / -1; }
 }
@@ -467,3 +488,124 @@
 .kp-header--scrolled { --kp-shell-top: 8px; }
 @media (max-width: 600px) { .kp-header { --kp-shell-top: 8px; --kp-shell-gutter: 12px; } }
 @media (max-width: 359px) { .kp-header { --kp-shell-gutter: 8px; } }
+
+/* Marketing Chrome Dark Mode */
+:root[data-color-mode="dark"] .kp-marketing-shell {
+  --kp-bg: var(--ui-theme-canvas);
+  --kp-surface: var(--ui-theme-surface);
+  --kp-ink: var(--ui-theme-ink);
+  --kp-muted: var(--ui-theme-muted);
+  --kp-border: var(--ui-theme-border);
+  --kp-paper: var(--ui-theme-subtle);
+  --kp-gold: var(--ui-theme-gold);
+  --kp-gold-deep: #ffd18a;
+  --kp-gold-ink: #ffd18a;
+  --kp-brand: var(--ui-theme-action);
+  --kp-brand-hover: #40594a;
+  --kp-emerald: #3d5a4d;
+  --kp-emerald-deep: #2e433a;
+  --kp-focus: var(--ui-theme-focus);
+}
+
+:root[data-color-mode="dark"] .kp-header-inner {
+  background: rgba(23, 32, 25, 0.88);
+  border-color: var(--ui-theme-border);
+  box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-color-mode="dark"] .kp-header--scrolled .kp-header-inner {
+  background: rgba(23, 32, 25, 0.96);
+  border-color: var(--ui-theme-border);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6);
+}
+
+:root[data-color-mode="dark"] .kp-nav-link:hover {
+  color: var(--ui-theme-ink);
+  background: var(--ui-theme-subtle);
+}
+
+:root[data-color-mode="dark"] .kp-nav-link[aria-current] {
+  color: var(--ui-theme-gold);
+  background: var(--ui-theme-action-soft);
+}
+
+:root[data-color-mode="dark"] .kp-language {
+  background: var(--ui-theme-subtle);
+}
+
+:root[data-color-mode="dark"] .kp-language button {
+  color: var(--ui-theme-muted);
+}
+
+:root[data-color-mode="dark"] .kp-language button[aria-pressed="true"] {
+  color: var(--ui-theme-ink);
+  background: var(--ui-theme-raised);
+}
+
+:root[data-color-mode="dark"] .kp-menu-trigger,
+:root[data-color-mode="dark"] .kp-menu-close {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-mobile-dialog {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+}
+
+:root[data-color-mode="dark"] .kp-mobile-inner nav a {
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-mobile-inner nav a:hover {
+  background: var(--ui-theme-subtle);
+}
+
+:root[data-color-mode="dark"] .kp-mobile-inner nav a[aria-current] {
+  background: var(--ui-theme-action-soft);
+  color: var(--ui-theme-gold);
+}
+
+:root[data-color-mode="dark"] .kp-footer {
+  border-top-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-footer-bottom {
+  border-top-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-footer nav p {
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-footer nav a:hover {
+  color: var(--ui-theme-gold);
+}
+
+/* Featured and catalog previews share the marketing shell. Keep the hovered
+   label on a semantic surface rather than the legacy fixed ivory background. */
+.kp-marketing-shell .kp-action-preview:is(:hover, :focus-visible) {
+  background: var(--ui-theme-interactive);
+  color: var(--ui-theme-ink) !important;
+}
+
+:root[data-color-mode="dark"] .kp-support-panel {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-support-panel > div > button {
+  background: var(--ui-theme-subtle);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-support-panel p {
+  color: var(--ui-theme-muted);
+}
+
+:root[data-color-mode="dark"] .kp-support-panel > a {
+  color: var(--ui-theme-ink);
+}

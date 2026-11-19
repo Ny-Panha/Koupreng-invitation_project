@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "strategy": "In-tree adaptation and vendoring with zero external runtime npm bloat",
+  "libraries": [
+    {
+      "name": "shadcn/ui",
+      "usage": "Dialog, DropdownMenu, Avatar, Badge, Button primitives",
+      "location": "src/shared/ui/vendor/shadcn"
+    },
+    {
+      "name": "Untitled UI",
+      "usage": "Pricing cards, empty states, feature matrix layouts",
+      "location": "src/shared/ui/vendor/untitled"
+    },
+    {
+      "name": "Magic UI",
+      "usage": "BorderBeam, BlurFade, AnimatedGradientText",
+      "location": "src/shared/ui/vendor/magicui"
+    },
+    {
+      "name": "Kokonut UI",
+      "usage": "Action toolbar, fluid input groups",
+      "location": "src/shared/ui/vendor/kokonut"
+    },
+    {
+      "name": "React Bits",
+      "usage": "DecryptedText, MagnetLines, SpotlightCard",
+      "location": "src/shared/ui/vendor/reactbits"
+    },
+    {
+      "name": "Animate UI",
+      "usage": "Smooth accordion, micro-interaction transitions",
+      "location": "src/shared/ui/vendor/animateui"
+    },
+    {
+      "name": "Aceternity UI",
+      "usage": "CardSpotlight, TracingBeam, MovingBorder",
+      "location": "src/shared/ui/vendor/aceternity"
+    },
+    {
+      "name": "Badtz UI",
+      "usage": "Luxury envelope flip, ribbon badges",
+      "location": "src/shared/ui/vendor/badtz"
+    },
+    {
+      "name": "Lightswind UI",
+      "usage": "Luminescent gold shimmer, glowing glass pills",
+      "location": "src/shared/ui/vendor/lightswind"
+    },
+    {
+      "name": "Skiper UI",
+      "usage": "Accessible skip opening buttons, bottom navigation sheets",
+      "location": "src/shared/ui/vendor/skiper"
+    }
+  ],
+  "commercialRedistributionCompliance": "All component patterns adapted under MIT or Apache 2.0. No unlicensed SaaS wrappers or copyleft dependencies."
+}

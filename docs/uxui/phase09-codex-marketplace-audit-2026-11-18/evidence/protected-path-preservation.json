@@ -1,0 +1,16 @@
+{
+  "flywayMigrationsCount": 48,
+  "flywayMigrationsStatus": "UNTOUCHED",
+  "backendCodeStatus": "UNTOUCHED",
+  "backendDatabaseStatus": "UNTOUCHED",
+  "securityContractsStatus": "PRESERVED",
+  "openDomainGates": [
+    {
+      "id": "C08-013",
+      "area": "Backend Security / Identity",
+      "issue": "Spring Security BCryptPasswordEncoder 72-byte UTF-8 ceiling rejection on passwords > 72 bytes",
+      "action": "Retained open for backend identity architect; no superficial frontend truncation applied"
+    }
+  ],
+  "rendererRegistryStatus": "PRESERVED (10 dedicated families, 38 aliases, 2 shared IDs, 1 fallback)"
+}

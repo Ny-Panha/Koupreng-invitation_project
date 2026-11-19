@@ -10,7 +10,7 @@ export default function LandingHero({ copy }) {
       <FadeContent className="kp-hero-copy" duration={0.6}>
         <div className="kp-hero-badge" role="text">
           <Sparkles size={14} aria-hidden="true" />
-          <span>{copy("វេទិកាសំបុត្រអញ្ជើញឌីជីថលខ្មែរដំបូងគេ", "Cambodia's premier digital wedding invitation platform")}</span>
+          <span>{copy("សំបុត្រអញ្ជើញមង្គលការឌីជីថល", "Digital wedding invitations, thoughtfully made")}</span>
         </div>
         <p className="kp-hero-category">{copy("សំបុត្រអញ្ជើញមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title">
@@ -40,15 +40,15 @@ export default function LandingHero({ copy }) {
         <div className="kp-hero-highlights" role="list" aria-label={copy("លក្ខណៈពិសេសចម្បង", "Core features")}>
           <div className="kp-hero-highlight-item" role="listitem">
             <span className="kp-hero-highlight-dot" aria-hidden="true" />
-            <span>{copy("ផ្ញើតាម Telegram & Messenger", "Instant Telegram & Messenger sharing")}</span>
+            <span>{copy("ផ្ញើតាម Telegram & Messenger", "Share via Telegram & Messenger")}</span>
           </div>
           <div className="kp-hero-highlight-item" role="listitem">
             <span className="kp-hero-highlight-dot" aria-hidden="true" />
-            <span>{copy("តាមដានចម្លើយ RSVP ងាយស្រួល", "Real-time guest RSVP tracking")}</span>
+            <span>{copy("តាមដានចម្លើយ RSVP ងាយស្រួល", "Track guest RSVP replies")}</span>
           </div>
           <div className="kp-hero-highlight-item" role="listitem">
             <span className="kp-hero-highlight-dot" aria-hidden="true" />
-            <span>{copy("រចនាបទខ្មែរប្រណីត ១០+ គំរូ", "10+ authentic Cambodian designs")}</span>
+            <span>{copy("មើលគំរូសំបុត្រអញ្ជើញ", "Explore invitation designs")}</span>
           </div>
         </div>
       </FadeContent>

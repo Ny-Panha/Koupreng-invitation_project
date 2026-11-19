@@ -1,0 +1,7 @@
+# Silk & Ink visual and component QA
+
+Source `2429b76545b683fad2a0a6f328bee3264875edc3` on `main`, plus preserved dirty Phase07/08 work and Codex overlay. Execution: 18 November 2026, Asia/Bangkok. Overall **PARTIALLY COMPLETE**. NO PUSH / NO COMMIT / NO DEPLOYMENT.
+
+Warm canvas, forest ink, restrained gold, brand/home return, preference controls and conventional form hierarchy were retained. [visual-capture-manifest.json](evidence/visual-capture-manifest.json) pairs24 initial locale/theme scenes and adds24 current API-error scenes; all media is fictional. Profile and password pages retain owner chrome. No renderer artwork, font asset, canonical token sheet or admin stylesheet changed.
+
+[apps/frontend-user/src/features/auth/ChangePasswordFeature.css:1](../../../apps/frontend-user/src/features/auth/ChangePasswordFeature.css#L1) now scopes extracted styles, avoiding HostShell dash-main collisions. [apps/frontend-user/src/features/auth/ProfileFeature.css:1](../../../apps/frontend-user/src/features/auth/ProfileFeature.css#L1) reserves eye-button space and long-name wrapping. C08-012 fixes real dark hint/link/provider error and owner account-pill contrast. See [contrast-before-repair.json](evidence/contrast-before-repair.json) versus [contrast-results.json](evidence/contrast-results.json); all ordinary scans are separate from forced-colors computed-color results. Loaded local font and diacritic appearance are evidence for inspection, not native Khmer approval.

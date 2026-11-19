@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "viewportsTested": [
+    {
+      "width": 320,
+      "height": 640,
+      "device": "iPhone SE / Galaxy Fold",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 360,
+      "height": 740,
+      "device": "Android Compact",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "device": "iPhone 13 / 14 / 15",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "device": "iPad / Tablet Portrait",
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "device": "Desktop Wide",
+      "horizontalOverflow": false
+    }
+  ],
+  "accessibilityMetrics": {
+    "minTouchTarget": "44px height/width on all primary interactives",
+    "focusNotObscured": "Passed — Focus ring visible with 2px gold outline and 2px offset",
+    "colorContrastRatio": "Gold on Dark (#D4AF37 on #18181B) = 8.2:1 (exceeds WCAG AAA 7.0:1)"
+  }
+}

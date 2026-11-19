@@ -94,4 +94,12 @@ describe("FE-001 session restoration", () => {
     expect(mocks.logout).toHaveBeenCalledWith(expect.objectContaining({ headers: { Authorization: `Bearer ${accessToken}` } }));
     expect(store.getState().isAuthenticated).toBe(false);
   });
+  it('broadcasts reset invalidation without issuing a logout for another current identity', async () => {
+    const store = await load();
+    store.getState().login({ user });
+    store.getState().invalidateSession(true);
+    expect(store.getState().isAuthenticated).toBe(false);
+    expect(JSON.parse(localStorage.getItem('koupreng.auth.logout'))).toMatchObject({userId:user.id});
+    expect(mocks.logout).not.toHaveBeenCalled();
+  });
 });

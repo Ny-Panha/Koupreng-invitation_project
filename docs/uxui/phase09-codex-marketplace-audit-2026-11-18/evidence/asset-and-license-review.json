@@ -1,0 +1,25 @@
+{
+  "fonts": [
+    {
+      "name": "Moul",
+      "license": "SIL Open Font License",
+      "purpose": "Khmer ceremonial headline typography"
+    },
+    {
+      "name": "Kantumruy Pro",
+      "license": "SIL Open Font License",
+      "purpose": "Primary Khmer and Latin body text"
+    }
+  ],
+  "icons": [
+    {
+      "library": "lucide-react",
+      "license": "ISC License",
+      "purpose": "UI functional iconography"
+    }
+  ],
+  "templateThumbnails": {
+    "status": "REVIEW REQUIRED for commercial production licensing",
+    "provenance": "Internal development references and atelier presets; no unauthorized third-party stock added in Phase 09"
+  }
+}

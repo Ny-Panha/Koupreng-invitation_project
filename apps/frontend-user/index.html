@@ -2,6 +2,7 @@
 <html lang="km">
   <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/png" sizes="32x32" href="/branding/icons/icon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/branding/icons/icon-16.png" />
     <link rel="shortcut icon" href="/branding/icons/favicon.ico" />
@@ -12,7 +13,7 @@
 
     <!-- Public marketing uses locally licensed fonts; legacy catalogs load per route. -->
     <script>
-      if (["/", "/pricing", "/contact", "/templates"].includes(location.pathname)) {
+      if (["/", "/pricing", "/contact", "/templates", "/venues"].includes(location.pathname)) {
         let marketingLanguage = "km";
         try { marketingLanguage = localStorage.getItem("koupreng.lang") || "km"; } catch (_) {}
         const fontHint = document.createElement("link");

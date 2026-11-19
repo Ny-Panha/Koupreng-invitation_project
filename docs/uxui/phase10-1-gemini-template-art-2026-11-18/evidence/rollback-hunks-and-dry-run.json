@@ -1,0 +1,5 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "selectiveRollbackStrategy": "Phase 10 template changes can be reverted cleanly per layout file without affecting Phase 07, 08, 09 or Phase 06 baseline",
+  "modifiedFilesCount": 12
+}

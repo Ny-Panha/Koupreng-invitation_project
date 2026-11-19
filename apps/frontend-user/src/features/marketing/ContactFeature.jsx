@@ -4,15 +4,15 @@ import { ArrowUpRight, CheckCircle2, Send, LoaderCircle, MessageSquare, LayoutTe
 import { api } from "../../shared/api/httpClient";
 import { unwrap } from "../../shared/api/helpers";
 import { useLanguageStore } from "../../stores/useLanguageStore";
+import { initialContactForm, useContactDraft } from './contactDraft';
 import "./MarketingPages.css";
 
-const initialForm = { name: "", email: "", phone: "", plan: "General inquiry", message: "" };
 const limits = { name: 120, email: 255, phone: 30, plan: 120, message: 5000 };
 
 export default function ContactFeature() {
   const lang = useLanguageStore(state => state.lang);
   const copy = (km, en) => lang === "en" ? en : km;
-  const [formData, setFormData] = useState(initialForm);
+  const [formData, setFormData] = useContactDraft();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [failure, setFailure] = useState(null);
@@ -53,6 +53,7 @@ export default function ContactFeature() {
       const result = unwrap(await api.post("/v1/contact", payload, { skipAuth: true, suppressAuthRedirect: true }));
       if (result?.accepted !== true || result?.delivery !== "SMTP_ACCEPTED") throw new Error("Contact acceptance not acknowledged");
       setSubmitted(true);
+      setFormData(initialContactForm);
     } catch (error) { setFailure(error?.status === 429 ? "rate" : "delivery"); }
     finally { inFlight.current = false; setSubmitting(false); }
   };

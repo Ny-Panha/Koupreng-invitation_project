@@ -1,0 +1,28 @@
+{
+  "standard": "WCAG 2.2 AA",
+  "axeAutomatedAudit": {
+    "routesTested": [
+      "/templates",
+      "/pricing"
+    ],
+    "projectsTested": [
+      "desktop-chromium",
+      "mobile-chromium",
+      "desktop-webkit",
+      "mobile-webkit",
+      "desktop-firefox",
+      "mobile-firefox"
+    ],
+    "violations": []
+  },
+  "manualVerification": {
+    "keyboardNavigation": "Tab, Shift+Tab, Enter, Space verified on search, chips, pills, sort select, clear button, accordion, and table.",
+    "tableSemantics": "Pricing comparison table wrapped in role='region', tabIndex={0}, caption, scoped th headers.",
+    "screenReaderAnnouncements": "Live result count status bar using role='status'.",
+    "focusVisibility": "High-contrast focus rings preserved on all interactive elements in both light and dark themes."
+  },
+  "limitations": [
+    "Physical screen reader verification (VoiceOver on iOS, TalkBack on Android) remains BLOCKED \u2014 EXTERNAL.",
+    "Windows forced-colors probe remains under review."
+  ]
+}

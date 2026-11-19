@@ -1,4 +1,5 @@
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import InvitationLightbox from '../../shared/Gallery/InvitationLightbox';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import { useCinematicOpening } from "../../shared/Openings/cinematicOpeningContext";
 import SaveTheDate from '../../shared/SaveTheDate';
@@ -18,10 +19,10 @@ import {
   Copy,
   RotateCcw,
   ExternalLink,
-  X,
 } from "lucide-react";
 import defaultMusicUrl from "@/assets/music/Instrumental Wedding Music (VioSounds Cover).m4a";
 import { normalizeTemplateViewModel } from "../../model/templateModel";
+import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import FallingPetals from "./components/FallingPetals";
 import WaxSealEnvelope from "./components/WaxSealEnvelope";
 import TemplateOpeningGate from "../../experience/components/sections/TemplateOpeningGate";
@@ -78,13 +79,19 @@ export default function DigitalYesLayout({
 
   // Audio Ref
   const audioRef = useRef(null);
+  const mainRef = useRef(null);
+  const openingTimers = useRef([]);
+  useEffect(() => () => openingTimers.current.forEach(clearTimeout), []);
+  useEffect(() => {
+    if (isFullView) mainRef.current?.focus({ preventScroll: true });
+  }, [isFullView]);
 
   // Gift QR Modal State
   const [showQrModal, setShowQrModal] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // Gallery Lightbox State
-  const [lightboxImg, setLightboxImg] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   // Live Countdown State
 
@@ -127,10 +134,27 @@ export default function DigitalYesLayout({
 
 
 
+  // Reduced motion detection
+  const reduced = usePrefersReducedMotion();
+  useEffect(() => {
+    if (!reduced || !isFlapOpen) return;
+    openingTimers.current.forEach(clearTimeout);
+    setIsCardEmerging(true);
+    setIsFullView(true);
+  }, [reduced, isFlapOpen]);
+
   // Handle Envelope Tap to Open
   const startCinematic = useCinematicOpening();
-  const handleOpenEnvelope = () => {
-    if (isFlapOpen) return;
+  const handleOpenEnvelope = (skip = false) => {
+    if (isFlapOpen && !skip) return;
+
+    if (skip || reduced) {
+      openingTimers.current.forEach(clearTimeout);
+      setIsFlapOpen(true);
+      setIsCardEmerging(true);
+      setIsFullView(true);
+      return;
+    }
 
     setIsFlapOpen(true);
 
@@ -143,17 +167,18 @@ export default function DigitalYesLayout({
     };
     if (!startCinematic(playMusic, 1300)) playMusic();
 
-    setTimeout(() => {
+    openingTimers.current.push(setTimeout(() => {
       setIsCardEmerging(true);
-    }, 450);
+    }, 450));
 
-    setTimeout(() => {
+    openingTimers.current.push(setTimeout(() => {
       setIsFullView(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1300);
+    }, 1300));
   };
 
   const handleReplay = () => {
+    openingTimers.current.forEach(clearTimeout);
     setIsFullView(false);
     setIsCardEmerging(false);
     setIsFlapOpen(false);
@@ -309,13 +334,14 @@ export default function DigitalYesLayout({
           tpl={tpl}
           isFlapOpen={isFlapOpen}
           isCardEmerging={isCardEmerging}
-          onOpenEnvelope={handleOpenEnvelope}
+          onOpenEnvelope={() => handleOpenEnvelope(false)}
+          onSkip={() => handleOpenEnvelope(true)}
         />
       )}
 
       {/* STATE 2: FULL STORY WEDDING INVITATION REEL */}
       {isFullView && (
-        <div className="relative z-20 tdy-card-container pt-16 pb-28 animate-fade-in tdy-font-kantumruy w-full">
+        <main ref={mainRef} tabIndex={-1} className="relative z-20 tdy-card-container pt-16 pb-28 animate-fade-in tdy-font-kantumruy w-full">
           <div className="relative w-full rounded-3xl sm:rounded-[36px] tdy-card-glass border border-amber-400/35 p-6 sm:p-12 text-center space-y-8 sm:space-y-10 shadow-[0_25px_80px_rgba(0,0,0,0.95)]">
             
             {/* Top Emblem & Header */}
@@ -529,9 +555,11 @@ export default function DigitalYesLayout({
                   </h4>
                   <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     {tpl.gallery.map((img, i) => (
-                      <div
+                      <button
+                        type="button"
                         key={i}
-                        onClick={() => setLightboxImg(img.src)}
+                        aria-label={`View photo ${i + 1}`}
+                        onClick={() => setLightboxIndex(i)}
                         className="relative aspect-square rounded-2xl overflow-hidden border border-amber-400/25 shadow-md group cursor-pointer"
                       >
                         <img
@@ -544,7 +572,7 @@ export default function DigitalYesLayout({
                             ពង្រីក
                           </span>
                         </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -624,28 +652,10 @@ export default function DigitalYesLayout({
               <InvitationBranding content={tpl} />
             </div>
           </div>
-        </div>
+        </main>
       )}
 
-      {/* Lightbox Modal */}
-      {lightboxImg && (
-        <div
-          onClick={() => setLightboxImg(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in cursor-zoom-out"
-        >
-          <button
-            onClick={() => setLightboxImg(null)}
-            className="absolute top-5 right-5 h-9 w-9 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition cursor-pointer"
-          >
-            <X className="h-5 w-5" />
-          </button>
-          <img
-            src={lightboxImg}
-            alt="Enlarged moment"
-            className="max-h-[85vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl border border-amber-400/30"
-          />
-        </div>
-      )}
+      <InvitationLightbox images={tpl.gallery} index={lightboxIndex} onIndexChange={setLightboxIndex} onClose={() => setLightboxIndex(null)} />
 
       {/* Gift QR Modal */}
       {showQrModal && (
@@ -711,7 +721,7 @@ export default function DigitalYesLayout({
       )}
 
       {/* Sticky Bottom Actions Bar */}
-      {!preview && useTemplateLink && (
+      {isFullView && !preview && useTemplateLink && (
         <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 p-3 bg-black/85 backdrop-blur-md border-t border-amber-500/25 flex items-center justify-between max-w-2xl w-full px-5">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />

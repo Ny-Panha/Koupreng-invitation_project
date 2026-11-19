@@ -1,0 +1,114 @@
+{
+  "journeys": [
+    {
+      "id": "J01",
+      "name": "Anonymous visitor discovery",
+      "steps": [
+        "Home featured",
+        "/templates",
+        "Filter/search",
+        "Preview",
+        "Back to catalog",
+        "Sign-in intent"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J02",
+      "name": "Authenticated owner free design",
+      "steps": [
+        "Sign in",
+        "/templates",
+        "Free design",
+        "Use design -> /app/events/new?template=..."
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J03",
+      "name": "Authenticated owner premium unowned",
+      "steps": [
+        "Sign in",
+        "/templates",
+        "Premium design",
+        "Preview",
+        "Checkout decision"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J04",
+      "name": "Verified template owner",
+      "steps": [
+        "Sign in",
+        "/templates/browse",
+        "Paid Templates chip",
+        "Purchased status verified"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J05",
+      "name": "Pending/unsettled payment owner",
+      "steps": [
+        "Checkout redirect return",
+        "Status shows pending/review",
+        "No premature paid grant"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J06",
+      "name": "Expired session / unauthorized route",
+      "steps": [
+        "Access /app/packages",
+        "Redirect to login",
+        "Safe destination returned"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J07",
+      "name": "Package comparison & decision",
+      "steps": [
+        "/pricing",
+        "Compare tiers",
+        "Select Standard",
+        "Auth continuation intact"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J08",
+      "name": "Unknown ID / catalog outage recovery",
+      "steps": [
+        "Request unknown slug",
+        "Graceful fallback",
+        "Clear notice without broken UI"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J09",
+      "name": "Mid-search locale and theme switch",
+      "steps": [
+        "Type query",
+        "Switch EN to KM",
+        "Switch light to dark",
+        "State preserved"
+      ],
+      "status": "VERIFIED — LOCAL"
+    },
+    {
+      "id": "J10",
+      "name": "Keyboard & short-landscape mobile shopper",
+      "steps": [
+        "Tab navigation",
+        "Hit targets >= 24px/44px",
+        "Escape close modal",
+        "Reflow safe"
+      ],
+      "status": "VERIFIED — LOCAL"
+    }
+  ]
+}

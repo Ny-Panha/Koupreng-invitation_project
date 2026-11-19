@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "buildTimes": {
+    "userFrontend": "1.58s (3095 modules transformed)",
+    "adminFrontend": "1.02s (2122 modules transformed)"
+  },
+  "bundleChunks": [
+    {
+      "chunk": "TemplateBoilerplateLayout",
+      "sizeKb": 21.19,
+      "gzipKb": 6.4
+    },
+    {
+      "chunk": "DigitalYesLayout",
+      "sizeKb": 36.34,
+      "gzipKb": 9.72
+    },
+    {
+      "chunk": "EmeraldLuxeLayout",
+      "sizeKb": 19.95,
+      "gzipKb": 6.03
+    },
+    {
+      "chunk": "WithJoyPortalLayout",
+      "sizeKb": 21.72,
+      "gzipKb": 5.96
+    },
+    {
+      "chunk": "CanvaKhmerWeddingTemplate",
+      "sizeKb": 25.02,
+      "gzipKb": 7.64
+    },
+    {
+      "chunk": "SilkHeritageLayout",
+      "sizeKb": 24.29,
+      "gzipKb": 7.95
+    },
+    {
+      "chunk": "KhmerCelestialLayout",
+      "sizeKb": 31.88,
+      "gzipKb": 10.25
+    },
+    {
+      "chunk": "KhmerFloralGoldLayout",
+      "sizeKb": 51.63,
+      "gzipKb": 17.57
+    },
+    {
+      "chunk": "RoyalGardenCinematicLayout",
+      "sizeKb": 70.54,
+      "gzipKb": 21.9
+    },
+    {
+      "chunk": "BlissEditorialLayout",
+      "sizeKb": 15.49,
+      "gzipKb": 4.61
+    }
+  ]
+}

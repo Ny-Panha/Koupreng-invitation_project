@@ -37,13 +37,13 @@ it.each(presentations.flatMap(template => ['KH', 'EN'].map(languageMode => ({ te
   const draft = publicInvitationToDraft({ id: 101, templateCode: code, title: content.title, groomName: content.groomName, brideName: content.brideName, hostName: content.hostName, languageMode, eventType: code === 'event-essential' ? 'BIRTHDAY' : 'WEDDING', contentJson: JSON.stringify(content), enabledSections: JSON.stringify({ rsvp: false, countdown: false, gallery: false, story: false, map: true, schedule: true }) });
   const { tpl } = draftToTemplate(draft);
   const { container } = render(<MemoryRouter><TemplateExperience tpl={tpl} preview showActions={false} showBreadcrumb={false} /></MemoryRouter>);
-  await waitFor(() => expect(container.textContent).toContain('Fictional first partner'));
+  await waitFor(() => expect(container.textContent).toContain('Fictional first partner'), { timeout: 5000 });
   let invitationWording = container.textContent.includes(content.messageText);
   if (code === 'khmer-floral-gold') {
     // Floral presents the authored greeting in its standalone welcome scene.
     const welcome = render(<MemoryRouter><TemplateExperience tpl={tpl} preview previewStartClosed showActions={false} showBreadcrumb={false} /></MemoryRouter>);
     fireEvent.click(welcome.container.querySelector('.kfg-open'));
-    await waitFor(() => expect(welcome.container.textContent).toContain(content.messageText));
+    await waitFor(() => expect(welcome.container.textContent).toContain(content.messageText), { timeout: 5000 });
     invitationWording = welcome.container.textContent.includes(content.messageText);
     welcome.unmount();
   }

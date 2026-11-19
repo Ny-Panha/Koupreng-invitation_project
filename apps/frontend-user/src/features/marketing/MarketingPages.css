@@ -7,7 +7,10 @@
 .kp-product-page h3 { font-size: 18px; line-height: 1.7; font-weight: 600; }
 .kp-product-page:lang(en) h1 { line-height: 1.17; letter-spacing: -.025em; font-size: clamp(36px, 4vw, 56px); }
 .kp-product-page:lang(en) h2 { line-height: 1.3; letter-spacing: -.015em; }
-.kp-page-label { color: var(--kp-gold-text); font-size: 14px; font-weight: 550; margin-bottom: 14px !important; }
+.kp-page-label { color: var(--ui-theme-link, #76572d); font-size: 14px; font-weight: 550; margin-bottom: 14px !important; }
+.kp-contact-page .kp-page-label { color: var(--ui-theme-muted); }
+.kp-contact-page .kp-field-error { color: var(--ui-theme-danger); }
+.kp-contact-page .kp-contact-field--invalid :is(input, select, textarea) { border-color: var(--ui-theme-danger); }
 .kp-page-intro { max-width: 760px; margin: 0 auto 52px; text-align: center; }
 .kp-page-intro > p:not(.kp-page-label) { max-width: 560px; margin: 20px auto 12px; color: var(--kp-muted); }
 .kp-page-section { max-width: 1200px; margin: 0 auto; padding-bottom: 72px; }
@@ -28,6 +31,9 @@
 .kp-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 24px; align-items: stretch; }
 .kp-plan-card { display: flex; flex-direction: column; min-width: 0; padding: 32px; background: var(--kp-surface); border: 1px solid var(--kp-border); border-radius: 24px; box-shadow: 0 8px 24px -6px rgba(46, 67, 58, 0.06); transition: border-color .25s, transform .4s var(--kp-ease), box-shadow .25s; }
 .kp-plan-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -8px rgba(46, 67, 58, 0.14); }
+.kp-plan-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+.kp-plan-badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: var(--kp-radius-pill, 9999px); background: linear-gradient(135deg, rgba(195, 162, 107, 0.2), rgba(184, 134, 11, 0.25)); color: var(--kp-gold-text, #8b6914); border: 1px solid rgba(195, 162, 107, 0.4); font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+:root[data-color-mode="dark"] .kp-plan-badge { background: rgba(195, 162, 107, 0.25); color: #dfc499; border-color: rgba(195, 162, 107, 0.45); }
 .kp-plan-card h2 { font-size: 23px; }
 .kp-plan-price { font: 650 clamp(32px, 3vw, 44px)/1.4 var(--kp-font); font-variant-numeric: tabular-nums; padding-top: 18px; }
 .kp-plan-price--missing { font-size: 24px; color: var(--kp-muted); }
@@ -148,4 +154,72 @@
   .kp-contact-help small { font-size: 14px; }
   .kp-contact-accepted { min-height: 380px; }
   .kp-plan-price--long { font-size: 26px; }
+}
+
+/* Dark mode for MarketingPages (Contact, Pricing, etc.) */
+:root[data-color-mode="dark"] .kp-product-page {
+  background: var(--ui-theme-canvas);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-contact-panel {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+  box-shadow: 0 16px 40px -28px rgba(0, 0, 0, 0.6);
+}
+
+:root[data-color-mode="dark"] .kp-contact-field :is(input, select, textarea) {
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-contact-field :is(input, select, textarea)::placeholder {
+  color: var(--ui-theme-muted);
+}
+
+:root[data-color-mode="dark"] .kp-contact-field :is(input, select, textarea):focus {
+  border-color: var(--ui-theme-focus);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25);
+}
+
+:root[data-color-mode="dark"] .kp-contact-help a {
+  border-bottom-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-contact-help a:hover {
+  background: var(--ui-theme-subtle);
+}
+
+:root[data-color-mode="dark"] .kp-contact-error {
+  border-color: var(--ui-theme-danger);
+  background: var(--ui-theme-danger-soft, #402826);
+  color: var(--ui-theme-danger, #ffb4ab);
+}
+
+:root[data-color-mode="dark"] .kp-contact-accepted > svg {
+  color: var(--ui-theme-success, #a9e0c7);
+}
+
+:root[data-color-mode="dark"] .kp-plan-card {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-plan-discovery {
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-compare-table table {
+  background: var(--ui-theme-surface);
+}
+
+:root[data-color-mode="dark"] .kp-compare-table thead {
+  background: var(--ui-theme-subtle);
+}
+
+:root[data-color-mode="dark"] .kp-guidance-strip {
+  background: var(--ui-theme-subtle);
 }

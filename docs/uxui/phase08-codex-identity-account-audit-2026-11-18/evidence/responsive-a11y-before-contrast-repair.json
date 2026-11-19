@@ -1,0 +1,3365 @@
+{
+  "geometry": [
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 360,
+      "height": 740,
+      "scrollWidth": 360,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 430,
+      "height": 844,
+      "scrollWidth": 430,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 600,
+      "height": 800,
+      "scrollWidth": 600,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 900,
+      "scrollWidth": 768,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 900,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1024,
+      "height": 900,
+      "scrollWidth": 1024,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 820,
+      "height": 430,
+      "scrollWidth": 820,
+      "clipped": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "width": 768,
+      "height": 390,
+      "scrollWidth": 768,
+      "clipped": []
+    }
+  ],
+  "axe": [
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-footer-link"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-footer-link"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "forcedColors": true,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            [
+              ".active"
+            ],
+            [
+              "button[lang=\"en\"]"
+            ],
+            [
+              "h1"
+            ],
+            [
+              ".auth-subtitle"
+            ],
+            [
+              "label[for=\"_r_5_\"]"
+            ],
+            [
+              "label[for=\"_r_6_\"]"
+            ],
+            [
+              ".auth-divider"
+            ],
+            [
+              ".auth-error"
+            ],
+            [
+              ".auth-footer-text"
+            ],
+            [
+              "a[href$=\"register\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-hint"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-hint"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-hint"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-hint"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.31 (foreground color: #59615c, background color: #202a24, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.39 (foreground color: #ef4444, background color: #fef0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.39 (foreground color: #ef4444, background color: #fef0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "button[aria-haspopup=\"menu\"] > .host-profile-name"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.58 (foreground color: #f0f3ee, background color: #c1c3c2, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.67 (foreground color: #ef4444, background color: #312c27, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.67 (foreground color: #ef4444, background color: #312c27, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.39 (foreground color: #ef4444, background color: #fef0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.39 (foreground color: #ef4444, background color: #fef0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.67 (foreground color: #ef4444, background color: #312c27, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".auth-error"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.67 (foreground color: #ef4444, background color: #312c27, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "button[aria-haspopup=\"menu\"] > .host-profile-name"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.58 (foreground color: #f0f3ee, background color: #c1c3c2, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "state": "API failure",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "violations": []
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "state": "API failure",
+      "violations": []
+    }
+  ],
+  "nativeZoom": "NOT TESTED",
+  "physicalAT": "BLOCKED — EXTERNAL"
+}

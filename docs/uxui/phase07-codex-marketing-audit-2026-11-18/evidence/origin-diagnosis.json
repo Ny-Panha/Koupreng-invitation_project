@@ -1,0 +1,36 @@
+{
+  "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+  "defaultBuildOrigin": "VITE_USER_APP_URL omitted; existing environment files and runtime fallback unchanged",
+  "frameSrc": "http://localhost:5173/templates/event-essential?embed=demo&previewSession=FICTIONAL-SESSION-REDACTED&previewOrigin=http%3A%2F%2F127.0.0.1%3A4184",
+  "expectedUserOrigin": "http://127.0.0.1:4173",
+  "mismatch": true,
+  "requestFailures": [
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Angkor&family=Battambang:wght@400;700&family=Bayon&family=Bokor&family=Chenla&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Dangrek&family=Fasthand&family=Great+Vibes&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Koulen&family=Moul&family=Nokora:wght@400;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400&family=Preahvihear&family=Siemreap&family=Suwannaphum:wght@400;700&family=Taprom&display=swap",
+      "error": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Moul&display=swap",
+      "error": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Playfair%20Display&display=swap",
+      "error": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "url": "https://telegram.org/js/telegram-web-app.js",
+      "error": {
+        "errorText": "net::ERR_FAILED"
+      }
+    }
+  ],
+  "correctedEvidence": "baseline-phase06: 44/44 with explicit consistent build origin; accepted-phase06-six final separately",
+  "inference": "Demonstrates a concrete build-origin failure mode. Gemini original extra failures cannot be individually attributed without their traces.",
+  "fixtureSessionRedacted": true
+}

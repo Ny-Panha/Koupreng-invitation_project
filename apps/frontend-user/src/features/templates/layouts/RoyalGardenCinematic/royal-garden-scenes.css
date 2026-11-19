@@ -45,7 +45,7 @@
 .tpl-royal-garden .rg-royal-open[data-button-style=text] { width:auto; max-width:90%; height:auto; padding:8px 18px; border-radius:8px; }
 .tpl-royal-garden .rg-royal-open:active { transform:scale(.97); }
 .tpl-royal-garden :is(.rg-royal-open,.rg-entrance-skip):focus-visible { outline:3px solid var(--rg-royal-white); outline-offset:4px; }
-.tpl-royal-garden .rg-entrance-skip { position:absolute; z-index:10; top:max(8px,env(safe-area-inset-top)); right:12px; min-height:44px; padding:6px 14px; border:1px solid var(--rg-royal-gold); border-radius:30px; background:var(--rg-royal-deep); color:var(--rg-royal-white); }
+.tpl-royal-garden .rg-entrance-skip { position:absolute; z-index:10; top:max(64px,calc(env(safe-area-inset-top) + 56px)); right:12px; min-height:44px; padding:6px 14px; border:1px solid var(--rg-royal-gold); border-radius:30px; background:var(--rg-royal-deep); color:var(--rg-royal-white); }
 .tpl-royal-garden[data-stage=VIDEO_PREPARING] .rg-royal-entrance { position:absolute; inset:0; z-index:20; }
 .tpl-royal-garden .rg-royal-entrance[data-scene=VIDEO_PREPARING] .rg-entrance-stage { animation:rg-royal-away 900ms ease both; }
 /* One viewport, one inner scroll area, stationary source-proportional border. */

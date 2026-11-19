@@ -1,0 +1,12 @@
+{
+  "id": "final-lint",
+  "command": "npm.cmd --prefix apps/frontend-user run lint",
+  "environment": {},
+  "exitCode": 0,
+  "seconds": 77.51,
+  "time": "2026-11-18T13:11:50.861479+00:00",
+  "head": "2429b76545b683fad2a0a6f328bee3264875edc3",
+  "sourceFingerprint": "55fbf710b8d541c126dc307e5e08abb8dd3ec84b6929a631487419bbd0cf611d",
+  "log": "output/phase08-codex-2026-11-18/final-lint.log",
+  "tail": "\n> frontend-user@0.0.0 lint\n> eslint .\n\n"
+}

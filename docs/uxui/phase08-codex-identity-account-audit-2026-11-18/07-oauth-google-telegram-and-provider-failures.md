@@ -1,0 +1,7 @@
+# Google and Telegram boundaries
+
+Source `2429b76545b683fad2a0a6f328bee3264875edc3` on `main`, plus preserved dirty Phase07/08 work and Codex overlay. Execution: 18 November 2026, Asia/Bangkok. Overall **PARTIALLY COMPLETE**. NO PUSH / NO COMMIT / NO DEPLOYMENT.
+
+[apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx:99](../../../apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx#L99) retries failed script nodes on remount; C08-009 fails before and passes after. Unit fixtures also verify server account-link conflicts and authenticated linking. Real Google-rendered button is retained. Telegram popup accepts messages only from oauth.telegram.org and the opened window; blocked/closed popup handling and SDK/widget modes remain in source. [apps/frontend-user/src/features/auth/components/telegramOAuth.js:1](../../../apps/frontend-user/src/features/auth/components/telegramOAuth.js#L1) owns URL generation.
+
+Provider configured/unconfigured branches, cancellation, state/nonce expiry and live account linking are not exhaustively browser-certified. Local production-like builds block external resources; no real tokens, accounts or provider callbacks were used. English-only provider diagnostics in Khmer and setup terminology remain a native/copy-owner review item. Live provider sandboxes are BLOCKED — EXTERNAL. No fabricated provider success or new login method.

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, LayoutTemplate, PencilLine, Send } from "lucide-react";
 import { usePrefersReducedMotion } from "../../../shared/hooks/usePrefersReducedMotion";
-import { NumberTicker } from "@/shared/ui/vendor";
 
 export default function LandingStory({ copy }) {
   const timeline = useRef(null);
@@ -53,17 +52,17 @@ export default function LandingStory({ copy }) {
         <p>{copy("ចាប់ផ្តើមពីរចនាបទដែលអ្នកពេញចិត្ត រួចរៀបចំព័ត៌មានឱ្យភ្ញៀវ។", "Start with a design you love, then bring the details together for your guests.")}</p>
       </div>
 
-      <div className="kp-metrics-ribbon" role="region" aria-label={copy("ស្ថិតិនៃការរចនា", "Design metrics")}>
+      <div className="kp-metrics-ribbon" role="region" aria-label={copy("លក្ខណៈពិសេសចម្បង", "Core features")}>
         <article className="kp-metric-card">
-          <strong className="kp-metric-value"><NumberTicker value={10} suffix="" /></strong>
-          <span className="kp-metric-label">{copy("គំរូរចនាប្រណីត", "Artisan wedding themes")}</span>
+          <strong className="kp-metric-value"><PencilLine size={36} aria-hidden="true" /></strong>
+          <span className="kp-metric-label">{copy("គំរូសន្លឹកការ", "Invitation designs")}</span>
         </article>
         <article className="kp-metric-card">
-          <strong className="kp-metric-value"><NumberTicker value={100} suffix="%" /></strong>
-          <span className="kp-metric-label">{copy("គាំទ្រអក្សរខ្មែរ ១០០%", "Khmer & English ready")}</span>
+          <strong className="kp-metric-value" lang="en">KM / EN</strong>
+          <span className="kp-metric-label">{copy("ខ្មែរ និងអង់គ្លេស", "Khmer & English")}</span>
         </article>
         <article className="kp-metric-card">
-          <strong className="kp-metric-value"><NumberTicker value={7} suffix="" /></strong>
+          <strong className="kp-metric-value"><LayoutTemplate size={36} aria-hidden="true" /></strong>
           <span className="kp-metric-label">{copy("ទម្រង់អេក្រង់ឆ្លើយតប", "Adaptive viewports")}</span>
         </article>
       </div>

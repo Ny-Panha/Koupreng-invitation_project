@@ -1,0 +1,1533 @@
+{
+  "surfaces": 13,
+  "stateCells": 234,
+  "statusCounts": {
+    "TESTED": 72,
+    "SOURCE-MAPPED": 134,
+    "N/A": 24,
+    "BLOCKED — EXTERNAL": 4
+  },
+  "rows": [
+    {
+      "surface": "/login",
+      "source": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+      "guard": "public",
+      "authority": "auth/login",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "C08 login / LoginFeature.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/register",
+      "source": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+      "guard": "public",
+      "authority": "auth/register",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "RegisterFeature.test.jsx; phase08-identity-account 02",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/forgot-password",
+      "source": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+      "guard": "public",
+      "authority": "auth/forgot-password",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/reset-password",
+      "source": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+      "guard": "public token possession for mutation",
+      "authority": "auth/reset-password",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "ResetPasswordFeature.test.jsx; C08 reset; Phase08Regression",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/app/profile",
+      "source": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+      "guard": "RequireAuth; server current-user authority",
+      "authority": "users/me; users/me/profile-image; users/me/change-password",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "ProfileFeature.test.jsx; Phase08Regression; C08 profile/avatar",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/app/change-password",
+      "source": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+      "guard": "RequireAuth; server current-user/current-password",
+      "authority": "auth/change-password",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "TESTED",
+          "evidence": "Phase08Regression; C08 password change",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/dashboard/profile",
+      "source": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+      "guard": "guarded alias",
+      "authority": "/app/profile",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "C08 aliases",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/dashboard/change-password",
+      "source": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+      "guard": "guarded alias",
+      "authority": "/app/change-password",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "/profile",
+      "source": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+      "guard": "guarded alias",
+      "authority": "/app/profile",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "C08 aliases",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "session guard",
+      "source": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+      "guard": "authenticated only",
+      "authority": "auth/me; auth/logout",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "TESTED",
+          "evidence": "useAuthStore.test.js; RequireAuth.test.jsx; AuthProvider.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "Google entry/link",
+      "source": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+      "guard": "server verifies ID token; authenticated linking",
+      "authority": "auth/google; auth/link/google",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "TESTED",
+          "evidence": "SocialAuthButtons.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "BLOCKED — EXTERNAL",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth QA / provider sandbox owner"
+        },
+        {
+          "state": "provider configured",
+          "status": "TESTED",
+          "evidence": "SocialAuthButtons.test.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "BLOCKED — EXTERNAL",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth QA / provider sandbox owner"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "Telegram entry/link",
+      "source": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+      "guard": "server verifies OIDC/HMAC; authenticated linking",
+      "authority": "auth/telegram; auth/link/telegram",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "TESTED",
+          "evidence": "SocialAuthButtons.test.jsx; telegramOAuth.test.js",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "BLOCKED — EXTERNAL",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth QA / provider sandbox owner"
+        },
+        {
+          "state": "provider configured",
+          "status": "TESTED",
+          "evidence": "SocialAuthButtons.test.jsx; telegramOAuth.test.js",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "BLOCKED — EXTERNAL",
+          "evidence": "apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx",
+          "owner": "Auth QA / provider sandbox owner"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    },
+    {
+      "surface": "admin /login + RequireAdmin",
+      "source": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+      "guard": "independent admin storage; exact ADMIN role",
+      "authority": "admin auth/session",
+      "states": [
+        {
+          "state": "anonymous",
+          "status": "TESTED",
+          "evidence": "batch11-auth-boundaries; admin unit suite",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "loading",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "valid form",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "invalid client input",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server validation",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "offline",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "401/403",
+          "status": "TESTED",
+          "evidence": "batch11-auth-boundaries; admin unit suite",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "server 5xx",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "retry",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "success",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "already authenticated",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "expired session",
+          "status": "TESTED",
+          "evidence": "batch11-auth-boundaries; admin unit suite",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "locale",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "theme",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "small viewport",
+          "status": "SOURCE-MAPPED",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider cancel",
+          "status": "N/A",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider configured",
+          "status": "N/A",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        },
+        {
+          "state": "provider unconfigured",
+          "status": "N/A",
+          "evidence": "apps/frontend-admin/src/app/guards/RequireAdmin.jsx",
+          "owner": "Auth/frontend QA"
+        }
+      ],
+      "limits": "TESTED may be unit/fixture/browser; use named test and commands to distinguish. Cross-product not exhaustive. Public AuthShell permits already-authenticated visits; no automatic anon-only redirect."
+    }
+  ]
+}

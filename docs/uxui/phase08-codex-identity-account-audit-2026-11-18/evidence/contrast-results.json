@@ -1,0 +1,1742 @@
+{
+  "samples": [
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "light",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(185, 28, 28)",
+      "background": [
+        255,
+        240,
+        237
+      ],
+      "ratio": 5.835031460170395,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(255, 180, 171)",
+      "background": [
+        64,
+        40,
+        38
+      ],
+      "ratio": 7.982276516489889,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "light",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(185, 28, 28)",
+      "background": [
+        255,
+        240,
+        237
+      ],
+      "ratio": 5.835031460170395,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-login",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(255, 180, 171)",
+      "background": [
+        64,
+        40,
+        38
+      ],
+      "ratio": 7.982276516489889,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "light",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(185, 28, 28)",
+      "background": [
+        255,
+        240,
+        237
+      ],
+      "ratio": 5.835031460170395,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(255, 180, 171)",
+      "background": [
+        64,
+        40,
+        38
+      ],
+      "ratio": 7.982276516489889,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "light",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(185, 28, 28)",
+      "background": [
+        255,
+        240,
+        237
+      ],
+      "ratio": 5.835031460170395,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-register",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "DIV.auth-error mt-2",
+      "color": "rgb(255, 180, 171)",
+      "background": [
+        64,
+        40,
+        38
+      ],
+      "ratio": 7.982276516489889,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "light",
+      "selector": "P.auth-hint",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "P.auth-hint",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "light",
+      "selector": "P.auth-hint",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-forgot",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "P.auth-hint",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.auth-title",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.auth-title",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "auth-reset",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.auth-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 5.678398693754095,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 7.2997989255932625,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 5.678398693754095,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        246,
+        241,
+        233
+      ],
+      "ratio": 14.01598644510375,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 7.2997989255932625,
+      "minimum": 4.5
+    },
+    {
+      "group": "profile",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        40,
+        53,
+        44
+      ],
+      "ratio": 11.46809279185969,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "selector": "H1.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "H1.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "en",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "selector": "H1.",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 3
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(89, 97, 92)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 6.384553656653567,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "light",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(31, 36, 33)",
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 15.75898811193429,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "H1.",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 3
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "UL.account-password-guidance",
+      "color": "rgb(185, 199, 186)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 8.420748670285072,
+      "minimum": 4.5
+    },
+    {
+      "group": "password",
+      "lang": "km",
+      "mode": "dark",
+      "selector": "LABEL.dash-label",
+      "color": "rgb(240, 243, 238)",
+      "background": [
+        32,
+        42,
+        36
+      ],
+      "ratio": 13.229121529523495,
+      "minimum": 4.5
+    }
+  ],
+  "failures": [],
+  "scope": "Computed text samples only; borders, focus and placeholders are not certified by this calculation."
+}

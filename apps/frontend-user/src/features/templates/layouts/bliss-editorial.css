@@ -294,6 +294,13 @@
   transform: translateX(0);
 }
 
+.bliss-rsvp-backdrop { justify-content: flex-end; padding: 0; background: rgba(28, 25, 23, .6); }
+.k-modal-container.bliss-drawer { position: relative; max-height: 100dvh; height: 100dvh; border-radius: 0; padding: 0; animation: bliss-drawer-enter var(--ui-duration-overlay, 220ms) ease-out; }
+.bliss-drawer .k-modal-body { padding: 3.5rem clamp(1rem, 5vw, 2.5rem); }
+.bliss-drawer-close { min-width: 44px; min-height: 44px; z-index: 1; }
+@keyframes bliss-drawer-enter { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) { .k-modal-container.bliss-drawer { animation: none; } }
+
 .bliss-drawer-close {
   position: absolute;
   top: 1.5rem;

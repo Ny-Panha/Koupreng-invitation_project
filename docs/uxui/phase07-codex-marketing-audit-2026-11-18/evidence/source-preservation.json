@@ -1,0 +1,224 @@
+{
+  "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+  "branch": "main",
+  "originSha": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "ahead": "13",
+  "routes": 135,
+  "groups": 62,
+  "appGroupPairs": 63,
+  "trackedSql": 51,
+  "flywayPaths": 48,
+  "protectedCategories": {
+    "backendAndTelegram": [],
+    "manifests": [],
+    "migrations": [],
+    "templateArtAndRegistry": [],
+    "originalBrowserTests": []
+  },
+  "originalReports": [
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/01-source-reconciliation-and-scope.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/02-premium-art-direction-and-brand-identity.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/03-full-marketing-route-and-state-matrix.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/04-homepage-implementation-and-conversion.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/05-marketing-navigation-header-footer.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/06-contact-help-aliases-and-form-states.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/07-venue-discovery-and-detail.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/08-typography-responsiveness-and-khmer-english.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/09-animation-motion-and-selective-depth.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/10-technical-implementation-and-changed-files.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/11-accessibility-and-interaction-testing.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/12-visual-before-after-gallery-index.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/13-performance-bundle-and-network-evidence.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/14-exact-test-commands-and-failure-register.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/15-carryover-57-entry-reconciliation.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/16-security-privacy-functionality-preservation.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/17-known-defects-risks-and-rollback.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/18-phase07-codex-audit-handoff.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/acceptance-matrix.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/changed-files.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/route-register.json",
+      "unchanged": true
+    }
+  ],
+  "changedTracked": [
+    "apps/frontend-user/index.html",
+    "apps/frontend-user/src/app/App.jsx",
+    "apps/frontend-user/src/app/ScrollToTop.jsx",
+    "apps/frontend-user/src/features/marketing/ContactFeature.jsx",
+    "apps/frontend-user/src/features/marketing/MarketingFeature.css",
+    "apps/frontend-user/src/features/marketing/MarketingPages.css",
+    "apps/frontend-user/src/features/marketing/VenuesFeature.jsx",
+    "apps/frontend-user/src/features/marketing/VenuesFeature.test.jsx",
+    "apps/frontend-user/src/features/marketing/components/LandingHero.jsx",
+    "apps/frontend-user/src/features/marketing/components/LandingStory.jsx",
+    "apps/frontend-user/src/layouts/MarketingShell.jsx",
+    "apps/frontend-user/src/layouts/components/MarketingChrome.css",
+    "apps/frontend-user/src/shared/i18n/marketingMessages.js"
+  ],
+  "untracked": [
+    "apps/frontend-user/playwright.phase07.config.js",
+    "apps/frontend-user/src/features/marketing/ContactDraftProvider.jsx",
+    "apps/frontend-user/src/features/marketing/ContactDraftProvider.test.jsx",
+    "apps/frontend-user/src/features/marketing/MarketingMetadata.jsx",
+    "apps/frontend-user/src/features/marketing/MarketingMetadata.test.jsx",
+    "apps/frontend-user/src/features/marketing/Phase07Marketing.test.jsx",
+    "apps/frontend-user/src/features/marketing/VenuesFeature.css",
+    "apps/frontend-user/src/features/marketing/contactDraft.js",
+    "apps/frontend-user/tests/e2e/phase07-featured-collection.spec.js",
+    "apps/frontend-user/tests/e2e/phase07-marketing-audit.spec.js",
+    "apps/frontend-user/tests/e2e/phase07-state-edges.spec.js",
+    "apps/frontend-user/tests/e2e/phase07-validation-contrast.spec.js",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/01-source-reconciliation-and-scope.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/02-premium-art-direction-and-brand-identity.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/03-full-marketing-route-and-state-matrix.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/04-homepage-implementation-and-conversion.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/05-marketing-navigation-header-footer.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/06-contact-help-aliases-and-form-states.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/07-venue-discovery-and-detail.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/08-typography-responsiveness-and-khmer-english.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/09-animation-motion-and-selective-depth.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/10-technical-implementation-and-changed-files.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/11-accessibility-and-interaction-testing.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/12-visual-before-after-gallery-index.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/13-performance-bundle-and-network-evidence.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/14-exact-test-commands-and-failure-register.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/15-carryover-57-entry-reconciliation.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/16-security-privacy-functionality-preservation.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/17-known-defects-risks-and-rollback.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/18-phase07-codex-audit-handoff.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/README.md",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/acceptance-matrix.json",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/changed-files.json",
+    "docs/uxui/phase07-1-gemini-marketing-transformation-2026-11-18/evidence/route-register.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/01-source-git-and-gemini-diff-reconciliation.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/02-claims-and-test-count-discrepancy-register.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/03-phase07-route-feature-state-coverage.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/04-premium-brand-visual-ux-laws-review.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/05-home-storytelling-cta-and-conversion-audit.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/06-header-footer-drawer-navigation-and-seo.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/07-contact-form-support-and-recovery.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/08-venues-directory-detail-modal-and-media.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/09-khmer-english-typography-and-theme-qa.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/10-responsive-cross-browser-a11y-and-input.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/11-motion-media-lazy-loading-and-performance.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/12-phase02-to-phase06-regression-triage.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/13-renderer-and-business-invariant-preservation.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/14-verified-bugs-fixes-and-reproduction.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/15-exact-commands-test-matrix-and-evidence-index.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/16-gemini-f01-to-f20-independent-acceptance-matrix.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/17-cross-phase-57-entry-closure-update.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/18-changed-files-diff-security-rollback.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/19-phase08-1-gemini-frontend-execution-handoff.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/20-open-gates-owners-and-final-phase-status.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/README.md",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/acceptance-f01-f20.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/after-manifest.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/asset-rights-ledger.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/attribute-patches.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/attributed-changes.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/before-manifest.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/build-assets.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/build-report.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/capture-and-measure.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/capture-attempts.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/capture-final-git.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/carryover-updated.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/codex-only.patch",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/computed-theme-contrast-before-validation-fix.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/computed-theme-contrast.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/defect-register.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/diagnose-history.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/diagnose-origin.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/evidence-validation.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/finalize-report-inputs.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/gemini-claim-reconciliation.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/gemini-starting-sanitized.patch",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/git-final.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/git-final.txt",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/git-initial.txt",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/history-diagnostic.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/interrupted-runs.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/inventory-source-and-build.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/mode-edge-results.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/native-zoom-results.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/origin-diagnosis.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/performance-comparison.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/performance-samples.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/probe-computed-contrast.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/probe-font-spacing-backdrops.mjs",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/renderer-registry.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/route-shell-inventory.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/route-state-matrix.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/run-command.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/source-preservation.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/starting-inventory.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/summarize-evidence.py",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/test-command-results.json",
+    "docs/uxui/phase07-codex-marketing-audit-2026-11-18/evidence/verify-evidence.py"
+  ]
+}

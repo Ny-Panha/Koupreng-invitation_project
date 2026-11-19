@@ -1,0 +1,102 @@
+[
+  {
+    "id": "C01",
+    "claim": "clean modifications; identical HEAD",
+    "observation": "main remains 2429b765, origin/main 4d30a8f3; 13 ahead, six initially modified files plus untracked CSS/tests/docs. Nothing staged.",
+    "classification": "AMBIGUOUS PROSE RESOLVED BY GIT",
+    "evidence": "initial-git.txt; starting-inventory.json"
+  },
+  {
+    "id": "C02",
+    "claim": "43 tests / 8 files vs 41 / 7",
+    "observation": "Both reproduced: marketing 41/7; marketing plus route inventory 43/8. Final marketing gains two metadata tests plus one draft-boundary test (44/9); final combined scope 46/10.",
+    "classification": "DIFFERENT DENOMINATORS",
+    "evidence": [
+      "baseline-marketing",
+      "baseline-marketing-routes"
+    ]
+  },
+  {
+    "id": "C03",
+    "claim": "Phase06 42/44 vs local report 36/44 vs historic 132/132",
+    "observation": "Actual Gemini local command register says 36 passed/8 failed, not 42/44; no supplied raw Gemini trace proves either cause. Consistent origin baseline reproduced 44/44. Six projects contain 132 cases.",
+    "classification": "REPORT CONTRADICTION; ORIGIN DIAGNOSIS SEPARATE",
+    "evidence": [
+      "baseline-phase06",
+      "closure-phase06-recovered",
+      "origin-diagnosis"
+    ]
+  },
+  {
+    "id": "C04",
+    "claim": "Phase02 24/8 matches prior baseline",
+    "observation": "Current controlled baseline reproduces 26/6; failures are the same three assertion identities in two projects, not viewport snapshots. Native copy/QA maintenance remains unapproved.",
+    "classification": "UNSUPPORTED EXTRA TWO FAILURES",
+    "evidence": [
+      "baseline-phase02",
+      "final-phase02"
+    ]
+  },
+  {
+    "id": "C05",
+    "claim": "native venue dialog, background inert, full AA",
+    "observation": "Starting venue modal was a custom role=dialog div; header alone used native dialog. Background focus, reset, history and contrast failed fresh tests. Repaired and explicitly sampled.",
+    "classification": "DISPROVED THEN REPAIRED",
+    "evidence": [
+      "baseline-new-marketing",
+      "accepted-phase07"
+    ]
+  },
+  {
+    "id": "C06",
+    "claim": "8.38kB venue CSS proves fast / decoding async everywhere",
+    "observation": "Initial actual JSX had lazy images without decoding=async. Current emitted sizes and routed request/paint lab are separately recorded.",
+    "classification": "SOURCE CONTRADICTION; PERFORMANCE REQUIRES MEASUREMENT",
+    "evidence": [
+      "build-assets.json",
+      "performance-comparison.json"
+    ]
+  },
+  {
+    "id": "C07",
+    "claim": "all 10 renderer names and zero pixel contamination certified",
+    "observation": "Gemini gallery lists fictional family identifiers. Current registry has 10 families, 38 aliases, two shared IDs and fallback. Two representative paint comparisons and Silk retained-CSS checks do not certify all authored/live families.",
+    "classification": "INCORRECT NAMES / OVERCLAIM",
+    "evidence": "renderer-registry.json"
+  },
+  {
+    "id": "C08",
+    "claim": "support alias, contact channels, new commission form, permanent redirects",
+    "observation": "/support is absent from marketing routes; /about and /help use SPA Navigate replace to /contact, not HTTP301. Actual form keys are name/email/phone/plan/message with limits 120/255/30/120/5000; no claimed address/hours/concierge email or custom commissions are implemented.",
+    "classification": "DISPROVED BY SOURCE",
+    "evidence": "marketingRoutes.jsx; ContactFeature.jsx"
+  },
+  {
+    "id": "C09",
+    "claim": "F01–F20 all PASS",
+    "observation": "Actual local acceptance JSON uses AC-01–AC-20. This package supplies the requested F01–F20 independently. No one-to-one PASS inheritance.",
+    "classification": "RECONCILED IDS / RECLASSIFIED",
+    "evidence": "acceptance-f01-f20.json"
+  },
+  {
+    "id": "C10",
+    "claim": "48 migrations vs 51 SQL paths",
+    "observation": "Current source: 48 Flyway SQL paths; 51 total tracked SQL paths. All protected categories unchanged.",
+    "classification": "DIFFERENT FILE SETS",
+    "evidence": "source-preservation.json"
+  },
+  {
+    "id": "C11",
+    "claim": "Studio Phase08 / payments Phase10",
+    "observation": "Master: Phase08 identity/account; Phase09 marketplace; Phase10 template art; Phase21 payments; Phase25 admin Studio.",
+    "classification": "OWNER LABELS CORRECTED",
+    "evidence": "MASTER_SCOPE.md"
+  },
+  {
+    "id": "C12",
+    "claim": "new whole-home artistic transformation",
+    "observation": "HomeFeature and landing components were unchanged in Gemini diff. Existing editorial composition, interactive folio, demo, FAQ and conversion were retained. Codex corrected the overridden editorial face and illegible dark surfaces, rather than crediting old components as new work.",
+    "classification": "EXISTING WORK RETAINED; ATTRIBUTION CORRECTED",
+    "evidence": "starting-inventory.json; attributed-changes.json"
+  }
+]

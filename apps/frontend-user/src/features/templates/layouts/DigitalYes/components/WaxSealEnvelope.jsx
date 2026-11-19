@@ -7,6 +7,7 @@ export default function WaxSealEnvelope({
   isFlapOpen,
   isCardEmerging,
   onOpenEnvelope,
+  onSkip,
 }) {
   const groomInitial = (tpl.groom || "V").trim()[0] || "V";
   const brideInitial = (tpl.bride || "S").trim()[0] || "S";
@@ -59,8 +60,17 @@ export default function WaxSealEnvelope({
 
           {/* Envelope Top Flap (Rotates on Open) */}
           <div
+            role="button"
+            tabIndex={!isFlapOpen ? 0 : -1}
+            aria-label="បើកគម្របសំបុត្រ (Open envelope flap)"
             className={`tdy-flap-top ${isFlapOpen ? "is-open" : ""}`}
             onClick={onOpenEnvelope}
+            onKeyDown={(e) => {
+              if (!isFlapOpen && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                onOpenEnvelope();
+              }
+            }}
           >
             <div className="tdy-flap-face" />
             <div className="tdy-flap-inner" />
@@ -68,8 +78,17 @@ export default function WaxSealEnvelope({
 
           {/* Wax Seal with Luxury Monogram */}
           <div
+            role="button"
+            tabIndex={!isFlapOpen ? 0 : -1}
+            aria-label={`ត្រាទៀនក្រមួន ${groomInitial} & ${brideInitial} (Tap to open)`}
             className={`tdy-wax-seal ${isFlapOpen ? "opacity-0 pointer-events-none scale-125 transition-all duration-300" : ""}`}
             onClick={onOpenEnvelope}
+            onKeyDown={(e) => {
+              if (!isFlapOpen && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                onOpenEnvelope();
+              }
+            }}
             title="ចុចដើម្បីបើកសំបុត្រអញ្ជើញ"
           >
             <div className="tdy-seal-inner">
@@ -90,16 +109,23 @@ export default function WaxSealEnvelope({
           <button
             type="button"
             onClick={onOpenEnvelope}
-            className="group relative px-6 py-2.5 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+            className="group relative px-6 py-2.5 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(212,175,55,0.4)] min-h-[44px]"
+            aria-label="បើកសំបុត្រអាពាហ៍ពិពាហ៍"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600 opacity-90 group-hover:opacity-100 transition" />
             <div className="relative flex items-center gap-2 text-stone-950 font-bold text-xs">
-              <Sparkles className="h-3.5 w-3.5 text-stone-950 animate-spin-slow" />
+              <Sparkles className="h-3.5 w-3.5 text-stone-950 animate-spin-slow" aria-hidden="true" />
               <span>បើកសំបុត្រអាពាហ៍ពិពាហ៍</span>
             </div>
           </button>
         </div>
       )}
+      <button
+        type="button"
+        onClick={onSkip || onOpenEnvelope}
+        className="fixed top-20 right-4 z-50 text-xs text-amber-200 bg-stone-950/90 rounded-full underline px-4 py-2 min-h-[44px] cursor-pointer"
+        aria-label="រំលង (Skip)"
+      >រំលង (Skip)</button>
     </div>
   );
 }

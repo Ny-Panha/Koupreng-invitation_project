@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "verifiedOpeningContracts": [
+    {
+      "family": "KhmerFloralGold",
+      "mechanism": "Regal Scroll / Ambience Banner",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "RoyalGardenCinematic",
+      "mechanism": "Video Entrance & Skip",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "SilkHeritage",
+      "mechanism": "Silk Scroll / Weave",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "TemplateBoilerplate",
+      "mechanism": "Cover Screen & Skip Button",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "KhmerCelestial",
+      "mechanism": "Celestial Starlight Banner",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "DigitalYes",
+      "mechanism": "3D Wax Seal Envelope & Skip",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "EmeraldLuxe",
+      "mechanism": "Velvet Curtain & Skip",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "WithJoyPortal",
+      "mechanism": "Hero & Glassmorphism Nav",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "BlissEditorial",
+      "mechanism": "Vogue Spread & Drawer",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    },
+    {
+      "family": "CanvaKhmerWeddingTemplate",
+      "mechanism": "Golden Kbach Cover & Skip",
+      "skipSupported": true,
+      "reducedMotionInstant": true
+    }
+  ]
+}

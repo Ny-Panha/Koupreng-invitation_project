@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, SearchX } from "lucide-react";
+import { ArrowUpDown, ArrowUpRight, Search, SearchX, X } from "lucide-react";
 import { TEMPLATES } from "../data/templatesData";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useLanguageStore } from "../../../stores/useLanguageStore";
@@ -18,6 +18,7 @@ export default function TemplateGrid({ featured = false }) {
   const [category, setCategory] = useState("all");
   const [pricePreference, setPricePreference] = useState("all");
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("default");
   const copy = (km, en) => (lang === "en" ? en : km);
   const categories = {
     ancient: copy("ប្រពៃណីខ្មែរ", "Khmer tradition"),
@@ -37,16 +38,38 @@ export default function TemplateGrid({ featured = false }) {
     };
     return rank(a) - rank(b);
   });
+  const baseFiltered = presented.filter(
+    (tpl) =>
+      (category === "all" || category === tpl.category) &&
+      (pricePreference === "all" ||
+        (pricePreference === "free" && !tpl.isPremium && tpl.live) ||
+        (pricePreference === "premium" && tpl.isPremium)) &&
+      matchesTemplateSearch(tpl, search)
+  );
+
+  const sortedList = [...baseFiltered].sort((a, b) => {
+    if (sortBy === "name-asc") {
+      return (a.name || "").localeCompare(b.name || "", lang === "km" ? "km" : "en");
+    }
+    if (sortBy === "name-desc") {
+      return (b.name || "").localeCompare(a.name || "", lang === "km" ? "km" : "en");
+    }
+    return 0;
+  });
+
   const filtered = featured
     ? sorted.filter((tpl) => FEATURED.includes(tpl.identity)).slice(0, 3)
-    : presented.filter(
-        (tpl) =>
-          (category === "all" || category === tpl.category) &&
-          (pricePreference === "all" ||
-            (pricePreference === "free" && !tpl.isPremium && tpl.live) ||
-            (pricePreference === "premium" && tpl.isPremium)) &&
-          matchesTemplateSearch(tpl, search)
-      );
+    : sortedList;
+
+  const hasActiveFilters = category !== "all" || pricePreference !== "all" || Boolean(search.trim()) || sortBy !== "default";
+
+  const clearAllFilters = () => {
+    setCategory("all");
+    setPricePreference("all");
+    setSearch("");
+    setSortBy("default");
+  };
+
   const content = (
     <>
       {!featured && (
@@ -82,15 +105,63 @@ export default function TemplateGrid({ featured = false }) {
                 </button>
               ))}
             </div>
-            <label className="kp-catalog-search">
-              <span>{copy("ស្វែងរកគំរូ", "Search designs")}</span>
-              <input
-                type="search"
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder={copy("ឈ្មោះ ឬរចនាបទ", "Name or design style")}
-              />
-            </label>
+
+            <div className="tp-sort-wrap">
+              <label htmlFor="tp-sort-select" className="tp-filter-label">
+                <ArrowUpDown size={14} aria-hidden="true" />
+                <span>{copy("តម្រៀបតាម", "Sort by")}:</span>
+              </label>
+              <select
+                id="tp-sort-select"
+                className="tp-sort-select"
+                value={sortBy}
+                onChange={(event) => setSortBy(event.target.value)}
+                aria-label={copy("តម្រៀបគំរូសន្លឹកការ", "Sort invitation designs")}
+              >
+                <option value="default">{copy("លំនាំដើម", "Curated order")}</option>
+                <option value="name-asc">{copy("ឈ្មោះ (A–Z)", "Name (A–Z)")}</option>
+                <option value="name-desc">{copy("ឈ្មោះ (Z–A)", "Name (Z–A)")}</option>
+              </select>
+            </div>
+
+            <div className="kp-catalog-search-wrap">
+              <label className="kp-catalog-search">
+                <Search size={16} aria-hidden="true" className="kp-catalog-search-icon" />
+                <span className="sr-only">{copy("ស្វែងរកគំរូ", "Search designs")}</span>
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder={copy("ឈ្មោះ ឬរចនាបទ…", "Search name or style…")}
+                  aria-label={copy("ស្វែងរកគំរូសន្លឹកការ", "Search invitation designs")}
+                />
+              </label>
+              {search && (
+                <button
+                  type="button"
+                  className="kp-search-clear-btn"
+                  onClick={() => setSearch("")}
+                  aria-label={copy("សម្អាតការស្វែងរក", "Clear search")}
+                >
+                  <X size={14} aria-hidden="true" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="tp-results-bar">
+            <span role="status" className="tp-results-count">
+              {copy(`បង្ហាញ ${filtered.length} គំរូ`, `Showing ${filtered.length} designs`)}
+            </span>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="tp-reset-filters-btn"
+                onClick={clearAllFilters}
+              >
+                {copy("កំណត់តម្រងឡើងវិញ", "Reset filters")}
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -134,15 +205,11 @@ export default function TemplateGrid({ featured = false }) {
                 )
           }
           primaryAction={
-            category !== "all" || pricePreference !== "all" || search ? (
+            hasActiveFilters ? (
               <button
                 type="button"
                 className="kp-button"
-                onClick={() => {
-                  setCategory("all");
-                  setPricePreference("all");
-                  setSearch("");
-                }}
+                onClick={clearAllFilters}
               >
                 {copy("សម្អាតតម្រង", "Clear filters")}
               </button>
@@ -189,8 +256,13 @@ export default function TemplateGrid({ featured = false }) {
     <div className="tp-page kp-public-catalog">
       <div className="tp-container">
         <header className="tp-header-section">
-          <p className="kp-eyebrow">{copy("គំរូសន្លឹកការ", "The invitation collection")}</p>
+          <p className="kp-eyebrow">{copy("គំរូសន្លឹកការប្រណិត", "The invitation collection")}</p>
           <h1 className="tp-title">{copy("រចនាបទដែលជារបស់អ្នក។", "A design that feels like you.")}</h1>
+          <div className="tp-divider" aria-hidden="true">
+            <span className="tp-line" />
+            <span className="tp-diamond" />
+            <span className="tp-line" />
+          </div>
           <p>
             {copy(
               "មើលគំរូពេញលេញ រួចជ្រើសរើសគំរូសម្រាប់ថ្ងៃពិសេសរបស់អ្នក។",

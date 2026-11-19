@@ -1,0 +1,19 @@
+{
+  "rollbackInstructions": "Do NOT use git reset --hard, git restore ., or git clean. Roll back only attributable Codex hunks labeled CODEX-P09.",
+  "revertibleHunks": [
+    {
+      "file": "apps/frontend-user/src/features/templates/components/templates.css",
+      "label": "CODEX-P09",
+      "target": ".kp-search-clear-btn target size and padding"
+    },
+    {
+      "file": "apps/frontend-user/src/features/templates/model/catalogPolicy.js",
+      "label": "CODEX-P09",
+      "target": "matchesTemplateSearch bilingual text fields"
+    },
+    {
+      "file": "apps/frontend-user/src/features/templates/Phase09CodexAuditRegression.test.jsx",
+      "action": "Remove newly added test file"
+    }
+  ]
+}

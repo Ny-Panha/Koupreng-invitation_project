@@ -1,0 +1,16 @@
+{
+  "measuredBuild": {
+    "userAppBundleSize": "477.66 kB",
+    "userAppGzip": "142.12 kB",
+    "adminAppBundleSize": "285.33 kB",
+    "adminAppGzip": "90.66 kB",
+    "buildDurationUser": "1.69s",
+    "buildDurationAdmin": "5.50s"
+  },
+  "diagnosticTriggers": {
+    "loadIncreaseAboveThreshold": false,
+    "transferIncreaseAboveThreshold": false,
+    "clsRegression": false
+  },
+  "caveats": "Diagnostic build metrics only. Real-user INP, p75 LCP, and CLS cannot be certified from local static server."
+}

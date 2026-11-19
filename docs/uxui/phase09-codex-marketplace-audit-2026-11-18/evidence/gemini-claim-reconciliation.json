@@ -1,0 +1,29 @@
+{
+  "reconciliationItems": [
+    {
+      "claim": "25 VERIFIED — LOCAL / 5 PARTIALLY COMPLETE",
+      "actualInTable": "26 VERIFIED — LOCAL / 4 PARTIALLY COMPLETE (F09.1-20, 21, 22, 24)",
+      "auditFinding": "Prose summary cited 25/5 while table had 26/4. Analysis shows Gemini intended F09.1-25 (Performance local lab vs field) or F09.1-03 (Cultural claims) as 5th partial gate. Codex independent evaluation sets 24 VERIFIED — LOCAL / 6 PARTIALLY COMPLETE with explicit external hardware/linguistic prerequisites."
+    },
+    {
+      "claim": "42 Playwright test cases across 6 browser projects",
+      "actual": "42 passed across desktop-chromium, mobile-chromium, desktop-webkit, mobile-webkit, desktop-firefox, mobile-firefox",
+      "auditFinding": "VERIFIED. 7 distinct workflows × 6 projects = 42 tests. Zero flakiness."
+    },
+    {
+      "claim": "Zero Axe violations with color-contrast enabled",
+      "actual": "0 violations reported on /templates and /pricing across all 6 projects",
+      "auditFinding": "VERIFIED. Prior draft attempted .disableRules(['color-contrast']), repaired in P09-003. Codex verified no rule suppressions remain."
+    },
+    {
+      "claim": "Touch target for search clear button: 22x22px",
+      "actual": "22x22px with min-height: auto and padding: 0",
+      "auditFinding": "REPAIRED (C09-001). 22px violated WCAG 2.2 AA SC 2.5.8 (24px min) and mobile 44px comfortable target contract. Upgraded to 24px + 44px ::before."
+    },
+    {
+      "claim": "Unicode search across bilingual catalog",
+      "actual": "Search only matched English name when English active",
+      "auditFinding": "REPAIRED (C09-002). matchesTemplateSearch omitted nameKm and nameEn. Fixed in catalogPolicy.js."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "galleryLightbox": {
+    "dialogAttribute": "role='dialog' aria-modal='true'",
+    "keyboardDismissal": "Escape key listener active with focus restoration",
+    "aspectRatioPreservation": "4:3 and 3:2 responsive grid frames without distortion"
+  },
+  "audioControls": {
+    "autoplayPolicy": "Browser-safe; starts only upon user opening interaction",
+    "toggleControl": "Accessible play/pause toggle with aria-pressed and title attributes",
+    "offlineHandling": "Graceful error banner without throwing unhandled promise rejections"
+  }
+}

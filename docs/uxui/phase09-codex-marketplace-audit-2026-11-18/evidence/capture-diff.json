@@ -1,0 +1,8 @@
+{
+  "changesConfirmed": [
+    "Search clear button visual glyph kept at 24px with 44px comfortable touch area via ::before",
+    "Bilingual template search index enabled (matchesTemplateSearch nameKm/nameEn)",
+    "Neutral tier badge confirmed on Standard package",
+    "Pricing page label contrast 6.19:1 confirmed active without Axe suppression"
+  ]
+}

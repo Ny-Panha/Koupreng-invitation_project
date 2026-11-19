@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "totalMarkdownReports": 20,
+  "readmePresent": true,
+  "machineReadableEvidenceFiles": 16,
+  "acceptanceGatesTotal": 30,
+  "historicalCarryoverTotal": 57,
+  "additionalAuthItemsTotal": 5,
+  "phase07PartialGatesTotal": 9,
+  "openGateC08013Documented": true
+}

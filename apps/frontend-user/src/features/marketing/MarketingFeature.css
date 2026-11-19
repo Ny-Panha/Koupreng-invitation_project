@@ -8,13 +8,15 @@
   --kp-gold-ink: #77572C;
   --kp-emerald: #2E433A;
   --kp-emerald-deep: #22332C;
-  --kp-bg: var(--ui-canvas);
-  --kp-surface: var(--ui-surface);
-  --kp-ink: var(--ui-ink);
-  --kp-muted: var(--ui-muted);
-  --kp-border: var(--ui-border);
-  --kp-paper: var(--ui-surface-subtle);
-  --kp-gold: #C3A26B;
+  --kp-bg: var(--ui-theme-canvas, var(--ui-canvas, #fbf6ee));
+  --kp-surface: var(--ui-theme-surface, var(--ui-surface, #ffffff));
+  --kp-ink: var(--ui-theme-ink, var(--ui-ink, #1f2421));
+  --kp-muted: var(--ui-theme-muted, var(--ui-muted, #59615c));
+  --kp-border: var(--ui-theme-border, var(--ui-border, #e6dccb));
+  --kp-paper: var(--ui-theme-subtle, var(--ui-surface-subtle, #f6f1e9));
+  --kp-gold: var(--ui-theme-gold, #C3A26B);
+  --kp-font: var(--ui-font, 'Kantumruy Pro', system-ui, sans-serif);
+  --kp-display: 'Koupreng Editorial', Georgia, serif;
   color: var(--kp-ink);
   background: var(--kp-bg);
   font: 400 16px/1.8 var(--kp-font);
@@ -1578,7 +1580,7 @@
 /* V4: product-first public composition, retaining the original folio behavior. */
 .kp-landing .kp-eyebrow { text-transform: none; letter-spacing: normal; font-size: 14px; font-weight: 550; }
 .kp-landing[lang="en"] .kp-eyebrow { letter-spacing: normal; }
-.kp-landing[lang="en"] :is(h1,h2) { font-family: var(--kp-font); font-weight: 600; letter-spacing: -.025em; }
+.kp-landing[lang="en"] :is(h1,h2) { font-family: var(--kp-display); font-weight: 600; letter-spacing: -.025em; }
 .kp-landing[lang="en"] h2 { font-size: clamp(28px, 3vw, 38px); line-height: 1.28; }
 .kp-landing .kp-section { max-width: 1200px; width: calc(100% - 64px); padding-block: 80px; }
 .kp-landing .kp-hero { max-width: 1296px; padding: 112px 48px 48px; gap: 64px; }
@@ -1820,4 +1822,100 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* ==========================================================================
+   Marketing Landing Dark Mode
+   ========================================================================== */
+:root[data-color-mode="dark"] .kp-landing {
+  --kp-deep: #1e2d26;
+  --kp-deep-hover: #17241e;
+  --kp-gold-ink: #d9b879;
+  --kp-emerald: #3d5a4d;
+  --kp-emerald-deep: #2e433a;
+  --kp-bg: var(--ui-theme-canvas);
+  --kp-surface: var(--ui-theme-surface);
+  --kp-ink: var(--ui-theme-ink);
+  --kp-muted: var(--ui-theme-muted);
+  --kp-border: var(--ui-theme-border);
+  --kp-paper: var(--ui-theme-subtle);
+  --kp-gold: var(--ui-theme-gold);
+}
+
+:root[data-color-mode="dark"] .kp-hero-badge {
+  background: rgba(217, 184, 121, 0.12);
+  border-color: rgba(217, 184, 121, 0.3);
+  color: #ffd18a;
+}
+
+:root[data-color-mode="dark"] .kp-hero-highlights {
+  border-top-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-metric-card {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+.kp-landing .kp-metric-value { color: var(--kp-gold-ink); }
+.kp-landing .kp-metric-label { color: var(--kp-muted); }
+:root[data-color-mode="dark"] .kp-landing :is(.kokonut-bento-card,.uui-empty-state) { background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
+:root[data-color-mode="dark"] .kp-landing :is(.kokonut-bento-card__description,.uui-empty-state__description) { color: var(--ui-theme-muted); }
+:root[data-color-mode="dark"] .kp-landing :is(.kokonut-bento-card__icon-wrap,.uui-empty-state__icon-wrap,.kokonut-bento-card__badge) { background: var(--ui-theme-subtle); border-color: var(--ui-theme-border); color: var(--ui-theme-gold); }
+:root[data-color-mode="dark"] .kp-landing :is(.kokonut-bento-card__icon,.uui-empty-state__icon) { color: var(--ui-theme-gold); }
+
+:root[data-color-mode="dark"] .kp-guest-demo {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-guest-demo-bar {
+  background: var(--ui-theme-subtle);
+  border-bottom-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-guest-demo table th,
+:root[data-color-mode="dark"] .kp-guest-demo table td {
+  border-bottom-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-faq details {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-help-preview {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-final {
+  background: linear-gradient(145deg, #172019 0%, #111719 100%);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-showcase-frame {
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-mini-invitation {
+  background: var(--ui-theme-subtle);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-mini-detail {
+  border-top-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .kp-stage-controls button {
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-stage-controls button[aria-pressed="true"] {
+  background: var(--ui-theme-action);
+  color: var(--ui-theme-on-action);
+  border-color: var(--ui-theme-action);
 }

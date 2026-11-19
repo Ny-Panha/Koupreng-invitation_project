@@ -22,6 +22,7 @@ function getPageTitle(pathname, lang) {
   if (pathname.startsWith("/reset-password")) return isEn ? "Reset Password | Koupreng" : "កំណត់ពាក្យសម្ងាត់ឡើងវិញ | គូព្រេង";
   if (pathname.startsWith("/app/change-password")) return isEn ? "Change Password | Koupreng" : "ប្តូរពាក្យសម្ងាត់ | គូព្រេង";
   if (pathname.startsWith("/venues")) return isEn ? "Wedding Venues | Koupreng" : "ទីតាំងរៀបមង្គលការ | គូព្រេង";
+  if (pathname === "/contact") return isEn ? "Contact | Koupreng" : "ទំនាក់ទំនង | គូព្រេង";
   if (pathname.startsWith("/pricing")) return isEn ? "Pricing & Packages | Koupreng" : "តម្លៃ និងកញ្ចប់សេវាកម្ម | គូព្រេង";
   if (pathname.startsWith("/profile")) return isEn ? "Account Profile | Koupreng" : "គណនីផ្ទាល់ខ្លួន | គូព្រេង";
   if (pathname.startsWith("/notifications")) return isEn ? "Notifications | Koupreng" : "ការជូនដំណឹង | គូព្រេង";

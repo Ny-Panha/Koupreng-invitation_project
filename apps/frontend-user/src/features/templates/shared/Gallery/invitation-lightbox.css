@@ -1,0 +1,9 @@
+.invitation-lightbox-backdrop { background: rgb(0 0 0 / .92); }
+.invitation-lightbox.k-modal-container { background: transparent; color: #fff; border: 0; box-shadow: none; }
+.invitation-lightbox .k-modal-body { padding: 0; }
+.invitation-lightbox-content { position: relative; text-align: center; padding-top: 52px; }
+.invitation-lightbox-content > img { display: block; width: 100%; max-height: calc(85dvh - 120px); object-fit: contain; }
+.invitation-lightbox button { display: inline-flex; justify-content: center; align-items: center; min-width: 44px; min-height: 44px; border: 1px solid #a3a3a3; border-radius: 50%; color: #fff; background: #262626; cursor: pointer; }
+.invitation-lightbox button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.invitation-lightbox-close { position: absolute; right: 4px; top: 4px; }
+.invitation-lightbox-controls { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 8px; }

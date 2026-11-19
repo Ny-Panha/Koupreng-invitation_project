@@ -1,0 +1,34 @@
+[
+  {
+    "asset": "CormorantGaramond.woff2 / marketing Koupreng Editorial alias",
+    "provenance": "docs/frontend/user/template-asset-licenses.md; adjacent CormorantGaramond-OFL.txt",
+    "status": "EXISTING LOCAL OFL NOTICE RETAINED; no new asset imported",
+    "use": "EN marketing headings; actual loaded-face evidence in manifests"
+  },
+  {
+    "asset": "DM Sans / Kantumruy Pro / Moul",
+    "provenance": "existing local font notices and Phase03 binary audit",
+    "status": "SOURCE PRESERVED; native glyph/weight approval remains external"
+  },
+  {
+    "asset": "Homepage phone preview, Silk folio, template posters, brand logo",
+    "provenance": "existing public assets and repository template asset ledger",
+    "status": "EXISTING ASSETS PRESERVED; no rights expansion claimed"
+  },
+  {
+    "asset": "four images.unsplash.com venue URLs",
+    "provenance": "preexisting getVenues static records; exact photographer/use record absent from local scope",
+    "status": "REVIEW REQUIRED — directory/content owner must verify rights and photo identity",
+    "mitigation": "illustrative caption, empty photo alt, failed-media fallback; no verified venue photography or partnership claim"
+  },
+  {
+    "asset": "src/assets/icons/background.png on Venues",
+    "provenance": "preexisting local decorative asset; unchanged",
+    "status": "BASELINE ASSET RETAINED; 2,520,889 decoded bytes in the measured route; absolute mobile asset-cost/provenance review remains open"
+  },
+  {
+    "asset": "new UI source",
+    "provenance": "original project edits using existing React/Framer/Lucide; local native dialog",
+    "status": "NO NEW THIRD-PARTY COMPONENT, FONT, RUNTIME DEPENDENCY OR IMAGE IMPORT"
+  }
+]

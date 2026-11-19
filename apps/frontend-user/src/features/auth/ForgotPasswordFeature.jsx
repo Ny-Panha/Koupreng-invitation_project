@@ -1,13 +1,16 @@
 import { useId, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Mail, ArrowRight, CheckCircle2, ArrowLeft } from "lucide-react";
 import authService from "./api/authApi";
 import AuthLayout from "./components/AuthLayout";
 import { useLanguageStore } from "../../stores/useLanguageStore";
 import "./AuthPage.css";
+import { safeAuthRedirect } from './safeRedirect';
 
 export default function ForgotPassword() {
   const emailId = useId();
+  const errorId = useId();
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,9 +19,11 @@ export default function ForgotPassword() {
 
   const lang = useLanguageStore((state) => state.lang);
   const copy = (km, en) => (lang === "en" ? en : km);
+  const nextTarget = safeAuthRedirect(searchParams.get("next"));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading || submitted) return;
     setError("");
     setServerMessage("");
 
@@ -30,21 +35,28 @@ export default function ForgotPassword() {
 
     setLoading(true);
     try {
-      const response = await authService.forgotPassword(trimmed);
+      await authService.forgotPassword(trimmed);
       setServerMessage(
-        response?.message ||
           copy(
-            "ប្រសិនបើអ៊ីមែលនេះមានក្នុងប្រព័ន្ធ យើងបានផ្ញើសេចក្តីណែនាំសម្រាប់កំណត់លេខសម្ងាត់ឡើងវិញរួចហើយ។",
-            "If this email is registered, password reset instructions have been sent."
+            "ប្រសិនបើអ៊ីមែលនេះមានក្នុងប្រព័ន្ធ សូមពិនិត្យប្រអប់សំបុត្រ ឬ Spam ក្នុងអ៊ីមែលរបស់អ្នក។",
+            "If this email belongs to an eligible account, reset instructions will be sent when email delivery is available."
           )
       );
       setSubmitted(true);
-    } catch (err) {
-      setError(err.message || copy("មិនអាចផ្ញើសំណើកំណត់លេខសម្ងាត់បានទេ។ សូមព្យាយាមម្តងទៀត។", "Could not request password reset. Please try again."));
+    } catch {
+      setError(
+          copy(
+            "មិនអាចផ្ញើសំណើកំណត់លេខសម្ងាត់បានទេ។ សូមព្យាយាមម្តងទៀត។",
+            "Could not request password reset. Please try again."
+          )
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  const loginUrl = nextTarget ? `/login?next=${encodeURIComponent(nextTarget)}` : "/login";
+  const resetUrl = nextTarget ? `/reset-password?next=${encodeURIComponent(nextTarget)}` : "/reset-password";
 
   return (
     <AuthLayout>
@@ -53,7 +65,7 @@ export default function ForgotPassword() {
           <>
             <div className="auth-header">
               <h1 className="auth-title">
-                {copy("ភ្លេចលេខសម្ងាត់", "Forgot your password?")}
+                {copy("ភ្លេចលេខសម្ងាត់?", "Forgot your password?")}
               </h1>
               <p className="auth-subtitle">
                 {copy(
@@ -64,12 +76,12 @@ export default function ForgotPassword() {
             </div>
 
             {error && (
-              <p className="auth-error" role="alert">
+              <p id={errorId} className="auth-error" role="alert">
                 {error}
               </p>
             )}
 
-            <form onSubmit={handleSubmit} className="auth-form">
+            <form onSubmit={handleSubmit} className="auth-form" aria-busy={loading}>
               <div className="auth-field">
                 <label htmlFor={emailId} className="auth-label">
                   {copy("អាសយដ្ឋានអ៊ីមែល", "Email address")}
@@ -83,13 +95,14 @@ export default function ForgotPassword() {
                     placeholder={copy("ឧ. name@example.com", "e.g. name@example.com")}
                     required
                     autoComplete="email"
-                    className="auth-input"
+                    className={`auth-input${error ? " error" : ""}`}
+                    aria-describedby={error ? errorId : undefined}
                   />
                 </div>
                 <p className="auth-hint">
                   {copy(
                     "យើងនឹងផ្ញើតំណ ឬលេខកូដសម្ងាត់ទៅកាន់អ៊ីមែលនេះ។",
-                    "We will send reset instructions to this email."
+                    "Email reset requires an email already linked to your account."
                   )}
                 </p>
               </div>
@@ -104,16 +117,17 @@ export default function ForgotPassword() {
               </button>
             </form>
 
-            <div className="auth-recovery-hint" style={{ marginTop: "16px", padding: "12px 14px", borderRadius: "10px", background: "var(--app-subtle, #f5efe6)", fontSize: "13px", color: "var(--app-muted, #5e6f66)", lineHeight: 1.5 }}>
+            <div className="auth-recovery-hint">
               <strong>{copy("ចុះឈ្មោះតាមលេខទូរស័ព្ទ?", "Signed up with phone?")}</strong>{" "}
               {copy(
-                "សូមទាក់ទងមកកាន់ក្រុមការងារគាំទ្រ ឬចូលតាម Telegram ដើម្បីស្វែងរកគណនីរបស់អ្នក។",
-                "Please contact support or sign in via Telegram to recover access."
+                "សូមទាក់ទងមកកាន់ក្រុមការងារគាំទ្រ។",
+                "Contact support for available options. Telegram sign-in works only for an identity already linked to your account."
               )}
+              {' '}<Link to="/contact">{copy("ទាក់ទងមកយើង", "Contact support")}</Link>
             </div>
 
-            <div className="auth-back" style={{ marginTop: "20px" }}>
-              <Link to="/login" className="auth-home-link">
+            <div className="auth-back">
+              <Link to={loginUrl} className="auth-home-link">
                 <ArrowLeft size={15} aria-hidden="true" />
                 <span>{copy("ត្រឡប់ទៅការចូលគណនី", "Back to sign in")}</span>
               </Link>
@@ -121,33 +135,32 @@ export default function ForgotPassword() {
           </>
         ) : (
           <div className="auth-success" role="status">
-            <div className="auth-success-icon" style={{ width: "64px", height: "64px", background: "rgba(46, 67, 58, 0.1)" }}>
-              <CheckCircle2 size={36} color="#2E433A" aria-hidden="true" />
+            <div className="auth-success-icon">
+              <CheckCircle2 size={36} aria-hidden="true" />
             </div>
 
-            <div style={{ margin: "16px 0 20px" }}>
-              <h2 style={{ fontSize: "20px", fontWeight: "700", color: "#2E433A", marginBottom: "8px" }}>
-                {copy("បានផ្ញើសេចក្តីណែនាំរួចរាល់", "Instructions sent")}
+            <div className="auth-success-content">
+              <h2 className="auth-success-title">
+                {copy("ផ្ញើសំណើកំណត់លេខសម្ងាត់", "Request received")}
               </h2>
-              <p style={{ fontSize: "14px", color: "#695D50", lineHeight: "1.7", maxWidth: "360px", margin: "0 auto" }}>
+              <p className="auth-success-desc">
                 {serverMessage}
               </p>
-              <p style={{ fontSize: "13px", color: "#77572C", marginTop: "10px" }}>
-                {copy("សូមពិនិត្យប្រអប់សំបុត្រ ឬ Spam ក្នុងអ៊ីមែលរបស់អ្នក។", "Please check your inbox or spam folder.")}
+              <p className="auth-success-note">
+                {copy(
+                  "សូមពិនិត្យប្រអប់សំបុត្រ ឬ Spam ក្នុងអ៊ីមែលរបស់អ្នក។",
+                  "Please check your inbox or spam folder."
+                )}
               </p>
             </div>
 
-            <Link
-              to="/reset-password"
-              className="auth-submit"
-              style={{ textDecoration: "none" }}
-            >
+            <Link to={resetUrl} className="auth-submit" style={{ textDecoration: "none" }}>
               <span>{copy("បញ្ចូល Reset Token ដើម្បីប្តូរលេខសម្ងាត់", "Enter reset token to set new password")}</span>
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
 
-            <div className="auth-back" style={{ marginTop: "16px" }}>
-              <Link to="/login" className="auth-home-link">
+            <div className="auth-back">
+              <Link to={loginUrl} className="auth-home-link">
                 <ArrowLeft size={15} aria-hidden="true" />
                 <span>{copy("ត្រឡប់ទៅចូលគណនី", "Back to sign in")}</span>
               </Link>

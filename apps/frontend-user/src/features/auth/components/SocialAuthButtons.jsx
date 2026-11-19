@@ -117,7 +117,7 @@ function loadScript(id, src, isReady = () => false) {
     const s = document.createElement("script");
     s.id = id; s.src = src; s.async = true; s.dataset.src = src;
     s.onload = () => { s.dataset.loaded = "1"; res(); };
-    s.onerror = rej;
+    s.onerror = () => { s.remove(); rej(new Error('Provider script failed to load')); };
     document.head.appendChild(s);
   });
 }

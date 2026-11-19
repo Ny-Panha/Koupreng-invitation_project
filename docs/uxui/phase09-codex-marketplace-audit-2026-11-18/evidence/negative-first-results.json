@@ -1,0 +1,122 @@
+[
+  {
+    "id": "N09-01",
+    "desc": "Type Khmer + composed mixed Latin; switch language mid-query",
+    "result": "PASS (C09-002 verified)"
+  },
+  {
+    "id": "N09-02",
+    "desc": "Search clear icon operable target >= 24px/44px",
+    "result": "PASS (C09-001 verified)"
+  },
+  {
+    "id": "N09-03",
+    "desc": "Slow catalog response arriving after fast response (race)",
+    "result": "PASS (unmount/stale safe)"
+  },
+  {
+    "id": "N09-04",
+    "desc": "Catalog offline while demo fixture exists",
+    "result": "PASS (clearly marked demo)"
+  },
+  {
+    "id": "N09-05",
+    "desc": "Filter for free when price is null/unknown",
+    "result": "PASS (not classified as free)"
+  },
+  {
+    "id": "N09-06",
+    "desc": "Premium template unowned vs pending vs verified owned",
+    "result": "PASS (truthful CTAs)"
+  },
+  {
+    "id": "N09-07",
+    "desc": "User A paid-templates promise resolves after User B login",
+    "result": "PASS (isolated session)"
+  },
+  {
+    "id": "N09-08",
+    "desc": "Disabled/unpublished design deep-linked",
+    "result": "PASS (filtered by policy)"
+  },
+  {
+    "id": "N09-09",
+    "desc": "Legacy numeric ID collides with dynamic backend ID",
+    "result": "PASS (stable slug/code wins)"
+  },
+  {
+    "id": "N09-10",
+    "desc": "Unknown stable code with numeric alias",
+    "result": "PASS (no false fallback)"
+  },
+  {
+    "id": "N09-11",
+    "desc": "Preview opened by anonymous user for paid design",
+    "result": "PASS (preview only, no edit)"
+  },
+  {
+    "id": "N09-12",
+    "desc": "Iframe forged origin/nonce messages",
+    "result": "PASS (rejected by protocol)"
+  },
+  {
+    "id": "N09-13",
+    "desc": "Short landscape iframe reachability at 844x390",
+    "result": "PASS (Playwright verified)"
+  },
+  {
+    "id": "N09-14",
+    "desc": "Return from checkout via redirect without settlement",
+    "result": "PASS (pending status)"
+  },
+  {
+    "id": "N09-15",
+    "desc": "Package price null, 0, invalid decimal, KHR/USD",
+    "result": "PASS (no synthetic prices)"
+  },
+  {
+    "id": "N09-16",
+    "desc": "Package feature missing/false/true in mobile view",
+    "result": "PASS (semantic parity)"
+  },
+  {
+    "id": "N09-17",
+    "desc": "Login redirection with legitimate query vs open redirect",
+    "result": "PASS (sanitized safe destination)"
+  },
+  {
+    "id": "N09-18",
+    "desc": "Broken/oversized card image, slow server",
+    "result": "PASS (fallback placeholder)"
+  },
+  {
+    "id": "N09-19",
+    "desc": "Dark hover, focus, selected, disabled, error",
+    "result": "PASS (token-mapped contrast)"
+  },
+  {
+    "id": "N09-20",
+    "desc": "Axe config suppresses color-contrast check",
+    "result": "PASS (zero suppressions active)"
+  },
+  {
+    "id": "N09-21",
+    "desc": "Repeated modal open/close + Back navigation",
+    "result": "PASS (focus restored cleanly)"
+  },
+  {
+    "id": "N09-22",
+    "desc": "Localized sort with missing and duplicate names",
+    "result": "PASS (stable deterministic order)"
+  },
+  {
+    "id": "N09-23",
+    "desc": "prefers-reduced-motion with slow media",
+    "result": "PASS (immediate operable UI)"
+  },
+  {
+    "id": "N09-24",
+    "desc": "Direct /app/packages unauthorized/expired session",
+    "result": "PASS (redirect with return target)"
+  }
+]

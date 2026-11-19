@@ -1,0 +1,123 @@
+[
+  {
+    "id": "admin-knip",
+    "command": "npm.cmd --prefix apps/frontend-admin run analyze:knip",
+    "started_utc": "2026-11-19T01:32:14.647956+00:00",
+    "finished_utc": "2026-11-19T01:32:26.033726+00:00",
+    "seconds": 11.39,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/admin-knip.log",
+    "log_sha256": "afa49df3bee5c2b78d840037becff061c8cafa743af7d2bf7ad3e56e12cfb8ce",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/admin-knip.txt"
+  },
+  {
+    "id": "user-knip",
+    "command": "npm.cmd --prefix apps/frontend-user run analyze:knip",
+    "started_utc": "2026-11-19T01:32:14.635145+00:00",
+    "finished_utc": "2026-11-19T01:32:26.148958+00:00",
+    "seconds": 11.51,
+    "exit_code": 1,
+    "local_log": "output/ci-tools/user-knip.log",
+    "log_sha256": "81ccc7dcbe07b6d74e55de2c96238b7db1f36afdfa5fdf21c7fcf8de9ce2a500",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/user-knip.txt"
+  },
+  {
+    "id": "recovery-secret-scan-verified",
+    "command": "output/ci-tools/gitleaks.exe dir output/ci-tools/phase10-publication-bundle-staging --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-recovery-secrets.json",
+    "started_utc": "2026-11-19T01:32:53.120298+00:00",
+    "finished_utc": "2026-11-19T01:32:55.776814+00:00",
+    "seconds": 2.66,
+    "exit_code": 1,
+    "local_log": "output/ci-tools/recovery-secret-scan-verified.log",
+    "log_sha256": "6656518912aa6fc0294c5a4fce0e8aeb9bdbb3209dd690bc667b616c76f2121d",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/recovery-secret-scan-verified.txt"
+  },
+  {
+    "id": "repository-qa",
+    "command": "node --test scripts/qa/*.test.mjs",
+    "started_utc": "2026-11-19T01:36:50.554668+00:00",
+    "finished_utc": "2026-11-19T01:36:51.961675+00:00",
+    "seconds": 1.41,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/repository-qa.log",
+    "log_sha256": "4db80b2e128b3971fd8b7f3fa72ecf8f2a0b4dce711d72801440e8edab41b193",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/repository-qa.txt"
+  },
+  {
+    "id": "recovery-secret-scan-final",
+    "command": "output/ci-tools/gitleaks.exe dir output/ci-tools/phase10-publication-bundle-staging --config .gitleaks.toml --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-recovery-secrets.json",
+    "started_utc": "2026-11-19T01:36:50.556808+00:00",
+    "finished_utc": "2026-11-19T01:36:52.152962+00:00",
+    "seconds": 1.6,
+    "exit_code": 1,
+    "local_log": "output/ci-tools/recovery-secret-scan-final.log",
+    "log_sha256": "f1e149ff14cc0d3d9c002114fceadab1fa0aca33992a4825cb9e315ec2b8bd84",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/recovery-secret-scan-final.txt"
+  },
+  {
+    "id": "user-knip-final",
+    "command": "npm.cmd --prefix apps/frontend-user run analyze:knip",
+    "started_utc": "2026-11-19T01:36:50.554104+00:00",
+    "finished_utc": "2026-11-19T01:36:53.216826+00:00",
+    "seconds": 2.66,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/user-knip-final.log",
+    "log_sha256": "8acd90b57c59d3b75938a13b603beb8f5404f1798ec1fa7beeceee27d0b4ef41",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/user-knip-final.txt"
+  },
+  {
+    "id": "recovery-secret-scan-clear",
+    "command": "output/ci-tools/gitleaks.exe dir output/ci-tools/phase10-publication-bundle-staging --config .gitleaks.toml --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-recovery-secrets.json",
+    "started_utc": "2026-11-19T01:37:17.079786+00:00",
+    "finished_utc": "2026-11-19T01:37:18.568930+00:00",
+    "seconds": 1.49,
+    "exit_code": 1,
+    "local_log": "output/ci-tools/recovery-secret-scan-clear.log",
+    "log_sha256": "67a1e9065cfade73a57b82d9c9afd7dd14d2ee800e4750e93d25fb9cf3fd76f3",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/recovery-secret-scan-clear.txt"
+  },
+  {
+    "id": "recovery-secret-scan-passed",
+    "command": "output/ci-tools/gitleaks.exe dir output/ci-tools/phase10-publication-bundle-staging --config .gitleaks.toml --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-recovery-secrets.json",
+    "started_utc": "2026-11-19T01:37:57.098753+00:00",
+    "finished_utc": "2026-11-19T01:37:58.380461+00:00",
+    "seconds": 1.28,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/recovery-secret-scan-passed.log",
+    "log_sha256": "ab2da0955718df82ae6ad584fe287e723f03c04c9e73fc791640ab5824e7e76f",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/recovery-secret-scan-passed.txt"
+  },
+  {
+    "id": "final-secret-boundary-probe",
+    "command": "python docs/uxui/phase10-publication-2026-11-19/prepare.py canary",
+    "started_utc": "2026-11-19T01:38:55.686182+00:00",
+    "finished_utc": "2026-11-19T01:38:56.782304+00:00",
+    "seconds": 1.1,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/final-secret-boundary-probe.log",
+    "log_sha256": "04dc9cbe856350af45663c8a74ca623251fbc5e2c549fc15e53a9496e3f1d252",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/final-secret-boundary-probe.txt"
+  },
+  {
+    "id": "staged-secret-scan",
+    "command": "output/ci-tools/gitleaks.exe git --staged --config .gitleaks.toml --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-staged-secrets.json .",
+    "started_utc": "2026-11-19T01:41:42.877197+00:00",
+    "finished_utc": "2026-11-19T01:41:44.143861+00:00",
+    "seconds": 1.27,
+    "exit_code": 1,
+    "local_log": "output/ci-tools/staged-secret-scan.log",
+    "log_sha256": "d755df2a734a0ddf2fd56a885bc47387331c1ac666f47e3454b1a3bcfb8c00f2",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/staged-secret-scan.txt"
+  },
+  {
+    "id": "staged-secret-scan-final",
+    "command": "output/ci-tools/gitleaks.exe git --staged --config .gitleaks.toml --redact --no-banner --no-color --report-format json --report-path output/ci-tools/phase10-staged-secrets-final.json .",
+    "started_utc": "2026-11-19T01:43:15.557767+00:00",
+    "finished_utc": "2026-11-19T01:43:16.916012+00:00",
+    "seconds": 1.36,
+    "exit_code": 0,
+    "local_log": "output/ci-tools/staged-secret-scan-final.log",
+    "log_sha256": "890e929fbf58f2478fc62512ba439063e62f01fb0396cd93ff565822aba0903a",
+    "portable_log": "docs/uxui/phase10-publication-2026-11-19/evidence/command-output/staged-secret-scan-final.txt"
+  }
+]

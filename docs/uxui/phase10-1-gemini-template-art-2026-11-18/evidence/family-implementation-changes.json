@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "changes": [
+    {
+      "family": "TemplateBoilerplateLayout",
+      "upgrades": [
+        "Replaced hardcoded mock schedule with dynamic programDays / schedule items",
+        "Removed blocking window.alert() in RSVP; wired accessible form confirmation",
+        "Added accessible Skip opening button with min 44px touch target",
+        "Added accessible gallery lightbox with role=dialog, aria-modal, Escape key and arrow navigation",
+        "Added audio error banner with non-blocking recovery",
+        "Wired usePrefersReducedMotion() for instantaneous opening",
+        "Added mobile 360px CSS overrides and zero horizontal overflow"
+      ]
+    },
+    {
+      "family": "DigitalYesLayout",
+      "upgrades": [
+        "Added onSkip prop to WaxSealEnvelope and wired immediate open handler",
+        "Made wax seal and envelope flap fully keyboard accessible (Enter / Space)",
+        "Integrated usePrefersReducedMotion() bypassing 1.3s opening delay",
+        "Ensured min 44px hit target for skip button"
+      ]
+    },
+    {
+      "family": "EmeraldLuxeLayout",
+      "upgrades": [
+        "Added onSkip prop to VelvetCurtainOpening with instant curtain reveal",
+        "Clamped couple names to clamp(1.25rem, 5vw, 1.75rem) preventing 320px text clipping",
+        "Constrained .el-curtain-btn-box to max-width: calc(100vw - 32px) eliminating 320px overflow",
+        "Added keyboard activation on wax badge and container",
+        "Integrated usePrefersReducedMotion() instant reveal"
+      ]
+    },
+    {
+      "family": "CanvaKhmerWeddingTemplate",
+      "upgrades": [
+        "Added accessible Skip button to CanvaKhmerOpeningCover",
+        "Replaced AnimatePresence mode='wait' with mode-free AnimatePresence to prevent headless transition stalls",
+        "Added previewStartClosed prop support",
+        "Integrated usePrefersReducedMotion() instantaneous bypass"
+      ]
+    },
+    {
+      "family": "WithJoyPortalLayout",
+      "upgrades": [
+        "Added role=dialog, aria-modal=true, and close button to gallery lightbox",
+        "Added window Escape key listener and focus restoration to trigger element",
+        "Upgraded mobile navigation (<768px) from display:none to horizontal scroll pill bar",
+        "Added support for tpl prop normalization alongside content prop",
+        "Added 320px mobile viewport padding safeguards"
+      ]
+    }
+  ]
+}

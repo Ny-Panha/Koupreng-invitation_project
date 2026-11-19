@@ -1,0 +1,202 @@
+[
+  {
+    "route": "/",
+    "component": "HomeFeature + MarketingShell",
+    "states": [
+      "hero, primary/browse/create continuation, real demo entry, featured collection/empty, folio stages, guest sample, packages, FAQ, final CTA"
+    ],
+    "cases": [
+      "home discovery",
+      "reflow/axe",
+      "signed-in",
+      "SPA renderer isolation"
+    ],
+    "dependency": "catalog + public packages; fictional read-only responses",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/contact",
+    "component": "ContactFeature + MarketingShell",
+    "states": [
+      "pristine, required/malformed, typed, locale/theme, pending, duplicate guard, SMTP_ACCEPTED, unacknowledged, 429/503/offline, retry"
+    ],
+    "cases": [
+      "contact draft/rejection/retry",
+      "service error",
+      "Phase07 edges"
+    ],
+    "dependency": "POST /api/v1/contact intercepted; no real email",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/venues",
+    "component": "VenuesFeature + MarketingShell",
+    "states": [
+      "four static entries",
+      "filter/empty/reset",
+      "failed/slow media",
+      "selected detail via click",
+      "Back"
+    ],
+    "cases": [
+      "venue search",
+      "history",
+      "background modality",
+      "slow-photo edges"
+    ],
+    "dependency": "local static records; blocked external photos in fixtures",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/venues/:id",
+    "component": "VenuesFeature + native dialog portal",
+    "states": [
+      "direct known ID, invalid ID, Escape/close/backdrop, inert background, trap/return, short landscape, eager selected image"
+    ],
+    "cases": [
+      "direct entry",
+      "eager/fallback",
+      "reflow/axe",
+      "venue inquiry edge"
+    ],
+    "dependency": "local static records; no booking or availability service",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/about",
+    "component": "Navigate replace → /contact",
+    "states": [
+      "client redirect, destination title/description/focus",
+      "no 301 server assertion"
+    ],
+    "cases": [
+      "about/help redirects"
+    ],
+    "dependency": "no dedicated About page",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/help",
+    "component": "Navigate replace → /contact",
+    "states": [
+      "client redirect, destination contact recovery"
+    ],
+    "cases": [
+      "about/help redirects"
+    ],
+    "dependency": "no dedicated Help page",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "*",
+    "component": "NotFoundFeature, standalone system main",
+    "states": [
+      "404 heading, home recovery, bilingual theme source",
+      "six-project Phase06 system checks"
+    ],
+    "cases": [
+      "alias/404 recovery",
+      "Phase06 system-page cases"
+    ],
+    "dependency": "SPA fallback HTTP status needs deployment review",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/templates",
+    "component": "existing catalog in MarketingShell",
+    "states": [
+      "marketing entry/teaser and destination only",
+      "full catalog preserved"
+    ],
+    "cases": [
+      "home browse + 135-route sweep"
+    ],
+    "dependency": "Phase09 owns catalog states and pricing",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/pricing",
+    "component": "existing pricing in MarketingShell",
+    "states": [
+      "marketing entry",
+      "real package service untouched"
+    ],
+    "cases": [
+      "CTA href + 135-route sweep"
+    ],
+    "dependency": "Phase09/21 own amounts, eligibility and checkout",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/login → /app/events/new",
+    "component": "existing auth guard and return intent",
+    "states": [
+      "anonymous create continuation",
+      "signed-in Dashboard chrome"
+    ],
+    "cases": [
+      "home continuation + existing guard units"
+    ],
+    "dependency": "Phase08 identity; Phase11 creation",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  },
+  {
+    "route": "/templates/:id, /templates/:id/demo",
+    "component": "existing independent renderers",
+    "states": [
+      "real demo entry",
+      "Silk computed style after SPA marketing",
+      "Silk/Emerald before/after"
+    ],
+    "cases": [
+      "new isolation case",
+      "Phase06 cover tests"
+    ],
+    "dependency": "Phase10 art/registry; Phase16 guest journey",
+    "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+    "proof": "SOURCE MAPPED + named fixture browser cases; no live integration certification",
+    "external": [
+      "physical device/AT/native Khmer where applicable"
+    ]
+  }
+]

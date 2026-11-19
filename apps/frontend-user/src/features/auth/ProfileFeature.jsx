@@ -1,9 +1,16 @@
 import { PageSkeleton } from '@/shared/ui/LoadingState';
-import { useId, useState, useEffect } from "react";
+import { useId, useLayoutEffect, useRef, useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import { userService } from "@/features/auth/api/userApi";
 import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+import "./ProfileFeature.css";
+import { useUiCopy } from '../../shared/i18n/useUiCopy';
+import { useT } from '../../shared/i18n/useT';
+import { isAccountPasswordValid } from './accountPasswordPolicy';
+import AccountPasswordGuidance from './components/AccountPasswordGuidance';
 
 /**
  * ProfilePage — create or edit user profile + change password.
@@ -12,6 +19,10 @@ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 export default function ProfilePage() {
   const fieldId = useId();
   const { text: t } = useBackendMessages("profile");
+  const copy = useUiCopy();
+  const { auth } = useT();
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang === "km";
   const { user, logout, updateUser } = useAuth();
 
   // ── Profile state ──────────────────────────────────────────────────────────
@@ -20,13 +31,21 @@ export default function ProfilePage() {
   const [profileImage, setProfileImage] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [brokenImage, setBrokenImage] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
+  const readerRef = useRef(null);
+  const mounted = useRef(false);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; readerRef.current?.abort(); };
+  }, []);
 
   // Strip absolute localhost origin so images go through the Vite /uploads proxy
-  // (prevents Mixed Content errors when served via ngrok/cloudflare)
   const toRelativeUrl = (url) => (url || "").replace(/^https?:\/\/localhost(:\d+)?/, "");
 
   // ── Password state ─────────────────────────────────────────────────────────
@@ -34,53 +53,88 @@ export default function ProfilePage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrentPw, setShowCurrentPw] = useState(false);
+  const [showNewPw, setShowNewPw] = useState(false);
+  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [pwSaving, setPwSaving] = useState(false);
   const [pwSaved, setPwSaved] = useState(false);
   const [pwError, setPwError] = useState("");
+  const accountId = useRef(user?.id);
+  useLayoutEffect(() => {
+    accountId.current = user?.id;
+    readerRef.current?.abort(); readerRef.current = null;
+    setFullName(''); setPhone(''); setProfileImage('');
+    setImageFile(null); setImagePreview(''); setBrokenImage('');
+    setSaving(false); setSaved(false); setError('');
+    setCurrentPassword(''); setNewPassword(''); setConfirmPassword('');
+    setShowCurrentPw(false); setShowNewPw(false); setShowConfirmPw(false);
+    setPwSaving(false); setPwSaved(false); setPwError('');
+    return () => { accountId.current = null; };
+  }, [user?.id]);
 
   const hasProfile = Boolean(user?.fullName?.trim() || user?.full_name?.trim());
 
   // Load profile from API
   useEffect(() => {
+    let active = true;
     async function fetchProfile() {
+      setLoading(true);
+      setLoadFailed(false);
       try {
         const data = await userService.getProfile();
+        if (!active) return;
         setFullName(data.fullName || data.full_name || "");
         setPhone(data.phone || "");
         setProfileImage(toRelativeUrl(data.profileImage || data.profile_image || ""));
       } catch {
-        setFullName(user?.fullName || user?.full_name || user?.name || "");
-        setPhone(user?.phone || "");
-        setProfileImage(toRelativeUrl(user?.profileImage || user?.profile_image || ""));
+        if (active) setLoadFailed(true);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     }
     fetchProfile();
-  }, [user]);
+    return () => { active = false; };
+  }, [user?.id, loadAttempt]);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (!['image/jpeg','image/png','image/webp'].includes(file.type) || !/\.(?:jpe?g|png|webp)$/i.test(file.name) || !file.size || file.size > 5 * 1024 * 1024) {
+        setError(`${t('selectImage')}: JPEG / PNG / WebP · 0 < MB ≤ 5`);
+        e.target.value = '';
+        return;
+      }
+      setError('');
+      readerRef.current?.abort();
       setImageFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
+      readerRef.current = reader;
+      reader.onload = () => { if (mounted.current && readerRef.current === reader) setImagePreview(reader.result); };
+      reader.onerror = () => { if (mounted.current && readerRef.current === reader) { setImageFile(null); setImagePreview(''); setError(t('saveFailed')); } };
       reader.readAsDataURL(file);
     }
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if (saving || loadFailed || !fullName.trim()) return;
     setSaving(true);
     setError("");
     setSaved(false);
+    const requestAccountId = accountId.current;
+    const isCurrentAccount = () => mounted.current && accountId.current === requestAccountId;
 
     try {
       let imageUrl = profileImage;
       if (imageFile) {
         const uploadRes = await userService.uploadProfileImage(imageFile);
-        imageUrl = uploadRes.url || uploadRes.profileImage || uploadRes.profile_image || imageUrl;
+        if (!isCurrentAccount()) return;
+        imageUrl = uploadRes.url || uploadRes.profileImage || uploadRes.profile_image;
+        if (!imageUrl) throw new Error(t('saveFailed'));
+        // Keep a successful upload for a failed profile PATCH retry.
+        setProfileImage(imageUrl);
+        setImageFile(null);
       }
 
       const profileData = {
@@ -90,33 +144,28 @@ export default function ProfilePage() {
       };
 
       const updatedUser = await userService.updateProfile(profileData);
+      if (!isCurrentAccount()) return;
+      if (!updatedUser || typeof updatedUser.fullName !== 'string') throw new Error(t('saveFailed'));
 
       updateUser({
-          ...user,
-          fullName: fullName.trim(),
-          full_name: fullName.trim(),
-          name: fullName.trim(),
-          phone: phone.trim(),
-          profileImage: imageUrl,
-          profile_image: imageUrl,
-          profileComplete: true,
-          ...updatedUser,
+        ...user,
+        ...updatedUser,
       });
 
       setProfileImage(imageUrl);
       setImageFile(null);
       setImagePreview("");
       setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
     } catch (err) {
-      setError(err.message || t("saveFailed"));
+      if (isCurrentAccount()) setError(err.message || t("saveFailed"));
     } finally {
-      setSaving(false);
+      if (isCurrentAccount()) setSaving(false);
     }
   };
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
+    if (pwSaving) return;
     setPwError("");
     setPwSaved(false);
 
@@ -124,270 +173,68 @@ export default function ProfilePage() {
       setPwError(t("passwordMismatch"));
       return;
     }
-    if (newPassword.length < 8) {
-      setPwError(t("passwordTooShort"));
+    if (!currentPassword || !confirmPassword || !isAccountPasswordValid(newPassword)) {
+      setPwError(auth('passwordRequirementsError'));
       return;
     }
 
     setPwSaving(true);
+    const requestAccountId = accountId.current;
+    const isCurrentAccount = () => mounted.current && accountId.current === requestAccountId;
     try {
       await userService.changePassword(currentPassword, newPassword);
+      if (!isCurrentAccount()) return;
       setPwSaved(true);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      // Backend invalidated old tokens — log out after short delay
-      setTimeout(() => logout(), 2000);
+      void logout();
     } catch (err) {
-      setPwError(err.message || t("passwordChangeFailed"));
+      if (isCurrentAccount()) setPwError(err.message || t("passwordChangeFailed"));
     } finally {
-      setPwSaving(false);
+      if (isCurrentAccount()) setPwSaving(false);
     }
   };
 
-  const displayImage = imagePreview || profileImage;
+  const candidateImage = imagePreview || profileImage;
+  const displayImage = candidateImage === brokenImage ? '' : candidateImage;
   const displayInitial =
     fullName?.charAt(0)?.toUpperCase() ||
     user?.email?.charAt(0)?.toUpperCase() ||
     "?";
 
+  const eyeLabel = (shown) =>
+    shown
+      ? isKm
+        ? "លាក់ពាក្យសម្ងាត់"
+        : "Hide password"
+      : isKm
+      ? "បង្ហាញពាក្យសម្ងាត់"
+      : "Show password";
+
   if (loading) return <PageSkeleton label={t("loading")} />;
 
   return (
-    <>
-      <style>{`
-        .profile-page {
-          max-width: 520px;
-          margin: 0 auto;
-          padding: 40px 20px;
-        }
-        .profile-page h1 {
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 24px;
-          color: #333;
-          margin-bottom: 8px;
-        }
-        .profile-page .subtitle {
-          font-family: 'Kantumruy Pro', sans-serif;
-          color: var(--ui-muted);
-          font-size: 14px;
-          margin-bottom: 32px;
-        }
-        .profile-avatar-section {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          margin-bottom: 32px;
-        }
-        .profile-avatar {
-          position: relative;
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          background: var(--ui-action);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 32px;
-          font-weight: bold;
-          overflow: hidden;
-          border: 3px solid rgba(176, 146, 106, 0.3);
-          cursor: pointer;
-          flex-shrink: 0;
-        }
-        .profile-avatar img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .profile-avatar-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: rgba(0,0,0,0.5);
-          color: white;
-          font-size: 10px;
-          text-align: center;
-          padding: 4px 0;
-          font-family: 'Kantumruy Pro', sans-serif;
-        }
-        .profile-avatar input[type="file"] {
-          position: absolute;
-          inset: 0;
-          opacity: 0;
-          cursor: pointer;
-        }
-        .profile-info-text {
-          font-family: 'Kantumruy Pro', sans-serif;
-        }
-        .profile-info-text strong {
-          display: block;
-          font-size: 16px;
-          color: #333;
-        }
-        .profile-info-text span {
-          color: var(--ui-muted);
-          font-size: 13px;
-        }
-        .profile-form-group {
-          margin-bottom: 20px;
-        }
-        .profile-form-group label {
-          display: block;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-weight: 600;
-          font-size: 14px;
-          color: #555;
-          margin-bottom: 8px;
-        }
-        .profile-form-group input {
-          width: 100%;
-          padding: 14px 16px;
-          border: 1.5px solid rgba(176, 146, 106, 0.3);
-          border-radius: 12px;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 15px;
-          background: #fff;
-          transition: 0.2s;
-          outline-offset: 3px;
-          box-sizing: border-box;
-        }
-        .profile-form-group input:focus {
-          border-color: var(--ui-action);
-          box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.1);
-        }
-        .profile-form-group input { border-color: var(--ui-control-border); }
-        .profile-form-group input::placeholder { color: var(--ui-muted); opacity: 1; }
-        .profile-avatar:focus-within { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
-        .profile-form-group input:disabled {
-          background: #f5f5f5;
-          color: #999;
-        }
-        .profile-save-btn {
-          width: 100%;
-          padding: 16px;
-          background: var(--ui-action);
-          color: white;
-          border: none;
-          border-radius: 12px;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-weight: 700;
-          font-size: 16px;
-          cursor: pointer;
-          transition: 0.2s;
-          margin-top: 12px;
-        }
-        .profile-save-btn:hover {
-          background: var(--ui-action-hover);
-        }
-        .profile-save-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-        .profile-msg {
-          text-align: center;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 14px;
-          margin-top: 12px;
-          animation: profileFadeIn 0.3s;
-        }
-        .profile-msg.success { color: #2e7d32; }
-        .profile-msg.error   { color: #c62828; }
-
-        /* ── Password section ───────────────────────────────────────────────── */
-        .profile-section-divider {
-          border: none;
-          border-top: 1px solid rgba(176, 146, 106, 0.2);
-          margin: 36px 0 0;
-        }
-        .profile-pw-toggle {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: none;
-          border: none;
-          padding: 18px 0 0;
-          cursor: pointer;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 16px;
-          font-weight: 700;
-          color: #333;
-          text-align: left;
-        }
-        .profile-pw-toggle svg {
-          transition: transform 0.25s;
-          flex-shrink: 0;
-        }
-        .profile-pw-toggle.open svg {
-          transform: rotate(180deg);
-        }
-        .profile-pw-section {
-          overflow: hidden;
-          max-height: 0;
-          transition: max-height 0.35s ease, opacity 0.3s ease;
-          opacity: 0;
-        }
-        .profile-pw-section.open {
-          max-height: 600px;
-          opacity: 1;
-        }
-        .profile-pw-hint {
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-size: 13px;
-          color: var(--ui-muted);
-          margin: 6px 0 20px;
-        }
-        .profile-pw-btn {
-          width: 100%;
-          padding: 14px;
-          background: transparent;
-          color: var(--ui-action);
-          border: 2px solid var(--ui-action);
-          border-radius: 12px;
-          font-family: 'Kantumruy Pro', sans-serif;
-          font-weight: 700;
-          font-size: 15px;
-          cursor: pointer;
-          transition: 0.2s;
-          margin-top: 4px;
-        }
-        .profile-pw-btn:hover {
-          background: var(--ui-action);
-          color: #fff;
-        }
-        .profile-pw-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .profile-page :is(input, button):focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 3px; }
-        @media (prefers-reduced-motion: reduce) { .profile-page * { animation: none !important; transition: none !important; } }
-
-        @keyframes profileFadeIn {
-          from { opacity: 0; transform: translateY(-5px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-    <div className="profile-page" role="main">
-        <h1>{hasProfile ? t("editTitle") : t("createTitle")}</h1>
-
+    <section className="profile-page" aria-labelledby="profile-heading">
+      <div className="profile-card">
+        <h1 id="profile-heading">{hasProfile ? t("editTitle") : t("createTitle")}</h1>
+        <p className="profile-subtitle">
+          {hasProfile ? t("editSubtitle") : t("createSubtitle")}
+        </p>
 
         {/* ── Avatar ── */}
         <div className="profile-avatar-section">
           <div className="profile-avatar">
             {displayImage ? (
-              <img src={displayImage} alt={t("profilePhoto")} />
+              <img src={displayImage} alt={t("profilePhoto")} onError={() => setBrokenImage(displayImage)} />
             ) : (
               displayInitial
             )}
             <div className="profile-avatar-overlay">{t("changePhoto")}</div>
             <input
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp"
+              disabled={saving || loadFailed}
               onChange={handleImageChange}
               title={t("selectImage")}
               aria-label={t("selectImage")}
@@ -399,8 +246,13 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {loadFailed && <div className="profile-msg error" role="alert">
+          <p>{t('saveFailed')}</p>
+          <button type="button" onClick={() => setLoadAttempt(v => v + 1)}>{copy('ព្យាយាមម្ដងទៀត', 'Try again')}</button>
+        </div>}
+
         {/* ── Profile form ── */}
-        <form onSubmit={handleSave}>
+        <form onSubmit={handleSave} aria-busy={saving}>
           <div className="profile-form-group">
             <label htmlFor={`${fieldId}-name`}>{t("fullNameLabel")}</label>
             <input
@@ -408,7 +260,8 @@ export default function ProfilePage() {
               autoComplete="name"
               type="text"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={(e) => { setFullName(e.target.value); setSaved(false); }}
+              disabled={saving || loadFailed}
               placeholder={t("fullNamePlaceholder")}
               required
             />
@@ -433,7 +286,8 @@ export default function ProfilePage() {
               autoComplete="tel"
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => { setPhone(e.target.value); setSaved(false); }}
+              disabled={saving || loadFailed}
               placeholder={t("phonePlaceholder")}
             />
           </div>
@@ -441,7 +295,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             className="profile-save-btn"
-            disabled={saving || !fullName.trim()}
+            disabled={saving || loadFailed || !fullName.trim()}
           >
             {saving
               ? t("saving")
@@ -458,14 +312,15 @@ export default function ProfilePage() {
           )}
         </form>
 
-        {/* ── Change password ── */}
+        {/* ── Linked identities ── */}
         <hr className="profile-section-divider" />
-        <section aria-labelledby="profile-linked-identities">
-          <h2 id="profile-linked-identities">{t("linkedIdentities")}</h2>
+        <section className="profile-linked-identities" aria-labelledby="profile-linked-heading">
+          <h2 id="profile-linked-heading">{t("linkedIdentities")}</h2>
           <SocialAuthButtons mode="link" />
         </section>
         <hr className="profile-section-divider" />
 
+        {/* ── Change password accordion ── */}
         <button
           type="button"
           className={`profile-pw-toggle${showPasswordSection ? " open" : ""}`}
@@ -474,56 +329,101 @@ export default function ProfilePage() {
           aria-controls={`${fieldId}-password-fields`}
         >
           <span>{t("changePassword")}</span>
-          {/* chevron */}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B0926A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </button>
 
-        <div id={`${fieldId}-password-fields`} hidden={!showPasswordSection} inert={!showPasswordSection} className={`profile-pw-section${showPasswordSection ? " open" : ""}`}>
+        <div
+          id={`${fieldId}-password-fields`}
+          hidden={!showPasswordSection}
+          className={`profile-pw-section${showPasswordSection ? " open" : ""}`}
+        >
           <p className="profile-pw-hint">
             {t("changePasswordHint")}
           </p>
 
-          <form onSubmit={handleChangePassword}>
+          <form onSubmit={handleChangePassword} aria-busy={pwSaving}>
             <div className="profile-form-group">
               <label htmlFor={`${fieldId}-current-password`}>{t("currentPassword")}</label>
-              <input
-                id={`${fieldId}-current-password`}
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                autoComplete="current-password"
-              />
+              <div className="profile-input-wrap">
+                <input
+                  id={`${fieldId}-current-password`}
+                  type={showCurrentPw ? "text" : "password"}
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  className="profile-eye-btn"
+                  onClick={() => setShowCurrentPw((v) => !v)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  aria-label={eyeLabel(showCurrentPw)}
+                  aria-pressed={showCurrentPw}
+                >
+                  {showCurrentPw ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                </button>
+              </div>
             </div>
 
             <div className="profile-form-group">
               <label htmlFor={`${fieldId}-new-password`}>{t("newPasswordLabel")}</label>
-              <input
-                id={`${fieldId}-new-password`}
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={8}
-                autoComplete="new-password"
-              />
+              <div className="profile-input-wrap">
+                <input
+                  id={`${fieldId}-new-password`}
+                  type={showNewPw ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  minLength={8}
+                  maxLength={100}
+                  aria-invalid={Boolean(newPassword) && !isAccountPasswordValid(newPassword)}
+                  aria-describedby={`${fieldId}-password-policy`}
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  className="profile-eye-btn"
+                  onClick={() => setShowNewPw((v) => !v)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  aria-label={eyeLabel(showNewPw)}
+                  aria-pressed={showNewPw}
+                >
+                  {showNewPw ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                </button>
+              </div>
             </div>
 
+            <AccountPasswordGuidance id={`${fieldId}-password-policy`} value={newPassword} />
             <div className="profile-form-group">
               <label htmlFor={`${fieldId}-confirm-password`}>{t("confirmNewPassword")}</label>
-              <input
-                id={`${fieldId}-confirm-password`}
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                autoComplete="new-password"
-              />
+              <div className="profile-input-wrap">
+                <input
+                  id={`${fieldId}-confirm-password`}
+                  aria-invalid={Boolean(confirmPassword) && newPassword !== confirmPassword}
+                  aria-describedby={pwError ? `${fieldId}-password-error` : undefined}
+                  type={showConfirmPw ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  className="profile-eye-btn"
+                  onClick={() => setShowConfirmPw((v) => !v)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  aria-label={eyeLabel(showConfirmPw)}
+                  aria-pressed={showConfirmPw}
+                >
+                  {showConfirmPw ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                </button>
+              </div>
             </div>
 
             <button
@@ -535,16 +435,16 @@ export default function ProfilePage() {
             </button>
 
             {pwSaved && (
-              <p className="profile-msg success">
+              <p className="profile-msg success" role="status">
                 {t("passwordChanged")}
               </p>
             )}
             {pwError && (
-              <p className="profile-msg error">{pwError}</p>
+              <p id={`${fieldId}-password-error`} className="profile-msg error" role="alert">{pwError}</p>
             )}
           </form>
         </div>
       </div>
-    </>
+    </section>
   );
 }

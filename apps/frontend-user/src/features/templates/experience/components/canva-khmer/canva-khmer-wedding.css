@@ -209,7 +209,30 @@
     animation: ck-button-shimmer 2.8s ease-in-out infinite;
 }
 .ck-cover__open svg { flex: 0 0 auto; font-size: 1.1em; }
-.ck-cover__date { position: absolute; top: 69.3%; left: 50%; width: 70%; color: var(--ck-navy); font: 700 clamp(8px, 2.8cqw, 12px)/1.4 "Kantumruy Pro", sans-serif; text-align: center; transform: translateX(-50%); }
+.ck-cover__skip {
+    position: absolute;
+    top: 68.2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    color: var(--ck-navy);
+    font-size: clamp(8px, 2.4cqw, 11px);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+    z-index: 2;
+}
+.ck-cover__skip:hover {
+    color: var(--ck-gold);
+}
+.ck-cover__date { position: absolute; top: 73.8%; left: 50%; width: 70%; color: var(--ck-navy); font: 700 clamp(8px, 2.8cqw, 12px)/1.4 "Kantumruy Pro", sans-serif; text-align: center; transform: translateX(-50%); }
 
 /* The slices retain the exact exported garden/floral artwork and proportions. */
 .ck-hero { aspect-ratio: 1024 / 1976; }

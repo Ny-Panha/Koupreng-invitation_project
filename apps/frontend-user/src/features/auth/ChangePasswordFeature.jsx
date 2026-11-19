@@ -1,28 +1,51 @@
 import { useUiCopy } from "../../shared/i18n/useUiCopy";
-import { useId, useState } from "react";
+import { useLanguageStore } from "../../stores/useLanguageStore";
+import { useId, useLayoutEffect, useRef, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import authService from "./api/authApi";
+import { useAuth } from './hooks/useAuth';
+import { isAccountPasswordValid } from './accountPasswordPolicy';
+import AccountPasswordGuidance from './components/AccountPasswordGuidance';
+import "./ChangePasswordFeature.css";
 
 export default function ChangePasswordPage() {
   const uiCopy = useUiCopy();
+  const { user, logout } = useAuth();
+  const accountId = useRef(user?.id);
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang === "km";
   const oldId = useId();
   const newId = useId();
   const confirmId = useId();
+  const errorId = useId();
+  const guidanceId = useId();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState(false);
+  useLayoutEffect(() => {
+    accountId.current = user?.id;
+    setOldPassword(''); setNewPassword(''); setConfirm('');
+    setShowOld(false); setShowNew(false); setShowConfirm(false);
+    setSaving(false); setError(''); setMessage(false);
+    return () => { accountId.current = null; };
+  }, [user?.id]);
 
-  const mismatch = confirm && newPassword !== confirm;
-  const isTooShort = newPassword.length > 0 && newPassword.length < 8;
+  const mismatch = Boolean(confirm) && newPassword !== confirm;
+  const passwordValid = isAccountPasswordValid(newPassword);
 
   const submit = async (event) => {
     event.preventDefault();
+    if (saving) return;
     setError("");
     setMessage(false);
 
-    if (newPassword.length < 8) {
+    if (!oldPassword.trim() || !confirm || !passwordValid) {
       setError("passwordTooShort");
       return;
     }
@@ -32,33 +55,45 @@ export default function ChangePasswordPage() {
     }
 
     setSaving(true);
+    const requestAccountId = accountId.current;
     try {
       await authService.changePassword(oldPassword, newPassword);
+      if (accountId.current !== requestAccountId) return;
       setMessage(true);
       setOldPassword("");
       setNewPassword("");
       setConfirm("");
+      void logout();
     } catch (err) {
-      setError(err.message || uiCopy("មិនអាចប្តូរពាក្យសម្ងាត់បានទេ។", "Could not change password."));
+      if (accountId.current === requestAccountId) setError(err.message || uiCopy("មិនអាចប្តូរពាក្យសម្ងាត់បានទេ។", "Could not change password."));
     } finally {
-      setSaving(false);
+      if (accountId.current === requestAccountId) setSaving(false);
     }
   };
 
+  const eyeLabel = (shown) =>
+    shown
+      ? isKm
+        ? "លាក់ពាក្យសម្ងាត់"
+        : "Hide password"
+      : isKm
+      ? "បង្ហាញពាក្យសម្ងាត់"
+      : "Show password";
+
   return (
-    <main className="dash-main">
-      <section className="dash-panel" style={{ maxWidth: 560 }}>
+    <div className="account-password-page">
+      <section className="dash-panel" aria-labelledby="change-password-heading">
         <div className="dash-section-head">
           <div>
-            <h1>{uiCopy("ប្តូរពាក្យសម្ងាត់", "Change password")}</h1>
+            <h1 id="change-password-heading">{uiCopy("ប្តូរពាក្យសម្ងាត់", "Change password")}</h1>
             <p>{uiCopy("ប្តូរពាក្យសម្ងាត់គណនីរបស់អ្នក", "Update your account password")}</p>
           </div>
         </div>
 
         {error && (
-          <div className="dash-alert is-error" role="alert">
+          <div id={errorId} className="dash-alert is-error" role="alert">
             {error === "passwordTooShort"
-              ? uiCopy("ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "New password must be at least 8 characters.")
+              ? <AccountPasswordGuidance value={newPassword} />
               : error === "passwordMismatch"
               ? uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.")
               : error}
@@ -70,59 +105,97 @@ export default function ChangePasswordPage() {
           </div>
         )}
 
-        <form onSubmit={submit} className="dash-form" noValidate>
+        <form onSubmit={submit} className="dash-form" noValidate aria-busy={saving}>
           <div className="dash-field-group">
             <label htmlFor={oldId} className="dash-label">
               {uiCopy("ពាក្យសម្ងាត់បច្ចុប្បន្ន", "Current password")}
             </label>
-            <input
-              id={oldId}
-              className="dash-input"
-              type="password"
-              autoComplete="current-password"
-              value={oldPassword}
-              onChange={(event) => setOldPassword(event.target.value)}
-              required
-            />
+            <div className="dash-input-wrap">
+              <input
+                id={oldId}
+                className="dash-input"
+                type={showOld ? "text" : "password"}
+                autoComplete="current-password"
+                value={oldPassword}
+                onChange={(event) => setOldPassword(event.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="dash-eye-btn"
+                onClick={() => setShowOld((v) => !v)}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={eyeLabel(showOld)}
+                aria-pressed={showOld}
+              >
+                {showOld ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+              </button>
+            </div>
           </div>
 
           <div className="dash-field-group">
             <label htmlFor={newId} className="dash-label">
               {uiCopy("ពាក្យសម្ងាត់ថ្មី", "New password")}
             </label>
-            <input
-              id={newId}
-              className="dash-input"
-              type="password"
-              autoComplete="new-password"
-              value={newPassword}
-              onChange={(event) => setNewPassword(event.target.value)}
-              aria-invalid={isTooShort ? "true" : "false"}
-              required
-            />
-            <span className="dash-requirement">
-              {uiCopy("យ៉ាងតិច ៨ តួអក្សរ", "Must be at least 8 characters")}
-            </span>
+            <div className="dash-input-wrap">
+              <input
+                id={newId}
+                className="dash-input"
+                type={showNew ? "text" : "password"}
+                autoComplete="new-password"
+                value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)}
+                aria-invalid={Boolean(newPassword) && !passwordValid}
+                aria-describedby={guidanceId}
+                minLength={8}
+                maxLength={100}
+                required
+              />
+              <button
+                type="button"
+                className="dash-eye-btn"
+                onClick={() => setShowNew((v) => !v)}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={eyeLabel(showNew)}
+                aria-pressed={showNew}
+              >
+                {showNew ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+              </button>
+            </div>
+            <AccountPasswordGuidance id={guidanceId} value={newPassword} />
           </div>
 
           <div className="dash-field-group">
             <label htmlFor={confirmId} className="dash-label">
               {uiCopy("បញ្ជាក់ពាក្យសម្ងាត់ថ្មី", "Confirm new password")}
             </label>
-            <input
-              id={confirmId}
-              className="dash-input"
-              type="password"
-              autoComplete="new-password"
-              value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
-              aria-invalid={mismatch ? "true" : "false"}
-              required
-            />
+            <div className="dash-input-wrap">
+              <input
+                id={confirmId}
+                className={`dash-input${mismatch ? " error" : ""}`}
+                type={showConfirm ? "text" : "password"}
+                autoComplete="new-password"
+                value={confirm}
+                onChange={(event) => setConfirm(event.target.value)}
+                aria-invalid={mismatch ? "true" : "false"}
+                aria-describedby={mismatch ? `${confirmId}-error` : undefined}
+                required
+              />
+              <button
+                type="button"
+                className="dash-eye-btn"
+                onClick={() => setShowConfirm((v) => !v)}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={eyeLabel(showConfirm)}
+                aria-pressed={showConfirm}
+              >
+                {showConfirm ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+              </button>
+            </div>
           </div>
 
           {mismatch && (
-            <div className="dash-alert is-error" role="alert">
+            <div id={`${confirmId}-error`} className="dash-alert is-error" role="alert">
               {uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.")}
             </div>
           )}
@@ -130,7 +203,7 @@ export default function ChangePasswordPage() {
           <button
             type="submit"
             className="dash-btn"
-            disabled={saving || !!mismatch || !oldPassword || !newPassword || !confirm}
+            disabled={saving || message || Boolean(mismatch) || !oldPassword.trim() || !passwordValid || !confirm}
           >
             {saving
               ? uiCopy("កំពុងរក្សាទុក...", "Saving...")
@@ -138,160 +211,6 @@ export default function ChangePasswordPage() {
           </button>
         </form>
       </section>
-
-      <style>{`
-        .dash-main {
-          min-height: 80vh;
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          padding: 40px 16px 80px;
-          background: var(--ui-canvas, #faf7f2);
-          color: var(--ui-ink, #1f2937);
-          box-sizing: border-box;
-          font-family: 'Kantumruy Pro', sans-serif;
-        }
-        .dash-panel {
-          width: 100%;
-          max-width: 560px;
-          background: var(--ui-card, #ffffff);
-          border: 1px solid var(--ui-card-border, rgba(176, 146, 106, 0.25));
-          border-radius: 16px;
-          padding: 32px 28px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-          box-sizing: border-box;
-        }
-        .dash-section-head h1 {
-          font-size: 24px;
-          font-weight: 700;
-          color: var(--ui-ink, #1f2937);
-          margin: 0 0 8px 0;
-          line-height: 1.3;
-        }
-        .dash-section-head p {
-          font-size: 14px;
-          color: var(--ui-muted, #6b7280);
-          margin: 0 0 24px 0;
-        }
-        .dash-alert {
-          padding: 12px 16px;
-          border-radius: 10px;
-          font-size: 14px;
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: #ecfdf5;
-          color: #065f46;
-          border: 1px solid #a7f3d0;
-        }
-        .dash-alert.is-error {
-          background: #fef2f2;
-          color: #991b1b;
-          border: 1px solid #fecaca;
-        }
-        .dash-form {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-        .dash-field-group {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-        .dash-label {
-          display: block;
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--ui-ink, #374151);
-        }
-        .dash-input {
-          width: 100%;
-          height: 48px;
-          min-height: 48px;
-          padding: 12px 16px;
-          border: 1.5px solid var(--ui-control-border, #d1d5db);
-          border-radius: 10px;
-          font-size: 15px;
-          background: var(--ui-surface, #ffffff);
-          color: var(--ui-ink, #111827);
-          box-sizing: border-box;
-          transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .dash-input:focus {
-          border-color: var(--ui-action, #B0926A);
-          box-shadow: 0 0 0 3px rgba(176, 146, 106, 0.2);
-          outline: none;
-        }
-        .dash-requirement {
-          font-size: 12px;
-          color: var(--ui-muted, #6b7280);
-          margin-top: 2px;
-        }
-        .dash-btn {
-          width: 100%;
-          height: 48px;
-          min-height: 48px;
-          border-radius: 10px;
-          font-size: 16px;
-          font-weight: 600;
-          background: var(--ui-action, #B0926A);
-          color: #ffffff;
-          border: none;
-          cursor: pointer;
-          transition: background 0.2s, opacity 0.2s;
-          margin-top: 8px;
-        }
-        .dash-btn:hover:not(:disabled) {
-          background: var(--ui-action-hover, #9c7f56);
-        }
-        .dash-btn:disabled {
-          opacity: 0.55;
-          cursor: not-allowed;
-        }
-        [data-theme="dark"] .dash-main,
-        .dark .dash-main {
-          background: var(--ui-canvas, #121212);
-          color: var(--ui-ink, #f3f4f6);
-        }
-        [data-theme="dark"] .dash-panel,
-        .dark .dash-panel {
-          background: var(--ui-card, #1e1e1e);
-          border-color: var(--ui-card-border, #333333);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        [data-theme="dark"] .dash-section-head h1,
-        .dark .dash-section-head h1 {
-          color: var(--ui-ink, #f9fafb);
-        }
-        [data-theme="dark"] .dash-section-head p,
-        .dark .dash-section-head p {
-          color: var(--ui-muted, #9ca3af);
-        }
-        [data-theme="dark"] .dash-label,
-        .dark .dash-label {
-          color: var(--ui-ink, #e5e7eb);
-        }
-        [data-theme="dark"] .dash-input,
-        .dark .dash-input {
-          background: var(--ui-surface, #2a2a2a);
-          border-color: var(--ui-control-border, #444444);
-          color: var(--ui-ink, #f9fafb);
-        }
-        [data-theme="dark"] .dash-alert,
-        .dark .dash-alert {
-          background: rgba(6, 95, 70, 0.2);
-          color: #6ee7b7;
-          border-color: rgba(167, 243, 208, 0.3);
-        }
-        [data-theme="dark"] .dash-alert.is-error,
-        .dark .dash-alert.is-error {
-          background: rgba(153, 27, 27, 0.2);
-          color: #fca5a5;
-          border-color: rgba(254, 202, 202, 0.3);
-        }
-      `}</style>
-    </main>
+    </div>
   );
 }

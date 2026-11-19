@@ -1,0 +1,8 @@
+{
+  "sampledAt": "2026-11-18T20:33:36.6148093+07:00",
+  "processors": 20,
+  "processCount": 10,
+  "workingSetBytes": 203251712,
+  "cpuSecondsCumulative": 254.484375,
+  "purpose": "Post-run sample, 1.5 seconds after default-worker run ended. Not load telemetry during tests; includes any pre-existing named processes; cumulative CPU is not utilization."
+}

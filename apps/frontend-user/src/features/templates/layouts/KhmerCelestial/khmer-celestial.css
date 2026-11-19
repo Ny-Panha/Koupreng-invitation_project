@@ -2374,3 +2374,6 @@ body:has(.kc-root[data-variant="khmer-celestial"]) .chatbot-wrapper {
     transform: translate(-50%, -50%);
   }
 }
+/* Static bypass stays reachable while the ceremonial CTA animates. */
+.kc-opening__skip { position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem; z-index: 30; min-width: 44px; min-height: 44px; padding: 8px 14px; border: 1px solid #8a6429; border-radius: 24px; background: #fffdf5; color: #4a3a24; cursor: pointer; font: inherit; }
+.kc-opening__skip:focus-visible { outline: 3px solid #4a3a24; outline-offset: 3px; }

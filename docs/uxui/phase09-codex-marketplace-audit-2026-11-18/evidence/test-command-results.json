@@ -1,0 +1,122 @@
+{
+  "tokenCheck": {
+    "command": "node scripts/sync-design-tokens.cjs --check",
+    "status": "PASS",
+    "result": "Verified 2 application token exports."
+  },
+  "routeInventories": {
+    "user": {
+      "command": "npm test -- src/app/batch11RouteInventory.test.jsx",
+      "status": "PASS",
+      "passed": 2,
+      "total": 2
+    },
+    "admin": {
+      "command": "npm test -- src/app/batch11RouteInventory.test.jsx",
+      "status": "PASS",
+      "passed": 2,
+      "total": 2
+    }
+  },
+  "vitestUserUnit": {
+    "phase09Templates": {
+      "command": "npm test -- src/features/templates/Phase09Templates.test.jsx",
+      "status": "PASS",
+      "passed": 10,
+      "total": 10
+    },
+    "phase09CodexAuditRegression": {
+      "command": "npm test -- src/features/templates/Phase09CodexAuditRegression.test.jsx",
+      "status": "PASS",
+      "passed": 12,
+      "total": 12
+    },
+    "templatesDirectory": {
+      "command": "npm test -- src/features/templates/",
+      "status": "PASS",
+      "passed": 700,
+      "total": 700,
+      "files": 60
+    },
+    "marketingDirectory": {
+      "command": "npm test -- src/features/marketing/",
+      "status": "PASS",
+      "passed": 44,
+      "total": 44,
+      "files": 9
+    },
+    "authDirectory": {
+      "command": "npm test -- src/features/auth/",
+      "status": "PASS",
+      "passed": 97,
+      "total": 97,
+      "files": 10
+    }
+  },
+  "vitestAdminUnit": {
+    "fullSuite": {
+      "command": "npm test (admin)",
+      "status": "PASS",
+      "passed": 202,
+      "total": 202,
+      "files": 37
+    }
+  },
+  "linters": {
+    "user": {
+      "command": "npm run lint (user)",
+      "status": "PASS"
+    },
+    "admin": {
+      "command": "npm run lint (admin)",
+      "status": "PASS"
+    }
+  },
+  "builds": {
+    "user": {
+      "command": "npm run build (user)",
+      "status": "PASS",
+      "indexChunk": "477.66 kB (gzip: 142.10 kB)"
+    },
+    "admin": {
+      "command": "npm run build (admin)",
+      "status": "PASS",
+      "indexChunk": "285.33 kB (gzip: 90.66 kB)"
+    }
+  },
+  "playwrightPhase09": {
+    "command": "npm run test:e2e -- --config playwright.phase09.config.js",
+    "workers2": {
+      "status": "PASS",
+      "passed": 42,
+      "total": 42,
+      "duration": "1.1m"
+    },
+    "defaultWorkers10": {
+      "status": "PASS",
+      "passed": 42,
+      "total": 42,
+      "duration": "1.5m"
+    }
+  },
+  "playwrightCrossPhaseRegressions": {
+    "phase08Identity": {
+      "command": "npm run test:e2e -- tests/e2e/phase08-identity-account.spec.js",
+      "status": "PASS",
+      "passed": 18,
+      "total": 18
+    },
+    "phase07Featured": {
+      "command": "npm run test:e2e -- tests/e2e/phase07-featured-collection.spec.js",
+      "status": "PASS",
+      "passed": 8,
+      "total": 8
+    },
+    "phase02Foundations": {
+      "command": "npm run test:e2e -- tests/e2e/phase02-foundations.spec.js",
+      "status": "EXPECTED HISTORICAL BASELINE",
+      "passed": 26,
+      "failedKnown": 6
+    }
+  }
+}

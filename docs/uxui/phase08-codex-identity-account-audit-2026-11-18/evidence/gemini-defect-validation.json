@@ -1,0 +1,32 @@
+[
+  {
+    "id": "DEF-08-01",
+    "status": "PARTIAL HISTORICAL ATTRIBUTION",
+    "evidence": "Login/Register eye toggles already existed at HEAD. Gemini added mouse-focus preservation and additional route toggles; local behavior verified, not all newly invented."
+  },
+  {
+    "id": "DEF-08-02",
+    "status": "VERIFIED EXTRACTION, REPAIRED LIFECYCLE",
+    "evidence": "Profile inline style removed and CSS extracted; lifecycle/media and embedded error defects required C08 repairs."
+  },
+  {
+    "id": "DEF-08-03",
+    "status": "VERIFIED EXTRACTION, SCOPING REPAIRED",
+    "evidence": "Change-password CSS extracted but generic dash-main leaked into HostShell; C08-008 scopes it."
+  },
+  {
+    "id": "DEF-08-04",
+    "status": "CLAIM OVERSTATED",
+    "evidence": "Phone hint existed after Gemini but no direct support link or backend phone recovery service. C08-004 adds honest contact guidance; service gap remains."
+  },
+  {
+    "id": "DEF-08-05",
+    "status": "VISUAL IMPROVEMENT VERIFIED",
+    "evidence": "HEAD already exposed retry, disproving no-way-to-retry claim. Styled card retained; C08-010 fixes locale display."
+  },
+  {
+    "id": "DEF-08-06",
+    "status": "PRE-EXISTING FEATURE",
+    "evidence": "HEAD RegisterFeature and its existing tests already provided live five-rule feedback. No lowercase rule; dedicated account checklist claim unsupported."
+  }
+]

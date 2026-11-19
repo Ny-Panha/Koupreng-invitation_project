@@ -1,0 +1,289 @@
+[
+  {
+    "name": "Animate UI",
+    "claimed_directory": "src/shared/ui/vendor/animateui",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/animateui",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/animateui/AnimatedTabs.css",
+        "sha256": "664a983191cd468fb285a73074e662226f2da538527428a816228a94deabacc0"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/animateui/AnimatedTabs.jsx",
+        "sha256": "32d522ad640343b6a00569ac9385c7c339b8ac133d1c07bc25fd3a84c590b5e1"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/animateui/AnimatedTabs.test.jsx",
+        "sha256": "62965dc3c6f666954317b965a30ab5b7f5693b00599e9f992dea251678933050"
+      }
+    ],
+    "source_components": [
+      "AnimatedTabs.jsx"
+    ],
+    "terms": "MIT + Commons Clause",
+    "official_current_reference": "https://raw.githubusercontent.com/imskyleen/animate-ui/main/LICENSE.md",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Badtz UI",
+    "claimed_directory": "src/shared/ui/vendor/badtz",
+    "actual_directory": null,
+    "files": [],
+    "source_components": [],
+    "terms": "MIT with significant modification restriction",
+    "official_current_reference": "https://raw.githubusercontent.com/badtzx0/badtz-ui/main/LICENSE.md",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "EVALUATED/NOT USED",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "Original interaction principles only; no install",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Lightswind UI",
+    "claimed_directory": "src/shared/ui/vendor/lightswind",
+    "actual_directory": null,
+    "files": [],
+    "source_components": [],
+    "terms": "Conflicting MIT repository / restrictive builder and template site terms",
+    "official_current_reference": "https://lightswind.com/license",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "EVALUATED/NOT USED",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "Original interaction principles only; no install",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Kokonut UI",
+    "claimed_directory": "src/shared/ui/vendor/kokonut",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/kokonutui",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/kokonutui/BentoCard.css",
+        "sha256": "971dbe3d4886dbf7d1997c13220224e9c25a15cd75c2cc9e9ff2e0c25f89ba6f"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/kokonutui/BentoCard.jsx",
+        "sha256": "81f94d38f3c60cad92f2c5a2f1919899838161b93a8bbea2d8b7fe162e3f5b51"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/kokonutui/BentoCard.test.jsx",
+        "sha256": "2328b0d3888dfdcdd3f049a59f3a3bbb60f0b46057b132b96680cce63f5063dc"
+      }
+    ],
+    "source_components": [
+      "BentoCard.jsx"
+    ],
+    "terms": "MIT free core; Pro separate",
+    "official_current_reference": "https://raw.githubusercontent.com/kokonut-labs/kokonutui/main/LICENSE",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Untitled UI React",
+    "claimed_directory": "src/shared/ui/vendor/untitled",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/untitledui",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/untitledui/EmptyState.css",
+        "sha256": "596d15ffc8e16c659ae47781e80255d4f58843a1f0fc8ad140a70688e0326cab"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/untitledui/EmptyState.jsx",
+        "sha256": "5b1f4f2947f209ac6c92815f98b7e18f2cc4beeb32fbf380c9562311c9904897"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/untitledui/EmptyState.test.jsx",
+        "sha256": "65a4abd6d43fe33f3597838c7b4634cf6382195811290aafb2d29d5655e1e08e"
+      }
+    ],
+    "source_components": [
+      "EmptyState.jsx"
+    ],
+    "terms": "MIT free core; Pro separate",
+    "official_current_reference": "https://raw.githubusercontent.com/untitleduico/react/main/LICENSE",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "shadcn/ui",
+    "claimed_directory": "src/shared/ui/vendor/shadcn",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/shadcn",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/shadcn/Accordion.css",
+        "sha256": "6bcd13293a06808067a02f358f501f15b33f6a0e7fc3e962115ab469cff35647"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/shadcn/Accordion.jsx",
+        "sha256": "48157cf4fec80bc7dd942f033104627c9bffa90730717ab0a58bc338432bfcda"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/shadcn/Accordion.test.jsx",
+        "sha256": "ea435c1971943a6e2b27343463d726740d0cf2b70a2e433b967b08361a9b12d7"
+      }
+    ],
+    "source_components": [
+      "Accordion.jsx"
+    ],
+    "terms": "MIT",
+    "official_current_reference": "https://raw.githubusercontent.com/shadcn-ui/ui/main/LICENSE.md",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "React Bits",
+    "claimed_directory": "src/shared/ui/vendor/reactbits",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/reactbits",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/reactbits/FadeContent.jsx",
+        "sha256": "f7bef97a4cc90dfb6679bf1ca98a1ee69a7e343f055f00f78228dd1a9827efe4"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/reactbits/FadeContent.test.jsx",
+        "sha256": "f9fd3e46dfbb2714d109c7db7b8a58fceff6412c2b87a1568880d81dd15854d2"
+      }
+    ],
+    "source_components": [
+      "FadeContent.jsx"
+    ],
+    "terms": "MIT + Commons Clause; tools/exports distinct restrictions",
+    "official_current_reference": "https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Aceternity UI",
+    "claimed_directory": "src/shared/ui/vendor/aceternity",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/aceternity",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/aceternity/CardHoverEffect.css",
+        "sha256": "0cafcba5ff5bc8ccbf8d5aeaad359931f9b6c73158ed4c57ddf5c82637dc9f21"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/aceternity/CardHoverEffect.jsx",
+        "sha256": "729c20470298f6eb90990e7b4050b08d0fd94cc43cb2df29a10a19388fbf3b70"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/aceternity/CardHoverEffect.test.jsx",
+        "sha256": "3a2c6baf318c426dc7f4e964ee025cf6d085accb8a3e25ccd7dfb70058913d8f"
+      }
+    ],
+    "source_components": [
+      "CardHoverEffect.jsx"
+    ],
+    "terms": "Custom end product / source and marketplace restrictions",
+    "official_current_reference": "https://ui.aceternity.com/licence",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Magic UI",
+    "claimed_directory": "src/shared/ui/vendor/magicui",
+    "actual_directory": "apps/frontend-user/src/shared/ui/vendor/magicui",
+    "files": [
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/magicui/NumberTicker.jsx",
+        "sha256": "ae18f005b9c5d3917ec1884bdea1f44afb6e5aa56f72c23ba789238966643e07"
+      },
+      {
+        "path": "apps/frontend-user/src/shared/ui/vendor/magicui/NumberTicker.test.jsx",
+        "sha256": "43c5d8ab1f9d346011319e3db5ab256a5da659e4fb70827d360bcc431c4468cd"
+      }
+    ],
+    "source_components": [
+      "NumberTicker.jsx"
+    ],
+    "terms": "MIT free core; Pro separate",
+    "official_current_reference": "https://raw.githubusercontent.com/magicuidesign/magicui/main/LICENSE.md",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "PRE-EXISTING VENDOR",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "No new reuse; keep existing outside renderer tree pending exact component provenance audit",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  },
+  {
+    "name": "Skiper UI",
+    "claimed_directory": "src/shared/ui/vendor/skiper",
+    "actual_directory": null,
+    "files": [],
+    "source_components": [],
+    "terms": "Free usage requires attribution; general terms reserve rights",
+    "official_current_reference": "https://skiper-ui.com/docs/quick-start",
+    "web_check": "Official source read in this audit, 2026-11-18",
+    "source_revision_evidence": "docs/design/THIRD_PARTY_UI_LICENSES.md; historical declared pins not all independently matched to upstream source",
+    "adoption": "EVALUATED/NOT USED",
+    "phase10_new_source_copied": false,
+    "new_dependencies": [],
+    "invitation_imports": [],
+    "decision": "Original interaction principles only; no install",
+    "redistribution_permission": "REVIEW REQUIRED for exact component and commercial template outputs; no new third-party source in Codex repair",
+    "dependency_overhead_bytes": 0,
+    "test_evidence": "full-user-unit; renderer browser suite tests original/project controls, not unused vendor widgets"
+  }
+]

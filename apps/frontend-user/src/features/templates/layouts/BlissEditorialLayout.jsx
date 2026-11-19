@@ -1,4 +1,6 @@
+import DemoRsvpNotice from "../shared/RSVP/DemoRsvpNotice";
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
+import Modal from '@/shared/ui/Modal';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
 import AuthoredClosing from '../shared/AuthoredClosing';
@@ -7,7 +9,7 @@ import AuthoredFamilies from '../shared/AuthoredFamilies';
 import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
-import { useState, useRef, useEffect } from "react";
+import { useId, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { X, CheckCircle2 } from "lucide-react";
 import FloatingAudioPlayer from "../shared/AudioPlayer/FloatingAudioPlayer";
@@ -26,6 +28,7 @@ export default function BlissEditorialLayout({
   useTemplateLink,
   children,
 }) {
+  const rsvpId = useId();
   const [liveData, setLiveData] = useState(null);
   const effectiveContent = { ...content, ...liveData };
 
@@ -53,27 +56,11 @@ export default function BlissEditorialLayout({
     hall: "",
     address: "",
   };
-  const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
-  const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
+  const coverImage = effectiveContent.coverImage || (effectiveContent.hasHostContent ? "" : "/images/wedding/couple-hero-meadow.webp");
+  const musicUrl = effectiveContent.music?.url || effectiveContent.music || (effectiveContent.hasHostContent ? "" : defaultMusicUrl);
 
   // RSVP Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawer = useRef(null);
-  useEffect(() => {
-    if (!drawerOpen) return;
-    const previous = document.activeElement, panel = drawer.current;
-    panel?.querySelector('button')?.focus();
-    const keydown = event => {
-      if (event.key === 'Escape') { event.preventDefault(); setDrawerOpen(false); }
-      if (event.key !== 'Tab') return;
-      const controls = [...panel.querySelectorAll('button, input, select, textarea, a[href]')].filter(node => !node.disabled && node.getClientRects().length);
-      const first = controls[0], last = controls.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-    };
-    panel?.addEventListener('keydown', keydown);
-    return () => { panel?.removeEventListener('keydown', keydown); if (previous?.isConnected) previous.focus({ preventScroll: true }); };
-  }, [drawerOpen]);
   const [rsvpState, setRsvpState] = useState({
     name: "",
     attending: "yes",
@@ -96,7 +83,7 @@ export default function BlissEditorialLayout({
 
   const galleryImages = (effectiveContent.gallery && effectiveContent.gallery.length)
     ? effectiveContent.gallery.map(img => typeof img === "string" ? img : img.src || img.url)
-    : defaultGallery;
+    : effectiveContent.hasHostContent ? [] : defaultGallery;
 
   const isEnabled = (key) => content.enabledSections?.[key] !== false;
   const dressColors = Array.isArray(content.dressCode)
@@ -330,11 +317,7 @@ export default function BlissEditorialLayout({
       </footer>
 
       {/* Slide-out RSVP Drawer */}
-      <div
-        className={`bliss-drawer-backdrop ${drawerOpen ? "open" : ""}`}
-        onClick={() => setDrawerOpen(false)}
-      />
-      <div ref={drawer} className={`bliss-drawer ${drawerOpen ? "open" : ""}`} role="dialog" aria-label="RSVP" aria-modal={drawerOpen || undefined} inert={!drawerOpen}>
+      <Modal isOpen={drawerOpen} keepMounted onClose={() => setDrawerOpen(false)} ariaLabel="RSVP" showHeader={false} className="bliss-drawer open" backdropClassName="bliss-rsvp-backdrop">
         <button type="button" className="bliss-drawer-close" aria-label={String(effectiveContent.languageMode).toLowerCase() === 'en' ? 'Close RSVP' : 'បិទ RSVP'} onClick={() => setDrawerOpen(false)}>
           <X className="w-6 h-6" />
         </button>
@@ -344,20 +327,18 @@ export default function BlissEditorialLayout({
         {children || (rsvpState.submitted ? (
           <div style={{ textAlign: "center", padding: "3rem 1rem" }}>
             <CheckCircle2 className="w-14 h-14 text-stone-800 mx-auto mb-4" />
-            <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
-            <p style={{ color: "var(--bliss-taupe)", fontSize: "0.9rem" }}>
-              យើងខ្ញុំទន្ទឹងរង់ចាំទទួលស្វាគមន៍លោកអ្នកក្នុងថ្ងៃមង្គលការ។
-            </p>
+            <DemoRsvpNotice completed />
           </div>
         ) : (
           <form onSubmit={handleRsvpSubmit}>
+            <DemoRsvpNotice />
             <div style={{ marginBottom: "1.5rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ឈ្មោះពេញ (Full Name)"} /></label>
+              <label htmlFor={`${rsvpId}-name`} style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ឈ្មោះពេញ (Full Name)"} /></label>
               <input
                 type="text"
                 required
                 style={{ width: "100%", padding: "0.75rem", border: "1px solid var(--bliss-border)", background: "var(--bliss-bg)" }}
-                value={rsvpState.name}
+                id={`${rsvpId}-name`} value={rsvpState.name}
                 onChange={(e) => setRsvpState({ ...rsvpState, name: e.target.value })}
               />
             </div>
@@ -385,12 +366,12 @@ export default function BlissEditorialLayout({
             </div>
 
             <div style={{ marginBottom: "2rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ពាក្យជូនពរ (Blessing Note)"} /></label>
+              <label htmlFor={`${rsvpId}-note`} style={{ display: "block", fontSize: "0.8rem", letterSpacing: "normal", textTransform: "uppercase", marginBottom: "0.5rem" }}><InvitationLabel value={"ពាក្យជូនពរ (Blessing Note)"} /></label>
               <textarea
                 rows="4"
                 style={{ width: "100%", padding: "0.75rem", border: "1px solid var(--bliss-border)", background: "var(--bliss-bg)" }}
                 placeholder="សរសេរពាក្យជូនពរ..."
-                value={rsvpState.note}
+                id={`${rsvpId}-note`} value={rsvpState.note}
                 onChange={(e) => setRsvpState({ ...rsvpState, note: e.target.value })}
               />
             </div>
@@ -411,7 +392,7 @@ export default function BlissEditorialLayout({
             ><InvitationLabel value={"ផ្ញើការឆ្លើយតប • SUBMIT"} /></button>
           </form>
         ))}
-      </div>
+      </Modal>
     </div>
   );
 }

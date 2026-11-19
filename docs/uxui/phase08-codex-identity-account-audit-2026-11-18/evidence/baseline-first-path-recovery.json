@@ -1,0 +1,8 @@
+{
+  "path": "apps/frontend-user/index.html",
+  "method": "Removed only the Codex referrer meta line from current bytes; tested LF/CRLF; accepted only exact immutable baseline SHA-256 match",
+  "matchedBytes": "LF",
+  "sha256": "6c4877026b130cc4e7a4211cc7bbdd5373b31a68f43c05ac4c18b98adb6d6712",
+  "liveSourceModified": false,
+  "reason": "Initial porcelain text stripped its first leading status space; first snapshot path was not copied."
+}

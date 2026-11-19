@@ -26,7 +26,7 @@ function reveal(reducedMotion, delay, overrides = {}) {
   };
 }
 
-export default function CelestialOpening({ content, onOpen, autoFocus = true }) {
+export default function CelestialOpening({ content, onOpen, onSkip, autoFocus = true }) {
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
   const openLabel = content.opening?.openButtonText || "Open invitation";
@@ -95,6 +95,7 @@ export default function CelestialOpening({ content, onOpen, autoFocus = true }) 
         transition={{ duration: reducedMotion ? 0 : 1.7, delay: reducedMotion ? 0 : 0.2, ease: EASE }}
       />
       <div className="kc-opening__shade" aria-hidden="true" />
+      <button type="button" className="kc-opening__skip" onClick={onSkip || onOpen}>{english ? 'Skip opening' : 'រំលង / Skip opening'}</button>
       <CelestialHeritage />
       <CelestialLiveGarden className="kc-opening__garden" variant="opening" />
 

@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-11-18T23:15:00+07:00",
+  "defects": [
+    {
+      "id": "D10-01",
+      "severity": "High",
+      "area": "TemplateBoilerplate",
+      "summary": "TemplateBoilerplate was a basic mock lacking dynamic schedule, accessible RSVP, and skip button",
+      "rootCause": "Initial boilerplate layout contained hardcoded static timetable and blocking alert() calls",
+      "fix": "Rewrote component as a full-featured accessible layout supporting programDays, clean RSVP confirmation, min 44px Skip opening, and lightbox Escape support",
+      "verifiedBy": "apps/frontend-user/src/features/templates/layouts/TemplateBoilerplate/TemplateBoilerplateLayout.test.jsx"
+    },
+    {
+      "id": "D10-02",
+      "severity": "Medium",
+      "area": "DigitalYes",
+      "summary": "WaxSealEnvelope lacked accessible skip button and keyboard activation",
+      "rootCause": "Opening relied on mouse click on envelope seal without keyboard Enter/Space or skip link",
+      "fix": "Added accessible Skip button and onKeyDown handler for Enter and Space keys",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx"
+    },
+    {
+      "id": "D10-03",
+      "severity": "Medium",
+      "area": "EmeraldLuxe",
+      "summary": "Curtain opening container caused horizontal scroll overflow on 320px screens and lacked skip link",
+      "rootCause": "Fixed width on curtain button container and missing skip option",
+      "fix": "Added clamp() scaling, constrained container with max-width calc(100vw - 32px), and added min 44px Skip opening button",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx & Playwright viewport guard"
+    },
+    {
+      "id": "D10-04",
+      "severity": "Medium",
+      "area": "CanvaKhmerWeddingTemplate",
+      "summary": "AnimatePresence mode='wait' caused exit animations to stall in headless testing environments",
+      "rootCause": "Framer Motion mode='wait' required complete transition event before mounting replacement",
+      "fix": "Refactored to standard AnimatePresence, added previewStartClosed prop, and added accessible Skip button",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx"
+    },
+    {
+      "id": "D10-05",
+      "severity": "Medium",
+      "area": "WithJoyPortalLayout",
+      "summary": "Lightbox modal lacked accessible dialog roles and Escape key listener; mobile nav was hidden",
+      "rootCause": "Basic overlay with display:none mobile nav rule in withjoy-portal.css",
+      "fix": "Added role='dialog', aria-modal='true', Escape key listener, focus return, and smooth horizontal scroll pill navigation on mobile",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx & withjoy-portal.css"
+    },
+    {
+      "id": "D10-06",
+      "severity": "Low",
+      "area": "TemplateBoilerplateLayout",
+      "summary": "React 19 compiler manual memoization preservation lint error in handleOpenInvitation",
+      "rootCause": "Dependencies array had [reduced] without setOpened",
+      "fix": "Updated dependencies array to [reduced, setOpened] and removed unused imports",
+      "verifiedBy": "npm --prefix apps/frontend-user run lint"
+    }
+  ]
+}

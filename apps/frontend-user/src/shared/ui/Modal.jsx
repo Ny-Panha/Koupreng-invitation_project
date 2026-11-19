@@ -57,12 +57,18 @@ export default function Modal({
   className = "",
   backdropClassName = "",
   initialFocusRef,
+  keepMounted = false,
 }) {
   const copy = useUiCopy();
   const modalRef = useRef(null);
   const closeOptions = useRef({ onClose, closeOnEscape });
   const [portalRoot] = useState(() => document.createElement("div"));
   useEffect(() => { closeOptions.current = { onClose, closeOnEscape }; }, [onClose, closeOnEscape]);
+  useEffect(() => {
+    if (!keepMounted) return undefined;
+    document.body.appendChild(portalRoot);
+    return () => portalRoot.remove();
+  }, [keepMounted, portalRoot]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -144,16 +150,17 @@ export default function Modal({
       document.removeEventListener("focusin", containFocus);
       const wasTop = modalStack.at(-1) === entry;
       const index = modalStack.indexOf(entry); if (index >= 0) modalStack.splice(index, 1);
-      portalRoot.remove(); isolateBackground();
+      if (!keepMounted) portalRoot.remove();
+      isolateBackground();
       if (wasTop) {
         const restore = modalStack.length ? previousFocus : originalFocus;
         if (restore?.isConnected && !restore.closest("[inert]")) restore.focus({ preventScroll: true });
         else if (modalStack.length) (focusableElements(modalStack.at(-1).dialog)[0] || modalStack.at(-1).dialog).focus();
       }
     };
-  }, [isOpen, portalRoot, initialFocusRef]);
+  }, [isOpen, portalRoot, initialFocusRef, keepMounted]);
 
-  if (!isOpen) return null;
+  if (!isOpen && !keepMounted) return null;
 
   const handleBackdropClick = (event) => {
     if (closeOnBackdropClick && event.target === event.currentTarget) {
@@ -166,6 +173,8 @@ export default function Modal({
       className={`k-modal-backdrop ${backdropClassName}`.trim()}
       onClick={handleBackdropClick}
       role="presentation"
+      inert={!isOpen}
+      style={!isOpen ? { display: 'none' } : undefined}
     >
       <div
         className={`k-modal-container k-modal-${size} ${className}`.trim()}

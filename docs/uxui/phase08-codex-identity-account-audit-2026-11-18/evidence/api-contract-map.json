@@ -1,0 +1,63 @@
+[
+  {
+    "endpoint": "/auth/login",
+    "dto": "LoginRequest -> AuthResponse",
+    "policy": "identifier aliases email/phone/emailOrPhone; not blank <=255, password not blank <=100; do not impose new-registration complexity on existing login. Server returns accessToken/tokenType/expiresAt/user and optional auth cookie.",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/dto/LoginRequest.java"
+  },
+  {
+    "endpoint": "/auth/google and /auth/link/google",
+    "dto": "GoogleLoginRequest",
+    "policy": "idToken not blank <=4096; server verifies provider token; linking requires authenticated current account, no client merge/role authority",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/dto/GoogleLoginRequest.java"
+  },
+  {
+    "endpoint": "/auth/telegram and /auth/link/telegram",
+    "dto": "TelegramLoginRequest",
+    "policy": "OIDC idToken <=8192 OR legacy positive id/authDate + names/photo/hash bounds; AuthService owns verification, freshness and linking conflicts",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/dto/TelegramLoginRequest.java"
+  },
+  {
+    "endpoint": "/auth/me and /auth/logout",
+    "dto": "UserResponse / MessageResponse",
+    "policy": "authenticated current user; me exposes CSRF proof header for cookie mutations; logout invalidates server JWTs and clears optional cookie",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/AuthController.java"
+  },
+  {
+    "endpoint": "/auth/register",
+    "dto": "RegisterRequest",
+    "policy": "8–100 UTF-16 units; BMP letter/digit + uppercase Lu through DTO and uppercase service check; fullName <=120; phone <=30; service requires unique normalized phone",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/dto/RegisterRequest.java"
+  },
+  {
+    "endpoint": "/auth/change-password and /users/me/change-password",
+    "dto": "ChangePasswordRequest",
+    "policy": "currentPassword/oldPassword alias; 8–100 new; BMP letter/digit, no uppercase; increments tokenVersion",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AccountService.java"
+  },
+  {
+    "endpoint": "/auth/reset-password",
+    "dto": "ResetPasswordRequest",
+    "policy": "token <=255; password 8–100 plus letter/digit; single use, expiry, account active, tokenVersion invalidation",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/api/dto/ResetPasswordRequest.java"
+  },
+  {
+    "endpoint": "/auth/forgot-password",
+    "dto": "ForgotPasswordRequest",
+    "policy": "email-based, neutral response even if absent; mail configuration/failure is not delivery certification; no dev token response",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/auth/application/AccountService.java"
+  },
+  {
+    "endpoint": "/users/me and /users/me/profile-image",
+    "dto": "UpdateProfileRequest",
+    "policy": "current user from Authentication; fullName <=120, phone <=30, imageURL <=1024; upload MIME/extension/signature + configured ceiling capped at 5 MiB for images",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/shared/security/FileUploadValidator.java"
+  },
+  {
+    "endpoint": "Password encoding for register/change/reset",
+    "dto": "SecurityConfig PasswordEncoder bean",
+    "policy": "Installed BCryptPasswordEncoder rejects >72 UTF-8 bytes, in conflict with declared up-to100 UTF-16 units. C08-013 remains open; library-only probe is not HTTP/account integration.",
+    "source": "apps/backend/src/main/java/com/koupreng/backend/shared/config/SecurityConfig.java",
+    "evidence": "password-encoder-probe.json"
+  }
+]

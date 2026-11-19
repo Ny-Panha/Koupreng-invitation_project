@@ -1,0 +1,1594 @@
+--- a/apps/frontend-user/index.html
++++ b/apps/frontend-user/index.html
+@@ -2,6 +2,7 @@
+ <html lang="km">
+   <head>
+     <meta charset="UTF-8" />
++    <meta name="referrer" content="no-referrer" />
+     <link rel="icon" type="image/png" sizes="32x32" href="/branding/icons/icon-32.png" />
+     <link rel="icon" type="image/png" sizes="16x16" href="/branding/icons/icon-16.png" />
+     <link rel="shortcut icon" href="/branding/icons/favicon.ico" />
+--- a/apps/frontend-user/src/app/guards/RequireAuth.jsx
++++ b/apps/frontend-user/src/app/guards/RequireAuth.jsx
+@@ -7,7 +7,7 @@
+ 
+ export default function RequireAuth({ children }) {
+   const uiCopy = useUiCopy();
+-  const { isAuthenticated, isLoading, authStatus, sessionError, retrySession } = useAuth();
++  const { isAuthenticated, isLoading, authStatus, retrySession } = useAuth();
+   const location = useLocation();
+ 
+   if (isLoading) {
+@@ -26,8 +26,7 @@
+             {uiCopy("ការផ្ទៀងផ្ទាត់គណនីមិនបានជោគជ័យ", "Session Verification Failed")}
+           </h1>
+           <p className="auth-session-error-desc">
+-            {sessionError ||
+-              uiCopy(
++            {uiCopy(
+                 "មិនអាចផ្ទៀងផ្ទាត់គណនីរបស់អ្នកបានទេ។ សូមព្យាយាមម្តងទៀត។",
+                 "Could not verify your session. Please try again."
+               )}
+--- a/apps/frontend-user/src/app/guards/RequireAuth.test.jsx
++++ b/apps/frontend-user/src/app/guards/RequireAuth.test.jsx
+@@ -9,8 +9,10 @@
+ 
+ let isAuthenticated = false;
+ let isLoading = false;
++let authStatus = 'anonymous';
++const retrySession = vi.fn();
+ vi.mock("@/features/auth/hooks/useAuth", () => ({
+-  useAuth: () => ({ isAuthenticated, isLoading }),
++  useAuth: () => ({ isAuthenticated, isLoading, authStatus, sessionError:'Unlocalized upstream diagnostic', retrySession }),
+ }));
+ 
+ function LoginProbe() {
+@@ -30,7 +32,7 @@
+ }
+ 
+ describe("RequireAuth", () => {
+-  beforeEach(() => { isAuthenticated = false; isLoading = false; });
++  beforeEach(() => { isAuthenticated = false; isLoading = false; authStatus = 'anonymous'; });
+   afterEach(cleanup);
+ 
+   it("redirects a guest and preserves the complete intended URL", () => {
+@@ -51,4 +53,10 @@
+     expect(screen.queryByText(/^login/)).not.toBeInTheDocument();
+     expect(screen.queryByText("Private dashboard")).not.toBeInTheDocument();
+   });
++  it.each(['en','km'])('C08-010 localizes retry errors without echoing upstream diagnostics in %s', lang => {
++    useLanguageStore.setState({lang}); authStatus = 'error'; renderProtected();
++    expect(screen.getByRole('alert')).not.toHaveTextContent('Unlocalized upstream diagnostic');
++    expect(screen.getByRole('alert')).toHaveTextContent(lang==='en'?'Could not verify your session':'មិនអាចផ្ទៀងផ្ទាត់គណនីរបស់អ្នកបានទេ');
++    expect(screen.getByRole('link')).toHaveAttribute('href','/login?next=%2Fdashboard%3Ftab%3Devents%23today');
++  });
+ });
+--- a/apps/frontend-user/src/app/routes/hostRoutes.jsx
++++ b/apps/frontend-user/src/app/routes/hostRoutes.jsx
+@@ -18,9 +18,9 @@
+   if (/^[1-9]\d*$/.test(String(id || ""))) return <InvitationScopedRedirect targetSubPath={preview ? "preview" : "invitation"} />;
+   return preview ? <InvitationPreviewPage /> : <InvitationEditPage />;
+ }
+-function AccountRedirect() {
++function AccountRedirect({ target }) {
+   const location = useLocation();
+-  return <Navigate to={location.pathname.replace(/^\/dashboard/, "/app") + location.search + location.hash} replace />;
++  return <Navigate to={(target || location.pathname.replace(/^\/dashboard/, "/app")) + location.search + location.hash} replace />;
+ }
+ 
+ export function hostRoutes() {
+@@ -76,7 +76,7 @@
+       {["/events", "/event/list"].map(path => <Route key={path} path={path} element={<Navigate to="/app/events" replace />} />)}
+       {[["/guests", "guests"], ["/expenses", "budget"], ["/gift", "gifts"], ["/gifts", "gifts"], ["/reports", "reports"]].map(([path, module]) =>
+         <Route key={path} path={path} element={<InvitationScopedRedirect targetSubPath={module} />} />)}
+-      <Route path="/profile" element={<Navigate to="/app/profile" replace />} />
++      <Route path="/profile" element={<AccountRedirect target="/app/profile" />} />
+       <Route path="/templates/browse" element={<BrowseTemplatesPage />} />
+     </Route>
+     <Route path="/templates/browse/:id" element={<RequireAuth><HostTemplateDemoPage /></RequireAuth>} />
+--- a/apps/frontend-user/src/features/auth/AuthPage.css
++++ b/apps/frontend-user/src/features/auth/AuthPage.css
+@@ -4,6 +4,7 @@
+ 
+ /* ── Page wrapper ── */
+ .auth-shell { font-family: var(--ui-font); color: var(--ui-ink); }
++.auth-shell .account-password-guidance { padding-inline-start: 20px; color: var(--ui-theme-muted); font-size: 12px; line-height: 1.7; }
+ .auth-brand { display: flex; justify-content: center; width: fit-content; max-width: 100%; min-height: 44px; margin: 0 auto 24px; border-radius: 4px; }
+ .auth-shell :where(input, button, select, textarea) { font-family: inherit; }
+ .auth-page {
+@@ -809,7 +810,7 @@
+ .auth-shell :is(.auth-page,.auth-page--centered) { background: var(--ui-theme-canvas); color: var(--ui-theme-ink); }
+ .auth-shell .auth-card { background: var(--ui-theme-surface); color: var(--ui-theme-ink); border: 1px solid var(--ui-theme-border); box-shadow: var(--ui-theme-shadow); }
+ .auth-shell :is(.auth-title,.auth-label,.auth-lang-btn.active) { color: var(--ui-theme-ink); }
+-.auth-shell :is(.auth-subtitle,.auth-home-link,.auth-lang-btn,.auth-footer-text,.auth-eye-btn) { color: var(--ui-theme-muted); }
++.auth-shell :is(.auth-subtitle,.auth-home-link,.auth-lang-btn,.auth-footer-text,.auth-eye-btn,.auth-hint,.auth-footer-link) { color: var(--ui-theme-muted); }
+ .auth-shell .auth-divider { color: var(--ui-theme-muted); font-size: 12px; letter-spacing: 0; line-height: var(--ui-leading-khmer); }
+ .auth-shell .auth-footer-text a, .auth-shell .auth-footer-text a:hover { color: var(--ui-theme-link); }
+ .auth-shell .auth-lang-pill { background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
+@@ -820,6 +821,7 @@
+ .auth-shell .auth-submit, .auth-shell .auth-submit:hover:not(:disabled) { background: var(--ui-theme-action); color: var(--ui-theme-on-action); }
+ .auth-shell :is(.auth-error,.auth-error-msg,.auth-link-recovery,.auth-link-recovery .auth-footer-link) { color: var(--ui-theme-danger); }
+ .auth-shell .auth-error { background: var(--ui-theme-danger-soft); }
++.profile-page .auth-error { color: var(--ui-theme-danger); background: var(--ui-theme-danger-soft); }
+ .auth-shell :is(a,button,input,select):focus-visible { outline-color: var(--ui-theme-focus); }
+ :root[data-color-mode="dark"] .auth-shell { color-scheme: dark; }
+ 
+--- a/apps/frontend-user/src/features/auth/ChangePasswordFeature.css
++++ b/apps/frontend-user/src/features/auth/ChangePasswordFeature.css
+@@ -3,7 +3,10 @@
+    Uses canonical management design tokens (--ui-theme-*) for light/dark parity.
+ ───────────────────────────────────────────────────────────────────────────── */
+ 
+-.dash-main {
++.account-password-page .account-password-guidance { margin-block: 4px; padding-inline-start: 20px; color: var(--ui-theme-muted); font-size: 12px; line-height: 1.7; }
++.account-password-page :is(button,input):focus-visible { outline: 3px solid var(--ui-theme-focus); outline-offset: 3px; }
++
++.account-password-page {
+     min-height: 80vh;
+     display: flex;
+     justify-content: center;
+@@ -15,7 +18,7 @@
+     font-family: var(--ui-font-management);
+ }
+ 
+-.dash-panel {
++.account-password-page .dash-panel {
+     width: 100%;
+     max-width: 560px;
+     background: var(--ui-theme-surface);
+@@ -26,7 +29,7 @@
+     box-sizing: border-box;
+ }
+ 
+-.dash-section-head h1 {
++.account-password-page .dash-section-head h1 {
+     font-size: clamp(22px, 3vw, 26px);
+     font-weight: 700;
+     color: var(--ui-theme-ink);
+@@ -34,14 +37,14 @@
+     line-height: var(--ui-leading-khmer, 1.8);
+ }
+ 
+-.dash-section-head p {
++.account-password-page .dash-section-head p {
+     font-size: 14px;
+     color: var(--ui-theme-muted);
+     margin: 0 0 24px 0;
+     line-height: 1.6;
+ }
+ 
+-.dash-alert {
++.account-password-page .dash-alert {
+     padding: 14px 18px;
+     border-radius: var(--radius-md, 12px);
+     font-size: 14px;
+@@ -55,25 +58,25 @@
+     line-height: 1.5;
+ }
+ 
+-.dash-alert.is-error {
++.account-password-page .dash-alert.is-error {
+     background: var(--ui-theme-danger-soft);
+     color: var(--ui-theme-danger);
+     border: 1px solid var(--ui-theme-danger);
+ }
+ 
+-.dash-form {
++.account-password-page .dash-form {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+ }
+ 
+-.dash-field-group {
++.account-password-page .dash-field-group {
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+ }
+ 
+-.dash-label {
++.account-password-page .dash-label {
+     display: block;
+     font-size: 14px;
+     font-weight: 600;
+@@ -81,12 +84,12 @@
+     line-height: var(--ui-leading-khmer, 1.6);
+ }
+ 
+-.dash-input-wrap {
++.account-password-page .dash-input-wrap {
+     position: relative;
+     width: 100%;
+ }
+ 
+-.dash-input {
++.account-password-page .dash-input {
+     width: 100%;
+     height: 48px;
+     min-height: 48px;
+@@ -102,19 +105,19 @@
+     font-family: inherit;
+ }
+ 
+-.dash-input:focus {
++.account-password-page .dash-input:focus {
+     border-color: var(--ui-theme-focus);
+     box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-theme-focus) 25%, transparent);
+     background: var(--ui-theme-raised);
+     outline: none;
+ }
+ 
+-.dash-input.error,
+-.dash-input[aria-invalid="true"] {
++.account-password-page .dash-input.error,
++.account-password-page .dash-input[aria-invalid="true"] {
+     border-color: var(--ui-theme-danger);
+ }
+ 
+-.dash-eye-btn {
++.account-password-page .dash-eye-btn {
+     position: absolute;
+     right: 4px;
+     top: 50%;
+@@ -133,22 +136,22 @@
+     border-radius: var(--radius-sm, 6px);
+ }
+ 
+-.dash-eye-btn:hover {
++.account-password-page .dash-eye-btn:hover {
+     color: var(--ui-theme-ink);
+ }
+ 
+-.dash-eye-btn:focus-visible {
++.account-password-page .dash-eye-btn:focus-visible {
+     outline: 2px solid var(--ui-theme-focus);
+     outline-offset: 2px;
+ }
+ 
+-.dash-requirement {
++.account-password-page .dash-requirement {
+     font-size: 12px;
+     color: var(--ui-theme-muted);
+     line-height: 1.5;
+ }
+ 
+-.dash-btn {
++.account-password-page .dash-btn {
+     width: 100%;
+     height: 50px;
+     min-height: 50px;
+@@ -168,29 +171,29 @@
+     gap: 8px;
+ }
+ 
+-.dash-btn:hover:not(:disabled) {
++.account-password-page .dash-btn:hover:not(:disabled) {
+     filter: brightness(1.08);
+ }
+ 
+-.dash-btn:disabled {
++.account-password-page .dash-btn:disabled {
+     opacity: 0.5;
+     cursor: not-allowed;
+ }
+ 
+ @media (max-width: 480px) {
+-    .dash-main {
++    .account-password-page {
+         padding: 20px 12px 64px;
+     }
+-    .dash-panel {
++    .account-password-page .dash-panel {
+         padding: 24px 18px;
+         border-radius: 16px;
+     }
+ }
+ 
+ @media (prefers-reduced-motion: reduce) {
+-    .dash-btn,
+-    .dash-input,
+-    .dash-eye-btn {
++    .account-password-page .dash-btn,
++    .account-password-page .dash-input,
++    .account-password-page .dash-eye-btn {
+         transition: none !important;
+     }
+ }
+--- a/apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx
++++ b/apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx
+@@ -1,17 +1,24 @@
+ import { useUiCopy } from "../../shared/i18n/useUiCopy";
+ import { useLanguageStore } from "../../stores/useLanguageStore";
+-import { useId, useState } from "react";
++import { useId, useLayoutEffect, useRef, useState } from "react";
+ import { Eye, EyeOff } from "lucide-react";
+ import authService from "./api/authApi";
++import { useAuth } from './hooks/useAuth';
++import { isAccountPasswordValid } from './accountPasswordPolicy';
++import AccountPasswordGuidance from './components/AccountPasswordGuidance';
+ import "./ChangePasswordFeature.css";
+ 
+ export default function ChangePasswordPage() {
+   const uiCopy = useUiCopy();
++  const { user, logout } = useAuth();
++  const accountId = useRef(user?.id);
+   const lang = useLanguageStore((state) => state.lang);
+   const isKm = lang === "km";
+   const oldId = useId();
+   const newId = useId();
+   const confirmId = useId();
++  const errorId = useId();
++  const guidanceId = useId();
+   const [oldPassword, setOldPassword] = useState("");
+   const [newPassword, setNewPassword] = useState("");
+   const [confirm, setConfirm] = useState("");
+@@ -21,16 +28,24 @@
+   const [saving, setSaving] = useState(false);
+   const [error, setError] = useState("");
+   const [message, setMessage] = useState(false);
++  useLayoutEffect(() => {
++    accountId.current = user?.id;
++    setOldPassword(''); setNewPassword(''); setConfirm('');
++    setShowOld(false); setShowNew(false); setShowConfirm(false);
++    setSaving(false); setError(''); setMessage(false);
++    return () => { accountId.current = null; };
++  }, [user?.id]);
+ 
+   const mismatch = Boolean(confirm) && newPassword !== confirm;
+-  const isTooShort = newPassword.length > 0 && newPassword.length < 8;
++  const passwordValid = isAccountPasswordValid(newPassword);
+ 
+   const submit = async (event) => {
+     event.preventDefault();
++    if (saving) return;
+     setError("");
+     setMessage(false);
+ 
+-    if (newPassword.length < 8) {
++    if (!oldPassword.trim() || !confirm || !passwordValid) {
+       setError("passwordTooShort");
+       return;
+     }
+@@ -40,16 +55,19 @@
+     }
+ 
+     setSaving(true);
++    const requestAccountId = accountId.current;
+     try {
+       await authService.changePassword(oldPassword, newPassword);
++      if (accountId.current !== requestAccountId) return;
+       setMessage(true);
+       setOldPassword("");
+       setNewPassword("");
+       setConfirm("");
++      void logout();
+     } catch (err) {
+-      setError(err.message || uiCopy("មិនអាចប្តូរពាក្យសម្ងាត់បានទេ។", "Could not change password."));
++      if (accountId.current === requestAccountId) setError(err.message || uiCopy("មិនអាចប្តូរពាក្យសម្ងាត់បានទេ។", "Could not change password."));
+     } finally {
+-      setSaving(false);
++      if (accountId.current === requestAccountId) setSaving(false);
+     }
+   };
+ 
+@@ -63,7 +81,7 @@
+       : "Show password";
+ 
+   return (
+-    <main className="dash-main">
++    <div className="account-password-page">
+       <section className="dash-panel" aria-labelledby="change-password-heading">
+         <div className="dash-section-head">
+           <div>
+@@ -73,9 +91,9 @@
+         </div>
+ 
+         {error && (
+-          <div className="dash-alert is-error" role="alert">
++          <div id={errorId} className="dash-alert is-error" role="alert">
+             {error === "passwordTooShort"
+-              ? uiCopy("ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "New password must be at least 8 characters.")
++              ? <AccountPasswordGuidance value={newPassword} />
+               : error === "passwordMismatch"
+               ? uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.")
+               : error}
+@@ -127,7 +145,10 @@
+                 autoComplete="new-password"
+                 value={newPassword}
+                 onChange={(event) => setNewPassword(event.target.value)}
+-                aria-invalid={isTooShort ? "true" : "false"}
++                aria-invalid={Boolean(newPassword) && !passwordValid}
++                aria-describedby={guidanceId}
++                minLength={8}
++                maxLength={100}
+                 required
+               />
+               <button
+@@ -141,9 +162,7 @@
+                 {showNew ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+               </button>
+             </div>
+-            <span className="dash-requirement">
+-              {uiCopy("យ៉ាងតិច ៨ តួអក្សរ", "Must be at least 8 characters")}
+-            </span>
++            <AccountPasswordGuidance id={guidanceId} value={newPassword} />
+           </div>
+ 
+           <div className="dash-field-group">
+@@ -159,6 +178,7 @@
+                 value={confirm}
+                 onChange={(event) => setConfirm(event.target.value)}
+                 aria-invalid={mismatch ? "true" : "false"}
++                aria-describedby={mismatch ? `${confirmId}-error` : undefined}
+                 required
+               />
+               <button
+@@ -175,7 +195,7 @@
+           </div>
+ 
+           {mismatch && (
+-            <div className="dash-alert is-error" role="alert">
++            <div id={`${confirmId}-error`} className="dash-alert is-error" role="alert">
+               {uiCopy("ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ។", "Passwords do not match.")}
+             </div>
+           )}
+@@ -183,7 +203,7 @@
+           <button
+             type="submit"
+             className="dash-btn"
+-            disabled={saving || Boolean(mismatch) || !oldPassword || !newPassword || !confirm}
++            disabled={saving || message || Boolean(mismatch) || !oldPassword.trim() || !passwordValid || !confirm}
+           >
+             {saving
+               ? uiCopy("កំពុងរក្សាទុក...", "Saving...")
+@@ -191,6 +211,6 @@
+           </button>
+         </form>
+       </section>
+-    </main>
++    </div>
+   );
+ }
+--- a/apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx
++++ b/apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx
+@@ -5,6 +5,7 @@
+ import AuthLayout from "./components/AuthLayout";
+ import { useLanguageStore } from "../../stores/useLanguageStore";
+ import "./AuthPage.css";
++import { safeAuthRedirect } from './safeRedirect';
+ 
+ export default function ForgotPassword() {
+   const emailId = useId();
+@@ -18,10 +19,11 @@
+ 
+   const lang = useLanguageStore((state) => state.lang);
+   const copy = (km, en) => (lang === "en" ? en : km);
+-  const nextTarget = searchParams.get("next");
++  const nextTarget = safeAuthRedirect(searchParams.get("next"));
+ 
+   const handleSubmit = async (e) => {
+     e.preventDefault();
++    if (loading || submitted) return;
+     setError("");
+     setServerMessage("");
+ 
+@@ -33,18 +35,16 @@
+ 
+     setLoading(true);
+     try {
+-      const response = await authService.forgotPassword(trimmed);
++      await authService.forgotPassword(trimmed);
+       setServerMessage(
+-        response?.message ||
+           copy(
+-            "ប្រសិនបើអ៊ីមែលនេះមានក្នុងប្រព័ន្ធ យើងបានផ្ញើសេចក្តីណែនាំសម្រាប់កំណត់លេខសម្ងាត់ឡើងវិញរួចហើយ។",
+-            "If this email is registered, password reset instructions have been sent."
++            "ប្រសិនបើអ៊ីមែលនេះមានក្នុងប្រព័ន្ធ សូមពិនិត្យប្រអប់សំបុត្រ ឬ Spam ក្នុងអ៊ីមែលរបស់អ្នក។",
++            "If this email belongs to an eligible account, reset instructions will be sent when email delivery is available."
+           )
+       );
+       setSubmitted(true);
+-    } catch (err) {
++    } catch {
+       setError(
+-        err.message ||
+           copy(
+             "មិនអាចផ្ញើសំណើកំណត់លេខសម្ងាត់បានទេ។ សូមព្យាយាមម្តងទៀត។",
+             "Could not request password reset. Please try again."
+@@ -96,14 +96,13 @@
+                     required
+                     autoComplete="email"
+                     className={`auth-input${error ? " error" : ""}`}
+-                    aria-invalid={Boolean(error)}
+                     aria-describedby={error ? errorId : undefined}
+                   />
+                 </div>
+                 <p className="auth-hint">
+                   {copy(
+                     "យើងនឹងផ្ញើតំណ ឬលេខកូដសម្ងាត់ទៅកាន់អ៊ីមែលនេះ។",
+-                    "We will send reset instructions to this email."
++                    "Email reset requires an email already linked to your account."
+                   )}
+                 </p>
+               </div>
+@@ -121,9 +120,10 @@
+             <div className="auth-recovery-hint">
+               <strong>{copy("ចុះឈ្មោះតាមលេខទូរស័ព្ទ?", "Signed up with phone?")}</strong>{" "}
+               {copy(
+-                "សូមទាក់ទងមកកាន់ក្រុមការងារគាំទ្រ ឬចូលតាម Telegram ដើម្បីស្វែងរកគណនីរបស់អ្នក។",
+-                "Please contact support or sign in via Telegram to recover access."
++                "សូមទាក់ទងមកកាន់ក្រុមការងារគាំទ្រ។",
++                "Contact support for available options. Telegram sign-in works only for an identity already linked to your account."
+               )}
++              {' '}<Link to="/contact">{copy("ទាក់ទងមកយើង", "Contact support")}</Link>
+             </div>
+ 
+             <div className="auth-back">
+@@ -141,7 +141,7 @@
+ 
+             <div className="auth-success-content">
+               <h2 className="auth-success-title">
+-                {copy("បានផ្ញើសេចក្តីណែនាំរួចរាល់", "Instructions sent")}
++                {copy("ផ្ញើសំណើកំណត់លេខសម្ងាត់", "Request received")}
+               </h2>
+               <p className="auth-success-desc">
+                 {serverMessage}
+--- a/apps/frontend-user/src/features/auth/ForgotPasswordFeature.test.jsx
++++ b/apps/frontend-user/src/features/auth/ForgotPasswordFeature.test.jsx
+@@ -50,7 +50,7 @@
+     expect(authService.forgotPassword).not.toHaveBeenCalled();
+   });
+ 
+-  it("submits recovery request and displays instructions sent panel", async () => {
++  it("submits recovery request and confirms receipt without certifying delivery", async () => {
+     renderForgotPassword();
+     fireEvent.change(screen.getByLabelText(/Email address/i), {
+       target: { value: "user@example.com" },
+@@ -63,7 +63,7 @@
+     });
+ 
+     await waitFor(() => {
+-      expect(screen.getByRole("heading", { name: /Instructions sent/i })).toBeInTheDocument();
++      expect(screen.getByRole("heading", { name: /Request received/i })).toBeInTheDocument();
+     });
+ 
+     expect(screen.getByRole("link", { name: /Enter reset token to set new password/i })).toBeInTheDocument();
+@@ -79,7 +79,8 @@
+     fireEvent.click(screen.getByRole("button", { name: /Send reset instructions/i }));
+ 
+     const alert = await screen.findByRole("alert");
+-    expect(alert).toHaveTextContent("Rate limit exceeded");
++    expect(alert).toHaveTextContent('Could not request password reset. Please try again.');
++    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+   });
+ 
+   it("renders in Khmer locale", () => {
+--- a/apps/frontend-user/src/features/auth/LoginFeature.jsx
++++ b/apps/frontend-user/src/features/auth/LoginFeature.jsx
+@@ -30,6 +30,7 @@
+ 
+   const handleSubmit = async (e) => {
+     e.preventDefault();
++    if (loading) return;
+     setError("");
+ 
+     if (!identifier.trim() || !password) {
+--- a/apps/frontend-user/src/features/auth/ProfileFeature.css
++++ b/apps/frontend-user/src/features/auth/ProfileFeature.css
+@@ -109,6 +109,7 @@
+ }
+ 
+ .profile-info-text strong {
++    overflow-wrap: anywhere;
+     display: block;
+     font-size: 16px;
+     font-weight: 700;
+@@ -117,6 +118,7 @@
+ }
+ 
+ .profile-info-text span {
++    overflow-wrap: anywhere;
+     color: var(--ui-theme-muted);
+     font-size: 13px;
+     line-height: 1.5;
+@@ -140,6 +142,10 @@
+     position: relative;
+     width: 100%;
+ }
++
++.profile-page .profile-input-wrap input { padding-inline-end: 52px; }
++.profile-page .account-password-guidance { color: var(--ui-theme-muted); font-size: 12px; padding-inline-start: 20px; line-height: 1.7; }
++.profile-page :is(button,input):focus-visible { outline: 3px solid var(--ui-theme-focus); outline-offset: 3px; }
+ 
+ .profile-form-group input {
+     width: 100%;
+--- a/apps/frontend-user/src/features/auth/ProfileFeature.jsx
++++ b/apps/frontend-user/src/features/auth/ProfileFeature.jsx
+@@ -1,5 +1,5 @@
+ import { PageSkeleton } from '@/shared/ui/LoadingState';
+-import { useId, useState, useEffect } from "react";
++import { useId, useLayoutEffect, useRef, useState, useEffect } from "react";
+ import { Eye, EyeOff } from "lucide-react";
+ import { useAuth } from "@/features/auth/hooks/useAuth";
+ import { useLanguageStore } from "../../stores/useLanguageStore";
+@@ -7,6 +7,10 @@
+ import { userService } from "@/features/auth/api/userApi";
+ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
+ import "./ProfileFeature.css";
++import { useUiCopy } from '../../shared/i18n/useUiCopy';
++import { useT } from '../../shared/i18n/useT';
++import { isAccountPasswordValid } from './accountPasswordPolicy';
++import AccountPasswordGuidance from './components/AccountPasswordGuidance';
+ 
+ /**
+  * ProfilePage — create or edit user profile + change password.
+@@ -15,6 +19,8 @@
+ export default function ProfilePage() {
+   const fieldId = useId();
+   const { text: t } = useBackendMessages("profile");
++  const copy = useUiCopy();
++  const { auth } = useT();
+   const lang = useLanguageStore((state) => state.lang);
+   const isKm = lang === "km";
+   const { user, logout, updateUser } = useAuth();
+@@ -25,10 +31,19 @@
+   const [profileImage, setProfileImage] = useState("");
+   const [imageFile, setImageFile] = useState(null);
+   const [imagePreview, setImagePreview] = useState("");
++  const [brokenImage, setBrokenImage] = useState('');
+   const [loading, setLoading] = useState(true);
+   const [saving, setSaving] = useState(false);
+   const [saved, setSaved] = useState(false);
+   const [error, setError] = useState("");
++  const [loadFailed, setLoadFailed] = useState(false);
++  const [loadAttempt, setLoadAttempt] = useState(0);
++  const readerRef = useRef(null);
++  const mounted = useRef(false);
++  useEffect(() => {
++    mounted.current = true;
++    return () => { mounted.current = false; readerRef.current?.abort(); };
++  }, []);
+ 
+   // Strip absolute localhost origin so images go through the Vite /uploads proxy
+   const toRelativeUrl = (url) => (url || "").replace(/^https?:\/\/localhost(:\d+)?/, "");
+@@ -44,50 +59,82 @@
+   const [pwSaving, setPwSaving] = useState(false);
+   const [pwSaved, setPwSaved] = useState(false);
+   const [pwError, setPwError] = useState("");
++  const accountId = useRef(user?.id);
++  useLayoutEffect(() => {
++    accountId.current = user?.id;
++    readerRef.current?.abort(); readerRef.current = null;
++    setFullName(''); setPhone(''); setProfileImage('');
++    setImageFile(null); setImagePreview(''); setBrokenImage('');
++    setSaving(false); setSaved(false); setError('');
++    setCurrentPassword(''); setNewPassword(''); setConfirmPassword('');
++    setShowCurrentPw(false); setShowNewPw(false); setShowConfirmPw(false);
++    setPwSaving(false); setPwSaved(false); setPwError('');
++    return () => { accountId.current = null; };
++  }, [user?.id]);
+ 
+   const hasProfile = Boolean(user?.fullName?.trim() || user?.full_name?.trim());
+ 
+   // Load profile from API
+   useEffect(() => {
++    let active = true;
+     async function fetchProfile() {
++      setLoading(true);
++      setLoadFailed(false);
+       try {
+         const data = await userService.getProfile();
++        if (!active) return;
+         setFullName(data.fullName || data.full_name || "");
+         setPhone(data.phone || "");
+         setProfileImage(toRelativeUrl(data.profileImage || data.profile_image || ""));
+       } catch {
+-        setFullName(user?.fullName || user?.full_name || user?.name || "");
+-        setPhone(user?.phone || "");
+-        setProfileImage(toRelativeUrl(user?.profileImage || user?.profile_image || ""));
++        if (active) setLoadFailed(true);
+       } finally {
+-        setLoading(false);
++        if (active) setLoading(false);
+       }
+     }
+     fetchProfile();
+-  }, [user]);
++    return () => { active = false; };
++  }, [user?.id, loadAttempt]);
+ 
+   // ── Handlers ───────────────────────────────────────────────────────────────
+   const handleImageChange = (e) => {
+     const file = e.target.files?.[0];
+     if (file) {
++      if (!['image/jpeg','image/png','image/webp'].includes(file.type) || !/\.(?:jpe?g|png|webp)$/i.test(file.name) || !file.size || file.size > 5 * 1024 * 1024) {
++        setError(`${t('selectImage')}: JPEG / PNG / WebP · 0 < MB ≤ 5`);
++        e.target.value = '';
++        return;
++      }
++      setError('');
++      readerRef.current?.abort();
+       setImageFile(file);
+       const reader = new FileReader();
+-      reader.onloadend = () => setImagePreview(reader.result);
++      readerRef.current = reader;
++      reader.onload = () => { if (mounted.current && readerRef.current === reader) setImagePreview(reader.result); };
++      reader.onerror = () => { if (mounted.current && readerRef.current === reader) { setImageFile(null); setImagePreview(''); setError(t('saveFailed')); } };
+       reader.readAsDataURL(file);
+     }
+   };
+ 
+   const handleSave = async (e) => {
+     e.preventDefault();
++    if (saving || loadFailed || !fullName.trim()) return;
+     setSaving(true);
+     setError("");
+     setSaved(false);
++    const requestAccountId = accountId.current;
++    const isCurrentAccount = () => mounted.current && accountId.current === requestAccountId;
+ 
+     try {
+       let imageUrl = profileImage;
+       if (imageFile) {
+         const uploadRes = await userService.uploadProfileImage(imageFile);
+-        imageUrl = uploadRes.url || uploadRes.profileImage || uploadRes.profile_image || imageUrl;
++        if (!isCurrentAccount()) return;
++        imageUrl = uploadRes.url || uploadRes.profileImage || uploadRes.profile_image;
++        if (!imageUrl) throw new Error(t('saveFailed'));
++        // Keep a successful upload for a failed profile PATCH retry.
++        setProfileImage(imageUrl);
++        setImageFile(null);
+       }
+ 
+       const profileData = {
+@@ -97,16 +144,11 @@
+       };
+ 
+       const updatedUser = await userService.updateProfile(profileData);
++      if (!isCurrentAccount()) return;
++      if (!updatedUser || typeof updatedUser.fullName !== 'string') throw new Error(t('saveFailed'));
+ 
+       updateUser({
+         ...user,
+-        fullName: fullName.trim(),
+-        full_name: fullName.trim(),
+-        name: fullName.trim(),
+-        phone: phone.trim(),
+-        profileImage: imageUrl,
+-        profile_image: imageUrl,
+-        profileComplete: true,
+         ...updatedUser,
+       });
+ 
+@@ -114,16 +156,16 @@
+       setImageFile(null);
+       setImagePreview("");
+       setSaved(true);
+-      setTimeout(() => setSaved(false), 3000);
+     } catch (err) {
+-      setError(err.message || t("saveFailed"));
++      if (isCurrentAccount()) setError(err.message || t("saveFailed"));
+     } finally {
+-      setSaving(false);
++      if (isCurrentAccount()) setSaving(false);
+     }
+   };
+ 
+   const handleChangePassword = async (e) => {
+     e.preventDefault();
++    if (pwSaving) return;
+     setPwError("");
+     setPwSaved(false);
+ 
+@@ -131,28 +173,31 @@
+       setPwError(t("passwordMismatch"));
+       return;
+     }
+-    if (newPassword.length < 8) {
+-      setPwError(t("passwordTooShort"));
++    if (!currentPassword || !confirmPassword || !isAccountPasswordValid(newPassword)) {
++      setPwError(auth('passwordRequirementsError'));
+       return;
+     }
+ 
+     setPwSaving(true);
++    const requestAccountId = accountId.current;
++    const isCurrentAccount = () => mounted.current && accountId.current === requestAccountId;
+     try {
+       await userService.changePassword(currentPassword, newPassword);
++      if (!isCurrentAccount()) return;
+       setPwSaved(true);
+       setCurrentPassword("");
+       setNewPassword("");
+       setConfirmPassword("");
+-      // Backend invalidated old tokens — log out after short delay
+-      setTimeout(() => logout(), 2000);
++      void logout();
+     } catch (err) {
+-      setPwError(err.message || t("passwordChangeFailed"));
++      if (isCurrentAccount()) setPwError(err.message || t("passwordChangeFailed"));
+     } finally {
+-      setPwSaving(false);
++      if (isCurrentAccount()) setPwSaving(false);
+     }
+   };
+ 
+-  const displayImage = imagePreview || profileImage;
++  const candidateImage = imagePreview || profileImage;
++  const displayImage = candidateImage === brokenImage ? '' : candidateImage;
+   const displayInitial =
+     fullName?.charAt(0)?.toUpperCase() ||
+     user?.email?.charAt(0)?.toUpperCase() ||
+@@ -181,14 +226,15 @@
+         <div className="profile-avatar-section">
+           <div className="profile-avatar">
+             {displayImage ? (
+-              <img src={displayImage} alt={t("profilePhoto")} />
++              <img src={displayImage} alt={t("profilePhoto")} onError={() => setBrokenImage(displayImage)} />
+             ) : (
+               displayInitial
+             )}
+             <div className="profile-avatar-overlay">{t("changePhoto")}</div>
+             <input
+               type="file"
+-              accept="image/*"
++              accept="image/jpeg,image/png,image/webp"
++              disabled={saving || loadFailed}
+               onChange={handleImageChange}
+               title={t("selectImage")}
+               aria-label={t("selectImage")}
+@@ -200,6 +246,11 @@
+           </div>
+         </div>
+ 
++        {loadFailed && <div className="profile-msg error" role="alert">
++          <p>{t('saveFailed')}</p>
++          <button type="button" onClick={() => setLoadAttempt(v => v + 1)}>{copy('ព្យាយាមម្ដងទៀត', 'Try again')}</button>
++        </div>}
++
+         {/* ── Profile form ── */}
+         <form onSubmit={handleSave} aria-busy={saving}>
+           <div className="profile-form-group">
+@@ -209,7 +260,8 @@
+               autoComplete="name"
+               type="text"
+               value={fullName}
+-              onChange={(e) => setFullName(e.target.value)}
++              onChange={(e) => { setFullName(e.target.value); setSaved(false); }}
++              disabled={saving || loadFailed}
+               placeholder={t("fullNamePlaceholder")}
+               required
+             />
+@@ -234,7 +286,8 @@
+               autoComplete="tel"
+               type="tel"
+               value={phone}
+-              onChange={(e) => setPhone(e.target.value)}
++              onChange={(e) => { setPhone(e.target.value); setSaved(false); }}
++              disabled={saving || loadFailed}
+               placeholder={t("phonePlaceholder")}
+             />
+           </div>
+@@ -242,7 +295,7 @@
+           <button
+             type="submit"
+             className="profile-save-btn"
+-            disabled={saving || !fullName.trim()}
++            disabled={saving || loadFailed || !fullName.trim()}
+           >
+             {saving
+               ? t("saving")
+@@ -327,6 +380,9 @@
+                   placeholder="••••••••"
+                   required
+                   minLength={8}
++                  maxLength={100}
++                  aria-invalid={Boolean(newPassword) && !isAccountPasswordValid(newPassword)}
++                  aria-describedby={`${fieldId}-password-policy`}
+                   autoComplete="new-password"
+                 />
+                 <button
+@@ -342,11 +398,14 @@
+               </div>
+             </div>
+ 
++            <AccountPasswordGuidance id={`${fieldId}-password-policy`} value={newPassword} />
+             <div className="profile-form-group">
+               <label htmlFor={`${fieldId}-confirm-password`}>{t("confirmNewPassword")}</label>
+               <div className="profile-input-wrap">
+                 <input
+                   id={`${fieldId}-confirm-password`}
++                  aria-invalid={Boolean(confirmPassword) && newPassword !== confirmPassword}
++                  aria-describedby={pwError ? `${fieldId}-password-error` : undefined}
+                   type={showConfirmPw ? "text" : "password"}
+                   value={confirmPassword}
+                   onChange={(e) => setConfirmPassword(e.target.value)}
+@@ -381,7 +440,7 @@
+               </p>
+             )}
+             {pwError && (
+-              <p className="profile-msg error" role="alert">{pwError}</p>
++              <p id={`${fieldId}-password-error`} className="profile-msg error" role="alert">{pwError}</p>
+             )}
+           </form>
+         </div>
+--- a/apps/frontend-user/src/features/auth/RegisterFeature.jsx
++++ b/apps/frontend-user/src/features/auth/RegisterFeature.jsx
+@@ -66,13 +66,14 @@
+     { key: "passwordMinLength", met: password.length >= MIN_PASSWORD_LENGTH },
+     { key: "passwordMaxLength", met: password.length > 0 && password.length <= MAX_PASSWORD_LENGTH },
+     { key: "passwordLetter", met: passwordCharacters.some((character) => /\p{L}/u.test(character)) },
+-    { key: "passwordUppercase", met: passwordCharacters.some((character) => /\p{Uppercase}/u.test(character)) },
++    { key: "passwordUppercase", met: passwordCharacters.some((character) => /\p{Lu}/u.test(character)) },
+     { key: "passwordNumber", met: passwordCharacters.some((character) => /\p{Nd}/u.test(character)) },
+   ];
+   const passwordValid = passwordRequirements.every((requirement) => requirement.met);
+   const passwordMatch = Boolean(confirmPassword) && password !== confirmPassword;
+   const handleSubmit = async (e) => {
+     e.preventDefault();
++    if (loading) return;
+     setError("");
+ 
+     if (!name.trim() || !phone.trim() || !password || !confirmPassword) {
+--- a/apps/frontend-user/src/features/auth/RegisterFeature.test.jsx
++++ b/apps/frontend-user/src/features/auth/RegisterFeature.test.jsx
+@@ -122,6 +122,7 @@
+     ["letters only", "abcdefgh"],
+     ["numbers only", "12345678"],
+     ["no capital letter", "abcdefg1"],
++    ["uppercase symbol outside the DTO uppercase-letter category", "Ⅰabcdef1"],
+     ["blank", "        "],
+     ["supplementary letters unsupported by the backend", "𝔄𝔄𝔄𝔄1"],
+   ])("does not send a %s password to registration", (_, password) => {
+--- a/apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx
++++ b/apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx
+@@ -1,18 +1,30 @@
+-import { useId, useState } from "react";
++import { useEffect, useId, useRef, useState } from "react";
+ import { Link, useSearchParams } from "react-router-dom";
+ import { KeyRound, CheckCircle2, ArrowRight, Eye, EyeOff } from "lucide-react";
+ import authService from "./api/authApi";
+ import AuthLayout from "./components/AuthLayout";
+ import { useLanguageStore } from "../../stores/useLanguageStore";
+ import "./AuthPage.css";
++import { safeAuthRedirect } from './safeRedirect';
++import { isAccountPasswordValid } from './accountPasswordPolicy';
++import AccountPasswordGuidance from './components/AccountPasswordGuidance';
++import { useAuthStore } from '../../stores/useAuthStore';
++import { useT } from '../../shared/i18n/useT';
+ 
+ export default function ResetPasswordPage() {
+   const tokenId = useId();
+   const passwordId = useId();
+   const confirmId = useId();
+   const errorId = useId();
+-  const [searchParams] = useSearchParams();
++  const [searchParams, setSearchParams] = useSearchParams();
++  const [tokenFromLink, setTokenFromLink] = useState(() => Boolean(searchParams.get('token')));
+   const [token, setToken] = useState(searchParams.get("token") || "");
++  useEffect(() => {
++    if (!searchParams.has('token')) return;
++    const clean = new URLSearchParams(searchParams);
++    clean.delete('token');
++    setSearchParams(clean, { replace: true });
++  }, [searchParams, setSearchParams]);
+   const [password, setPassword] = useState("");
+   const [confirm, setConfirm] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
+@@ -21,25 +33,30 @@
+   const [error, setError] = useState("");
+   const [success, setSuccess] = useState(false);
+   const [serverMessage, setServerMessage] = useState("");
++  const active = useRef(false);
++  useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
+ 
+   const lang = useLanguageStore((state) => state.lang);
++  const { auth } = useT();
+   const isKm = lang === "km";
+   const copy = (km, en) => (lang === "en" ? en : km);
+-  const nextTarget = searchParams.get("next");
++  const nextTarget = safeAuthRedirect(searchParams.get("next"));
+ 
+   const mismatch = Boolean(confirm) && password !== confirm;
++  const passwordValid = isAccountPasswordValid(password);
+ 
+   const submit = async (event) => {
+     event.preventDefault();
++    if (loading || success) return;
+     setError("");
+     setServerMessage("");
+ 
+-    if (!token.trim()) {
++    if (!token.trim() || token.length > 255) {
+       setError(copy("សូមបញ្ចូល Reset Token ពីអ៊ីមែលរបស់អ្នក", "Reset token is required"));
+       return;
+     }
+-    if (password.length < 8) {
+-      setError(copy("លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ", "Password must be at least 8 characters"));
++    if (!passwordValid || !confirm) {
++      setError(auth('passwordRequirementsError'));
+       return;
+     }
+     if (mismatch) {
+@@ -48,8 +65,10 @@
+     }
+ 
+     setLoading(true);
++    const sessionUserId = useAuthStore.getState().user?.id;
+     try {
+       const response = await authService.resetPassword(token.trim(), password);
++      if (!active.current) return;
+       setServerMessage(
+         response?.message ||
+           copy("បានកំណត់លេខសម្ងាត់ថ្មីដោយជោគជ័យ។", "Password reset successfully.")
+@@ -57,7 +76,10 @@
+       setSuccess(true);
+       setPassword("");
+       setConfirm("");
++      setToken('');
++      if (useAuthStore.getState().user?.id === sessionUserId) useAuthStore.getState().invalidateSession(true);
+     } catch (err) {
++      if (!active.current) return;
+       setError(
+         err.message ||
+           copy(
+@@ -66,7 +88,7 @@
+           )
+       );
+     } finally {
+-      setLoading(false);
++      if (active.current) setLoading(false);
+     }
+   };
+ 
+@@ -94,25 +116,32 @@
+                 {error}
+               </p>
+             )}
++            {tokenFromLink && <button type="button" className="auth-home-link" onClick={() => { setToken(''); setTokenFromLink(false); setError(''); }} disabled={loading}>
++              {copy('លេខកូដសម្ងាត់ (Reset Token)', 'Enter another reset token')}
++            </button>}
+ 
+             <form onSubmit={submit} className="auth-form" aria-busy={loading}>
+-              <div className="auth-field">
++              {!tokenFromLink && <div className="auth-field">
+                 <label htmlFor={tokenId} className="auth-label">
+                   {copy("លេខកូដសម្ងាត់ (Reset Token)", "Reset token")}
+                 </label>
+                 <div className="auth-input-wrap">
+                   <input
+                     id={tokenId}
+-                    type="text"
++                    type="password"
+                     value={token}
+                     onChange={(event) => setToken(event.target.value)}
+                     placeholder={copy("បិទភ្ជាប់លេខកូដពីអ៊ីមែល", "Paste reset token from email")}
+                     required
+                     className="auth-input"
+                     autoComplete="off"
++                    autoCapitalize="none"
++                    spellCheck={false}
++                    maxLength={255}
++                    aria-describedby={error ? errorId : undefined}
+                   />
+                 </div>
+-              </div>
++              </div>}
+ 
+               <div className="auth-field">
+                 <label htmlFor={passwordId} className="auth-label">
+@@ -127,8 +156,10 @@
+                     placeholder={copy("យ៉ាងតិច ៨ តួអក្សរ", "At least 8 characters")}
+                     required
+                     minLength={8}
++                    maxLength={100}
+                     autoComplete="new-password"
+                     aria-describedby="reset-password-hint"
++                    aria-invalid={Boolean(password) && !passwordValid}
+                     className="auth-input"
+                   />
+                   <button
+@@ -150,9 +181,7 @@
+                     {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                   </button>
+                 </div>
+-                <p id="reset-password-hint" className="auth-hint">
+-                  {copy("លេខសម្ងាត់ត្រូវមានយ៉ាងតិច ៨ តួអក្សរ។", "Password must be at least 8 characters long.")}
+-                </p>
++                <AccountPasswordGuidance id="reset-password-hint" value={password} />
+               </div>
+ 
+               <div className="auth-field">
+@@ -170,6 +199,7 @@
+                     autoComplete="new-password"
+                     className={`auth-input${mismatch ? " error" : ""}`}
+                     aria-invalid={mismatch}
++                    aria-describedby={mismatch ? `${confirmId}-mismatch` : undefined}
+                   />
+                   <button
+                     type="button"
+@@ -191,7 +221,7 @@
+                   </button>
+                 </div>
+                 {mismatch && (
+-                  <p className="auth-error-msg" role="status">
++                  <p id={`${confirmId}-mismatch`} className="auth-error-msg" role="status">
+                     {copy("លេខសម្ងាត់ទាំងពីរមិនត្រូវគ្នាទេ", "Passwords do not match")}
+                   </p>
+                 )}
+@@ -200,7 +230,7 @@
+               <button
+                 type="submit"
+                 className="auth-submit"
+-                disabled={loading || Boolean(mismatch) || !token.trim() || password.length < 8}
++                disabled={loading || Boolean(mismatch) || !token.trim() || token.length > 255 || !passwordValid || !confirm}
+               >
+                 <KeyRound size={16} aria-hidden="true" />
+                 <span>
+--- a/apps/frontend-user/src/features/auth/ResetPasswordFeature.test.jsx
++++ b/apps/frontend-user/src/features/auth/ResetPasswordFeature.test.jsx
+@@ -40,9 +40,16 @@
+     expect(screen.getByRole("button", { name: /Update password/i })).toBeDisabled();
+   });
+ 
+-  it("pre-fills token from search params", () => {
+-    renderResetPassword("/reset-password?token=sample-token-123");
+-    expect(screen.getByLabelText(/Reset token/i)).toHaveValue("sample-token-123");
++  it("accepts a token link without exposing the token in the rendered form", () => {
++    const { container } = renderResetPassword("/reset-password?token=sample-token-123");
++    expect(screen.queryByLabelText(/Reset token/i)).not.toBeInTheDocument();
++    expect(container.innerHTML).not.toContain('sample-token-123');
++  });
++  it('C08-003 lets a malformed overlong link token be replaced manually', () => {
++    renderResetPassword('/reset-password?token='+'x'.repeat(256));
++    fireEvent.click(screen.getByRole('button',{name:'Enter another reset token'}));
++    expect(screen.getByLabelText('Reset token')).toHaveValue('');
++    expect(screen.getByLabelText('Reset token')).toHaveAttribute('type','password');
+   });
+ 
+   it("toggles password visibility with accessible names", () => {
+--- a/apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx
++++ b/apps/frontend-user/src/features/auth/components/SocialAuthButtons.jsx
+@@ -117,7 +117,7 @@
+     const s = document.createElement("script");
+     s.id = id; s.src = src; s.async = true; s.dataset.src = src;
+     s.onload = () => { s.dataset.loaded = "1"; res(); };
+-    s.onerror = rej;
++    s.onerror = () => { s.remove(); rej(new Error('Provider script failed to load')); };
+     document.head.appendChild(s);
+   });
+ }
+--- a/apps/frontend-user/src/features/auth/components/SocialAuthButtons.test.jsx
++++ b/apps/frontend-user/src/features/auth/components/SocialAuthButtons.test.jsx
+@@ -23,6 +23,24 @@
+ }));
+ 
+ describe("SocialAuthButtons", () => {
++  it('C08-009 retries a blocked Google script after leaving and reopening the form', async () => {
++    delete window.google;
++    const appended = [];
++    const append = document.head.appendChild.bind(document.head);
++    vi.spyOn(document.head, 'appendChild').mockImplementation(node => { appended.push(node); return append(node); });
++    const { default: SocialAuthButtons } = await import('./SocialAuthButtons');
++    const first = render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
++    const script = appended.find(node => node.id === 'google-gsi-script');
++    await act(async () => { script.dispatchEvent(new Event('error')); });
++    expect(await screen.findByRole('alert')).toHaveTextContent('Google script failed');
++    first.unmount();
++    render(<MemoryRouter><SocialAuthButtons /></MemoryRouter>);
++    const retry = appended.filter(node => node.id === 'google-gsi-script').at(-1);
++    expect(retry).not.toBe(script);
++    await act(async () => { retry.dispatchEvent(new Event('error')); });
++    expect(await screen.findByRole('alert')).toHaveTextContent('Google script failed');
++    expect(login).not.toHaveBeenCalled();
++  });
+   beforeEach(() => {
+     authenticated = true;
+     vi.stubEnv("VITE_GOOGLE_CLIENT_ID", "test-client.apps.googleusercontent.com");
+--- a/apps/frontend-user/src/features/auth/safeRedirect.js
++++ b/apps/frontend-user/src/features/auth/safeRedirect.js
+@@ -4,11 +4,14 @@
+ export function safeAuthRedirect(value) {
+   if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//")
+       || [...value].some(char => char.charCodeAt(0) <= 32 || char === "\\")
+-      || /%(?:2f|5c|0[0-9a-f]|1[0-9a-f])/i.test(value)) return DEFAULT_DESTINATION;
++      || /%(?:5c|0[0-9a-f]|1[0-9a-f])/i.test(value)) return DEFAULT_DESTINATION;
+   try {
++    decodeURIComponent(value); // Reject malformed encoding rather than forwarding it.
+     const url = new URL(value, "https://koupreng.invalid");
+     if (url.origin !== "https://koupreng.invalid") return DEFAULT_DESTINATION;
+     const path = url.pathname;
++    if (/%(?:2f|25)/i.test(path)) return DEFAULT_DESTINATION;
++    if ([...url.searchParams.keys()].some(key => /^(?:next|redirect|redirectTo|token|accessToken|password)$/i.test(key))) return DEFAULT_DESTINATION;
+     if (!(/^\/(?:app|dashboard)(?:\/|$)/.test(path) || /^\/templates\/[^/]+\/(?:checkout|preview)$/.test(path)
+         || /^\/templates\/browse(?:\/[^/]+)?$/.test(path) || /^\/(?:create\/wedding|event)\/[^/]+(?:\/manage)?$/.test(path))) return DEFAULT_DESTINATION;
+     return url.pathname + url.search + url.hash;
+--- a/apps/frontend-user/src/layouts/components/HostNav.css
++++ b/apps/frontend-user/src/layouts/components/HostNav.css
+@@ -237,6 +237,15 @@
+   outline: 3px solid var(--ui-focus);
+   outline-offset: 2px;
+ }
++
++/* Account entry must remain legible in both canonical management themes. */
++.dash-wrapper .host-profile-pill {
++  background: var(--ui-theme-surface);
++  color: var(--ui-theme-ink);
++  border-color: var(--ui-theme-control-border);
++}
++.dash-wrapper .host-profile-pill:hover,
++.dash-wrapper .host-profile-pill.open { background: var(--ui-theme-raised); }
+ 
+ .host-profile-avatar {
+   width: 36px;
+--- a/apps/frontend-user/src/stores/useAuthStore.js
++++ b/apps/frontend-user/src/stores/useAuthStore.js
+@@ -108,11 +108,13 @@
+     set({ user });
+   },
+ 
+-  invalidateSession: () => {
++  invalidateSession: (broadcast = false) => {
++    const userId = get().user?.id;
+     sessionGeneration += 1;
+     clearStoredAuth();
+     localStorage.removeItem("koupreng.host.activeEventId");
+     set({ user: null, accessToken: null, isAuthenticated: false, authStatus: "anonymous", sessionError: "" });
++    if (broadcast && userId != null) localStorage.setItem("koupreng.auth.logout", JSON.stringify({ userId, at: Date.now() }));
+   },
+ 
+   logout: async () => {
+--- a/apps/frontend-user/src/stores/useAuthStore.test.js
++++ b/apps/frontend-user/src/stores/useAuthStore.test.js
+@@ -94,4 +94,12 @@
+     expect(mocks.logout).toHaveBeenCalledWith(expect.objectContaining({ headers: { Authorization: `Bearer ${accessToken}` } }));
+     expect(store.getState().isAuthenticated).toBe(false);
+   });
++  it('broadcasts reset invalidation without issuing a logout for another current identity', async () => {
++    const store = await load();
++    store.getState().login({ user });
++    store.getState().invalidateSession(true);
++    expect(store.getState().isAuthenticated).toBe(false);
++    expect(JSON.parse(localStorage.getItem('koupreng.auth.logout'))).toMatchObject({userId:user.id});
++    expect(mocks.logout).not.toHaveBeenCalled();
++  });
+ });
+--- a/apps/frontend-user/tests/e2e/phase08-identity-account.spec.js
++++ b/apps/frontend-user/tests/e2e/phase08-identity-account.spec.js
+@@ -102,7 +102,7 @@
+     await submitBtn.click();
+ 
+     await expect(page.locator('.auth-success')).toBeVisible();
+-    await expect(page.locator('.auth-success-title')).toContainText(/Instructions sent|បានផ្ញើសេចក្តីណែនាំរួចរាល់/i);
++    await expect(page.locator('.auth-success-title')).toContainText(/Request received|ផ្ញើសំណើកំណត់លេខសម្ងាត់/i);
+     await expect(page.locator('a.auth-submit')).toHaveAttribute('href', /reset-password/);
+   });
+ 
+@@ -110,8 +110,9 @@
+     await openPhase06Fixture(page, 'auth-reset', { path: '/reset-password?token=secret-token-xyz', anonymous: true });
+ 
+     await expect(page.getByRole('heading', { name: /Set new password|កំណត់លេខសម្ងាត់ថ្មី/i })).toBeVisible();
+-    const tokenInput = page.locator('.auth-input').first();
+-    await expect(tokenInput).toHaveValue('secret-token-xyz');
++    await expect(page).not.toHaveURL(/token=/);
++    await expect(page.getByLabel('Reset token', { exact:true })).toHaveCount(0);
++    expect(await page.content()).not.toContain('secret-token-xyz');
+ 
+     const newPw = page.locator('input[autocomplete="new-password"]').first();
+     const confirmPw = page.locator('input[autocomplete="new-password"]').nth(1);
+--- /dev/null
++++ b/apps/frontend-user/src/features/auth/Phase08Regression.test.jsx
+@@ -0,0 +1,179 @@
++import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
++import { MemoryRouter, useLocation } from 'react-router-dom';
++import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
++import ChangePassword from './ChangePasswordFeature';
++import ResetPassword from './ResetPasswordFeature';
++import ForgotPassword from './ForgotPasswordFeature';
++import Profile from './ProfileFeature';
++import authService from './api/authApi';
++import { userService } from './api/userApi';
++import { useLanguageStore } from '../../stores/useLanguageStore';
++import { safeAuthRedirect } from './safeRedirect';
++import { isAccountPasswordValid } from './accountPasswordPolicy';
++import { useAuthStore } from '../../stores/useAuthStore';
++
++const mocks = vi.hoisted(() => ({ logout: vi.fn(), updateUser: vi.fn(), user: { id: 77, role: 'USER', fullName: 'Fictional Host', email: 'host@example.invalid' } }));
++vi.mock('./hooks/useAuth', () => ({ useAuth: () => ({ user: mocks.user, logout: mocks.logout, updateUser: mocks.updateUser }) }));
++vi.mock('./components/SocialAuthButtons', () => ({ default: () => null }));
++vi.mock('./api/authApi', () => ({ default: { changePassword: vi.fn(), resetPassword: vi.fn(), forgotPassword: vi.fn() } }));
++vi.mock('./api/userApi', () => ({ userService: { getProfile: vi.fn(), updateProfile: vi.fn(), uploadProfileImage: vi.fn(), changePassword: vi.fn() } }));
++
++function Location() { const location = useLocation(); return <output data-testid="location">{location.pathname + location.search}</output>; }
++function open(element, path = '/') { return render(<MemoryRouter initialEntries={[path]}>{element}<Location /></MemoryRouter>); }
++function change(label, value) { fireEvent.change(screen.getByLabelText(label), { target: { value } }); }
++function fillPassword(value = 'newsecret123') {
++  change(/Current password/i, 'oldsecret123'); change(/^New password/i, value); change(/Confirm new password/i, value);
++}
++beforeEach(() => {
++  vi.clearAllMocks(); useLanguageStore.getState().setLang('en');
++  mocks.user = { id:77,role:'USER',fullName:'Fictional Host',email:'host@example.invalid' };
++  useAuthStore.setState({user:null,isAuthenticated:false});
++  userService.getProfile.mockResolvedValue({ ...mocks.user, phone: '012345678' });
++  authService.changePassword.mockResolvedValue({ message: 'Password changed successfully' });
++  authService.resetPassword.mockResolvedValue({ message: 'Password reset successfully' });
++});
++afterEach(() => { cleanup(); vi.restoreAllMocks(); });
++
++describe('C08 password and recovery regressions', () => {
++  it('C08-001 does not log out a new account when an older password change completes', async () => {
++    let finish;
++    authService.changePassword.mockReturnValueOnce(new Promise(resolve=>{finish=resolve;}));
++    const view=open(<ChangePassword />); fillPassword();
++    fireEvent.click(screen.getByRole('button',{name:'Change password'}));
++    await waitFor(()=>expect(authService.changePassword).toHaveBeenCalled());
++    mocks.user={...mocks.user,id:88};
++    view.rerender(<MemoryRouter><ChangePassword /><Location /></MemoryRouter>);
++    await act(async()=>finish({message:'Password changed successfully'}));
++    expect(mocks.logout).not.toHaveBeenCalled();
++  });
++  it('C08-003 does not invalidate a new identity after an older reset request completes', async () => {
++    let finish;
++    authService.resetPassword.mockReturnValueOnce(new Promise(resolve=>{finish=resolve;}));
++    useAuthStore.setState({user:{id:77},isAuthenticated:true});
++    const invalidate=vi.spyOn(useAuthStore.getState(),'invalidateSession');
++    open(<ResetPassword />,'/reset-password?token=fictional-reset');
++    change(/^New password/i,'newsecret123');change(/Confirm new password/i,'newsecret123');
++    fireEvent.click(screen.getByRole('button',{name:'Update password'}));
++    await waitFor(()=>expect(authService.resetPassword).toHaveBeenCalled());
++    useAuthStore.setState({user:{id:88},isAuthenticated:true});
++    await act(async()=>finish({message:'Password reset successfully'}));
++    expect(invalidate).not.toHaveBeenCalled();
++    expect(useAuthStore.getState().user.id).toBe(88);
++  });
++  it('C08-001 clears the revoked session immediately after dedicated password change', async () => {
++    open(<ChangePassword />); fillPassword();
++    fireEvent.click(screen.getByRole('button', { name: 'Change password' }));
++    await waitFor(() => expect(mocks.logout).toHaveBeenCalledTimes(1));
++  });
++  it.each(['abcdefgh', '12345678', 'a1'.repeat(51)])('C08-002 rejects account password outside server policy: %s', async value => {
++    open(<ChangePassword />); fillPassword(value);
++    fireEvent.submit(screen.getByRole('button', { name: 'Change password' }).closest('form'));
++    expect(authService.changePassword).not.toHaveBeenCalled();
++    expect(screen.getAllByRole('alert').length).toBeGreaterThan(0);
++  });
++  it('C08-002 preserves Khmer letters/digits and does not add uppercase to account policy', async () => {
++    open(<ChangePassword />); fillPassword('កខគឃងចឆ១');
++    fireEvent.click(screen.getByRole('button', { name: 'Change password' }));
++    await waitFor(() => expect(authService.changePassword).toHaveBeenCalledWith('oldsecret123', 'កខគឃងចឆ១'));
++  });
++  it('C08-003 consumes the query token without rendering it or retaining it in navigation', async () => {
++    const { container } = open(<ResetPassword />, '/reset-password?token=fictional-reset&next=%2Fapp%2Fprofile');
++    await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/reset-password?next='));
++    expect(screen.getByTestId('location').textContent).not.toContain('token=');
++    expect(container.innerHTML).not.toContain('fictional-reset');
++    change(/^New password/i, 'newsecret123'); change(/Confirm new password/i, 'newsecret123');
++    fireEvent.click(screen.getByRole('button', { name: 'Update password' }));
++    await waitFor(() => expect(authService.resetPassword).toHaveBeenCalledWith('fictional-reset', 'newsecret123'));
++  });
++  it('C08-002 requires confirmation even for a programmatic reset submission', () => {
++    open(<ResetPassword />); change(/Reset token/i, 'fictional-reset'); change(/^New password/i, 'newsecret123');
++    fireEvent.submit(screen.getByRole('button', { name: 'Update password' }).closest('form'));
++    expect(authService.resetPassword).not.toHaveBeenCalled();
++  });
++  it('C08-004 does not echo an existence-revealing recovery response', async () => {
++    authService.forgotPassword.mockResolvedValue({ message: 'Account exists: private@example.invalid' });
++    open(<ForgotPassword />); change(/Email address/i, 'fictional@example.invalid');
++    fireEvent.click(screen.getByRole('button', { name: 'Send reset instructions' }));
++    await screen.findByRole('heading', { name:'Request received' });
++    expect(screen.queryByText(/Account exists/)).not.toBeInTheDocument();
++    expect(document.querySelector('.auth-success')).toHaveTextContent('If');
++  });
++});
++describe('C08 profile lifecycle regressions', () => {
++  it('C08-005 ignores a late profile save after the active account changes', async () => {
++    let finish;
++    userService.updateProfile.mockReturnValueOnce(new Promise(resolve=>{finish=resolve;}));
++    const view=open(<Profile />); await screen.findByLabelText('Full name');
++    fireEvent.click(screen.getByRole('button',{name:'Save changes'}));
++    await waitFor(()=>expect(userService.updateProfile).toHaveBeenCalled());
++    mocks.user={...mocks.user,id:88,fullName:'Second Fictional Host'};
++    userService.getProfile.mockResolvedValueOnce({...mocks.user});
++    view.rerender(<MemoryRouter><Profile /><Location /></MemoryRouter>);
++    await waitFor(()=>expect(screen.getByLabelText('Full name')).toHaveValue('Second Fictional Host'));
++    await act(async()=>finish({id:77,role:'USER',fullName:'Old response'}));
++    expect(mocks.updateUser).not.toHaveBeenCalled();
++  });
++  it('C08-006 stops at upload failure and retains the profile draft', async () => {
++    userService.uploadProfileImage.mockRejectedValueOnce(new Error('Upload unavailable'));
++    open(<Profile />); await screen.findByLabelText('Full name');
++    change('Full name', 'Draft Host');
++    fireEvent.change(screen.getByLabelText('Choose a profile photo'), { target: { files:[new File(['fictional'], 'avatar.png', {type:'image/png'})] } });
++    fireEvent.click(screen.getByRole('button', {name:'Save changes'}));
++    await waitFor(()=>expect(userService.uploadProfileImage).toHaveBeenCalledTimes(1));
++    expect(userService.updateProfile).not.toHaveBeenCalled();
++    expect(await screen.findByRole('alert')).toHaveTextContent('Upload unavailable');
++    expect(screen.getByLabelText('Full name')).toHaveValue('Draft Host');
++  });
++  it('C08-006 reuses a successful image upload on profile retry and honors canonical server data', async () => {
++    userService.uploadProfileImage.mockResolvedValueOnce({url:'/uploads/fictional.png'});
++    userService.updateProfile.mockRejectedValueOnce(new Error('Profile unavailable')).mockResolvedValueOnce({...mocks.user,fullName:'Canonical Host',phone:'012345678',profileImage:'/uploads/fictional.png'});
++    open(<Profile />); await screen.findByLabelText('Full name');
++    fireEvent.change(screen.getByLabelText('Choose a profile photo'), { target: { files:[new File(['fictional'], 'avatar.png', {type:'image/png'})] } });
++    fireEvent.click(screen.getByRole('button', {name:'Save changes'}));
++    await screen.findByRole('alert');
++    fireEvent.click(screen.getByRole('button', {name:'Save changes'}));
++    await waitFor(()=>expect(mocks.updateUser).toHaveBeenCalledWith(expect.objectContaining({fullName:'Canonical Host'})));
++    expect(userService.uploadProfileImage).toHaveBeenCalledTimes(1);
++    expect(userService.updateProfile).toHaveBeenLastCalledWith(expect.objectContaining({profileImage:'/uploads/fictional.png'}));
++  });
++  it('C08-005 surfaces profile loading failure and provides retry', async () => {
++    userService.getProfile.mockRejectedValueOnce(new Error('Unavailable'));
++    open(<Profile />); await screen.findByRole('alert');
++    expect(screen.getByRole('button', { name: /Save changes/i })).toBeDisabled();
++    fireEvent.click(screen.getByRole('button', { name: /Try again/i }));
++    await waitFor(() => expect(screen.getByLabelText('Full name')).toHaveValue('Fictional Host'));
++    expect(screen.getByRole('button', { name: /Save changes/i })).toBeEnabled();
++  });
++  it.each([
++    new File(['<svg/>'], 'avatar.svg', { type: 'image/svg+xml' }),
++    new File([new Uint8Array(5 * 1024 * 1024 + 1)], 'large.png', { type: 'image/png' }),
++  ])('C08-006 rejects unsupported or oversized avatar before reading/uploading: $name', async file => {
++    open(<Profile />); await screen.findByLabelText('Full name');
++    fireEvent.change(screen.getByLabelText('Choose a profile photo'), { target: { files: [file] } });
++    expect(await screen.findByRole('alert')).toBeInTheDocument();
++    fireEvent.click(screen.getByRole('button', { name: /Save changes/i }));
++    expect(userService.uploadProfileImage).not.toHaveBeenCalled();
++  });
++  it('C08-001 clears revoked profile password session without a delayed timer', async () => {
++    userService.changePassword.mockResolvedValue(undefined);
++    open(<Profile />); await screen.findByLabelText('Full name');
++    fireEvent.click(screen.getByRole('button', { name: 'Change password' })); fillPassword();
++    fireEvent.click(screen.getByRole('button', { name: 'Update password' }));
++    await waitFor(() => expect(mocks.logout).toHaveBeenCalledTimes(1), { timeout: 500 });
++  });
++});
++describe('C08-002 verified AccountService password boundaries', () => {
++  it.each([
++    ['abcdef1',false], ['abcdefg1',true], ['a1'+'x'.repeat(98),true], ['a1'+'x'.repeat(99),false],
++    ['កខគឃងចឆ១',true], ['ABCDEFG1',true], [' abcdef1',true], ['        ',false],
++    ['😀😀😀1',false], ['😀😀😀a1',true],
++  ])('matches UTF-16 length and BMP letter/digit rules for %s', (value,valid) => expect(isAccountPasswordValid(value)).toBe(valid));
++});
++describe('C08-007 continuation parser', () => {
++  it.each(['/app/profile?name=%ZZ', '/app/profile?next=https%3A%2F%2Fevil.invalid', '/app/profile?token=fictional'])('rejects ambiguous or sensitive continuation %s', value => {
++    expect(safeAuthRedirect(value)).toBe('/app/events');
++  });
++  it('preserves legitimate encoded query content and fragment', () => {
++    expect(safeAuthRedirect('/app/events?search=one%2Ftwo#details')).toBe('/app/events?search=one%2Ftwo#details');
++  });
++});
+--- /dev/null
++++ b/apps/frontend-user/src/features/auth/accountPasswordPolicy.js
+@@ -0,0 +1,12 @@
++// AccountService + ChangePasswordRequest/ResetPasswordRequest use UTF-16 length
++// and Character checks on individual Java char values. Uppercase is registration-only.
++export function accountPasswordRules(value) {
++  const characters = value.split('');
++  return [
++    { key: 'passwordMinLength', met: value.length >= 8 },
++    { key: 'passwordMaxLength', met: value.length > 0 && value.length <= 100 },
++    { key: 'passwordLetter', met: characters.some(char => /\p{L}/u.test(char)) },
++    { key: 'passwordNumber', met: characters.some(char => /\p{Nd}/u.test(char)) },
++  ];
++}
++export const isAccountPasswordValid = value => accountPasswordRules(value).every(rule => rule.met);
+--- /dev/null
++++ b/apps/frontend-user/src/features/auth/components/AccountPasswordGuidance.jsx
+@@ -0,0 +1,11 @@
++import { useT } from '@/shared/i18n/useT';
++import { accountPasswordRules } from '../accountPasswordPolicy';
++
++export default function AccountPasswordGuidance({ id, value }) {
++  const { auth } = useT();
++  return <ul id={id} className="account-password-guidance">
++    {accountPasswordRules(value).map(({ key, met }) => <li key={key}>
++      {auth(key)}{value && <span> — {auth(met ? 'passwordRuleMet' : 'passwordRuleUnmet')}</span>}
++    </li>)}
++  </ul>;
++}
+--- /dev/null
++++ b/apps/frontend-user/tests/e2e/phase08-codex-regression.spec.js
+@@ -0,0 +1,93 @@
++import { test, expect } from '@playwright/test';
++import { Buffer } from 'node:buffer';
++import AxeBuilder from '@axe-core/playwright';
++import { openPhase06Fixture } from './support/phase06Fixtures.js';
++
++const login = page => page.locator('input[autocomplete="username"]');
++const password = page => page.locator('input[autocomplete="current-password"]');
++async function credentials(page) { await login(page).fill('fictional@example.invalid'); await password(page).fill('FictionalPass1'); }
++
++test('C08-012 dark account routes and provider errors meet automated text contrast checks',async({page})=>{
++  for(const [group,path] of [['auth-login','/login'],['auth-forgot','/forgot-password'],['profile','/app/profile'],['password','/app/change-password']]) {
++    await openPhase06Fixture(page,group,{path,mode:'dark',anonymous:group.startsWith('auth-')});
++    await page.locator('h1').first().waitFor(); await page.evaluate(()=>document.fonts.ready);
++    const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
++    expect(results.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
++  }
++});
++
++for (const status of [400,401,403,429,500,'offline']) test(`C08 login ${status} retains identifier and never authenticates`, async ({page}) => {
++  await openPhase06Fixture(page,'auth-login',{path:'/login?next=%2Fapp%2Fprofile',anonymous:true});
++  let calls=0;
++  await page.route('**/auth/login',route=>{calls++;return status==='offline'?route.abort('internetdisconnected'):route.fulfill({status,json:{message:'Fictional sign-in failure'}});});
++  await credentials(page); await page.locator('form button[type=submit]').click();
++  await expect(page.locator('.auth-card > p.auth-error[role=alert]')).toBeVisible();
++  await expect(login(page)).toHaveValue('fictional@example.invalid');
++  await expect(page).toHaveURL(/\/login/); expect(calls).toBe(1);
++  await expect(page.locator('form button[type=submit]')).toBeEnabled();
++});
++test('C08 pending login suppresses Enter and repeated submit; keyboard toggle retains selection',async({page})=>{
++  await openPhase06Fixture(page,'auth-login',{anonymous:true});
++  let release,calls=0; const gate=new Promise(resolve=>{release=resolve;});
++  await page.route('**/auth/login',async route=>{calls++;await gate;await route.fulfill({status:401,json:{message:'Fictional credentials rejected'}});});
++  await credentials(page); await password(page).focus();
++  await password(page).evaluate(el=>el.setSelectionRange(3,7));
++  await page.locator('.auth-eye-btn').click(); await expect(password(page)).toBeFocused();
++  expect(await password(page).evaluate(el=>[el.selectionStart,el.selectionEnd])).toEqual([3,7]);
++  await page.locator('.auth-eye-btn').focus(); await page.keyboard.press('Space');
++  await expect(password(page)).toHaveAttribute('type','password');
++  await page.locator('form button[type=submit]').click(); await expect(page.locator('form')).toHaveAttribute('aria-busy','true');
++  await password(page).press('Enter'); expect(calls).toBe(1); release();
++  await expect(page.locator('.auth-card > p.auth-error[role=alert]')).toBeVisible();
++});
++for(const status of [429,500,'offline']) test(`C08 recovery ${status} is failure with retry, never sent`,async({page})=>{
++  await openPhase06Fixture(page,'auth-forgot',{anonymous:true});
++  await page.route('**/auth/forgot-password',route=>status==='offline'?route.abort():route.fulfill({status,json:{message:'Account exists: do not display'}}));
++  await page.locator('input[type=email]').fill('fictional@example.invalid'); await page.locator('form button[type=submit]').click();
++  await expect(page.locator('.auth-error')).toBeVisible(); await expect(page.locator('.auth-success')).toHaveCount(0);
++  await expect(page.locator('input[type=email]')).toHaveValue('fictional@example.invalid');
++  expect(await page.content()).not.toContain('Account exists:');
++});
++for(const reason of ['invalid','expired','already used']) test(`C08 reset ${reason} token remains private; no false success`,async({page})=>{
++  await openPhase06Fixture(page,'auth-reset',{path:'/reset-password?token=fictional-reset&next=%2Fapp%2Fprofile',anonymous:true});
++  await expect(page).not.toHaveURL(/token=/); expect(await page.content()).not.toContain('fictional-reset');
++  await page.route('**/auth/reset-password',route=>route.fulfill({status:400,json:{message:`Password reset token is ${reason}`}}));
++  const inputs=page.locator('input[autocomplete=new-password]'); await inputs.nth(0).fill('lowercase123'); await inputs.nth(1).fill('lowercase123');
++  await page.locator('form button[type=submit]').click(); await expect(page.locator('.auth-error')).toBeVisible();
++  await expect(page.locator('.auth-success')).toHaveCount(0);
++  const leaks=await page.evaluate(()=>[...Object.values(localStorage),...Object.values(sessionStorage)].some(v=>v.includes('fictional-reset')));
++  expect(leaks).toBe(false);
++});
++test('C08 profile failure is visible and retry restores editing',async({page})=>{
++  await openPhase06Fixture(page,'profile');
++  await page.route('**/users/me',route=>route.fulfill({status:503,json:{message:'Unavailable'}}));
++  await page.reload(); await expect(page.locator('.profile-page .profile-msg[role=alert]')).toBeVisible();
++  await expect(page.locator('.profile-save-btn')).toBeDisabled();
++  await page.unroute('**/users/me'); await page.getByRole('button',{name:'Try again',exact:true}).click();
++  await expect(page.locator('.profile-save-btn')).toBeEnabled();
++});
++test('C08 password change revokes local session only after server acceptance',async({page})=>{
++  await openPhase06Fixture(page,'password');
++  let calls=0;
++  await page.route('**/auth/change-password',route=>{calls++;return route.fulfill({json:{data:{message:'Password changed successfully'}}});});
++  await password(page).fill('FictionalOld1');
++  const inputs=page.locator('input[autocomplete=new-password]'); await inputs.nth(0).fill('lowercase123'); await inputs.nth(1).fill('lowercase123');
++  await page.locator('.dash-form button[type=submit]').click();
++  await expect(page).toHaveURL(/\/login\?next=%2Fapp%2Fchange-password/); expect(calls).toBe(1);
++  expect(await page.evaluate(()=>localStorage.getItem('koupreng.auth'))).toBeNull();
++});
++test('C08 aliases retain query and fragment through guarded canonical profile',async({page})=>{
++  await openPhase06Fixture(page,'profile',{path:'/dashboard/profile?from=menu#security'});
++  await expect(page).toHaveURL(/\/app\/profile\?from=menu#security/);
++  await page.goto('/profile?from=menu#security'); await expect(page).toHaveURL(/\/app\/profile\?from=menu#security/);
++});
++test('C08 denied profile does not display a successful editable account',async({page})=>{
++  await openPhase06Fixture(page,'profile',{anonymous:true});
++  await expect(page).toHaveURL(/\/login\?next=/); await expect(page.locator('.profile-page')).toHaveCount(0);
++});
++test('C08 avatar rejects SVG and keeps server-owned profile image',async({page})=>{
++  await openPhase06Fixture(page,'profile');
++  await page.locator('input[type=file]').setInputFiles({name:'avatar.svg',mimeType:'image/svg+xml',buffer:Buffer.from('<svg/>')});
++  await expect(page.locator('.profile-msg.error')).toBeVisible();
++  expect(await page.locator('input[type=file]').inputValue()).toBe('');
++});
+--- /dev/null
++++ b/apps/frontend-user/playwright.phase08.config.js
+@@ -0,0 +1,5 @@
++import { defineConfig } from '@playwright/test';
++import base from './playwright.phase06.config.js';
++
++// Six installed engine/viewport projects; mobile Firefox is a viewport/touch proxy.
++export default defineConfig({ ...base, testMatch: ['phase08-identity-account.spec.js', 'phase08-codex-regression.spec.js'] });

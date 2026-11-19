@@ -1,3 +1,5 @@
+import InvitationLightbox from "../shared/Gallery/InvitationLightbox";
+import DemoRsvpNotice from "../shared/RSVP/DemoRsvpNotice";
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
 import SaveTheDate from '../shared/SaveTheDate';
@@ -7,7 +9,7 @@ import AuthoredFamilies from '../shared/AuthoredFamilies';
 import { authoredHeadingStyle } from '../shared/templateTypography';
 import ProgramTimeline from '../shared/ProgramTimeline';
 import ProgramDetails from "../shared/ProgramDetails";
-import { useState, useEffect } from "react";
+import { useId, useState, useEffect } from "react";
 import FloatingAudioPlayer from "../shared/AudioPlayer/FloatingAudioPlayer";
 import { Link } from "react-router-dom";
 import {
@@ -26,6 +28,7 @@ import { isTrustedPreviewMessage, readEmbeddedPreviewChannel } from "@/shared/pr
 import "./withjoy-portal.css";
 
 export default function WithJoyPortalLayout({
+  tpl: tplProp,
   content = {},
   preview = false,
   previewChannel,
@@ -35,8 +38,9 @@ export default function WithJoyPortalLayout({
   useTemplateLink,
   children,
 }) {
+  const rsvpId = useId();
   const [liveData, setLiveData] = useState(null);
-  const effectiveContent = { ...content, ...liveData };
+  const effectiveContent = { ...(tplProp || {}), ...content, ...liveData };
 
   useEffect(() => {
     const channel = previewChannel || readEmbeddedPreviewChannel();
@@ -59,11 +63,13 @@ export default function WithJoyPortalLayout({
     hall: "",
     address: "",
   };
-  const coverImage = effectiveContent.coverImage || "/images/wedding/couple-hero-meadow.webp";
-  const musicUrl = effectiveContent.music?.url || effectiveContent.music || defaultMusicUrl;
+  const coverImage = effectiveContent.coverImage || (effectiveContent.hasHostContent ? "" : "/images/wedding/couple-hero-meadow.webp");
+  const musicUrl = effectiveContent.music?.url || effectiveContent.music || (effectiveContent.hasHostContent ? "" : defaultMusicUrl);
 
-  // Lightbox modal state
+  // Lightbox modal state with keyboard support
   const [activePhoto, setActivePhoto] = useState(null);
+  const openPhoto = index => setActivePhoto(index);
+  const closePhoto = () => setActivePhoto(null);
 
   // RSVP Form state
   const [rsvpState, setRsvpState] = useState({
@@ -98,7 +104,7 @@ export default function WithJoyPortalLayout({
   ];
   const galleryImages = (effectiveContent.gallery && effectiveContent.gallery.length)
     ? effectiveContent.gallery.map(img => typeof img === "string" ? img : img.src || img.url)
-    : defaultGallery;
+    : effectiveContent.hasHostContent ? [] : defaultGallery;
 
   const isEnabled = (key) => effectiveContent.enabledSections?.[key] !== false;
   const dressColors = Array.isArray(content.dressCode)
@@ -262,36 +268,22 @@ export default function WithJoyPortalLayout({
 
           <div className="wj-gallery-grid">
             {galleryImages.map((src, i) => (
-              <div key={i} className="wj-gallery-item" onClick={() => setActivePhoto(src)}>
+              <button
+                type="button"
+                key={i}
+                className="wj-gallery-item"
+                onClick={() => openPhoto(i)}
+                aria-label={`ពង្រីករូបភាពទី ${i + 1}`}
+                style={{ padding: 0, border: "none", background: "none", cursor: "pointer", minHeight: "44px" }}
+              >
                 <img src={src} alt={`Moment ${i + 1}`} className="wj-gallery-img" loading="lazy" />
-              </div>
+              </button>
             ))}
           </div>
         </section>
       )}
 
-      {/* Lightbox Modal */}
-      {activePhoto && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.85)",
-            zIndex: 200,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "2rem",
-          }}
-          onClick={() => setActivePhoto(null)}
-        >
-          <img
-            src={activePhoto}
-            alt="Expanded view"
-            style={{ maxWidth: "90%", maxHeight: "85vh", borderRadius: "12px", boxShadow: "0 10px 40px rgba(0,0,0,0.5)" }}
-          />
-        </div>
-      )}
+      <InvitationLightbox images={galleryImages} index={activePhoto} onIndexChange={setActivePhoto} onClose={closePhoto} />
 
       {/* Venue Section */}
       {isEnabled("map") && (
@@ -456,21 +448,19 @@ export default function WithJoyPortalLayout({
             {children || (rsvpState.submitted ? (
               <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
                 <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
-                <h3 style={{ fontSize: "1.4rem", fontWeight: "700", color: "var(--wj-primary)", marginBottom: "0.5rem" }}><InvitationLabel value={"សូមអរគុណសម្រាប់ការឆ្លើយតប!"} /></h3>
-                <p style={{ color: "var(--wj-text-muted)", lineHeight: "1.6" }}>
-                  យើងខ្ញុំទទួលបានការបញ្ជាក់របស់លោកអ្នករួចរាល់ហើយ។ រីករាយនឹងជួបលោកអ្នកក្នុងថ្ងៃមង្គលការ!
-                </p>
+                <DemoRsvpNotice completed />
               </div>
             ) : (
               <form onSubmit={handleRsvpSubmit}>
+                <DemoRsvpNotice />
                 <div className="wj-form-group">
-                  <label className="wj-label"><InvitationLabel value={"គោត្តនាម និងនាម (Your Name)"} /></label>
+                  <label htmlFor={`${rsvpId}-name`} className="wj-label"><InvitationLabel value={"គោត្តនាម និងនាម (Your Name)"} /></label>
                   <input
                     type="text"
                     required
                     placeholder="ឧ. លោក សុខ សុផល"
                     className="wj-input"
-                    value={rsvpState.name}
+                    id={`${rsvpId}-name`} value={rsvpState.name}
                     onChange={(e) => setRsvpState({ ...rsvpState, name: e.target.value })}
                   />
                 </div>
@@ -500,10 +490,10 @@ export default function WithJoyPortalLayout({
                 {rsvpState.attending === "yes" && (
                   <>
                     <div className="wj-form-group">
-                      <label className="wj-label"><InvitationLabel value={"ចំនួនភ្ញៀវចូលរួម (Number of Guests)"} /></label>
+                      <label htmlFor={`${rsvpId}-guests`} className="wj-label"><InvitationLabel value={"ចំនួនភ្ញៀវចូលរួម (Number of Guests)"} /></label>
                       <select
                         className="wj-select"
-                        value={rsvpState.guests}
+                        id={`${rsvpId}-guests`} value={rsvpState.guests}
                         onChange={(e) => setRsvpState({ ...rsvpState, guests: e.target.value })}
                       >
                         <option value="1"><InvitationLabel value={"១ នាក់ (1 person)"} /></option>
@@ -513,10 +503,10 @@ export default function WithJoyPortalLayout({
                     </div>
 
                     <div className="wj-form-group">
-                      <label className="wj-label"><InvitationLabel value={"ជម្រើសមុខម្ហូប (Meal Preference)"} /></label>
+                      <label htmlFor={`${rsvpId}-meal`} className="wj-label"><InvitationLabel value={"ជម្រើសមុខម្ហូប (Meal Preference)"} /></label>
                       <select
                         className="wj-select"
-                        value={rsvpState.meal}
+                        id={`${rsvpId}-meal`} value={rsvpState.meal}
                         onChange={(e) => setRsvpState({ ...rsvpState, meal: e.target.value })}
                       >
                         <option value="khmer"><InvitationLabel value={"ម្ហូបខ្មែរប្រពៃណី (Traditional Khmer Feast)"} /></option>
@@ -526,12 +516,12 @@ export default function WithJoyPortalLayout({
                     </div>
 
                     <div className="wj-form-group">
-                      <label className="wj-label"><InvitationLabel value={"សំណូមពរបទចម្រៀងសម្រាប់ DJ (Song Request)"} /></label>
+                      <label htmlFor={`${rsvpId}-song`} className="wj-label"><InvitationLabel value={"សំណូមពរបទចម្រៀងសម្រាប់ DJ (Song Request)"} /></label>
                       <input
                         type="text"
                         placeholder="ឧ. ថ្ងៃដែលរង់ចាំ ឬ គូព្រេង"
                         className="wj-input"
-                        value={rsvpState.song}
+                        id={`${rsvpId}-song`} value={rsvpState.song}
                         onChange={(e) => setRsvpState({ ...rsvpState, song: e.target.value })}
                       />
                     </div>

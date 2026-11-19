@@ -1,0 +1,126 @@
+{
+  "totalInventoryRoutes": 135,
+  "customerRoutes": 111,
+  "adminRoutes": 24,
+  "featureGroupsCount": 62,
+  "appGroupPairsCount": 63,
+  "phase09Routes": [
+    {
+      "routeId": "R-09-01",
+      "path": "/templates",
+      "shell": "MarketingShell",
+      "auth": "Public / Anonymous",
+      "component": "BrowseTemplatesFeature",
+      "testedStates": [
+        "initial",
+        "loading",
+        "ready",
+        "empty",
+        "error-fallback",
+        "filtered-category",
+        "filtered-price",
+        "sorted-name",
+        "dark-mode",
+        "khmer-locale"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-02",
+      "path": "/templates/:id",
+      "shell": "MarketingShell / Fullscreen",
+      "auth": "Public / Anonymous",
+      "component": "TemplateDemoPage / TemplateExperience",
+      "testedStates": [
+        "ready",
+        "iframe-demo",
+        "esc-exit",
+        "back-navigation",
+        "locale-switch"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-03",
+      "path": "/templates/:id/demo",
+      "shell": "Standalone Demo",
+      "auth": "Public / Anonymous",
+      "component": "TemplateDemoPage",
+      "testedStates": [
+        "isolated-demo",
+        "fullscreen",
+        "unowned-preview"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-04",
+      "path": "/templates/:id/preview",
+      "shell": "Standalone Preview",
+      "auth": "Guarded / Public Protocol",
+      "component": "TemplateExperience",
+      "testedStates": [
+        "sanitized-protocol",
+        "no-injected-secrets",
+        "sandboxed-iframe"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-05",
+      "path": "/templates/:templateId/checkout",
+      "shell": "HostShell",
+      "auth": "Guarded (RequireAuth)",
+      "component": "TemplateCheckoutPage",
+      "testedStates": [
+        "order-summary",
+        "aba-payway-notice",
+        "pending-settlement",
+        "back-to-catalog"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-06",
+      "path": "/templates/browse",
+      "shell": "HostShell",
+      "auth": "Guarded (RequireAuth)",
+      "component": "BrowseTemplatesFeature",
+      "testedStates": [
+        "stats-counters",
+        "paid-templates-filter",
+        "dark-mode",
+        "owned-indicator"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-07",
+      "path": "/pricing",
+      "shell": "MarketingShell",
+      "auth": "Public / Anonymous",
+      "component": "PricingFeature",
+      "testedStates": [
+        "packages-cards",
+        "usd-khr-display",
+        "feature-table-keyboard",
+        "safe-cta-redirect",
+        "dark-mode"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    },
+    {
+      "routeId": "R-09-08",
+      "path": "/app/packages",
+      "shell": "HostShell",
+      "auth": "Guarded (RequireAuth)",
+      "component": "SubscriptionPackagesPage",
+      "testedStates": [
+        "active-subscription",
+        "plan-upgrade",
+        "direct-access-safe-redirect"
+      ],
+      "verdict": "VERIFIED — LOCAL"
+    }
+  ]
+}

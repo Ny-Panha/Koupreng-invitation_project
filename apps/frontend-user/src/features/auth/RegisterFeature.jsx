@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useToggle } from "../../shared/hooks/useToggle";
 import { useT } from "../../shared/i18n/useT";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import AuthLayout from "./components/AuthLayout";
@@ -23,11 +24,11 @@ function RequirementIcon({ met }) {
 
 function EyeIcon({ open }) {
   return open ? (
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
     </svg>
   ) : (
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
     </svg>
@@ -41,6 +42,7 @@ function Register() {
   const passwordRequirementsId = useId();
   const confirmPasswordId = useId();
   const confirmPasswordStatusId = useId();
+  const errorId = useId();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +55,8 @@ function Register() {
   const [searchParams] = useSearchParams();
   const { login } = useAuth();
   const { auth } = useT();
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang === "km";
   const redirectTo = useTemplateContinuation(searchParams);
 
   // Match the backend's character checks on UTF-16 code units,
@@ -62,13 +66,14 @@ function Register() {
     { key: "passwordMinLength", met: password.length >= MIN_PASSWORD_LENGTH },
     { key: "passwordMaxLength", met: password.length > 0 && password.length <= MAX_PASSWORD_LENGTH },
     { key: "passwordLetter", met: passwordCharacters.some((character) => /\p{L}/u.test(character)) },
-    { key: "passwordUppercase", met: passwordCharacters.some((character) => /\p{Uppercase}/u.test(character)) },
+    { key: "passwordUppercase", met: passwordCharacters.some((character) => /\p{Lu}/u.test(character)) },
     { key: "passwordNumber", met: passwordCharacters.some((character) => /\p{Nd}/u.test(character)) },
   ];
   const passwordValid = passwordRequirements.every((requirement) => requirement.met);
   const passwordMatch = Boolean(confirmPassword) && password !== confirmPassword;
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError("");
 
     if (!name.trim() || !phone.trim() || !password || !confirmPassword) {
@@ -110,7 +115,7 @@ function Register() {
           <p className="auth-subtitle">{auth("registerSubtitle")}</p>
         </div>
 
-        {error && <p className="auth-error" role="alert">{error}</p>}
+        {error && <p id={errorId} className="auth-error" role="alert">{error}</p>}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="auth-form" aria-busy={loading}>
@@ -118,11 +123,14 @@ function Register() {
           <div className="auth-field">
             <label htmlFor={nameId} className="auth-label">{auth("fullName")}</label>
             <input
-              id={nameId} type="text" value={name}
+              id={nameId}
+              type="text"
+              value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={auth("fullNamePlaceholder")}
               className="auth-input"
               required
+              autoComplete="name"
             />
           </div>
 
@@ -130,11 +138,14 @@ function Register() {
           <div className="auth-field">
             <label htmlFor={phoneId} className="auth-label">{auth("phone")}</label>
             <input
-              id={phoneId} type="tel" value={phone}
+              id={phoneId}
+              type="tel"
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={auth("phonePlaceholder")}
               className="auth-input"
               required
+              autoComplete="tel"
             />
           </div>
 
@@ -156,7 +167,22 @@ function Register() {
                 maxLength={MAX_PASSWORD_LENGTH}
                 required
               />
-              <button type="button" onClick={togglePassword} className="auth-eye-btn" aria-label="Toggle password">
+              <button
+                type="button"
+                onClick={togglePassword}
+                onMouseDown={(e) => e.preventDefault()}
+                className="auth-eye-btn"
+                aria-label={
+                  showPassword
+                    ? isKm
+                      ? "លាក់ពាក្យសម្ងាត់"
+                      : "Hide password"
+                    : isKm
+                    ? "បង្ហាញពាក្យសម្ងាត់"
+                    : "Show password"
+                }
+                aria-pressed={showPassword}
+              >
                 <EyeIcon open={showPassword} />
               </button>
             </div>
@@ -194,7 +220,22 @@ function Register() {
                 aria-invalid={passwordMatch}
                 required
               />
-              <button type="button" onClick={toggleConfirm} className="auth-eye-btn" aria-label="Toggle confirm">
+              <button
+                type="button"
+                onClick={toggleConfirm}
+                onMouseDown={(e) => e.preventDefault()}
+                className="auth-eye-btn"
+                aria-label={
+                  showConfirm
+                    ? isKm
+                      ? "លាក់ពាក្យសម្ងាត់"
+                      : "Hide password"
+                    : isKm
+                    ? "បង្ហាញពាក្យសម្ងាត់"
+                    : "Show password"
+                }
+                aria-pressed={showConfirm}
+              >
                 <EyeIcon open={showConfirm} />
               </button>
             </div>

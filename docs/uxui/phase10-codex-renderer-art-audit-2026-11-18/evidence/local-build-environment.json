@@ -1,0 +1,13 @@
+{
+  "admin_command": "admin-preview-origin-build",
+  "process_environment": {
+    "VITE_USER_APP_URL": "http://127.0.0.1:4173"
+  },
+  "reason": "Admin runtime default localhost:5173 mismatched preview runner4173; source and .env files unchanged",
+  "initial_results": {
+    "cross_phase": "78 pass /8 Studio fail",
+    "phase02": "24 pass /8 fail (two additional iframe failures beyond historical six)"
+  },
+  "corrected_results": "studio-matched-origin-browser:44/44; see fresh Phase02 and composition commands",
+  "user_frozen_build": "frozen-delivery-build"
+}

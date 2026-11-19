@@ -1,5 +1,6 @@
 import InvitationLabel from '@/features/templates/shared/InvitationLabel';
 import InvitationBranding from '../../../shared/InvitationBranding';
+import DemoRsvpNotice from '../../../shared/RSVP/DemoRsvpNotice';
 import FamilyNames from '@/features/templates/shared/FamilyNames';
 import { usesFamilyLayout } from '@/features/templates/shared/invitationFeatures';
 import IllustratedMap from '@/features/templates/shared/IllustratedMap';
@@ -28,6 +29,7 @@ import {
     IoTimeOutline,
 } from "react-icons/io5";
 import CoverBackground from "@/features/templates/shared/Openings/CoverBackground";
+import { usePrefersReducedMotion } from "@/shared/hooks/usePrefersReducedMotion";
 import { formatTime24toKhmer } from "@/shared/ui/TimePicker";
 import "./canva-khmer-wedding.css";
 
@@ -187,7 +189,7 @@ function CanvaKhmerMusicButton({ src, audioRef }) {
     );
 }
 
-function CanvaKhmerOpeningCover({ content, onOpen }) {
+function CanvaKhmerOpeningCover({ content, onOpen, onSkip }) {
     return (
         <motion.section
             className="ck-cover"
@@ -217,6 +219,14 @@ function CanvaKhmerOpeningCover({ content, onOpen }) {
                 </p>
             )}
             <button type="button" className="ck-cover__open" onClick={onOpen}><InvitationLabel value={"ចុចទីនេះដើម្បីមើលព័ត៌មានលម្អិត"} /><IoChevronDownOutline aria-hidden="true" />
+            </button>
+            <button
+                type="button"
+                className="ck-cover__skip"
+                onClick={onSkip || onOpen}
+                aria-label="រំលងការបើក (Skip opening)"
+            >
+                រំលង (Skip opening)
             </button>
             {content.dateText && (
                 <time className="ck-cover__date">
@@ -570,8 +580,10 @@ function CanvaKhmerGift({ content }) {
 }
 
 function CanvaKhmerDemoRsvp({ useTemplateLink }) {
+    const [completed, setCompleted] = useState(false);
     return (
-        <form className="ck-demo-rsvp" onSubmit={(event) => event.preventDefault()} aria-label="គំរូ RSVP សម្រាប់សន្លឹកការ">
+        <form className="ck-demo-rsvp" onSubmit={(event) => { event.preventDefault(); setCompleted(true); }} aria-label="គំរូ RSVP សម្រាប់សន្លឹកការ">
+            <DemoRsvpNotice completed={completed} />
             <div className="ck-demo-rsvp__grid">
                 <label><InvitationLabel value={"ឈ្មោះភ្ញៀវ"} /><input type="text" placeholder="បញ្ចូលឈ្មោះរបស់អ្នក" />
                 </label>
@@ -590,7 +602,7 @@ function CanvaKhmerDemoRsvp({ useTemplateLink }) {
             </label>
             {useTemplateLink ? (
                 <Link to={useTemplateLink} className="ck-demo-rsvp__submit">
-                    <IoHeartOutline aria-hidden="true" /><InvitationLabel value={"បើក RSVP ពិតប្រាកដ"} /></Link>
+                    <IoHeartOutline aria-hidden="true" /><InvitationLabel value={"ប្រើគំរូនេះ"} /></Link>
             ) : (
                 <button type="submit" className="ck-demo-rsvp__submit">
                     <IoHeartOutline aria-hidden="true" /><InvitationLabel value={"ផ្ញើការឆ្លើយតប"} /></button>
@@ -694,20 +706,25 @@ export default function CanvaKhmerWeddingTemplate({
     backLabel = "ត្រឡប់ទៅគំរូទាំងអស់",
     primaryCtaLabel = "ប្រើគំរូនេះ",
     preview = false,
+    previewStartClosed = false,
     showActions = true,
     showStickyCta = true,
     children,
 }) {
-    const [opened, setOpened] = useState(() => Boolean(preview));
+    const [opened, setOpened] = useState(() => Boolean(preview && !previewStartClosed));
+    const [bypassOpening, setBypassOpening] = useState(false);
     const canvasRef = useRef(null);
     const musicRef = useRef(null);
     const heroRef = useRef(null);
     const detailRef = useRef(null);
+    const reduced = usePrefersReducedMotion();
     const sectionEnabled = useCallback((key) => content.enabledSections?.[key] !== false, [content.enabledSections]);
     const navigateTo = useCallback((id) => canvasRef.current?.querySelector(`#ck-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), []);
     const startCinematic = useCinematicOpening();
-    const handleOpen = useCallback(() => {
+    const handleOpen = useCallback((skip = false) => {
+        setBypassOpening(skip || reduced);
         setOpened(true);
+        if (skip || reduced) return;
         const playMusic = () => {
         const audio = musicRef.current;
         if (audio && content.music) {
@@ -716,17 +733,20 @@ export default function CanvaKhmerWeddingTemplate({
         }
         };
         if (!startCinematic(playMusic)) playMusic();
-    }, [content.music, startCinematic]);
+    }, [content.music, startCinematic, reduced]);
 
     useEffect(() => {
-        if (preview) setOpened(true);
-    }, [preview]);
+        if (preview) setOpened(!previewStartClosed);
+    }, [preview, previewStartClosed]);
 
     useEffect(() => {
-        if (!opened || preview) return undefined;
-        const frame = window.requestAnimationFrame(() => heroRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+        if (!opened) return undefined;
+        const frame = window.requestAnimationFrame(() => {
+            canvasRef.current?.querySelector("main")?.focus({ preventScroll: true });
+            if (!preview) heroRef.current?.scrollIntoView({ behavior: bypassOpening || reduced ? "auto" : "smooth", block: "start" });
+        });
         return () => window.cancelAnimationFrame(frame);
-    }, [opened, preview]);
+    }, [opened, preview, reduced, bypassOpening]);
 
     const availableSections = {
         program: Boolean(content.schedule?.length || content.ceremonyTime || content.receptionTime),
@@ -743,11 +763,11 @@ export default function CanvaKhmerWeddingTemplate({
     return (
         <div className={`ck-page${preview ? " ck-page--preview" : ""}`}>
             <div className="ck-phone" ref={canvasRef}>
-                <AnimatePresence mode="wait">
+                <AnimatePresence key={bypassOpening ? "immediate" : "ceremonial"}>
                     {!opened ? (
-                        <CanvaKhmerOpeningCover key="cover" content={content} onOpen={handleOpen} />
+                        <CanvaKhmerOpeningCover key="cover" content={content} onOpen={() => handleOpen(false)} onSkip={() => handleOpen(true)} />
                     ) : (
-                        <motion.main key="invitation" className="ck-invitation" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                        <motion.main key="invitation" tabIndex={-1} className="ck-invitation" initial={bypassOpening || reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }}>
                             <CanvaKhmerGardenHero content={content} sectionRef={heroRef} onDetails={() => detailRef.current?.scrollIntoView({ behavior: "smooth" })} />
                             <CanvaKhmerInvitationDetails
                                 content={content}

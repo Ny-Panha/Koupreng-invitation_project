@@ -1,0 +1,25 @@
+{
+  "status": "BLOCKED — EXTERNAL",
+  "date": "2026-11-18",
+  "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+  "scope": "Owned headed Chromium marketing home fixture at loopback4186; reduced motion; no live writes",
+  "browser": "156.0.8078.4",
+  "baseline": {
+    "innerWidth": 1426,
+    "innerHeight": 883,
+    "dpr": 1.5
+  },
+  "attempts": [
+    {
+      "operation": "sky.get_window with list_windows returned id853142/appChrome",
+      "error": "window id 853142 no longer belongs to Chrome; current owner is Chrome"
+    },
+    {
+      "operation": "Fresh list_windows followed by one get_window retry",
+      "error": "window id 853142 no longer belongs to Chrome; current owner is Chrome"
+    }
+  ],
+  "actual200Percent": "NOT EXECUTED",
+  "actual400Percent": "NOT EXECUTED",
+  "conclusion": "Native bridge failed before any input; viewport tests are not native zoom evidence. Physical/native accessibility QA remains open."
+}

@@ -1,0 +1,4 @@
+
+> frontend-admin@0.0.0 analyze:knip
+> node ../../scripts/ci/run-knip.mjs --include files,dependencies,unlisted,binaries
+

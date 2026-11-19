@@ -1,0 +1,15 @@
+{
+  "branch": "main",
+  "head": "2429b76545b683fad2a0a6f328bee3264875edc3",
+  "origin": "4d30a8f3bd0b0c1ab63b9111389bfbeb6ece19b4",
+  "ahead": 13,
+  "before_observed_tracked_modified": 49,
+  "before_observed_untracked_files": 396,
+  "before_inherited_tracked_modified": 49,
+  "before_inherited_untracked_files": 395,
+  "baseline_collector_note": "Observed Git status is49 tracked/396 untracked; the first audit.py collector is one of those396. Inherited baseline is49+395=444, excluding that new collector.",
+  "after_tracked_modified": 63,
+  "after_untracked_files": 469,
+  "staged": "",
+  "committed_pushed_deployed": false
+}

@@ -1,0 +1,245 @@
+{
+  "count": 26,
+  "counts": {
+    "VERIFIED — LOCAL": 11,
+    "PARTIALLY COMPLETE": 11,
+    "BLOCKED — EXTERNAL": 2,
+    "REVIEW REQUIRED": 2
+  },
+  "criteria": [
+    {
+      "id": "F08.1-01",
+      "gate": "Git preservation",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "git-worktree-baseline.json; preservation-diff.json",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-02",
+      "gate": "Complete identity inventory",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "route-state-matrix.json; route-inventory.json",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-03",
+      "gate": "Silk & Ink visual identity",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "before-visual.json; after-visual.json",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-04",
+      "gate": "Login",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "phase08-codex-regression login matrix; LoginFeature.test.jsx",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-05",
+      "gate": "Password toggles/autofill",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "pointer/keyboard caret test; route controls unit tests; native AT blocked",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-06",
+      "gate": "Registration/server policy",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "RegisterFeature.test.jsx; RegisterRequest.java; C08-002; OPEN C08-013 installed BCrypt72-byte boundary conflicts with100-unit DTO/service/UI declaration",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-07",
+      "gate": "Private recovery",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "ForgotPasswordFeature.test.jsx; C08 recovery; phone-only service gap",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-08",
+      "gate": "Reset lifecycle",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "C08 reset invalid/expired/reused and success fixture tests; OPEN C08-013 installed BCrypt72-byte boundary conflicts with100-unit DTO/service/UI declaration",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-09",
+      "gate": "Google entry",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "BLOCKED — EXTERNAL",
+      "evidence": "SocialAuthButtons.test.jsx simulated script/link failures only; no live provider",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-10",
+      "gate": "Telegram entry",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "BLOCKED — EXTERNAL",
+      "evidence": "telegramOAuth.test.js + simulated callback conflict; no live provider",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-11",
+      "gate": "Session guards",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "store cookie/token race/outage tests; no full browser cookie build",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-12",
+      "gate": "Safe next",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "safeRedirect.test.js; C08-007; template continuation source",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-13",
+      "gate": "Admin role isolation",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "historical-auth + 202 admin unit tests",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-14",
+      "gate": "Profile lifecycle",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "ProfileFeature.test.jsx; C08-005/006 and canonical response tests",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-15",
+      "gate": "Avatar lifecycle",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "local MIME/size/retry tests; real storage signature/integration not run",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-16",
+      "gate": "Password change/logout",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "C08-001; backend-auth-wrapper; reset cross-tab unit test; OPEN C08-013 installed BCrypt72-byte boundary conflicts with100-unit DTO/service/UI declaration",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-17",
+      "gate": "Khmer/English",
+      "geminiClaim": "PARTIALLY COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "all six routes in both locale captures; English provider diagnostics and native wording review remain",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-18",
+      "gate": "Light/dark",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "24 locale/theme primary captures; paired before; ordinary axe scans",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-19",
+      "gate": "Responsive/native input",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "312 geometry observations; short landscape; native zoom/keyboard unverified",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-20",
+      "gate": "Accessibility",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "PARTIALLY COMPLETE",
+      "evidence": "48 ordinary axe scans; one forced-colors computed finding; physical AT and exhaustive border/focus states open",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-21",
+      "gate": "Reduced motion",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "CSS reduced-motion rules; legacy motion/Phase06 suites; no physical low-end device",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-22",
+      "gate": "Performance",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "REVIEW REQUIRED",
+      "evidence": "before/after 18 loopback samples each; exact final build assets; matched emitted baseline/throttled/field acceptance remains open",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-23",
+      "gate": "Cross-phase regression",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "REVIEW REQUIRED",
+      "evidence": "test-command-results.json; unchanged Phase02 known red + default runner outcomes",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-24",
+      "gate": "Protected business/security",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "preservation-diff.json; backend 29 tests; no live sensitive action",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-25",
+      "gate": "57 carryovers",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "all 57 IDs retained; five AUTH items separate; Phase07 nine partials preserved",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    },
+    {
+      "id": "F08.1-26",
+      "gate": "Handoff/reproducibility",
+      "geminiClaim": "VERIFIED COMPLETE",
+      "verdict": "VERIFIED — LOCAL",
+      "evidence": "21 reports; evidence-validation.json; Phase09.1 handoff",
+      "denominator": "Named matrix cells/test cases only; no all-state certification",
+      "remediation": "See defect register and open gates; inherited PASS does not certify external state"
+    }
+  ]
+}

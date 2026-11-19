@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useToggle } from "../../shared/hooks/useToggle";
 import { useT } from "../../shared/i18n/useT";
+import { useLanguageStore } from "../../stores/useLanguageStore";
 import authService from "@/features/auth/api/authApi";
 import SocialAuthButtons from "./components/SocialAuthButtons";
 import AuthLayout from "./components/AuthLayout";
@@ -12,6 +13,7 @@ import "./AuthPage.css";
 function Login() {
   const emailId = useId();
   const passwordId = useId();
+  const errorId = useId();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, togglePassword] = useToggle();
@@ -22,10 +24,13 @@ function Login() {
   const [searchParams] = useSearchParams();
   const { login } = useAuth();
   const { nav, auth } = useT();
+  const lang = useLanguageStore((state) => state.lang);
+  const isKm = lang === "km";
   const redirectTo = useTemplateContinuation(searchParams);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError("");
 
     if (!identifier.trim() || !password) {
@@ -55,7 +60,11 @@ function Login() {
           <p className="auth-subtitle">{auth("loginSubtitle")}</p>
         </div>
 
-        {error && <p role="alert" className="auth-error">{error}</p>}
+        {error && (
+          <p id={errorId} role="alert" className="auth-error">
+            {error}
+          </p>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="auth-form" aria-busy={loading}>
@@ -70,8 +79,13 @@ function Login() {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               placeholder={auth("phoneOrEmailPlaceholder")}
-              className="auth-input"
-              autoComplete="username" required autoCapitalize="none" spellCheck={false}
+              className={`auth-input${error ? " error" : ""}`}
+              autoComplete="username"
+              required
+              autoCapitalize="none"
+              spellCheck={false}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? errorId : undefined}
             />
           </div>
 
@@ -87,23 +101,37 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={auth("passwordPlaceholder")}
-                className="auth-input"
-                autoComplete="current-password" required
+                className={`auth-input${error ? " error" : ""}`}
+                autoComplete="current-password"
+                required
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? errorId : undefined}
               />
               <button
                 type="button"
                 onClick={togglePassword}
-                aria-label={showPassword ? "លាក់ពាក្យសម្ងាត់ / Hide password" : "បង្ហាញពាក្យសម្ងាត់ / Show password"} aria-pressed={showPassword}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={
+                  showPassword
+                    ? isKm
+                      ? "លាក់ពាក្យសម្ងាត់"
+                      : "Hide password"
+                    : isKm
+                    ? "បង្ហាញពាក្យសម្ងាត់"
+                    : "Show password"
+                }
+                aria-pressed={showPassword}
                 className="auth-eye-btn"
               >
                 {showPassword ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
+                    width="18"
+                    height="18"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -115,11 +143,12 @@ function Login() {
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
+                    width="18"
+                    height="18"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -153,7 +182,14 @@ function Login() {
 
         {/* Forgot password */}
         <div className="auth-footer">
-          <Link to="/forgot-password" className="auth-footer-link">
+          <Link
+            to={
+              redirectTo && redirectTo !== "/app/events"
+                ? `/forgot-password?next=${encodeURIComponent(redirectTo)}`
+                : "/forgot-password"
+            }
+            className="auth-footer-link"
+          >
             {auth("forgotPassword")}
           </Link>
         </div>

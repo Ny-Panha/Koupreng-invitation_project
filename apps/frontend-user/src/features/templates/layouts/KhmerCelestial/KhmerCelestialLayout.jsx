@@ -306,6 +306,12 @@ export default function KhmerCelestialLayout({
     setOpened(true);
     if (!startCinematic(() => void startMusic(), transitionEnabled ? 500 : 0)) void startMusic();
   }, [startMusic, transitionEnabled, startCinematic]);
+  const handleSkip = () => {
+    playback.stop();
+    setOpenTransitionActive(false);
+    setOpened(true);
+    requestAnimationFrame(() => mainRef.current?.focus({ preventScroll: true }));
+  };
 
   const toggleMusic = useCallback(async () => {
     const audio = audioRef.current;
@@ -362,7 +368,7 @@ export default function KhmerCelestialLayout({
       ) : null}
 
       <AnimatePresence>
-        {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} autoFocus={!preview} /> : null}
+        {!opened ? <CelestialOpening key="opening" content={content} onOpen={handleOpen} onSkip={handleSkip} autoFocus={!preview} /> : null}
       </AnimatePresence>
 
       {openTransitionActive ? (

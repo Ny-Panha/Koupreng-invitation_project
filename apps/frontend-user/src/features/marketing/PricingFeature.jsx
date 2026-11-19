@@ -106,7 +106,7 @@ export default function PricingFeature() {
                   <div className="kp-plan-card-top">
                     <h3>{plan.packageName || plan.code}</h3>
                     {plan.code === "STANDARD" && (
-                      <span className="kp-plan-badge">{copy("ពេញនិយម", "Popular choice")}</span>
+                      <span className="kp-plan-badge">{copy("កញ្ចប់ពេញលេញ", "Full-featured tier")}</span>
                     )}
                   </div>
                   <p className={`kp-plan-price${price === null ? " kp-plan-price--missing" : ""}`}>{price ?? copy("តម្លៃមិនទាន់មាន", "Price unavailable")}</p>

@@ -1,0 +1,471 @@
+[
+  {
+    "path": "apps/frontend-user/index.html",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "6c4877026b130cc4e7a4211cc7bbdd5373b31a68f43c05ac4c18b98adb6d6712",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -12,7 +12,7 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/app/App.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "537607077c530d4ac29d89baba48160414db32bd3236a2adf02161985aec7b38",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -25,7 +25,6 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/app/ScrollToTop.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "3098313f6906134c848a9d10f12361f18a48c67d7e217695eed3d5e374b6d7dc",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -22,6 +22,7 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "d1cf1e088fb59ef592a61d36a6f60183632a81cf72302c7d03c5afd1c7b184ee",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -1,15 +1,57 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/AuthPage.css",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "92fee61233738b951a7f184421ac4f343f5ae6f17f8dd82f93653553b7baa898",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -822,6 +822,197 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ChangePasswordFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "6552d26136f4c5e4b5f824fea90bb09172fcc27af38ee29a305a636116b500c1",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -1,20 +1,28 @@",
+      "@@ -45,12 +53,21 @@",
+      "@@ -70,36 +87,60 @@",
+      "@@ -109,16 +150,28 @@",
+      "@@ -130,7 +183,7 @@",
+      "@@ -138,160 +191,6 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "333c8a0c81db729608945b13efbaf9072d067c41d30871b2c117b8c718ab0c5d",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -1,5 +1,5 @@",
+      "@@ -8,6 +8,8 @@",
+      "@@ -16,6 +18,7 @@",
+      "@@ -40,11 +43,20 @@",
+      "@@ -53,7 +65,7 @@",
+      "@@ -64,12 +76,12 @@",
+      "@@ -83,7 +95,9 @@",
+      "@@ -104,7 +118,7 @@",
+      "@@ -112,8 +126,8 @@",
+      "@@ -121,33 +135,32 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/LoginFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "06ec74286f5c84edb5181a29a19546742f14b18a22004edeff9722d6bba0a3ec",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -4,6 +4,7 @@",
+      "@@ -12,6 +13,7 @@",
+      "@@ -22,6 +24,8 @@",
+      "@@ -55,7 +59,11 @@",
+      "@@ -70,8 +78,13 @@",
+      "@@ -87,23 +100,37 @@",
+      "@@ -115,11 +142,12 @@",
+      "@@ -153,7 +181,14 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ProfileFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "06ba2849fecaee6d839388315da4183ec0e8eba1b15ac0d34228691ac4eddf99",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -1,9 +1,12 @@",
+      "@@ -12,6 +15,8 @@",
+      "@@ -26,7 +31,6 @@",
+      "@@ -34,6 +38,9 @@",
+      "@@ -92,15 +99,15 @@",
+      "@@ -151,230 +158,24 @@",
+      "@@ -400,7 +201,7 @@",
+      "@@ -458,14 +259,15 @@",
+      "@@ -474,56 +276,95 @@",
+      "@@ -535,16 +376,16 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/RegisterFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "33dbbb87fe774747c42a1d28bd7b881ba22d99338a3db6fd4a07961ce983f583",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -4,6 +4,7 @@",
+      "@@ -23,11 +24,11 @@",
+      "@@ -41,6 +42,7 @@",
+      "@@ -53,6 +55,8 @@",
+      "@@ -110,7 +114,7 @@",
+      "@@ -118,11 +122,14 @@",
+      "@@ -130,11 +137,14 @@",
+      "@@ -156,7 +166,22 @@",
+      "@@ -194,7 +219,22 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ResetPasswordFeature.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "57b3fa4245e9143c7fc641d4e86949d088490447036212dc83e487b56b54a783",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -10,6 +10,7 @@",
+      "@@ -22,7 +23,9 @@",
+      "@@ -55,11 +58,19 @@",
+      "@@ -79,12 +90,12 @@",
+      "@@ -98,6 +109,7 @@",
+      "@@ -122,10 +134,20 @@",
+      "@@ -147,14 +169,25 @@",
+      "@@ -178,29 +211,29 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/ContactFeature.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "807b081a85f1a9fafa94f23fe220b657358d80c2a83ceaf63d431a61520a3786",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -4,15 +4,15 @@",
+      "@@ -53,6 +53,7 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/MarketingFeature.css",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "0dbc84aa5c45eac9e64efae3861468006337217c6124c3183784830f35a3e539",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -8,13 +8,15 @@",
+      "@@ -1578,7 +1580,7 @@",
+      "@@ -1821,3 +1823,99 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/MarketingPages.css",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "ff17c63bdeff9c1820770e8c989f8f0bdfbf935117bc1663132ff38aea61c345",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -8,6 +8,9 @@",
+      "@@ -149,3 +152,71 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/VenuesFeature.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "f176cc6caecec2c3b8efbbafb437dcd86b2153aec714811760238f4d083b3834",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -1,15 +1,16 @@",
+      "@@ -61,30 +62,38 @@",
+      "@@ -100,8 +109,10 @@",
+      "@@ -112,7 +123,7 @@",
+      "@@ -124,7 +135,7 @@",
+      "@@ -141,21 +152,28 @@",
+      "@@ -167,7 +185,7 @@",
+      "@@ -176,43 +194,40 @@",
+      "@@ -221,7 +236,7 @@",
+      "@@ -230,15 +245,12 @@",
+      "@@ -251,17 +263,13 @@",
+      "@@ -272,30 +280,30 @@",
+      "@@ -303,347 +311,11 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/VenuesFeature.test.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "9359ad014e12a60a6322a187ee5712c71018531d854982ee25cae6a0e9e3e105",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -1,13 +1,13 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/components/LandingHero.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "f2a2f07ba2557090115089670524e22f22e1df196d05399768a49951af6e125b",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -10,7 +10,7 @@",
+      "@@ -40,15 +40,15 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/components/LandingStory.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "daea5e8adbf8cceedcc5884aeafaafb5ca65fa30173c316ad1a83ab279162080",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -2,7 +2,6 @@",
+      "@@ -53,17 +52,17 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/layouts/MarketingShell.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "ecfdb4e3cd53c3ec103d8f73ce7c55a15019312dce1fa4641ba37ca936d67537",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -2,17 +2,22 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/layouts/components/MarketingChrome.css",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "c7809adc3b8b2efa9b56c8b403cbb1749fa87629db7800914cf72aeb7a9661cb",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -14,6 +14,20 @@",
+      "@@ -21,6 +35,7 @@",
+      "@@ -28,12 +43,17 @@",
+      "@@ -234,7 +254,8 @@",
+      "@@ -276,7 +297,7 @@",
+      "@@ -445,7 +466,7 @@",
+      "@@ -467,3 +488,124 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/src/shared/i18n/marketingMessages.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "efb0d178bcff37d4f3e981196835e6faf4222109ec0590ab03586c24d6c5547e",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -133,26 +133,26 @@"
+    ],
+    "newAtStart": false
+  },
+  {
+    "path": "apps/frontend-user/playwright.phase07.config.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "4e01c4718d2c527a9602b90983b4b7bfa1cc3310716039f1380e63fd566d40ed",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,4 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ChangePasswordFeature.css",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "deb12602bf12c5b934838d09f85cde156a00ce8f3dcf20061574b7921ca0685a",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,196 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ForgotPasswordFeature.test.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "fb069629d0676ccd3efa4565e997c61e82aa407a5278eb337d7d161d92bd46e9",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,91 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/LoginFeature.test.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "91d64b94d3799c9ca0123185b6da480351eb76418b282e845dc84c33975076ec",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,142 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ProfileFeature.css",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "fe496e46180ceb6a71e6a2752c35919247c4133f92f36b8eae529e2d875e0c59",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,367 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ProfileFeature.test.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "78767d68927ed69b489ee875c69f38d30b7d8603999e4c6f9b7225e10b0c3355",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,151 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/auth/ResetPasswordFeature.test.jsx",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "b91139048569f7e641fb08142db437d02c41f39022a7ca293871600e1b6e8139",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,113 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/ContactDraftProvider.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "26ce88719bb78867c7a0a136e6cc9c43db9acd373ee209f4a6070d985df856ac",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,7 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/ContactDraftProvider.test.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "4b5c3a9215d3a5152bd6b3eeea6472b0d923066a2a86035e1cbf4fc186158ed2",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,27 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/MarketingMetadata.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "cd96370501eb70c9474d654fef935a19f872664dd9cecd89a0944dffbbe5f495",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,43 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/MarketingMetadata.test.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "28437a76083cb51966e2b05ea2dffccf39b6a7ed23c58b61d774b89d5f688d18",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,27 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/Phase07Marketing.test.jsx",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "18955e8542a2077fcafdfe486c4d8a5c9537bd38bca14da47c3ebd969eae7e5b",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,210 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/VenuesFeature.css",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "a47b5c21644fd31dd3a425067983889352fb130577af8ecc7e8153e43c333c33",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,533 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/src/features/marketing/contactDraft.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "9edebb787b040a356bff20df764e9385ca2d2e97c55f25a259d9b8b6e0e94603",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,11 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/tests/e2e/phase07-featured-collection.spec.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "f8974978904632d55ec773cb7ee09d2c108899089e86251623fe07921906f080",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,28 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/tests/e2e/phase07-marketing-audit.spec.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "d958e412c52baa2fd73555f32b26e1fea91503583716cee6b0ff2ff7202fe788",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,225 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/tests/e2e/phase07-state-edges.spec.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "b63b46fb91b4c7a9bd7a76884f7eaa543b8551a930850481303a5aa001acbd5b",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,86 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/tests/e2e/phase07-validation-contrast.spec.js",
+    "owner": "PHASE07 — hash matches independent Phase07 final attribution",
+    "startingHash": "4d9c9c603ca6df10eb9ec42ebedb0892249f87c8ce921aefef6443bb3a52aa65",
+    "matchesPhase07Hash": true,
+    "hunks": [
+      "@@ -0,0 +1,17 @@"
+    ],
+    "newAtStart": true
+  },
+  {
+    "path": "apps/frontend-user/tests/e2e/phase08-identity-account.spec.js",
+    "owner": "PHASE08.1 — original auth delta/fixture; HEAD already contains Phase06 primitives",
+    "startingHash": "62007e4a541d1b11c241dc213f2b0e41812c8eebd9f932daded74bc7d78a5ae9",
+    "matchesPhase07Hash": false,
+    "hunks": [
+      "@@ -0,0 +1,231 @@"
+    ],
+    "newAtStart": true
+  }
+]

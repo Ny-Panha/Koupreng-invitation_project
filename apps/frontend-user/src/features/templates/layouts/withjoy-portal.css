@@ -470,8 +470,44 @@
 /* Floating Music Player */
 /* Media Queries */
 @media (max-width: 768px) {
+  .wj-nav-inner {
+    padding: 0.6rem 1rem;
+    gap: 0.5rem;
+  }
+  .wj-nav-brand {
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45%;
+  }
   .wj-nav-links {
+    display: flex;
+    overflow-x: auto;
+    max-width: 55%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+  }
+  .wj-nav-links::-webkit-scrollbar {
     display: none;
+  }
+  .wj-nav-link {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    white-space: nowrap;
+    border-radius: 9999px;
+    background: rgba(26, 54, 93, 0.06);
+    flex-shrink: 0;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .wj-nav-rsvp-btn {
+    background: linear-gradient(135deg, var(--wj-accent), #b7791f) !important;
+    color: #ffffff !important;
+    font-weight: 700;
   }
   .wj-countdown-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -497,3 +533,18 @@
     padding: 1.5rem;
   }
 }
+
+@media (max-width: 360px) {
+  .wj-nav-brand {
+    font-size: 1rem;
+    max-width: 40%;
+  }
+  .wj-gallery-grid {
+    column-count: 1;
+  }
+  .wj-rsvp-card {
+    padding: 1rem;
+  }
+}
+/* Text gold needs a darker tone on the white programme cards. */
+.wj-schedule-card .wj-schedule-time { color: #865b16; }
