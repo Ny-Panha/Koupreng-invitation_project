@@ -1,0 +1,16 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "library_preservation_decisions": [
+    { "name": "React 19", "version": "19.3.1", "decision": "PRESERVED", "rationale": "Core runtime; hooks, effects and concurrent state models preserved" },
+    { "name": "React Router", "version": "7.18.2", "decision": "PRESERVED", "rationale": "Route tree, URL search param synchronization, and navigation contracts preserved" },
+    { "name": "Tailwind CSS", "version": "4.3.3", "decision": "PRESERVED", "rationale": "Utility-first design tokens and semantic variables preserved" },
+    { "name": "Zustand", "version": "5.0.16", "decision": "PRESERVED", "rationale": "Language store and global auth state management preserved" },
+    { "name": "Lucide React", "version": "1.61.0", "decision": "PRESERVED", "rationale": "Accessible icon hierarchy preserved with aria-hidden attributes" },
+    { "name": "Axios", "version": "1.19.0", "decision": "PRESERVED", "rationale": "HTTP client with interceptors, token injection, and unwrap helpers preserved" },
+    { "name": "Framer Motion", "version": "14.5.0", "decision": "PRESERVED", "rationale": "Animation orchestration with reduced-motion safeguards preserved" },
+    { "name": "Vitest", "version": "5.0.5", "decision": "PRESERVED", "rationale": "Unit and integration test runner preserved with 29 test files" },
+    { "name": "Playwright", "version": "1.64.1", "decision": "PRESERVED", "rationale": "E2E visual regression and multi-viewport screenshot runner preserved" },
+    { "name": "Axe Core", "version": "4.14.0", "decision": "PRESERVED", "rationale": "Automated accessibility and contrast rule verification preserved" }
+  ]
+}

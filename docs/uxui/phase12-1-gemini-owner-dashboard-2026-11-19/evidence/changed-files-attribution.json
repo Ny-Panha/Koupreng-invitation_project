@@ -1,0 +1,50 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "author": "Gemini Frontend Engineer",
+  "status": "UNSTAGED_WORKING_TREE",
+  "files": [
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.jsx",
+      "pre_sha256": "0977a7743c4d8917f618e80193132a46719e200c366f1cd00dc3d51135be93c2",
+      "post_sha256": "733c59377cd47409f1493811766c2cfba894086903968d17afccb88778059b75",
+      "purpose": "Deterministic newest/date/title sorting, Khmer NFC search normalization, contextual Continue where you left off resume draft banner, onEdit callback for calendar"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.css",
+      "pre_sha256": "b2070575474988a0ccac97846f233d62449330ef9482b4c8aed603a6f2bdeb27",
+      "post_sha256": "0c0652fd7ac7d83face314e1a885d1da674ce8b5dbe06c6f71d526def0691c89",
+      "purpose": "Provenance badge styling for local and failed-sync, contextual resume draft banner container, kicker, title, and action styling"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCard.jsx",
+      "pre_sha256": "bc2c11220b90eb0c85415fdffdbd95b6e6932506bc209429b0d0a3b1dc9ae359",
+      "post_sha256": "167f98578616f14bf7c785801d206b67b2780cb4ccce77a3e5b897870dd1a081",
+      "purpose": "Server vs local vs failed-sync provenance badges, Manage event vs Resume draft action button differentiation, delete restriction for shared events"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.jsx",
+      "pre_sha256": "afded03b4f366e87c32994c259b6929c00a92dff2d784c38b4f4d19c27878851",
+      "post_sha256": "fc245fa7eb0fa564cad4938a74f3067a40fb4d39523691cf8f5d711bdb012125",
+      "purpose": "Provenance chip and status badge tones for LOCAL_ONLY and SYNC_FAILED, initialDate prop support for reliable leap year navigation, onEdit routing"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.css",
+      "pre_sha256": "f68301773f5735f1322c860dc2689ded090bcc50840a1b1275796b802b973830",
+      "post_sha256": "acd7d0bf9dc07ec6133c02c501a62c4d98dccf7464ed03d667b294d083538229",
+      "purpose": "Styling for is-local and is-sync-failed calendar chips, bullets, and detail status badges"
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "pre_sha256": "00a1718ce555dbdbba3780b35d2cdad862681b6ce4bbf5a959e83d230eeef0dc",
+      "post_sha256": "732843d273185b4da1d3c43e3046f75d7080e8702a733605ae9a349b0238430e",
+      "purpose": "Immediate state reset on eventId change to prevent flashing stale event X data while event Y is fetching"
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.jsx",
+      "pre_sha256": "4ac085d979d0216d7eb1caeeda90fd5d42c6782fc2b430e0f876b937368515b7",
+      "post_sha256": "f6e039ec0929e344b4ce6bcdce674c7aba8b5eb5f98a6e26fb9fc619730aa693",
+      "purpose": "Immediate state reset on route event ID change to prevent flashing stale event metrics"
+    }
+  ]
+}

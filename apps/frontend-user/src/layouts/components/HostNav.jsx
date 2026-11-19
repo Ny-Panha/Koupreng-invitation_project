@@ -174,7 +174,11 @@ export default function HostNav() {
   useEffect(() => {
     setMobileMenuOpen(false);
     setProfileOpen(false);
-  }, [location.key]);
+  }, [location.key, user?.id, user?.userId]);
+
+  useEffect(() => {
+    if (profileOpen) profileMenuRef.current?.querySelector('[role="menuitem"]')?.focus();
+  }, [profileOpen]);
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1201px)");
@@ -195,7 +199,7 @@ export default function HostNav() {
   ];
 
   const isActive = useCallback((path) => {
-    if (path === "/app/events") return location.pathname === path;
+    if (path === "/app/events") return location.pathname === path || /^\/app\/events\/\d+(?:\/|$)/.test(location.pathname);
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   }, [location.pathname]);
 
@@ -225,6 +229,9 @@ export default function HostNav() {
 
   // Profile menu keyboard navigation
   const handleProfileKeyDown = (e) => {
+    if (!profileOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      e.preventDefault(); setProfileOpen(true); return;
+    }
     if (!profileOpen) return;
     const items = profileMenuRef.current?.querySelectorAll('[role="menuitem"]');
     if (!items || items.length === 0) return;
@@ -245,6 +252,8 @@ export default function HostNav() {
     } else if (e.key === "End") {
       e.preventDefault();
       itemsArray[itemsArray.length - 1]?.focus();
+    } else if (e.key === "Tab") {
+      setProfileOpen(false);
     }
   };
 
@@ -268,17 +277,16 @@ export default function HostNav() {
             className="host-nav-links"
             aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}
           >
-            {dynamicNavItems.map((item, index) => {
+            {dynamicNavItems.map((item) => {
               const active = isActive(item.activePath || item.path);
               return (
                 <span key={item.labelKey} className="host-nav-item-wrap">
-                  {index > 0 && <span className="host-nav-divider" aria-hidden="true">|</span>}
                   <Link
                     to={item.path}
                     className={`host-nav-link${active ? " active" : ""}`}
                     aria-current={active ? "page" : undefined}
                   >
-                    {getNavLabel(item.labelKey)}
+                    <item.Icon size={17} aria-hidden="true" />{getNavLabel(item.labelKey)}
                   </Link>
                 </span>
               );
@@ -300,7 +308,7 @@ export default function HostNav() {
                 onClick={() => setProfileOpen((value) => !value)}
               >
                 <span className="host-profile-avatar">
-                  {profileImage ? <img src={profileImage} alt="" /> : profileInitial}
+                  {profileImage ? <img key={profileImage} src={profileImage} alt="" /> : profileInitial}
                 </span>
                 <span className="host-profile-name">{displayName}</span>
                 <ChevronDown className="host-profile-chevron" aria-hidden="true" />

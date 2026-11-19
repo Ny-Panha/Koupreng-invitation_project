@@ -1,8 +1,0 @@
-{
-  "primary": ".agents/skills/koupreng-qa-release/SKILL.md",
-  "supporting": [
-    ".agents/skills/playwright/SKILL.md",
-    ".agents/skills/security-best-practices/SKILL.md"
-  ],
-  "scope": "Independent frontend identity/account QA and security-conscious source review; backend read-only contract checks"
-}

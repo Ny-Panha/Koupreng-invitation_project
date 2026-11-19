@@ -37,6 +37,7 @@ function VerifiedWorkspace({ eventId }) {
   useEffect(() => {
     let active = true;
     if (!/^[1-9]\d*$/.test(eventId)) return;
+    setState(current => ({ ...current, loading: true, event: null, access: null, error: "" }));
     Promise.all([invitationService.get(eventId), invitationService.listMine(), invitationService.access?.(eventId)?.catch(() => null)])
       .then(([event, events, access]) => {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");

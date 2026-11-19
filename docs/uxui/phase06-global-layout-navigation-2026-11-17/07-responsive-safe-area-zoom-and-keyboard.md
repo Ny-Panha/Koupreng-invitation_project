@@ -1,9 +1,0 @@
-# 07 — responsive, safe-area, zoom and keyboard evidence
-
-Six shell contexts × twenty-four widths × two locales × two appearances = **576 observations**. Widths: 320, 359/360/361, 375, 390, 414, 430, 479/480/481, 599/600/601, 767/768/769, 820, 1023/1024/1025, 1280, 1440, 1920. The baseline used nineteen widths / 456 observations; five added widths bracket the auth breakpoints. [Raw geometry](evidence/after-shell-probes.json) records focusable child bounds, scroll ranges, local fonts and actual drawer focus. Closed inert/dialog-hidden controls are excluded from clipping flags. Result: 0 horizontal control-clip rows and no page exceptions. This is not merely a document scrollWidth check.
-
-Portrait CDP insets are top 44/bottom 34; short-landscape insets are left/right 44/bottom 21 at 844×390. [Special modes](evidence/special-mode-results.json) verify computed padding and real hit targets, text spacing, long mixed-script names, forced colors and local font fallback. These are explicit browser emulations, not physical hardware.
-
-Studio’s three short landscapes have scroll/reachability contracts in the browser suite. Normal/reduced motion, keyboard Enter, Tab/Shift+Tab/Escape and normal pointer/touch paths are exercised in named cases. Device emulation names do not substitute for the actual viewport set by each test.
-
-Native zoom remains **BLOCKED / NOT TESTED**. Headed Playwright Control+Equal did not change measured DPR/innerWidth; the Windows computer-use bridge then rejected its returned owned Chrome window handle twice: `window id 1640326 no longer belongs to Chrome; current owner is Chrome`. No native input was issued after recovery failed. A fresh default-zoom baseline is retained in [native-zoom-results](evidence/native-zoom-results.json). CSS 320px reflow is not called native 400% zoom. OS text scaling, hardware keyboards, browser bars and real virtual keyboards require device QA.

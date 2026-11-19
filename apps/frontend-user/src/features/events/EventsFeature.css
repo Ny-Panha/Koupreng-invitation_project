@@ -465,6 +465,128 @@
     color: var(--ui-muted);
 }
 
+.event-card-badge--local {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid rgba(3, 105, 161, 0.2);
+}
+
+.event-card-badge--sync-failed {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid rgba(185, 28, 28, 0.2);
+}
+
+.event-card-badge--shared {
+    background: #f3e8ff;
+    color: #7e22ce;
+    border: 1px solid rgba(126, 34, 206, 0.2);
+}
+
+/* ── Contextual Resume Draft Banner ── */
+.events-resume-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(135deg, #fffbf5 0%, #fbf6ee 100%);
+    border: 1px solid #ebd9bf;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 3px 12px rgba(184, 134, 11, 0.06);
+}
+
+.events-resume-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.events-resume-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f5ebd9;
+    color: #b8860b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.events-resume-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.events-resume-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8b1e3f;
+}
+
+.events-resume-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2a1f10;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.events-resume-status {
+    font-size: 12px;
+    color: #786a55;
+}
+
+.events-resume-status.is-failed {
+    color: #b91c1c;
+    font-weight: 600;
+}
+
+.events-resume-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    background: #8b1e3f;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    flex-shrink: 0;
+    min-height: 40px;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.events-resume-action-btn:hover {
+    background: #a22449;
+    transform: translateY(-1px);
+}
+
+.events-resume-action-btn:focus-visible {
+    outline: 2px solid #8b1e3f;
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .events-resume-banner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .events-resume-action-btn {
+        justify-content: center;
+    }
+}
+
 .event-card-body {
     padding: 20px;
     display: flex;

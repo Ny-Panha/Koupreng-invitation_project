@@ -1,0 +1,23 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "race_isolation_mechanics": {
+    "event_switch_race": {
+      "scenario": "Navigating from /app/events/101 to /app/events/102 while request for 102 is pending",
+      "mitigation": "Synchronous state reset (event: null, access: null, loading: true) in useEffect before async dispatch; cancellation flag active = false aborts out-of-order 101 resolution",
+      "test_suite": "apps/frontend-user/src/features/events/workspace/Phase12_1WorkspaceAuthority.test.jsx",
+      "result": "VERIFIED—LOCAL"
+    },
+    "account_switch_race": {
+      "scenario": "User A logs out and User B logs in within the same SPA runtime",
+      "mitigation": "Subject string derived from user.id included in useEffect dependency array; stale user cache wiped on auth transition",
+      "test_suite": "apps/frontend-user/src/features/events/onboarding/Phase11_1DraftLifecycle.test.jsx",
+      "result": "VERIFIED—LOCAL"
+    },
+    "dashboard_kpi_race": {
+      "scenario": "Rapid switching of selected invitation in DashboardFeature",
+      "mitigation": "Synchronous state reset (selectedInvitation: null, loading: true) inside route change effect",
+      "result": "VERIFIED—LOCAL"
+    }
+  }
+}

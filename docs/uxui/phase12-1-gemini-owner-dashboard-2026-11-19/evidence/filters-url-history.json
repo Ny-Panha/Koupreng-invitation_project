@@ -1,0 +1,45 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "url_state_synchronization": {
+    "params": {
+      "q": {
+        "description": "Search query normalized with Unicode NFC",
+        "default": "",
+        "resets_page": true
+      },
+      "status": {
+        "description": "Event status filter ('DRAFT' | 'PUBLISHED' | 'UNPUBLISHED')",
+        "default": "",
+        "resets_page": true
+      },
+      "type": {
+        "description": "Event type filter ('WEDDING' | 'BIRTHDAY' | 'ANNIVERSARY' | 'CORPORATE')",
+        "default": "",
+        "resets_page": true
+      },
+      "sort": {
+        "description": "Deterministic sort ('newest' | 'date' | 'title')",
+        "default": "newest",
+        "resets_page": false
+      },
+      "view": {
+        "description": "View mode ('list' | 'calendar')",
+        "default": "list",
+        "resets_page": false
+      },
+      "period": {
+        "description": "Event period ('all' | 'upcoming' | 'past')",
+        "default": "all",
+        "resets_page": true
+      },
+      "page": {
+        "description": "1-based pagination index clamped against filtered length",
+        "default": "1",
+        "resets_page": false
+      }
+    },
+    "history_mode": "replace (prevents back-button clutter on typing or tab changes)",
+    "zero_state_reset": "Clear all filters button resets search params to empty URLSearchParams"
+  }
+}

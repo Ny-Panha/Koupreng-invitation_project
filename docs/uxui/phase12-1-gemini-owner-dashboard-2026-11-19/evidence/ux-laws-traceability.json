@@ -1,0 +1,30 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "heuristics_and_laws": [
+    {
+      "principle": "Jakob's Law",
+      "implementation": "Standard event card layout with image, title, date, venue, and familiar status badges; calendar follows Monday-first grid and agenda feed conventions"
+    },
+    {
+      "principle": "Fitts's Law",
+      "implementation": "Large, easily clickable primary actions (Manage event / Resume draft) and prominent full-width action buttons on mobile"
+    },
+    {
+      "principle": "Hick's Law",
+      "implementation": "Clean period tabs (All / Upcoming / Past) reduce cognitive load when filtering large event rosters"
+    },
+    {
+      "principle": "Visibility of System Status (Nielsen #1)",
+      "implementation": "Explicit provenance badges (Published, Draft, Local draft, Sync failed, Shared by X) truthfully convey server and sync status"
+    },
+    {
+      "principle": "Error Prevention & Recovery (Nielsen #5 & #9)",
+      "implementation": "Sync failed events preserve local payloads without data loss; delete modal requires explicit confirmation before removing backend data"
+    },
+    {
+      "principle": "Recognition rather than Recall (Nielsen #6)",
+      "implementation": "Contextual 'Continue where you left off' resume draft banner surfaces pending work immediately upon opening /app/events"
+    }
+  ]
+}

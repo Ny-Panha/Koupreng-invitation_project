@@ -1,7 +1,0 @@
-# 06 — public, auth, and marketplace adoption
-
-The public home, pricing, contact, and `/templates` pages retain their existing bounded CSS and observer behavior. `/venues` and `/venues/:id` retain their own `ScrollReveal` and Framer entrance. The separate global `RouteMotion`/`SiteAnimations` layer was removed after source review showed the proposed generic venue observer had no eligible noninteractive section. Its old full-screen logo preloader, pointer-tracked kinetic background, route pulse, and reversible hidden sections are gone. Route content remains readable without that layer.
-
-`/login`, `/register`, recovery/reset, template preview/demo, checkout, and public payment return/status paths no longer receive a generic route curtain or route pulse. Their own form busy/error and payment states remain under existing components and server responses. The user `LoadingButton` keeps `aria-busy` and disabled behavior; its color/opacity transition now uses canonical tokens. Toast entrance uses the same brief reveal token and remains controlled by its message state.
-
-`IMPLEMENTED` source paths: removal of `RouteMotion.jsx`/`SiteAnimations.jsx` and their app mount, semantic tokens, `LoadingButton.css`, and `Toast.css`. `FIXTURE VERIFIED` scope and exact commands are in [13](13-browser-and-unit-test-matrix-exact-commands.md); source adoption does not certify every auth/checkout error state. Long Khmer/English layout, real mobile touch, and all marketplace filter variants remain `NOT TESTED` or the owning Phase 07–09 work.

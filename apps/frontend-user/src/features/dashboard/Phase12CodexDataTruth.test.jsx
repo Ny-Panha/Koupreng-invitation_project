@@ -1,0 +1,20 @@
+import { cleanup, render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import DashboardFeature from './DashboardFeature';
+import { reportsApi } from '../reports/api/reportsApi';
+import { groupAmounts } from './dashboardData';
+import { useLanguageStore } from '@/stores/useLanguageStore';
+vi.mock('../invitations/api/invitationApi',()=>({invitationService:{listMine:vi.fn().mockResolvedValue([{id:42,title:'Truthful event',status:'PUBLISHED',eventDate:'2020-01-01'}])}}));
+vi.mock('../reports/api/reportsApi',()=>({reportsApi:{invitationDashboard:vi.fn()}}));
+vi.mock('../budget/api/budgetApi',()=>({budgetService:{listItems:vi.fn().mockResolvedValue([])}}));
+vi.mock('../planning/api/planningApi',()=>({planningService:{listGifts:vi.fn().mockResolvedValue([])}}));
+vi.mock('../notifications/notificationService',()=>({default:{listByInvitation:vi.fn().mockResolvedValue([])}}));
+vi.mock('../guests/api/guestApi',()=>({guestService:{checkInSummary:vi.fn().mockResolvedValue(null)}}));
+beforeEach(()=>{useLanguageStore.setState({lang:'en'}); reportsApi.invitationDashboard.mockResolvedValue({totalGuests:12,totalInvited:5,attending:3,pending:4});});
+afterEach(cleanup);
+function mount(){return render(<MemoryRouter initialEntries={['/app/events/42']}><Routes><Route path='/app/events/:eventId' element={<DashboardFeature/>}/></Routes></MemoryRouter>);}
+it('C12-002 distinguishes guest records from invited records',async()=>{mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('12 total invited')).not.toBeInTheDocument(); expect(screen.getByText('5 total invited')).toBeInTheDocument();});
+it('C12-003 keeps missing aggregates unavailable instead of manufacturing zero',async()=>{reportsApi.invitationDashboard.mockResolvedValue({}); mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('No guests yet')).not.toBeInTheDocument(); expect(screen.getAllByText('Unavailable').length).toBeGreaterThan(0);});
+it('C12-004 does not declare a past scheduled event completed',async()=>{mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('Event completed')).not.toBeInTheDocument(); expect(await screen.findByText('Date passed')).toBeInTheDocument();});
+it('C12-005 refuses malformed and unlabelled monetary amounts',()=>{expect(groupAmounts([{currency:'USD',amount:'bad'},{currency:'USD',amount:10},{currency:'KHR',amount:40000},{amount:99}],'amount')).toEqual({USD:null,KHR:40000});});

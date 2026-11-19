@@ -1,0 +1,18 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "currency_handling": {
+    "supported_currencies": ["USD", "KHR"],
+    "formatting_function": "currencyAmounts / currencyTotals",
+    "separation_rules": [
+      "USD amounts formatted with '$' symbol and thousands commas (e.g., '$3,500')",
+      "KHR amounts formatted with 'KHR' prefix or '៛' and Khmer thousands grouping (e.g., 'KHR 2,000,000')",
+      "Dual-currency events separate sums with middle dot separator (e.g., '$3,500 · KHR 2,000,000')",
+      "Zero exchange conversion: client never guesses or applies exchange rates (e.g. 1 USD = 4000 KHR)"
+    ],
+    "permission_gate": {
+      "budget_view": "Requires MANAGE_BUDGET permission; hidden from unauthorized viewers",
+      "gifts_view": "Requires VIEW_EVENT and owner context; hidden from public or restricted collaborators"
+    }
+  }
+}

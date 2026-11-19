@@ -1,9 +1,0 @@
-{
-  "rows": [],
-  "method": "Primary snapshot follows load + ready content/fonts + 400ms + consumed paint. Resource Timing lists completed resources; lazy/late media can move between the cold and warm snapshots.",
-  "limits": [
-    "Parent document timings can omit nested/cross-origin resources",
-    "A different three-sample transfer median does not by itself prove source asset growth",
-    "Hash equality proves static file identity, not that every request completed before the same snapshot"
-  ]
-}

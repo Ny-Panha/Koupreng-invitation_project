@@ -1,0 +1,56 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "provenance_taxonomy": [
+    {
+      "tier": "SERVER_PUBLISHED",
+      "conditions": "numeric backend invitation ID, status == 'PUBLISHED'",
+      "badge_label_en": "Published",
+      "badge_label_km": "បានផ្សាយ",
+      "tone": "event-card-badge--published",
+      "primary_action": "Manage event",
+      "destination_route": "/app/events/:id",
+      "delete_allowed": true
+    },
+    {
+      "tier": "SERVER_DRAFT",
+      "conditions": "numeric backend invitation ID, status == 'DRAFT'",
+      "badge_label_en": "Draft",
+      "badge_label_km": "ព្រាង",
+      "tone": "event-card-badge--draft",
+      "primary_action": "Manage event",
+      "destination_route": "/app/events/:id",
+      "delete_allowed": true
+    },
+    {
+      "tier": "LOCAL_ONLY",
+      "conditions": "syncStatus == 'LOCAL_ONLY' || isLocal == true || id starts with 'wed-' / 'draft-' without backend ID",
+      "badge_label_en": "Local draft",
+      "badge_label_km": "ព្រាងលើឧបករណ៍នេះ",
+      "tone": "event-card-badge--local",
+      "primary_action": "Resume draft",
+      "destination_route": "/dashboard/invitations/:id/edit",
+      "delete_allowed": true
+    },
+    {
+      "tier": "SYNC_FAILED",
+      "conditions": "syncStatus == 'SYNC_FAILED'",
+      "badge_label_en": "Sync failed",
+      "badge_label_km": "Sync បរាជ័យ",
+      "tone": "event-card-badge--sync-failed",
+      "primary_action": "Resume draft",
+      "destination_route": "/dashboard/invitations/:id/edit",
+      "delete_allowed": true
+    },
+    {
+      "tier": "SHARED",
+      "conditions": "shared == true, ownerName present",
+      "badge_label_en": "Shared by {ownerName}",
+      "badge_label_km": "ចែករំលែកដោយ {ownerName}",
+      "tone": "event-card-badge--shared",
+      "primary_action": "Manage event",
+      "destination_route": "/app/events/:id",
+      "delete_allowed": false
+    }
+  ]
+}

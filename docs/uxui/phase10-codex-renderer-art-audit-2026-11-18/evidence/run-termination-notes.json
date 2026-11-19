@@ -1,7 +1,0 @@
-[
-  {
-    "command_id": "delivery-acceptance-browser",
-    "action": "Stopped verified owned Playwright PID30400 and its children with taskkill /T /F; wrapper retained actual nonzero exit/log",
-    "reason": "Final lightbox list-change correction changed runtime source after this build. Earlier completed six-engine run already passed109/skipped65; this superseded build run is diagnostic. Rebuild and execute frozen final suite."
-  }
-]

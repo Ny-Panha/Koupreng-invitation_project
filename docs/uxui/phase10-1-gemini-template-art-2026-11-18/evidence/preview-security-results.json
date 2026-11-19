@@ -1,9 +1,0 @@
-{
-  "timestamp": "2026-11-18T23:15:00+07:00",
-  "boundaries": {
-    "trustedPreviewMessaging": "isTrustedPreviewMessage checks event.origin and previewChannel nonce",
-    "guestTokenPrivacy": "Guest tokens isolated from public preview simulation",
-    "iframeSandbox": "allow-scripts allow-same-origin restricted; no top-level navigation spoofing",
-    "xssSanitization": "All text values rendered via React JSX text nodes, eliminating DOM injection"
-  }
-}

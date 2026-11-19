@@ -1,0 +1,24 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "open_gates": [
+    {
+      "gate": "F12.1-03",
+      "status": "REVIEW REQUIRED",
+      "owner": "Remote DevOps / CI Maintainer",
+      "escalation_reason": "Verification of remote GitHub Actions workflow run for ad02a263; requires remote token/browser audit."
+    },
+    {
+      "gate": "F12.1-37",
+      "status": "REVIEW REQUIRED",
+      "owner": "Cambodian Native Linguist / Cultural Consultant",
+      "escalation_reason": "Native human sign-off on authentic Khmer non-wedding celebration terminology."
+    },
+    {
+      "gate": "F12.1-39",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Accessibility QA Specialist",
+      "escalation_reason": "Automated Axe Core contrast checks clean; physical assistive technology (NVDA, VoiceOver) hardware testing open."
+    }
+  ]
+}

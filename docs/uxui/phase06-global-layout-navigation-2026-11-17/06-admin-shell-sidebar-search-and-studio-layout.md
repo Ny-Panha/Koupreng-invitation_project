@@ -1,9 +1,0 @@
-# 06 — admin navigation and full-screen Studio
-
-AdminLayout adds a stable bilingual Workspace breadcrumb and destination focus after an actual pathname change. Theme/locale changes do not run that focus effect. Header/sidebar controls explicitly focus their trigger before opening native dialogs, preserving WebKit return behavior. Existing filtered destination search, empty results, account role and guard checks remain. Safe-area padding is applied after mobile shorthands; menu content scrolls independently.
-
-Template Studio keeps its own dark authoring chrome and an independent preview document. All five section buttons retain their current labels and `aria-pressed`; a named group and missing level-two editor heading repair semantics without new tab behavior. The mobile Edit/Preview switch sticks within the scrolling studio. Short-landscape buttons keep 44px targets. A measured notch failure showed the short-height padding shorthand overriding insets; the narrow CSS fix now preserves top/right/left/bottom safe-area values.
-
-Tests use 844×390, 820×430 and 768×390: visit all five sections, type a fictional catalog value, keyboard-switch Preview/Edit, hit-test preview tools, load the real user iframe, reach outer scroll bottom, scroll the inner document and verify retained typed data. The frame need not occupy 95% of a viewport shorter than the frame itself. Existing separator arrows/Home/End and simple pointer buttons remain; the trusted Khmer new-tab action is activated with Enter and its exact 127.0.0.1:4173 destination is asserted.
-
-Admin fixture builds set `VITE_USER_APP_URL=http://127.0.0.1:4173`. Origin/session/channel checks, sandbox policy, JSON preservation, immutable identity, conflicts and save authorization remain untouched. An early Canva sandbox storage exception came from the test initializer and was corrected there, without relaxing iframe security.

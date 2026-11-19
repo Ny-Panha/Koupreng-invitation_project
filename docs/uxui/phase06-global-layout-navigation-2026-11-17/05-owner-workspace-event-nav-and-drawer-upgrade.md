@@ -1,7 +1,0 @@
-# 05 — owner workspace and drawer
-
-HostNav keeps the same links, labels and closed drawer DOM, including `inert` and `aria-hidden`. Its open drawer now uses native `<dialog>` modality so background controls cannot receive focus by script or keyboard. The existing Tab loop remains the only custom boundary loop. Original overflow is restored. Escape, close/backdrop, selected route, browser Back, desktop resize and unmount release the menu. The opening control receives focus before modality, which fixes WebKit restoration. On desktop resize the visible navigation peer receives focus rather than the now-hidden hamburger.
-
-The new event breadcrumb uses authorized current event data and exact module labels. Existing event selection, permissions, revocation behavior, dirty-history guard and current event source are unchanged. Full unit tests retain viewer denial, event-switch clearing and revoked-draft retention contracts. New route tests verify the current Guests link, event ID and drawer return at phone width; the full leaf sweep includes all event modules and account aliases.
-
-The 320px real-route drawer test covers forward/reverse Tab, programmatic background exclusion, Escape, normal backdrop click, 1440px resize, route change and Back. Locale/theme controls retain the current route and form/filter data. Header safe-area reservation grows with top insets so fixed chrome does not cover the task. Short drawer content remains scrollable with wrapped Khmer labels.

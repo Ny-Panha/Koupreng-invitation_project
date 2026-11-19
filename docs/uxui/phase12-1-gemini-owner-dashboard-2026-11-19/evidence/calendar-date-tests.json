@@ -1,0 +1,30 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "calendar_fidelity_matrix": {
+    "leap_year_validation": {
+      "target_date": "2028-02-29",
+      "test_result": "PASS (Feb 29 renders in gridcell, event chip attached to Feb 29 without month overflow)",
+      "suite": "src/features/events/components/Phase12_1EventCalendarFidelity.test.jsx"
+    },
+    "month_transitions": {
+      "prev_month": "decrements month safely across year boundaries (Jan -> Dec)",
+      "next_month": "increments month safely across year boundaries (Dec -> Jan)",
+      "jump_today": "returns viewDate to current local month"
+    },
+    "subviews": {
+      "month": "7x6 grid with Monday-first weekday headers, event chips, and selected date details panel",
+      "agenda": "Chronological upcoming feed with formatLocalDate and action buttons"
+    },
+    "bilingual_support": {
+      "en": {
+        "months": "Full English month name and year (e.g., 'November 2026')",
+        "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      },
+      "km": {
+        "months": "Authentic Khmer month names (មករា .. ធ្នូ) and year",
+        "days": ["ច", "អ", "ព", "ព្រ", "សុ", "ស", "អា"]
+      }
+    }
+  }
+}

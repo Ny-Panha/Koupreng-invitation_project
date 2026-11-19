@@ -1,0 +1,12 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "lifecycle_rules": {
+    "creation": "Draft authored locally in weddingStorage with syncStatus 'LOCAL_ONLY'",
+    "auto_sync": "useEvents attempts background sync with persistWeddingDraft upon backend list load",
+    "sync_success": "Backend returns server-owned ID; local record updated to 'SYNCED' and merged with backend list",
+    "sync_failure": "On network/template rejection, draft remains retained in localStorage with 'SYNC_FAILED' and error details; card displays 'Sync failed' badge and 'Resume draft'",
+    "contextual_banner": "EventsFeature displays top 'Continue where you left off' banner for pending LOCAL_ONLY or SYNC_FAILED drafts without active filters",
+    "account_switch_isolation": "Drafts indexed by ownerUserId; logging out or switching accounts wipes User A drafts from memory and prevents leaking to User B"
+  }
+}

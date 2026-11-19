@@ -1,9 +1,0 @@
-{
-  "path": "docs/uxui/phase10-publication-2026-11-19/evidence/phase10-text-recovery.zip",
-  "sha256": "fdbcf98cc6bac22782389f65114098eefa2ae31c3b9425d303fe9fe5f7e00cef",
-  "bytes": 4374193,
-  "files": 2679,
-  "all_entry_hashes_verified": true,
-  "plaintext_gitleaks_report": "phase10-recovery-secrets.json: empty findings",
-  "audit_status": "PARTIALLY COMPLETE; this archive is continuity evidence, not production/native/legal certification"
-}

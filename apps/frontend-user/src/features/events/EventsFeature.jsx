@@ -7,12 +7,13 @@ import { EventCard } from "./components/EventCard";
 import { EventCalendar } from "./components/EventCalendar";
 import { EventDeleteModal } from "./components/EventDeleteModal";
 import { toast } from "../../shared/ui/toast";
-import { CalendarHeart, Search, X, FilterX, LayoutList, CalendarDays, Plus } from "lucide-react";
+import { CalendarHeart, Search, X, FilterX, LayoutList, CalendarDays, Plus, Sparkles, ArrowRight } from "lucide-react";
 import "./EventsFeature.css";
 import "./workspace/EventWorkspace.css";
 import { backendEventId, eventPath, EVENT_MODULES } from "./workspace/eventRoutes";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { EVENT_TYPES } from "./onboarding/eventFields";
+import { compareEvents, eventDay, pageItems } from "./model/eventListModel";
 import { localDateString } from "@/shared/utils/localDate";
 
 export function EventsFeature() {
@@ -21,18 +22,19 @@ export function EventsFeature() {
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
     const hasTriggeredRef = useRef(false);
+    const searchInputRef = useRef(null);
+    const resultsRef = useRef(null);
     const { text: t } = useBackendMessages("events");
-    const { text: tDash } = useBackendMessages("dashboard");
 
     // Synchronize filters with URL search parameters
     const search = searchParams.get("q") || "";
-    const status = searchParams.get("status") || "";
-    const eventType = searchParams.get("type") || "";
-    const sort = searchParams.get("sort") || "newest";
-    const view = searchParams.get("view") || "list"; // "list" | "calendar"
-    const period = searchParams.get("period") || "all"; // "all" | "upcoming" | "past"
-    const pageParam = parseInt(searchParams.get("page") || "1", 10);
-    const page = isNaN(pageParam) || pageParam < 1 ? 0 : pageParam - 1;
+    const status = ["DRAFT", "PUBLISHED", "UNPUBLISHED", "ARCHIVED"].includes(searchParams.get("status")) ? searchParams.get("status") : "";
+    const eventType = EVENT_TYPES.some(item => item[0] === searchParams.get("type")) ? searchParams.get("type") : "";
+    const sort = ["newest", "date", "title"].includes(searchParams.get("sort")) ? searchParams.get("sort") : "newest";
+    const view = searchParams.get("view") === "calendar" ? "calendar" : "list"; // "list" | "calendar"
+    const period = ["upcoming", "past"].includes(searchParams.get("period")) ? searchParams.get("period") : "all"; // "all" | "upcoming" | "past"
+    const pageParam = Number(searchParams.get("page") || "1");
+    const page = !Number.isSafeInteger(pageParam) || pageParam < 1 ? 0 : pageParam - 1;
 
     const updateFilter = (key, value) => {
         setSearchParams(prev => {
@@ -41,7 +43,7 @@ export function EventsFeature() {
             else next.delete(key);
             next.delete("page"); // Reset to first page on filter change
             return next;
-        }, { replace: true });
+        }, { replace: key === "q" });
     };
 
     const setPage = (newPage) => {
@@ -50,11 +52,13 @@ export function EventsFeature() {
             if (newPage > 0) next.set("page", String(newPage + 1));
             else next.delete("page");
             return next;
-        }, { replace: true });
+        });
+        requestAnimationFrame(() => resultsRef.current?.focus());
     };
 
     const resetAllFilters = () => {
-        setSearchParams(new URLSearchParams(), { replace: true });
+        setSearchParams(prev => { const next = new URLSearchParams(prev); for (const key of ["q","status","type","sort","period","page"]) next.delete(key); return next; });
+        searchInputRef.current?.focus();
     };
 
     useEffect(() => {
@@ -100,29 +104,36 @@ export function EventsFeature() {
       if (status && (draft.status || "DRAFT") !== status) return false;
       if (eventType && draft.eventType !== eventType) return false;
       if (search) {
-        const query = search.toLocaleLowerCase();
-        const matches = [draft.title, draft.venueName, draft.groomName, draft.brideName]
+        const query = search.trim().toLocaleLowerCase().normalize("NFC");
+        const matches = [
+          draft.title,
+          draft.venueName,
+          draft.event?.venueName,
+          draft.groomName,
+          draft.brideName,
+          draft.hostNames,
+          draft.celebrantName,
+          draft.coupleNames,
+          draft.event?.title,
+        ]
           .filter(Boolean)
           .join(" ")
           .toLocaleLowerCase()
+          .normalize("NFC")
           .includes(query);
         if (!matches) return false;
       }
       if (period === "upcoming") {
-        const raw = draft.eventDate || draft.event?.date;
-        if (!raw) return true;
-        return String(raw).slice(0, 10) >= todayStr;
+        const raw = eventDay(draft);
+        return raw !== null && raw >= todayStr;
       }
       if (period === "past") {
-        const raw = draft.eventDate || draft.event?.date;
-        if (!raw) return false;
-        return String(raw).slice(0, 10) < todayStr;
+        const raw = eventDay(draft);
+        return raw !== null && raw < todayStr;
       }
       return true;
     })
-      .sort((a, b) => sort === "title" ? String(a.title || "").localeCompare(String(b.title || ""))
-        : sort === "date" ? String(a.eventDate || "9999").localeCompare(String(b.eventDate || "9999"))
-        : 0);
+      .sort((a,b) => compareEvents(a,b,sort,en ? "en" : "km"));
 
     const maxPage = Math.max(0, Math.ceil(filtered.length / 12) - 1);
     const currentPage = Math.min(page, maxPage);
@@ -132,11 +143,18 @@ export function EventsFeature() {
     const createBtnText = (t("createBtn") || (en ? "Create Event" : "បង្កើតកម្មវិធី")).replace(/^\+*\s*/, "");
     const emptyActionText = (t("goToCreate") || t("createBtn") || (en ? "Create First Event" : "បង្កើតកម្មវិធីថ្មី")).replace(/^\+*\s*/, "");
 
+    // Contextual "Continue where you left off" for pending local draft
+    const resumeDraft = drafts.find(draft => !draft.shared && (
+      draft.syncStatus === "LOCAL_ONLY" ||
+      draft.syncStatus === "SYNC_FAILED" ||
+      Boolean(draft.isLocal && draft.status !== "PUBLISHED") ||
+      Boolean(String(draft.id || "").startsWith("draft-") && draft.status !== "PUBLISHED")
+    ));
+
     return (
         <main className="events-page workspace-page">
             <header className="events-page-header">
                 <div>
-                    <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "សំបុត្រអញ្ជើញ"}`}</span>
                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
                     <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលសំបុត្រអញ្ជើញ តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
                 </div>
@@ -180,14 +198,43 @@ export function EventsFeature() {
                 </div>
             )}
 
+            {/* Contextual "Continue where you left off" Action */}
+            {resumeDraft && !hasActiveFilters && (
+                <div className="events-resume-banner" role="region" aria-label={en ? "Pending draft" : "សេចក្តីព្រាងមិនទាន់បញ្ចប់"}>
+                    <div className="events-resume-content">
+                        <div className="events-resume-icon-wrap" aria-hidden="true">
+                            <Sparkles size={18} />
+                        </div>
+                        <div className="events-resume-text">
+                            <span className="events-resume-kicker">{en ? "Continue where you left off" : "បន្តការរៀបចំកម្មវិធីចុងក្រោយរបស់អ្នក"}</span>
+                            <strong className="events-resume-title">
+                                {en ? "Draft: " : "សេចក្តីព្រាង៖ "}{resumeDraft.title || (en ? "Untitled Event Draft" : "សេចក្តីព្រាងកម្មវិធី")}
+                            </strong>
+                            <span className={`events-resume-status ${resumeDraft.syncStatus === "SYNC_FAILED" ? "is-failed" : "is-local"}`}>
+                                {resumeDraft.syncStatus === "SYNC_FAILED"
+                                    ? (en ? "Sync failed · Local copy retained" : "Sync បរាជ័យ · រក្សាទុកក្នុងឧបករណ៍")
+                                    : (en ? "Saved in this browser only" : "រក្សាទុកក្នុងកម្មវិធីរុករកនេះ")}
+                            </span>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        className="events-resume-action-btn"
+                        onClick={() => handleEdit(resumeDraft)}
+                    >
+                        <span>{en ? "Resume draft" : "បន្តការព្រាង"}</span>
+                        <ArrowRight size={15} aria-hidden="true" />
+                    </button>
+                </div>
+            )}
+
             {/* Filter and Search Bar */}
             <div className="events-filters-container">
                 {/* Period Quick Filter Tabs */}
-                <div className="events-period-tabs" role="tablist" aria-label={en ? "Event period" : "កាលវេលាកម្មវិធី"}>
+                <div className="events-period-tabs" role="group" aria-label={en ? "Event period" : "កាលវេលាកម្មវិធី"}>
                     <button
                         type="button"
-                        role="tab"
-                        aria-selected={period === "all"}
+                        aria-pressed={period === "all"}
                         className={`events-period-tab ${period === "all" ? "is-active" : ""}`}
                         onClick={() => updateFilter("period", "")}
                     >
@@ -195,8 +242,7 @@ export function EventsFeature() {
                     </button>
                     <button
                         type="button"
-                        role="tab"
-                        aria-selected={period === "upcoming"}
+                        aria-pressed={period === "upcoming"}
                         className={`events-period-tab ${period === "upcoming" ? "is-active" : ""}`}
                         onClick={() => updateFilter("period", "upcoming")}
                     >
@@ -204,8 +250,7 @@ export function EventsFeature() {
                     </button>
                     <button
                         type="button"
-                        role="tab"
-                        aria-selected={period === "past"}
+                        aria-pressed={period === "past"}
                         className={`events-period-tab ${period === "past" ? "is-active" : ""}`}
                         onClick={() => updateFilter("period", "past")}
                     >
@@ -219,6 +264,7 @@ export function EventsFeature() {
                         <div className="events-search-input-wrap">
                             <Search size={16} className="events-search-icon" aria-hidden="true" />
                             <input
+                                ref={searchInputRef}
                                 type="search"
                                 placeholder={en ? "Filter by name or venue…" : "ស្វែងរកតាមឈ្មោះ ឬទីតាំង…"}
                                 value={search}
@@ -228,7 +274,7 @@ export function EventsFeature() {
                                 <button
                                     type="button"
                                     className="events-search-clear-btn"
-                                    onClick={() => updateFilter("q", "")}
+                                    onClick={() => { updateFilter("q", ""); searchInputRef.current?.focus(); }}
                                     aria-label={en ? "Clear search query" : "លុបពាក្យស្វែងរក"}
                                 >
                                     <X size={15} aria-hidden="true" />
@@ -288,12 +334,19 @@ export function EventsFeature() {
                 </div>
             </div>
 
+            {hasActiveFilters && <div className="events-applied-filters" aria-label={en ? 'Applied filters' : 'ការចម្រោះដែលបានជ្រើសរើស'}>
+                {[["q",search],["status",status],["type",eventType],["period",period !== 'all' ? period : '']].filter(([,value])=>value).map(([key,value]) =>
+                    <button type="button" key={key} onClick={() => { updateFilter(key,''); searchInputRef.current?.focus(); }} aria-label={`${en ? 'Remove filter' : 'លុបការចម្រោះ'}: ${value}`}>
+                        <span>{value}</span><X size={14} aria-hidden="true" />
+                    </button>)}
+            </div>}
+
             {/* Results Count Summary */}
             {!loading && drafts.length > 0 && (
-                <div className="events-results-summary" aria-live="polite">
+                <div className="events-results-summary" ref={resultsRef} tabIndex={-1} aria-live="polite">
                     <span>
                         {en
-                            ? `Showing ${filtered.length} of ${drafts.length} event${drafts.length === 1 ? "" : "s"}`
+                            ? `${filtered.length ? (view === 'calendar' ? 1 : currentPage * 12 + 1) : 0}–${view === "calendar" ? filtered.length : Math.min((currentPage + 1) * 12, filtered.length)} of ${filtered.length} matching events (${drafts.length} loaded)`
                             : `បង្ហាញ ${filtered.length} នៃ ${drafts.length} កម្មវិធី`}
                     </span>
                 </div>
@@ -384,9 +437,11 @@ export function EventsFeature() {
                     >
                         {en ? "Previous" : "មុន"}
                     </button>
-                    <span className="events-pagination-info">
-                        {currentPage + 1} / {Math.ceil(filtered.length / 12)}
-                    </span>
+                    <div className="events-pagination-pages">
+                        {pageItems(currentPage, maxPage + 1).map(item => typeof item === 'number'
+                            ? <button type="button" key={item} className="workspace-button" aria-label={`${en ? 'Page' : 'ទំព័រ'} ${item+1}`} aria-current={item===currentPage ? 'page' : undefined} onClick={()=>setPage(item)}>{item+1}</button>
+                            : <span key={item} aria-hidden="true">…</span>)}
+                    </div>
                     <button
                         type="button"
                         disabled={(currentPage + 1) * 12 >= filtered.length}

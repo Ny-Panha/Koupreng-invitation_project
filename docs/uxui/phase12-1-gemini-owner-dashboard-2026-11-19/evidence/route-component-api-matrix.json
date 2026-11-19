@@ -1,0 +1,44 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "routes": [
+    {
+      "route": "/app/events",
+      "component": "EventsFeature",
+      "feature_file": "apps/frontend-user/src/features/events/EventsFeature.jsx",
+      "api_endpoints": [
+        "GET /api/v1/invitations/my"
+      ],
+      "access_role": "HOST (Authenticated Owner)",
+      "url_parameters": ["q", "status", "type", "sort", "view", "period", "page"],
+      "view_modes": ["list", "calendar"]
+    },
+    {
+      "route": "/app/events/:eventId",
+      "component": "EventWorkspace -> DashboardFeature",
+      "feature_file": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "api_endpoints": [
+        "GET /api/v1/invitations/{id}",
+        "GET /api/v1/invitations/my",
+        "GET /api/v1/invitations/{id}/access",
+        "GET /api/v1/reports/invitations/{id}/dashboard",
+        "GET /api/v1/budget/items?invitationId={id}",
+        "GET /api/v1/planning/gifts?invitationId={id}",
+        "GET /api/v1/guests/check-in/summary?invitationId={id}",
+        "GET /api/v1/notifications/invitation/{id}"
+      ],
+      "access_role": "OWNER (or Team Collaborator with permitted modules)",
+      "url_parameters": ["eventId", "module"]
+    },
+    {
+      "route": "/dashboard/invitations/:id/edit",
+      "component": "InvitationEditFeature",
+      "feature_file": "apps/frontend-user/src/features/wedding-builder/InvitationEditFeature.jsx",
+      "api_endpoints": [
+        "Local Storage (weddingDrafts) / PATCH /api/v1/invitations/{id}"
+      ],
+      "access_role": "HOST (Local draft author / Owner)",
+      "url_parameters": ["id"]
+    }
+  ]
+}

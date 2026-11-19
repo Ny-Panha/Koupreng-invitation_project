@@ -1,7 +1,0 @@
-# 07 — owner workspace, editor, and Studio adoption
-
-`/app/events`, `/dashboard`, event creation, owner guests/RSVP/finance, and invitation edit/preview retain immediate state changes and domain-owned data. The route curtain is excluded from owner routes. Shared feedback durations change only the display transition, not save/entitlement/payment status. The owner mobile `HostNav` drawer now translates on the compositor; its closed state is visually hidden and `inert`, and explicit close/Escape returns focus to the trigger. The existing menu link/navigation and scroll-lock contract remain.
-
-Creator Studio's Edit/Preview implementation, draft serializer, unknown JSON, preview iframe origin/session checks, and unsaved-history guard were **not modified**. Phase 05 browser tests exercise the short-landscape panel handoff and owner drawer; existing Phase 04 tests cover several Studio controls. This is `FIXTURE VERIFIED` for those tasks only. No real draft save, upload, provider call, physical keyboard, or full editor state matrix was exercised here.
-
-Owner operations with money, gifts, attendance, and RSVP should show stable authoritative values. Their [route rows](evidence/route-adoption.json) apply feedback-only or no-ambient-motion policies. Route-specific wizard step transitions, responsive short viewport controls, and owner calendar are deferred to Phases 11–21 or remain outside scope; no data calculation was changed.

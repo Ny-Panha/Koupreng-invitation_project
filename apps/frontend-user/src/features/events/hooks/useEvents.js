@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { generateSecureUuid } from "../../../shared/utils/uuid";
 import { listDrafts, deleteDraft, saveDraft } from "../../../shared/storage/weddingStorage";
 import { eventsApi } from "../api/eventsApi";
@@ -9,6 +9,8 @@ import { persistWeddingDraft } from "../../wedding-builder/utils/draftPublishApi
 export function useEvents(t) {
     const { user } = useAuth();
     const ownerUserId = user?.id || user?.userId;
+    const subject = String(ownerUserId ?? '');
+    const [draftSubject, setDraftSubject] = useState(subject);
     const [drafts, setDrafts] = useState(() => listDrafts(ownerUserId));
     const [draftToDelete, setDraftToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -19,6 +21,16 @@ export function useEvents(t) {
     const loadGeneration = useRef(0);
     const autoSyncAttempted = useRef(new Set());
     const syncInFlight = useRef(new Set());
+    const sessionAuthority = useRef(0);
+
+    useLayoutEffect(() => {
+        sessionAuthority.current += 1;
+        setDraftToDelete(null);
+        setIsDeleting(false);
+        setBackendListLoaded(false);
+        autoSyncAttempted.current.clear();
+        return () => { sessionAuthority.current += 1; loadGeneration.current += 1; };
+    }, [subject]);
 
     const loadDrafts = useCallback(() => {
         const generation = ++loadGeneration.current;
@@ -70,11 +82,13 @@ export function useEvents(t) {
                 }
             });
             setDrafts(merged);
+            setDraftSubject(String(ownerUserId ?? ''));
             setBackendListLoaded(true);
         }).catch((err) => {
             if (generation !== loadGeneration.current) return;
             setError(err.message || "Could not load events");
             setDrafts(listDrafts(ownerUserId));
+            setDraftSubject(String(ownerUserId ?? ''));
             setBackendListLoaded(false);
         }).finally(() => { if (generation === loadGeneration.current) setLoading(false); });
     }, [ownerUserId]);
@@ -85,7 +99,7 @@ export function useEvents(t) {
     }, [loadDrafts]);
 
     const handleDeleteClick = (draft) => {
-        if (draft.shared) return;
+        if (draft.shared || draftSubject !== subject || !drafts.includes(draft)) return;
         setDraftToDelete(draft);
     };
 
@@ -94,6 +108,7 @@ export function useEvents(t) {
     };
 
     const syncDraft = useCallback(async (draft, { silent = false } = {}) => {
+        const authority = sessionAuthority.current;
         const draftId = String(draft?.id || "");
         if (!draftId || syncInFlight.current.has(draftId)) return;
         // Display summaries carry server cover identity; retries must use the untouched local payload.
@@ -110,6 +125,7 @@ export function useEvents(t) {
                 saveDraft(draft);
             }
             const { response, patch } = await persistWeddingDraft(draft);
+            if (authority !== sessionAuthority.current) return;
             const syncedDraft = {
                 ...draft,
                 ...patch,
@@ -123,6 +139,7 @@ export function useEvents(t) {
             loadDrafts();
             if (!silent) toast("បាន sync កម្មវិធីទៅ server ជោគជ័យ / Event synced to server");
         } catch (error) {
+            if (authority !== sessionAuthority.current) return;
             const partialPatch = error?.partialPatch || {};
             const failedDraft = {
                 ...draft,
@@ -137,12 +154,12 @@ export function useEvents(t) {
             if (!silent) toast.warning(`មិនអាច sync បានទេ: ${failedDraft.syncError}`);
         } finally {
             syncInFlight.current.delete(draftId);
-            setSyncingDraftId("");
+            if (authority === sessionAuthority.current) setSyncingDraftId("");
         }
     }, [ownerUserId, loadDrafts]);
 
     useEffect(() => {
-        if (!backendListLoaded) return undefined;
+        if (!backendListLoaded || draftSubject !== subject) return undefined;
         const draftsToSync = drafts.filter((draft) => {
             if (draft.shared) return false;
             const isLocalOnly = draft.syncStatus === "LOCAL_ONLY"
@@ -164,11 +181,12 @@ export function useEvents(t) {
         };
         migrateDrafts();
         return () => { active = false; };
-    }, [backendListLoaded, drafts, syncDraft]);
+    }, [backendListLoaded, drafts, syncDraft, draftSubject, subject]);
 
     const confirmDelete = async (directDraft) => {
         const target = (directDraft && directDraft.id) ? directDraft : draftToDelete;
-        if (!target || target.shared) return;
+        if (!target || target.shared || draftSubject !== subject) return;
+        const authority = sessionAuthority.current;
         setIsDeleting(true);
 
         const targetId = target.id;
@@ -177,10 +195,13 @@ export function useEvents(t) {
         try {
             if (backendId) await eventsApi.remove(backendId);
         } catch (err) {
+            if (authority !== sessionAuthority.current) return;
             setError(err.message || "Could not delete event; your draft is preserved");
             setIsDeleting(false);
             return;
         }
+
+        if (authority !== sessionAuthority.current) return;
 
         deleteDraft(targetId);
         if (target.backendInvitationId) {
@@ -206,11 +227,11 @@ export function useEvents(t) {
     };
 
     return {
-        drafts,
-        loading, error, reload: loadDrafts,
-        syncingDraftId,
+        drafts: draftSubject === subject ? drafts : [],
+        loading: draftSubject !== subject || loading, error: draftSubject === subject ? error : '', reload: loadDrafts,
+        syncingDraftId: draftSubject === subject ? syncingDraftId : '',
         syncDraft,
-        draftToDelete,
+        draftToDelete: draftSubject === subject ? draftToDelete : null,
         isDeleting,
         handleDeleteClick,
         cancelDelete,

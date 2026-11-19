@@ -4,6 +4,7 @@ import EventCover from './EventCover';
 import { EVENT_TYPES } from "../onboarding/eventFields";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { formatLocalDate } from "@/shared/utils/localDate";
+import { eventProvenance } from '../model/eventListModel';
 import {
   Calendar,
   Clock,
@@ -120,11 +121,24 @@ export function EventCard({
     (en ? "Date to be announced" : "មិនទាន់កំណត់កាលបរិច្ឆេទ");
   const timeText = draft.event?.receptionTime || draft.eventTime || "";
 
+  const isLocalDraft = Boolean(
+    draft.syncStatus === "LOCAL_ONLY" ||
+    draft.isLocal === true ||
+    String(draft.id || "").startsWith("draft-") ||
+    (String(draft.id || "").startsWith("wed-") && !draft.backendInvitationId)
+  );
+  const provenance = eventProvenance(draft);
+  const isServerEvent = Boolean(provenance.serverId) && !provenance.resume;
+
   const isPublished = draft.status
     ? draft.status === "PUBLISHED"
     : Boolean(draft.publishedAt);
   const statusLabel =
-    draft.status === "UNPUBLISHED"
+    draft.syncStatus === "SYNC_FAILED"
+      ? (en ? "Sync failed" : "Sync បរាជ័យ")
+      : isLocalDraft
+      ? (en ? "Local draft" : "ព្រាងលើឧបករណ៍នេះ")
+      : draft.status === "UNPUBLISHED"
       ? en
         ? "Unpublished"
         : "ផ្អាកផ្សាយ"
@@ -135,6 +149,17 @@ export function EventCard({
       : isPublished
       ? (t && t("badgePublished")) || (en ? "Published" : "បានផ្សាយ")
       : (t && t("badgeDraft")) || (en ? "Draft" : "ព្រាង");
+
+  const badgeToneClass =
+    draft.syncStatus === "SYNC_FAILED"
+      ? "event-card-badge--sync-failed"
+      : isLocalDraft
+      ? "event-card-badge--local"
+      : isPublished
+      ? "event-card-badge--published"
+      : draft.status === "UNPUBLISHED"
+      ? "event-card-badge--unpublished"
+      : "event-card-badge--draft";
 
   const eventTypeName =
     EVENT_TYPES.find((type) => type[0] === draft.eventType)?.[en ? 2 : 1] ||
@@ -174,13 +199,7 @@ export function EventCard({
           className="event-card-img"
         />
         <span
-          className={`event-card-badge ${
-            isPublished
-              ? "event-card-badge--published"
-              : draft.status === "UNPUBLISHED"
-              ? "event-card-badge--unpublished"
-              : "event-card-badge--draft"
-          }`}
+          className={`event-card-badge ${badgeToneClass}`}
         >
           {statusLabel}
         </span>
@@ -268,29 +287,18 @@ export function EventCard({
               className="event-card-btn event-card-btn--primary"
               onClick={(event) => {
                 event.stopPropagation();
-                if (onManage) onManage(draft);
+                if (isServerEvent && onManage) onManage(draft);
                 else if (onEdit) onEdit(draft);
+                else if (onManage) onManage(draft);
               }}
             >
               <LayoutDashboard size={15} aria-hidden="true" />
-              <span>{en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី"}</span>
+              <span>
+                {isServerEvent
+                  ? (en ? "Manage event" : "គ្រប់គ្រងកម្មវិធី")
+                  : (en ? "Resume draft" : "បន្តការព្រាង")}
+              </span>
             </button>
-
-            {!draft.shared && (
-              <button
-                type="button"
-                className="event-card-btn event-card-btn--secondary"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  if (onEdit) onEdit(draft);
-                }}
-              >
-                <Edit3 size={15} aria-hidden="true" />
-                <span>
-                  {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
-                </span>
-              </button>
-            )}
 
             {onPreview && (
               <button
@@ -315,7 +323,6 @@ export function EventCard({
                 ref={triggerRef}
                 className={`event-card-dots-btn ${isMenuOpen ? "is-active" : ""}`}
                 aria-label={en ? "More options" : "ជម្រើសបន្ថែម"}
-                aria-haspopup="menu"
                 aria-expanded={isMenuOpen}
                 onClick={(event) => {
                   event.stopPropagation();
@@ -329,6 +336,7 @@ export function EventCard({
                 <div
                   ref={dropdownRef}
                   className="event-card-dropdown"
+                  aria-label={en ? 'Event actions' : 'សកម្មភាពកម្មវិធី'}
                   onClick={(event) => event.stopPropagation()}
                 >
                   <button

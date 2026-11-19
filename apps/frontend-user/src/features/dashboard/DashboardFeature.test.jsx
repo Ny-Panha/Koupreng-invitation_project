@@ -134,16 +134,16 @@ describe("DashboardFeature Component", () => {
     expect(screen.getByText("250 total invited")).toBeInTheDocument();
 
     // Attending / Confirmed: 180 (72% response rate)
-    expect(screen.getByText("180")).toBeInTheDocument();
+    expect(screen.getByText("72% attending").closest("a")).toHaveTextContent("180");
     expect(screen.getByText(/72% attending/)).toBeInTheDocument();
 
     // Pending: 50
-    expect(screen.getByText("50")).toBeInTheDocument();
-    expect(screen.getByText("Awaiting reply")).toBeInTheDocument();
+    expect(screen.getAllByText("Awaiting reply")[0].closest("a")).toHaveTextContent("50");
+    expect(screen.getAllByText("Awaiting reply").length).toBeGreaterThan(0);
 
     // Checked in: 90
     expect(screen.getByText("90")).toBeInTheDocument();
-    expect(screen.getByText(/50% of confirmed/)).toBeInTheDocument();
+    expect(screen.getByText(/36% of guest records/)).toBeInTheDocument();
   });
 
   it("renders preparation checklist with completion progress", async () => {

@@ -179,6 +179,8 @@
   background: #ffffff;
 }
 
+.event-calendar-week { display: contents; }
+
 .event-calendar-cell {
   min-height: 96px;
   padding: 8px;
@@ -302,6 +304,26 @@
 
 .event-calendar-chip.is-published .event-calendar-chip-bullet {
   background: #2e8b41;
+}
+
+.event-calendar-chip.is-local {
+  background: #f0f7ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.event-calendar-chip.is-local .event-calendar-chip-bullet {
+  background: #3b82f6;
+}
+
+.event-calendar-chip.is-sync-failed {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.event-calendar-chip.is-sync-failed .event-calendar-chip-bullet {
+  background: #ef4444;
 }
 
 .event-calendar-chip-bullet {

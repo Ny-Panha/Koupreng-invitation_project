@@ -19,6 +19,7 @@ import { useBackendMessages } from "../../shared/i18n/useBackendMessages";
 import { ErrorState } from "@/shared/ui";
 import "./DashboardPage.css";
 import "./EventOverview.css";
+import RsvpComposition from './RsvpComposition';
 
 function asList(val) {
   if (Array.isArray(val)) return val;
@@ -140,80 +141,29 @@ export default function DashboardFeature() {
 
   useEffect(() => {
     const targetId = routeEventId || searchParams.get("id") || searchParams.get("invitationId");
+    setState((prev) => ({ ...prev, loading: true, selectedInvitation: null, error: "" }));
     loadData(targetId || null);
     return () => { loadGeneration.current += 1; };
   }, [loadData, searchParams, routeEventId]);
 
   const stats = useMemo(() => {
     const inv = state.selectedInvitation;
-    const guestTotal = state.guests.reduce((sum, g) => sum + (Number(g.count) || 1), 0);
-    const totalGuestsCount = state.dashboard?.totalGuests ?? state.checkInSummary?.totalGuests ?? Math.max(guestTotal, state.guests.length);
-
-    // 1. Check summary from backend API (matching /dashboard/invitations/:id/rsvp)
-    const summaryAttending =
-      typeof state.rsvpSummary?.attending === "number"
-        ? state.rsvpSummary.attending
-        : typeof state.rsvpSummary?.accepted === "number"
-          ? state.rsvpSummary.accepted
-          : null;
-
-    const summaryDeclined =
-      typeof state.rsvpSummary?.notAttending === "number"
-        ? state.rsvpSummary.notAttending
-        : typeof state.rsvpSummary?.declined === "number"
-          ? state.rsvpSummary.declined
-          : null;
-
-    const summaryPending =
-      typeof state.rsvpSummary?.pending === "number"
-        ? state.rsvpSummary.pending
-        : null;
-
-    // 2. Fallback calculate from rsvps list
-    const rsvpsYes = state.rsvps.reduce((sum, r) => {
-      const s = String(r.responseStatus || r.status || "").toUpperCase();
-      return s === "ATTENDING" || s === "ACCEPTED" || r.attending === true
-        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
-        : sum;
-    }, 0);
-
-    const guestsYes = state.guests.reduce((sum, g) => {
-      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
-      return s === "ATTENDING" || s === "ACCEPTED"
-        ? sum + (Number(g.count) || 1)
-        : sum;
-    }, 0);
-
-    const rsvpsNo = state.rsvps.reduce((sum, r) => {
-      const s = String(r.responseStatus || r.status || "").toUpperCase();
-      return s === "NOT_ATTENDING" || s === "DECLINED"
-        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
-        : sum;
-    }, 0);
-
-    const guestsNo = state.guests.reduce((sum, g) => {
-      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
-      return s === "NOT_ATTENDING" || s === "DECLINED"
-        ? sum + (Number(g.count) || 1)
-        : sum;
-    }, 0);
-
-    const rsvpYes = state.dashboard?.attending ?? (summaryAttending !== null ? summaryAttending : Math.max(rsvpsYes, guestsYes));
-    const rsvpNo = state.dashboard?.declined ?? (summaryDeclined !== null ? summaryDeclined : Math.max(rsvpsNo, guestsNo));
-    const rsvpPending = state.dashboard?.pending ?? (summaryPending !== null
-      ? summaryPending
-      : Math.max(0, totalGuestsCount - rsvpYes - rsvpNo));
+    // DashboardReportService counts persisted guest/RSVP records, not seats.
+    const count = value => typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : null;
+    const totalGuestsCount = count(state.dashboard?.totalGuests);
+    const totalInvited = count(state.dashboard?.totalInvited);
+    const rsvpYes = count(state.dashboard?.attending);
+    const rsvpNo = count(state.dashboard?.declined);
+    const rsvpMaybe = count(state.dashboard?.maybe);
+    const rsvpPending = count(state.dashboard?.pending);
 
     const expenseAmounts = groupAmounts(state.budgetItems, "actualCost");
     const estimatedAmounts = groupAmounts(state.budgetItems, "estimatedCost");
     const giftAmounts = groupAmounts(state.gifts, "amount");
     const hasBudget = [...Object.values(expenseAmounts), ...Object.values(estimatedAmounts)].some((amount) => amount > 0);
 
-    const checkedInCount =
-      state.checkInSummary?.checkedIn ?? state.checkInSummary?.totalCheckedIn ??
-      state.guests.filter((g) => g.checkedIn).length;
-
-    const rsvpRate = totalGuestsCount > 0 ? Math.min(100, Math.round((rsvpYes / totalGuestsCount) * 100)) : 0;
+    const checkedInCount = count(state.checkInSummary?.checkedIn ?? state.checkInSummary?.totalCheckedIn);
+    const rsvpRate = totalGuestsCount > 0 && rsvpYes !== null ? Math.round((rsvpYes / totalGuestsCount) * 100) : null;
 
     return {
       hasInvitation: !!inv,
@@ -226,6 +176,8 @@ export default function DashboardFeature() {
       status: inv?.status || (inv?.published ? "PUBLISHED" : "DRAFT"),
       id: inv?.id || inv?.invitationId,
       guestTotal: totalGuestsCount,
+      totalInvited,
+      rsvpMaybe,
       rsvpYes,
       rsvpNo,
       rsvpPending,
@@ -267,7 +219,7 @@ export default function DashboardFeature() {
     }
 
     const calculateTime = () => {
-      const target = new Date(stats.eventDate).getTime();
+      const target = new Date(`${String(stats.eventDate).slice(0,10)}T${state.selectedInvitation?.eventTime || "23:59:59"}`).getTime();
       const now = new Date().getTime();
       const diff = target - now;
 
@@ -290,9 +242,9 @@ export default function DashboardFeature() {
     };
 
     calculateTime();
-    const interval = setInterval(calculateTime, 1000);
+    const interval = setInterval(calculateTime, 60_000);
     return () => clearInterval(interval);
-  }, [stats.eventDate]);
+  }, [stats.eventDate, state.selectedInvitation?.eventTime]);
 
   const handleCopyLink = async (slug) => {
     if (!slug) return;
@@ -351,7 +303,7 @@ export default function DashboardFeature() {
           <span className="workspace-muted">{EVENT_TYPES.find(type => type[0] === invitation.eventType)?.[english ? 2 : 1]}</span>
         </div>
         <h2>{stats.title}</h2>
-        {stats.couple && stats.couple !== stats.title && (
+        {stats.couple && !stats.title.includes(stats.couple) && (
           <p className="overview-couple-names">
             <Heart size={14} aria-hidden="true" />
             <span>{stats.couple}</span>
@@ -378,7 +330,7 @@ export default function DashboardFeature() {
         )}
         {timeRemaining.hasDate && timeRemaining.isPast && (
           <p className="workspace-muted overview-countdown-pill is-past">
-            <span>{label("Event completed", "កម្មវិធីបានកន្លងផុត")}</span>
+            <span>{label(stats.status === 'COMPLETED' ? "Event completed" : "Date passed", "កាលបរិច្ឆេទបានកន្លងផុត")}</span>
           </p>
         )}
         <div className="overview-actions">
@@ -424,11 +376,11 @@ export default function DashboardFeature() {
           <span>{text("statGuests") || label("Guests", "ភ្ញៀវ")}</span>
           <Users size={20} aria-hidden="true" />
         </div>
-        <strong>{stats.guestTotal}</strong>
+        <strong>{stats.guestTotal ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
         <span className="overview-metric-sub">
-          {stats.guestTotal > 0
-            ? `${stats.guestTotal} ${label("total invited", "នាក់បានអញ្ជើញ")}`
-            : label("No guests yet", "មិនទាន់មានភ្ញៀវ")}
+          {stats.totalInvited !== null && stats.guestTotal > 0
+            ? `${stats.totalInvited} ${label("total invited", "នាក់បានអញ្ជើញ")}`
+            : stats.guestTotal === 0 ? label("No guests yet", "មិនទាន់មានភ្ញៀវ") : label("Invited count unavailable", "មិនមានចំនួនភ្ញៀវអញ្ជើញ")}
         </span>
       </Link>
       <Link to={eventPath(stats.id, "rsvp")} className="overview-metric-card">
@@ -436,9 +388,9 @@ export default function DashboardFeature() {
           <span>{label("Confirmed", "បានយល់ព្រម")}</span>
           <CheckCircle2 className="overview-metric-icon" size={20} aria-hidden="true" />
         </div>
-        <strong>{stats.rsvpYes}</strong>
+        <strong>{stats.rsvpYes ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
         <span className="overview-metric-sub">
-          {stats.guestTotal > 0
+          {stats.rsvpRate !== null
             ? `${stats.rsvpRate}% ${label("attending", "នឹងមកចូលរួម")}`
             : label("Awaiting reply", "រង់ចាំការឆ្លើយតប")}
         </span>
@@ -448,7 +400,7 @@ export default function DashboardFeature() {
           <span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span>
           <Clock3 className="overview-metric-icon" size={20} aria-hidden="true" />
         </div>
-        <strong>{stats.rsvpPending}</strong>
+        <strong>{stats.rsvpPending ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
         <span className="overview-metric-sub">
           {label("Awaiting reply", "មិនទាន់ឆ្លើយតប")}
         </span>
@@ -458,13 +410,15 @@ export default function DashboardFeature() {
           <span>{label("Checked in", "បានចូលរួម")}</span>
           <ScanLine className="overview-metric-icon" size={20} aria-hidden="true" />
         </div>
-        <strong>{stats.checkedInCount}</strong>
+        <strong>{stats.checkedInCount ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
         <span className="overview-metric-sub">
-          {stats.rsvpYes > 0
-            ? `${Math.min(100, Math.round((stats.checkedInCount / stats.rsvpYes) * 100))}% ${label("of confirmed", "នៃអ្នកបានយល់ព្រម")}`
+          {stats.guestTotal > 0 && stats.checkedInCount !== null
+            ? `${Math.round((stats.checkedInCount / stats.guestTotal) * 100)}% ${label("of guest records", "នៃកំណត់ត្រាភ្ញៀវ")}`
             : label("Ready for reception", "ត្រៀមសម្រាប់ពិធី")}
         </span>
       </Link>
+    </section>
+    {(state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-finance" aria-label={label('Recorded finances', 'ហិរញ្ញវត្ថុដែលបានកត់ត្រា')}>
       {state.budgetItems.length > 0 && (
         <Link to={eventPath(stats.id, "budget")} className="overview-metric-card">
           <div className="overview-metric-heading">
@@ -485,7 +439,8 @@ export default function DashboardFeature() {
           <span className="overview-metric-sub">{stats.giftCount} {label("gifts recorded", "ចំណងដៃកត់ត្រា")}</span>
         </Link>
       )}
-    </section>
+    </section>}
+    <RsvpComposition dashboard={state.dashboard} en={english} />
     <section className="overview-columns">
       <div className="workspace-section overview-preparation">
         <div className="workspace-section-heading">

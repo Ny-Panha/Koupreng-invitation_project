@@ -1,0 +1,397 @@
+{
+  "phase": "12.1",
+  "audit_reference": "phase12-1-gemini-owner-dashboard-2026-11-19",
+  "timestamp": "2026-11-19T15:15:00+07:00",
+  "historical_count": 57,
+  "historical_distribution": {
+    "CLOSED — VERIFIED": 29,
+    "DEFERRED — DOMAIN OWNER": 4,
+    "BLOCKED — EXTERNAL": 16,
+    "CLOSED — NOT APPLICABLE": 2,
+    "REVIEW REQUIRED": 6
+  },
+  "auth_items": [
+    {
+      "id": "AUTH-A11Y-01",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Toggle browser pointer/keyboard and unit contracts; physical AT/device breadth open",
+      "source": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/57-carryover-updated.json",
+      "owner": "Identity / Accessibility QA",
+      "phase10_action": "Retain actual Phase08 partial/verified disposition. Phase09 prose claiming five verified is not supported by this ID ledger."
+    },
+    {
+      "id": "AUTH-A11Y-02",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Login linked errors tested; full form/AT semantics not certified",
+      "source": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/57-carryover-updated.json",
+      "owner": "Identity / Accessibility QA",
+      "phase10_action": "Retain actual Phase08 partial/verified disposition. Phase09 prose claiming five verified is not supported by this ID ledger."
+    },
+    {
+      "id": "AUTH-PWD-01",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "DTO/service predicates and feedback verified; actual encoder byte ceiling C08-013 remains inconsistent",
+      "source": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/57-carryover-updated.json",
+      "owner": "Backend Identity / Auth QA",
+      "phase10_action": "Retain actual Phase08 partial/verified disposition. Phase09 prose claiming five verified is not supported by this ID ledger."
+    },
+    {
+      "id": "AUTH-LIFE-01",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Truthful guidance and contact link; no linked email for phone-only account remains a service gap",
+      "source": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/57-carryover-updated.json",
+      "owner": "Identity / Accessibility QA",
+      "phase10_action": "Retain actual Phase08 partial/verified disposition. Phase09 prose claiming five verified is not supported by this ID ledger."
+    },
+    {
+      "id": "AUTH-GUARD-01",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Localized error retry card + cookie bootstrap race/outage tests",
+      "source": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/57-carryover-updated.json",
+      "owner": "Identity / Accessibility QA",
+      "phase10_action": "Retain actual Phase08 partial/verified disposition. Phase09 prose claiming five verified is not supported by this ID ledger."
+    }
+  ],
+  "phase07_partial_gates": [
+    {
+      "id": "F03",
+      "gate": "Premium brand system",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Computed sampled contrast and font loading verified; full native Khmer/weight/device art approval remains external.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "/",
+        "/contact",
+        "/venues"
+      ],
+      "testCommandIds": [
+        "delivery-contrast",
+        "delivery-modes"
+      ],
+      "evidenceArtifacts": [
+        "computed-theme-contrast.json",
+        "asset-rights-ledger.json"
+      ]
+    },
+    {
+      "id": "F07",
+      "gate": "Venue list/detail",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Functional states and image policy fixed/tested; exact venue facts and photo rights need directory/content owner approval.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "/venues",
+        "/venues/:id"
+      ],
+      "testCommandIds": [
+        "delivery-phase07"
+      ],
+      "evidenceArtifacts": [
+        "after-manifest.json",
+        "asset-rights-ledger.json"
+      ]
+    },
+    {
+      "id": "F11",
+      "gate": "Accessibility",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Sampled axe and keyboard/contrast run; physical AT and native zoom cannot be certified here.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "home/contact/venues/detail sampled states"
+      ],
+      "testCommandIds": [
+        "delivery-phase07",
+        "delivery-contrast",
+        "delivery-modes"
+      ],
+      "evidenceArtifacts": [
+        "computed-theme-contrast.json",
+        "mode-edge-results.json",
+        "native-zoom-results.json"
+      ]
+    },
+    {
+      "id": "F12",
+      "gate": "Responsive quality",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "25 viewport/reflow points in each main browser/theme/locale case; physical keyboards, native bars and real zoom remain external.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "home/contact/venues/detail at documented widths"
+      ],
+      "testCommandIds": [
+        "delivery-phase07",
+        "delivery-modes"
+      ],
+      "evidenceArtifacts": [
+        "after-manifest.json",
+        "mode-edge-results.json",
+        "native-zoom-results.json"
+      ]
+    },
+    {
+      "id": "F13",
+      "gate": "Localization",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "EN/KM route/state source and rendered samples verified; native terminology, shaping and pronunciation approval remains external.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "EN/KM marketing routes"
+      ],
+      "testCommandIds": [
+        "delivery-phase07",
+        "delivery-captures"
+      ],
+      "evidenceArtifacts": [
+        "after-manifest.json",
+        "asset-rights-ledger.json"
+      ]
+    },
+    {
+      "id": "F14",
+      "gate": "Performance",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Controlled local before/after assets and repeated routed lab comparison; review triggers and field/device limits remain explicit.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "/",
+        "/contact",
+        "/venues"
+      ],
+      "testCommandIds": [
+        "final-lab-before",
+        "final-lab-after",
+        "delivery-assets"
+      ],
+      "evidenceArtifacts": [
+        "performance-comparison.json",
+        "performance-samples.json",
+        "build-assets.json"
+      ]
+    },
+    {
+      "id": "F15",
+      "gate": "Renderer isolation",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "10/38/2/fallback source/unit contracts; Silk retained-CSS computed comparison and Silk/Emerald paint only. Dynamic published catalog/all guest families remain external/domain-owned.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "/templates/silk-heritage",
+        "/templates/emerald-canva-luxe-wedding",
+        "source registry"
+      ],
+      "testCommandIds": [
+        "delivery-phase07",
+        "delivery-user-unit"
+      ],
+      "evidenceArtifacts": [
+        "renderer-registry.json",
+        "before-manifest.json",
+        "after-manifest.json"
+      ]
+    },
+    {
+      "id": "F16",
+      "gate": "Regression reliability",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Current unit/lint/build and browser commands recorded; Phase02 six known red assertions and default-worker instability stay explicit. No historical result relabeled as current.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "Phase02/04/05/06/07 fixture routes"
+      ],
+      "testCommandIds": [
+        "final-phase02",
+        "delivery-combined",
+        "closure-phase06-recovered",
+        "delivery-phase07",
+        "final-default-workers",
+        "skip-isolated-repeat"
+      ],
+      "evidenceArtifacts": [
+        "test-command-results.json"
+      ]
+    },
+    {
+      "id": "F17",
+      "gate": "Business/security preservation",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Protected source paths unchanged; guards/preview/entitlement unit contracts retained. No MySQL/provider/payment/live guest integration certificate.",
+      "sourceSha": "2429b76545b683fad2a0a6f328bee3264875edc3",
+      "scope": "local source + fictional fixture evidence only",
+      "owner": "Phase07 Codex / named external gate owner",
+      "routes": [
+        "protected auth/checkout/guest/Studio contracts"
+      ],
+      "testCommandIds": [
+        "delivery-user-unit",
+        "final-admin-unit"
+      ],
+      "evidenceArtifacts": [
+        "source-preservation.json"
+      ]
+    }
+  ],
+  "C08_013": {
+    "status": "OPEN — outside renderer authorization",
+    "owner": "Backend identity/security + product policy",
+    "future_phase": "Identity maintenance before Phase26/27 release",
+    "observed_contract": "8–100 UTF-16 policy vs installed BCrypt 72 UTF-8-byte rejection; no new probe claimed",
+    "required_tests": [
+      "register/change/reset/login Unicode boundaries",
+      "old-hash compatibility",
+      "API errors and native-reviewed guidance"
+    ],
+    "evidence": "docs/uxui/phase08-codex-identity-account-audit-2026-11-18/evidence/password-encoder-probe.json",
+    "phase10_changes": "NONE; no frontend 72-character limit or hash change"
+  },
+  "phase09_defects": {
+    "upstreamDefects": [
+      {
+        "id": "P09-001",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Missing search clear button in public catalog"
+      },
+      {
+        "id": "P09-002",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Host Browse Templates dark mode missing token mapping"
+      },
+      {
+        "id": "P09-003",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Color contrast failure on pricing page label and Axe suppression test tamper"
+      },
+      {
+        "id": "P09-004",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Missing .tp-category-buttons styling and search clear button sizing distortion"
+      },
+      {
+        "id": "P09-005",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Unstyled dark mode public catalog elements"
+      },
+      {
+        "id": "P09-006",
+        "status": "VERIFIED FIXED BY GEMINI",
+        "title": "Hardcoded Popular choice marketing badge on STANDARD tier"
+      }
+    ],
+    "codexFindings": [
+      {
+        "id": "C09-001",
+        "severity": "P2",
+        "title": "Search clear button hit target violated WCAG 2.2 AA SC 2.5.8 (min 24px) and mobile 44px comfortable touch contract",
+        "file": "apps/frontend-user/src/features/templates/components/templates.css & apps/frontend-user/src/features/templates/pages/BrowseTemplates.css",
+        "repaired": true,
+        "fix": "Set width/height/min-width/min-height to 24px, added ::before pseudo-element with min-width/min-height 44px, and padded input to 38px on both public catalog (.kp-search-clear-btn) and host browse (.tb-search-clear-btn)",
+        "verifiedBy": "Playwright spec test 02 & Phase09CodexAuditRegression.test.jsx N09-02"
+      },
+      {
+        "id": "C09-002",
+        "severity": "P2",
+        "title": "matchesTemplateSearch omitted bilingual fields (nameKm, nameEn), causing cross-language search to miss valid templates",
+        "file": "apps/frontend-user/src/features/templates/model/catalogPolicy.js",
+        "repaired": true,
+        "fix": "Added template.nameKm and template.nameEn to matchesTemplateSearch text search index",
+        "verifiedBy": "Phase09CodexAuditRegression.test.jsx N09-01"
+      },
+      {
+        "id": "C09-003",
+        "severity": "P3",
+        "title": "Concurrency timeout on lazy template mounting in full template test suite",
+        "file": "apps/frontend-user/src/features/templates/registry/phase12ContractMatrix.test.jsx",
+        "repaired": true,
+        "fix": "Extended waitFor timeout to 5000ms for resilient async lazy loading during full 60-file test runs",
+        "verifiedBy": "Full 60-file Vitest templates suite passing 700/700 tests"
+      },
+      {
+        "id": "C08-013",
+        "severity": "P1",
+        "title": "Spring Security BCryptPasswordEncoder 72-byte UTF-8 ceiling rejection on passwords > 72 bytes",
+        "file": "backend/src/main/java/.../SecurityConfig.java",
+        "repaired": false,
+        "disposition": "PRESERVED OPEN (Domain Architect Review Required)",
+        "verifiedBy": "Documented in Phase 08 and preserved in Phase 09"
+      }
+    ]
+  },
+  "gemini_D10": [
+    {
+      "id": "D10-01",
+      "severity": "High",
+      "area": "TemplateBoilerplate",
+      "summary": "TemplateBoilerplate was a basic mock lacking dynamic schedule, accessible RSVP, and skip button",
+      "rootCause": "Initial boilerplate layout contained hardcoded static timetable and blocking alert() calls",
+      "fix": "Rewrote component as a full-featured accessible layout supporting programDays, clean RSVP confirmation, min 44px Skip opening, and lightbox Escape support",
+      "verifiedBy": "apps/frontend-user/src/features/templates/layouts/TemplateBoilerplate/TemplateBoilerplateLayout.test.jsx"
+    },
+    {
+      "id": "D10-02",
+      "severity": "Medium",
+      "area": "DigitalYes",
+      "summary": "WaxSealEnvelope lacked accessible skip button and keyboard activation",
+      "rootCause": "Opening relied on mouse click on envelope seal without keyboard Enter/Space or skip link",
+      "fix": "Added accessible Skip button and onKeyDown handler for Enter and Space keys",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx"
+    },
+    {
+      "id": "D10-03",
+      "severity": "Medium",
+      "area": "EmeraldLuxe",
+      "summary": "Curtain opening container caused horizontal scroll overflow on 320px screens and lacked skip link",
+      "rootCause": "Fixed width on curtain button container and missing skip option",
+      "fix": "Added clamp() scaling, constrained container with max-width calc(100vw - 32px), and added min 44px Skip opening button",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx & Playwright viewport guard"
+    },
+    {
+      "id": "D10-04",
+      "severity": "Medium",
+      "area": "CanvaKhmerWeddingTemplate",
+      "summary": "AnimatePresence mode='wait' caused exit animations to stall in headless testing environments",
+      "rootCause": "Framer Motion mode='wait' required complete transition event before mounting replacement",
+      "fix": "Refactored to standard AnimatePresence, added previewStartClosed prop, and added accessible Skip button",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx"
+    },
+    {
+      "id": "D10-05",
+      "severity": "Medium",
+      "area": "WithJoyPortalLayout",
+      "summary": "Lightbox modal lacked accessible dialog roles and Escape key listener; mobile nav was hidden",
+      "rootCause": "Basic overlay with display:none mobile nav rule in withjoy-portal.css",
+      "fix": "Added role='dialog', aria-modal='true', Escape key listener, focus return, and smooth horizontal scroll pill navigation on mobile",
+      "verifiedBy": "apps/frontend-user/src/features/templates/Phase10ArtFidelity.test.jsx & withjoy-portal.css"
+    },
+    {
+      "id": "D10-06",
+      "severity": "Low",
+      "area": "TemplateBoilerplateLayout",
+      "summary": "React 19 compiler manual memoization preservation lint error in handleOpenInvitation",
+      "rootCause": "Dependencies array had [reduced] without setOpened",
+      "fix": "Updated dependencies array to [reduced, setOpened] and removed unused imports",
+      "verifiedBy": "npm --prefix apps/frontend-user run lint"
+    }
+  ],
+  "phase10_codex": "defect-register.json",
+  "phase11_status": {
+    "status": "RETAINED_PRESERVED",
+    "impact_analysis": "Phase 11.1 operates exclusively on /app/events/new onboarding wizard. No changes were made to invitation renderers, music players, guest RSVP, Flyway migrations, or auth tokens. All 57 historical carryovers remain cleanly tracked and untouched."
+  }
+}

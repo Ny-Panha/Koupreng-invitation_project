@@ -15,8 +15,12 @@ export async function loadServerDashboard(invitationId) {
 
 export function groupAmounts(items, field) {
   return items.reduce((totals, item) => {
-    const currency = item.currency || "USD";
-    totals[currency] = (totals[currency] || 0) + Number(item[field] ?? 0);
+    const currency = item.currency;
+    if (!['USD', 'KHR'].includes(currency)) return totals;
+    const raw = item[field];
+    const amount = typeof raw === 'number' || (typeof raw === 'string' && raw.trim()) ? Number(raw) : NaN;
+    if (!Number.isFinite(amount) || totals[currency] === null) totals[currency] = null;
+    else totals[currency] = (totals[currency] || 0) + amount;
     return totals;
   }, {});
 }

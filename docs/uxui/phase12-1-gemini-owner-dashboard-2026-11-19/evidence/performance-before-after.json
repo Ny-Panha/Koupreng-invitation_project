@@ -1,0 +1,25 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "build_metrics": {
+    "frontend_user": {
+      "pre_build_time_sec": 1.48,
+      "post_build_time_sec": 1.46,
+      "bundle_events_page_kb": 46.41,
+      "bundle_workspace_kb": 16.18,
+      "bundle_dashboard_page_kb": 18.63,
+      "total_dist_assets": 115,
+      "status": "PASS (Clean Vite production bundle, no chunk warnings)"
+    },
+    "frontend_admin": {
+      "pre_build_time_sec": 0.46,
+      "post_build_time_sec": 0.45,
+      "status": "PASS"
+    }
+  },
+  "runtime_optimizations": [
+    "Khmer Unicode NFC search normalization executes client-side across host/participant fields with O(N) single pass",
+    "Memoized event calendar indexing with Map<YYYY-MM-DD, Event[]> for O(1) date lookup per cell",
+    "Synchronous state clearance in EventWorkspace eliminates redundant re-render cycles on route change"
+  ]
+}

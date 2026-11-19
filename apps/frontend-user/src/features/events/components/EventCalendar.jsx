@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { formatLocalDate, localDateString } from "@/shared/utils/localDate";
 import { EVENT_TYPES } from "../onboarding/eventFields";
@@ -37,21 +37,35 @@ function getFirstDayOfWeekMondayFirst(year, month) {
 
 export function EventCalendar({
   events = [],
+  initialDate: initialDateProp,
   onManage,
   onPreview,
+  onEdit,
 }) {
   const en = useLanguageStore((s) => s.lang) === "en";
   const todayDateString = localDateString(new Date());
 
-  // Determine initial month from current date or first upcoming event
+  // Determine initial month from prop, current date or first upcoming event
   const initialDate = useMemo(() => {
+    if (initialDateProp) {
+      return new Date(initialDateProp.getFullYear(), initialDateProp.getMonth(), 1);
+    }
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), 1);
-  }, []);
+  }, [initialDateProp]);
 
   const [viewDate, setViewDate] = useState(initialDate);
   const [selectedDate, setSelectedDate] = useState(null);
   const [calendarSubView, setCalendarSubView] = useState("month"); // "month" | "agenda"
+  const [focusDate, setFocusDate] = useState(null);
+  const gridRef = useRef(null);
+  const pendingFocus = useRef(false);
+  useEffect(() => {
+    if (pendingFocus.current) {
+      gridRef.current?.querySelector(`[data-date="${focusDate}"]`)?.focus();
+      pendingFocus.current = false;
+    }
+  }, [focusDate, viewDate]);
 
   const viewYear = viewDate.getFullYear();
   const viewMonth = viewDate.getMonth();
@@ -238,7 +252,7 @@ export function EventCalendar({
       {calendarSubView === "month" ? (
         <>
           {/* Month Grid */}
-          <div className="event-calendar-grid" role="grid" aria-label={monthLabel}>
+          <div className="event-calendar-grid" role="grid" aria-label={monthLabel} ref={gridRef}>
             {/* Weekday Headers */}
             <div className="event-calendar-weekdays" role="row">
               {dayHeaders.map((day, idx) => (
@@ -249,15 +263,16 @@ export function EventCalendar({
             </div>
 
             {/* Days Grid */}
-            <div className="event-calendar-days">
-              {cells.map((cell) => {
+            <div className="event-calendar-days" role="rowgroup">
+              {Array.from({length: Math.ceil(cells.length/7)}, (_,week) => <div key={week} role="row" className="event-calendar-week">{cells.slice(week*7,week*7+7).map((cell) => {
                 const isSelected = selectedDate === cell.dateKey;
                 const hasEvents = cell.events.length > 0;
 
                 return (
                   <div
                     key={cell.dateKey}
-                    tabIndex={cell.isCurrentMonth ? 0 : -1}
+                    data-date={cell.dateKey}
+                    tabIndex={cell.dateKey === (focusDate || localDateString(viewDate)) ? 0 : -1}
                     role="gridcell"
                     aria-selected={isSelected}
                     aria-label={`${formatLocalDate(cell.dateKey, en ? "en-US" : "km-KH")}${
@@ -272,10 +287,25 @@ export function EventCalendar({
                       setSelectedDate(cell.dateKey);
                     }}
                     onKeyDown={(e) => {
+                      if (e.target !== e.currentTarget) return;
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
                         setSelectedDate(cell.dateKey);
+                        return;
                       }
+                      const moves = { ArrowLeft:-1, ArrowRight:1, ArrowUp:-7, ArrowDown:7 };
+                      const date = new Date(`${cell.dateKey}T12:00:00`);
+                      let next = new Date(date);
+                      if (e.key in moves) next.setDate(date.getDate()+moves[e.key]);
+                      else if (e.key==='Home') next.setDate(date.getDate()-(date.getDay()+6)%7);
+                      else if (e.key==='End') next.setDate(date.getDate()+6-(date.getDay()+6)%7);
+                      else if (e.key==='PageUp' || e.key==='PageDown') {
+                        const month=date.getMonth()+(e.key==='PageUp' ? -1 : 1);
+                        next=new Date(date.getFullYear(),month,Math.min(date.getDate(),getDaysInMonth(date.getFullYear(),month)),12);
+                      } else return;
+                      e.preventDefault(); pendingFocus.current=true;
+                      setFocusDate(localDateString(next));
+                      setViewDate(new Date(next.getFullYear(),next.getMonth(),1));
                     }}
                   >
                     <div className="event-calendar-cell-top">
@@ -309,18 +339,33 @@ export function EventCalendar({
                             EVENT_TYPES.find((t) => t[0] === evt.eventType)?.[en ? 2 : 1] ||
                             evt.eventType ||
                             "Event";
+                          const isLocal = Boolean(
+                            evt.syncStatus === "LOCAL_ONLY" ||
+                            evt.isLocal === true ||
+                            String(evt.id || "").startsWith("draft-") ||
+                            (String(evt.id || "").startsWith("wed-") && !evt.backendInvitationId)
+                          );
+                          const isSyncFailed = evt.syncStatus === "SYNC_FAILED";
+                          const isServer = !isLocal && !isSyncFailed;
+                          const chipTone = isSyncFailed
+                            ? "is-sync-failed"
+                            : isLocal
+                            ? "is-local"
+                            : evt.status === "PUBLISHED"
+                            ? "is-published"
+                            : "is-draft";
 
                           return (
                             <button
                               key={evt.id}
                               type="button"
-                              className={`event-calendar-chip ${
-                                evt.status === "PUBLISHED" ? "is-published" : "is-draft"
-                              }`}
-                              title={`${evt.title || typeName}${evt.eventTime ? ` · ${evt.eventTime}` : ""}`}
+                              className={`event-calendar-chip ${chipTone}`}
+                              title={`${evt.title || typeName}${evt.eventTime ? ` · ${evt.eventTime}` : ""}${isLocal ? ` (${en ? "Local draft" : "ព្រាងលើឧបករណ៍"})` : ""}`}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                if (onManage) onManage(evt);
+                                if (isServer && onManage) onManage(evt);
+                                else if (onEdit) onEdit(evt);
+                                else if (onManage) onManage(evt);
                               }}
                             >
                               <span className="event-calendar-chip-bullet" />
@@ -339,7 +384,7 @@ export function EventCalendar({
                     )}
                   </div>
                 );
-              })}
+              })}</div>)}
             </div>
           </div>
 
@@ -377,19 +422,38 @@ export function EventCalendar({
                       evt.eventType ||
                       (en ? "Wedding" : "អាពាហ៍ពិពាហ៍");
 
+                    const isLocal = Boolean(
+                      evt.syncStatus === "LOCAL_ONLY" ||
+                      evt.isLocal === true ||
+                      String(evt.id || "").startsWith("draft-") ||
+                      (String(evt.id || "").startsWith("wed-") && !evt.backendInvitationId)
+                    );
+                    const isSyncFailed = evt.syncStatus === "SYNC_FAILED";
+                    const isServer = !isLocal && !isSyncFailed;
+                    const statusLabel = isSyncFailed
+                      ? (en ? "Sync failed" : "Sync បរាជ័យ")
+                      : isLocal
+                      ? (en ? "Local draft" : "ព្រាងលើឧបករណ៍នេះ")
+                      : evt.status === "PUBLISHED"
+                      ? (en ? "Published" : "បានផ្សាយ")
+                      : (en ? "Draft" : "ព្រាង");
+                    const statusClass = isSyncFailed
+                      ? "is-sync-failed"
+                      : isLocal
+                      ? "is-local"
+                      : evt.status === "PUBLISHED"
+                      ? "is-published"
+                      : "is-draft";
+
                     return (
                       <article key={evt.id} className="event-calendar-detail-card">
                         <div className="event-calendar-detail-main">
                           <div className="event-calendar-detail-tags">
                             <span className="event-calendar-detail-type">{typeName}</span>
                             <span
-                              className={`event-calendar-detail-status ${
-                                evt.status === "PUBLISHED" ? "is-published" : "is-draft"
-                              }`}
+                              className={`event-calendar-detail-status ${statusClass}`}
                             >
-                              {evt.status === "PUBLISHED"
-                                ? en ? "Published" : "បានផ្សាយ"
-                                : en ? "Draft" : "ព្រាង"}
+                              {statusLabel}
                             </span>
                             {evt.eventTime && (
                               <span className="event-calendar-detail-time">
@@ -413,10 +477,14 @@ export function EventCalendar({
                           <button
                             type="button"
                             className="event-calendar-action-btn primary"
-                            onClick={() => onManage && onManage(evt)}
+                            onClick={() => {
+                              if (isServer && onManage) onManage(evt);
+                              else if (onEdit) onEdit(evt);
+                              else if (onManage) onManage(evt);
+                            }}
                           >
                             <LayoutDashboard size={14} aria-hidden="true" />
-                            <span>{en ? "Manage" : "គ្រប់គ្រង"}</span>
+                            <span>{isServer ? (en ? "Manage" : "គ្រប់គ្រង") : (en ? "Resume draft" : "បន្តការព្រាង")}</span>
                           </button>
                           {onPreview && (
                             <button
@@ -454,6 +522,29 @@ export function EventCalendar({
                   evt.eventType ||
                   (en ? "Wedding" : "អាពាហ៍ពិពាហ៍");
 
+                const isLocal = Boolean(
+                  evt.syncStatus === "LOCAL_ONLY" ||
+                  evt.isLocal === true ||
+                  String(evt.id || "").startsWith("draft-") ||
+                  (String(evt.id || "").startsWith("wed-") && !evt.backendInvitationId)
+                );
+                const isSyncFailed = evt.syncStatus === "SYNC_FAILED";
+                const isServer = !isLocal && !isSyncFailed;
+                const statusLabel = isSyncFailed
+                  ? (en ? "Sync failed" : "Sync បរាជ័យ")
+                  : isLocal
+                  ? (en ? "Local draft" : "ព្រាងលើឧបករណ៍នេះ")
+                  : evt.status === "PUBLISHED"
+                  ? (en ? "Published" : "បានផ្សាយ")
+                  : (en ? "Draft" : "ព្រាង");
+                const statusClass = isSyncFailed
+                  ? "is-sync-failed"
+                  : isLocal
+                  ? "is-local"
+                  : evt.status === "PUBLISHED"
+                  ? "is-published"
+                  : "is-draft";
+
                 return (
                   <article key={evt.id} className="event-calendar-agenda-item">
                     <div className="event-calendar-agenda-date-box">
@@ -474,13 +565,9 @@ export function EventCalendar({
                       <div className="event-calendar-agenda-badges">
                         <span className="event-calendar-detail-type">{typeName}</span>
                         <span
-                          className={`event-calendar-detail-status ${
-                            evt.status === "PUBLISHED" ? "is-published" : "is-draft"
-                          }`}
+                          className={`event-calendar-detail-status ${statusClass}`}
                         >
-                          {evt.status === "PUBLISHED"
-                            ? en ? "Published" : "បានផ្សាយ"
-                            : en ? "Draft" : "ព្រាង"}
+                          {statusLabel}
                         </span>
                       </div>
                       <h3 className="event-calendar-agenda-title">
@@ -498,10 +585,14 @@ export function EventCalendar({
                       <button
                         type="button"
                         className="event-calendar-action-btn primary"
-                        onClick={() => onManage && onManage(evt)}
+                        onClick={() => {
+                          if (isServer && onManage) onManage(evt);
+                          else if (onEdit) onEdit(evt);
+                          else if (onManage) onManage(evt);
+                        }}
                       >
                         <LayoutDashboard size={14} aria-hidden="true" />
-                        <span>{en ? "Manage" : "គ្រប់គ្រង"}</span>
+                        <span>{isServer ? (en ? "Manage" : "គ្រប់គ្រង") : (en ? "Resume draft" : "បន្តការព្រាង")}</span>
                       </button>
                     </div>
                   </article>

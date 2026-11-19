@@ -1,0 +1,135 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:16:40+07:00",
+  "total_screenshots": 16,
+  "screenshots": [
+    {
+      "file": "01-events-list-desktop-1440-en.png",
+      "size_bytes": 99122,
+      "sha256": "777344f2f8d26b5e770ce5914940d0155360ccc5f99b319160d86696fc8ccf5c",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop populated events list showing server events (Manage event), local drafts (Resume draft), failed sync, and shared event with provenance tags"
+    },
+    {
+      "file": "02-events-list-mobile-393-en.png",
+      "size_bytes": 60513,
+      "sha256": "9f1b3cfb660b3a83fde4dd0bed8f8f2fc2597b43fef731478ad917c95bcbb7fe",
+      "viewport": "393x851",
+      "locale": "en",
+      "description": "Mobile Chrome populated events list showing single-column editorial cards, sticky filters, and top Continue where you left off resume banner"
+    },
+    {
+      "file": "03-events-list-tablet-768-en.png",
+      "size_bytes": 69930,
+      "sha256": "a904dd3c9ea98409928e925a2f7bbaf54e1444457a793cd3374de7bf20ec00f3",
+      "viewport": "768x1024",
+      "locale": "en",
+      "description": "Tablet 2-column event grid layout with clean status badges and responsive header"
+    },
+    {
+      "file": "04-events-list-narrow-320-en.png",
+      "size_bytes": 45862,
+      "sha256": "bb76deb7658d27387d64c413472c412c4aa32998e8f044ab960215c379f3e50a",
+      "viewport": "320x568",
+      "locale": "en",
+      "description": "Narrow mobile showing touch targets (min 44px), no horizontal scroll, and stacked actions"
+    },
+    {
+      "file": "05-events-list-landscape-844-en.png",
+      "size_bytes": 52517,
+      "sha256": "728e0396fda51a98d685d8d0a66a72756c0fc4f5dab46f1d8b40b94c874d81a3",
+      "viewport": "844x390",
+      "locale": "en",
+      "description": "Short landscape mobile showing compact headers and comfortable scrollable card list"
+    },
+    {
+      "file": "06-events-list-khmer-desktop-1440.png",
+      "size_bytes": 107778,
+      "sha256": "6bfc95b38c793989646f80974b7f76abf92ca0cff8bed8d96233526d3cf8efb5",
+      "viewport": "1440x900",
+      "locale": "km",
+      "description": "Desktop Khmer locale with authentic Khmer typography, Cambodian dates, and translated status pills"
+    },
+    {
+      "file": "07-events-calendar-month-desktop-1440-en.png",
+      "size_bytes": 92211,
+      "sha256": "9f52831783efb8fe0e2587eced9df7dbd13b76be6b189ff19476b1a44a147f19",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop inline calendar month view showing multi-status event chips and leap year day"
+    },
+    {
+      "file": "08-events-calendar-agenda-desktop-1440-en.png",
+      "size_bytes": 110462,
+      "sha256": "a279d2a28a2f212adeb5b320bde89e95b409428a3f557286f71093d176517a81",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop inline calendar agenda view with chronological timeline and manage actions"
+    },
+    {
+      "file": "09-events-calendar-mobile-393-km.png",
+      "size_bytes": 62448,
+      "sha256": "1bc0ca2a41f97d94d0961a4fe296cfb2f82d00e160c41afd97620db3754f3b6f",
+      "viewport": "393x851",
+      "locale": "km",
+      "description": "Mobile Khmer calendar view with Khmer months and short weekday headers"
+    },
+    {
+      "file": "10-events-empty-state-desktop-1440-en.png",
+      "size_bytes": 106406,
+      "sha256": "371166f859840241b29c7ff482a493ffeffdd49374239dba3dade2d9f129dbf1",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop zero-events empty state with clear call to create first event"
+    },
+    {
+      "file": "11-events-search-filter-desktop-1440-en.png",
+      "size_bytes": 107928,
+      "sha256": "035a65340250312b55d139e7cf3792670a01aceda98e38078c5bb47ac7628035",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop active search query filtering by host/venue with quick clear button"
+    },
+    {
+      "file": "12-workspace-dashboard-desktop-1440-en.png",
+      "size_bytes": 137812,
+      "sha256": "8cd150064db22215ea596425e6a022fb21162d436d174611e8fd684641268797",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop event workspace dashboard showing truthful KPIs, separate USD/KHR budget and gifts"
+    },
+    {
+      "file": "13-workspace-dashboard-mobile-393-en.png",
+      "size_bytes": 61632,
+      "sha256": "c72e976254a86234dfd5da9a5b06340fdbf2df3af5de79bc4d0eb6669a859785",
+      "viewport": "393x851",
+      "locale": "en",
+      "description": "Mobile event workspace dashboard with responsive metric cards and countdown pill"
+    },
+    {
+      "file": "14-workspace-dashboard-khmer-1440.png",
+      "size_bytes": 142805,
+      "sha256": "1630462af5be665c8577bfa70ba88e3ce8c963b9f13db59964bd13be577bea5e",
+      "viewport": "1440x900",
+      "locale": "km",
+      "description": "Desktop Khmer workspace dashboard with authentic Khmer metrics and countdown timer"
+    },
+    {
+      "file": "15-workspace-permission-denied-desktop-en.png",
+      "size_bytes": 78156,
+      "sha256": "9ee787d3cfb657b8a0f9c667fc3d4e622b18120d2babcd6fc5d6359e0243977e",
+      "viewport": "1440x900",
+      "locale": "en",
+      "description": "Desktop workspace displaying shared event non-owner messaging and restricted access"
+    },
+    {
+      "file": "16-workspace-mobile-drawer-393-en.png",
+      "size_bytes": 41335,
+      "sha256": "46a2babd836e4fff797d869eb765ea9843d5d0af3944556f05417363fe77757e",
+      "viewport": "393x851",
+      "locale": "en",
+      "description": "Mobile opened module navigation drawer with active module indicator and touch targets"
+    }
+  ]
+}

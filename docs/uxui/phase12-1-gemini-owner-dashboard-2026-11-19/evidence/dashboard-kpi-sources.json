@@ -1,0 +1,42 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "kpi_sources": [
+    {
+      "metric": "Total Guests / Invited",
+      "source_api": "GET /api/v1/reports/invitations/{id}/dashboard",
+      "field": "totalGuests / totalInvited",
+      "truth_rule": "Renders exact number; if 0, renders 'No guests yet' instead of fabricated default"
+    },
+    {
+      "metric": "Confirmed RSVPs",
+      "source_api": "GET /api/v1/reports/invitations/{id}/dashboard",
+      "field": "attending / rsvpRate",
+      "truth_rule": "Renders exact attending count and calculated percentage; if total is 0, renders 'Awaiting reply'"
+    },
+    {
+      "metric": "Pending Responses",
+      "source_api": "GET /api/v1/reports/invitations/{id}/dashboard",
+      "field": "pending",
+      "truth_rule": "Renders exact pending count"
+    },
+    {
+      "metric": "Checked In",
+      "source_api": "GET /api/v1/guests/check-in/summary?invitationId={id}",
+      "field": "checkedIn / totalCheckedIn",
+      "truth_rule": "Renders real reception scan count and percent of confirmed; if none, renders 'Ready for reception'"
+    },
+    {
+      "metric": "Budget Recorded Expenses",
+      "source_api": "GET /api/v1/budget/items?invitationId={id}",
+      "field": "currencyTotals(budgetItems.map(item => ({ currency: item.currency, amount: item.actualCost })))",
+      "truth_rule": "Strict USD and KHR separation; never converts or blends"
+    },
+    {
+      "metric": "Gifts Recorded",
+      "source_api": "GET /api/v1/planning/gifts?invitationId={id}",
+      "field": "currencyTotals(gifts.map(g => ({ currency: g.currency, amount: g.amount })))",
+      "truth_rule": "Strict USD and KHR separation; displays total gift count and sums"
+    }
+  ]
+}

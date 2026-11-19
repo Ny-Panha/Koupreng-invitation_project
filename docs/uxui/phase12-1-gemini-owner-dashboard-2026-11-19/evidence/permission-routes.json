@@ -1,0 +1,48 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "workspace_permissions": [
+    {
+      "module": "overview",
+      "route": "/app/events/:eventId",
+      "required_permission": "VIEW_EVENT",
+      "owner_only": false,
+      "non_owner_behavior": "Renders shared event notice with accepted team role tools"
+    },
+    {
+      "module": "invitation",
+      "route": "/app/events/:eventId/invitation",
+      "required_permission": "MANAGE_INVITATION",
+      "owner_only": false,
+      "non_owner_behavior": "Permission alert fallback if not granted in access payload"
+    },
+    {
+      "module": "guests",
+      "route": "/app/events/:eventId/guests",
+      "required_permission": "MANAGE_GUESTS",
+      "owner_only": false,
+      "non_owner_behavior": "Permission alert fallback"
+    },
+    {
+      "module": "budget",
+      "route": "/app/events/:eventId/budget",
+      "required_permission": "MANAGE_BUDGET",
+      "owner_only": false,
+      "non_owner_behavior": "Permission alert fallback"
+    },
+    {
+      "module": "settings",
+      "route": "/app/events/:eventId/settings",
+      "required_permission": "MANAGE_SETTINGS",
+      "owner_only": true,
+      "non_owner_behavior": "Omitted from navigation, route returns permission alert"
+    },
+    {
+      "module": "delete",
+      "route": "DELETE /api/v1/invitations/:id",
+      "required_permission": "OWNER",
+      "owner_only": true,
+      "non_owner_behavior": "Action completely hidden from EventCard and EventWorkspace"
+    }
+  ]
+}

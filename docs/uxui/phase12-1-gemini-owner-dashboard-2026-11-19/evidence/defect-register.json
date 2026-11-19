@@ -1,0 +1,34 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "defects": [
+    {
+      "id": "DEF-12.1-01",
+      "summary": "Sort newest returned 0 in EventsFeature, causing non-deterministic event order",
+      "severity": "MEDIUM",
+      "resolution": "Fixed: added multi-level comparison (updatedAt -> createdAt -> fallback to id)",
+      "status": "RESOLVED_LOCAL"
+    },
+    {
+      "id": "DEF-12.1-02",
+      "summary": "Local drafts rendered Manage event button routing to non-existent /app/events/:draftId instead of edit page",
+      "severity": "HIGH",
+      "resolution": "Fixed: differentiated isServerEvent vs isLocalDraft; local drafts render Resume draft and route to /dashboard/invitations/:id/edit",
+      "status": "RESOLVED_LOCAL"
+    },
+    {
+      "id": "DEF-12.1-03",
+      "summary": "Flashing stale event X metrics when navigating X -> Y in EventWorkspace and DashboardFeature",
+      "severity": "MEDIUM",
+      "resolution": "Fixed: synchronous state clearance (event: null, selectedInvitation: null, loading: true) in useEffect upon route eventId change",
+      "status": "RESOLVED_LOCAL"
+    },
+    {
+      "id": "DEF-12.1-04",
+      "summary": "Calendar cells lacked leap year initialDate prop for targeted test verification",
+      "severity": "LOW",
+      "resolution": "Fixed: added initialDate prop support to EventCalendar",
+      "status": "RESOLVED_LOCAL"
+    }
+  ]
+}

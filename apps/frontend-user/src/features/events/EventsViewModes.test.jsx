@@ -98,7 +98,7 @@ describe("EventsFeature View Modes & Period Filters", () => {
     expect(screen.getByText("Completed Anniversary Gala")).toBeInTheDocument();
 
     // Click "Upcoming" tab
-    const upcomingTab = screen.getByRole("tab", { name: "Upcoming" });
+    const upcomingTab = screen.getByRole("button", { name: "Upcoming" });
     fireEvent.click(upcomingTab);
 
     await waitFor(() => {
@@ -107,7 +107,7 @@ describe("EventsFeature View Modes & Period Filters", () => {
     });
 
     // Click "Past" tab
-    const pastTab = screen.getByRole("tab", { name: "Past" });
+    const pastTab = screen.getByRole("button", { name: "Past" });
     fireEvent.click(pastTab);
 
     await waitFor(() => {
@@ -116,7 +116,7 @@ describe("EventsFeature View Modes & Period Filters", () => {
     });
 
     // Click "All" tab
-    const allTab = screen.getByRole("tab", { name: "All" });
+    const allTab = screen.getByRole("button", { name: "All" });
     fireEvent.click(allTab);
 
     await waitFor(() => {

@@ -5,6 +5,7 @@ import HostNav from "./components/HostNav";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import "@/shared/styles/workspace-ui.css";
 import "./HostShell.css";
+import "./OwnerExperience.css";
 
 export default function HostShell() {
     const location = useLocation();

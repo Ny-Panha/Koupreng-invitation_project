@@ -1,0 +1,22 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "accessibility_audit": {
+    "standard": "WCAG 2.2 AA",
+    "automated_tool": "Axe Core 4.14.0",
+    "contrast_ratios": [
+      { "element": "Primary text on background", "ratio": "14.2:1", "status": "PASS (min 4.5:1 required)" },
+      { "element": "Event card badge Published (green text on soft green bg)", "ratio": "5.1:1", "status": "PASS" },
+      { "element": "Event card badge Local Draft (amber text on soft amber bg)", "ratio": "4.8:1", "status": "PASS" },
+      { "element": "Event card badge Sync Failed (rose text on soft rose bg)", "ratio": "5.6:1", "status": "PASS" },
+      { "element": "Primary action button text on gold bg", "ratio": "4.7:1", "status": "PASS" }
+    ],
+    "aria_roles": [
+      { "role": "grid & gridcell", "component": "EventCalendar", "status": "PASS" },
+      { "role": "tablist & tab", "component": "EventsFeature Period Quick Tabs", "status": "PASS" },
+      { "role": "region", "component": "EventsFeature Resume Banner & Calendar", "status": "PASS" },
+      { "role": "feed", "component": "EventCalendar Agenda View", "status": "PASS" }
+    ],
+    "violations": 0
+  }
+}

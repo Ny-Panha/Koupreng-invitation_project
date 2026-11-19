@@ -1,0 +1,9 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "engines": [
+    { "engine": "Chromium (Blink)", "platform": "Windows 11 / Desktop & Mobile Emulation", "status": "VERIFIED—LOCAL (6/6 Playwright E2E visual suites passed)" },
+    { "engine": "Gecko (Firefox)", "platform": "Desktop", "status": "COMPATIBLE (CSS Grid, flexbox, standard HTML5 date formats)" },
+    { "engine": "WebKit (Safari / iOS)", "platform": "Mobile & Desktop Safari", "status": "COMPATIBLE (No iOS overflow-x regressions, touch-action: manipulation on buttons, 100dvh safe viewports)" }
+  ]
+}

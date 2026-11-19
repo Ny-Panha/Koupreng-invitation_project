@@ -1,0 +1,46 @@
+{
+  "phase": "12.1",
+  "generated_at": "2026-11-19T15:15:00+07:00",
+  "viewports": [
+    {
+      "name": "Desktop",
+      "width": 1440,
+      "height": 900,
+      "layout": "3-column responsive event grid; full monthly calendar grid with visible weekday headers and quick period tabs",
+      "overflow_x": "none",
+      "touch_targets": "min 40px interactive"
+    },
+    {
+      "name": "Tablet",
+      "width": 768,
+      "height": 1024,
+      "layout": "2-column responsive event grid; collapsible sidebar navigation; full calendar width",
+      "overflow_x": "none",
+      "touch_targets": "min 44px interactive"
+    },
+    {
+      "name": "Mobile Chrome",
+      "width": 393,
+      "height": 851,
+      "layout": "1-column stacked editorial cards; mobile sticky header; full-width CTA buttons; mobile navigation drawer",
+      "overflow_x": "none",
+      "touch_targets": "min 44px interactive"
+    },
+    {
+      "name": "Narrow Mobile",
+      "width": 320,
+      "height": 568,
+      "layout": "1-column condensed cards; stacked resume banner text and button; no clipping or horizontal scroll",
+      "overflow_x": "none",
+      "touch_targets": "min 44px interactive"
+    },
+    {
+      "name": "Landscape Mobile",
+      "width": 844,
+      "height": 390,
+      "layout": "Compact header; scrollable main content without overlapping fixed bars",
+      "overflow_x": "none",
+      "touch_targets": "min 44px interactive"
+    }
+  ]
+}
