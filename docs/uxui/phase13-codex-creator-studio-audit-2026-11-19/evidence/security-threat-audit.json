@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "auditMetadata": {
+    "auditVersion": "1.0.0",
+    "auditor": "Codex Senior Security Reviewer",
+    "timestamp": "2026-11-19T21:26:30+07:00"
+  },
+  "threatVerificationSummary": {
+    "c10_001_rsvp_isolation": "VERIFIED_SECURE",
+    "phase11_account_switch_isolation": "VERIFIED_SECURE",
+    "phase12_ownerless_draft_isolation": "VERIFIED_SECURE",
+    "preview_postmessage_injection": "VERIFIED_SECURE",
+    "csrf_and_cookie_binding": "VERIFIED_SECURE",
+    "xss_and_html_injection": "VERIFIED_SECURE",
+    "unauthorized_mutation_fail_closed": "VERIFIED_SECURE"
+  },
+  "threatFindings": [
+    {
+      "threatId": "THR-13-01",
+      "name": "C10-001 Guest RSVP Privacy & Attendance Isolation",
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "analysis": "Studio section editors never leak or expose private guest attendance data, meal choices, or personal remarks to unauthenticated or view-only collaborators. Public RSVP endpoint enforces C10-001 isolation contract.",
+      "testEvidence": "PublicRsvpForm.test.jsx, checkIn.persistence.test.jsx"
+    },
+    {
+      "threatId": "THR-13-02",
+      "name": "Phase 11 Account-Switch Credential & Draft Binding",
+      "severity": "HIGH",
+      "status": "PASS",
+      "analysis": "When active user session changes (User A -> User B), in-flight autosave requests from User A are aborted or fail-closed. User B cannot receive acknowledgements or view drafts belonging to User A.",
+      "testEvidence": "InvitationStudioNegativeScenarios.test.jsx N13-01 & N13-07, Phase11_1DraftLifecycle.test.jsx"
+    },
+    {
+      "threatId": "THR-13-03",
+      "name": "Phase 12 Ownerless Draft Safety & Revoked Access Fail-Closed",
+      "severity": "HIGH",
+      "status": "PASS",
+      "analysis": "If an editor's collaborator permission is revoked during an active editing session (HTTP 403 Forbidden), the persistence hook immediately blocks all subsequent writes, sets phase to 'failed', and leaves the local buffer intact without overwriting server state.",
+      "testEvidence": "InvitationStudioNegativeScenarios.test.jsx N13-03 & N13-26, useStudioPersistence.js lines 62-65"
+    },
+    {
+      "threatId": "THR-13-04",
+      "name": "Cross-Origin Preview postMessage Injection & Nonce Tampering",
+      "severity": "HIGH",
+      "status": "PASS",
+      "analysis": "LivePhoneSimulator and previewMessaging.js enforce strict origin checking (matching window.location.origin) and ignore messages lacking the expected session nonce or containing prototype pollution keys (__proto__, constructor).",
+      "testEvidence": "InvitationStudioNegativeScenarios.test.jsx N13-02 & N13-09, previewMessaging.test.js"
+    },
+    {
+      "threatId": "THR-13-05",
+      "name": "Cross-Site Scripting (XSS) via Media & Video Embed URLs",
+      "severity": "HIGH",
+      "status": "PASS",
+      "analysis": "PreWeddingVideoEditor sanitizeUrl validates embed protocols and domain patterns, rejecting javascript: or data: URIs. Illustrated map labels and couple names are sanitized via React DOM JSX text nodes, preventing raw HTML injection.",
+      "testEvidence": "PreWeddingVideoEditor.test.jsx, IllustratedMapDesignerModal.test.jsx"
+    },
+    {
+      "threatId": "THR-13-06",
+      "name": "Secret Exposure in Test Fixtures & Local Storage",
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "analysis": "Scanned all Phase 13 test files, fixtures, and documentation. Zero real API keys, ABA PayWay passwords, Telegram bot tokens, or private secrets exist in source. All credentials use classified dummy tokens (e.g. test-token-123).",
+      "testEvidence": "InvitationStudioNegativeScenarios.test.jsx N13-30, git diff check"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "01-desktop-1440-en-light.png",
+    "hash": "B7F3307D715EA1FDF9B80836945B2D1B74E35889E6A808B070CF9E7F7E74A460",
+    "path": "evidence/screenshots/01-desktop-1440-en-light.png"
+  },
+  {
+    "id": "02-desktop-1440-en-dark.png",
+    "hash": "9941E96B4C85A21995FD680F688C68B3A217A70C3DCF87F4BF11D0D9DC79EC9D",
+    "path": "evidence/screenshots/02-desktop-1440-en-dark.png"
+  },
+  {
+    "id": "03-desktop-1440-km-light.png",
+    "hash": "0891071B5535606EDA5110EAB85D0EF99367F5F3BF0A026C7C96DC643B272C34",
+    "path": "evidence/screenshots/03-desktop-1440-km-light.png"
+  },
+  {
+    "id": "04-desktop-1440-km-dark.png",
+    "hash": "CD967C96671C0438FB8BAEC2BE5D9C482BBE07632FC0B726ED8F48B4961E0BD5",
+    "path": "evidence/screenshots/04-desktop-1440-km-dark.png"
+  },
+  {
+    "id": "05-desktop-1920-en-light.png",
+    "hash": "653E078C9789D6800EADE231314955E0787ADD1199ECB80373FB587076F09C7A",
+    "path": "evidence/screenshots/05-desktop-1920-en-light.png"
+  },
+  {
+    "id": "06-tablet-768-en-light.png",
+    "hash": "45C974B252732347F89821AD891FD8B8F5B673679F9141B47D3C4D1F11D7B63F",
+    "path": "evidence/screenshots/06-tablet-768-en-light.png"
+  },
+  {
+    "id": "07-tablet-768-km-light.png",
+    "hash": "4B57303DFE06D6B4859781D2D026685676B3DA07D186A10013BD9BB11C1EBD05",
+    "path": "evidence/screenshots/07-tablet-768-km-light.png"
+  },
+  {
+    "id": "08-mobile-393-en-light.png",
+    "hash": "96C07C9E79E8BA9B13ED4C444D9470AB32286E26C23201AD5E0BC86E866E2EB7",
+    "path": "evidence/screenshots/08-mobile-393-en-light.png"
+  },
+  {
+    "id": "09-mobile-393-km-light.png",
+    "hash": "DAEB550138C84CE250A613F94BDFB57B756896193E41BBF63674F172C575D578",
+    "path": "evidence/screenshots/09-mobile-393-km-light.png"
+  },
+  {
+    "id": "10-mobile-393-preview-sheet.png",
+    "hash": "D8336DBB79F66F142C0830558CB4FE9A81A0404D99027698D4EB544A24C407EC",
+    "path": "evidence/screenshots/10-mobile-393-preview-sheet.png"
+  },
+  {
+    "id": "11-narrow-mobile-320-en-light.png",
+    "hash": "4D46404110C37F013C4CC90D8C0BA514568038D4725BB14D3C01910D0656E6DC",
+    "path": "evidence/screenshots/11-narrow-mobile-320-en-light.png"
+  },
+  {
+    "id": "12-narrow-mobile-320-km-light.png",
+    "hash": "83E205755EC5A5DD26905F1163F25520A5758AAFB522CC89F50F18B066410991",
+    "path": "evidence/screenshots/12-narrow-mobile-320-km-light.png"
+  },
+  {
+    "id": "13-short-landscape-844x390-en.png",
+    "hash": "905E14593D38FAAD7E1C197A87367B501DBFE44681D4D012920E0A18849822D6",
+    "path": "evidence/screenshots/13-short-landscape-844x390-en.png"
+  },
+  {
+    "id": "14-short-landscape-844x390-km.png",
+    "hash": "A300410F14D30CAB8934FC136F4731468D8CFE078697490B940B25122053C9D1",
+    "path": "evidence/screenshots/14-short-landscape-844x390-km.png"
+  },
+  {
+    "id": "15-template-chooser-modal.png",
+    "hash": "C500ED717241979B4E11A21C75CC6FD45E9E0FC92B90FF9227C70455E0CDE308",
+    "path": "evidence/screenshots/15-template-chooser-modal.png"
+  },
+  {
+    "id": "16-publish-review-modal.png",
+    "hash": "C4E4A6B7A839EA3A40364FDDF26408882940344A5DB001276B8A8A7174D7AA24",
+    "path": "evidence/screenshots/16-publish-review-modal.png"
+  }
+]

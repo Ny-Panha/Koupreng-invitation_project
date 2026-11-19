@@ -88,4 +88,23 @@ describe('StudioSections', () => {
     fireEvent.keyDown(firstTab, { key: 'ArrowDown' });
     expect(onChange).toHaveBeenCalledWith('schedule');
   });
+
+  it('supports Home and End keys for jumping to first and last tabs', () => {
+    const onChange = vi.fn();
+    render(
+      <StudioSections
+        sections={sections}
+        active="schedule"
+        onChange={onChange}
+        english={true}
+      />
+    );
+
+    const secondTab = screen.getByRole('button', { name: 'Schedule & Venue' });
+    fireEvent.keyDown(secondTab, { key: 'Home' });
+    expect(onChange).toHaveBeenCalledWith('eventInfo');
+
+    fireEvent.keyDown(secondTab, { key: 'End' });
+    expect(onChange).toHaveBeenCalledWith('ticketsQr');
+  });
 });

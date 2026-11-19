@@ -1,0 +1,38 @@
+[
+  {
+    "law": "Jakob's Law",
+    "principle": "Users expect familiar patterns from tools they already know.",
+    "implementation": "Left section rail, center form inspector, right live simulator; Ctrl+S for Save, Ctrl+Z for Undo.",
+    "verification": "StudioToolbar.test.jsx and StudioSections.test.jsx test familiar shortcuts and tab navigation."
+  },
+  {
+    "law": "Fitts's Law",
+    "principle": "Touch targets must be comfortably reachable (>= 44px) and prominent.",
+    "implementation": "Save button is 44px+ height with distinct gold/forest green styling; mobile actions placed in thumb-reachable bottom bar.",
+    "verification": "StudioFields.css defines min-height: 46px on inputs, buttons, and select dropdowns."
+  },
+  {
+    "law": "Hick's Law",
+    "principle": "Progressive disclosure reduces cognitive load.",
+    "implementation": "Sections grouped into 6 purposeful categories; collapsible subsection panels in advanced mode.",
+    "verification": "StudioSections renders 6 high-level categories rather than 25 raw sections at once."
+  },
+  {
+    "law": "Miller's Law",
+    "principle": "Organize information into digestible chunks.",
+    "implementation": "Event Information, Schedule & Venue, Media & Opening, Design & Cover, Guest Experience, Tickets & QR.",
+    "verification": "STUDIO_TABS chunking validated in studioNavigation.js."
+  },
+  {
+    "law": "Tesler's Law",
+    "principle": "Handle serialization and synchronization complexity in application code, not by host burden.",
+    "implementation": "useStudioPersistence and invitationDraftAdapter handle payload parsing, draft migration, and unknown JSON roundtrips.",
+    "verification": "InvitationStudioNegativeScenarios.test.jsx N13-08 tests unknown JSON preservation."
+  },
+  {
+    "law": "Doherty Threshold",
+    "principle": "Immediate local feedback without waiting for server roundtrips.",
+    "implementation": "Optimistic local state, debounced autosave (1500ms), instant preview synchronization via postMessage.",
+    "verification": "useStudioPersistence.test.jsx and previewMessaging.test.js."
+  }
+]

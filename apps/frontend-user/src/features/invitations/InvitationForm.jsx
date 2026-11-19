@@ -1269,6 +1269,7 @@ export default function InvitationForm({ invitation }) {
         try {
             let savedPhotos = form.photos || [];
             const designPayload = {
+                ...safeJson(invitation?.designJson),
                 studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
                 fontLatin: form.fontLatin,
@@ -1314,11 +1315,10 @@ export default function InvitationForm({ invitation }) {
             };
 
             const contentPayload = {
+                ...safeJson(invitation?.contentJson),
                 ...invitationFeatureFields(form),
                 ...(form.localizedContentV1 ? { localizedContentV1: localeContent(form) } : {}),
-                ...safeJson(invitation?.contentJson),
                 ...eventPresentationFields(form),
-                ...invitationFeatureFields(form),
                 ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}),
                 musicTrackId: form.musicTrackId,
                 musicUrl: form.musicUrl,

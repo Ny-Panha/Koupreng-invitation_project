@@ -1,0 +1,36 @@
+{
+  "skill": "ui-ux-pro-max",
+  "executed_at": "2026-11-19T20:45:25+07:00",
+  "queries": [
+    {
+      "query": "form save status error feedback",
+      "domain": "ux",
+      "findings": "Submit feedback must show loading -> success/error state. Error recovery must provide clear next steps. Clear error messages near problem."
+    },
+    {
+      "query": "keyboard navigation focus visible touch target",
+      "domain": "ux",
+      "findings": "WCAG 2.2 AA requires complete keyboard navigation with visible focus on every operable control. Touch target: iOS 44pt; Android 48dp; Web 24 CSS px plus WCAG exceptions."
+    },
+    {
+      "query": "split resize drag pane layout",
+      "domain": "ux",
+      "findings": "WCAG 2.2 AA requires single-pointer alternative for author-controlled drag operations. Add buttons/menus or tap-to-move controls and retain keyboard operation."
+    },
+    {
+      "query": "line height diacritics font pairing hierarchy",
+      "domain": "typography",
+      "findings": "Tri-stack font hierarchy: Calistoga (warmth), Inter (body/UI), JetBrains Mono (data/badges). Generous line height (1.8+) required for Khmer script subscripts."
+    },
+    {
+      "query": "reduced motion animation performance",
+      "domain": "react",
+      "findings": "Hardware accelerated wrappers for animated SVGs. Zero animation delays when prefers-reduced-motion is active."
+    },
+    {
+      "query": "mobile desktop responsive layout progressive disclosure",
+      "domain": "ux",
+      "findings": "Mobile-first responsive design, safe areas for fixed positioning, responsive table/card layouts."
+    }
+  ]
+}

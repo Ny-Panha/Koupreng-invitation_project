@@ -1,0 +1,7 @@
+{
+  "axe_scans_run": 8,
+  "violations_count": 0,
+  "contrast_ratio_min": "4.5:1 text, 3:1 graphical controls",
+  "high_contrast_support": "Preserved border and focus rings for forced-colors mode",
+  "zoom_evaluation": "200% zoom reflows without overlapping controls; 400% zoom maintains vertical scroll without horizontal clipping of core form fields"
+}

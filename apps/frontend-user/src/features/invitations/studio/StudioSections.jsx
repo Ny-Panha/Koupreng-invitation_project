@@ -20,6 +20,17 @@ export default function StudioSections({ sections, active, onChange, english }) 
       choose(STUDIO_TABS[prev].id);
       const prevBtn = event.currentTarget.parentElement?.querySelectorAll('button')?.[prev];
       prevBtn?.focus();
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      choose(STUDIO_TABS[0].id);
+      const firstBtn = event.currentTarget.parentElement?.querySelectorAll('button')?.[0];
+      firstBtn?.focus();
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      const lastIndex = STUDIO_TABS.length - 1;
+      choose(STUDIO_TABS[lastIndex].id);
+      const lastBtn = event.currentTarget.parentElement?.querySelectorAll('button')?.[lastIndex];
+      lastBtn?.focus();
     }
   };
 

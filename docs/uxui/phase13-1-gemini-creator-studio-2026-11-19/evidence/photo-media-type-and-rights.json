@@ -1,0 +1,10 @@
+{
+  "allowed_mimes": [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+  ],
+  "max_file_size_bytes": 5242880,
+  "blob_url_cleanup": "URL.revokeObjectURL called on image replacement and component unmount to prevent memory leaks",
+  "rights_provenance": "No unlicensed demo images or third-party photos injected; authentic user content only"
+}

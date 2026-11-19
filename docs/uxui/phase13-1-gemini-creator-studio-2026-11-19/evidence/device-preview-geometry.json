@@ -1,0 +1,13 @@
+{
+  "mobile": {
+    "width": 440,
+    "height": 860,
+    "scale_rule": "clamped fitScale based on container ResizeObserver"
+  },
+  "desktop": {
+    "width": 1216,
+    "height": 816,
+    "scale_rule": "clamped fitScale based on container ResizeObserver"
+  },
+  "short_landscape_handling": "In 844x390 landscape, toolbar collapses to 54px min-height, preview fits gracefully."
+}

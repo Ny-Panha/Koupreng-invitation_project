@@ -1,0 +1,13 @@
+{
+  "public_templates": [
+    "silk-heritage",
+    "emerald-luxe",
+    "khmer-celestial"
+  ],
+  "premium_templates": [
+    "royal-garden",
+    "floral-v4",
+    "golden-opening"
+  ],
+  "entitlement_rule": "Premium templates require verified ownerFeatures entitlement from backend API before selection is saved; unentitled selection fails closed."
+}

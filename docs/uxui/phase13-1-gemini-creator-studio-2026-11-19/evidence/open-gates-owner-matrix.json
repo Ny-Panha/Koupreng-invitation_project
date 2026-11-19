@@ -1,0 +1,27 @@
+[
+  {
+    "gate": "C08-013",
+    "owner": "Backend/Security Team",
+    "topic": "BCrypt 72-byte UTF8 truncation check"
+  },
+  {
+    "gate": "C10-001",
+    "owner": "Backend/Privacy Team",
+    "topic": "Guest RSVP token data isolation invariant"
+  },
+  {
+    "gate": "PH02-FAIL",
+    "owner": "Phase 2 Foundations",
+    "topic": "Six known Phase 2 Playwright failure identities"
+  },
+  {
+    "gate": "NATIVE-KM",
+    "owner": "Khmer Cultural Advisory",
+    "topic": "Formal wedding invitation ceremonial wording signoff"
+  },
+  {
+    "gate": "PHYSICAL-QA",
+    "owner": "Mobile QA Team",
+    "topic": "Physical iOS and Android device & screen reader verification"
+  }
+]

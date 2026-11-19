@@ -1,0 +1,5 @@
+{
+  "storage_key": "koupreng.wedding.drafts",
+  "isolation_rule": "getDraft(id, ownerUserId) returns null if draft.ownerUserId exists and does not match caller",
+  "unowned_draft_rule": "Legacy drafts with null ownerUserId are accessible read-only for recovery but never auto-claimed silently by foreign accounts"
+}

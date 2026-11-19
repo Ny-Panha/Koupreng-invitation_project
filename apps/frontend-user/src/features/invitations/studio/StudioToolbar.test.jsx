@@ -120,4 +120,80 @@ describe('StudioToolbar', () => {
     fireEvent.click(redoBtn);
     expect(studio.redo).toHaveBeenCalledOnce();
   });
+
+  it('triggers undo and redo shortcuts (Ctrl+Z, Ctrl+Shift+Z, Ctrl+Y) when not in editable input', () => {
+    const studio = { ...defaultStudio, undo: vi.fn(), redo: vi.fn(), canUndo: true, canRedo: true };
+    render(
+      <StudioToolbar
+        title="Wedding"
+        templateName="Template"
+        english={true}
+        studio={studio}
+        saving={false}
+        canEdit={true}
+      />
+    );
+
+    // Document-level Ctrl+Z -> undo
+    fireEvent.keyDown(window, { key: 'z', ctrlKey: true });
+    expect(studio.undo).toHaveBeenCalledOnce();
+
+    // Document-level Ctrl+Shift+Z -> redo
+    fireEvent.keyDown(window, { key: 'z', ctrlKey: true, shiftKey: true });
+    expect(studio.redo).toHaveBeenCalledOnce();
+
+    // Document-level Ctrl+Y -> redo
+    fireEvent.keyDown(window, { key: 'y', ctrlKey: true });
+    expect(studio.redo).toHaveBeenCalledTimes(2);
+  });
+
+  it('does NOT trigger document undo/redo shortcut when focused in a text input', () => {
+    const studio = { ...defaultStudio, undo: vi.fn(), redo: vi.fn(), canUndo: true, canRedo: true };
+    render(
+      <div>
+        <input type="text" data-testid="title-input" />
+        <StudioToolbar
+          title="Wedding"
+          templateName="Template"
+          english={true}
+          studio={studio}
+          saving={false}
+          canEdit={true}
+        />
+      </div>
+    );
+
+    const input = screen.getByTestId('title-input');
+    input.focus();
+
+    // Native typing undo should be preserved
+    fireEvent.keyDown(input, { key: 'z', ctrlKey: true });
+    expect(studio.undo).not.toHaveBeenCalled();
+  });
+
+  it('renders conflict and expired statuses with clear labels', () => {
+    const { rerender } = render(
+      <StudioToolbar
+        title="Wedding"
+        templateName="Template"
+        english={true}
+        studio={{ ...defaultStudio, phase: 'conflict' }}
+        saving={false}
+        canEdit={true}
+      />
+    );
+    expect(screen.getByRole('status')).toHaveTextContent('Newer version on server');
+
+    rerender(
+      <StudioToolbar
+        title="Wedding"
+        templateName="Template"
+        english={true}
+        studio={{ ...defaultStudio, phase: 'expired' }}
+        saving={false}
+        canEdit={true}
+      />
+    );
+    expect(screen.getByRole('status')).toHaveTextContent('Session expired');
+  });
 });

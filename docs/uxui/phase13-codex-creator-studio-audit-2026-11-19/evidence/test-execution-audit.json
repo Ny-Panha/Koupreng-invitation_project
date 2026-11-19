@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "auditMetadata": {
+    "auditVersion": "1.0.0",
+    "auditor": "Codex Independent Architecture & QA Lead",
+    "timestamp": "2026-11-19T21:26:00+07:00",
+    "nodeVersion": "v26.12.1",
+    "npmVersion": "11.20.0",
+    "platform": "win32 x64"
+  },
+  "overallSummary": {
+    "totalTestsExecuted": 2158,
+    "totalTestsPassed": 2158,
+    "totalTestsFailed": 0,
+    "totalTestsSkipped": 0,
+    "overallStatus": "ALL_TESTS_PASSING"
+  },
+  "suites": [
+    {
+      "name": "Design Tokens Contract Check",
+      "command": "node scripts/sync-design-tokens.cjs --check",
+      "exitCode": 0,
+      "duration": "0.85s",
+      "passed": 2,
+      "failed": 0,
+      "details": "Verified 2 application token exports (frontend-user, frontend-admin)."
+    },
+    {
+      "name": "Creator Studio Targeted Vitest Suite",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/ --run",
+      "exitCode": 0,
+      "duration": "3.36s",
+      "testFiles": 15,
+      "passed": 106,
+      "failed": 0,
+      "details": "Includes useStudioPersistence, useStudioSplit, StudioSections, StudioToolbar, IllustratedMapDesignerModal, InvitationStyleEditor, InvitationStudioNegativeScenarios."
+    },
+    {
+      "name": "Creator Studio Negative Scenarios Matrix (N13-01 to N13-35)",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx --run",
+      "exitCode": 0,
+      "duration": "0.085s",
+      "testFiles": 1,
+      "scenariosCovered": 35,
+      "passed": 38,
+      "failed": 0,
+      "details": "34 single-test scenarios + 4 parameterized iterations (N13-04: 401, 403, 409, 503) = 38 executed tests."
+    },
+    {
+      "name": "Full Frontend-User Vitest Suite",
+      "command": "npm.cmd --prefix apps/frontend-user test -- --run",
+      "exitCode": 0,
+      "duration": "41.83s",
+      "testFiles": 246,
+      "passed": 1821,
+      "failed": 0,
+      "details": "Comprehensive regression verification across all 246 user application test files."
+    },
+    {
+      "name": "Full Frontend-Admin Vitest Suite",
+      "command": "npm.cmd --prefix apps/frontend-admin test -- --run",
+      "exitCode": 0,
+      "duration": "16.77s",
+      "testFiles": 37,
+      "passed": 202,
+      "failed": 0,
+      "details": "Comprehensive admin portal verification including reports, users, payments, and system logs."
+    },
+    {
+      "name": "Frontend-User ESLint",
+      "command": "npm.cmd --prefix apps/frontend-user run lint",
+      "exitCode": 0,
+      "duration": "24.5s",
+      "errors": 0,
+      "warnings": 0,
+      "details": "Clean lint pass on entire frontend-user codebase."
+    },
+    {
+      "name": "Frontend-Admin ESLint",
+      "command": "npm.cmd --prefix apps/frontend-admin run lint",
+      "exitCode": 0,
+      "duration": "6.2s",
+      "errors": 0,
+      "warnings": 0,
+      "details": "Clean lint pass on entire frontend-admin codebase."
+    },
+    {
+      "name": "Frontend-User Production Vite Build",
+      "command": "npm.cmd --prefix apps/frontend-user run build",
+      "exitCode": 0,
+      "duration": "1.90s",
+      "modulesTransformed": 3101,
+      "details": "Generated dist/ assets cleanly. InvitationStudio chunk: 47.35 kB (14.08 kB gzip)."
+    },
+    {
+      "name": "Frontend-Admin Production Vite Build",
+      "command": "npm.cmd --prefix apps/frontend-admin run build",
+      "exitCode": 0,
+      "duration": "0.67s",
+      "modulesTransformed": 2122,
+      "details": "Generated admin dist/ assets cleanly with zero build errors."
+    },
+    {
+      "name": "Phase 13.1 Playwright E2E Visual Capture Suite",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-1.config.js",
+      "exitCode": 0,
+      "duration": "43.8s",
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "details": "16 responsive screenshots captured across 1440px, 1920px, 768px, 393px, 320px, and 844x390 in EN and KM."
+    },
+    {
+      "name": "Backend ArchUnit Architecture Rules",
+      "command": "powershell -Command \"& '.\\apps\\backend\\mvnw.cmd' -f apps/backend/pom.xml test -Dtest=ArchitectureRulesTests\"",
+      "exitCode": 0,
+      "duration": "9.88s",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "details": "Verified layered architecture boundaries, controller access, and service encapsulation."
+    },
+    {
+      "name": "Backend Template Payment Service Unit Tests",
+      "command": "powershell -Command \"& '.\\apps\\backend\\mvnw.cmd' -f apps/backend/pom.xml test -Dtest=TemplatePaymentServiceTests\"",
+      "exitCode": 0,
+      "duration": "7.12s",
+      "tests": 39,
+      "passed": 39,
+      "failed": 0,
+      "details": "Verified static ABA PayWay link generation, telegram notifications, and entitlement idempotency."
+    },
+    {
+      "name": "Backend Flyway Migration Integrity Tests",
+      "command": "powershell -Command \"& '.\\apps\\backend\\mvnw.cmd' -f apps/backend/pom.xml test -Dtest=FlywayMigrationVersionTests\"",
+      "exitCode": 0,
+      "duration": "4.88s",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "details": "Verified all 48 forward-only Flyway migrations are intact with proper sequence and naming."
+    },
+    {
+      "name": "Telegram Alert Bot Pytest Suite",
+      "command": "powershell -Command \"& apps\\telegram-bot\\.venv\\Scripts\\python.exe -m pytest apps/telegram-bot/tests\"",
+      "exitCode": 0,
+      "duration": "0.97s",
+      "tests": 74,
+      "passed": 74,
+      "failed": 0,
+      "details": "74 tests passing across webhook delivery, security, payment completion, and start flows."
+    }
+  ]
+}

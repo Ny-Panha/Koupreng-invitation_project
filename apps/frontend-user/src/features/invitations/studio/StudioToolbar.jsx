@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, CloudOff, Eye, LoaderCircle, Menu, MoreHorizontal, Palette, RotateCcw, Undo2, Redo2 } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Check, CloudOff, Eye, LoaderCircle, Lock, Menu, MoreHorizontal, Palette, RotateCcw, Undo2, Redo2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useEventWorkspace } from "../../events/workspace/EventContext";
 import { feedback } from '@/shared/feedback/feedback';
@@ -12,9 +12,19 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
 
   useEffect(() => {
     const viewport = window.visualViewport;
-    const update = () => setKeyboardOpen(Boolean(viewport && window.innerHeight - viewport.height > 150 && document.activeElement?.matches("input,textarea,select,[contenteditable=true]")));
-    viewport?.addEventListener("resize", update); document.addEventListener("focusout", update);
-    return () => { viewport?.removeEventListener("resize", update); document.removeEventListener("focusout", update); };
+    const update = () => {
+      const isShrunk = Boolean(viewport && window.innerHeight - viewport.height > 150);
+      const isInputActive = Boolean(document.activeElement?.matches("input,textarea,select,[contenteditable=true]"));
+      setKeyboardOpen(isShrunk && isInputActive);
+    };
+    viewport?.addEventListener("resize", update);
+    document.addEventListener("focusin", update);
+    document.addEventListener("focusout", update);
+    return () => {
+      viewport?.removeEventListener("resize", update);
+      document.removeEventListener("focusin", update);
+      document.removeEventListener("focusout", update);
+    };
   }, []);
 
   const labels = english
@@ -23,10 +33,17 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
   labels.conflict = english ? "Newer version on server" : "មានកំណែថ្មីលើម៉ាស៊ីនមេ";
   labels.expired = english ? "Session expired" : "វគ្គចូលប្រើផុតកំណត់";
   const blocked = ["conflict", "expired"].includes(studio.phase);
-  const StatusIcon = studio.phase === "saved" ? Check : studio.phase === "saving" ? LoaderCircle : CloudOff;
+  const StatusIcon = studio.phase === "saved" ? Check
+    : studio.phase === "saving" ? LoaderCircle
+    : studio.phase === "conflict" ? AlertTriangle
+    : studio.phase === "expired" ? Lock
+    : CloudOff;
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      const isTextEditable = event.target?.matches?.("input, textarea, select, [contenteditable=true]");
+
+      // Ctrl/Cmd + S -> Save
       if ((event.ctrlKey || event.metaKey) && (event.key === 's' || event.key === 'S')) {
         event.preventDefault();
         if (!saving && !blocked && canEdit) {
@@ -39,6 +56,22 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
               });
             }
           });
+        }
+        return;
+      }
+
+      // Studio document-level Undo / Redo when not focused in an editable text control
+      if ((event.ctrlKey || event.metaKey) && !isTextEditable) {
+        if (event.key === 'z' || event.key === 'Z') {
+          event.preventDefault();
+          if (event.shiftKey) {
+            if (studio.canRedo && canEdit) studio.redo();
+          } else {
+            if (studio.canUndo && canEdit) studio.undo();
+          }
+        } else if (event.key === 'y' || event.key === 'Y') {
+          event.preventDefault();
+          if (studio.canRedo && canEdit) studio.redo();
         }
       }
     };
@@ -62,13 +95,13 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} className={studio.phase === "saving" ? "animate-spin" : undefined} aria-hidden="true" />{labels[studio.phase]}</span>
     <StudioActionBar data-keyboard-open={keyboardOpen}>
       <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលសំបុត្រអញ្ជើញជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
-      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked || !canEdit} title={english ? "Save changes (Ctrl+S)" : "រក្សាទុកការកែប្រែ (Ctrl+S)"} onClick={async () => { if (await studio.flush({ deliberate: true })) feedback.success({ id: 'studio-save', title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ', description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។' }); }}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
+      <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked || !canEdit} aria-keyshortcuts="Control+s Meta+s" title={english ? "Save changes (Ctrl+S)" : "រក្សាទុកការកែប្រែ (Ctrl+S)"} onClick={async () => { if (await studio.flush({ deliberate: true })) feedback.success({ id: 'studio-save', title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ', description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។' }); }}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
       {canPublish && canEdit && !published && <button type="button" className="studio-action studio-action--publish" disabled={saving || publishing || blocked} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
         <summary aria-label={english ? "More studio actions" : "ជម្រើសបន្ថែម"}><MoreHorizontal size={20} aria-hidden="true" /></summary>
         <div className="studio-more-panel">
-          <button type="button" disabled={!studio.canUndo || !canEdit} onClick={studio.undo}><Undo2 size={17} />{english ? "Undo" : "ត្រឡប់វិញ"}</button>
-          <button type="button" disabled={!studio.canRedo || !canEdit} onClick={studio.redo}><Redo2 size={17} />{english ? "Redo" : "ធ្វើឡើងវិញ"}</button>
+          <button type="button" disabled={!studio.canUndo || !canEdit} aria-keyshortcuts="Control+z Meta+z" title={english ? "Undo (Ctrl+Z)" : "ត្រឡប់វិញ (Ctrl+Z)"} onClick={studio.undo}><Undo2 size={17} />{english ? "Undo" : "ត្រឡប់វិញ"}</button>
+          <button type="button" disabled={!studio.canRedo || !canEdit} aria-keyshortcuts="Control+Shift+z Meta+Shift+z Control+y Meta+y" title={english ? "Redo (Ctrl+Shift+Z / Ctrl+Y)" : "ធ្វើឡើងវិញ (Ctrl+Shift+Z / Ctrl+Y)"} onClick={studio.redo}><Redo2 size={17} />{english ? "Redo" : "ធ្វើឡើងវិញ"}</button>
           <button type="button" disabled={saving || !canEdit} onClick={studio.reset}><RotateCcw size={17} />{english ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
         </div>
       </details>

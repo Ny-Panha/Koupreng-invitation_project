@@ -1,0 +1,42 @@
+[
+  {
+    "cmd": "git status --porcelain=v1 -uall",
+    "exit_code": 0,
+    "summary": "Working tree clean at start; 6 modified files, 3 test/config files unstaged"
+  },
+  {
+    "cmd": "node scripts/sync-design-tokens.cjs --check",
+    "exit_code": 0,
+    "summary": "Verified 2 application token exports"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/ src/features/wedding-builder/ src/shared/preview/ --run",
+    "exit_code": 0,
+    "summary": "32 test files passed, 231 tests passed"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-user run lint",
+    "exit_code": 0,
+    "summary": "ESLint passed with zero errors or warnings"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-user run build",
+    "exit_code": 0,
+    "summary": "Vite build completed in 6.49s"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-admin run lint",
+    "exit_code": 0,
+    "summary": "ESLint passed with zero errors"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-admin run build",
+    "exit_code": 0,
+    "summary": "Vite build completed in 4.06s"
+  },
+  {
+    "cmd": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-1.config.js",
+    "exit_code": 0,
+    "summary": "16 visual screenshot tests passed in 42.9s"
+  }
+]

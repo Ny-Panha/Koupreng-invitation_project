@@ -1,0 +1,29 @@
+[
+  {
+    "route": "/app/events/:eventId/invitation",
+    "component": "EventInvitation -> InvitationEditFeature",
+    "condition": "event.eventType === 'WEDDING' && event.templateCode !== 'event-essential'",
+    "owner_edit": "Full studio editing enabled, auto-save and preview active",
+    "collaborator_edit": "Full studio editing enabled per MANAGE_INVITATION grant",
+    "collaborator_view": "Mutation controls disabled, read-only inspection",
+    "anonymous": "Redirect to login / unauthorized"
+  },
+  {
+    "route": "/app/events/:eventId/invitation",
+    "component": "EventInvitation -> EventDetails",
+    "condition": "Non-wedding event OR event.templateCode === 'event-essential'",
+    "owner_edit": "Renders generic EventDetails editor gracefully without false studio claims",
+    "collaborator_edit": "Standard event details editing",
+    "collaborator_view": "Read-only event details",
+    "anonymous": "Redirect to login"
+  },
+  {
+    "route": "/dashboard/invitations/:id/edit",
+    "component": "InvitationEditFeature",
+    "condition": "Legacy route / local draft continuation",
+    "owner_edit": "Scoped to local draft or numeric backend id with ownerUserId match",
+    "collaborator_edit": "Allowed if linked backend invitation grants MANAGE_INVITATION",
+    "collaborator_view": "Fails closed if grant not present",
+    "anonymous": "Local-only draft preserved if ownerless, blocked from backend write"
+  }
+]

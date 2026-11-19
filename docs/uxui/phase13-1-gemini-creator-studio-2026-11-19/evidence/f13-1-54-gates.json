@@ -1,0 +1,272 @@
+[
+  {
+    "gate": "F13.1-01",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-02",
+    "verdict": "PARTIALLY COMPLETE",
+    "notes": "Phase 12 published checkpoint preserved; CI secret scan & route smoke red acknowledged."
+  },
+  {
+    "gate": "F13.1-03",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-04",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-05",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-06",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-07",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-08",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-09",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-10",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-11",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-12",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-13",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-14",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-15",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-16",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-17",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-18",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-19",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-20",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-21",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-22",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-23",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-24",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-25",
+    "verdict": "REVIEW REQUIRED",
+    "notes": "Physical mobile testing and Cambodian native cultural signoff required."
+  },
+  {
+    "gate": "F13.1-26",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-27",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-28",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-29",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-30",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-31",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-32",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-33",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-34",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-35",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-36",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-37",
+    "verdict": "REVIEW REQUIRED",
+    "notes": "Physical mobile testing and Cambodian native cultural signoff required."
+  },
+  {
+    "gate": "F13.1-38",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-39",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-40",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-41",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-42",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-43",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-44",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-45",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-46",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-47",
+    "verdict": "PARTIALLY COMPLETE",
+    "notes": "Phase 02 six failures preserved; 57 ledger entries retained."
+  },
+  {
+    "gate": "F13.1-48",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-49",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-50",
+    "verdict": "PARTIALLY COMPLETE",
+    "notes": "Phase 02 six failures preserved; 57 ledger entries retained."
+  },
+  {
+    "gate": "F13.1-51",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-52",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Locally verified via unit tests, build checks, and Playwright screenshots."
+  },
+  {
+    "gate": "F13.1-53",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Unstaged working tree preserved; zero commits or pushes made; ready for Codex 13 audit."
+  },
+  {
+    "gate": "F13.1-54",
+    "verdict": "VERIFIED\u2014LOCAL",
+    "notes": "Unstaged working tree preserved; zero commits or pushes made; ready for Codex 13 audit."
+  }
+]

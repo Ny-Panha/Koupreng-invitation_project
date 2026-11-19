@@ -1,0 +1,12 @@
+{
+  "contentJson_policy": "...safeJson(invitation?.contentJson) placed at base of contentPayload; custom extension keys survive save/reload",
+  "designJson_policy": "...safeJson(invitation?.designJson) placed at base of designPayload; custom extension keys survive save/reload",
+  "verified_types": [
+    "strings",
+    "numbers",
+    "booleans",
+    "arrays",
+    "nested objects",
+    "null values"
+  ]
+}

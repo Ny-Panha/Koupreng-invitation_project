@@ -1,0 +1,7 @@
+{
+  "scenarios_defined": 35,
+  "unit_integration_tests_executed": 38,
+  "pass_count": 38,
+  "fail_count": 0,
+  "coverage": "All 35 scenarios N13-01 through N13-35 directly implemented and verified"
+}

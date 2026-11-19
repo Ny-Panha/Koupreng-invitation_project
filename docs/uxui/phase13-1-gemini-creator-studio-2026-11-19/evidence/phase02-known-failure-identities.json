@@ -1,0 +1,29 @@
+{
+  "retained_failures": [
+    [
+      "desktop",
+      "129"
+    ],
+    [
+      "desktop",
+      "196"
+    ],
+    [
+      "desktop",
+      "208"
+    ],
+    [
+      "mobile",
+      "129"
+    ],
+    [
+      "mobile",
+      "196"
+    ],
+    [
+      "mobile",
+      "208"
+    ]
+  ],
+  "status": "Preserved truthfully as inherited open defects; never erased or falsified as green"
+}

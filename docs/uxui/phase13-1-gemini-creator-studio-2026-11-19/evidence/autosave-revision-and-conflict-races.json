@@ -1,0 +1,7 @@
+{
+  "debounce_ms": 1500,
+  "max_history_entries": 25,
+  "conflict_handling": "409 status locks editing into conflict mode, displays prompt to export unsaved draft",
+  "session_expired_handling": "401 status locks editing into expired mode, displays prompt to download recovery JSON",
+  "in_flight_mutation_safety": "Pending writes acknowledge only sent snapshot; newly edited fields remain dirty"
+}

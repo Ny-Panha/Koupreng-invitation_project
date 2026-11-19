@@ -1,0 +1,82 @@
+[
+  {
+    "library": "Animate UI",
+    "license_source": "https://github.com/imskyleen/animate-ui/blob/main/LICENSE.md",
+    "license_status": "MIT with Commons Clause conditions",
+    "studio_usecase": "Motion-backed accessible buttons, tabs, sheet feedback",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Implemented smooth status transitions in StudioChrome.css and StudioToolbar using standard CSS without copying library code."
+  },
+  {
+    "library": "Badtz UI",
+    "license_source": "https://github.com/badtzx0/badtz-ui/blob/main/LICENSE.md",
+    "license_status": "Custom terms / additional conditions",
+    "studio_usecase": "Interactive cards and reveal patterns",
+    "disposition": "REJECT",
+    "adaptation_details": "Unnecessary cursor effects and card expansions; rejected to avoid bloated dependencies and licensing risks."
+  },
+  {
+    "library": "Lightswind UI",
+    "license_source": "https://lightswind.com/license",
+    "license_status": "Commercial with SaaS vs resale distinction",
+    "studio_usecase": "Layered surfaces, content organization, command bar",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Studied 3-pane workbench hierarchy and sticky command bar; implemented clean semantic HTML and CSS."
+  },
+  {
+    "library": "Kokonut UI",
+    "license_source": "https://github.com/kokonut-labs/kokonutui/blob/main/LICENSE",
+    "license_status": "MIT (Free components) / Commercial PRO",
+    "studio_usecase": "Compact status indicators and utility button grouping",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Adapted compact save-status indicator with lucide-react icons in StudioToolbar."
+  },
+  {
+    "library": "Untitled UI React",
+    "license_source": "https://github.com/untitleduico/react/blob/main/LICENSE",
+    "license_status": "Commercial Pro / Free Community components",
+    "studio_usecase": "Enterprise-grade form density and validation summaries",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Adapted structured form field grouping (StudioFields.jsx) and validation alert summary."
+  },
+  {
+    "library": "shadcn/ui",
+    "license_source": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "license_status": "MIT",
+    "studio_usecase": "Accessible composed primitives (dialog, roving tabs, dropdowns)",
+    "disposition": "EXISTING COMPONENT",
+    "adaptation_details": "Project already uses established accessible Modal and native controls; no duplicate CLI dependencies introduced."
+  },
+  {
+    "library": "React Bits",
+    "license_source": "https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md",
+    "license_status": "Custom / Builder restrictions",
+    "studio_usecase": "Interaction micro-animations",
+    "disposition": "REJECT",
+    "adaptation_details": "Heavy decorative effects inappropriate for creative production workbench; rejected."
+  },
+  {
+    "library": "Aceternity UI",
+    "license_source": "https://ui.aceternity.com/licence",
+    "license_status": "Commercial with redistribution limits",
+    "studio_usecase": "Contextual navigation hierarchy and focus transitions",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Subtle focus-visible ring styles and smooth tab transitions adopted in CSS."
+  },
+  {
+    "library": "Magic UI",
+    "license_source": "https://github.com/magicuidesign/magicui/blob/main/LICENSE.md",
+    "license_status": "MIT",
+    "studio_usecase": "Refined affordances and microinteractions",
+    "disposition": "ADAPT ORIGINAL IDEA",
+    "adaptation_details": "Subtle hover lift and active press scale feedback on primary Save button."
+  },
+  {
+    "library": "Skiper UI",
+    "license_source": "https://skiper-ui.com/docs/terms-of-service",
+    "license_status": "Commercial Terms of Service",
+    "studio_usecase": "Editorial creative layouts",
+    "disposition": "REJECT",
+    "adaptation_details": "Excessive drag/scroll effects conflicting with split-pane ergonomics; rejected."
+  }
+]

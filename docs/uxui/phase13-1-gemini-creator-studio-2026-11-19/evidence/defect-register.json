@@ -1,0 +1,26 @@
+[
+  {
+    "id": "DEF-13-01",
+    "description": "Short landscape (844x390) toolbar consuming excessive vertical space",
+    "status": "REPAIRED",
+    "resolution": "Added @media (orientation: landscape) and (max-height: 500px) compact toolbar styles in StudioChrome.css"
+  },
+  {
+    "id": "DEF-13-02",
+    "description": "DesignJson unknown keys dropped during handleSave reconstruction",
+    "status": "REPAIRED",
+    "resolution": "Added ...safeJson(invitation?.designJson) to base of designPayload in InvitationForm.jsx"
+  },
+  {
+    "id": "DEF-13-03",
+    "description": "ContentJson spread order could overwrite newly edited localizedContentV1",
+    "status": "REPAIRED",
+    "resolution": "Moved ...safeJson(invitation?.contentJson) to initial position before localizedContentV1 and feature fields in InvitationForm.jsx"
+  },
+  {
+    "id": "DEF-13-04",
+    "description": "StudioSections lacked Home and End roving keyboard navigation",
+    "status": "REPAIRED",
+    "resolution": "Added Home/End handlers in StudioSections.jsx"
+  }
+]

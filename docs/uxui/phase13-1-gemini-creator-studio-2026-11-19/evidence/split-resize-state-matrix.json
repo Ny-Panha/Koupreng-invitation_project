@@ -1,0 +1,8 @@
+{
+  "default_percentage": 60,
+  "min_percentage": 30,
+  "max_percentage": 75,
+  "step_keyboard": 2,
+  "step_keyboard_shift": 10,
+  "cancel_behavior": "Restores original value upon pointercancel or window blur without layout collapse"
+}

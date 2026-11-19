@@ -516,3 +516,35 @@
     font-size: 11px;
   }
 }
+@media (max-width: 360px) {
+  .invitation-studio .studio-toolbar,
+  #invitation-studio-toolbar .studio-toolbar {
+    min-height: 64px;
+    padding: 6px 8px;
+    gap: 6px;
+  }
+  .invitation-studio .studio-document h1 {
+    font-size: 14px;
+  }
+  .invitation-studio .studio-action {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  .invitation-studio .studio-save-status {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .invitation-studio .studio-toolbar,
+  #invitation-studio-toolbar .studio-toolbar {
+    min-height: 54px;
+    padding: 4px 12px;
+  }
+  .invitation-studio .studio-document h1 {
+    font-size: 15px;
+  }
+  .invitation-studio .pe-editor-scroll-body {
+    padding: 12px 16px 80px;
+  }
+}

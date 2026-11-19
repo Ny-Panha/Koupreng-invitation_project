@@ -1,0 +1,36 @@
+{
+  "eventInformation": [
+    "eventInfo",
+    "family",
+    "invitation",
+    "closing",
+    "languageMode"
+  ],
+  "scheduleVenue": [
+    "schedule",
+    "countdown",
+    "venue"
+  ],
+  "mediaOpening": [
+    "cinematicIntro",
+    "gallery",
+    "couplePhoto",
+    "music",
+    "preWeddingVideo"
+  ],
+  "designCover": [
+    "cover",
+    "appearance",
+    "invitationStyles"
+  ],
+  "guestExperience": [
+    "story",
+    "dressCode",
+    "party",
+    "faq",
+    "khqr"
+  ],
+  "ticketsQr": [
+    "ticketsQr"
+  ]
+}

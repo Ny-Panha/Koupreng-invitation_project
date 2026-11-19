@@ -1,0 +1,22 @@
+{
+  "branch": "main",
+  "commit_head": "8c1e930fbe1e39e8fc660c3ba2caf80d81e2b289",
+  "origin_main": "8c1e930fbe1e39e8fc660c3ba2caf80d81e2b289",
+  "staged_count": 0,
+  "unstaged_modified_count": 6,
+  "untracked_count": 3,
+  "policy": "Uncommitted local changes only; zero git add/commit/push/deploy by Gemini; Phase 13 Codex owns audit and reviewed push",
+  "modified_files": [
+    "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+    "apps/frontend-user/src/features/invitations/studio/StudioSections.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioSections.test.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx"
+  ],
+  "new_test_and_config_files": [
+    "apps/frontend-user/playwright.phase13-1.config.js",
+    "apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+    "apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js"
+  ]
+}

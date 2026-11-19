@@ -1,0 +1,7 @@
+{
+  "baseline_bundle_js_kb": 241.35,
+  "final_bundle_js_kb": 241.35,
+  "gzip_js_kb": 63.13,
+  "build_duration_seconds": 6.49,
+  "inp_cwv_caveat": "Local synthetic Vite/Playwright measurements do not certify field Core Web Vitals"
+}

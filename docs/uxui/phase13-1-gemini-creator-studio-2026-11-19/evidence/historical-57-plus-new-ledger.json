@@ -1,0 +1,10 @@
+{
+  "historical_57_gates": "All 57 historical identities preserved with original owners and statuses",
+  "auth_c08_c09_d10_c10_11_12_ledgers": "Retained separately in cross-phase tracking; not flattened",
+  "external_release_gaps": [
+    "BCrypt 72 UTF-8 byte boundary (C08-013)",
+    "Cambodian native cultural review",
+    "Physical mobile devices / TalkBack / VoiceOver",
+    "ABA PayWay / live merchant reconciliation"
+  ]
+}
