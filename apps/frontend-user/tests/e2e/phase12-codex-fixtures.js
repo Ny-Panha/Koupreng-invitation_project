@@ -69,9 +69,9 @@ export async function establishUserSession(page, { userId = 7, lang = "en", them
     window.localStorage.setItem("koupreng.colorMode", theme);
 
     if (drafts && drafts.length > 0) {
-      window.localStorage.setItem("weddingDrafts", JSON.stringify(drafts));
+      window.localStorage.setItem("koupreng.wedding.drafts", JSON.stringify(Object.fromEntries(drafts.map(draft=>[draft.id,draft]))));
     } else {
-      window.localStorage.removeItem("weddingDrafts");
+      window.localStorage.removeItem("koupreng.wedding.drafts");
     }
   }, { token: TEST_TOKEN, userId, lang, theme, drafts });
 }
@@ -81,6 +81,7 @@ export function setupMockApis(page, { emptyEvents = false, events = mockServerEv
     const url = new URL(route.request().url());
     const path = url.pathname;
     const method = route.request().method();
+    if (method !== 'GET') return route.fulfill({ status:503, contentType:'application/json', body:JSON.stringify({message:'Offline test fixture; local changes retained'}) });
 
     if (path.includes("/invitations/my") || path.includes("/invitations/mine") || (path === "/api/v1/invitations" && method === "GET")) {
       return route.fulfill({

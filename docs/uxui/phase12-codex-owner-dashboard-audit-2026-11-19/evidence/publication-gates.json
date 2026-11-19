@@ -1,0 +1,134 @@
+{
+  "evaluated_utc": "2026-11-19T13:13:52.271243+00:00",
+  "development_checkpoint_only": true,
+  "production_release_certified": false,
+  "resumed_ancestor": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
+  "origin_main_reviewed": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
+  "user_confirmed_concurrent_commit": true,
+  "hard_gates": [
+    {
+      "id": 1,
+      "status": "SATISFIED",
+      "evidence": "main; expected source/test/report/fixture paths only. Original inherited screenshot bytes restored. User cleanup retained."
+    },
+    {
+      "id": 2,
+      "status": "SATISFIED WITH DOCUMENTED HISTORICAL EXCEPTIONS",
+      "evidence": "No known new unmitigated P0/P1 in changed flows. Three reproduced P1s repaired. Existing six Phase02/two guest cases retained; exact no-new-failure identity comparison. Chromium pre-navigation error replay passed."
+    },
+    {
+      "id": 3,
+      "status": "SATISFIED",
+      "evidence": [
+        {
+          "id": "frozen-user-full",
+          "command": "npm.cmd --prefix apps/frontend-user test",
+          "exit_code": 0,
+          "log_sha256": "d98c7625be000cdf231c3d0549d169cd77c2f4bf1efcb4ad5ac4a38220caf7de"
+        },
+        {
+          "id": "final-admin-full",
+          "command": "npm.cmd --prefix apps/frontend-admin test",
+          "exit_code": 0,
+          "log_sha256": "2effd7e7f9b99bcee02555e337ad36c1b3ecb175214caf7f7e94717dc5d63763"
+        },
+        {
+          "id": "final-lint",
+          "command": "npm.cmd --prefix apps/frontend-user run lint",
+          "exit_code": 0,
+          "log_sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f"
+        },
+        {
+          "id": "freeze-admin-lint",
+          "command": "npm.cmd --prefix apps/frontend-admin run lint",
+          "exit_code": 0,
+          "log_sha256": "ab5123e1d0fb3e38b732a02ecca441740c4054b6a8a69f2fd7a1d20672308fa6"
+        },
+        {
+          "id": "last-user-build",
+          "command": "npm.cmd --prefix apps/frontend-user run build",
+          "exit_code": 0,
+          "log_sha256": "845616f4b471510a4b0b3b44599ea52acd0c565a4515c5ee8a224e6f3ab219e9"
+        },
+        {
+          "id": "freeze-admin-build",
+          "command": "npm.cmd --prefix apps/frontend-admin run build",
+          "exit_code": 0,
+          "log_sha256": "4a273356a81463ce82671f9379820bbbcaebef18b82df35248797d72939cc5bc"
+        },
+        {
+          "id": "freeze-token",
+          "command": "node scripts/sync-design-tokens.cjs --check",
+          "exit_code": 0,
+          "log_sha256": "ef1c815152a5259c561b8d3ae6e4fb9fc286c2e5fc097a98fa0056474454317e"
+        },
+        {
+          "id": "final-owner-complete",
+          "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+          "exit_code": 0,
+          "log_sha256": "c1d99915a083dfadfc088691887a16d16ab718b4cdb71fcebf259757920dab9f"
+        },
+        {
+          "id": "final-phase11-default",
+          "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase11-codex.config.js",
+          "exit_code": 0,
+          "log_sha256": "248960c4bdf8b87bce17ba4358cab58ccba1baea3987a200aa845171c09e60b5"
+        },
+        {
+          "id": "backend-draft-contract",
+          "command": "apps\\backend\\mvnw.cmd -f apps/backend/pom.xml -Dtest=EventDraftPersistenceTests test",
+          "exit_code": 0,
+          "log_sha256": "285b5073ab3f859e829b46d42fc191d9c35e5cd0977f25983436423ca2cf5c2a"
+        },
+        {
+          "id": "final-repository-policy",
+          "command": "node --test scripts/qa/repository-policy.test.mjs",
+          "exit_code": 0,
+          "log_sha256": "2189928adbfc6f0188441eee7bf8754b1dd7ee9ffc2275bfaa56060a8f2e0620"
+        },
+        {
+          "id": "c08-connection-replay",
+          "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --project=desktop-chromium --grep \"pending login\"",
+          "exit_code": 0,
+          "log_sha256": "cd58327f906f8407e785df46ba1fe44a15be2f6d04e3f73e0ab8f61eb87a67cc"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "status": "SATISFIED",
+      "evidence": {
+        "tool": "Gitleaks 8.30.1 checksum verified",
+        "diff_findings": 0,
+        "whole_tree_findings": 3,
+        "whole_tree_classification": "Unchanged planning prose and synthetic test signing fixtures",
+        "scanner_disabled": false,
+        "binary_review": "Only synthetic PNG screenshots and their annotated comparison; no customer photos, new copied assets or paid sources.",
+        "staged_secret_findings": 0,
+        "staged_file_count": 102,
+        "staged_review_bytes": 3551113
+      }
+    },
+    {
+      "id": 5,
+      "status": "SATISFIED; RECHECK IMMEDIATELY BEFORE PUSH",
+      "evidence": "Authenticated GitHub read and fetch succeeded; reviewed origin equals local expected ancestor. Never force."
+    },
+    {
+      "id": 6,
+      "status": "SATISFIED",
+      "evidence": "Explicit source/tests/report tree, two exact prior route JSON fixtures and docs entry point only. No output/dist/node_modules/env/archive/backups."
+    }
+  ],
+  "external_open_gates": [
+    "CI historical secret/guest failures",
+    "Native Khmer",
+    "Physical AT/device/native zoom",
+    "358-asset rights inventory",
+    "Live MySQL/providers/settlement",
+    "Field RUM",
+    "Missing deterministic StyleSeed lock/registry",
+    "Broader legacy editor draft-consumer review"
+  ],
+  "ready_for_reviewed_commit": true
+}

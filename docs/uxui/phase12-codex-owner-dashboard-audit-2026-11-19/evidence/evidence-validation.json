@@ -1,0 +1,345 @@
+{
+  "markdown_count": 32,
+  "json_count_including_validation": 35,
+  "reviewed_visual_count": 14,
+  "relative_links_checked": 128,
+  "relative_link_errors": [],
+  "json_parse_errors": [],
+  "f12_rows": 44,
+  "ux12_rows": 16,
+  "historical_unique_ids": 57,
+  "package_hashes": [
+    {
+      "path": "01-git-baseline-origin-and-provenance.md",
+      "sha256": "56e820675f798c1368a56641d27c101dadccd9cd3cfef59fb0781aae2893fb93"
+    },
+    {
+      "path": "02-gemini-claims-and-f12-count-reconciliation.md",
+      "sha256": "cf50fd42004cffc1b713a1358b0fd71135e04b5ab548d93538d91375c167e946"
+    },
+    {
+      "path": "03-source-route-and-component-ownership.md",
+      "sha256": "676518f392a172a72222b8b853016bd77ac956486c04233ffd0113030b5ccf39"
+    },
+    {
+      "path": "04-screenshot-defects-navbar-sidebar-empty-space.md",
+      "sha256": "1d4081724527d253db4281390efa666323e215be74d3eb9ac615bf0d7571f552"
+    },
+    {
+      "path": "05-premium-art-direction-and-layout-architecture.md",
+      "sha256": "05d453a99812ee2898e74e8540bca8922e88fd2c79eeedf525e80668c542ad0a"
+    },
+    {
+      "path": "06-host-navbar-menu-locale-theme-focus.md",
+      "sha256": "5818fb424fc92f3a8f7a96232b98eef06f43c0baef23556dc371a392bc1c5990"
+    },
+    {
+      "path": "07-workspace-sidebar-icons-drawers-scroll.md",
+      "sha256": "92b05381105655d71e0dcb1f70c547d7a125f1689528a8cdefc0529ac447b3eb"
+    },
+    {
+      "path": "08-event-list-and-card-composition.md",
+      "sha256": "3814087955200324d22be89ae42f6ea782dba36983ef77b8dc83303d2def50a9"
+    },
+    {
+      "path": "09-compact-search-filter-sort-dropdowns.md",
+      "sha256": "ed627d50839b56b2432d5de40bab8610d4af20434bb8258bb39580096cecf1a4"
+    },
+    {
+      "path": "10-pagination-url-history-and-zero-states.md",
+      "sha256": "47737dea6831019bdd9383c88c28dd3dd9ceee550f772a6325145deb299f633a"
+    },
+    {
+      "path": "11-inline-calendar-month-agenda-and-timezones.md",
+      "sha256": "2e7addcefc09d0a7259a4551417516179ce96eaedf869d1e5db45601748f9209"
+    },
+    {
+      "path": "12-dashboard-hero-kpi-and-next-actions.md",
+      "sha256": "3b4ddc387dd32da99e94fedf7b04e78bd237464850d7e155d00dacab041e9cc8"
+    },
+    {
+      "path": "13-server-sourced-charts-and-accessible-alternatives.md",
+      "sha256": "f67fa43a0246a5d63a5e99206097332e59610f71a927ea32d1f5a513a60bf92d"
+    },
+    {
+      "path": "14-owner-shared-local-and-sync-provenance.md",
+      "sha256": "1566d0c1f89f411cffaa2edeb46e5cefa674873ed9b60ce160feffb6922a6a93"
+    },
+    {
+      "path": "15-account-event-races-and-revoked-access.md",
+      "sha256": "3af4e3a89b057ef0e4fad36183b08bd67690ca4fbd4d3cd3669cf324025bb5de"
+    },
+    {
+      "path": "16-permissions-and-cross-module-route-safety.md",
+      "sha256": "1e4d03662c50f1340869452133c574d27d258c89ed217981a568093a479b1aa0"
+    },
+    {
+      "path": "17-khmer-english-fonts-and-native-signoff.md",
+      "sha256": "9622b18c1fd9980e1251d86e99fda13ff4d28242aa6677840acb45bc944d188f"
+    },
+    {
+      "path": "18-light-dark-forced-colors-keyboard-zoom.md",
+      "sha256": "c4cc576878a1205c5d478f6d7f73ffd0b2f6dc3d72c02690fc4520c65f820c81"
+    },
+    {
+      "path": "19-responsive-geometry-mobile-landscape.md",
+      "sha256": "a3ef2805008bbbf7b416d0cf4e1d7f4aade7007540aa7a16fa015e3fbad74b23"
+    },
+    {
+      "path": "20-motion-performance-bundle-and-browser-reliability.md",
+      "sha256": "e40f8c8be527c7792294bc89ee2fa4171316598ff36ef669090c131dd6af8e6d"
+    },
+    {
+      "path": "21-ui-ux-pro-max-and-canonical-ten-library-matrix.md",
+      "sha256": "9b902355739b648703fe8ecc9f694a556c6a8d0dad6e4eabdb6e46179d523744"
+    },
+    {
+      "path": "22-ux-laws-and-nielsen-heuristics-mapping.md",
+      "sha256": "6593f5428fca004119f4257c3313d78b4529f5bba51ec4277632fb2f13841f62"
+    },
+    {
+      "path": "23-github-ci-secret-and-guest-test-triage.md",
+      "sha256": "d4fabdb1da7bcae998031cc1e0ebc481ad7b2ed550dd1b61e32c804005868303"
+    },
+    {
+      "path": "24-defect-register-negative-tests-and-verified-repairs.md",
+      "sha256": "04fc3aee3f9667c9e9cf58cd2dbc4bcf47ae207df0f4b4e7aedb66bf484699e5"
+    },
+    {
+      "path": "25-all-exact-test-commands-and-failure-register.md",
+      "sha256": "5f938eff274ea8b19f419a1c1e3ca573088a87cd0c27a33a3f2cca5d4cfb67ee"
+    },
+    {
+      "path": "26-independent-f12-01-to-44-acceptance.md",
+      "sha256": "355c4fa28524e4da544138721ff98bb30c8561471c42e9feb4e2b722fa90e86d"
+    },
+    {
+      "path": "27-ux12-c01-to-c16-visual-acceptance.md",
+      "sha256": "f0a8f399269a1109ad50e34a44f20e16831af6b38bf7b2f9f61f208a8e3fcfdf"
+    },
+    {
+      "path": "28-all-57-and-newer-cross-phase-gates.md",
+      "sha256": "e338d4abe83a61608cc6d84be644ffb02574a4edfc19aae0d4f5a4cf94958ee4"
+    },
+    {
+      "path": "29-attributed-changes-snapshots-and-rollback.md",
+      "sha256": "0454b3424be309e4390d66f00c5f42d5015e8652abf7b4174a7731c388ea1ca3"
+    },
+    {
+      "path": "30-safe-commit-push-ci-verification.md",
+      "sha256": "ec196d1461b589201e161aaef0bfc395b793cd8592372ba741b90cf316a3fd59"
+    },
+    {
+      "path": "31-phase13-1-gemini-studio-execution-handoff.md",
+      "sha256": "d9f567ee704439c48de07f8e7839826073ba66c3d2067873ef999c12c3402889"
+    },
+    {
+      "path": "comparison.html",
+      "sha256": "7e77de72425d5ea037673b87a8eedcfd0f477b8327613290c8b68ea513d6ceb2"
+    },
+    {
+      "path": "comparison.png",
+      "sha256": "9b854bb265f98f3de6b1dca521c963258378718691eedb64ab02081eba8f78fe"
+    },
+    {
+      "path": "evidence/account-event-races.json",
+      "sha256": "02325e9ace2d8e34a59a3aff503c830be8dcac102c6649fe7f7c18fb446ed495"
+    },
+    {
+      "path": "evidence/axe-keyboard-contrast.json",
+      "sha256": "c46513ceec6ae1874fb4a764208f1b1aad63d0d36c562cd5632ce59135dd002c"
+    },
+    {
+      "path": "evidence/calendar-date-cases.json",
+      "sha256": "7fd54d55489abbbd448141ab700358b3a02134188e71322d1b828f69df31d0eb"
+    },
+    {
+      "path": "evidence/changed-files-rollback.json",
+      "sha256": "c2b0502645264c3742266424295fb3ab8c8fad9d86467380d48278e81af9e820"
+    },
+    {
+      "path": "evidence/chart-data-contracts.json",
+      "sha256": "f9e526b0facba1cbffa771dd42d2e72ecc22f3a255dd116a960c58371658ffd4"
+    },
+    {
+      "path": "evidence/ci-triage.json",
+      "sha256": "dae2732209068e4486493052f9e15dae809a7461e9d0a02bea7329e90d50c822"
+    },
+    {
+      "path": "evidence/codex-owned-hunks.patch",
+      "sha256": "5070ead115910db3190c81a77d24b14950a4857058f6cfeab84feae779638da4"
+    },
+    {
+      "path": "evidence/cross-phase-ledger.json",
+      "sha256": "c566cc36f393282157afc376fbf4ea9350c1c171b6b5e40de99cdb7cd3786ef0"
+    },
+    {
+      "path": "evidence/defect-register.json",
+      "sha256": "4dd9372773368035aaaa53e2371b700a759b4336c7020bf0fec512c16cc5b818"
+    },
+    {
+      "path": "evidence/f12-independent-44.json",
+      "sha256": "1e9f1636dee99b4bb4b8c7a0b471df501de7acd57fff0e4df1d2efc69874b7ec"
+    },
+    {
+      "path": "evidence/file-attribution.json",
+      "sha256": "06f2ed300daaabca3738d51f1a3abdf07fef8df1f1a76c62341ca68d9034cf35"
+    },
+    {
+      "path": "evidence/filters-url-pagination.json",
+      "sha256": "5a0964b1df34424239719638ccc00e2288bacb5d1799de54060181c29373a7ea"
+    },
+    {
+      "path": "evidence/gemini-gate-discrepancy.json",
+      "sha256": "b14e8171703dd065447a38ddc42be8cbf9efdd0e336d37daffad4f50f0ad627e"
+    },
+    {
+      "path": "evidence/geometry-comparison.json",
+      "sha256": "7c8ffe4385385c298ac08803aee45b2736acf8d0657630bb1d39a0bea0689513"
+    },
+    {
+      "path": "evidence/geometry-matrix.json",
+      "sha256": "5fbb34c8c9aa2d548c74033680cdc5cc3a7e64975ad3c3078bdc661e8e1df6f7"
+    },
+    {
+      "path": "evidence/git-baseline.json",
+      "sha256": "5e101b30fa2e5ac1101ca003ca511818de904ad5b889a64ff76d4695944b761d"
+    },
+    {
+      "path": "evidence/kpi-data-provenance.json",
+      "sha256": "bd774bfe1cc0bdba1dfdfcf75099310a47f2ed0497b793371a866198b4d7d02a"
+    },
+    {
+      "path": "evidence/negative-tests.json",
+      "sha256": "b6b93d89e559b1d517ae77d51fe9f4bc1177c7e2671408b0f199c3f5f8680e54"
+    },
+    {
+      "path": "evidence/performance-before-after.json",
+      "sha256": "87d1a7faa93d7ab5df9429a27d257ea95e6b65c5c5ae3a39e7703cf25415305f"
+    },
+    {
+      "path": "evidence/phase02-failure-identities.json",
+      "sha256": "6137bd151f38f0cb177baf854ad633eb8271470215bc6b0b9f75ee3ff93e7d04"
+    },
+    {
+      "path": "evidence/phase13-studio-source-inventory.json",
+      "sha256": "a76b61f95bbef738c688b2da87070fd78b7efbb9e5ae5abbd9fa92bf1a29ca61"
+    },
+    {
+      "path": "evidence/publication-gates.json",
+      "sha256": "415ed903329fad18e14441a856c1326fd25a6bebc34af8076f9b692f18c2a7f4"
+    },
+    {
+      "path": "evidence/publication-result.json",
+      "sha256": "e369912b014c5e4200c521d2f936a85214e5a2e90f0e8531d51a34257429c82a"
+    },
+    {
+      "path": "evidence/regression-comparison.json",
+      "sha256": "0d6e591077b6a7ec096cf3d0645c118cd24eca43aedf5203687ad136dcf3a44f"
+    },
+    {
+      "path": "evidence/role-module-matrix.json",
+      "sha256": "0231f9cd8072137d92d5b694ea45aa7f6d5e20637db6c7ea24fc3a0d9d748f67"
+    },
+    {
+      "path": "evidence/route-matrix.json",
+      "sha256": "b770023ce739dcdc023dd5ebde063c642cca1e2bedd69d2378bef5da919a99cd"
+    },
+    {
+      "path": "evidence/secret-classifications.json",
+      "sha256": "119b9062f12a24150822e09e0830a0f87d16419a2d282ff3c678814e96540b8e"
+    },
+    {
+      "path": "evidence/source-freeze.json",
+      "sha256": "142c400e2fbc79a45d30994d10c2417ec48da147a022997cc313af90abf147d4"
+    },
+    {
+      "path": "evidence/styleseed-review.json",
+      "sha256": "96ae36faa4996170556e4c87302a49bd74a54b93abdee93063876230a3a5fb7d"
+    },
+    {
+      "path": "evidence/ten-library-canonical-matrix.json",
+      "sha256": "4fcad9ab138b0224dc5fbb43f679d88efb87fe8f54869d416f4068a3b992d687"
+    },
+    {
+      "path": "evidence/test-commands.json",
+      "sha256": "0a9b6932643b54850cbb8023d514a19a3fd40818a6272526739c4308546bef92"
+    },
+    {
+      "path": "evidence/ux-law-mappings.json",
+      "sha256": "e74275ebed4b396f50b09505cf8f0335bf2238efd7b4d9f441018fe7e924bc2c"
+    },
+    {
+      "path": "evidence/ux-pro-max-queries.json",
+      "sha256": "0d3e9e61adf485f41d4bb9fdc2bff6ad1c18bf903b6134950e461a9690243bb7"
+    },
+    {
+      "path": "evidence/ux12-visual-16.json",
+      "sha256": "bf8ebda7085fb812e02d20a6b3ddf9038dbad5ff5178b142c9077dba4b3528fb"
+    },
+    {
+      "path": "evidence/visual-before-after-manifest.json",
+      "sha256": "a3e9b89789a9a6240d2a71544b89698a8bfe1a7e1267af70a4ecf80be8648c87"
+    },
+    {
+      "path": "README.md",
+      "sha256": "4c3131f622244d8ad6a6b879e83b8957128d116abd1acdcce23a9270cb24ffd3"
+    },
+    {
+      "path": "visuals/after-khmer-dark.png",
+      "sha256": "d012a616587b26b0c8418add5cb1400b04a33f6a7ad2912c95092be25d2dbefc"
+    },
+    {
+      "path": "visuals/after-list-chromium-1440x900-en-light.png",
+      "sha256": "7280ee572a00c3cd44d5555e1fa5fc1de5bc11414e4d4a6f8306f3accfe0c06e"
+    },
+    {
+      "path": "visuals/after-list-chromium-1920x1080-en-light.png",
+      "sha256": "a7eb36619f4dc1aa644c7fe8231a91ae5e8c1cefc3fa9fbd4dad11308e98bb3f"
+    },
+    {
+      "path": "visuals/after-list-chromium-320x568-en-light.png",
+      "sha256": "007bd5875c502909932179737892ad941c095c88fd19531811a56ca1e4677fe7"
+    },
+    {
+      "path": "visuals/after-long-khmer-320.png",
+      "sha256": "6ff4649fa4fd5ee051b4b35ab959dddf7f48f7bb2388e33206df30d612f47723"
+    },
+    {
+      "path": "visuals/after-overview-chromium-1440x900-en-light.png",
+      "sha256": "048dfc37bec31fa7cfcace709f77bbf5d8770a5d55a11527024cf21aacd78962"
+    },
+    {
+      "path": "visuals/after-overview-chromium-1920x1080-en-light.png",
+      "sha256": "1b0646cee2651156804547483414311b3755ea884dbedc53feaacaa49dff09ee"
+    },
+    {
+      "path": "visuals/after-overview-chromium-320x568-en-light.png",
+      "sha256": "a7303f7d25149bf0fe8109cb123f84218cc96140a770fd659da2f43c6760a0e0"
+    },
+    {
+      "path": "visuals/before-list-chromium-1440x900-en-light.png",
+      "sha256": "777344f2f8d26b5e770ce5914940d0155360ccc5f99b319160d86696fc8ccf5c"
+    },
+    {
+      "path": "visuals/before-list-chromium-1920x1080-en-light.png",
+      "sha256": "4f092689fec6ee0afdeefd083f04f7200bd55cf618f46c90e0d5a82909c420e2"
+    },
+    {
+      "path": "visuals/before-list-chromium-320x568-en-light.png",
+      "sha256": "361f5df6b78904c2f39c0ac46d6c7e9a40301df806248f8b5247a92761198cd4"
+    },
+    {
+      "path": "visuals/before-overview-chromium-1440x900-en-light.png",
+      "sha256": "89f5d6cc552115628d11ecdc7b48b13c90c35abfa1303c566856a49ea57f41e8"
+    },
+    {
+      "path": "visuals/before-overview-chromium-1920x1080-en-light.png",
+      "sha256": "89067a01302b209de69385035b2e03a48e2025490dfa520b2e0e733d38325ed4"
+    },
+    {
+      "path": "visuals/before-overview-chromium-320x568-en-light.png",
+      "sha256": "190032c6158688a116dc62a4893570e817b600473da8c106d535441d03202941"
+    }
+  ]
+}

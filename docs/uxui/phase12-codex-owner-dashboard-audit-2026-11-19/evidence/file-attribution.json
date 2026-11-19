@@ -1,0 +1,267 @@
+{
+  "files": [
+    {
+      "path": "apps/frontend-user/playwright.phase12-1.config.js",
+      "codex_entry_sha256": "7d659ba4dbebbda85e31899c425ede73a8d3801cfcfbbe8e395113411834261f",
+      "current_sha256": "7d659ba4dbebbda85e31899c425ede73a8d3801cfcfbbe8e395113411834261f",
+      "bytes": 889,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/playwright.phase12-codex.config.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "8203840fcde1aef02b57914a59cf31bef577ddb4b199b479263ff87959739614",
+      "bytes": 839,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/playwright.phase12-regressions.config.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "dfce735b850b91c3e7116899001f4eddf337a5bb496f4c6bc2ba199a14ee62b8",
+      "bytes": 547,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.jsx",
+      "codex_entry_sha256": "f6e039ec0929e344b4ce6bcdce674c7aba8b5eb5f98a6e26fb9fc619730aa693",
+      "current_sha256": "5709c16ffedb1e2e4765b90d30ec9a506f13947988aebf6b7470b54eb6cdd9b6",
+      "bytes": 25766,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.test.jsx",
+      "codex_entry_sha256": "dc33bfa81bec9d21e58fb69723db6d93566ef60b4750eaf1c2611508fb2f6753",
+      "current_sha256": "a6b871ebace126ce858658f7173db973cfbec9813122f88c7d9310dec21dfadb",
+      "bytes": 6521,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/Phase12CodexDataTruth.test.jsx",
+      "codex_entry_sha256": null,
+      "current_sha256": "fc1f2ccd99c75e0c295520e52ddbabf043e6b94d9bd13e640bc501eda000d101",
+      "bytes": 2648,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/Phase12_1DashboardTruthfulness.test.jsx",
+      "codex_entry_sha256": "83762c55a8e623a80e91df1807bb77f3b51cb65123631d5066c0b2289e96c985",
+      "current_sha256": "c970aaa839aa9637023cb7bd1bea9df64e8a7626d297dd2a055292ccd7606ded",
+      "bytes": 5634,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/RsvpComposition.jsx",
+      "codex_entry_sha256": null,
+      "current_sha256": "9c9800ef18f7c856a91eae25e22fb695f28deae015ebb70f2a621d4ccef06848",
+      "bytes": 2270,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/dashboardData.js",
+      "codex_entry_sha256": "3f0d0d64e4e293c9860d07fbd21932c369e519592babdcbb390f425870cdfe50",
+      "current_sha256": "44a11568cb40dfb094f6826d2ce46a353f53e3f8cb7f54e55dc016895aa4b445",
+      "bytes": 1353,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.css",
+      "codex_entry_sha256": "0c0652fd7ac7d83face314e1a885d1da674ce8b5dbe06c6f71d526def0691c89",
+      "current_sha256": "0c0652fd7ac7d83face314e1a885d1da674ce8b5dbe06c6f71d526def0691c89",
+      "bytes": 33713,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.jsx",
+      "codex_entry_sha256": "733c59377cd47409f1493811766c2cfba894086903968d17afccb88778059b75",
+      "current_sha256": "48d42513710223a8745499ffe6b0a8008c001816bbbc3d4ccc4bf127fa55202a",
+      "bytes": 25171,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsViewModes.test.jsx",
+      "codex_entry_sha256": "f70fd1a2fe31f96d06593d3bcf233e5e4147070f4787ea8232f9de81b6724db2",
+      "current_sha256": "70e807183588530fd605836285c4dca1c1b48643959b48148f9bcf2cc42aaf99",
+      "bytes": 4667,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/Phase12CodexAccountIsolation.test.jsx",
+      "codex_entry_sha256": null,
+      "current_sha256": "702ee74aa0e11856448616b36fea4060f0edd9badffb500c2333556d5e36dda0",
+      "bytes": 3706,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx",
+      "codex_entry_sha256": "11fb8faf44c381cce08959ac5595fb36154157b547f106bb9e157cd8faa0655f",
+      "current_sha256": "8d782f471da7ecbb3d8c527832b3bc2826a331defd5b791b55a84dcf5e5ec079",
+      "bytes": 7076,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.css",
+      "codex_entry_sha256": "acd7d0bf9dc07ec6133c02c501a62c4d98dccf7464ed03d667b294d083538229",
+      "current_sha256": "f2a5fcd02cf088f96da497fdce3fb9be2180119b268d4dba647dc470ee8f6341",
+      "bytes": 13235,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.jsx",
+      "codex_entry_sha256": "fc245fa7eb0fa564cad4938a74f3067a40fb4d39523691cf8f5d711bdb012125",
+      "current_sha256": "2181006fac07b96c170fa334f25c676c42da16ab30d3ffb0113988bacbdd0806",
+      "bytes": 27068,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCard.jsx",
+      "codex_entry_sha256": "167f98578616f14bf7c785801d206b67b2780cb4ccce77a3e5b897870dd1a081",
+      "current_sha256": "c2e667fad09d629f0ab8fdecf277333a00eeb18fbade364ff2bed20f2a2f78fa",
+      "bytes": 13958,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/Phase12_1EventCalendarFidelity.test.jsx",
+      "codex_entry_sha256": "2b6a4d61d1495be9b2a431b9bf13b27911be8146c85858490e398345f2355e2c",
+      "current_sha256": "2b6a4d61d1495be9b2a431b9bf13b27911be8146c85858490e398345f2355e2c",
+      "bytes": 3870,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/hooks/useEvents.js",
+      "codex_entry_sha256": "08f3b7d9655cb9231c27e53001e72c1de3b96e29cfd77f3de07209b06ae51552",
+      "current_sha256": "7ca1dbe5eeae2a5531197ae69bc347525c84961db2a5265c090cf7bf2b78ee15",
+      "bytes": 12434,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/model/Phase12CodexListModel.test.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "94f1c3abac98d125823f290008aea76b8a90cb6723c82a922b3ef62c1e4954cf",
+      "bytes": 1270,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/model/eventListModel.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "7fd5798344e95b5ef185c7721bd8348c09579f45a619511ce2d042dc0713ab7d",
+      "bytes": 1909,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventNavigation.jsx",
+      "codex_entry_sha256": "ca7036f15181d6979c686d9f983c02d4582f1ef01f4e0764f7d6643c65114436",
+      "current_sha256": "952c232fc3d597dd559d78a4b45786853a701b9605cea57a990b04e24c922156",
+      "bytes": 7999,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "codex_entry_sha256": "732843d273185b4da1d3c43e3046f75d7080e8702a733605ae9a349b0238430e",
+      "current_sha256": "ec146859e58ea8bedf11f47c61541dbe83b2cfbfed1028ff37c1e1c023ac4e92",
+      "bytes": 13378,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/Phase12CodexRevocation.test.jsx",
+      "codex_entry_sha256": null,
+      "current_sha256": "aec88edb9ae7e24dbb2622d75a16a6ace6ba67dca19d7536d9f929d2c4cb9bb0",
+      "bytes": 2314,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/Phase12_1WorkspaceAuthority.test.jsx",
+      "codex_entry_sha256": "93c1587bc5242d3ea747cf745bcc6184089b7856fa0ad65837179e1768688a52",
+      "current_sha256": "93c1587bc5242d3ea747cf745bcc6184089b7856fa0ad65837179e1768688a52",
+      "bytes": 5049,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/HostShell.jsx",
+      "codex_entry_sha256": "42d7fac0df39610904a15937d444eb8d67654abece17218a1544fcdf2d522825",
+      "current_sha256": "db41f97086188bf2768fc7335cc6f307fa704a399b4e9121aab7176dff94c059",
+      "bytes": 1728,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/OwnerExperience.css",
+      "codex_entry_sha256": null,
+      "current_sha256": "4518d56a663429da94ae48d69ebd034e731dbea522d1cfc7b76cee02c95d7bc2",
+      "bytes": 17744,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/HostNav.jsx",
+      "codex_entry_sha256": "f6e1b341c0e0e20608c73b268bf50f78ae527742a4dc53c6607faf3c6f5004f9",
+      "current_sha256": "f4768f79031c47dcdd661e956cd9a10e295e0614101eece5df1292a28e3b58c5",
+      "bytes": 19562,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase12-1-owner-dashboard-screenshots.spec.js",
+      "codex_entry_sha256": "724446d1407fab9baccbffda3965bf0c387c69384983812119553d58ee128a5e",
+      "current_sha256": "724446d1407fab9baccbffda3965bf0c387c69384983812119553d58ee128a5e",
+      "bytes": 13302,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase12-codex-behavior.spec.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "4f7c1fd0a408d098fb0d9e786e2e013387adf122165738f00c7cc666c27c6975",
+      "bytes": 10498,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase12-codex-fixtures.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "890c37250fab729410cccc2bc52a4449ca3a7fb3c82a29632c737d2747e54a35",
+      "bytes": 7806,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase12-codex-visual.spec.js",
+      "codex_entry_sha256": null,
+      "current_sha256": "d3c5f66fc8092ee8bfa2ad1891df1a98f00354cfce3c20e5b8cadfc5c0a19769",
+      "bytes": 3113,
+      "in_resumed_commit": true
+    },
+    {
+      "path": "docs/README.md",
+      "codex_entry_sha256": null,
+      "current_sha256": "fc3337a5d771be5272c873e1d671f07d07aaefd71d0989cf5e08d69d8dbd6b4b",
+      "bytes": 1764,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "docs/qa/batch11/route-matrix.json",
+      "codex_entry_sha256": null,
+      "current_sha256": "d73b6647eedde58c9f49d29b66f87525d8400e8a3201afd325f9a3ea37777fba",
+      "bytes": 200921,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "docs/qa/batch12/route-matrix.json",
+      "codex_entry_sha256": null,
+      "current_sha256": "0efbc7443d3bd76719f0910dae2b1611dcf56469dbc08a47493fef37f0f5d206",
+      "bytes": 86856,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "scripts/qa/build-phase12-evidence.py",
+      "codex_entry_sha256": null,
+      "current_sha256": "feaa3ba3bb94d0d340bdd597fc277b81ca5ea0536ff7e1a3a157d1e03c7fdf83",
+      "bytes": 81693,
+      "in_resumed_commit": false
+    },
+    {
+      "path": "scripts/qa/run-phase12-check.py",
+      "codex_entry_sha256": null,
+      "current_sha256": "d612564b497273ba997102ed1bb5e04b4f13f504bd4c1ad72e1ff783dc8d9cf3",
+      "bytes": 1310,
+      "in_resumed_commit": true
+    }
+  ],
+  "entry_snapshot_preserves_gemini_bytes": true,
+  "codex_patch": "codex-owned-hunks.patch",
+  "patch_basis": "Read-only entry snapshot, not the broad concurrent documentation cleanup. Review hunks individually before a forward rollback.",
+  "warning": "b18aae3 was user-published during work and includes earlier Codex edits. Current diff alone is not full Phase 12 attribution."
+}

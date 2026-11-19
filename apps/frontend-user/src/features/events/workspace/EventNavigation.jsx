@@ -30,8 +30,11 @@ export default function EventNavigation({ event, events, eventId, currentModule,
     return () => cancelAnimationFrame(frame);
   }, [currentModule, overlay, rail]);
 
-  const showTooltip = (element, text, path) => {
+  const showTooltip = (element, text, path, pointer = false) => {
     if (!rail) return;
+    // Pointer movement caused by collapsing the layout must not replace the
+    // description of a different link that the keyboard user is focusing.
+    if (pointer && navRef.current?.contains(document.activeElement) && document.activeElement !== element && document.activeElement.matches('.event-nav-tab')) return;
     const box = element.getBoundingClientRect();
     setTooltip({ text, path, left: box.right + 12, top: Math.max(8, Math.min(box.top, window.innerHeight - 60)) });
   };
@@ -45,7 +48,7 @@ export default function EventNavigation({ event, events, eventId, currentModule,
       aria-label={label} aria-describedby={rail && tooltip?.path === path ? tooltipId : undefined}
       onClick={() => { setTooltip(null); onNavigate?.(); }}
       onFocus={e => showTooltip(e.currentTarget, label, path)} onBlur={() => setTooltip(null)}
-      onMouseEnter={e => showTooltip(e.currentTarget, label, path)} onMouseLeave={() => setTooltip(null)}
+      onMouseEnter={e => showTooltip(e.currentTarget, label, path, true)} onMouseLeave={() => { if (!navRef.current?.contains(document.activeElement)) setTooltip(null); }}
       onKeyDown={e => { if (e.key === "Escape") setTooltip(null); }}>
       <Icon size={20} strokeWidth={1.75} className="event-nav-tab-icon" aria-hidden="true" />
       <span className="event-nav-tab-text">{label}</span>

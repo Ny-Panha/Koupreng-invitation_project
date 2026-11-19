@@ -1,0 +1,146 @@
+[
+  {
+    "id": "C12-001",
+    "severity": "P1",
+    "finding": "Prior account records/delete modal flashed in first committed frame; late sync could update the new view.",
+    "repair": "Subject-gated render plus session authority fences.",
+    "proof": "negative-before / negative-after; Phase12CodexAccountIsolation",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Client/fixture evidence; server still authorizes every request. C12-012 covers Events listing/synchronization, not a new certification of every legacy editor/storage consumer."
+  },
+  {
+    "id": "C12-002",
+    "severity": "P2",
+    "finding": "totalGuests was described as total invited.",
+    "repair": "Render totalInvited independently; records are not seats.",
+    "proof": "Phase12CodexDataTruth red/green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-003",
+    "severity": "P2",
+    "finding": "Missing aggregate fields were fabricated as zero.",
+    "repair": "Validated nonnegative safe-integer counts; unavailable retained.",
+    "proof": "Phase12CodexDataTruth red/green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-004",
+    "severity": "P2",
+    "finding": "Past date was declared completed regardless of status.",
+    "repair": "Date passed plus browser-local event time/end-of-day fallback.",
+    "proof": "Phase12CodexDataTruth red/green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-005",
+    "severity": "P2",
+    "finding": "Malformed amount poisoned currency math and missing currency was guessed USD.",
+    "repair": "Invalid known currency total becomes unavailable; no unlabeled USD assumption.",
+    "proof": "Phase12CodexDataTruth red/green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-006",
+    "severity": "P2",
+    "finding": "Newest comparator had no total order for missing/malformed/tied times.",
+    "repair": "Finite time fallback and numeric-aware stable ID ties.",
+    "proof": "Phase12CodexListModel",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-007",
+    "severity": "P2",
+    "finding": "Unscheduled events appeared upcoming.",
+    "repair": "Validated real calendar dates; missing/invalid dates in neither period.",
+    "proof": "Phase12CodexListModel / browser period count",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-008",
+    "severity": "P2",
+    "finding": "Unknown nonnumeric IDs could be labeled Manage event; shared sync flags could select edit action.",
+    "repair": "Separate backend identity, unsaved changes and relation in list actions.",
+    "proof": "Phase12CodexListModel / EventCard tests",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-009",
+    "severity": "P2",
+    "finding": "Mouse movement during rail collapse replaced the keyboard-focused tooltip.",
+    "repair": "Keyboard focus description takes precedence over pointer enter.",
+    "proof": "codex-browser failed; codex-browser-2 green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-010",
+    "severity": "P1",
+    "finding": "Initial owner reply could override a newer access revocation; revoked identity remained in chrome.",
+    "repair": "Shared access revision; no-grant workspace removes identity/navigation and focuses safe denial.",
+    "proof": "revocation-red: 2 failed; revocation-green: 41 passed",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Client/fixture evidence; server still authorizes every request. C12-012 covers Events listing/synchronization, not a new certification of every legacy editor/storage consumer."
+  },
+  {
+    "id": "C12-011",
+    "severity": "P2",
+    "finding": "User cleanup removed executable route matrices and docs entry point.",
+    "repair": "Restore only two exact prior JSON fixtures; rebuild concise current docs index.",
+    "proof": "freeze user/admin 2 failures each; final full suites and repository policy",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-012",
+    "severity": "P1",
+    "finding": "Legacy ownerless drafts were visible and automatically claimed by any current owner.",
+    "repair": "Require owner proof in authenticated Events list/auto-sync; original bytes retained.",
+    "proof": "unclaimed-draft-red; final-events-dashboard green",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Client/fixture evidence; server still authorizes every request. C12-012 covers Events listing/synchronization, not a new certification of every legacy editor/storage consumer."
+  },
+  {
+    "id": "C12-013",
+    "severity": "P2",
+    "finding": "Collapsed desktop header rule hid mobile navigation trigger after resize.",
+    "repair": "Limit suppression to desktop.",
+    "proof": "codex-browser failed; codex-browser-2 green on three engines",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-014",
+    "severity": "P2",
+    "finding": "Calendar grid lacked rows and composite keyboard movement.",
+    "repair": "Rows, single date tab stop, arrows/Home/End/Page keys and selected-date actions.",
+    "proof": "Calendar current unit/browser matrix",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-015",
+    "severity": "P2",
+    "finding": "Couple text contrast was 4.49:1 on white in rendered overview.",
+    "repair": "Semantic gold text, verified by enabled Axe contrast.",
+    "proof": "design-browser failed; later Axe captures clean",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  },
+  {
+    "id": "C12-016",
+    "severity": "P3",
+    "finding": "Floating duplicate Create covered controls at 320px.",
+    "repair": "Retain header Create; remove duplicate FAB and shorten subtitle.",
+    "proof": "320px visual review and final visual captures",
+    "status": "REPAIRED — LOCAL",
+    "limits": "Bounded to tested source and states."
+  }
+]

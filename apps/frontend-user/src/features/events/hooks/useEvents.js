@@ -6,12 +6,19 @@ import { toast } from "../../../shared/ui/toast";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { persistWeddingDraft } from "../../wedding-builder/utils/draftPublishApi";
 
+function ownerDrafts(ownerUserId) {
+    // Legacy records without owner proof remain stored, but cannot be exposed
+    // or silently uploaded to whichever authenticated account opens Events.
+    return listDrafts(ownerUserId).filter(draft => ownerUserId == null
+        || (draft.ownerUserId != null && String(draft.ownerUserId) === String(ownerUserId)));
+}
+
 export function useEvents(t) {
     const { user } = useAuth();
     const ownerUserId = user?.id || user?.userId;
     const subject = String(ownerUserId ?? '');
     const [draftSubject, setDraftSubject] = useState(subject);
-    const [drafts, setDrafts] = useState(() => listDrafts(ownerUserId));
+    const [drafts, setDrafts] = useState(() => ownerDrafts(ownerUserId));
     const [draftToDelete, setDraftToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [syncingDraftId, setSyncingDraftId] = useState("");
@@ -37,7 +44,7 @@ export function useEvents(t) {
         setLoading(true); setError("");
         eventsApi.listMine().then((apiInvs) => {
             if (generation !== loadGeneration.current) return;
-            const localDrafts = listDrafts(ownerUserId);
+            const localDrafts = ownerDrafts(ownerUserId);
             const merged = (apiInvs || []).map((apiInv) => {
                 const matchingLocal = localDrafts.find((ld) =>
                     String(ld.id) === String(apiInv.id) || String(ld.backendInvitationId) === String(apiInv.id)
@@ -87,7 +94,7 @@ export function useEvents(t) {
         }).catch((err) => {
             if (generation !== loadGeneration.current) return;
             setError(err.message || "Could not load events");
-            setDrafts(listDrafts(ownerUserId));
+            setDrafts(ownerDrafts(ownerUserId));
             setDraftSubject(String(ownerUserId ?? ''));
             setBackendListLoaded(false);
         }).finally(() => { if (generation === loadGeneration.current) setLoading(false); });
@@ -112,7 +119,7 @@ export function useEvents(t) {
         const draftId = String(draft?.id || "");
         if (!draftId || syncInFlight.current.has(draftId)) return;
         // Display summaries carry server cover identity; retries must use the untouched local payload.
-        const storedDraft = listDrafts(ownerUserId).find(item => String(item.id) === draftId
+        const storedDraft = ownerDrafts(ownerUserId).find(item => String(item.id) === draftId
             || (item.backendInvitationId && String(item.backendInvitationId) === String(draft.backendInvitationId || draft.id)));
         if (storedDraft) draft = { ...storedDraft, backendInvitationId: draft.backendInvitationId || storedDraft.backendInvitationId };
         autoSyncAttempted.current.add(draftId);

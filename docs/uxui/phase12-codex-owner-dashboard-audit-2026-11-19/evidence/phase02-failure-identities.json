@@ -1,0 +1,61 @@
+{
+  "historical_failures": [
+    [
+      "desktop",
+      "110"
+    ],
+    [
+      "desktop",
+      "129"
+    ],
+    [
+      "desktop",
+      "196"
+    ],
+    [
+      "desktop",
+      "208"
+    ],
+    [
+      "mobile",
+      "129"
+    ],
+    [
+      "mobile",
+      "196"
+    ],
+    [
+      "mobile",
+      "208"
+    ]
+  ],
+  "current_failures": [
+    [
+      "desktop",
+      "129"
+    ],
+    [
+      "desktop",
+      "196"
+    ],
+    [
+      "desktop",
+      "208"
+    ],
+    [
+      "mobile",
+      "129"
+    ],
+    [
+      "mobile",
+      "196"
+    ],
+    [
+      "mobile",
+      "208"
+    ]
+  ],
+  "new_failed_identities": [],
+  "historical_raw_sha256": "3fd97e2869b3d78c46e401b1d3274b5790f71dbdc2c6ceaf2addb1e8185c9c9c",
+  "current_raw_sha256": "6814a8b6996d3360914fbed7e1fad823283eeac1e1bec770ae827cb5bc993c8d"
+}

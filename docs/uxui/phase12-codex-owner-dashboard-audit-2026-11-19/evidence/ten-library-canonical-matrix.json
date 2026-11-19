@@ -1,0 +1,82 @@
+[
+  {
+    "library": "Animate UI",
+    "license_source": "https://github.com/imskyleen/animate-ui/blob/main/LICENSE.md",
+    "decision": "Independent inspiration",
+    "reason": "Short menu feedback; existing primitives retained. Commons Clause scope needs exact review before source reuse.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Badtz UI",
+    "license_source": "https://github.com/badtzx0/badtz-ui/blob/main/LICENSE.md",
+    "decision": "Reject source adoption",
+    "reason": "No need for cursor effects/expandable marketing cards; historical additional terms are not universal commercial clearance.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Lightswind UI",
+    "license_source": "https://lightswind.com/license",
+    "decision": "Independent inspiration",
+    "reason": "App-shell grouping only. Current page distinguishes SaaS use from competing source/builders; no source copied.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Kokonut UI",
+    "license_source": "https://github.com/kokonut-labs/kokonutui/blob/main/LICENSE",
+    "decision": "Independent inspiration",
+    "reason": "Quiet account/action grouping; no parallel menu implementation or PRO assets.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Untitled UI",
+    "license_source": "https://github.com/untitleduico/react/blob/main/LICENSE",
+    "decision": "Independent inspiration",
+    "reason": "Operational filter/result hierarchy; no React Aria/theme reset or PRO source added.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "shadcn/ui",
+    "license_source": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "decision": "Independent inspiration",
+    "reason": "Native controls and current Modal already cover this scope; no CLI init or duplicate primitive stack.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "React Bits",
+    "license_source": "https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md",
+    "decision": "Reject source adoption",
+    "reason": "No decorative effects in owner operations; no restricted component/template output redistributed.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Aceternity UI",
+    "license_source": "https://ui.aceternity.com/licence",
+    "decision": "Independent inspiration",
+    "reason": "Contextual navigation hierarchy only; no marketplace/template source copied.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Magic UI",
+    "license_source": "https://github.com/magicuidesign/magicui/blob/main/LICENSE.md",
+    "decision": "Independent inspiration",
+    "reason": "Stable numeric feedback through existing CSS; no ticker dependency or fabricated trend.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  },
+  {
+    "library": "Skiper UI",
+    "license_source": "https://skiper-ui.com/docs/terms-of-service",
+    "decision": "Reject source adoption",
+    "reason": "No drag/scroll effect needed; exact free-component attribution and scope not assumed.",
+    "new_source_copied": false,
+    "new_dependencies": []
+  }
+]

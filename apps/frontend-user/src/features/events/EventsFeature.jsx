@@ -156,7 +156,7 @@ export function EventsFeature() {
             <header className="events-page-header">
                 <div>
                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
-                    <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលសំបុត្រអញ្ជើញ តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
+                    <p>{en ? "Your celebrations, invitations and guest lists." : "រៀបចំកម្មវិធី សំបុត្រអញ្ជើញ និងបញ្ជីភ្ញៀវរបស់អ្នក។"}</p>
                 </div>
                 <div className="events-header-actions">
                     {/* View Mode Toggle: List vs Calendar */}
@@ -184,7 +184,7 @@ export function EventsFeature() {
                     </div>
 
                     <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
-                        + {createBtnText}
+                        <Plus size={18} aria-hidden="true" />{createBtnText}
                     </Link>
                 </div>
             </header>
@@ -452,16 +452,6 @@ export function EventsFeature() {
                     </button>
                 </nav>
             )}
-
-            {/* Mobile Floating Action Button (FAB) */}
-            <Link
-                to="/app/events/new"
-                state={{ from: "/dashboard/events" }}
-                className="events-mobile-fab"
-                aria-label={en ? "Create new event" : "បង្កើតកម្មវិធីថ្មី"}
-            >
-                <Plus size={24} aria-hidden="true" />
-            </Link>
 
             <EventDeleteModal
                 draftToDelete={draftToDelete}

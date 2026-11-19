@@ -1,0 +1,354 @@
+[
+  {
+    "surface": "list",
+    "width": 1440,
+    "selector": ".host-header-container",
+    "before": {
+      "x": 57.59375,
+      "y": 8,
+      "width": 1324.796875,
+      "height": 72,
+      "bottom": 80
+    },
+    "after": {
+      "x": 16,
+      "y": 8,
+      "width": 1408,
+      "height": 64,
+      "bottom": 72
+    },
+    "top_delta_px": 0,
+    "height_delta_px": -8,
+    "width_delta_px": 83.2
+  },
+  {
+    "surface": "list",
+    "width": 1440,
+    "selector": ".events-page-header",
+    "before": {
+      "x": 40,
+      "y": 143.1875,
+      "width": 1360,
+      "height": 151.578125,
+      "bottom": 294.765625
+    },
+    "after": {
+      "x": 32,
+      "y": 96,
+      "width": 1376,
+      "height": 100.890625,
+      "bottom": 196.890625
+    },
+    "top_delta_px": -47.19,
+    "height_delta_px": -50.69,
+    "width_delta_px": 16
+  },
+  {
+    "surface": "list",
+    "width": 1440,
+    "selector": ".events-filters-container",
+    "before": {
+      "x": 40,
+      "y": 314.765625,
+      "width": 1360,
+      "height": 185.484375,
+      "bottom": 500.25
+    },
+    "after": {
+      "x": 32,
+      "y": 212.890625,
+      "width": 1376,
+      "height": 129.390625,
+      "bottom": 342.28125
+    },
+    "top_delta_px": -101.88,
+    "height_delta_px": -56.09,
+    "width_delta_px": 16
+  },
+  {
+    "surface": "list",
+    "width": 1440,
+    "selector": ".event-card",
+    "before": {
+      "x": 40,
+      "y": 566.546875,
+      "width": 437.328125,
+      "height": 569.234375,
+      "bottom": 1135.78125
+    },
+    "after": {
+      "x": 32,
+      "y": 399.46875,
+      "width": 442.65625,
+      "height": 472.53125,
+      "bottom": 872
+    },
+    "top_delta_px": -167.08,
+    "height_delta_px": -96.7,
+    "width_delta_px": 5.33
+  },
+  {
+    "surface": "list",
+    "width": 1920,
+    "selector": ".host-header-container",
+    "before": {
+      "x": 240,
+      "y": 8,
+      "width": 1440,
+      "height": 72,
+      "bottom": 80
+    },
+    "after": {
+      "x": 16,
+      "y": 8,
+      "width": 1888,
+      "height": 64,
+      "bottom": 72
+    },
+    "top_delta_px": 0,
+    "height_delta_px": -8,
+    "width_delta_px": 448
+  },
+  {
+    "surface": "list",
+    "width": 1920,
+    "selector": ".events-page-header",
+    "before": {
+      "x": 200,
+      "y": 160,
+      "width": 1520,
+      "height": 151.578125,
+      "bottom": 311.578125
+    },
+    "after": {
+      "x": 152,
+      "y": 96,
+      "width": 1616,
+      "height": 100.890625,
+      "bottom": 196.890625
+    },
+    "top_delta_px": -64,
+    "height_delta_px": -50.69,
+    "width_delta_px": 96
+  },
+  {
+    "surface": "list",
+    "width": 1920,
+    "selector": ".events-filters-container",
+    "before": {
+      "x": 200,
+      "y": 331.578125,
+      "width": 1520,
+      "height": 185.484375,
+      "bottom": 517.0625
+    },
+    "after": {
+      "x": 152,
+      "y": 212.890625,
+      "width": 1616,
+      "height": 129.390625,
+      "bottom": 342.28125
+    },
+    "top_delta_px": -118.69,
+    "height_delta_px": -56.09,
+    "width_delta_px": 96
+  },
+  {
+    "surface": "list",
+    "width": 1920,
+    "selector": ".event-card",
+    "before": {
+      "x": 200,
+      "y": 583.359375,
+      "width": 464,
+      "height": 532.828125,
+      "bottom": 1116.1875
+    },
+    "after": {
+      "x": 152,
+      "y": 399.46875,
+      "width": 522.65625,
+      "height": 507.53125,
+      "bottom": 907
+    },
+    "top_delta_px": -183.89,
+    "height_delta_px": -25.3,
+    "width_delta_px": 58.66
+  },
+  {
+    "surface": "overview",
+    "width": 1440,
+    "selector": ".host-header-container",
+    "before": {
+      "x": 16,
+      "y": 8,
+      "width": 1408,
+      "height": 56,
+      "bottom": 64
+    },
+    "after": {
+      "x": 16,
+      "y": 8,
+      "width": 1408,
+      "height": 64,
+      "bottom": 72
+    },
+    "top_delta_px": 0,
+    "height_delta_px": 8,
+    "width_delta_px": 0
+  },
+  {
+    "surface": "overview",
+    "width": 1440,
+    "selector": ".event-workspace-sidebar",
+    "before": {
+      "x": 28.796875,
+      "y": 96,
+      "width": 256,
+      "height": 788,
+      "bottom": 884
+    },
+    "after": {
+      "x": 28.796875,
+      "y": 88,
+      "width": 240,
+      "height": 993.78125,
+      "bottom": 1081.78125
+    },
+    "top_delta_px": -8,
+    "height_delta_px": 205.78,
+    "width_delta_px": -16
+  },
+  {
+    "surface": "overview",
+    "width": 1440,
+    "selector": ".overview-hero",
+    "before": {
+      "x": 312.796875,
+      "y": 225.59375,
+      "width": 660.25,
+      "height": 441.640625,
+      "bottom": 667.234375
+    },
+    "after": {
+      "x": 292.796875,
+      "y": 200.796875,
+      "width": 1118.390625,
+      "height": 320.765625,
+      "bottom": 521.5625
+    },
+    "top_delta_px": -24.8,
+    "height_delta_px": -120.88,
+    "width_delta_px": 458.14
+  },
+  {
+    "surface": "overview",
+    "width": 1440,
+    "selector": ".overview-metrics",
+    "before": {
+      "x": 312.796875,
+      "y": 689.234375,
+      "width": 1082.390625,
+      "height": 340.78125,
+      "bottom": 1030.015625
+    },
+    "after": {
+      "x": 292.796875,
+      "y": 541.5625,
+      "width": 1118.390625,
+      "height": 144.1875,
+      "bottom": 685.75
+    },
+    "top_delta_px": -147.67,
+    "height_delta_px": -196.59,
+    "width_delta_px": 36.0
+  },
+  {
+    "surface": "overview",
+    "width": 1920,
+    "selector": ".host-header-container",
+    "before": {
+      "x": 16,
+      "y": 8,
+      "width": 1888,
+      "height": 56,
+      "bottom": 64
+    },
+    "after": {
+      "x": 16,
+      "y": 8,
+      "width": 1888,
+      "height": 64,
+      "bottom": 72
+    },
+    "top_delta_px": 0,
+    "height_delta_px": 8,
+    "width_delta_px": 0
+  },
+  {
+    "surface": "overview",
+    "width": 1920,
+    "selector": ".event-workspace-sidebar",
+    "before": {
+      "x": 32,
+      "y": 96,
+      "width": 256,
+      "height": 968,
+      "bottom": 1064
+    },
+    "after": {
+      "x": 32,
+      "y": 88,
+      "width": 240,
+      "height": 993.78125,
+      "bottom": 1081.78125
+    },
+    "top_delta_px": -8,
+    "height_delta_px": 25.78,
+    "width_delta_px": -16
+  },
+  {
+    "surface": "overview",
+    "width": 1920,
+    "selector": ".overview-hero",
+    "before": {
+      "x": 316,
+      "y": 225.59375,
+      "width": 955.125,
+      "height": 390.5,
+      "bottom": 616.09375
+    },
+    "after": {
+      "x": 296,
+      "y": 200.796875,
+      "width": 1592,
+      "height": 320.765625,
+      "bottom": 521.5625
+    },
+    "top_delta_px": -24.8,
+    "height_delta_px": -69.73,
+    "width_delta_px": 636.88
+  },
+  {
+    "surface": "overview",
+    "width": 1920,
+    "selector": ".overview-metrics",
+    "before": {
+      "x": 316,
+      "y": 638.09375,
+      "width": 1556,
+      "height": 304.78125,
+      "bottom": 942.875
+    },
+    "after": {
+      "x": 296,
+      "y": 541.5625,
+      "width": 1592,
+      "height": 144.1875,
+      "bottom": 685.75
+    },
+    "top_delta_px": -96.53,
+    "height_delta_px": -160.59,
+    "width_delta_px": 36
+  }
+]

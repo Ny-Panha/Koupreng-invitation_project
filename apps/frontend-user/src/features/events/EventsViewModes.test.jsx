@@ -43,7 +43,7 @@ describe("EventsFeature View Modes & Period Filters", () => {
     useLanguageStore.setState({ lang: "en" });
   });
 
-  it("renders view mode toggle buttons (List and Calendar) and mobile FAB", async () => {
+  it("renders view mode controls and a single primary creation entry", async () => {
     render(
       <MemoryRouter initialEntries={["/app/events"]}>
         <EventsFeature />
@@ -59,8 +59,8 @@ describe("EventsFeature View Modes & Period Filters", () => {
     expect(listBtn).toHaveAttribute("aria-pressed", "true");
     expect(calBtn).toHaveAttribute("aria-pressed", "false");
 
-    const fab = screen.getByRole("link", { name: "Create new event" });
-    expect(fab).toHaveAttribute("href", "/app/events/new");
+    const create = screen.getByRole("link", { name: "Create Event" });
+    expect(create).toHaveAttribute("href", "/app/events/new");
   });
 
   it("switches to Calendar view when clicking the Calendar view toggle button", async () => {

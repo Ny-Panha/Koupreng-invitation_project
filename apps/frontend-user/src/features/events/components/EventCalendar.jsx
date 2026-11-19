@@ -171,6 +171,7 @@ export function EventCalendar({
     }
     return [];
   }, [eventsByDate, selectedDate]);
+  const activeFocusDate = cells.some(cell => cell.dateKey === focusDate) ? focusDate : localDateString(viewDate);
 
   // Chronological agenda list for all events
   const sortedAgendaEvents = useMemo(() => {
@@ -272,7 +273,8 @@ export function EventCalendar({
                   <div
                     key={cell.dateKey}
                     data-date={cell.dateKey}
-                    tabIndex={cell.dateKey === (focusDate || localDateString(viewDate)) ? 0 : -1}
+                    tabIndex={cell.dateKey === activeFocusDate ? 0 : -1}
+                    onFocus={e => { if(e.target === e.currentTarget) setFocusDate(cell.dateKey); }}
                     role="gridcell"
                     aria-selected={isSelected}
                     aria-label={`${formatLocalDate(cell.dateKey, en ? "en-US" : "km-KH")}${
@@ -359,6 +361,7 @@ export function EventCalendar({
                             <button
                               key={evt.id}
                               type="button"
+                              tabIndex={-1}
                               className={`event-calendar-chip ${chipTone}`}
                               title={`${evt.title || typeName}${evt.eventTime ? ` · ${evt.eventTime}` : ""}${isLocal ? ` (${en ? "Local draft" : "ព្រាងលើឧបករណ៍"})` : ""}`}
                               onClick={(e) => {

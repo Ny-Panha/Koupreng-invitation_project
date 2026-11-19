@@ -1,0 +1,931 @@
+{
+  "captures": [
+    {
+      "path": "output/phase12-codex/before/list-chromium-1024x768-en-light.png",
+      "sha256": "f31dcfee28ae07276359d8d18d3773ad56c1450f55f9e398bad47b6f96ad1c7a",
+      "bytes": 70197,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-1280x720-en-light.png",
+      "sha256": "3fbc1d8e65ee434c853eb85769e88f420a52ddf1b043ff28ca714ebc42813bd4",
+      "bytes": 78525,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-1440x900-en-light.png",
+      "sha256": "777344f2f8d26b5e770ce5914940d0155360ccc5f99b319160d86696fc8ccf5c",
+      "bytes": 99122,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-1920x1080-en-light.png",
+      "sha256": "4f092689fec6ee0afdeefd083f04f7200bd55cf618f46c90e0d5a82909c420e2",
+      "bytes": 130503,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-320x568-en-light.png",
+      "sha256": "361f5df6b78904c2f39c0ac46d6c7e9a40301df806248f8b5247a92761198cd4",
+      "bytes": 45764,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-360x800-en-light.png",
+      "sha256": "37f19d878351e2f92da048b4de417bac73760fed74edc348cd168425a7c3d06d",
+      "bytes": 56660,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-393x851-en-light.png",
+      "sha256": "46d3b5be49dda61ef5b8dafe1281417f664f6381eff87bdf26c7d4f1e5b2a715",
+      "bytes": 60255,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-768x1024-en-light.png",
+      "sha256": "a7e8c72ae12759b5372c47ea8e5beeade515d374bcc6495119bde9e6865fea1e",
+      "bytes": 69622,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/list-chromium-844x390-en-light.png",
+      "sha256": "3cfdb66d91403e2d781cf88cc833cde555f9f8892b86ca187f70308b474ff541",
+      "bytes": 52537,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-1024x768-en-light.png",
+      "sha256": "bad11fa540705e86f2abaa3823311a02391357bbfa0ecd1b7f70583391391946",
+      "bytes": 83532,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-1280x720-en-light.png",
+      "sha256": "72e8db2845384540e79103fd79ef9dcc000213d43f3c2cb79be97633096f4109",
+      "bytes": 100663,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-1440x900-en-light.png",
+      "sha256": "89f5d6cc552115628d11ecdc7b48b13c90c35abfa1303c566856a49ea57f41e8",
+      "bytes": 134065,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-1920x1080-en-light.png",
+      "sha256": "89067a01302b209de69385035b2e03a48e2025490dfa520b2e0e733d38325ed4",
+      "bytes": 166107,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-320x568-en-light.png",
+      "sha256": "190032c6158688a116dc62a4893570e817b600473da8c106d535441d03202941",
+      "bytes": 42187,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-360x800-en-light.png",
+      "sha256": "152d718c6db79476ceb1e11ee5efc956721c5df306d2f8b373aa0e5e0cd8e24d",
+      "bytes": 58193,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-393x851-en-light.png",
+      "sha256": "64debf971a2414487c981bf102f3707db4c09159a074fc6f611b1b7c8bd53e0c",
+      "bytes": 59840,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-768x1024-en-light.png",
+      "sha256": "3ee49cbd63e40a034e2ee9c1bbd0cb25c3934270b39c949f600630e2e149d35d",
+      "bytes": 103285,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/before/overview-chromium-844x390-en-light.png",
+      "sha256": "d86a0259e86da9453fb9e3888b9f7120f87625113d8ac889b72edd1d83cfb06a",
+      "bytes": 45798,
+      "stage": "before",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-1024x768-en-light.png",
+      "sha256": "41906ea9bb51276e23a28e0b9afc23d1b19a3b3c3a81acb3e49872e31c0a95ce",
+      "bytes": 73994,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-1280x720-en-light.png",
+      "sha256": "dc6fa2fbc5525ce61cbd05ad579ddf40c4075a31de4595a3765b0251a3e84741",
+      "bytes": 102782,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-1440x900-en-light.png",
+      "sha256": "7280ee572a00c3cd44d5555e1fa5fc1de5bc11414e4d4a6f8306f3accfe0c06e",
+      "bytes": 124941,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-1920x1080-en-light.png",
+      "sha256": "a7eb36619f4dc1aa644c7fe8231a91ae5e8c1cefc3fa9fbd4dad11308e98bb3f",
+      "bytes": 129392,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-320x568-en-light.png",
+      "sha256": "007bd5875c502909932179737892ad941c095c88fd19531811a56ca1e4677fe7",
+      "bytes": 36337,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-360x800-en-light.png",
+      "sha256": "1ef7049c492cd9f0c0a2de9db4f79fc7b3653fdbbf023065c1ce78915804d789",
+      "bytes": 50316,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-393x851-en-light.png",
+      "sha256": "7e37197c538586ab209aab1aa1a36ac4ea84d179cc6240e9ee75e0b36b890be8",
+      "bytes": 52891,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-768x1024-en-light.png",
+      "sha256": "5fff4bcc3e3ef7446cae708c1313f49c6ad35a554ab3df4faf787bb044c06733",
+      "bytes": 98884,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-chromium-844x390-en-light.png",
+      "sha256": "50a2b960288dfb097f6a866d8e00b93c0305a164862421a3ecd74f84677c1dd6",
+      "bytes": 45142,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-1024x768-en-light.png",
+      "sha256": "5111e1ff474628d305fe8593e06c719b5f18c4bbfc49a8e085feb1a65592abcb",
+      "bytes": 75594,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-1280x720-en-light.png",
+      "sha256": "5897100301cc5369257fad4df1523a2057095a8ab6d2d265eb8ed09bcd36f4a8",
+      "bytes": 98641,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-1440x900-en-light.png",
+      "sha256": "7f17352163ee1e03e5dbd973a7482acde61dd21cdd1f41772e07542ef4c1a645",
+      "bytes": 123507,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-1920x1080-en-light.png",
+      "sha256": "532e8f679c7e723ae642cd9b1e94aefd8a2db047a893e779f5db36abfe366606",
+      "bytes": 134857,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-320x568-en-light.png",
+      "sha256": "b58ea95d6bc6e89f2bb1fea76afa3c3055a3d1da5b0fa090ea13223cef10bd33",
+      "bytes": 36763,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-360x800-en-light.png",
+      "sha256": "ec4a1053a080db28d5653d06748471e8bea0c405aab17e03c64bae855aa499e7",
+      "bytes": 50212,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-393x851-en-light.png",
+      "sha256": "eb35b73cb9d6022aca214f9e6ff4136cfea9dad6061286d5100220e8584c7c6e",
+      "bytes": 52989,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-768x1024-en-light.png",
+      "sha256": "671df82a017d3098897523477bb992d0f158041a958d99a5bc5a62f6b7623a89",
+      "bytes": 98843,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-firefox-844x390-en-light.png",
+      "sha256": "db1d841fa4ac47ee7f4bbd19de767919c8887bfccac9acd4857e86889ad29ff5",
+      "bytes": 47289,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-1024x768-en-light.png",
+      "sha256": "ef9d6a2881a790fcb74048f67b76bfe4b04b7f6680d8966c2268365fb7f4cd86",
+      "bytes": 66689,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-1280x720-en-light.png",
+      "sha256": "277e206a126d833bca354bc70683fbc502e7b9ea3635d6744f05c5a9f23ec2af",
+      "bytes": 89716,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-1440x900-en-light.png",
+      "sha256": "be570104032f0a78b0fef016e698f59fc9f01eed3b335866685b5e53f8e737d7",
+      "bytes": 112229,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-1920x1080-en-light.png",
+      "sha256": "474476a03a1b3973c6614160f86d7a63401ed3c5831a9a3144325f9f6349555f",
+      "bytes": 118198,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-320x568-en-light.png",
+      "sha256": "975149c2e27141b4433f7fde60160be09ba9be1e33dde7a2edda6f62370cc087",
+      "bytes": 33889,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-360x800-en-light.png",
+      "sha256": "dec0da66e78eec74ff9e1386698a26474662788f8064738f048ee5d57ccaa1c2",
+      "bytes": 46241,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-393x851-en-light.png",
+      "sha256": "bcd5d2a074c6b766476aa07313cd637985c80e42a6468a01ea784ccc98ecf3cf",
+      "bytes": 49016,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-768x1024-en-light.png",
+      "sha256": "267a2082fb09fab51f716d0da529ca9fd5dd9aca8ef59ce31e1ee6b020acbcf7",
+      "bytes": 88448,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/list-webkit-844x390-en-light.png",
+      "sha256": "a71cb3f2ad7fd5308d7efa1402a6128b3e0e50952aab42ba1823110a076c9d86",
+      "bytes": 43821,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-1024x768-en-light.png",
+      "sha256": "389617d306a21bc3c844301fe442ff437ec59effcf91f947db53d1f1656e88c7",
+      "bytes": 90146,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-1280x720-en-light.png",
+      "sha256": "53530dd24046d0ceff89422e773f85579ec6d8bfc67a70a7bf03c501536b7478",
+      "bytes": 97755,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-1440x900-en-light.png",
+      "sha256": "048dfc37bec31fa7cfcace709f77bbf5d8770a5d55a11527024cf21aacd78962",
+      "bytes": 139659,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-1920x1080-en-light.png",
+      "sha256": "1b0646cee2651156804547483414311b3755ea884dbedc53feaacaa49dff09ee",
+      "bytes": 163470,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-320x568-en-light.png",
+      "sha256": "a7303f7d25149bf0fe8109cb123f84218cc96140a770fd659da2f43c6760a0e0",
+      "bytes": 44046,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-360x800-en-light.png",
+      "sha256": "e882472cc3d4076fd59727f1b440db48ced70d10bde1b28620bd5236b4adad54",
+      "bytes": 56947,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-393x851-en-light.png",
+      "sha256": "b7a9dec7b4593fb84211956b5576a568b8f547830401f3b06e6e13fe7a371515",
+      "bytes": 61422,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-768x1024-en-light.png",
+      "sha256": "aa09e189c3eb1a07c871b72e80d6c6fe025dc03c79b07e76f8852f4a6d6cf287",
+      "bytes": 98436,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-chromium-844x390-en-light.png",
+      "sha256": "3429fde0026f9a5cbb51256283118f04b31c01ba08dcb6301a36e2a32dabfe92",
+      "bytes": 46282,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-1024x768-en-light.png",
+      "sha256": "72854ac0a913caa92a1054455548b4f07b0fc7cd6c753f5cf085c6bc72ac2e0f",
+      "bytes": 91679,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-1280x720-en-light.png",
+      "sha256": "7043166d3a8fcdb12e2119fbab2297fa915ff4f9a846845842b1681782a3d419",
+      "bytes": 98218,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-1440x900-en-light.png",
+      "sha256": "435185c9e9b82607d02004339e91ea573309f04388c86e6f882e8c3aef396b4f",
+      "bytes": 137024,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-1920x1080-en-light.png",
+      "sha256": "b29e40c65a544ae983ff44dc16a72efb3c3beb177ee6e28184d50063387d7f65",
+      "bytes": 161575,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-320x568-en-light.png",
+      "sha256": "e5bcfb68aa80c3efeba836ab436f41468d2b0fcad67d804ebfb790daee4eb6f6",
+      "bytes": 40745,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-360x800-en-light.png",
+      "sha256": "31206c310b89010f7c9f25a70252bcd30db79ad61e6c6af157a071fd2f75842a",
+      "bytes": 53872,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-393x851-en-light.png",
+      "sha256": "05320875b9a3cccd6e4a4817844c9c352ce03b1c0b48114588653fc6109f924f",
+      "bytes": 58426,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-768x1024-en-light.png",
+      "sha256": "5fb17cc416456f4c06b78641e524b350674ddd9b5bdfe83bceff88dcc8d7db20",
+      "bytes": 92213,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-firefox-844x390-en-light.png",
+      "sha256": "51b4d4bd866be5bebc80726862152d5beb8d6b8c097ac3c90359b07ef260ca31",
+      "bytes": 46812,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-1024x768-en-light.png",
+      "sha256": "3129fe467ca2ab126cc90db6e3b7641b759724462309b79e3dce744b8941a6a5",
+      "bytes": 82266,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-1280x720-en-light.png",
+      "sha256": "c2f72e43224e8b412f7e55db8c210915378dac2e1d1afe5cc338cc6ce2214a90",
+      "bytes": 89069,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-1440x900-en-light.png",
+      "sha256": "429f786ad106382b2cc29134eb077aa1f0faa56915d7e909c29938c4a7d8e72e",
+      "bytes": 124132,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-1920x1080-en-light.png",
+      "sha256": "658932aff5ee860054afd34f63ffaa94612ae045c88cfe41a36741052336a8c3",
+      "bytes": 145488,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-320x568-en-light.png",
+      "sha256": "a2120dbaee2f629531802f3d0e489ed6aa978b7ba89f23ce59bd424dc0b81d87",
+      "bytes": 38949,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-360x800-en-light.png",
+      "sha256": "cab2437a1181ccf06e01e228181e59b325c18fea74adff69071d5006da16980d",
+      "bytes": 51364,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-393x851-en-light.png",
+      "sha256": "6f3fb466fd399de4db7f098b0259cd5adbcc5ce85d30d230884d44de1e3e8c35",
+      "bytes": 55551,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-768x1024-en-light.png",
+      "sha256": "44c1368999085057ae88c2536309040231e9ac757101f3681aa110639385e960",
+      "bytes": 85740,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/after/overview-webkit-844x390-en-light.png",
+      "sha256": "06d328913a3320c1f82393813641791014ac4e0784ee835ef9a9ecc2c37f03da",
+      "bytes": 43914,
+      "stage": "after",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/calendar-agenda-chromium.png",
+      "sha256": "03903e5c7c489d3f5e8e191a31df3c4a4a5ab57da834d23aab98791f85300155",
+      "bytes": 124958,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/calendar-agenda-firefox.png",
+      "sha256": "2eeebfd953b329747472037c18f9a0b9a94475ffc1b186d920437dc7594cf68f",
+      "bytes": 119169,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/calendar-agenda-webkit.png",
+      "sha256": "07de4f09b8eb51c2a3b4c45601b695d972716926a8ebb34e76f5e0cb3585ad3c",
+      "bytes": 112789,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/drawer-320-chromium.png",
+      "sha256": "eed21a2e767c54c34c162d78823669655d3f95fe583caba8f2042d031abac9ba",
+      "bytes": 154329,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/drawer-320-firefox.png",
+      "sha256": "95fe77ba932795ef62b1fa149d44705dcaf79a054db8f0f367252af1be1d2995",
+      "bytes": 118847,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/drawer-320-webkit.png",
+      "sha256": "0249d3c216676ced8a132288945cb7a9a7791fe9a7092fb1ff77d9e1d3a6a695",
+      "bytes": 112530,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/equivalent-200-reflow-chromium.png",
+      "sha256": "7032659ea6b03cf981e7d7181325dee75fa9c4d25459f1cc2cbbb291783daa50",
+      "bytes": 160581,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/equivalent-200-reflow-firefox.png",
+      "sha256": "d8206513497261a5f3bdfec1d49e811ac67ba7850587f10ecea4111d9a914749",
+      "bytes": 146308,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/equivalent-200-reflow-webkit.png",
+      "sha256": "21a093a459715345c8b6ea3a0a82b125bee493cb309599326d913e102eb74b3b",
+      "bytes": 135403,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/forced-colors-chromium.png",
+      "sha256": "6584ba90403076b5154223d12347aed090bb6c9b4e12983ff471a493c7963c3e",
+      "bytes": 130850,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/forced-colors-firefox.png",
+      "sha256": "e5bd040f7609ea784eab8cdfd932175929fee4f1ff5283925d480d74f277280a",
+      "bytes": 129376,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/forced-colors-webkit.png",
+      "sha256": "f45e64187a7e7ba650ccf59a2aac8ac33360d7e815e8673f53e68e7418fb09f7",
+      "bytes": 128592,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/hundred-events-chromium.png",
+      "sha256": "27c9d38bff8bdafd6eea4343fe5e08361933115a1493645c9071a7c2ec055922",
+      "bytes": 267239,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/hundred-events-firefox.png",
+      "sha256": "5f9b86552f5cee0eff3492c63be555de083964d1ad9d5d0bfa9a3ed16f1e568c",
+      "bytes": 265633,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/hundred-events-webkit.png",
+      "sha256": "07097212f432ffa607e7a3579469c8e54c2e327f59d8a3ab8c66b981981ae305",
+      "bytes": 227363,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/khmer-dark-chromium.png",
+      "sha256": "d012a616587b26b0c8418add5cb1400b04a33f6a7ad2912c95092be25d2dbefc",
+      "bytes": 204235,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/khmer-dark-firefox.png",
+      "sha256": "3f95278672a89c5e3318272fe1e7c617f463c196f1f5f3f88931f5e7af900700",
+      "bytes": 199584,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/khmer-dark-webkit.png",
+      "sha256": "744821af3f0d8a75d243423ad11de7e6561bd544cfc8d9cb5d6fe8a6c445fd90",
+      "bytes": 174636,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/local-drafts-chromium.png",
+      "sha256": "4af55b3a354433357a885dadfbdd6b3b6d2e23e2575499130ab9aa2df8e79932",
+      "bytes": 204807,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/local-drafts-firefox.png",
+      "sha256": "42668b786a3740291747608fb4dffbc2c47d55645bd993f2076196373f186cb7",
+      "bytes": 198921,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/local-drafts-webkit.png",
+      "sha256": "1f6870ffc7c6fd4a5a749d5373eb0215d5ce476f0d6c813c6f9b79ca76c2b920",
+      "bytes": 176801,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-dark-chromium.png",
+      "sha256": "37da808b9aa8677fa72accd321329ec3fde7573b62b6f932c58ac2fa1d7139cf",
+      "bytes": 74466,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-dark-firefox.png",
+      "sha256": "7fbc46cb0e158b88c8415a0c3b7a42b590731ab930f1c52d78f374276a648432",
+      "bytes": 70125,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-dark-webkit.png",
+      "sha256": "ca997489b33b1ab9e844d856c8c26de54d53d1f031399d88fdbda4905b5eb3b0",
+      "bytes": 65083,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-light-chromium.png",
+      "sha256": "db63b24113d17e06e0a5b4810b2c7952c205717ba9a90c0f179caa52aa3a3bd7",
+      "bytes": 73369,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-light-firefox.png",
+      "sha256": "36990bfe0d7765c2996b65490b8a1fe8353dbf3f6891b6e48bf00f49d05b5d72",
+      "bytes": 70281,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-en-light-webkit.png",
+      "sha256": "7893f8c12ce059958ae8bab610108728e51d13cf98f2d991268db98f3725cba9",
+      "bytes": 64740,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-dark-chromium.png",
+      "sha256": "13e5d51fa599921f206e0be3023cb6dc825038d376833edda9741942d155f9dd",
+      "bytes": 76210,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-dark-firefox.png",
+      "sha256": "4a7fde444f0a7a77963d8d4b7743c78d72e5440473ba723c13cf5412870c8746",
+      "bytes": 72149,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-dark-webkit.png",
+      "sha256": "06d25ae2bb0935c363bd95539cddbef0b050d4460bb5ce89caf3466c460dbea6",
+      "bytes": 65643,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-light-chromium.png",
+      "sha256": "6ff4649fa4fd5ee051b4b35ab959dddf7f48f7bb2388e33206df30d612f47723",
+      "bytes": 75821,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-light-firefox.png",
+      "sha256": "828bd2a01f65d993751f3db059d028e05a3066a7d0d22f65fd150269ea8028c8",
+      "bytes": 72975,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/long-title-320-km-light-webkit.png",
+      "sha256": "f7bc472f6319f51fd495ee693a84e1fbe24183210d72d374221aa0e9bed4b2db",
+      "bytes": 65893,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/no-match-chromium.png",
+      "sha256": "c43c7b63425d51f678f1f6a3f56fa6206a35a7aa92de49b71c8bb1e5b4ec5a49",
+      "bytes": 82505,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/no-match-firefox.png",
+      "sha256": "f6371b04d29e41bc29ac5dfe572aa746b45f63c2fdac8764adce1dac2e6e47e1",
+      "bytes": 81346,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/no-match-webkit.png",
+      "sha256": "f2a0bef7d65fd9fb64589b6abdc03ca8b189ae59d1ced1baaabe08403b135053",
+      "bytes": 76596,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/pagination-25-chromium.png",
+      "sha256": "474e27c75bc40a3266ba76c34771d60351ab1209c4d2dbb07326dc4a548bacff",
+      "bytes": 280463,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/pagination-25-firefox.png",
+      "sha256": "5e1e920bb359ffe17e1665a80e8abdb425cd4841c44e35c2500bf68140d1eadc",
+      "bytes": 277528,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/pagination-25-webkit.png",
+      "sha256": "c8ac85b25d7679dc8f32fc186c9032ca15763db782ad1757d14b6eb8fa26c277",
+      "bytes": 235989,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/profile-open-chromium.png",
+      "sha256": "53f544295f6cbaed80e6baf35caeebc4b2da303c9828be44112184473e41fba0",
+      "bytes": 222782,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/profile-open-firefox.png",
+      "sha256": "dcf2b3cc52cd3e51f3b4aee5f8ce65ecddca6fc5355337239a332a364fda473c",
+      "bytes": 205955,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/profile-open-webkit.png",
+      "sha256": "e4aa2d0518a73946cf6494c8d183b540cda52670e26ff01f6a2a9d2614eb97eb",
+      "bytes": 186142,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/revoked-access-chromium.png",
+      "sha256": "4bf7007a2034b3d99eeae18ef3903df47a3122b1e1d86fb44d2a478de95f743d",
+      "bytes": 45469,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/revoked-access-firefox.png",
+      "sha256": "03c00241e29e35bdcd0777c12a367a63313e0418209e3aeb4efc675ba79e207d",
+      "bytes": 48185,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/revoked-access-webkit.png",
+      "sha256": "9cddca856b1852c77b767c0152401fbcaaf66664c6d45c8e0ae0d427516a085a",
+      "bytes": 44804,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/shared-role-chromium.png",
+      "sha256": "5f37f646a1b503d0838098c0d8f19cb0eb392c7769909c10e09bd3321384cdde",
+      "bytes": 88426,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/shared-role-firefox.png",
+      "sha256": "73f1f76b2d945e0af4007b5bff691c20935e564a6b98b5fac5f72e6bd7c4641f",
+      "bytes": 78283,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/shared-role-webkit.png",
+      "sha256": "f3e13a65dcfb96ef38acdd22e1761885194b599f5d45c8290dc2c469579a1514",
+      "bytes": 72949,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/sidebar-rail-chromium.png",
+      "sha256": "32b542cf88213a8bec7ddee6c155b8495424f4a3a0222429fd5ee2655109e01c",
+      "bytes": 187849,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/sidebar-rail-firefox.png",
+      "sha256": "11d9bfe83965ca1e16328a22a29e27cc3f733a692e42d51c292237719d14700a",
+      "bytes": 175260,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/sidebar-rail-webkit.png",
+      "sha256": "74975624a32ff27d789432e1099821dae42af95878beff2ad10c784304fbf8a2",
+      "bytes": 159460,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/unknown-dashboard-chromium.png",
+      "sha256": "7bcf6a8f4d0a2d171f2b15545eecd84e5a7494c562688aaf1e92f4ddd72c936c",
+      "bytes": 208790,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/unknown-dashboard-firefox.png",
+      "sha256": "26519f5061e0ceac1e0c0c93ee3a62013e3b259f8ebb630ff47482b20af1774e",
+      "bytes": 194551,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/unknown-dashboard-webkit.png",
+      "sha256": "482031447d6ca5773ece49138a937bd90288a5dd177f01516bdc9fa3f2e4bf0d",
+      "bytes": 174178,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-dashboard-chromium.png",
+      "sha256": "381fb98b5f27a077afcfb2cac6cb158b214fe68e00ab9a313c3a2b93f40f3675",
+      "bytes": 200516,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-dashboard-firefox.png",
+      "sha256": "1f8468d60e607d79ec1cadc2ea5e980bbe96fbb3393c40418d8ca73de9d8ab32",
+      "bytes": 188589,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-dashboard-webkit.png",
+      "sha256": "b1f45176d98d8b8a43f794ff0ad82dca647a69257ca96450282e0d0842f92c0d",
+      "bytes": 169200,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-events-chromium.png",
+      "sha256": "1d204a611fbe0857074f6b7738374dda6bea2620bf2bcb11701b27e971a7b939",
+      "bytes": 104598,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-events-firefox.png",
+      "sha256": "30d2fb7d98fe6b56a699ee034f82d672bef4dfaee722d424c70743d490de7996",
+      "bytes": 94606,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    },
+    {
+      "path": "output/phase12-codex/states/zero-events-webkit.png",
+      "sha256": "777acbb2c19f3eb32612753e9c7357faf04af5185fb7d111cba46446c4db2807",
+      "bytes": 90776,
+      "stage": "states",
+      "privacy": "Synthetic fixtures and existing neutral fallback/brand artwork; no customer photos or live accounts."
+    }
+  ],
+  "baseline": "Independent preview of pre-edit compiled build, frozen 2026-11-19T08:00Z, corrected API fixture; not Gemini screenshot claims.",
+  "engines": "Before Chromium; after Chromium/Firefox/WebKit.",
+  "raw_images": "Local output ignored; selected synthetic captures reviewed and copied into visuals/."
+}

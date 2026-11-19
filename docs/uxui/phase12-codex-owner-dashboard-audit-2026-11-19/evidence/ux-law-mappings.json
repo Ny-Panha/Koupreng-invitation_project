@@ -1,0 +1,68 @@
+[
+  {
+    "principle": "Jakob",
+    "observed_change": "Familiar native search/select/calendar and event hierarchy",
+    "source": "EventsFeature / EventNavigation",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Hick",
+    "observed_change": "Three period choices and compact controls; visible applied criteria",
+    "source": "EventsFeature",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Fitts",
+    "observed_change": "44px principal controls; redundant covering FAB removed",
+    "source": "OwnerExperience.css",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Gestalt proximity",
+    "observed_change": "Title/control/result grouping; quiet metric strip",
+    "source": "OwnerExperience.css",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Tesler",
+    "observed_change": "Secondary module groups preserve all 19 destinations",
+    "source": "EventNavigation",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Doherty",
+    "observed_change": "Immediate native filter state; stable data/layout during genuine loading",
+    "source": "EventsFeature",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Nielsen 1",
+    "observed_change": "Server/local/sync status and unavailable/zero distinction",
+    "source": "EventCard / DashboardFeature",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Nielsen 3",
+    "observed_change": "Clear criteria, Back history, Escape and focus return",
+    "source": "Owner browser suite",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Nielsen 5",
+    "observed_change": "No automatic ownership claim; confirmed deletion and request authority",
+    "source": "useEvents",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Nielsen 6",
+    "observed_change": "Event context, labeled icons and next actions",
+    "source": "EventNavigation / DashboardFeature",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  },
+  {
+    "principle": "Nielsen 9",
+    "observed_change": "Draft retention, retry and clear recovery",
+    "source": "useEvents / EventsFeature",
+    "evidence": "frozen-owner-browser / current unit suites; no measured decision-time claim"
+  }
+]

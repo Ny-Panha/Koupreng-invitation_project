@@ -1,0 +1,12 @@
+{
+  "initial_data_account_suite": "5 failed, 1 passed before; 6 passed after first fixes",
+  "revocation": "2 failed before; workspace suite 41 passed after",
+  "unclaimed_draft": "1 failed, 3 passed before; complete events/dashboard suite passed after",
+  "test_source": [
+    "Phase12CodexAccountIsolation.test.jsx",
+    "Phase12CodexDataTruth.test.jsx",
+    "Phase12CodexListModel.test.js",
+    "Phase12CodexRevocation.test.jsx"
+  ],
+  "non_red_first": "Visual composition and helper/date edge cases were source-backed improvements without an archived executable red version for every assertion."
+}

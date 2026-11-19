@@ -1,0 +1,105 @@
+{
+  "rows": [
+    {
+      "id": "UX12-C01",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C02",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C03",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C04",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C05",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C06",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C07",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C08",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C09",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C10",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C11",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C12",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Emulated forced colors/reflow and EN/KM themes checked; native zoom/physical devices unverified.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C13",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C14",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Exact desktop before/after captured; baseline only Chromium and annotated artifact/manifest bounded to fixtures.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C15",
+      "status": "PARTIALLY COMPLETE",
+      "evidence": "Canonical ten and queries corrected; StyleSeed deterministic registry remains unavailable.",
+      "release_certification": false
+    },
+    {
+      "id": "UX12-C16",
+      "status": "VERIFIED — LOCAL",
+      "evidence": "Scoped source + frozen-owner-browser, current unit tests and actual geometry/capture evidence.",
+      "release_certification": false
+    }
+  ],
+  "counts": {
+    "VERIFIED — LOCAL": 13,
+    "PARTIALLY COMPLETE": 3
+  },
+  "total": 16
+}

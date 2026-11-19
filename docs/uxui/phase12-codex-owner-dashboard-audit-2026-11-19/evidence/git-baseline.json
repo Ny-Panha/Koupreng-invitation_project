@@ -1,0 +1,739 @@
+{
+  "utc": "20261119T085303Z",
+  "local": "2026-11-19T15:53:03.999272+07:00",
+  "head": "ad02a26345f2beed2e8d0d28459de7fac1f8aef8",
+  "origin_main": "ad02a26345f2beed2e8d0d28459de7fac1f8aef8",
+  "status": " M apps/frontend-user/src/features/dashboard/DashboardFeature.jsx\n M apps/frontend-user/src/features/events/EventsFeature.css\n M apps/frontend-user/src/features/events/EventsFeature.jsx\n M apps/frontend-user/src/features/events/components/EventCalendar.css\n M apps/frontend-user/src/features/events/components/EventCalendar.jsx\n M apps/frontend-user/src/features/events/components/EventCard.jsx\n M apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx\n?? apps/frontend-user/playwright.phase12-1.config.js\n?? apps/frontend-user/src/features/dashboard/Phase12_1DashboardTruthfulness.test.jsx\n?? apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx\n?? apps/frontend-user/src/features/events/components/Phase12_1EventCalendarFidelity.test.jsx\n?? apps/frontend-user/src/features/events/workspace/Phase12_1WorkspaceAuthority.test.jsx\n?? apps/frontend-user/tests/e2e/phase12-1-owner-dashboard-screenshots.spec.js\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/01-executive-summary.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/02-architecture-boundaries.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/03-git-baseline.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/04-route-inventory.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/05-owner-events-provenance.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/06-owner-workspace-authority.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/07-event-list-ia.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/08-event-cards-editorial.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/09-filters-search-sort.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/10-inline-calendar-fidelity.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/11-local-draft-lifecycle.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/12-dashboard-hero-action-center.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/13-kpi-rsvp-guest-truth.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/14-currency-financial-summary.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/15-design-tokens-parity.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/16-visual-direction-evidence.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/17-library-preservation.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/18-ui-ux-pro-max-evidence.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/19-ux-laws-traceability.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/20-accessibility-audit.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/21-responsive-geometry.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/22-performance-audit.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/23-security-privacy-isolation.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/24-test-matrix-evidence.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/25-defect-register.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/26-independent-codex-handoff.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/README.md\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/async-authority-races.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/axe-contrast-results.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/browser-coverage.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/calendar-date-tests.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/changed-files-attribution.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/currency-permission-matrix.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/dashboard-kpi-sources.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/defect-register.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/draft-sync-lifecycle.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/event-provenance-matrix.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/evidence-validation.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/exact-test-command-results.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/filters-url-history.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/git-baseline.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/historical-57-plus-new-ledger.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/open-gates-owners.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/performance-before-after.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/permission-routes.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/phase12-1-acceptance-44.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/responsive-geometry.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/route-component-api-matrix.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/01-events-list-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/02-events-list-mobile-393-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/03-events-list-tablet-768-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/04-events-list-narrow-320-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/05-events-list-landscape-844-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/06-events-list-khmer-desktop-1440.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/07-events-calendar-month-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/08-events-calendar-agenda-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/09-events-calendar-mobile-393-km.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/10-events-empty-state-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/11-events-search-filter-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/12-workspace-dashboard-desktop-1440-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/13-workspace-dashboard-mobile-393-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/14-workspace-dashboard-khmer-1440.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/15-workspace-permission-denied-desktop-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/16-workspace-mobile-drawer-393-en.png\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ten-library-decisions.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ux-laws-traceability.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ux-pro-max-queries.json\n?? docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/visual-manifest.json\n",
+  "files": [
+    {
+      "path": "apps/frontend-user/playwright.phase12-1.config.js",
+      "sha256": "7d659ba4dbebbda85e31899c425ede73a8d3801cfcfbbe8e395113411834261f",
+      "bytes": 889
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.jsx",
+      "sha256": "f6e039ec0929e344b4ce6bcdce674c7aba8b5eb5f98a6e26fb9fc619730aa693",
+      "bytes": 26174
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.test.jsx",
+      "sha256": "dc33bfa81bec9d21e58fb69723db6d93566ef60b4750eaf1c2611508fb2f6753",
+      "bytes": 6251
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardPage.css",
+      "sha256": "0e4f6d7c37fde916fdacbca1222173948b58303c7c0518274fd71058d93bc63e",
+      "bytes": 18052
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/EventOverview.css",
+      "sha256": "28be68df39e69b92fd7a4440766cb4b200fb0de144487f7343e12ebac05cdb9e",
+      "bytes": 8638
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/Phase12_1DashboardTruthfulness.test.jsx",
+      "sha256": "83762c55a8e623a80e91df1807bb77f3b51cb65123631d5066c0b2289e96c985",
+      "bytes": 5459
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/dashboardData.js",
+      "sha256": "3f0d0d64e4e293c9860d07fbd21932c369e519592babdcbb390f425870cdfe50",
+      "bytes": 1092
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/dashboardData.test.js",
+      "sha256": "c35e2f42f7cce918151ca267673ba99f648351428130b819d6bb67a8c2d7311b",
+      "bytes": 1843
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.css",
+      "sha256": "0c0652fd7ac7d83face314e1a885d1da674ce8b5dbe06c6f71d526def0691c89",
+      "bytes": 33713
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.jsx",
+      "sha256": "733c59377cd47409f1493811766c2cfba894086903968d17afccb88778059b75",
+      "bytes": 24760
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsViewModes.test.jsx",
+      "sha256": "f70fd1a2fe31f96d06593d3bcf233e5e4147070f4787ea8232f9de81b6724db2",
+      "bytes": 4534
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx",
+      "sha256": "11fb8faf44c381cce08959ac5595fb36154157b547f106bb9e157cd8faa0655f",
+      "bytes": 7006
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/api/eventsApi.js",
+      "sha256": "648480b261f829e4ea7de7db5c317e7496eacf3295c172d75247561cf24a51df",
+      "bytes": 280
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.css",
+      "sha256": "acd7d0bf9dc07ec6133c02c501a62c4d98dccf7464ed03d667b294d083538229",
+      "bytes": 13190
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.jsx",
+      "sha256": "fc245fa7eb0fa564cad4938a74f3067a40fb4d39523691cf8f5d711bdb012125",
+      "bytes": 25103
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.test.jsx",
+      "sha256": "b309122c3cc799fb778a390c91bf7a51e55e98555dd4a71373161c69bf4b71b3",
+      "bytes": 4744
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCard.jsx",
+      "sha256": "167f98578616f14bf7c785801d206b67b2780cb4ccce77a3e5b897870dd1a081",
+      "bytes": 14367
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCard.test.jsx",
+      "sha256": "670efc2b1f6de3e65b93110fd81e38199a25690111a7f31222c995791d4aee93",
+      "bytes": 1958
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCover.jsx",
+      "sha256": "392e55ca6c97cb7ec9bde036df171f5c6fa7f32f783c32b485395f2c4dd88845",
+      "bytes": 563
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventDeleteModal.jsx",
+      "sha256": "ae3d4103ec3f4b9e852347889c21a7d44fa223a5cb1426caeb317f7fdd9b1b75",
+      "bytes": 1068
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/Phase12_1EventCalendarFidelity.test.jsx",
+      "sha256": "2b6a4d61d1495be9b2a431b9bf13b27911be8146c85858490e398345f2355e2c",
+      "bytes": 3870
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/events.test.jsx",
+      "sha256": "002f68aa1a231214d2e7c891aefba72cc3bf76d8cb114bd33d6b048a1eba3373",
+      "bytes": 13334
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/hooks/useEvents.js",
+      "sha256": "08f3b7d9655cb9231c27e53001e72c1de3b96e29cfd77f3de07209b06ae51552",
+      "bytes": 10700
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/model/eventCover.js",
+      "sha256": "182ec8e4a82afeb730970f1cbf17ac60cfebd1650509205280bd9e3aa0dfad8e",
+      "bytes": 2321
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/model/eventCover.test.js",
+      "sha256": "b0c79ea265d134e9c6a2158d9a61cbcc994b225f2f95666db7733962343e1020",
+      "bytes": 2799
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventCreatePage.css",
+      "sha256": "352163232cce1362f3702a4e6964bf8fd7bd79b1a52387ae803366aed2dff233",
+      "bytes": 25684
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventCreatePage.jsx",
+      "sha256": "d65d0487d949200f0d87a038d455a6134f34475dd9950366c1df7d6519ffafb3",
+      "bytes": 72645
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventCreatePage.test.jsx",
+      "sha256": "b445b62b4d3ecd627829e90ab695ca0357dffb206bc0d58af65feb386125f0af",
+      "bytes": 17327
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.css",
+      "sha256": "9b20dee760458cbde4621a597a631e66294a07f524250c38f3c78ef041d4372e",
+      "bytes": 5743
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.jsx",
+      "sha256": "0248f3ba36c859172e0f574664f8e99e9229099665e5944be707a210c8cb95e9",
+      "bytes": 21527
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventDetails.test.jsx",
+      "sha256": "6191aee5f26397ff9f5c72a43e1ea52d530f5e85e65c3ca0ed5dae89d05b33c7",
+      "bytes": 9201
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventFields.jsx",
+      "sha256": "29a0ae8c10887d1fc0560ce681798286556efc37f13145b7255929ee6f647310",
+      "bytes": 2980
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventPhotoUpload.css",
+      "sha256": "0f85847de7a947e1d20917dbc6bb9e809c543415b46015efd7167fb118c76a25",
+      "bytes": 5268
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventPhotoUpload.jsx",
+      "sha256": "41842e2fe342f8f391f1fc3a7413a98f4c035172f635a120a480de6d0b6fcb6f",
+      "bytes": 12928
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventPhotoUpload.test.jsx",
+      "sha256": "f4f0cc0cb696ee05c5fde0df92d332b94975a8cf040528036c9444811d1e4cb7",
+      "bytes": 4838
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/EventWizardModernization.test.jsx",
+      "sha256": "b5bdbb40adf0abe804520719677b570ccb15c6b5e1de7dba4decbd7d14234673",
+      "bytes": 8472
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/LanSafariCompatibility.test.jsx",
+      "sha256": "710a7f4c4ff5abbd015d7dc840d112a52bbb8e7304f6df2e4b97c9cb32b5b730",
+      "bytes": 3495
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/LocalizedEventEditor.jsx",
+      "sha256": "5d98a28f4ce1c04500ebcda01a8011c3cf980099de2736f6b90d6a5016b63e8c",
+      "bytes": 3625
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/MobileWizardRefinement.test.jsx",
+      "sha256": "c2ff1235eed706cce18507bd3aafe0892f32cec68d8e97c7458ae7cf7f854b6c",
+      "bytes": 5528
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/Phase11CodexRegression.test.jsx",
+      "sha256": "526fe4266b57f814f8f7bcc5912f366dcec0adcbb2790e096043a58a7e7447be",
+      "bytes": 16444
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/Phase11RequestAuthority.test.jsx",
+      "sha256": "f8811b2e5fe29002c4de1d40a9d5913577c6a3537aeb722d3bd8e06ba36cf468",
+      "bytes": 2234
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/Phase11_1DraftLifecycle.test.jsx",
+      "sha256": "bc6913dba469ba8f8ebf2bf03d3d1b70b0b367763d9c943ad122805c7662cfa0",
+      "bytes": 8462
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/Phase11_1TemplateIntent.test.jsx",
+      "sha256": "de7a94f1b4399fd2c167eea2ae54e4cf3f4febabc75dae96bb958adcaf7ce29a",
+      "bytes": 3818
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/Phase11_1WizardRegression.test.jsx",
+      "sha256": "29b68fdd10886096c851d1cb6cb2f7fa3b3c7795f5c254284d8b0057eea4f83d",
+      "bytes": 7933
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/RequiredPhotoEventCreation.test.jsx",
+      "sha256": "f26a1cc72111c7c9c3744b453e7fc7876b1a5a3857a68b367660cfd2a2cc56c1",
+      "bytes": 8446
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/eventCreation.js",
+      "sha256": "b0747f5140ad43a154de523044ea9ed7fd3f5dac5a8759b5a22a1710d4deec1e",
+      "bytes": 1764
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/eventFields.js",
+      "sha256": "53eb317db0b9bebfbd978a03f678e91790c216d2e6f5b34ef7f9a7900c190158",
+      "bytes": 3846
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/onboarding/localizedEventModel.js",
+      "sha256": "4226587a977d34e402b638c5304c083ecffd9a0d09681e29f8d1066e1ff5254e",
+      "bytes": 138
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/AttendanceAnalytics.css",
+      "sha256": "62a20c2eb9da4ced37e34d80be0109b2c2fea9e9c22bfd5330eec9bd4d51573f",
+      "bytes": 4108
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/AttendanceAnalytics.jsx",
+      "sha256": "a2e7a84458940916cd94f6688161022dc6fe77063e66cb6ebf3521b3d8807ab8",
+      "bytes": 8468
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/AttendanceAnalytics.test.jsx",
+      "sha256": "cf5d6121390db8bff30c1ea32ddcefb42a2359d8f55ec18679f06315e34ab541",
+      "bytes": 2765
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventContext.js",
+      "sha256": "e61e4759c96cd8c46aa8eafd7835b0d4eb7a61a3f5ff0ab1b7d960f8f7b554cd",
+      "bytes": 173
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventInvitation.jsx",
+      "sha256": "4cd07049fd37d46f0f45f13a3055aa470c1ae05c40484bbe6c589877127d30ad",
+      "bytes": 453
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventNavigation.jsx",
+      "sha256": "ca7036f15181d6979c686d9f983c02d4582f1ef01f4e0764f7d6643c65114436",
+      "bytes": 7597
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventNavigation.test.jsx",
+      "sha256": "936a18e5626667628f3e6ce37721674ffe28a4a19ee17e916b29c27813bb3c50",
+      "bytes": 6776
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventTeamPanel.jsx",
+      "sha256": "7b2d62eccf60fa53b5782738b02b23570b87fdbf2f50ea93e2acf629b1e7b889",
+      "bytes": 6467
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventTeamPanel.test.jsx",
+      "sha256": "f78263dc3dccdaba7ce62a983968e7f5d03fbef7cddb508ca60f95c2572afe42",
+      "bytes": 3046
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+      "sha256": "e0e9331eaf0a10f2a2f40dfdc7f206e5a8e9d4d5e0acb2378654302aff1c63f7",
+      "bytes": 14112
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "sha256": "732843d273185b4da1d3c43e3046f75d7080e8702a733605ae9a349b0238430e",
+      "bytes": 12194
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.test.jsx",
+      "sha256": "f40859b97c7cc53194fe397b46ad0a114e80263966c339e56d5711d11dbb899c",
+      "bytes": 5756
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/Phase12_1WorkspaceAuthority.test.jsx",
+      "sha256": "93c1587bc5242d3ea747cf745bcc6184089b7856fa0ad65837179e1768688a52",
+      "bytes": 5049
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/eventNavigationModel.js",
+      "sha256": "bfae8d10608917018b7c38a404a69ba4eb4bed414cf3e134289f5b9a7d7bc67c",
+      "bytes": 3732
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/eventRoutes.js",
+      "sha256": "8642c33c9bc66333c27fe26a997e4490f23655aed0fda9e3d7505c7f2be882de",
+      "bytes": 563
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/phase12Modernization.test.jsx",
+      "sha256": "d068330a4279cf4d665c07232b6d146b09bd91053c3bed6c6ed41bfdea28e552",
+      "bytes": 6495
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/phase13AccessibilityResponsive.test.jsx",
+      "sha256": "e0569af6a5db7ae524f42c1758bc72ababa37f117928a63224d5a62b9dcfe9fa",
+      "bytes": 7226
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/useEventNavigation.js",
+      "sha256": "f472156edb53b90301a18b607a11ce222f351792c1948edc6fb7da438d140ae5",
+      "bytes": 2004
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/AuthShell.jsx",
+      "sha256": "ec4c9f66434a1bbf5a393b8c40d941c9bf1a69c3942544345c36450b2f0aa886",
+      "bytes": 351
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/HostShell.css",
+      "sha256": "154a1ce90bb731ec87037f5986f1d49f53ffe353c0653b2cdd4766d92fd8486e",
+      "bytes": 3843
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/HostShell.jsx",
+      "sha256": "42d7fac0df39610904a15937d444eb8d67654abece17218a1544fcdf2d522825",
+      "bytes": 1696
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/MarketingShell.jsx",
+      "sha256": "ecfdb4e3cd53c3ec103d8f73ce7c55a15019312dce1fa4641ba37ca936d67537",
+      "bytes": 1117
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/Footer.jsx",
+      "sha256": "a28315d0b681072ff70b99f1b1d1a9673bf42c4f6a612bb147c243f47a137f71",
+      "bytes": 2099
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/Header.jsx",
+      "sha256": "4f69bb71b423f2f602f8d3e879d809f19c08b1b17253974808b3274885b5f8f1",
+      "bytes": 6342
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/HostNav.css",
+      "sha256": "26bbb6344d1a9af3eda933bc771f2d0c7c0233477bc0b66bf8bddeb3ffb4f059",
+      "bytes": 16837
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/HostNav.jsx",
+      "sha256": "f6e1b341c0e0e20608c73b268bf50f78ae527742a4dc53c6607faf3c6f5004f9",
+      "bytes": 19184
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/HostNav.test.jsx",
+      "sha256": "f27fa1038497752ab6681bcea2b0c677f020b9edf8357f67deb3b8e92ec053c8",
+      "bytes": 5161
+    },
+    {
+      "path": "apps/frontend-user/src/layouts/components/MarketingChrome.css",
+      "sha256": "c7809adc3b8b2efa9b56c8b403cbb1749fa87629db7800914cf72aeb7a9661cb",
+      "bytes": 18299
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase12-1-owner-dashboard-screenshots.spec.js",
+      "sha256": "724446d1407fab9baccbffda3965bf0c387c69384983812119553d58ee128a5e",
+      "bytes": 13302
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/01-executive-summary.md",
+      "sha256": "6031015d3e71c51e78dbd7b5e75428e009bcbfa661e1c2cb9b0a9ebb72b6b2ae",
+      "bytes": 3514
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/02-architecture-boundaries.md",
+      "sha256": "15774b6e1153da09470a67a6f8793f5c32f8e9c07c9a618881e62e02c0765015",
+      "bytes": 3120
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/03-git-baseline.md",
+      "sha256": "7d30977dd9f6f1945158dd3f138a76abba60736d0a82c7fa30f535f12ad613b9",
+      "bytes": 2738
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/04-route-inventory.md",
+      "sha256": "f6c187ffcd3003e86ca8920458b3c8ecf2b1a35064e15642d9bd12242b74ae02",
+      "bytes": 2926
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/05-owner-events-provenance.md",
+      "sha256": "c10ae8efed329d908a6238aef2bcda5761515722879d320be331d1d27123b889",
+      "bytes": 2857
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/06-owner-workspace-authority.md",
+      "sha256": "37cdba6ab0acd646455cdd35a39a99e4c4870647605e341a2668c0f0090a0794",
+      "bytes": 2665
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/07-event-list-ia.md",
+      "sha256": "77e54d8a3fb2dc76d76c4f8673d0b6dd919995fbf251b6d442ca7b3ec9fcd4f1",
+      "bytes": 3264
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/08-event-cards-editorial.md",
+      "sha256": "47c9ae18f6fbcebfafb113a2da2b9a666dbde5256157e4e05770b7b41059dfc0",
+      "bytes": 2352
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/09-filters-search-sort.md",
+      "sha256": "2c6b7ccc8773cbd067ad2c3a62d1cb9569b9f84ecae2366404a18c29951c4958",
+      "bytes": 2836
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/10-inline-calendar-fidelity.md",
+      "sha256": "76fa39be78f5789a4a16bc768d4bb2f4e070c9787e3c557ab5be155617c78331",
+      "bytes": 2378
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/11-local-draft-lifecycle.md",
+      "sha256": "8749ab12173fafd8bd8d3cdfbb836b6c862a9245789fc733d025f868695dd4de",
+      "bytes": 1585
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/12-dashboard-hero-action-center.md",
+      "sha256": "7d89693cb7349fdebb0cc5b2b9c8f5cbf360c562cefc544d67303be795c404c1",
+      "bytes": 2115
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/13-kpi-rsvp-guest-truth.md",
+      "sha256": "5a724ed6d0e1d89b33d26495480d436d6615ec1b5050fca4eaa38cb64331b367",
+      "bytes": 1822
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/14-currency-financial-summary.md",
+      "sha256": "1a11f948d6696f91e8db43b26f8ee1dc8b3438e87078731d6a3a97096681fb85",
+      "bytes": 1757
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/15-design-tokens-parity.md",
+      "sha256": "76fac654a743a1dd2ce632a784ddddfab3a5af8fb7f942225d95307dc36851fd",
+      "bytes": 1563
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/16-visual-direction-evidence.md",
+      "sha256": "f049be5cac3d368cb96f2b058be0df50e6d622405e497ee7ddd8b71d7ec55c4e",
+      "bytes": 6650
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/17-library-preservation.md",
+      "sha256": "1ff4889993deb09aff39c8d09529b23a2a3875397745c6258f4d5ff35e029a1e",
+      "bytes": 1776
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/18-ui-ux-pro-max-evidence.md",
+      "sha256": "32a810f5ab5f50cc8656d9e93b7a067273ecf61826b7e00159524631d99b923b",
+      "bytes": 2611
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/19-ux-laws-traceability.md",
+      "sha256": "bbb6f897707c7bedfa99b55b2209e44a2a81752f881093426c30fbdbe3c5973a",
+      "bytes": 2759
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/20-accessibility-audit.md",
+      "sha256": "8fe17688ec28cb1f7d0a5fca07950adf52b6062fcc66768e4b0134e9df687194",
+      "bytes": 2290
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/21-responsive-geometry.md",
+      "sha256": "fba1ea60d24b5b9bd1b5332379b1ac4a778a00821c2513145700cb850db7b829",
+      "bytes": 1928
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/22-performance-audit.md",
+      "sha256": "5c9d3b4ffd64c5611722faf685c5e43d85f80e8f99f90be7ed4f78d14f1e516a",
+      "bytes": 1729
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/23-security-privacy-isolation.md",
+      "sha256": "e2fef130f4351d0a20cb4467f7a21a0939d3782f4b0ef47668dee5e6ef535468",
+      "bytes": 1800
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/24-test-matrix-evidence.md",
+      "sha256": "b72315bf218ac53f6b4b4f814eb3a552700f0c57bf9ff84ed57cb0aec3ee0b4f",
+      "bytes": 2785
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/25-defect-register.md",
+      "sha256": "0f156c6556b8cc5405b1a77e2a39a0d87967b6481e4ce199d794bea929960899",
+      "bytes": 1805
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/26-independent-codex-handoff.md",
+      "sha256": "0e945ed758913e8119f30ca8d95766018f57c5f56b58d521cdcc56a72e886790",
+      "bytes": 3440
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/README.md",
+      "sha256": "711b5c3cc1ae17cb9fa87c55312b7e29ead76b904794fbcacb8b10ae761d190b",
+      "bytes": 12657
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/async-authority-races.json",
+      "sha256": "04374a4d8162d1a6d6eebc37d0f3376e3fb109bb65b4b208bb7dba81e3c2f46c",
+      "bytes": 1249
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/axe-contrast-results.json",
+      "sha256": "55d0b5488113a52ecaa396948a15dc13b2df97b54d365935fcb98b86bba9c89c",
+      "bytes": 1182
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/browser-coverage.json",
+      "sha256": "21d1041bdbaeb86a85552904ce15088ae8296a79dd7983693df569fc53cdda26",
+      "bytes": 585
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/calendar-date-tests.json",
+      "sha256": "a954441974dda9e63804cfadcc2714b5cc32d984d9040f7adc5f7fba147a7499",
+      "bytes": 1246
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/changed-files-attribution.json",
+      "sha256": "46427d6589122d6fb15acbd0540aeda7277888ee2ba1f50c36192914a382f208",
+      "bytes": 3054
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/currency-permission-matrix.json",
+      "sha256": "5c8eb140a6fe9fbc5b5086486e382223f92bea80aa395e9d077dc6b96155d08d",
+      "bytes": 874
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/dashboard-kpi-sources.json",
+      "sha256": "1620cdf5dc3d2f08e98f1a16bdcf79c77d79459647814fb12058e580d2efb822",
+      "bytes": 1736
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/defect-register.json",
+      "sha256": "51e4e58fb57ca099038d9180828858a03bbb8ddb7ea6dbb841ea37675333b607",
+      "bytes": 1412
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/draft-sync-lifecycle.json",
+      "sha256": "1bb69b2b460b6678cbb18267c59d19611d394f6c068c73c4b1dabe0109e17d0a",
+      "bytes": 912
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/event-provenance-matrix.json",
+      "sha256": "66fe3d6cbb7c6b7cac0d683cba194494df007b3d9eb75071573897a9f3af9f07",
+      "bytes": 2005
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/evidence-validation.json",
+      "sha256": "32baa78f661f35b331e954d77c3db58dec34420a75ca2179fd4a064873c9e19a",
+      "bytes": 1102
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/exact-test-command-results.json",
+      "sha256": "60b61ad01f655b3707d996814860994a5f42aa24627b83ac6c2e8562dcde8d50",
+      "bytes": 1479
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/filters-url-history.json",
+      "sha256": "eda9f9f5bbe4b863862d1c3c16d5d9549747d76d1b05b5b1f5b52d77f8032394",
+      "bytes": 1399
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/git-baseline.json",
+      "sha256": "18c1752fb1711fe5d67abdbe1d57d3a440fe706e8f8da56bf95ca653af562c6b",
+      "bytes": 499
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/historical-57-plus-new-ledger.json",
+      "sha256": "28f4ae9083ee9caf2e21a821bff05b0f7a0902493e1c517cfa9c61f0173e603f",
+      "bytes": 17128
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/open-gates-owners.json",
+      "sha256": "421e2e9f33bcbdfab2b8485df46c2a54880bc4b7f744f6afe8ef0d9123a281d3",
+      "bytes": 855
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/performance-before-after.json",
+      "sha256": "fb6544cf0302581ae6bea13bdc65f281fc5858d84b3be6de1456366387712f5b",
+      "bytes": 895
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/permission-routes.json",
+      "sha256": "250953acb4e94f412d719626fd56504b84d1de12c1ba58f03b7cc65032d08ad1",
+      "bytes": 1516
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/phase12-1-acceptance-44.json",
+      "sha256": "ca8f09108a200da84e1fe2087ed03a70ccb4991e53e1ef3b6249a635816b5e9c",
+      "bytes": 9340
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/responsive-geometry.json",
+      "sha256": "926b50b826e5e9458e29ecd36c57b13be402043fc1ca59621a0d14783a7e5a4a",
+      "bytes": 1439
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/route-component-api-matrix.json",
+      "sha256": "c1bca6ddde7f2e6b60feae835be2d930509724f15befbd15e73c42c2983abc61",
+      "bytes": 1663
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/01-events-list-desktop-1440-en.png",
+      "sha256": "777344f2f8d26b5e770ce5914940d0155360ccc5f99b319160d86696fc8ccf5c",
+      "bytes": 99122
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/02-events-list-mobile-393-en.png",
+      "sha256": "9f1b3cfb660b3a83fde4dd0bed8f8f2fc2597b43fef731478ad917c95bcbb7fe",
+      "bytes": 60513
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/03-events-list-tablet-768-en.png",
+      "sha256": "a904dd3c9ea98409928e925a2f7bbaf54e1444457a793cd3374de7bf20ec00f3",
+      "bytes": 69930
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/04-events-list-narrow-320-en.png",
+      "sha256": "bb76deb7658d27387d64c413472c412c4aa32998e8f044ab960215c379f3e50a",
+      "bytes": 45862
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/05-events-list-landscape-844-en.png",
+      "sha256": "728e0396fda51a98d685d8d0a66a72756c0fc4f5dab46f1d8b40b94c874d81a3",
+      "bytes": 52517
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/06-events-list-khmer-desktop-1440.png",
+      "sha256": "6bfc95b38c793989646f80974b7f76abf92ca0cff8bed8d96233526d3cf8efb5",
+      "bytes": 107778
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/07-events-calendar-month-desktop-1440-en.png",
+      "sha256": "9f52831783efb8fe0e2587eced9df7dbd13b76be6b189ff19476b1a44a147f19",
+      "bytes": 92211
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/08-events-calendar-agenda-desktop-1440-en.png",
+      "sha256": "a279d2a28a2f212adeb5b320bde89e95b409428a3f557286f71093d176517a81",
+      "bytes": 110462
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/09-events-calendar-mobile-393-km.png",
+      "sha256": "1bc0ca2a41f97d94d0961a4fe296cfb2f82d00e160c41afd97620db3754f3b6f",
+      "bytes": 62448
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/10-events-empty-state-desktop-1440-en.png",
+      "sha256": "371166f859840241b29c7ff482a493ffeffdd49374239dba3dade2d9f129dbf1",
+      "bytes": 106406
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/11-events-search-filter-desktop-1440-en.png",
+      "sha256": "035a65340250312b55d139e7cf3792670a01aceda98e38078c5bb47ac7628035",
+      "bytes": 107928
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/12-workspace-dashboard-desktop-1440-en.png",
+      "sha256": "8cd150064db22215ea596425e6a022fb21162d436d174611e8fd684641268797",
+      "bytes": 137812
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/13-workspace-dashboard-mobile-393-en.png",
+      "sha256": "c72e976254a86234dfd5da9a5b06340fdbf2df3af5de79bc4d0eb6669a859785",
+      "bytes": 61632
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/14-workspace-dashboard-khmer-1440.png",
+      "sha256": "1630462af5be665c8577bfa70ba88e3ce8c963b9f13db59964bd13be577bea5e",
+      "bytes": 142805
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/15-workspace-permission-denied-desktop-en.png",
+      "sha256": "9ee787d3cfb657b8a0f9c667fc3d4e622b18120d2babcd6fc5d6359e0243977e",
+      "bytes": 78156
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/screenshots/16-workspace-mobile-drawer-393-en.png",
+      "sha256": "46a2babd836e4fff797d869eb765ea9843d5d0af3944556f05417363fe77757e",
+      "bytes": 41335
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ten-library-decisions.json",
+      "sha256": "e0306cf74aea22b21e82361041902398b9138df390aefae35aac0f10a38ece67",
+      "bytes": 1690
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ux-laws-traceability.json",
+      "sha256": "0ddcc41b18f14e909733b97d1f165f2aa04196eeb8fceffba123532e67b8300c",
+      "bytes": 1381
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/ux-pro-max-queries.json",
+      "sha256": "b351c87b55313d0eb435e639b745a711aa4861c196a8151b99413e04bcdee582",
+      "bytes": 1445
+    },
+    {
+      "path": "docs/uxui/phase12-1-gemini-owner-dashboard-2026-11-19/evidence/visual-manifest.json",
+      "sha256": "e444f4ca6ac9460b11ef39f75d5678cba21da47a9e715bce869dfed9c7f69ab7",
+      "bytes": 5656
+    }
+  ],
+  "archive": "local external snapshot; absolute path intentionally omitted",
+  "resumed_head": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
+  "concurrent_commit_confirmed_by_user": true,
+  "concurrent_commit_changed_files": 4262,
+  "scope": "No Codex staging or publication occurred before the user-authored concurrent commit."
+}

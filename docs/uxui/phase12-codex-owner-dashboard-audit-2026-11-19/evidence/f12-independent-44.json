@@ -1,0 +1,375 @@
+{
+  "rows": [
+    {
+      "id": "F12.1-01",
+      "topic": "Git baseline, inherited state and origin/main authority",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-02",
+      "topic": "Preservation of published Phase 06–11 code and Phase 11 P1 fixes",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Cross-phase source preservation and executed coverage are recorded; historical/live certifications are not renewed.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-03",
+      "topic": "Previous failed CI + current ad02a263 run reported truthfully",
+      "gemini_verdict": "REVIEW REQUIRED",
+      "codex_verdict": "REVIEW REQUIRED",
+      "evidence": "Actual CI red/skipped state independently retrieved; DevOps owns external rerun/secret classifier.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-04",
+      "topic": "Complete Phase 12 source/route/component/state inventory",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-05",
+      "topic": "RequireAuth and server-backed event ownership maintained",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-06",
+      "topic": "Legacy route aliases, query/hash and guided continuation preserved",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-07",
+      "topic": "Distinctive premium event-atelier visual implementation",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-08",
+      "topic": "Scoped tokens, light/dark visual integrity and no global collision",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-09",
+      "topic": "Exact canonical ten UI references evaluated safely",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-10",
+      "topic": "Actual UI UX Pro Max and design skills applied",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Requested design skills used; StyleSeed legacy bundle exists but lock/registry is missing, so deterministic gate cannot certify.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-11",
+      "topic": "UX laws mapped to observable interactions",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-12",
+      "topic": "Accurate owner event list, meaningful empty/loading/error states",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-13",
+      "topic": "Server/local/shared event provenance and sync truth",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Local/server/shared behavior tested; exhaustive stale/ambiguous server combinations remain bounded.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-14",
+      "topic": "Event status, title/type/date and missing value truth",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Missing data handled; exhaustive malformed-date metadata display across every old consumer not certified.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-15",
+      "topic": "Cover-source order, authored media absence and fallback correctness",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-16",
+      "topic": "Owner/shared/local event action routing and keyboard menus",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-17",
+      "topic": "Deterministic sorting by newest, date and title with tie-breaking",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-18",
+      "topic": "Khmer Unicode NFC search normalization",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-19",
+      "topic": "Period quick filter tabs (all, upcoming, past) and stable identity",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-20",
+      "topic": "URL search param synchronization without history clutter",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-21",
+      "topic": "Pagination and zero-state recovery without blank screens",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-22",
+      "topic": "Inline calendar month and agenda views preserved",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-23",
+      "topic": "Leap years and date arithmetic without month shifts",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Leap/month/day behavior exercised; full DST and malformed API date matrix incomplete.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-24",
+      "topic": "Calendar event chip status styling and uncommitted draft indicator",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-25",
+      "topic": "Draft storage integrity and automatic sync preservation",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "List and retry/account isolation verified; unknown legacy ownerless drafts retained for separately authorized recovery.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-26",
+      "topic": "Contextual Continue where you left off resume draft banner",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-27",
+      "topic": "Account switch isolation for drafts and session caches",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Events account transitions verified; every legacy editor/cache consumer requires Phase 13 follow-through.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-28",
+      "topic": "Event workspace identity and nested destinations reachable",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-29",
+      "topic": "Owner/collaborator permissions reflected correctly",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-30",
+      "topic": "Pending/denied/revoked access fails closed without stale data",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-31",
+      "topic": "Mobile/desktop EventNavigation drawer/prefs and focus",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-32",
+      "topic": "Source-backed event overview and preparation/checklist",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-33",
+      "topic": "Guest/RSVP/check-in KPIs zero versus unavailable truthful",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-34",
+      "topic": "USD/KHR financial data separate and permission-gated",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-35",
+      "topic": "Correct action center and role-aware workflow shortcuts",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-36",
+      "topic": "Upcoming date, countdown and notification fidelity",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-37",
+      "topic": "Bilingual EN/KM long text and culturally correct labels",
+      "gemini_verdict": "REVIEW REQUIRED",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "EN/KM rendered; native cultural/linguistic signoff remains external.",
+      "owner": "Native Khmer reviewer"
+    },
+    {
+      "id": "F12.1-38",
+      "topic": "Responsive geometry including 320px and short landscape",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Nine viewport geometries and long localized text checked; native zoom/physical devices open.",
+      "owner": "Accessibility/device QA"
+    },
+    {
+      "id": "F12.1-39",
+      "topic": "WCAG 2.2 AA development evidence and forced colors",
+      "gemini_verdict": "PARTIALLY COMPLETE",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Axe/keyboard/forced-color emulation exercised; physical AT and native 200% zoom remain open.",
+      "owner": "Accessibility/device QA"
+    },
+    {
+      "id": "F12.1-40",
+      "topic": "Reduced motion, media loading and safe perceived performance",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "Reduced motion and emitted bytes checked; field performance and physical low-end device remain external.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-41",
+      "topic": "Unit/lint/build/route and historical regression honesty",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "All actual commands and inherited/environmental failures retained; no universal release certification.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-42",
+      "topic": "All 57 historical IDs and separate AUTH/C08/C09/C10/F10/F11 gates retained",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "57 exact historical entries and separate ledgers retained from immutable Git source; no new closure claims.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-43",
+      "topic": "Full attributable documentation, hashes and evidence validation",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "VERIFIED — LOCAL",
+      "evidence": "Current source, exact command register and named browser/unit fixtures; see topic reports.",
+      "owner": "Codex / relevant domain owner"
+    },
+    {
+      "id": "F12.1-44",
+      "topic": "Gemini-only handoff with Phase 12 Codex + later push policy",
+      "gemini_verdict": "VERIFIED—LOCAL",
+      "codex_verdict": "PARTIALLY COMPLETE",
+      "evidence": "User-published concurrent checkpoint acknowledged; this audit publication result is separate.",
+      "owner": "Codex / relevant domain owner"
+    }
+  ],
+  "counts": {
+    "VERIFIED — LOCAL": 29,
+    "PARTIALLY COMPLETE": 14,
+    "REVIEW REQUIRED": 1
+  },
+  "total": 44,
+  "reported_summary": {
+    "VERIFIED—LOCAL": 39,
+    "REVIEW REQUIRED": 3,
+    "PARTIALLY COMPLETE": 2,
+    "FAILED": 0,
+    "BLOCKED—EXTERNAL": 0,
+    "NOT APPLICABLE": 0
+  },
+  "actual_gemini_itemized": {
+    "VERIFIED—LOCAL": 41,
+    "REVIEW REQUIRED": 2,
+    "PARTIALLY COMPLETE": 1
+  }
+}

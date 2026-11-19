@@ -1,0 +1,23 @@
+{
+  "week_start": "Monday",
+  "leap_day": "2028-02-29 covered by inherited current-run component test",
+  "keyboard": [
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowDown",
+    "Home",
+    "End",
+    "PageUp",
+    "PageDown",
+    "Enter",
+    "Space"
+  ],
+  "semantics": "Grid rows with one date tab stop; event-chip pointer shortcuts have equivalent selected-date native actions.",
+  "date_basis": "Event date strings are calendar days; formatting local noon. Countdown uses browser-local event date/time, or end of day when time absent. API has no separately verified timezone field.",
+  "limits": [
+    "Native Khmer pronunciation/numerals signoff external",
+    "Full DST/invalid API date certification incomplete",
+    "No selected-date URL persistence existed; no new route/API added"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "initial_run": {
+    "id": 44479860498,
+    "sha": "ad02a26345f2beed2e8d0d28459de7fac1f8aef8",
+    "failed": [
+      "Secret Scan",
+      "Browser E2E & Route Smoke"
+    ],
+    "guest": "Expected Add guest count 0; got 1 on desktop/mobile owner fixture."
+  },
+  "resumed_run": {
+    "id": 44493698838,
+    "sha": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
+    "failed": [
+      "Deployment Configuration & Docker Applicability",
+      "User Frontend Lint, Test, Analysis & Build",
+      "Admin Frontend Lint, Test, Analysis & Build",
+      "Secret Scan"
+    ],
+    "browser": "skipped",
+    "source_backed_repairs": [
+      "Missing Node process import in Codex test",
+      "Missing route fixtures",
+      "Missing docs/README.md"
+    ]
+  },
+  "redacted_secret_finding": [
+    {
+      "RuleID": "generic-api-key",
+      "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+      "StartLine": 121,
+      "EndLine": 121,
+      "File": "docs/uxui/MASTER_SCOPE.md",
+      "Entropy": 3.6818807,
+      "Fingerprint": "docs/uxui/MASTER_SCOPE.md:generic-api-key:121"
+    }
+  ],
+  "classification": "MASTER_SCOPE.md:121 is ordinary planning prose; no actual credential identified. Scanner remains enabled and its failed result is not green.",
+  "new_publication_ci": "Recorded separately after any authorized push."
+}

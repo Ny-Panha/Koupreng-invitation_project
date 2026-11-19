@@ -1,0 +1,179 @@
+[
+  {
+    "route": "/app/events",
+    "owner": "EventsFeature",
+    "css": "EventsFeature.css / scoped OwnerExperience.css",
+    "states": [
+      "loading",
+      "empty",
+      "offline local",
+      "search",
+      "filters",
+      "sort",
+      "page",
+      "calendar"
+    ]
+  },
+  {
+    "route": "/app/events/new",
+    "owner": "EventCreatePage (preserved)",
+    "states": [
+      "create",
+      "retry",
+      "cover recovery",
+      "request identity"
+    ]
+  },
+  {
+    "route": "/app/events/:eventId",
+    "label": "Dashboard",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "VIEW_EVENT"
+  },
+  {
+    "route": "/app/events/:eventId/invitation",
+    "label": "Invitation Studio",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "EDIT_EVENT"
+  },
+  {
+    "route": "/app/events/:eventId/guests",
+    "label": "Guests",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_GUESTS"
+  },
+  {
+    "route": "/app/events/:eventId/rsvp",
+    "label": "RSVP",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_RSVP"
+  },
+  {
+    "route": "/app/events/:eventId/delivery",
+    "label": "Delivery",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/tickets/design",
+    "label": "Digital tickets",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/preview",
+    "label": "Preview",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "VIEW_EVENT"
+  },
+  {
+    "route": "/app/events/:eventId/media",
+    "label": "Media",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_INVITATION"
+  },
+  {
+    "route": "/app/events/:eventId/seating",
+    "label": "Seating",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_SEATING"
+  },
+  {
+    "route": "/app/events/:eventId/check-in",
+    "label": "Check-in",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_CHECKIN"
+  },
+  {
+    "route": "/app/events/:eventId/analytics",
+    "label": "Attendance analytics",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "VIEW_REPORTS"
+  },
+  {
+    "route": "/app/events/:eventId/gifts",
+    "label": "Gifts",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/budget",
+    "label": "Budget",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/reports",
+    "label": "Reports",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/qr",
+    "label": "QR Code",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/wishes",
+    "label": "Wishes",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "MANAGE_RSVP"
+  },
+  {
+    "route": "/app/events/:eventId/settings",
+    "label": "Settings",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/team",
+    "label": "Event team",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  },
+  {
+    "route": "/app/events/:eventId/assistant",
+    "label": "Assistant",
+    "owner": "EventWorkspace + child in hostRoutes.jsx",
+    "css": "EventWorkspace.css / scoped OwnerExperience.css",
+    "owner_allowed": true,
+    "collaborator_grant": "OWNER ONLY"
+  }
+]

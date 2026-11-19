@@ -1,0 +1,60 @@
+{
+  "historical_records_from_immutable_baseline": [
+    {
+      "id": "guest-ci-reproduction",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/guest-workspace.spec.js --grep intersect --workers=2",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T03:04:55.972868+00:00",
+      "endedAt": "2026-11-19T03:05:05.302373+00:00",
+      "durationSeconds": 9.33,
+      "exitCode": 1,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/guest-ci-reproduction.log",
+      "logSha256": "6019cddf56c4ce3aaa3c6d46f3876a12c0b94763dcf8144e8a25d26ef60a2c16",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "2 failed",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    },
+    {
+      "id": "cross-phase02",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/phase02-foundations.spec.js --workers=2",
+      "environment": {
+        "PHASE11_STAGE": null,
+        "VITE_USER_APP_URL": null,
+        "VITE_PUBLIC_APP_URL": null,
+        "VITE_AUTH_STORAGE": null
+      },
+      "startedAt": "2026-11-19T03:17:50.394919+00:00",
+      "endedAt": "2026-11-19T03:18:52.139331+00:00",
+      "durationSeconds": 61.744,
+      "exitCode": 1,
+      "log": "output/playwright/phase11-codex-2026-11-19/logs/cross-phase02.log",
+      "logSha256": "3fd97e2869b3d78c46e401b1d3274b5790f71dbdc2c6ceaf2addb1e8185c9c9c",
+      "sourceHead": "0cf4755b645d948f1f10762075f4abd1c8e50e76",
+      "observedResult": "7 failed / 25 passed (1.0m)",
+      "workingDirectory": "D:/Koupreng-invitation_project"
+    }
+  ],
+  "phase02_current": {
+    "passed": 26,
+    "failed": 6,
+    "classification": "Existing admin Studio preview containment and translated selector failures. Admin source, Phase 02 test, onboarding, and guest source unchanged from ad02; no new failed identity versus the preserved historical failure log."
+  },
+  "guest_current": {
+    "passed": 0,
+    "failed": 2,
+    "classification": "Same Add guest count expected 0, received 1, owner fixture as historical CI."
+  },
+  "cross_phase_06_08_09_10": {
+    "passed": 456,
+    "skipped": 65,
+    "failed": 1,
+    "classification": "Chromium ERR_ADDRESS_IN_USE before page load; same named case passed separately in c08-connection-replay. Original completed run remains failed, never relabeled 457/0."
+  },
+  "theme_transition_trial": "One Chromium Axe trial inspected an intermediate light/dark color transition. Explicitly await finite animations and fonts for steady-state screenshots/contrast. Settled three-engine trial passed; no Axe rules suppressed.",
+  "comparison_limit": "Historical raw logs retain local ignored paths. Counts and immutable record hashes are preserved; native device and release certification remain open."
+}

@@ -1,0 +1,1926 @@
+--- /dev/null
++++ b/apps/frontend-user/playwright.phase12-codex.config.js
+@@ -0,0 +1,11 @@
++import { defineConfig, devices } from '@playwright/test';
++
++export default defineConfig({
++  testDir: './tests/e2e', testMatch: 'phase12-codex-*.spec.js',
++  workers: 2, retries: 0, timeout: 60000,
++  reporter: [['list'], ['json', { outputFile: '../../output/phase12-codex/browser-results.json' }]],
++  outputDir: '../../output/phase12-codex/browser-artifacts',
++  use: { baseURL: 'http://127.0.0.1:4313', trace: 'retain-on-failure', screenshot: 'only-on-failure', timezoneId: 'Asia/Phnom_Penh' },
++  projects: ['chromium', 'firefox', 'webkit'].map(name => ({ name, use: { ...devices['Desktop Chrome'], browserName: name, viewport: { width: 1440, height: 900 } } })),
++  webServer: { command: 'node ./node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4313 --strictPort', url: 'http://127.0.0.1:4313', reuseExistingServer: false },
++});
+--- /dev/null
++++ b/apps/frontend-user/playwright.phase12-regressions.config.js
+@@ -0,0 +1,10 @@
++import { defineConfig } from '@playwright/test';
++import base from './playwright.phase06.config.js';
++
++export default defineConfig({
++  ...base,
++  workers: 2, retries: 0, timeout: 60000,
++  testMatch: ['phase06-layout-navigation.spec.js','phase08-identity-account.spec.js','phase08-codex-regression.spec.js','phase09-marketplace-catalog.spec.js','phase10-codex-renderers.spec.js'],
++  outputDir: '../../output/phase12-codex/regression-artifacts',
++  reporter: [['list'], ['json', {outputFile:'../../output/phase12-codex/regression-results.json'}]],
++});
+--- a/apps/frontend-user/src/features/dashboard/DashboardFeature.jsx
++++ b/apps/frontend-user/src/features/dashboard/DashboardFeature.jsx
+@@ -19,6 +19,7 @@
+ import { ErrorState } from "@/shared/ui";
+ import "./DashboardPage.css";
+ import "./EventOverview.css";
++import RsvpComposition from './RsvpComposition';
+ 
+ function asList(val) {
+   if (Array.isArray(val)) return val;
+@@ -147,74 +148,22 @@
+ 
+   const stats = useMemo(() => {
+     const inv = state.selectedInvitation;
+-    const guestTotal = state.guests.reduce((sum, g) => sum + (Number(g.count) || 1), 0);
+-    const totalGuestsCount = state.dashboard?.totalGuests ?? state.checkInSummary?.totalGuests ?? Math.max(guestTotal, state.guests.length);
+-
+-    // 1. Check summary from backend API (matching /dashboard/invitations/:id/rsvp)
+-    const summaryAttending =
+-      typeof state.rsvpSummary?.attending === "number"
+-        ? state.rsvpSummary.attending
+-        : typeof state.rsvpSummary?.accepted === "number"
+-          ? state.rsvpSummary.accepted
+-          : null;
+-
+-    const summaryDeclined =
+-      typeof state.rsvpSummary?.notAttending === "number"
+-        ? state.rsvpSummary.notAttending
+-        : typeof state.rsvpSummary?.declined === "number"
+-          ? state.rsvpSummary.declined
+-          : null;
+-
+-    const summaryPending =
+-      typeof state.rsvpSummary?.pending === "number"
+-        ? state.rsvpSummary.pending
+-        : null;
+-
+-    // 2. Fallback calculate from rsvps list
+-    const rsvpsYes = state.rsvps.reduce((sum, r) => {
+-      const s = String(r.responseStatus || r.status || "").toUpperCase();
+-      return s === "ATTENDING" || s === "ACCEPTED" || r.attending === true
+-        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
+-        : sum;
+-    }, 0);
+-
+-    const guestsYes = state.guests.reduce((sum, g) => {
+-      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
+-      return s === "ATTENDING" || s === "ACCEPTED"
+-        ? sum + (Number(g.count) || 1)
+-        : sum;
+-    }, 0);
+-
+-    const rsvpsNo = state.rsvps.reduce((sum, r) => {
+-      const s = String(r.responseStatus || r.status || "").toUpperCase();
+-      return s === "NOT_ATTENDING" || s === "DECLINED"
+-        ? sum + (Number(r.attendeeCount) || Number(r.count) || 1)
+-        : sum;
+-    }, 0);
+-
+-    const guestsNo = state.guests.reduce((sum, g) => {
+-      const s = String(g.rsvpStatus || g.status || "").toUpperCase();
+-      return s === "NOT_ATTENDING" || s === "DECLINED"
+-        ? sum + (Number(g.count) || 1)
+-        : sum;
+-    }, 0);
+-
+-    const rsvpYes = state.dashboard?.attending ?? (summaryAttending !== null ? summaryAttending : Math.max(rsvpsYes, guestsYes));
+-    const rsvpNo = state.dashboard?.declined ?? (summaryDeclined !== null ? summaryDeclined : Math.max(rsvpsNo, guestsNo));
+-    const rsvpPending = state.dashboard?.pending ?? (summaryPending !== null
+-      ? summaryPending
+-      : Math.max(0, totalGuestsCount - rsvpYes - rsvpNo));
++    // DashboardReportService counts persisted guest/RSVP records, not seats.
++    const count = value => typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : null;
++    const totalGuestsCount = count(state.dashboard?.totalGuests);
++    const totalInvited = count(state.dashboard?.totalInvited);
++    const rsvpYes = count(state.dashboard?.attending);
++    const rsvpNo = count(state.dashboard?.declined);
++    const rsvpMaybe = count(state.dashboard?.maybe);
++    const rsvpPending = count(state.dashboard?.pending);
+ 
+     const expenseAmounts = groupAmounts(state.budgetItems, "actualCost");
+     const estimatedAmounts = groupAmounts(state.budgetItems, "estimatedCost");
+     const giftAmounts = groupAmounts(state.gifts, "amount");
+     const hasBudget = [...Object.values(expenseAmounts), ...Object.values(estimatedAmounts)].some((amount) => amount > 0);
+ 
+-    const checkedInCount =
+-      state.checkInSummary?.checkedIn ?? state.checkInSummary?.totalCheckedIn ??
+-      state.guests.filter((g) => g.checkedIn).length;
+-
+-    const rsvpRate = totalGuestsCount > 0 ? Math.min(100, Math.round((rsvpYes / totalGuestsCount) * 100)) : 0;
++    const checkedInCount = count(state.checkInSummary?.checkedIn ?? state.checkInSummary?.totalCheckedIn);
++    const rsvpRate = totalGuestsCount > 0 && rsvpYes !== null ? Math.round((rsvpYes / totalGuestsCount) * 100) : null;
+ 
+     return {
+       hasInvitation: !!inv,
+@@ -227,6 +176,8 @@
+       status: inv?.status || (inv?.published ? "PUBLISHED" : "DRAFT"),
+       id: inv?.id || inv?.invitationId,
+       guestTotal: totalGuestsCount,
++      totalInvited,
++      rsvpMaybe,
+       rsvpYes,
+       rsvpNo,
+       rsvpPending,
+@@ -268,7 +219,7 @@
+     }
+ 
+     const calculateTime = () => {
+-      const target = new Date(stats.eventDate).getTime();
++      const target = new Date(`${String(stats.eventDate).slice(0,10)}T${state.selectedInvitation?.eventTime || "23:59:59"}`).getTime();
+       const now = new Date().getTime();
+       const diff = target - now;
+ 
+@@ -291,9 +242,9 @@
+     };
+ 
+     calculateTime();
+-    const interval = setInterval(calculateTime, 1000);
++    const interval = setInterval(calculateTime, 60_000);
+     return () => clearInterval(interval);
+-  }, [stats.eventDate]);
++  }, [stats.eventDate, state.selectedInvitation?.eventTime]);
+ 
+   const handleCopyLink = async (slug) => {
+     if (!slug) return;
+@@ -352,7 +303,7 @@
+           <span className="workspace-muted">{EVENT_TYPES.find(type => type[0] === invitation.eventType)?.[english ? 2 : 1]}</span>
+         </div>
+         <h2>{stats.title}</h2>
+-        {stats.couple && stats.couple !== stats.title && (
++        {stats.couple && !stats.title.includes(stats.couple) && (
+           <p className="overview-couple-names">
+             <Heart size={14} aria-hidden="true" />
+             <span>{stats.couple}</span>
+@@ -379,7 +330,7 @@
+         )}
+         {timeRemaining.hasDate && timeRemaining.isPast && (
+           <p className="workspace-muted overview-countdown-pill is-past">
+-            <span>{label("Event completed", "កម្មវិធីបានកន្លងផុត")}</span>
++            <span>{label(stats.status === 'COMPLETED' ? "Event completed" : "Date passed", "កាលបរិច្ឆេទបានកន្លងផុត")}</span>
+           </p>
+         )}
+         <div className="overview-actions">
+@@ -425,11 +376,11 @@
+           <span>{text("statGuests") || label("Guests", "ភ្ញៀវ")}</span>
+           <Users size={20} aria-hidden="true" />
+         </div>
+-        <strong>{stats.guestTotal}</strong>
++        <strong>{stats.guestTotal ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
+         <span className="overview-metric-sub">
+-          {stats.guestTotal > 0
+-            ? `${stats.guestTotal} ${label("total invited", "នាក់បានអញ្ជើញ")}`
+-            : label("No guests yet", "មិនទាន់មានភ្ញៀវ")}
++          {stats.totalInvited !== null && stats.guestTotal > 0
++            ? `${stats.totalInvited} ${label("total invited", "នាក់បានអញ្ជើញ")}`
++            : stats.guestTotal === 0 ? label("No guests yet", "មិនទាន់មានភ្ញៀវ") : label("Invited count unavailable", "មិនមានចំនួនភ្ញៀវអញ្ជើញ")}
+         </span>
+       </Link>
+       <Link to={eventPath(stats.id, "rsvp")} className="overview-metric-card">
+@@ -437,9 +388,9 @@
+           <span>{label("Confirmed", "បានយល់ព្រម")}</span>
+           <CheckCircle2 className="overview-metric-icon" size={20} aria-hidden="true" />
+         </div>
+-        <strong>{stats.rsvpYes}</strong>
++        <strong>{stats.rsvpYes ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
+         <span className="overview-metric-sub">
+-          {stats.guestTotal > 0
++          {stats.rsvpRate !== null
+             ? `${stats.rsvpRate}% ${label("attending", "នឹងមកចូលរួម")}`
+             : label("Awaiting reply", "រង់ចាំការឆ្លើយតប")}
+         </span>
+@@ -449,7 +400,7 @@
+           <span>{label("Pending responses", "រង់ចាំការឆ្លើយតប")}</span>
+           <Clock3 className="overview-metric-icon" size={20} aria-hidden="true" />
+         </div>
+-        <strong>{stats.rsvpPending}</strong>
++        <strong>{stats.rsvpPending ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
+         <span className="overview-metric-sub">
+           {label("Awaiting reply", "មិនទាន់ឆ្លើយតប")}
+         </span>
+@@ -459,13 +410,15 @@
+           <span>{label("Checked in", "បានចូលរួម")}</span>
+           <ScanLine className="overview-metric-icon" size={20} aria-hidden="true" />
+         </div>
+-        <strong>{stats.checkedInCount}</strong>
++        <strong>{stats.checkedInCount ?? label("Unavailable", "មិនមានទិន្នន័យ")}</strong>
+         <span className="overview-metric-sub">
+-          {stats.rsvpYes > 0
+-            ? `${Math.min(100, Math.round((stats.checkedInCount / stats.rsvpYes) * 100))}% ${label("of confirmed", "នៃអ្នកបានយល់ព្រម")}`
++          {stats.guestTotal > 0 && stats.checkedInCount !== null
++            ? `${Math.round((stats.checkedInCount / stats.guestTotal) * 100)}% ${label("of guest records", "នៃកំណត់ត្រាភ្ញៀវ")}`
+             : label("Ready for reception", "ត្រៀមសម្រាប់ពិធី")}
+         </span>
+       </Link>
++    </section>
++    {(state.budgetItems.length > 0 || state.gifts.length > 0) && <section className="overview-finance" aria-label={label('Recorded finances', 'ហិរញ្ញវត្ថុដែលបានកត់ត្រា')}>
+       {state.budgetItems.length > 0 && (
+         <Link to={eventPath(stats.id, "budget")} className="overview-metric-card">
+           <div className="overview-metric-heading">
+@@ -486,7 +439,8 @@
+           <span className="overview-metric-sub">{stats.giftCount} {label("gifts recorded", "ចំណងដៃកត់ត្រា")}</span>
+         </Link>
+       )}
+-    </section>
++    </section>}
++    <RsvpComposition dashboard={state.dashboard} en={english} />
+     <section className="overview-columns">
+       <div className="workspace-section overview-preparation">
+         <div className="workspace-section-heading">
+--- a/apps/frontend-user/src/features/dashboard/DashboardFeature.test.jsx
++++ b/apps/frontend-user/src/features/dashboard/DashboardFeature.test.jsx
+@@ -134,16 +134,16 @@
+     expect(screen.getByText("250 total invited")).toBeInTheDocument();
+ 
+     // Attending / Confirmed: 180 (72% response rate)
+-    expect(screen.getByText("180")).toBeInTheDocument();
++    expect(screen.getByText("72% attending").closest("a")).toHaveTextContent("180");
+     expect(screen.getByText(/72% attending/)).toBeInTheDocument();
+ 
+     // Pending: 50
+-    expect(screen.getByText("50")).toBeInTheDocument();
+-    expect(screen.getByText("Awaiting reply")).toBeInTheDocument();
++    expect(screen.getAllByText("Awaiting reply")[0].closest("a")).toHaveTextContent("50");
++    expect(screen.getAllByText("Awaiting reply").length).toBeGreaterThan(0);
+ 
+     // Checked in: 90
+     expect(screen.getByText("90")).toBeInTheDocument();
+-    expect(screen.getByText(/50% of confirmed/)).toBeInTheDocument();
++    expect(screen.getByText(/36% of guest records/)).toBeInTheDocument();
+   });
+ 
+   it("renders preparation checklist with completion progress", async () => {
+--- /dev/null
++++ b/apps/frontend-user/src/features/dashboard/Phase12CodexDataTruth.test.jsx
+@@ -0,0 +1,20 @@
++import { cleanup, render, screen } from '@testing-library/react';
++import { MemoryRouter, Route, Routes } from 'react-router-dom';
++import { afterEach, beforeEach, expect, it, vi } from 'vitest';
++import DashboardFeature from './DashboardFeature';
++import { reportsApi } from '../reports/api/reportsApi';
++import { groupAmounts } from './dashboardData';
++import { useLanguageStore } from '@/stores/useLanguageStore';
++vi.mock('../invitations/api/invitationApi',()=>({invitationService:{listMine:vi.fn().mockResolvedValue([{id:42,title:'Truthful event',status:'PUBLISHED',eventDate:'2020-01-01'}])}}));
++vi.mock('../reports/api/reportsApi',()=>({reportsApi:{invitationDashboard:vi.fn()}}));
++vi.mock('../budget/api/budgetApi',()=>({budgetService:{listItems:vi.fn().mockResolvedValue([])}}));
++vi.mock('../planning/api/planningApi',()=>({planningService:{listGifts:vi.fn().mockResolvedValue([])}}));
++vi.mock('../notifications/notificationService',()=>({default:{listByInvitation:vi.fn().mockResolvedValue([])}}));
++vi.mock('../guests/api/guestApi',()=>({guestService:{checkInSummary:vi.fn().mockResolvedValue(null)}}));
++beforeEach(()=>{useLanguageStore.setState({lang:'en'}); reportsApi.invitationDashboard.mockResolvedValue({totalGuests:12,totalInvited:5,attending:3,pending:4});});
++afterEach(cleanup);
++function mount(){return render(<MemoryRouter initialEntries={['/app/events/42']}><Routes><Route path='/app/events/:eventId' element={<DashboardFeature/>}/></Routes></MemoryRouter>);}
++it('C12-002 distinguishes guest records from invited records',async()=>{mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('12 total invited')).not.toBeInTheDocument(); expect(screen.getByText('5 total invited')).toBeInTheDocument();});
++it('C12-003 keeps missing aggregates unavailable instead of manufacturing zero',async()=>{reportsApi.invitationDashboard.mockResolvedValue({}); mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('No guests yet')).not.toBeInTheDocument(); expect(screen.getAllByText('Unavailable').length).toBeGreaterThan(0);});
++it('C12-004 does not declare a past scheduled event completed',async()=>{mount(); await screen.findByRole('heading',{name:'Truthful event'}); expect(screen.queryByText('Event completed')).not.toBeInTheDocument(); expect(await screen.findByText('Date passed')).toBeInTheDocument();});
++it('C12-005 refuses malformed and unlabelled monetary amounts',()=>{expect(groupAmounts([{currency:'USD',amount:'bad'},{currency:'USD',amount:10},{currency:'KHR',amount:40000},{amount:99}],'amount')).toEqual({USD:null,KHR:40000});});
+--- a/apps/frontend-user/src/features/dashboard/Phase12_1DashboardTruthfulness.test.jsx
++++ b/apps/frontend-user/src/features/dashboard/Phase12_1DashboardTruthfulness.test.jsx
+@@ -133,7 +133,7 @@
+     expect(giftCard).toHaveTextContent(/KHR/i);
+   });
+ 
+-  it("truthfully renders countdown pill for future event and completed pill for past event", async () => {
++  it("truthfully renders countdown pill for future event and date-passed pill for past event", async () => {
+     budgetService.listItems.mockResolvedValue([]);
+     planningService.listGifts.mockResolvedValue([]);
+ 
+@@ -154,7 +154,7 @@
+     ]);
+ 
+     renderDashboard();
+-    expect(await screen.findByText("Event completed")).toBeInTheDocument();
++    expect(await screen.findByText("Date passed")).toBeInTheDocument();
+   });
+ 
+   it("differentiates truthful zero guest count from uninitialized data", async () => {
+--- /dev/null
++++ b/apps/frontend-user/src/features/dashboard/RsvpComposition.jsx
+@@ -0,0 +1,18 @@
++export default function RsvpComposition({ dashboard, en }) {
++  const rows = [
++    ['attending', en ? 'Attending' : 'ចូលរួម', 'success'],
++    ['declined', en ? 'Declined' : 'មិនចូលរួម', 'muted'],
++    ['maybe', en ? 'Maybe' : 'ប្រហែល', 'info'],
++    ['pending', en ? 'Awaiting reply' : 'រង់ចាំការឆ្លើយតប', 'warning'],
++  ].map(([key,label,tone])=>({key,label,tone,value:dashboard?.[key]}));
++  const known = value => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
++  const total = dashboard?.totalGuests;
++  const complete = known(total) && rows.every(row=>known(row.value)) && rows.reduce((sum,row)=>sum+row.value,0)===total;
++  return <section className="workspace-section overview-rsvp" aria-labelledby="overview-rsvp-title" data-source="GET /api/v1/invitations/:id/dashboard">
++    <div className="workspace-section-heading"><h2 id="overview-rsvp-title">{en ? 'Guest responses' : 'ការឆ្លើយតបរបស់ភ្ញៀវ'}</h2></div>
++    <p className="workspace-muted">{en ? 'Current response status of guest records.' : 'ស្ថានភាពឆ្លើយតបបច្ចុប្បន្ននៃកំណត់ត្រាភ្ញៀវ។'}</p>
++    {complete && total>0 ? <div className="overview-response-track" aria-hidden="true">{rows.map(row=><span key={row.key} className={`response-${row.tone}`} style={{width:`${row.value/total*100}%`}} />)}</div>
++      : <p className="overview-response-empty">{complete && total===0 ? (en ? 'Add guests to start tracking responses.' : 'បន្ថែមភ្ញៀវដើម្បីតាមដានការឆ្លើយតប។') : (en ? 'A complete response breakdown is unavailable.' : 'មិនមានទិន្នន័យឆ្លើយតបពេញលេញ។')}</p>}
++    <dl className="overview-response-legend">{rows.map(row=><div key={row.key} data-source={row.key}><dt><span aria-hidden="true" className={`response-dot response-${row.tone}`} />{row.label}</dt><dd>{known(row.value) ? `${row.value}${complete && total>0 ? ` (${Math.round(row.value/total*100)}%)` : ''}` : (en ? 'Unavailable' : 'មិនមានទិន្នន័យ')}</dd></div>)}</dl>
++  </section>;
++}
+--- a/apps/frontend-user/src/features/dashboard/dashboardData.js
++++ b/apps/frontend-user/src/features/dashboard/dashboardData.js
+@@ -15,8 +15,12 @@
+ 
+ export function groupAmounts(items, field) {
+   return items.reduce((totals, item) => {
+-    const currency = item.currency || "USD";
+-    totals[currency] = (totals[currency] || 0) + Number(item[field] ?? 0);
++    const currency = item.currency;
++    if (!['USD', 'KHR'].includes(currency)) return totals;
++    const raw = item[field];
++    const amount = typeof raw === 'number' || (typeof raw === 'string' && raw.trim()) ? Number(raw) : NaN;
++    if (!Number.isFinite(amount) || totals[currency] === null) totals[currency] = null;
++    else totals[currency] = (totals[currency] || 0) + amount;
+     return totals;
+   }, {});
+ }
+--- a/apps/frontend-user/src/features/events/EventsFeature.jsx
++++ b/apps/frontend-user/src/features/events/EventsFeature.jsx
+@@ -13,6 +13,7 @@
+ import { backendEventId, eventPath, EVENT_MODULES } from "./workspace/eventRoutes";
+ import { useLanguageStore } from "@/stores/useLanguageStore";
+ import { EVENT_TYPES } from "./onboarding/eventFields";
++import { compareEvents, eventDay, pageItems } from "./model/eventListModel";
+ import { localDateString } from "@/shared/utils/localDate";
+ 
+ export function EventsFeature() {
+@@ -21,18 +22,19 @@
+     const [searchParams, setSearchParams] = useSearchParams();
+     const location = useLocation();
+     const hasTriggeredRef = useRef(false);
++    const searchInputRef = useRef(null);
++    const resultsRef = useRef(null);
+     const { text: t } = useBackendMessages("events");
+-    const { text: tDash } = useBackendMessages("dashboard");
+ 
+     // Synchronize filters with URL search parameters
+     const search = searchParams.get("q") || "";
+-    const status = searchParams.get("status") || "";
+-    const eventType = searchParams.get("type") || "";
+-    const sort = searchParams.get("sort") || "newest";
+-    const view = searchParams.get("view") || "list"; // "list" | "calendar"
+-    const period = searchParams.get("period") || "all"; // "all" | "upcoming" | "past"
+-    const pageParam = parseInt(searchParams.get("page") || "1", 10);
+-    const page = isNaN(pageParam) || pageParam < 1 ? 0 : pageParam - 1;
++    const status = ["DRAFT", "PUBLISHED", "UNPUBLISHED", "ARCHIVED"].includes(searchParams.get("status")) ? searchParams.get("status") : "";
++    const eventType = EVENT_TYPES.some(item => item[0] === searchParams.get("type")) ? searchParams.get("type") : "";
++    const sort = ["newest", "date", "title"].includes(searchParams.get("sort")) ? searchParams.get("sort") : "newest";
++    const view = searchParams.get("view") === "calendar" ? "calendar" : "list"; // "list" | "calendar"
++    const period = ["upcoming", "past"].includes(searchParams.get("period")) ? searchParams.get("period") : "all"; // "all" | "upcoming" | "past"
++    const pageParam = Number(searchParams.get("page") || "1");
++    const page = !Number.isSafeInteger(pageParam) || pageParam < 1 ? 0 : pageParam - 1;
+ 
+     const updateFilter = (key, value) => {
+         setSearchParams(prev => {
+@@ -41,7 +43,7 @@
+             else next.delete(key);
+             next.delete("page"); // Reset to first page on filter change
+             return next;
+-        }, { replace: true });
++        }, { replace: key === "q" });
+     };
+ 
+     const setPage = (newPage) => {
+@@ -50,11 +52,13 @@
+             if (newPage > 0) next.set("page", String(newPage + 1));
+             else next.delete("page");
+             return next;
+-        }, { replace: true });
++        });
++        requestAnimationFrame(() => resultsRef.current?.focus());
+     };
+ 
+     const resetAllFilters = () => {
+-        setSearchParams(new URLSearchParams(), { replace: true });
++        setSearchParams(prev => { const next = new URLSearchParams(prev); for (const key of ["q","status","type","sort","period","page"]) next.delete(key); return next; });
++        searchInputRef.current?.focus();
+     };
+ 
+     useEffect(() => {
+@@ -120,36 +124,16 @@
+         if (!matches) return false;
+       }
+       if (period === "upcoming") {
+-        const raw = draft.eventDate || draft.event?.date;
+-        if (!raw) return true;
+-        return String(raw).slice(0, 10) >= todayStr;
++        const raw = eventDay(draft);
++        return raw !== null && raw >= todayStr;
+       }
+       if (period === "past") {
+-        const raw = draft.eventDate || draft.event?.date;
+-        if (!raw) return false;
+-        return String(raw).slice(0, 10) < todayStr;
++        const raw = eventDay(draft);
++        return raw !== null && raw < todayStr;
+       }
+       return true;
+     })
+-      .sort((a, b) => {
+-        if (sort === "title") {
+-          const cmp = String(a.title || "").localeCompare(String(b.title || ""), en ? "en" : "km");
+-          if (cmp !== 0) return cmp;
+-          return String(a.id || "").localeCompare(String(b.id || ""));
+-        }
+-        if (sort === "date") {
+-          const dateA = a.eventDate || a.event?.date || "9999-99-99";
+-          const dateB = b.eventDate || b.event?.date || "9999-99-99";
+-          const cmp = dateA.localeCompare(dateB);
+-          if (cmp !== 0) return cmp;
+-          return String(a.id || "").localeCompare(String(b.id || ""));
+-        }
+-        // Default deterministic "newest" sort: compare updatedAt/createdAt when available, otherwise preserve list order
+-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : a.createdAt ? new Date(a.createdAt).getTime() : null;
+-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : b.createdAt ? new Date(b.createdAt).getTime() : null;
+-        if (timeA !== null && timeB !== null && timeB !== timeA) return timeB - timeA;
+-        return 0;
+-      });
++      .sort((a,b) => compareEvents(a,b,sort,en ? "en" : "km"));
+ 
+     const maxPage = Math.max(0, Math.ceil(filtered.length / 12) - 1);
+     const currentPage = Math.min(page, maxPage);
+@@ -171,9 +155,8 @@
+         <main className="events-page workspace-page">
+             <header className="events-page-header">
+                 <div>
+-                    <span>{t("brandKicker") || `${tDash("brand") || "Koupreng"} ${en ? "invitations" : "សំបុត្រអញ្ជើញ"}`}</span>
+                     <h1>{en ? "My Events" : "កម្មវិធីរបស់ខ្ញុំ"}</h1>
+-                    <p>{en ? "Manage your weddings and celebrations, customize invitations, track guest RSVPs, and coordinate event logistics." : "គ្រប់គ្រងកម្មវិធីមង្គលការ និងពិធីផ្សេងៗ កែសម្រួលសំបុត្រអញ្ជើញ តាមដានភ្ញៀវ និងរៀបចំកាលវិភាគ។"}</p>
++                    <p>{en ? "Your celebrations, invitations and guest lists." : "រៀបចំកម្មវិធី សំបុត្រអញ្ជើញ និងបញ្ជីភ្ញៀវរបស់អ្នក។"}</p>
+                 </div>
+                 <div className="events-header-actions">
+                     {/* View Mode Toggle: List vs Calendar */}
+@@ -201,7 +184,7 @@
+                     </div>
+ 
+                     <Link to="/app/events/new" state={{ from: "/dashboard/events" }} className="events-create-btn">
+-                        + {createBtnText}
++                        <Plus size={18} aria-hidden="true" />{createBtnText}
+                     </Link>
+                 </div>
+             </header>
+@@ -248,11 +231,10 @@
+             {/* Filter and Search Bar */}
+             <div className="events-filters-container">
+                 {/* Period Quick Filter Tabs */}
+-                <div className="events-period-tabs" role="tablist" aria-label={en ? "Event period" : "កាលវេលាកម្មវិធី"}>
+-                    <button
+-                        type="button"
+-                        role="tab"
+-                        aria-selected={period === "all"}
++                <div className="events-period-tabs" role="group" aria-label={en ? "Event period" : "កាលវេលាកម្មវិធី"}>
++                    <button
++                        type="button"
++                        aria-pressed={period === "all"}
+                         className={`events-period-tab ${period === "all" ? "is-active" : ""}`}
+                         onClick={() => updateFilter("period", "")}
+                     >
+@@ -260,8 +242,7 @@
+                     </button>
+                     <button
+                         type="button"
+-                        role="tab"
+-                        aria-selected={period === "upcoming"}
++                        aria-pressed={period === "upcoming"}
+                         className={`events-period-tab ${period === "upcoming" ? "is-active" : ""}`}
+                         onClick={() => updateFilter("period", "upcoming")}
+                     >
+@@ -269,8 +250,7 @@
+                     </button>
+                     <button
+                         type="button"
+-                        role="tab"
+-                        aria-selected={period === "past"}
++                        aria-pressed={period === "past"}
+                         className={`events-period-tab ${period === "past" ? "is-active" : ""}`}
+                         onClick={() => updateFilter("period", "past")}
+                     >
+@@ -284,6 +264,7 @@
+                         <div className="events-search-input-wrap">
+                             <Search size={16} className="events-search-icon" aria-hidden="true" />
+                             <input
++                                ref={searchInputRef}
+                                 type="search"
+                                 placeholder={en ? "Filter by name or venue…" : "ស្វែងរកតាមឈ្មោះ ឬទីតាំង…"}
+                                 value={search}
+@@ -293,7 +274,7 @@
+                                 <button
+                                     type="button"
+                                     className="events-search-clear-btn"
+-                                    onClick={() => updateFilter("q", "")}
++                                    onClick={() => { updateFilter("q", ""); searchInputRef.current?.focus(); }}
+                                     aria-label={en ? "Clear search query" : "លុបពាក្យស្វែងរក"}
+                                 >
+                                     <X size={15} aria-hidden="true" />
+@@ -353,12 +334,19 @@
+                 </div>
+             </div>
+ 
++            {hasActiveFilters && <div className="events-applied-filters" aria-label={en ? 'Applied filters' : 'ការចម្រោះដែលបានជ្រើសរើស'}>
++                {[["q",search],["status",status],["type",eventType],["period",period !== 'all' ? period : '']].filter(([,value])=>value).map(([key,value]) =>
++                    <button type="button" key={key} onClick={() => { updateFilter(key,''); searchInputRef.current?.focus(); }} aria-label={`${en ? 'Remove filter' : 'លុបការចម្រោះ'}: ${value}`}>
++                        <span>{value}</span><X size={14} aria-hidden="true" />
++                    </button>)}
++            </div>}
++
+             {/* Results Count Summary */}
+             {!loading && drafts.length > 0 && (
+-                <div className="events-results-summary" aria-live="polite">
++                <div className="events-results-summary" ref={resultsRef} tabIndex={-1} aria-live="polite">
+                     <span>
+                         {en
+-                            ? `Showing ${filtered.length} of ${drafts.length} event${drafts.length === 1 ? "" : "s"}`
++                            ? `${filtered.length ? (view === 'calendar' ? 1 : currentPage * 12 + 1) : 0}–${view === "calendar" ? filtered.length : Math.min((currentPage + 1) * 12, filtered.length)} of ${filtered.length} matching events (${drafts.length} loaded)`
+                             : `បង្ហាញ ${filtered.length} នៃ ${drafts.length} កម្មវិធី`}
+                     </span>
+                 </div>
+@@ -449,9 +437,11 @@
+                     >
+                         {en ? "Previous" : "មុន"}
+                     </button>
+-                    <span className="events-pagination-info">
+-                        {currentPage + 1} / {Math.ceil(filtered.length / 12)}
+-                    </span>
++                    <div className="events-pagination-pages">
++                        {pageItems(currentPage, maxPage + 1).map(item => typeof item === 'number'
++                            ? <button type="button" key={item} className="workspace-button" aria-label={`${en ? 'Page' : 'ទំព័រ'} ${item+1}`} aria-current={item===currentPage ? 'page' : undefined} onClick={()=>setPage(item)}>{item+1}</button>
++                            : <span key={item} aria-hidden="true">…</span>)}
++                    </div>
+                     <button
+                         type="button"
+                         disabled={(currentPage + 1) * 12 >= filtered.length}
+@@ -462,16 +452,6 @@
+                     </button>
+                 </nav>
+             )}
+-
+-            {/* Mobile Floating Action Button (FAB) */}
+-            <Link
+-                to="/app/events/new"
+-                state={{ from: "/dashboard/events" }}
+-                className="events-mobile-fab"
+-                aria-label={en ? "Create new event" : "បង្កើតកម្មវិធីថ្មី"}
+-            >
+-                <Plus size={24} aria-hidden="true" />
+-            </Link>
+ 
+             <EventDeleteModal
+                 draftToDelete={draftToDelete}
+--- a/apps/frontend-user/src/features/events/EventsViewModes.test.jsx
++++ b/apps/frontend-user/src/features/events/EventsViewModes.test.jsx
+@@ -43,7 +43,7 @@
+     useLanguageStore.setState({ lang: "en" });
+   });
+ 
+-  it("renders view mode toggle buttons (List and Calendar) and mobile FAB", async () => {
++  it("renders view mode controls and a single primary creation entry", async () => {
+     render(
+       <MemoryRouter initialEntries={["/app/events"]}>
+         <EventsFeature />
+@@ -59,8 +59,8 @@
+     expect(listBtn).toHaveAttribute("aria-pressed", "true");
+     expect(calBtn).toHaveAttribute("aria-pressed", "false");
+ 
+-    const fab = screen.getByRole("link", { name: "Create new event" });
+-    expect(fab).toHaveAttribute("href", "/app/events/new");
++    const create = screen.getByRole("link", { name: "Create Event" });
++    expect(create).toHaveAttribute("href", "/app/events/new");
+   });
+ 
+   it("switches to Calendar view when clicking the Calendar view toggle button", async () => {
+@@ -98,7 +98,7 @@
+     expect(screen.getByText("Completed Anniversary Gala")).toBeInTheDocument();
+ 
+     // Click "Upcoming" tab
+-    const upcomingTab = screen.getByRole("tab", { name: "Upcoming" });
++    const upcomingTab = screen.getByRole("button", { name: "Upcoming" });
+     fireEvent.click(upcomingTab);
+ 
+     await waitFor(() => {
+@@ -107,7 +107,7 @@
+     });
+ 
+     // Click "Past" tab
+-    const pastTab = screen.getByRole("tab", { name: "Past" });
++    const pastTab = screen.getByRole("button", { name: "Past" });
+     fireEvent.click(pastTab);
+ 
+     await waitFor(() => {
+@@ -116,7 +116,7 @@
+     });
+ 
+     // Click "All" tab
+-    const allTab = screen.getByRole("tab", { name: "All" });
++    const allTab = screen.getByRole("button", { name: "All" });
+     fireEvent.click(allTab);
+ 
+     await waitFor(() => {
+--- /dev/null
++++ b/apps/frontend-user/src/features/events/Phase12CodexAccountIsolation.test.jsx
+@@ -0,0 +1,66 @@
++import { useLayoutEffect } from 'react';
++import { act, cleanup, render, screen } from '@testing-library/react';
++import { afterEach, beforeEach, expect, it, vi } from 'vitest';
++import { useEvents } from './hooks/useEvents';
++import { eventsApi } from './api/eventsApi';
++import { persistWeddingDraft } from '../wedding-builder/utils/draftPublishApi';
++import { getDraft } from '@/shared/storage/weddingStorage';
++
++const session = vi.hoisted(() => ({ user: { id: 1 } }));
++vi.mock('../auth/hooks/useAuth', () => ({ useAuth: () => session }));
++vi.mock('./api/eventsApi', () => ({ eventsApi: { listMine: vi.fn(), remove: vi.fn() } }));
++vi.mock('../wedding-builder/utils/draftPublishApi', () => ({ persistWeddingDraft: vi.fn() }));
++beforeEach(() => { localStorage.clear(); session.user = { id: 1 }; vi.clearAllMocks(); });
++afterEach(cleanup);
++
++it('C12-001 hides prior account records and delete modal in the first committed frame', async () => {
++  const frames=[];
++  function Probe() {
++    const events=useEvents();
++    useLayoutEffect(() => { frames.push({ user:session.user.id, titles:events.drafts.map(x=>x.title), deleting:events.draftToDelete?.title }); });
++    return <>{events.drafts.map(x=><button key={x.id} onClick={()=>events.handleDeleteClick(x)}>{x.title}</button>)}</>;
++  }
++  eventsApi.listMine.mockResolvedValueOnce([{id:101,title:'Private A'}]).mockImplementationOnce(()=>new Promise(()=>{}));
++  const view=render(<Probe/>);
++  await screen.findByText('Private A');
++  await act(async()=>screen.getByText('Private A').click());
++  session.user={id:2}; view.rerender(<Probe/>);
++  expect(frames.filter(x=>x.user===2)).not.toContainEqual(expect.objectContaining({titles:['Private A']}));
++  expect(frames.filter(x=>x.user===2).every(x=>!x.deleting)).toBe(true);
++});
++
++it('C12-001 ignores an account A response that arrives after B has loaded', async () => {
++  let finishA;
++  eventsApi.listMine.mockImplementationOnce(()=>new Promise(resolve=>{finishA=resolve;})).mockResolvedValueOnce([{id:202,title:'B event'}]);
++  function Probe(){const {drafts}=useEvents(); return <>{drafts.map(x=><p key={x.id}>{x.title}</p>)}</>;}
++  const view=render(<Probe/>); session.user={id:2}; view.rerender(<Probe/>);
++  await screen.findByText('B event');
++  await act(async()=>finishA([{id:101,title:'Private A'}]));
++  expect(screen.queryByText('Private A')).not.toBeInTheDocument();
++});
++
++it('C12-001 does not apply a completed draft synchronization to a later account', async () => {
++  let finish;
++  eventsApi.listMine.mockResolvedValue([]);
++  persistWeddingDraft.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
++  let events;
++  function Probe(){events=useEvents();return null;}
++  const view=render(<Probe/>);
++  let pending;
++  await act(async()=>{pending=events.syncDraft({id:'wed-private',ownerUserId:1,title:'Private A'});});
++  session.user={id:2};view.rerender(<Probe/>);
++  await act(async()=>{finish({response:{id:99},patch:{backendInvitationId:99}});await pending;});
++  expect(events.drafts).toEqual([]);
++  expect(getDraft('wed-private',1).backendInvitationId).toBeUndefined();
++});
++
++it('C12-012 never displays or automatically claims a legacy draft with no owner proof', async () => {
++  localStorage.setItem('koupreng.wedding.drafts',JSON.stringify({legacy:{id:'wed-unclaimed',title:'Unclaimed private draft',syncStatus:'LOCAL_ONLY'}}));
++  eventsApi.listMine.mockResolvedValue([]);
++  let events;
++  function Probe(){events=useEvents();return null;}
++  render(<Probe/>); await act(async()=>{});
++  expect(events.drafts).toEqual([]);
++  expect(persistWeddingDraft).not.toHaveBeenCalled();
++  expect(JSON.parse(localStorage.getItem('koupreng.wedding.drafts')).legacy.title).toBe('Unclaimed private draft');
++});
+--- a/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx
++++ b/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx
+@@ -50,6 +50,7 @@
+ 
+     saveDraft({
+       id: "wed-local-1",
++      ownerUserId: "user-owner-1",
+       title: "Local Unsynced Celebration",
+       eventType: "BIRTHDAY",
+       status: "DRAFT",
+@@ -59,6 +60,7 @@
+ 
+     saveDraft({
+       id: "wed-failed-sync",
++      ownerUserId: "user-owner-1",
+       title: "Failed Sync Ceremony",
+       eventType: "ENGAGEMENT",
+       status: "DRAFT",
+--- a/apps/frontend-user/src/features/events/components/EventCalendar.css
++++ b/apps/frontend-user/src/features/events/components/EventCalendar.css
+@@ -178,6 +178,8 @@
+   grid-template-columns: repeat(7, 1fr);
+   background: #ffffff;
+ }
++
++.event-calendar-week { display: contents; }
+ 
+ .event-calendar-cell {
+   min-height: 96px;
+--- a/apps/frontend-user/src/features/events/components/EventCalendar.jsx
++++ b/apps/frontend-user/src/features/events/components/EventCalendar.jsx
+@@ -1,4 +1,4 @@
+-import { useState, useMemo, useCallback } from "react";
++import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+ import { useLanguageStore } from "@/stores/useLanguageStore";
+ import { formatLocalDate, localDateString } from "@/shared/utils/localDate";
+ import { EVENT_TYPES } from "../onboarding/eventFields";
+@@ -57,6 +57,15 @@
+   const [viewDate, setViewDate] = useState(initialDate);
+   const [selectedDate, setSelectedDate] = useState(null);
+   const [calendarSubView, setCalendarSubView] = useState("month"); // "month" | "agenda"
++  const [focusDate, setFocusDate] = useState(null);
++  const gridRef = useRef(null);
++  const pendingFocus = useRef(false);
++  useEffect(() => {
++    if (pendingFocus.current) {
++      gridRef.current?.querySelector(`[data-date="${focusDate}"]`)?.focus();
++      pendingFocus.current = false;
++    }
++  }, [focusDate, viewDate]);
+ 
+   const viewYear = viewDate.getFullYear();
+   const viewMonth = viewDate.getMonth();
+@@ -162,6 +171,7 @@
+     }
+     return [];
+   }, [eventsByDate, selectedDate]);
++  const activeFocusDate = cells.some(cell => cell.dateKey === focusDate) ? focusDate : localDateString(viewDate);
+ 
+   // Chronological agenda list for all events
+   const sortedAgendaEvents = useMemo(() => {
+@@ -243,7 +253,7 @@
+       {calendarSubView === "month" ? (
+         <>
+           {/* Month Grid */}
+-          <div className="event-calendar-grid" role="grid" aria-label={monthLabel}>
++          <div className="event-calendar-grid" role="grid" aria-label={monthLabel} ref={gridRef}>
+             {/* Weekday Headers */}
+             <div className="event-calendar-weekdays" role="row">
+               {dayHeaders.map((day, idx) => (
+@@ -254,15 +264,17 @@
+             </div>
+ 
+             {/* Days Grid */}
+-            <div className="event-calendar-days">
+-              {cells.map((cell) => {
++            <div className="event-calendar-days" role="rowgroup">
++              {Array.from({length: Math.ceil(cells.length/7)}, (_,week) => <div key={week} role="row" className="event-calendar-week">{cells.slice(week*7,week*7+7).map((cell) => {
+                 const isSelected = selectedDate === cell.dateKey;
+                 const hasEvents = cell.events.length > 0;
+ 
+                 return (
+                   <div
+                     key={cell.dateKey}
+-                    tabIndex={cell.isCurrentMonth ? 0 : -1}
++                    data-date={cell.dateKey}
++                    tabIndex={cell.dateKey === activeFocusDate ? 0 : -1}
++                    onFocus={e => { if(e.target === e.currentTarget) setFocusDate(cell.dateKey); }}
+                     role="gridcell"
+                     aria-selected={isSelected}
+                     aria-label={`${formatLocalDate(cell.dateKey, en ? "en-US" : "km-KH")}${
+@@ -277,10 +289,25 @@
+                       setSelectedDate(cell.dateKey);
+                     }}
+                     onKeyDown={(e) => {
++                      if (e.target !== e.currentTarget) return;
+                       if (e.key === "Enter" || e.key === " ") {
+                         e.preventDefault();
+                         setSelectedDate(cell.dateKey);
++                        return;
+                       }
++                      const moves = { ArrowLeft:-1, ArrowRight:1, ArrowUp:-7, ArrowDown:7 };
++                      const date = new Date(`${cell.dateKey}T12:00:00`);
++                      let next = new Date(date);
++                      if (e.key in moves) next.setDate(date.getDate()+moves[e.key]);
++                      else if (e.key==='Home') next.setDate(date.getDate()-(date.getDay()+6)%7);
++                      else if (e.key==='End') next.setDate(date.getDate()+6-(date.getDay()+6)%7);
++                      else if (e.key==='PageUp' || e.key==='PageDown') {
++                        const month=date.getMonth()+(e.key==='PageUp' ? -1 : 1);
++                        next=new Date(date.getFullYear(),month,Math.min(date.getDate(),getDaysInMonth(date.getFullYear(),month)),12);
++                      } else return;
++                      e.preventDefault(); pendingFocus.current=true;
++                      setFocusDate(localDateString(next));
++                      setViewDate(new Date(next.getFullYear(),next.getMonth(),1));
+                     }}
+                   >
+                     <div className="event-calendar-cell-top">
+@@ -334,6 +361,7 @@
+                             <button
+                               key={evt.id}
+                               type="button"
++                              tabIndex={-1}
+                               className={`event-calendar-chip ${chipTone}`}
+                               title={`${evt.title || typeName}${evt.eventTime ? ` · ${evt.eventTime}` : ""}${isLocal ? ` (${en ? "Local draft" : "ព្រាងលើឧបករណ៍"})` : ""}`}
+                               onClick={(e) => {
+@@ -359,7 +387,7 @@
+                     )}
+                   </div>
+                 );
+-              })}
++              })}</div>)}
+             </div>
+           </div>
+ 
+--- a/apps/frontend-user/src/features/events/components/EventCard.jsx
++++ b/apps/frontend-user/src/features/events/components/EventCard.jsx
+@@ -4,6 +4,7 @@
+ import { EVENT_TYPES } from "../onboarding/eventFields";
+ import { useLanguageStore } from "@/stores/useLanguageStore";
+ import { formatLocalDate } from "@/shared/utils/localDate";
++import { eventProvenance } from '../model/eventListModel';
+ import {
+   Calendar,
+   Clock,
+@@ -126,8 +127,8 @@
+     String(draft.id || "").startsWith("draft-") ||
+     (String(draft.id || "").startsWith("wed-") && !draft.backendInvitationId)
+   );
+-  const isSyncFailed = draft.syncStatus === "SYNC_FAILED";
+-  const isServerEvent = !isLocalDraft && !isSyncFailed;
++  const provenance = eventProvenance(draft);
++  const isServerEvent = Boolean(provenance.serverId) && !provenance.resume;
+ 
+   const isPublished = draft.status
+     ? draft.status === "PUBLISHED"
+@@ -299,22 +300,6 @@
+               </span>
+             </button>
+ 
+-            {!draft.shared && (
+-              <button
+-                type="button"
+-                className="event-card-btn event-card-btn--secondary"
+-                onClick={(event) => {
+-                  event.stopPropagation();
+-                  if (onEdit) onEdit(draft);
+-                }}
+-              >
+-                <Edit3 size={15} aria-hidden="true" />
+-                <span>
+-                  {(t && t("editBtn")) || (en ? "Edit" : "កែសម្រួល")}
+-                </span>
+-              </button>
+-            )}
+-
+             {onPreview && (
+               <button
+                 type="button"
+@@ -338,7 +323,6 @@
+                 ref={triggerRef}
+                 className={`event-card-dots-btn ${isMenuOpen ? "is-active" : ""}`}
+                 aria-label={en ? "More options" : "ជម្រើសបន្ថែម"}
+-                aria-haspopup="menu"
+                 aria-expanded={isMenuOpen}
+                 onClick={(event) => {
+                   event.stopPropagation();
+@@ -352,6 +336,7 @@
+                 <div
+                   ref={dropdownRef}
+                   className="event-card-dropdown"
++                  aria-label={en ? 'Event actions' : 'សកម្មភាពកម្មវិធី'}
+                   onClick={(event) => event.stopPropagation()}
+                 >
+                   <button
+--- a/apps/frontend-user/src/features/events/hooks/useEvents.js
++++ b/apps/frontend-user/src/features/events/hooks/useEvents.js
+@@ -1,4 +1,4 @@
+-import { useState, useEffect, useCallback, useRef } from "react";
++import { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
+ import { generateSecureUuid } from "../../../shared/utils/uuid";
+ import { listDrafts, deleteDraft, saveDraft } from "../../../shared/storage/weddingStorage";
+ import { eventsApi } from "../api/eventsApi";
+@@ -6,10 +6,19 @@
+ import { useAuth } from "../../auth/hooks/useAuth";
+ import { persistWeddingDraft } from "../../wedding-builder/utils/draftPublishApi";
+ 
++function ownerDrafts(ownerUserId) {
++    // Legacy records without owner proof remain stored, but cannot be exposed
++    // or silently uploaded to whichever authenticated account opens Events.
++    return listDrafts(ownerUserId).filter(draft => ownerUserId == null
++        || (draft.ownerUserId != null && String(draft.ownerUserId) === String(ownerUserId)));
++}
++
+ export function useEvents(t) {
+     const { user } = useAuth();
+     const ownerUserId = user?.id || user?.userId;
+-    const [drafts, setDrafts] = useState(() => listDrafts(ownerUserId));
++    const subject = String(ownerUserId ?? '');
++    const [draftSubject, setDraftSubject] = useState(subject);
++    const [drafts, setDrafts] = useState(() => ownerDrafts(ownerUserId));
+     const [draftToDelete, setDraftToDelete] = useState(null);
+     const [isDeleting, setIsDeleting] = useState(false);
+     const [syncingDraftId, setSyncingDraftId] = useState("");
+@@ -19,13 +28,23 @@
+     const loadGeneration = useRef(0);
+     const autoSyncAttempted = useRef(new Set());
+     const syncInFlight = useRef(new Set());
++    const sessionAuthority = useRef(0);
++
++    useLayoutEffect(() => {
++        sessionAuthority.current += 1;
++        setDraftToDelete(null);
++        setIsDeleting(false);
++        setBackendListLoaded(false);
++        autoSyncAttempted.current.clear();
++        return () => { sessionAuthority.current += 1; loadGeneration.current += 1; };
++    }, [subject]);
+ 
+     const loadDrafts = useCallback(() => {
+         const generation = ++loadGeneration.current;
+         setLoading(true); setError("");
+         eventsApi.listMine().then((apiInvs) => {
+             if (generation !== loadGeneration.current) return;
+-            const localDrafts = listDrafts(ownerUserId);
++            const localDrafts = ownerDrafts(ownerUserId);
+             const merged = (apiInvs || []).map((apiInv) => {
+                 const matchingLocal = localDrafts.find((ld) =>
+                     String(ld.id) === String(apiInv.id) || String(ld.backendInvitationId) === String(apiInv.id)
+@@ -70,11 +89,13 @@
+                 }
+             });
+             setDrafts(merged);
++            setDraftSubject(String(ownerUserId ?? ''));
+             setBackendListLoaded(true);
+         }).catch((err) => {
+             if (generation !== loadGeneration.current) return;
+             setError(err.message || "Could not load events");
+-            setDrafts(listDrafts(ownerUserId));
++            setDrafts(ownerDrafts(ownerUserId));
++            setDraftSubject(String(ownerUserId ?? ''));
+             setBackendListLoaded(false);
+         }).finally(() => { if (generation === loadGeneration.current) setLoading(false); });
+     }, [ownerUserId]);
+@@ -85,7 +106,7 @@
+     }, [loadDrafts]);
+ 
+     const handleDeleteClick = (draft) => {
+-        if (draft.shared) return;
++        if (draft.shared || draftSubject !== subject || !drafts.includes(draft)) return;
+         setDraftToDelete(draft);
+     };
+ 
+@@ -94,10 +115,11 @@
+     };
+ 
+     const syncDraft = useCallback(async (draft, { silent = false } = {}) => {
++        const authority = sessionAuthority.current;
+         const draftId = String(draft?.id || "");
+         if (!draftId || syncInFlight.current.has(draftId)) return;
+         // Display summaries carry server cover identity; retries must use the untouched local payload.
+-        const storedDraft = listDrafts(ownerUserId).find(item => String(item.id) === draftId
++        const storedDraft = ownerDrafts(ownerUserId).find(item => String(item.id) === draftId
+             || (item.backendInvitationId && String(item.backendInvitationId) === String(draft.backendInvitationId || draft.id)));
+         if (storedDraft) draft = { ...storedDraft, backendInvitationId: draft.backendInvitationId || storedDraft.backendInvitationId };
+         autoSyncAttempted.current.add(draftId);
+@@ -110,6 +132,7 @@
+                 saveDraft(draft);
+             }
+             const { response, patch } = await persistWeddingDraft(draft);
++            if (authority !== sessionAuthority.current) return;
+             const syncedDraft = {
+                 ...draft,
+                 ...patch,
+@@ -123,6 +146,7 @@
+             loadDrafts();
+             if (!silent) toast("បាន sync កម្មវិធីទៅ server ជោគជ័យ / Event synced to server");
+         } catch (error) {
++            if (authority !== sessionAuthority.current) return;
+             const partialPatch = error?.partialPatch || {};
+             const failedDraft = {
+                 ...draft,
+@@ -137,12 +161,12 @@
+             if (!silent) toast.warning(`មិនអាច sync បានទេ: ${failedDraft.syncError}`);
+         } finally {
+             syncInFlight.current.delete(draftId);
+-            setSyncingDraftId("");
++            if (authority === sessionAuthority.current) setSyncingDraftId("");
+         }
+     }, [ownerUserId, loadDrafts]);
+ 
+     useEffect(() => {
+-        if (!backendListLoaded) return undefined;
++        if (!backendListLoaded || draftSubject !== subject) return undefined;
+         const draftsToSync = drafts.filter((draft) => {
+             if (draft.shared) return false;
+             const isLocalOnly = draft.syncStatus === "LOCAL_ONLY"
+@@ -164,11 +188,12 @@
+         };
+         migrateDrafts();
+         return () => { active = false; };
+-    }, [backendListLoaded, drafts, syncDraft]);
++    }, [backendListLoaded, drafts, syncDraft, draftSubject, subject]);
+ 
+     const confirmDelete = async (directDraft) => {
+         const target = (directDraft && directDraft.id) ? directDraft : draftToDelete;
+-        if (!target || target.shared) return;
++        if (!target || target.shared || draftSubject !== subject) return;
++        const authority = sessionAuthority.current;
+         setIsDeleting(true);
+ 
+         const targetId = target.id;
+@@ -177,10 +202,13 @@
+         try {
+             if (backendId) await eventsApi.remove(backendId);
+         } catch (err) {
++            if (authority !== sessionAuthority.current) return;
+             setError(err.message || "Could not delete event; your draft is preserved");
+             setIsDeleting(false);
+             return;
+         }
++
++        if (authority !== sessionAuthority.current) return;
+ 
+         deleteDraft(targetId);
+         if (target.backendInvitationId) {
+@@ -206,11 +234,11 @@
+     };
+ 
+     return {
+-        drafts,
+-        loading, error, reload: loadDrafts,
+-        syncingDraftId,
++        drafts: draftSubject === subject ? drafts : [],
++        loading: draftSubject !== subject || loading, error: draftSubject === subject ? error : '', reload: loadDrafts,
++        syncingDraftId: draftSubject === subject ? syncingDraftId : '',
+         syncDraft,
+-        draftToDelete,
++        draftToDelete: draftSubject === subject ? draftToDelete : null,
+         isDeleting,
+         handleDeleteClick,
+         cancelDelete,
+--- /dev/null
++++ b/apps/frontend-user/src/features/events/model/Phase12CodexListModel.test.js
+@@ -0,0 +1,10 @@
++import { expect, it } from 'vitest';
++import { compareEvents, eventDay, eventProvenance, pageItems } from './eventListModel';
++it('C12-006 newest sort handles missing/malformed timestamps and stable numeric ties',()=>{
++  const records=[{id:10},{id:3,updatedAt:'bad',createdAt:'2026-11-18'},{id:2},{id:4,updatedAt:1795046400000}];
++  expect([...records].sort(compareEvents).map(x=>x.id)).toEqual([4,3,2,10]);
++  expect([...records].reverse().sort(compareEvents).map(x=>x.id)).toEqual([4,3,2,10]);
++});
++it('C12-007 rejects rolled-over and missing calendar dates',()=>{expect(eventDay({eventDate:'2028-02-29'})).toBe('2028-02-29'); expect(eventDay({eventDate:'2027-02-29'})).toBeNull(); expect(eventDay({})).toBeNull();});
++it('C12-008 keeps server identity and unsaved changes as separate facts',()=>{expect(eventProvenance({id:12,syncStatus:'SYNC_FAILED'})).toMatchObject({serverId:'12',resume:true}); expect(eventProvenance({id:'unknown'}).resume).toBe(true); expect(eventProvenance({id:12,shared:true,syncStatus:'SYNC_FAILED'}).resume).toBe(false);});
++it.each([0,1,11,12,13,25,100])('bounds page controls for %i records',records=>{const count=Math.ceil(records/12); expect(pageItems(Math.max(0,count-1),count).filter(Number.isInteger).every(x=>x>=0&&x<count)).toBe(true);});
+--- /dev/null
++++ b/apps/frontend-user/src/features/events/model/eventListModel.js
+@@ -0,0 +1,37 @@
++import { backendEventId } from '../workspace/eventRoutes';
++
++export function eventDay(event) {
++  const value = String(event.eventDate || event.event?.date || '').slice(0, 10);
++  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
++  const parsed = new Date(`${value}T12:00:00`);
++  return !Number.isNaN(parsed.getTime()) && parsed.getFullYear() === Number(value.slice(0,4)) && parsed.getMonth()+1 === Number(value.slice(5,7)) && parsed.getDate() === Number(value.slice(8,10)) ? value : null;
++}
++
++function timestamp(event) {
++  for (const value of [event.updatedAt, event.createdAt]) {
++    if (value == null || value === '') continue;
++    const time = typeof value === 'number' ? value : Date.parse(value);
++    if (Number.isFinite(time)) return time;
++  }
++  return -Infinity;
++}
++
++export function compareEvents(a, b, sort = 'newest', locale = 'en') {
++  const tie = () => String(a.id ?? '').localeCompare(String(b.id ?? ''), 'en', {numeric:true});
++  if (sort === 'title') return String(a.title || '').normalize('NFC').localeCompare(String(b.title || '').normalize('NFC'), locale) || tie();
++  if (sort === 'date') return (eventDay(a) || '9999-12-31').localeCompare(eventDay(b) || '9999-12-31') || tie();
++  const first = timestamp(a), second = timestamp(b);
++  return first === second ? tie() : first > second ? -1 : 1;
++}
++
++export function eventProvenance(event) {
++  const serverId = backendEventId(event);
++  const failed = event.syncStatus === 'SYNC_FAILED';
++  const local = !serverId || (event.syncStatus === 'LOCAL_ONLY' && !event.backendInvitationId);
++  return { serverId, failed, local, resume: !event.shared && (failed || local), shared: event.shared === true };
++}
++
++export function pageItems(current, count) {
++  return Array.from({length:count},(_,i)=>i).filter(i=>i===0 || i===count-1 || Math.abs(i-current)<=1)
++    .flatMap((value,index,items)=>index && value-items[index-1]>1 ? ['gap-'+value,value] : [value]);
++}
+--- a/apps/frontend-user/src/features/events/workspace/EventNavigation.jsx
++++ b/apps/frontend-user/src/features/events/workspace/EventNavigation.jsx
+@@ -30,8 +30,11 @@
+     return () => cancelAnimationFrame(frame);
+   }, [currentModule, overlay, rail]);
+ 
+-  const showTooltip = (element, text, path) => {
++  const showTooltip = (element, text, path, pointer = false) => {
+     if (!rail) return;
++    // Pointer movement caused by collapsing the layout must not replace the
++    // description of a different link that the keyboard user is focusing.
++    if (pointer && navRef.current?.contains(document.activeElement) && document.activeElement !== element && document.activeElement.matches('.event-nav-tab')) return;
+     const box = element.getBoundingClientRect();
+     setTooltip({ text, path, left: box.right + 12, top: Math.max(8, Math.min(box.top, window.innerHeight - 60)) });
+   };
+@@ -45,7 +48,7 @@
+       aria-label={label} aria-describedby={rail && tooltip?.path === path ? tooltipId : undefined}
+       onClick={() => { setTooltip(null); onNavigate?.(); }}
+       onFocus={e => showTooltip(e.currentTarget, label, path)} onBlur={() => setTooltip(null)}
+-      onMouseEnter={e => showTooltip(e.currentTarget, label, path)} onMouseLeave={() => setTooltip(null)}
++      onMouseEnter={e => showTooltip(e.currentTarget, label, path, true)} onMouseLeave={() => { if (!navRef.current?.contains(document.activeElement)) setTooltip(null); }}
+       onKeyDown={e => { if (e.key === "Escape") setTooltip(null); }}>
+       <Icon size={20} strokeWidth={1.75} className="event-nav-tab-icon" aria-hidden="true" />
+       <span className="event-nav-tab-text">{label}</span>
+--- a/apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx
++++ b/apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx
+@@ -20,6 +20,7 @@
+   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+   const menuTrigger = useRef(null);
+   const mainPanel = useRef(null);
++  const accessRevision = useRef(0);
+   const registerNavigationTrigger = useCallback(node => { menuTrigger.current = node; }, []);
+   const { user } = useAuth();
+   const subject = String(user?.id || user?.userId || '');
+@@ -37,13 +38,15 @@
+   useEffect(() => {
+     let active = true;
+     if (!/^[1-9]\d*$/.test(eventId)) return;
++    const requestedAccess = ++accessRevision.current;
+     setState(current => ({ ...current, loading: true, event: null, access: null, error: "" }));
+     Promise.all([invitationService.get(eventId), invitationService.listMine(), invitationService.access?.(eventId)?.catch(() => null)])
+       .then(([event, events, access]) => {
+         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
+         const eventList = Array.isArray(events) ? events : [];
+         const summary = eventList.find(item => String(item.id) === eventId);
+-        if (active) setState({ loading: false, subject, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access, error: "" });
++        // A newer access refresh can revoke permission while event detail loads.
++        if (active) setState(current => ({ loading: false, subject, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access: requestedAccess === accessRevision.current ? access : current.access, error: "" }));
+       })
+       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message, errorStatus: error.status }); });
+     return () => { active = false; };
+@@ -51,12 +54,11 @@
+ 
+   useEffect(() => {
+     let active = true;
+-    let revision = 0;
+     const refreshAccess = () => {
+       if (!/^[1-9]\d*$/.test(eventId) || !invitationService.access) return;
+-      const requested = ++revision;
+-      invitationService.access(eventId, { suppressAuthRedirect: true }).then(access => { if (active && requested === revision) setState(current => ({ ...current, access })); })
+-        .catch(() => { if (active && requested === revision) setState(current => ({ ...current, access: null })); });
++      const requested = ++accessRevision.current;
++      invitationService.access(eventId, { suppressAuthRedirect: true }).then(access => { if (active && requested === accessRevision.current) setState(current => ({ ...current, access })); })
++        .catch(() => { if (active && requested === accessRevision.current) setState(current => ({ ...current, access: null })); });
+     };
+     window.addEventListener('focus', refreshAccess); window.addEventListener('koupreng:access-refresh', refreshAccess);
+     const timer = setInterval(refreshAccess, 60_000);
+@@ -66,6 +68,13 @@
+   useEffect(() => {
+     if (currentModule === 'invitation' && state.access && moduleAllowed('invitation', state.access.owner, state.access.permissions)) setOpenedStudio(true);
+   }, [currentModule, state.access]);
++
++  useEffect(() => {
++    if (state.loading || ALL_EVENT_LINKS.some(item => moduleAllowed(item.path, state.access?.owner === true, state.access?.permissions))) return;
++    setMobileDrawerOpen(false);
++    const frame = requestAnimationFrame(() => document.getElementById('event-access-message')?.focus());
++    return () => cancelAnimationFrame(frame);
++  }, [state.loading, state.access]);
+ 
+   if (!/^[1-9]\d*$/.test(eventId)) return (
+     <div className="event-workspace workspace-page" role="alert">
+@@ -103,6 +112,10 @@
+   const owner = state.access?.owner === true;
+   const allowed = path => moduleAllowed(path, owner, state.access?.permissions);
+   const studioRecovery = currentModule === 'invitation' && openedStudio;
++  if (!ALL_EVENT_LINKS.some(item => allowed(item.path)) && !studioRecovery) return <main id="event-access-message" tabIndex={-1} className="workspace-page" role="alert">
++    <p>{en ? 'You do not have permission for this event section.' : 'អ្នកមិនមានសិទ្ធិចូលផ្នែកកម្មវិធីនេះទេ។'}</p>
++    <Link className="workspace-button" to="/app/events">{en ? 'My Events' : 'កម្មវិធីរបស់ខ្ញុំ'}</Link>
++  </main>;
+   const activeItem = ALL_EVENT_LINKS.find(item => item.path === currentModule);
+   const activeModuleLabel = activeItem?.[en ? "en" : "km"] || (en ? "Dashboard" : "ផ្ទាំងគ្រប់គ្រង");
+   const events = state.events.some(item => String(item.id) === eventId) ? state.events : [state.event, ...state.events];
+--- /dev/null
++++ b/apps/frontend-user/src/features/events/workspace/Phase12CodexRevocation.test.jsx
+@@ -0,0 +1,31 @@
++import { act, cleanup, render, screen } from '@testing-library/react';
++import { MemoryRouter, Route, Routes } from 'react-router-dom';
++import { afterEach, beforeEach, expect, it, vi } from 'vitest';
++import EventWorkspace from './EventWorkspace';
++import { invitationService } from '@/features/invitations/api/invitationApi';
++import { useLanguageStore } from '@/stores/useLanguageStore';
++vi.mock('@/features/auth/hooks/useAuth',()=>({useAuth:()=>({user:{id:7}})}));
++vi.mock('@/features/invitations/api/invitationApi',()=>({invitationService:{get:vi.fn(),listMine:vi.fn(),access:vi.fn()}}));
++const event={id:42,title:'Sensitive event title',status:'DRAFT'};
++const owner={owner:true,permissions:[]};
++beforeEach(()=>{vi.clearAllMocks();useLanguageStore.setState({lang:'en'});invitationService.get.mockResolvedValue(event);invitationService.listMine.mockResolvedValue([event]);invitationService.access.mockResolvedValue(owner);});
++afterEach(cleanup);
++function mount(){return render(<MemoryRouter initialEntries={['/app/events/42']}><Routes><Route path='/app/events/:eventId' element={<EventWorkspace/>}><Route index element={<p>Private overview</p>}/></Route></Routes></MemoryRouter>);}
++it('C12-010 removes event identity and navigation after all access is revoked',async()=>{
++  mount();await screen.findByText('Private overview');
++  invitationService.access.mockResolvedValue({owner:false,permissions:[]});
++  await act(async()=>window.dispatchEvent(new Event('koupreng:access-refresh')));
++  expect(screen.queryByText('Private overview')).not.toBeInTheDocument();
++  expect(screen.queryByRole('navigation',{name:'Event navigation'})).not.toBeInTheDocument();
++  expect(screen.queryAllByText('Sensitive event title')).toHaveLength(0);
++});
++it('C12-010 rejects older initial owner access after a newer revocation reply',async()=>{
++  let finishGet;
++  invitationService.get.mockImplementationOnce(()=>new Promise(resolve=>{finishGet=resolve;}));
++  mount();
++  invitationService.access.mockResolvedValue({owner:false,permissions:[]});
++  await act(async()=>window.dispatchEvent(new Event('koupreng:access-refresh')));
++  await act(async()=>finishGet(event));
++  expect(screen.queryByText('Private overview')).not.toBeInTheDocument();
++  expect(screen.queryByRole('navigation',{name:'Event navigation'})).not.toBeInTheDocument();
++});
+--- a/apps/frontend-user/src/layouts/HostShell.jsx
++++ b/apps/frontend-user/src/layouts/HostShell.jsx
+@@ -5,6 +5,7 @@
+ import { useLanguageStore } from "@/stores/useLanguageStore";
+ import "@/shared/styles/workspace-ui.css";
+ import "./HostShell.css";
++import "./OwnerExperience.css";
+ 
+ export default function HostShell() {
+     const location = useLocation();
+--- /dev/null
++++ b/apps/frontend-user/src/layouts/OwnerExperience.css
+@@ -0,0 +1,187 @@
++/* Phase 12 owner chrome. Public pages, template renderers and admin are excluded. */
++.dash-wrapper {
++  --host-nav-offset: calc(80px + env(safe-area-inset-top, 0px));
++  background: var(--ui-theme-canvas);
++  color: var(--ui-theme-ink);
++}
++.dash-wrapper .host-header-wrapper { padding: 8px 0; background: var(--ui-theme-canvas); border: 0; box-shadow: none; backdrop-filter: none; }
++.dash-wrapper .host-header-container {
++  width: calc(100% - 32px); max-width: none; height: 64px; padding: 0 24px;
++  border-radius: 14px; border: 1px solid var(--ui-theme-border); background: var(--ui-theme-surface);
++  box-shadow: none; backdrop-filter: none; gap: 32px;
++}
++.dash-wrapper .host-nav-links { justify-content: flex-start; gap: 4px; }
++.dash-wrapper .host-nav-link { border-radius: 8px; font-size: 14px; padding-inline: 12px; font-weight: 600; color: var(--ui-theme-muted); }
++.dash-wrapper .host-nav-link.active { background: var(--ui-theme-action-soft); color: var(--ui-theme-action); border-color: transparent; }
++.dash-wrapper .host-logo-box:hover { transform: none; }
++.dash-wrapper .host-profile-menu { background: var(--ui-theme-surface); border-color: var(--ui-theme-border); box-shadow: var(--ui-theme-shadow); backdrop-filter: none; }
++.dash-wrapper .host-profile-menu-item { color: var(--ui-theme-ink); }
++.dash-wrapper .host-profile-menu-item:focus-visible { outline: 2px solid var(--ui-theme-focus); outline-offset: -2px; background: var(--ui-theme-subtle); }
++.dash-wrapper .host-profile-menu-item:hover { background: var(--ui-theme-subtle); color: var(--ui-theme-ink); }
++.dash-wrapper .host-profile-menu-item.logout { color: var(--ui-theme-danger); }
++.dash-wrapper .host-user-actions { gap: 12px; }
++.dash-wrapper :is(button,a,input,select,summary):focus-visible { outline: 3px solid var(--ui-theme-focus); outline-offset: 3px; }
++.dash-wrapper #host-main-content, .dash-wrapper #event-module-content { scroll-margin-top: var(--host-nav-offset); }
++
++/* A single document scroll keeps navigation and the active task in one hierarchy. */
++@media (min-width: 1024px) {
++  .dash-wrapper.dash-wrapper--event:not(.dash-wrapper--studio) { height: auto; min-height: 100dvh; overflow: visible; }
++  .dash-wrapper.dash-wrapper--event:not(.dash-wrapper--studio) > .dash-main-scroll { overflow: visible; }
++  .dash-wrapper .event-workspace:not(.is-studio) { height: auto; min-height: calc(100dvh - var(--host-nav-offset)); overflow: visible; align-items: start; padding-bottom: 32px; }
++  .dash-wrapper .event-workspace:not(.is-studio) .event-workspace-main { overflow: visible; padding: 0; }
++  .dash-wrapper .event-workspace:not(.is-studio) .event-workspace-sidebar { position: static; height: auto; }
++  .dash-wrapper .event-navigation-body { overflow: visible; scrollbar-gutter: auto; }
++}
++.dash-wrapper .event-workspace {
++  --event-nav-width: 240px; --ws-canvas: var(--ui-theme-canvas); --ws-surface: var(--ui-theme-surface);
++  --ws-ink: var(--ui-theme-ink); --ws-muted: var(--ui-theme-muted); --ws-border: var(--ui-theme-border);
++  --ws-border-strong: var(--ui-theme-control-border); --ws-surface-subtle: var(--ui-theme-subtle);
++  gap: 24px; padding-top: 8px;
++}
++.dash-wrapper .event-workspace.is-collapsed { --event-nav-width: 72px; }
++.dash-wrapper .event-workspace-sidebar { border-radius: 12px; box-shadow: none; }
++.dash-wrapper .event-navigation-header { padding: 16px 12px; }
++.dash-wrapper .event-context-eyebrow { font-size: 13px; margin-bottom: 8px; }
++.dash-wrapper .event-navigation-body { padding: 8px; }
++.dash-wrapper .event-nav-tab { border-radius: 8px; padding: 8px 10px; font-size: 14px; }
++.dash-wrapper .event-nav-tab.active { color: var(--ui-theme-action); background: var(--ui-theme-action-soft); box-shadow: inset 3px 0 var(--ui-theme-action); }
++.dash-wrapper .event-nav-group { padding-top: 4px; }
++.dash-wrapper .event-nav-group-toggle { font-size: 13px; min-height: 40px; }
++.dash-wrapper .event-navigation-footer { display: flex; flex-wrap: wrap; }
++.dash-wrapper .event-breadcrumb { min-height: 44px; padding: 0; margin-bottom: 8px; }
++.dash-wrapper .event-workspace-header { background: var(--ui-theme-surface); }
++.dash-wrapper .event-mobile-nav-toggle { background: var(--ui-theme-surface); }
++@media (min-width: 1024px) { .dash-wrapper .is-collapsed .event-workspace-header { display: none; } }
++
++/* Collection: title, controls and results occupy one compact control surface. */
++.dash-wrapper .events-page { max-width: 1680px; padding: 16px 32px 64px; box-sizing: border-box; }
++.dash-wrapper .events-page-header { margin-bottom: 16px; padding-bottom: 16px; align-items: center; }
++.dash-wrapper .events-page-header h1 { color: var(--ui-theme-ink); font-size: clamp(26px, 2.5vw, 34px); font-weight: 650; line-height: 1.6; }
++.dash-wrapper .events-page-header p { max-width: 70ch; font-size: 15px; color: var(--ui-theme-muted); margin-top: 4px; }
++.dash-wrapper .events-header-actions { gap: 12px; }
++.dash-wrapper .events-filters-container { padding: 0; margin-bottom: 0; background: none; border: 0; box-shadow: none; gap: 0; }
++.dash-wrapper .events-period-tabs { margin: 0 0 12px; padding: 0; gap: 8px; }
++.dash-wrapper .events-period-tab { min-height: 44px; padding: 8px 16px; border-radius: 8px; color: var(--ui-theme-muted); background: var(--ui-theme-subtle); box-shadow: none; }
++.dash-wrapper .events-period-tab.is-active { color: var(--ui-theme-on-action); background: var(--ui-theme-action); }
++.dash-wrapper .events-filters { display: grid; grid-template-columns: minmax(240px,2fr) repeat(3,minmax(140px,1fr)) auto; align-items: end; gap: 12px; padding: 0; margin: 0; border: 0; background: none; box-shadow: none; }
++.dash-wrapper .events-filters label { font-size: 13px; color: var(--ui-theme-muted); min-width: 0; }
++.dash-wrapper .events-filters :is(input,select) { height: 44px; color: var(--ui-theme-ink); background: var(--ui-theme-surface); border-color: var(--ui-theme-control-border); border-radius: 8px; }
++.dash-wrapper .events-search-input-wrap input { padding-right: 48px; }
++.dash-wrapper .events-search-clear-btn { width: 44px; height: 44px; right: 0; top: 0; transform: none; color: var(--ui-theme-muted); }
++.dash-wrapper .events-results-summary { margin: 16px 0; font-size: 14px; color: var(--ui-theme-muted); }
++.dash-wrapper .events-applied-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
++.dash-wrapper .events-applied-filters button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid var(--ui-theme-border); border-radius: 8px; background: var(--ui-theme-subtle); color: var(--ui-theme-ink); font: inherit; font-size: 13px; cursor: pointer; }
++.dash-wrapper .events-applied-filters span { overflow-wrap: anywhere; }
++.dash-wrapper .events-grid { max-width: none; gap: 24px; grid-template-columns: repeat(3,minmax(0,1fr)); }
++.dash-wrapper .event-card { border-radius: 12px; box-shadow: none; background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
++.dash-wrapper .event-card:hover { transform: none; border-color: var(--ui-theme-control-border); box-shadow: var(--ui-theme-shadow); }
++.dash-wrapper .event-card-img-wrap { border-radius: 11px 11px 0 0; aspect-ratio: 16/7; }
++.dash-wrapper .event-card-body { padding: 20px; }
++.dash-wrapper .event-card-title { font-size: 21px; line-height: 1.6; color: var(--ui-theme-ink); }
++.dash-wrapper .event-card-footer { padding-top: 12px; margin-top: 16px; flex-wrap: nowrap; gap: 8px; border-color: var(--ui-theme-border); }
++.dash-wrapper .event-card-actions-left { gap: 8px; }
++.dash-wrapper .event-card-btn { padding: 8px 12px; }
++.dash-wrapper .event-card-btn--primary { background: var(--ui-theme-action); color: var(--ui-theme-on-action); border-color: transparent; box-shadow: none; }
++.dash-wrapper .event-card-btn--secondary, .dash-wrapper .event-card-dots-btn { color: var(--ui-theme-ink); background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
++.dash-wrapper .event-card-dropdown { background: var(--ui-theme-surface); border-color: var(--ui-theme-border); }
++.dash-wrapper .event-card-dropdown-item { min-height: 44px; color: var(--ui-theme-ink); }
++.dash-wrapper .event-card-owner { color: var(--ui-theme-muted); font-size: 14px; margin: 4px 0; }
++.dash-wrapper .events-resume-banner { padding: 12px 16px; margin-bottom: 16px; background: var(--ui-theme-gold-soft); border-color: var(--ui-theme-border); box-shadow: none; }
++.dash-wrapper .events-resume-kicker { text-transform: none; letter-spacing: normal; font-size: 13px; color: var(--ui-theme-muted); }
++.dash-wrapper .events-resume-title { white-space: normal; overflow-wrap: anywhere; color: var(--ui-theme-ink); }
++.dash-wrapper .events-resume-status { color: var(--ui-theme-muted); }
++.dash-wrapper .events-resume-action-btn { min-height: 44px; background: var(--ui-theme-action); color: var(--ui-theme-on-action); }
++.dash-wrapper .events-pagination { justify-content: space-between; flex-wrap: wrap; gap: 12px; }
++.dash-wrapper .events-pagination-pages { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
++.dash-wrapper .events-pagination-pages button { min-width: 44px; padding-inline: 12px; }
++.dash-wrapper .events-pagination-pages [aria-current] { color: var(--ui-theme-on-action); background: var(--ui-theme-action); }
++
++/* Overview: one event identity, a quiet metric strip, then response and action panels. */
++.dash-wrapper .event-overview.pe-dashboard-page { grid-template-columns: minmax(0,1.4fr) minmax(300px,1fr); grid-template-areas: 'heading heading' 'hero hero' 'metrics metrics' 'responses preparation' 'finance finance' 'tools tools' 'activity activity'; gap: 20px; color: var(--ui-theme-ink); }
++.dash-wrapper .event-overview > .dash-page-header { margin: 0; }
++.dash-wrapper .event-overview .dash-page-header h1 { color: var(--ui-theme-ink); font-size: 24px; }
++.dash-wrapper .event-overview .overview-hero { grid-template-columns: minmax(0,1fr) 180px; padding: 24px; gap: 32px; border-radius: 12px; background: var(--ui-theme-surface); border-color: var(--ui-theme-border); box-shadow: none; }
++.dash-wrapper .event-overview .overview-cover { min-height: 160px; max-height: 220px; border-radius: 8px; }
++.dash-wrapper .event-overview .overview-hero-content h2 { color: var(--ui-theme-ink); font-size: clamp(26px,2.7vw,36px); line-height: 1.35; margin: 8px 0 12px; }
++:root[lang=km] .dash-wrapper .event-overview .overview-hero-content h2 { line-height: 1.65; }
++.dash-wrapper .event-overview .overview-event-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: var(--ui-theme-muted); }
++.dash-wrapper .event-overview .overview-couple-names { color: var(--ui-theme-gold); }
++.dash-wrapper .event-overview .overview-actions { margin-top: 12px; }
++.dash-wrapper .event-overview .overview-actions .workspace-button { font-size: 14px; }
++.dash-wrapper .event-overview .overview-actions .primary { background: var(--ui-theme-action); color: var(--ui-theme-on-action); border-color: transparent; }
++.dash-wrapper .event-overview .overview-publication-controls summary { font-size: 13px; color: var(--ui-theme-muted); }
++.dash-wrapper .event-overview .overview-metrics { gap: 0; border: 1px solid var(--ui-theme-border); border-radius: 12px; overflow: hidden; background: var(--ui-theme-surface); }
++.dash-wrapper .event-overview .overview-metrics > a { border: 0; border-radius: 0; border-inline-end: 1px solid var(--ui-theme-border); padding: 20px; min-height: 128px; background: transparent; }
++.dash-wrapper .event-overview .overview-metrics > a:hover { box-shadow: none; background: var(--ui-theme-subtle); }
++.dash-wrapper .event-overview .overview-metrics span { color: var(--ui-theme-muted); font-size: 13px; }
++.dash-wrapper .event-overview .overview-metrics strong { color: var(--ui-theme-ink); font-variant-numeric: tabular-nums; font-size: 30px; }
++.dash-wrapper .event-overview .overview-metrics > a:has(.overview-metric-heading+strong):nth-child(n+5) strong { font-size: 22px; line-height: 1.5; }
++.dash-wrapper .event-overview .workspace-section { padding: 20px 24px; border-radius: 12px; background: var(--ui-theme-surface); border-color: var(--ui-theme-border); box-shadow: none; }
++.dash-wrapper .event-overview .workspace-section h2 { color: var(--ui-theme-ink); font-size: 18px; }
++.dash-wrapper .event-overview .overview-checklist strong { color: var(--ui-theme-ink); font-size: 14px; }
++.dash-wrapper .event-overview .overview-checklist a { min-height: 44px; }
++.dash-wrapper .event-overview .overview-checklist li { padding-block: 2px; }
++.dash-wrapper .event-overview .overview-rsvp { grid-area: responses; }
++.dash-wrapper .overview-finance { grid-area: finance; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
++.dash-wrapper .overview-finance a { position: relative; display: grid; gap: 8px; padding: 20px; border: 1px solid var(--ui-theme-border); border-radius: 12px; background: var(--ui-theme-surface); color: var(--ui-theme-ink); text-decoration: none; }
++.dash-wrapper .overview-finance strong { font-size: 22px; font-variant-numeric: tabular-nums; padding-right: 24px; }
++.dash-wrapper .overview-finance span { font-size: 14px; color: var(--ui-theme-muted); }
++.dash-wrapper .overview-rsvp > p { font-size: 14px; line-height: 1.8; margin: 8px 0 20px; }
++.dash-wrapper .overview-response-track { display: flex; height: 16px; border-radius: 6px; overflow: hidden; gap: 3px; margin-block: 24px; }
++.dash-wrapper .overview-response-track span { transition: width var(--ui-duration-feedback); }
++.dash-wrapper .response-success { background: var(--ui-theme-success); }
++.dash-wrapper .response-muted { background: var(--ui-theme-muted); }
++.dash-wrapper .response-info { background: var(--ui-theme-info); }
++.dash-wrapper .response-warning { background: var(--ui-theme-warning); }
++.dash-wrapper .overview-response-legend { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px 24px; margin: 0; }
++.dash-wrapper .overview-response-legend div { min-width: 0; }
++.dash-wrapper .overview-response-legend dt { display: flex; align-items: center; gap: 8px; color: var(--ui-theme-muted); font-size: 14px; }
++.dash-wrapper .response-dot { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; }
++.dash-wrapper .overview-response-legend dd { margin: 4px 0 0 16px; font-size: 18px; font-weight: 650; font-variant-numeric: tabular-nums; }
++.dash-wrapper .overview-response-empty { padding: 12px; background: var(--ui-theme-subtle); border-radius: 8px; }
++.dash-wrapper .event-overview .overview-tool-grid { grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); }
++.dash-wrapper .event-overview .overview-tool-grid a { color: var(--ui-theme-ink); background: var(--ui-theme-subtle); border-color: transparent; font-size: 14px; }
++
++@media (max-width: 1279px) {
++  .dash-wrapper .host-header-container { gap: 16px; padding-inline: 16px; }
++  .dash-wrapper .events-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
++  .dash-wrapper .event-overview.pe-dashboard-page { grid-template-columns: minmax(0,1fr); grid-template-areas: 'heading' 'hero' 'metrics' 'responses' 'preparation' 'finance' 'tools' 'activity'; }
++  .dash-wrapper .events-filters { grid-template-columns: repeat(3,minmax(0,1fr)); }
++  .dash-wrapper .events-filter-search-label { grid-column: 1 / -1; }
++}
++@media (max-width: 767px) {
++  .dash-wrapper .host-header-container { width: calc(100% - 16px); padding-inline: 12px; height: 64px; }
++  .dash-wrapper .events-page { padding: 12px 16px 72px; }
++  .dash-wrapper .events-page-header { align-items: stretch; gap: 12px; }
++  .dash-wrapper .events-page-header p { font-size: 14px; }
++  .dash-wrapper .events-header-actions { justify-content: space-between; width: 100%; }
++  .dash-wrapper .events-grid { grid-template-columns: minmax(0,1fr); }
++  .dash-wrapper .events-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
++  .dash-wrapper .events-filters label:last-of-type { grid-column: 1 / -1; }
++  .dash-wrapper .event-overview .overview-hero { grid-template-columns: minmax(0,1fr); padding: 20px; gap: 16px; }
++  .dash-wrapper .event-overview .overview-cover { display: none; }
++  .dash-wrapper .event-overview .overview-hero-content { grid-column: 1; }
++  .dash-wrapper .event-overview .overview-metrics,
++  .dash-wrapper .event-overview .overview-metrics:has(>a:nth-child(5)),
++  .dash-wrapper .event-overview .overview-metrics:has(>a:nth-child(5)):not(:has(>a:nth-child(6))) { grid-template-columns: repeat(2,minmax(0,1fr)); }
++  .dash-wrapper .event-overview .overview-metrics > a { padding: 16px; border-bottom: 1px solid var(--ui-theme-border); }
++  .dash-wrapper .event-overview .overview-metrics strong { font-size: 26px; }
++  .dash-wrapper .event-overview .overview-metrics span { max-width: 100%; padding-right: 24px; }
++  .dash-wrapper .event-overview .workspace-section { padding: 20px; }
++  .dash-wrapper .overview-finance { grid-template-columns: minmax(0,1fr); }
++  .dash-wrapper .events-pagination-pages { order: 3; width: 100%; justify-content: center; }
++}
++@media (max-width: 359px) {
++  .dash-wrapper .events-page { padding-inline: 12px; }
++  .dash-wrapper .events-header-actions { flex-wrap: wrap; }
++  .dash-wrapper .events-create-btn { width: 100%; justify-content: center; }
++  .dash-wrapper .event-overview .overview-metrics strong { font-size: 22px; }
++}
++@media (prefers-reduced-motion: reduce) {
++  .dash-wrapper .overview-response-track span { transition: none; }
++}
++@media (forced-colors: active) {
++  .dash-wrapper :is(.event-nav-tab.active,[aria-current=page],button[aria-pressed=true]) { outline: 2px solid Highlight; outline-offset: -2px; }
++  .dash-wrapper .overview-response-track { border: 1px solid CanvasText; }
++  .dash-wrapper .response-dot { border: 1px solid CanvasText; }
++}
+--- a/apps/frontend-user/src/layouts/components/HostNav.jsx
++++ b/apps/frontend-user/src/layouts/components/HostNav.jsx
+@@ -174,7 +174,11 @@
+   useEffect(() => {
+     setMobileMenuOpen(false);
+     setProfileOpen(false);
+-  }, [location.key]);
++  }, [location.key, user?.id, user?.userId]);
++
++  useEffect(() => {
++    if (profileOpen) profileMenuRef.current?.querySelector('[role="menuitem"]')?.focus();
++  }, [profileOpen]);
+ 
+   useEffect(() => {
+     const desktop = window.matchMedia("(min-width: 1201px)");
+@@ -195,7 +199,7 @@
+   ];
+ 
+   const isActive = useCallback((path) => {
+-    if (path === "/app/events") return location.pathname === path;
++    if (path === "/app/events") return location.pathname === path || /^\/app\/events\/\d+(?:\/|$)/.test(location.pathname);
+     return location.pathname === path || location.pathname.startsWith(`${path}/`);
+   }, [location.pathname]);
+ 
+@@ -225,6 +229,9 @@
+ 
+   // Profile menu keyboard navigation
+   const handleProfileKeyDown = (e) => {
++    if (!profileOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
++      e.preventDefault(); setProfileOpen(true); return;
++    }
+     if (!profileOpen) return;
+     const items = profileMenuRef.current?.querySelectorAll('[role="menuitem"]');
+     if (!items || items.length === 0) return;
+@@ -245,6 +252,8 @@
+     } else if (e.key === "End") {
+       e.preventDefault();
+       itemsArray[itemsArray.length - 1]?.focus();
++    } else if (e.key === "Tab") {
++      setProfileOpen(false);
+     }
+   };
+ 
+@@ -268,17 +277,16 @@
+             className="host-nav-links"
+             aria-label={language === "en" ? "Main navigation" : "ម៉ឺនុយចម្បង"}
+           >
+-            {dynamicNavItems.map((item, index) => {
++            {dynamicNavItems.map((item) => {
+               const active = isActive(item.activePath || item.path);
+               return (
+                 <span key={item.labelKey} className="host-nav-item-wrap">
+-                  {index > 0 && <span className="host-nav-divider" aria-hidden="true">|</span>}
+                   <Link
+                     to={item.path}
+                     className={`host-nav-link${active ? " active" : ""}`}
+                     aria-current={active ? "page" : undefined}
+                   >
+-                    {getNavLabel(item.labelKey)}
++                    <item.Icon size={17} aria-hidden="true" />{getNavLabel(item.labelKey)}
+                   </Link>
+                 </span>
+               );
+@@ -300,7 +308,7 @@
+                 onClick={() => setProfileOpen((value) => !value)}
+               >
+                 <span className="host-profile-avatar">
+-                  {profileImage ? <img src={profileImage} alt="" /> : profileInitial}
++                  {profileImage ? <img key={profileImage} src={profileImage} alt="" /> : profileInitial}
+                 </span>
+                 <span className="host-profile-name">{displayName}</span>
+                 <ChevronDown className="host-profile-chevron" aria-hidden="true" />
+--- /dev/null
++++ b/apps/frontend-user/tests/e2e/phase12-codex-behavior.spec.js
+@@ -0,0 +1,134 @@
++import { test, expect } from '@playwright/test';
++import AxeBuilder from '@axe-core/playwright';
++import fs from 'node:fs';
++import path from 'node:path';
++import { establishUserSession, setupMockApis, mockServerEvents, sampleDrafts } from './phase12-codex-fixtures';
++
++const output=path.resolve('../../output/phase12-codex/states');
++async function capture(page,name,testInfo){fs.mkdirSync(output,{recursive:true});await page.screenshot({path:path.join(output,`${name}-${testInfo.project.name}.png`),fullPage:true});}
++async function start(page,route='/app/events',options={}){
++  await page.clock.setFixedTime(new Date('2026-11-19T08:00:00Z'));
++  await establishUserSession(page,options); await setupMockApis(page,options);
++  await page.goto(route); await page.evaluate(()=>document.fonts.ready);
++}
++
++test('profile keyboard, locale, theme and nested active route',async({page},info)=>{
++  await start(page,'/app/events/42'); await expect(page.locator('.overview-hero')).toBeVisible();
++  await expect(page.locator('.host-nav-links a[href="/app/events"]')).toHaveAttribute('aria-current','page');
++  const trigger=page.getByRole('button',{name:'Audit Owner',exact:true}); await trigger.focus(); await page.keyboard.press('ArrowDown');
++  await expect(page.getByRole('menu')).toBeVisible(); await expect(page.getByRole('menuitem').first()).toBeFocused();
++  await page.keyboard.press('End'); await expect(page.getByRole('menuitem').last()).toBeFocused();
++  await capture(page,'profile-open',info); await page.keyboard.press('Escape'); await expect(trigger).toBeFocused();
++  await trigger.click(); await page.locator('.overview-hero h2').click(); await expect(page.getByRole('menu')).toHaveCount(0);
++  await page.getByRole('switch',{name:'English interface'}).click(); await expect(page.locator('html')).toHaveAttribute('lang','km');
++  await page.locator('.app-theme-toggle').first().click(); await expect(page.locator('html')).toHaveAttribute('data-color-mode','dark');
++});
++
++test('sidebar destinations, saved rail, tooltip, modal focus and resize',async({page},info)=>{
++  await start(page,'/app/events/42'); await expect(page.locator('.overview-hero')).toBeVisible();
++  expect(await page.locator('.event-workspace-nav a').count()).toBe(19);
++  await page.getByRole('button',{name:'Collapse navigation',exact:true}).click();
++  const guests=page.locator('.event-workspace-nav a[href="/app/events/42/guests"]'); await guests.focus();
++  await expect(page.getByRole('tooltip')).toHaveText('Guests'); await page.keyboard.press('Escape');
++  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('koupreng.eventNavigation.7')).mode)).toBe('collapsed');
++  await capture(page,'sidebar-rail',info);
++  await page.setViewportSize({width:320,height:568});
++  const trigger=page.getByRole('button',{name:'Toggle modules menu'}); await trigger.click();
++  await expect(page.getByRole('dialog',{name:'Event navigation'})).toBeVisible();
++  expect(await page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
++  await page.keyboard.press('Shift+Tab');
++  expect(await page.getByRole('dialog').evaluate(e=>e.contains(document.activeElement))).toBe(true);
++  await capture(page,'drawer-320',info); await page.keyboard.press('Escape');
++  await expect(trigger).toBeFocused(); expect(await page.evaluate(()=>document.body.style.overflow)).toBe('');
++  await trigger.click(); await page.setViewportSize({width:1440,height:900}); await expect(page.getByRole('dialog')).toHaveCount(0);
++});
++
++test('search, filters, pagination, history and preserving unrelated query state',async({page},info)=>{
++  const events=Array.from({length:25},(_,i)=>({...mockServerEvents[0],id:100+i,title:`Celebration ${String(i+1).padStart(2,'0')}`,updatedAt:null,createdAt:null,eventDate:i===24?null:'2027-11-28'}));
++  await start(page,'/app/events?module=guests&page=999&sort=unknown',{events});
++  await expect(page.getByRole('heading',{name:'Celebration 25',exact:true})).toBeVisible();
++  await page.getByRole('button',{name:'Page 1',exact:true}).click();
++  await expect(page.getByRole('heading',{name:'Celebration 01',exact:true})).toBeVisible();
++  await page.getByRole('button',{name:'Next',exact:true}).click();
++  await expect(page.locator('.events-results-summary')).toContainText('13–24 of 25');
++  await expect(page.getByRole('button',{name:'Page 2',exact:true})).toHaveAttribute('aria-current','page');
++  await capture(page,'pagination-25',info);
++  await page.getByRole('button',{name:'Upcoming',exact:true}).click();
++  await expect(page.locator('.events-results-summary')).toContainText('24 matching events');
++  await page.goBack(); await expect(page.getByRole('button',{name:'All',exact:true})).toHaveAttribute('aria-pressed','true');
++  const search=page.getByRole('searchbox'); await search.fill('  Celebration 25  ');
++  await expect(page.getByRole('heading',{name:'Celebration 25',exact:true})).toBeVisible();
++  await page.getByRole('button',{name:'Clear filters',exact:true}).click();
++  await expect(search).toHaveValue(''); expect(new URL(page.url()).searchParams.get('module')).toBe('guests');
++  await search.fill('no such celebration'); await expect(page.locator('.events-grid .event-card')).toHaveCount(0);
++  await capture(page,'no-match',info);
++});
++
++test('calendar arrow navigation, date selection and shared restrictions',async({page},info)=>{
++  await start(page,'/app/events?view=calendar');
++  const first=page.getByRole('gridcell',{name:/Nov 1, 2026/}); await first.focus(); await page.keyboard.press('ArrowRight');
++  await expect(page.getByRole('gridcell',{name:/Nov 2, 2026/})).toBeFocused();
++  await page.keyboard.press('Enter'); await expect(page.getByRole('region',{name:'Selected date events'})).toBeVisible();
++  await page.getByRole('button',{name:'Agenda',exact:true}).click(); await capture(page,'calendar-agenda',info);
++  await page.goto('/app/events/201'); await expect(page.getByText(/Shared event. Available tools/)).toBeVisible();
++  await expect(page.locator('.event-workspace-nav a[href$="/budget"]')).toHaveCount(0);
++  await expect(page.locator('.overview-metrics')).toHaveCount(0); await capture(page,'shared-role',info);
++});
++
++test('Khmer dark, forced colors, reduced motion and equivalent reflow',async({page},info)=>{
++  await start(page,'/app/events/42',{lang:'km',theme:'dark'}); await expect(page.locator('.overview-hero')).toBeVisible();
++  await page.emulateMedia({reducedMotion:'reduce'});
++  await capture(page,'khmer-dark',info);
++  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
++  fs.writeFileSync(path.join(output,`khmer-dark-${info.project.name}-axe.json`),JSON.stringify(axe.violations,null,2));
++  expect(axe.violations).toEqual([]);
++  await page.setViewportSize({width:720,height:450}); // equivalent layout width; not native browser zoom certification
++  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
++  await capture(page,'equivalent-200-reflow',info);
++  await page.emulateMedia({forcedColors:'active'}); await page.locator('.overview-actions a').first().focus();
++  await expect(page.locator('.overview-actions a').first()).toBeFocused(); await capture(page,'forced-colors',info);
++});
++
++test('empty, unknown, zero and revoked states',async({page},info)=>{
++  await start(page,'/app/events',{emptyEvents:true});
++  await expect(page.locator('.events-empty-state')).toBeVisible(); await capture(page,'zero-events',info);
++  await page.route('**/api/v1/invitations/42/dashboard',route=>route.fulfill({json:{}}));
++  await page.goto('/app/events/42'); await expect(page.locator('.overview-metrics')).toContainText('Unavailable'); await capture(page,'unknown-dashboard',info);
++  await page.route('**/api/v1/invitations/42/dashboard',route=>route.fulfill({json:{totalGuests:0,totalInvited:0,attending:0,declined:0,maybe:0,pending:0}}));
++  await page.reload(); await expect(page.getByText('No guests yet', {exact:true})).toBeVisible(); await capture(page,'zero-dashboard',info);
++  await page.route('**/api/v1/invitations/42/access',route=>route.fulfill({json:{owner:false,permissions:[]}}));
++  await page.evaluate(()=>window.dispatchEvent(new Event('koupreng:access-refresh')));
++  await expect(page.locator('.event-workspace-nav')).toHaveCount(0); await expect(page.locator('.overview-hero')).toHaveCount(0);
++  await capture(page,'revoked-access',info);
++});
++
++test('local drafts stay recoverable after offline synchronization',async({page},info)=>{
++  await start(page,'/app/events',{drafts:sampleDrafts});
++  await expect(page.getByRole('button',{name:'Resume draft',exact:true}).first()).toBeVisible();
++  await expect(page.locator('.events-resume-banner')).toContainText('Saved in this browser only');
++  await capture(page,'local-drafts',info);
++});
++
++test('one hundred loaded events have bounded pagination',async({page},info)=>{
++  await start(page,'/app/events',{events:Array.from({length:100},(_,i)=>({...mockServerEvents[0],id:100+i,title:`Event ${i+1}`}))});
++  await expect(page.locator('.events-results-summary')).toContainText('100 matching events');
++  await capture(page,'hundred-events',info);
++});
++
++test('long Khmer content reflows in both locales and themes at 320px',async({page},info)=>{
++  await page.setViewportSize({width:320,height:568});
++  const title='សិរីមង្គលអាពាហ៍ពិពាហ៍ សុខា និងសុភា ជាមួយក្រុមគ្រួសារ និងមិត្តភក្តិ';
++  await start(page,'/app/events',{lang:'km',events:[{...mockServerEvents[0],title,venueName:'ភ្នំពេញ សាលពិធីមង្គលការ'}]});
++  await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();
++  for(const mode of ['km-light','km-dark','en-dark','en-light']){
++    await page.evaluate(async()=>{
++      await document.fonts.ready;
++      await Promise.all(document.getAnimations().filter(animation=>animation.effect?.getTiming().iterations!==Infinity).map(animation=>animation.finished.catch(()=>{})));
++    });
++    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
++    const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
++    expect(axe.violations).toEqual([]);await capture(page,`long-title-320-${mode}`,info);
++    if(mode==='km-light'||mode==='en-dark')await page.locator('.app-theme-toggle').first().click();
++    if(mode==='km-dark')await page.locator('.app-language-toggle').first().click();
++  }
++});
+--- /dev/null
++++ b/apps/frontend-user/tests/e2e/phase12-codex-fixtures.js
+@@ -0,0 +1,235 @@
++const TEST_TOKEN = [
++  "eyJhbGciOiJub25lIn0",
++  "eyJleHAiOjQxMDIyNjg4MDB9",
++  "",
++].join(".");
++
++export const mockServerEvents = [
++  {
++    id: 42,
++    title: "Vannak & Kolab Royal Wedding",
++    groomName: "Vannak",
++    brideName: "Kolab",
++    eventType: "WEDDING",
++    eventDate: "2027-11-28",
++    eventTime: "17:00",
++    venueName: "Sokha Hotel Grand Ballroom",
++    status: "PUBLISHED",
++    slug: "vannak-kolab-2027",
++    coverUrl: "/templates/royal-garden.svg",
++    templateThumbnailUrl: "/templates/royal-garden.svg",
++    createdAt: "2026-11-01T10:00:00Z",
++    updatedAt: "2026-11-18T15:30:00Z",
++  },
++  {
++    id: 105,
++    title: "Channary 30th Birthday Gala",
++    celebrantName: "Channary",
++    eventType: "BIRTHDAY",
++    eventDate: "2027-04-12",
++    eventTime: "18:30",
++    venueName: "Rosewood Phnom Penh",
++    status: "DRAFT",
++    slug: "channary-30th",
++    coverUrl: "/templates/event-essential.svg",
++    templateThumbnailUrl: "/templates/event-essential.svg",
++    createdAt: "2026-11-10T12:00:00Z",
++    updatedAt: "2026-11-15T09:00:00Z",
++  },
++  {
++    id: 201,
++    title: "Piseth Tech Leadership Summit",
++    eventType: "CORPORATE",
++    eventDate: "2027-08-20",
++    eventTime: "09:00",
++    venueName: "Koh Pich Convention Center",
++    status: "PUBLISHED",
++    shared: true,
++    ownerName: "Piseth Tech Ltd",
++    slug: "tech-leadership-2027",
++    coverUrl: "/templates/bliss-editorial.svg",
++    templateThumbnailUrl: "/templates/bliss-editorial.svg",
++    createdAt: "2026-11-05T08:00:00Z",
++    updatedAt: "2026-11-12T14:00:00Z",
++  },
++];
++
++export async function establishUserSession(page, { userId = 7, lang = "en", theme = "light", drafts = [] } = {}) {
++  await page.addInitScript(({ token, userId, lang, theme, drafts }) => {
++    const authEnvelope = JSON.stringify({
++      accessToken: token,
++      tokenType: "Bearer",
++      expiresAt: "2100-01-01T00:00:00Z",
++      user: { id: userId, fullName: "Audit Owner", email: "owner@example.test", role: "HOST" },
++    });
++    window.sessionStorage.setItem("koupreng.auth", authEnvelope);
++    window.localStorage.setItem("koupreng.auth", authEnvelope);
++    window.localStorage.setItem("koupreng.lang", lang);
++    window.localStorage.setItem("theme", theme);
++    window.localStorage.setItem("koupreng.colorMode", theme);
++
++    if (drafts && drafts.length > 0) {
++      window.localStorage.setItem("koupreng.wedding.drafts", JSON.stringify(Object.fromEntries(drafts.map(draft=>[draft.id,draft]))));
++    } else {
++      window.localStorage.removeItem("koupreng.wedding.drafts");
++    }
++  }, { token: TEST_TOKEN, userId, lang, theme, drafts });
++}
++
++export function setupMockApis(page, { emptyEvents = false, events = mockServerEvents } = {}) {
++  return page.route("**/api/v1/**", async (route) => {
++    const url = new URL(route.request().url());
++    const path = url.pathname;
++    const method = route.request().method();
++    if (method !== 'GET') return route.fulfill({ status:503, contentType:'application/json', body:JSON.stringify({message:'Offline test fixture; local changes retained'}) });
++
++    if (path.includes("/invitations/my") || path.includes("/invitations/mine") || (path === "/api/v1/invitations" && method === "GET")) {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify(emptyEvents ? [] : events),
++      });
++    }
++
++    if (path === "/api/v1/invitations/42" && method === "GET") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify(mockServerEvents[0]),
++      });
++    }
++
++    if (path === "/api/v1/invitations/201" && method === "GET") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify(mockServerEvents[2]),
++      });
++    }
++
++    if (path.includes("/invitations/42/access")) {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify({
++          owner: true,
++          role: "OWNER",
++          canManage: true,
++          permissions: ["VIEW_EVENT", "EDIT_EVENT", "MANAGE_SETTINGS", "MANAGE_INVITATION", "MANAGE_GUESTS", "MANAGE_BUDGET"],
++          ownerFeatures: ["QR_INVITATIONS", "CUSTOM_DOMAIN"],
++        }),
++      });
++    }
++
++    if (path.includes("/invitations/201/access")) {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify({
++          owner: false,
++          role: "VIEWER",
++          canManage: false,
++          permissions: ["VIEW_EVENT"],
++          ownerFeatures: [],
++        }),
++      });
++    }
++
++    if (path === "/api/v1/invitations/42/dashboard") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify({
++          totalGuests: 250,
++          totalInvited: 250,
++          attending: 185,
++          declined: 15,
++          pending: 50,
++          maybe: 0,
++          totalResponded: 200,
++          rsvpRate: 74,
++          checkedInCount: 120,
++        }),
++      });
++    }
++
++    if (path === "/api/v1/invitations/42/budget-items") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify([
++          { id: 1, category: "Venue & Catering", actualCost: 3500, estimatedCost: 4000, currency: "USD" },
++          { id: 2, category: "Traditional Music", actualCost: 2000000, estimatedCost: 2500000, currency: "KHR" },
++          { id: 3, category: "Floral & Decor", actualCost: 1500, estimatedCost: 1500, currency: "USD" },
++        ]),
++      });
++    }
++
++    if (path === "/api/v1/invitations/42/gifts") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify([
++          { id: 1, guestName: "Lok Chumteav Bopha", amount: 200, currency: "USD" },
++          { id: 2, guestName: "Oknha Rithy", amount: 800000, currency: "KHR" },
++          { id: 3, guestName: "Meng & Srey", amount: 100, currency: "USD" },
++        ]),
++      });
++    }
++
++    if (path === "/api/v1/invitations/42/check-in/summary") {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify({
++          totalCheckedIn: 120,
++          checkedIn: 120,
++        }),
++      });
++    }
++
++    if (path.includes("/notifications/invitation")) {
++      return route.fulfill({
++        status: 200,
++        contentType: "application/json",
++        body: JSON.stringify([
++          { id: 1, title: "RSVP Accepted", message: "Visal confirmed attendance.", createdAt: "2026-11-18T14:20:00Z" },
++          { id: 2, title: "Gift Received", message: "Lok Chumteav Bopha sent $200.", createdAt: "2026-11-18T15:00:00Z" },
++        ]),
++      });
++    }
++
++    return route.fulfill({
++      status: 200,
++      contentType: "application/json",
++      body: JSON.stringify({ data: {} }),
++    });
++  });
++}
++
++export const sampleDrafts = [
++  {
++    id: "wed-local-offline-1", ownerUserId: 7,
++    title: "Dara & Rathana Riverside Wedding",
++    eventType: "WEDDING",
++    status: "DRAFT",
++    syncStatus: "LOCAL_ONLY",
++    isLocal: true,
++    eventDate: "2027-05-15",
++    eventTime: "16:30",
++    venueName: "Sofitel Phnom Penh Phokeethra",
++    updatedAt: "2026-11-19T08:00:00Z",
++  },
++  {
++    id: "wed-sync-failed-1", ownerUserId: 7,
++    title: "Sreypov Golden Anniversary",
++    eventType: "ANNIVERSARY",
++    status: "DRAFT",
++    syncStatus: "SYNC_FAILED",
++    eventDate: "2027-06-20",
++    eventTime: "18:00",
++    venueName: "Hyatt Regency Phnom Penh",
++    updatedAt: "2026-11-17T11:00:00Z",
++  },
++];
++
+--- /dev/null
++++ b/apps/frontend-user/tests/e2e/phase12-codex-visual.spec.js
+@@ -0,0 +1,46 @@
++import { test, expect } from '@playwright/test';
++import fs from 'node:fs';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import process from 'node:process';
++import AxeBuilder from '@axe-core/playwright';
++import { establishUserSession, setupMockApis } from './phase12-codex-fixtures';
++
++const stage = process.env.PHASE12_CAPTURE || 'after';
++const output = path.resolve('../../output/phase12-codex', stage);
++const viewports = [[1440,900],[1920,1080],[1280,720],[1024,768],[768,1024],[393,851],[360,800],[320,568],[844,390]];
++
++for (const [surface, route, ready] of [['list','/app/events','.event-card'],['overview','/app/events/42','.overview-hero']]) {
++  test(`${surface} geometry and visual matrix`, async ({ page }, testInfo) => {
++    fs.mkdirSync(output, { recursive: true });
++    await page.clock.setFixedTime(new Date('2026-11-19T08:00:00Z'));
++    await establishUserSession(page);
++    await setupMockApis(page);
++    await page.goto(route);
++    await expect(page.locator(ready).first()).toBeVisible();
++    await page.evaluate(() => document.fonts.ready);
++    const measurements = [];
++    for (const [width,height] of viewports) {
++      await page.setViewportSize({ width,height });
++      await page.emulateMedia({ reducedMotion: 'reduce' });
++      const geometry = await page.evaluate(() => {
++        const selectors = ['.host-header-container','.events-page-header','.events-filters-container','.event-card','.event-workspace-sidebar','.overview-hero','.overview-preparation','.overview-metrics'];
++        return { viewport: { width: innerWidth, height: innerHeight }, scrollWidth: document.documentElement.scrollWidth,
++          rects: Object.fromEntries(selectors.map(selector => { const element=document.querySelector(selector); const r=element?.getBoundingClientRect(); return [selector,r ? { x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom } : null]; })),
++          scrollOwners: [...document.querySelectorAll('*')].filter(e => /auto|scroll/.test(getComputedStyle(e).overflowY) && e.scrollHeight>e.clientHeight).map(e => ({className:e.className,height:e.clientHeight,scrollHeight:e.scrollHeight})) };
++      });
++      const filename = `${surface}-${testInfo.project.name}-${width}x${height}-en-light.png`;
++      await page.screenshot({ path:path.join(output,filename) });
++      const sha256=crypto.createHash('sha256').update(fs.readFileSync(path.join(output,filename))).digest('hex');
++      measurements.push({filename,sha256,...geometry});
++      if(stage==='after') expect(geometry.scrollWidth).toBeLessThanOrEqual(width);
++    }
++    fs.writeFileSync(path.join(output,`${surface}-${testInfo.project.name}-geometry.json`), JSON.stringify(measurements,null,2));
++    if(stage==='after') {
++      await page.setViewportSize({width:1440,height:900});
++      const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
++      fs.writeFileSync(path.join(output,`${surface}-${testInfo.project.name}-axe.json`),JSON.stringify({violations:axe.violations,incomplete:axe.incomplete},null,2));
++      expect(axe.violations).toEqual([]);
++    }
++  });
++}

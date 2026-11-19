@@ -20,6 +20,7 @@ function VerifiedWorkspace({ eventId }) {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const menuTrigger = useRef(null);
   const mainPanel = useRef(null);
+  const accessRevision = useRef(0);
   const registerNavigationTrigger = useCallback(node => { menuTrigger.current = node; }, []);
   const { user } = useAuth();
   const subject = String(user?.id || user?.userId || '');
@@ -37,13 +38,15 @@ function VerifiedWorkspace({ eventId }) {
   useEffect(() => {
     let active = true;
     if (!/^[1-9]\d*$/.test(eventId)) return;
+    const requestedAccess = ++accessRevision.current;
     setState(current => ({ ...current, loading: true, event: null, access: null, error: "" }));
     Promise.all([invitationService.get(eventId), invitationService.listMine(), invitationService.access?.(eventId)?.catch(() => null)])
       .then(([event, events, access]) => {
         if (!event || String(event.id) !== eventId) throw new Error("Invalid event response");
         const eventList = Array.isArray(events) ? events : [];
         const summary = eventList.find(item => String(item.id) === eventId);
-        if (active) setState({ loading: false, subject, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access, error: "" });
+        // A newer access refresh can revoke permission while event detail loads.
+        if (active) setState(current => ({ loading: false, subject, event: { ...event, coverUrl: summary?.coverUrl || null, coverSource: summary?.coverSource, invitationCoverUrl: summary?.invitationCoverUrl, templateThumbnailUrl: summary?.templateThumbnailUrl || event.templateThumbnailUrl }, events: eventList, access: requestedAccess === accessRevision.current ? access : current.access, error: "" }));
       })
       .catch(error => { if (active) setState({ loading: false, event: null, events: [], error: error.message, errorStatus: error.status }); });
     return () => { active = false; };
@@ -51,12 +54,11 @@ function VerifiedWorkspace({ eventId }) {
 
   useEffect(() => {
     let active = true;
-    let revision = 0;
     const refreshAccess = () => {
       if (!/^[1-9]\d*$/.test(eventId) || !invitationService.access) return;
-      const requested = ++revision;
-      invitationService.access(eventId, { suppressAuthRedirect: true }).then(access => { if (active && requested === revision) setState(current => ({ ...current, access })); })
-        .catch(() => { if (active && requested === revision) setState(current => ({ ...current, access: null })); });
+      const requested = ++accessRevision.current;
+      invitationService.access(eventId, { suppressAuthRedirect: true }).then(access => { if (active && requested === accessRevision.current) setState(current => ({ ...current, access })); })
+        .catch(() => { if (active && requested === accessRevision.current) setState(current => ({ ...current, access: null })); });
     };
     window.addEventListener('focus', refreshAccess); window.addEventListener('koupreng:access-refresh', refreshAccess);
     const timer = setInterval(refreshAccess, 60_000);
@@ -66,6 +68,13 @@ function VerifiedWorkspace({ eventId }) {
   useEffect(() => {
     if (currentModule === 'invitation' && state.access && moduleAllowed('invitation', state.access.owner, state.access.permissions)) setOpenedStudio(true);
   }, [currentModule, state.access]);
+
+  useEffect(() => {
+    if (state.loading || ALL_EVENT_LINKS.some(item => moduleAllowed(item.path, state.access?.owner === true, state.access?.permissions))) return;
+    setMobileDrawerOpen(false);
+    const frame = requestAnimationFrame(() => document.getElementById('event-access-message')?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [state.loading, state.access]);
 
   if (!/^[1-9]\d*$/.test(eventId)) return (
     <div className="event-workspace workspace-page" role="alert">
@@ -103,6 +112,10 @@ function VerifiedWorkspace({ eventId }) {
   const owner = state.access?.owner === true;
   const allowed = path => moduleAllowed(path, owner, state.access?.permissions);
   const studioRecovery = currentModule === 'invitation' && openedStudio;
+  if (!ALL_EVENT_LINKS.some(item => allowed(item.path)) && !studioRecovery) return <main id="event-access-message" tabIndex={-1} className="workspace-page" role="alert">
+    <p>{en ? 'You do not have permission for this event section.' : 'អ្នកមិនមានសិទ្ធិចូលផ្នែកកម្មវិធីនេះទេ។'}</p>
+    <Link className="workspace-button" to="/app/events">{en ? 'My Events' : 'កម្មវិធីរបស់ខ្ញុំ'}</Link>
+  </main>;
   const activeItem = ALL_EVENT_LINKS.find(item => item.path === currentModule);
   const activeModuleLabel = activeItem?.[en ? "en" : "km"] || (en ? "Dashboard" : "ផ្ទាំងគ្រប់គ្រង");
   const events = state.events.some(item => String(item.id) === eventId) ? state.events : [state.event, ...state.events];

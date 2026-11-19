@@ -1,0 +1,16 @@
+{
+  "component": "RsvpComposition.jsx",
+  "source": "GET /api/v1/invitations/:id/dashboard",
+  "categories": [
+    "attending",
+    "declined",
+    "maybe",
+    "pending"
+  ],
+  "denominator": "totalGuests only when all four counts are nonnegative safe integers and sum exactly to totalGuests",
+  "unknown_or_inconsistent": "Text counts retained; proportional track withheld with explicit unavailable message.",
+  "zero": "Add guests guidance; no 100% chart.",
+  "alternative": "Labeled definition list with count and percentage; color is supplementary.",
+  "finance": "Independent USD/KHR ledger totals. Invalid labeled amounts poison that currency total to unavailable; unsupported/unlabeled currency is excluded, never assumed USD.",
+  "history": "No series, growth, delivery trend or FX invented."
+}

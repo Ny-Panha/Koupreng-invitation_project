@@ -1,0 +1,60 @@
+{
+  "final_assets": [
+    {
+      "file": "DashboardPage-8jDWMK4x.css",
+      "bytes": 21915,
+      "gzip_bytes": 4589,
+      "sha256": "5fd303698030bc09bf4e1dfc403994b96092b38362f0b45ce4b445ddb6f600ed"
+    },
+    {
+      "file": "DashboardPage-DKuBGWrp.js",
+      "bytes": 20569,
+      "gzip_bytes": 6368,
+      "sha256": "80b9689513e86b97e9e794a643ccdc4ff0e0b7b74af72958787fa13e401fbe13"
+    },
+    {
+      "file": "EventsPage-BPV7b442.css",
+      "bytes": 10010,
+      "gzip_bytes": 2227,
+      "sha256": "253b93e003a57b48eecdc3ae10e5897c6b3a8ec970004c42aa7af9d7b8627e5a"
+    },
+    {
+      "file": "EventsPage-CBQM5GD6.js",
+      "bytes": 49019,
+      "gzip_bytes": 14308,
+      "sha256": "8a65e6971fef72a5b37fd96eaaf9a5dc41c441b1eb1a2ed37127e454c046eeab"
+    },
+    {
+      "file": "EventWorkspace-w1om48Q6.js",
+      "bytes": 17198,
+      "gzip_bytes": 5852,
+      "sha256": "52f43bc4ed55fbb56c671b65caef3d1a87caa5349247e8591df12a8660e2d46d"
+    },
+    {
+      "file": "EventWorkspace-XYVPlUBb.css",
+      "bytes": 12317,
+      "gzip_bytes": 3198,
+      "sha256": "178efe4c1641e26cf75588a67a1990461dac747d2e539b9d07aff486ad2b46a3"
+    },
+    {
+      "file": "HostShell-BQ-xOXag.js",
+      "bytes": 13485,
+      "gzip_bytes": 4150,
+      "sha256": "37218b58a1ed616d1af4f0edb33e0fd49d02f47b4a66205ca4b219814d13f88a"
+    },
+    {
+      "file": "HostShell-C8mOkh_h.css",
+      "bytes": 31286,
+      "gzip_bytes": 5904,
+      "sha256": "0c1ccf4264edefc27efc7e8bf1913824c202cc345c8ad6cf278585ac58e4a637"
+    }
+  ],
+  "baseline_build_log": "output/phase12-codex/baseline-build.log",
+  "final_build_command": "last-user-build",
+  "limits": [
+    "Build durations varied with concurrent lab load; not a speedup claim.",
+    "No RUM/field INP, physical lower-end device, or p50/p95 certification.",
+    "Baseline exact byte inventory was not archived before rebuild; formatted build log remains."
+  ],
+  "runtime_change": "Countdown refresh reduced from every second to every minute; truthful semantic response track adds no chart dependency."
+}

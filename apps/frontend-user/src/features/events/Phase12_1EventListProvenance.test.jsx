@@ -50,6 +50,7 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
 
     saveDraft({
       id: "wed-local-1",
+      ownerUserId: "user-owner-1",
       title: "Local Unsynced Celebration",
       eventType: "BIRTHDAY",
       status: "DRAFT",
@@ -59,6 +60,7 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
 
     saveDraft({
       id: "wed-failed-sync",
+      ownerUserId: "user-owner-1",
       title: "Failed Sync Ceremony",
       eventType: "ENGAGEMENT",
       status: "DRAFT",

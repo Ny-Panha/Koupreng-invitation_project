@@ -1,0 +1,846 @@
+[
+  {
+    "id": "backend-draft-contract",
+    "command": "apps\\backend\\mvnw.cmd -f apps/backend/pom.xml -Dtest=EventDraftPersistenceTests test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:32:01.073659+00:00",
+    "seconds": 39.523,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/backend-draft-contract.log",
+    "log_sha256": "285b5073ab3f859e829b46d42fc191d9c35e5cd0977f25983436423ca2cf5c2a",
+    "summary": [
+      "Tests     : Starting EventDraftPersistenceTests using Java 25.0.1 with PID 7044 (started by ASER Nitro in D:\\Koupreng-invitation_project\\apps\\backend)",
+      "Tests     : The following 1 profile is active: \"test\"",
+      "Tests     : Started EventDraftPersistenceTests in 20.572 seconds (process running for 23.976)",
+      "Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 27.48 s -- in com.koupreng.backend.invitation.application.EventDraftPersistenceTests",
+      "Tests run: 11, Failures: 0, Errors: 0, Skipped: 0"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "c08-connection-replay",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --project=desktop-chromium --grep \"pending login\"",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:44:28.630613+00:00",
+    "seconds": 5.886,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/c08-connection-replay.log",
+    "log_sha256": "cd58327f906f8407e785df46ba1fe44a15be2f6d04e3f73e0ab8f61eb87a67cc",
+    "summary": [
+      "\n  1 passed (4.9s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "codex-browser-2",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:12:17.635257+00:00",
+    "seconds": 43.133,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/codex-browser-2.log",
+    "log_sha256": "1de8e94b922b0bc5c2d16ec4c3e88ecdbf114d88ced0a1c002c728054da657ae",
+    "summary": [
+      "\n  21 passed (42.5s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "codex-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:08:44.873562+00:00",
+    "seconds": 107.574,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/codex-browser.log",
+    "log_sha256": "7272c9283397b4af2ade0833a66daa01626cf9853b6b3a68c0b452d3b0f7ba7c",
+    "summary": [
+      "\n  6 failed",
+      "  15 passed (1.8m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-admin-full",
+    "command": "npm.cmd --prefix apps/frontend-admin test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:17:26.500897+00:00",
+    "seconds": 18.646,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-admin-full.log",
+    "log_sha256": "2effd7e7f9b99bcee02555e337ad36c1b3ecb175214caf7f7e94717dc5d63763",
+    "summary": [
+      "Test Files  37 passed (37)",
+      "Tests  202 passed (202)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-codex-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:20:03.586879+00:00",
+    "seconds": 113.606,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-codex-browser.log",
+    "log_sha256": "15a08c0a7408717729cdbc686114479cb3d5d7c85468caaad5951184c0d3a270",
+    "summary": [
+      "\n  30 passed (1.9m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-events-dashboard",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ --run",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:19:18.979143+00:00",
+    "seconds": 9.096,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-events-dashboard.log",
+    "log_sha256": "f2723c3268a20e135994433a56a910852ebc84cac433f4983b4438d3be0044b4",
+    "summary": [
+      "Test Files  33 passed (33)",
+      "Tests  213 passed (213)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-lint",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:43:17.687946+00:00",
+    "seconds": 53.817,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-lint.log",
+    "log_sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "final-owner-complete",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T13:09:17.450957+00:00",
+    "seconds": 79.362,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-owner-complete.log",
+    "log_sha256": "c1d99915a083dfadfc088691887a16d16ab718b4cdb71fcebf259757920dab9f",
+    "summary": [
+      "\n  33 passed (1.3m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-phase11-default",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase11-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:43:07.639600+00:00",
+    "seconds": 145.561,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-phase11-default.log",
+    "log_sha256": "248960c4bdf8b87bce17ba4358cab58ccba1baea3987a200aa845171c09e60b5",
+    "summary": [
+      "\n  54 passed (2.4m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-repository-policy",
+    "command": "node --test scripts/qa/repository-policy.test.mjs",
+    "cwd": ".",
+    "started_utc": "2026-11-19T13:11:34.578778+00:00",
+    "seconds": 0.145,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-repository-policy.log",
+    "log_sha256": "2189928adbfc6f0188441eee7bf8754b1dd7ee9ffc2275bfaa56060a8f2e0620",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "final-routes",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/app/ --run",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:17:26.493940+00:00",
+    "seconds": 15.405,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-routes.log",
+    "log_sha256": "4c9db834c24adbfeb227584e7f00554754fce502cebb6baeacec7e5bf9d24d9e",
+    "summary": [
+      "Test Files  7 passed (7)",
+      "Tests  24 passed (24)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-user-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:19:35.294913+00:00",
+    "seconds": 2.868,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-user-build.log",
+    "log_sha256": "01a9e8500b68626bc4fe785a8b1d96c26a453286c01b98fb67ccb08ad3711571",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "final-user-full-2",
+    "command": "npm.cmd --prefix apps/frontend-user test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:20:03.511758+00:00",
+    "seconds": 69.758,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-user-full-2.log",
+    "log_sha256": "eb0cb49364f1f83c6de5f64e6e75c7987022d4075699e69eca17fa81fea62f37",
+    "summary": [
+      "Test Files  245 passed (245)",
+      "Tests  1779 passed (1779)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-user-full",
+    "command": "npm.cmd --prefix apps/frontend-user test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:17:26.597795+00:00",
+    "seconds": 66.772,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-user-full.log",
+    "log_sha256": "2c05a0025e62d0320aa6e3a4ba4bfd56b334a65466a3741ceb263562e26c81e6",
+    "summary": [
+      "Test Files  245 passed (245)",
+      "Tests  1778 passed (1778)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "final-user-lint-2",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:20:03.540672+00:00",
+    "seconds": 129.375,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-user-lint-2.log",
+    "log_sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "final-user-lint",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:17:26.467376+00:00",
+    "seconds": 105.391,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/final-user-lint.log",
+    "log_sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-admin-build",
+    "command": "npm.cmd --prefix apps/frontend-admin run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.175994+00:00",
+    "seconds": 5.552,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/freeze-admin-build.log",
+    "log_sha256": "4a273356a81463ce82671f9379820bbbcaebef18b82df35248797d72939cc5bc",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-admin-full",
+    "command": "npm.cmd --prefix apps/frontend-admin test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.127018+00:00",
+    "seconds": 63.641,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/freeze-admin-full.log",
+    "log_sha256": "8adbcdf60e8f3305299aa77999f45d98a9a752fabef634531cf94f25a8f5d621",
+    "summary": [
+      "Tests 2 ⎯⎯⎯⎯⎯⎯⎯",
+      "Test Files  1 failed | 36 passed (37)",
+      "Tests  2 failed | 200 passed (202)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-admin-lint",
+    "command": "npm.cmd --prefix apps/frontend-admin run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.146209+00:00",
+    "seconds": 47.369,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/freeze-admin-lint.log",
+    "log_sha256": "ab5123e1d0fb3e38b732a02ecca441740c4054b6a8a69f2fd7a1d20672308fa6",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-codex-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:16:22.536851+00:00",
+    "seconds": 2.263,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/freeze-codex-browser.log",
+    "log_sha256": "bb75323a427fa9ff9b0a2f7d115d3b0b95a69748386a1dd90c0781f7a67a6d92",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-phase11-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase11-codex.config.js --workers=2",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:16:22.170327+00:00",
+    "seconds": 183.561,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/freeze-phase11-browser.log",
+    "log_sha256": "5f370693caff650eb82276fe47d14346bb4432be6bc889207dd0f7025494537e",
+    "summary": [
+      "\n  54 passed (3.0m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-routes",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/app/ --run",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:16:22.418702+00:00",
+    "seconds": 3.992,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/freeze-routes.log",
+    "log_sha256": "e9f594e6690f14464bfa94b0a06524374e412b02ee9eb7dc94584b51568d99cd",
+    "summary": [
+      "Tests 2 ⎯⎯⎯⎯⎯⎯⎯",
+      "Test Files  1 failed | 6 passed (7)",
+      "Tests  2 failed | 22 passed (24)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-token",
+    "command": "node scripts/sync-design-tokens.cjs --check",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.132522+00:00",
+    "seconds": 0.098,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/freeze-token.log",
+    "log_sha256": "ef1c815152a5259c561b8d3ae6e4fb9fc286c2e5fc097a98fa0056474454317e",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-user-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.102773+00:00",
+    "seconds": 11.226,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/freeze-user-build.log",
+    "log_sha256": "916ac1bb983f5b41656b810fa4aa8225f00fb42d3586156d3bb18292327e79fa",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-user-full",
+    "command": "npm.cmd --prefix apps/frontend-user test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.165153+00:00",
+    "seconds": 56.977,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/freeze-user-full.log",
+    "log_sha256": "ece8ffa7a7fbad7ea67c1da39a94b45599f2b0be0d797ed2a6031691b1bccc9b",
+    "summary": [
+      "Tests 2 ⎯⎯⎯⎯⎯⎯⎯",
+      "Test Files  1 failed | 244 passed (245)",
+      "Tests  2 failed | 1776 passed (1778)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "freeze-user-lint",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:15:21.200029+00:00",
+    "seconds": 94.429,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/freeze-user-lint.log",
+    "log_sha256": "ac3ee70c82d29da0124c583f767eb62f743e78d5ede778f9e2909cf7aec62813",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "frozen-cross-phase",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:25:04.032798+00:00",
+    "seconds": 690.874,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/frozen-cross-phase.log",
+    "log_sha256": "4622bda578c49d49fee03e91684f31a71cfe42fa8a7e2fec6a202d6b340df5c9",
+    "summary": [
+      "\n  1 failed",
+      "  65 skipped",
+      "  456 passed (11.5m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "frozen-owner-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:25:04.053212+00:00",
+    "seconds": 137.33,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/frozen-owner-browser.log",
+    "log_sha256": "dafeb1c791d5c8f56ce5b579833c6a91e9fc0c4b32e8862ed08b7f0b5745e1a0",
+    "summary": [
+      "\n  30 passed (2.3m)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "frozen-user-full",
+    "command": "npm.cmd --prefix apps/frontend-user test",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:25:04.103295+00:00",
+    "seconds": 90.02,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/frozen-user-full.log",
+    "log_sha256": "d98c7625be000cdf231c3d0549d169cd77c2f4bf1efcb4ad5ac4a38220caf7de",
+    "summary": [
+      "Test Files  245 passed (245)",
+      "Tests  1779 passed (1779)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "frozen-user-lint",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:25:04.074365+00:00",
+    "seconds": 147.241,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/frozen-user-lint.log",
+    "log_sha256": "09cdef02d506117755234340eb56c35e3d74f1533518ee1c9a3e9aa9833fee8f",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "gemini12-replay",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-1.config.js",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:36:40.188079+00:00",
+    "seconds": 20.972,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/gemini12-replay.log",
+    "log_sha256": "bff055bf1a45916d2ed1581dacd593efad999874be086a8dae3b031b66a58b44",
+    "summary": [
+      "\n  6 passed (20.2s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "guest-current",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/guest-workspace.spec.js --grep intersect --workers=2",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:43:57.908326+00:00",
+    "seconds": 12.266,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/guest-current.log",
+    "log_sha256": "d3dcd182dd8bc5745f96e581344533f30c2b3966bd192a51cd905ab83d64f08d",
+    "summary": [
+      "\n  2 failed"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "last-user-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:24:22.161465+00:00",
+    "seconds": 3.958,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/last-user-build.log",
+    "log_sha256": "845616f4b471510a4b0b3b44599ea52acd0c565a4515c5ee8a224e6f3ab219e9",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "long-khmer-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js --grep \"long Khmer\"",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:36:40.184905+00:00",
+    "seconds": 18.93,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/long-khmer-browser.log",
+    "log_sha256": "827d3417b19d4894e008a3046961594cdb3fd42dac854edbb36c51bc2c6ee2fc",
+    "summary": [
+      "\n  1 failed",
+      "  2 passed (18.1s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "long-khmer-settled",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js --grep \"long Khmer\"",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:42:08.939548+00:00",
+    "seconds": 15.051,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/long-khmer-settled.log",
+    "log_sha256": "cd670c419230d307783c2059980b38576c0990ccf5889af62cccca04df74ac53",
+    "summary": [
+      "\n  3 passed (14.4s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "phase02-current",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/phase02-foundations.spec.js --workers=2",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:42:19.146726+00:00",
+    "seconds": 57.787,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/phase02-current.log",
+    "log_sha256": "6814a8b6996d3360914fbed7e1fad823283eeac1e1bec770ae827cb5bc993c8d",
+    "summary": [
+      "\n  6 failed",
+      "  26 passed (57.1s)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "regression-admin-build",
+    "command": "npm.cmd --prefix apps/frontend-admin run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:22:41.052869+00:00",
+    "seconds": 1.388,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/regression-admin-build.log",
+    "log_sha256": "2dbd2e065df636cef744874fcd59bed06fd6158948a148a82eeaa38fb9b167d8",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "render-comparison",
+    "command": "node output/phase12-codex/render-comparison.mjs",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:38:48.553474+00:00",
+    "seconds": 0.704,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/render-comparison.log",
+    "log_sha256": "ceefe721b71c67b70cb7c7d99b3cf491d50ee15f9b7f97b939fa6a7df77c83b5",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "repository-policy",
+    "command": "node --test scripts/qa/repository-policy.test.mjs",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:38:48.571738+00:00",
+    "seconds": 0.204,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/repository-policy.log",
+    "log_sha256": "0bd7137ab322bab9ec8a6c902784b2566b862223f14ba8a2f0c6ec2157b26b0e",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "revocation-green",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/workspace/",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:13:27.502452+00:00",
+    "seconds": 2.205,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/revocation-green.log",
+    "log_sha256": "9eb754ed347e9bae4afb06815e596cb6a361ac7a6d673b34d0a0be49da1bd287",
+    "summary": [
+      "Test Files  8 passed (8)",
+      "Tests  41 passed (41)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "revocation-red",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/workspace/Phase12CodexRevocation.test.jsx",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:12:54.230101+00:00",
+    "seconds": 1.644,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/revocation-red.log",
+    "log_sha256": "eb8c4950a7ed44cdd1eebb6f07ed440429107a5c2389f45e565eb03fba5dc976",
+    "summary": [
+      "Tests 2 ⎯⎯⎯⎯⎯⎯⎯",
+      "Test Files  1 failed (1)",
+      "Tests  2 failed (2)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "rollback-patch-check",
+    "command": "git apply --reverse --check --ignore-space-change docs/uxui/phase12-codex-owner-dashboard-audit-2026-11-19/evidence/codex-owned-hunks.patch",
+    "cwd": ".",
+    "started_utc": "2026-11-19T13:11:34.483352+00:00",
+    "seconds": 0.042,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/rollback-patch-check.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "styleseed-resolve",
+    "command": "node .agents/skills/ss-resolve/scripts/resolve-context.mjs --from-lock STYLESEED.md --check",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:08:27.741696+00:00",
+    "seconds": 0.11,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/styleseed-resolve.log",
+    "log_sha256": "1c6be230b9f1f96a6bef96217f853312f7dd87764f4a71f20845513643ae2102",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "styleseed-scan",
+    "command": "node .agents/skills/ss-score/scripts/styleseed-check.mjs scan --project-root . --artifact phase12-owner --format json",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:11:44.017869+00:00",
+    "seconds": 0.103,
+    "exit_code": 2,
+    "log": "output/phase12-codex/checks/styleseed-scan.log",
+    "log_sha256": "4cf493cf2116ade8f39928ba4dbf5940957efc031ec50bd90f330f1ca2ccc642",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "targeted-3",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ src/layouts/",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:08:44.873400+00:00",
+    "seconds": 9.282,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/targeted-3.log",
+    "log_sha256": "728d6909e15c9a3d2d6220e85bbbf8489dbaddcf8f07010aff1b2180ddda8ac3",
+    "summary": [
+      "Test Files  33 passed (33)",
+      "Tests  214 passed (214)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "targeted-4",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ src/layouts/",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:11:44.049375+00:00",
+    "seconds": 14.108,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/targeted-4.log",
+    "log_sha256": "4e3c832da354b4967cd94178daab85c4b1562f065c6bbefe1e717f83d14a2bcf",
+    "summary": [
+      "Test Files  33 passed (33)",
+      "Tests  215 passed (215)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "unclaimed-draft-red",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/Phase12CodexAccountIsolation.test.jsx",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:18:49.172202+00:00",
+    "seconds": 2.001,
+    "exit_code": 1,
+    "log": "output/phase12-codex/checks/unclaimed-draft-red.log",
+    "log_sha256": "d9e63a896b1092ed73f89e3ff465f6a9afabe2990e3c11f2825aeb9c18ff8d9d",
+    "summary": [
+      "Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+      "Test Files  1 failed (1)",
+      "Tests  1 failed | 3 passed (4)"
+    ],
+    "hash_valid": true
+  },
+  {
+    "id": "user-build-2",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:11:44.012398+00:00",
+    "seconds": 9.641,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/user-build-2.log",
+    "log_sha256": "c05da00fd223c5a43ae65a322d56dd275e757d2d4f2e09cbaca7c240d80727d8",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "user-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "cwd": ".",
+    "started_utc": "2026-11-19T09:08:27.741430+00:00",
+    "seconds": 2.964,
+    "exit_code": 0,
+    "log": "output/phase12-codex/checks/user-build.log",
+    "log_sha256": "5b32ae9dfee043db175cfdcbbf95b6a773b0324361ccbc884af2467ed1500cbc",
+    "summary": [],
+    "hash_valid": true
+  },
+  {
+    "id": "baseline-targeted",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ --run",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/baseline-targeted.log",
+    "log_sha256": "6f35856abe78f522484f67dc3fe7173446d6615f23891c1f590eaa368b52db81",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "baseline-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/baseline-build.log",
+    "log_sha256": "3cf8d441461291821ee2fcf3370f64b944e091ef26a77c20e34b05cab1590b65",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "before-browser",
+    "command": "PHASE12_CAPTURE=before; npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js --project=chromium",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/before-browser.log",
+    "log_sha256": "228087d5e267a4ecef3b35daf9d75f379c1248ec363a5c0be87a71ff221f2e13",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "negative-before",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/Phase12CodexAccountIsolation.test.jsx src/features/dashboard/Phase12CodexDataTruth.test.jsx",
+    "exit_code": 1,
+    "seconds": null,
+    "log": "output/phase12-codex/negative-before.log",
+    "log_sha256": "57d33fff47c8c679e6a72258029b3e6b950b8459cf3d160b38786ea7a24958d2",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "negative-after",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/Phase12CodexAccountIsolation.test.jsx src/features/dashboard/Phase12CodexDataTruth.test.jsx",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/negative-after.log",
+    "log_sha256": "3b079c49dacdfb47b6b04d6f2df6b1afd357eaf34d8d7cbcd99676defa757fd3",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "design-targeted",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ src/layouts/",
+    "exit_code": 1,
+    "seconds": null,
+    "log": "output/phase12-codex/design-targeted.log",
+    "log_sha256": "47ec3eb19e2561f275c475fb737037b08aeb6a9cb4d5026fb91a062e477be8ce",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "design-targeted-2",
+    "command": "npm.cmd --prefix apps/frontend-user test -- src/features/events/ src/features/dashboard/ src/layouts/",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/design-targeted-2.log",
+    "log_sha256": "6729bfc40c435aabe3aa321c4d08ca36f8779374266aacd05830daeb696b5381",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "design-lint",
+    "command": "npm.cmd --prefix apps/frontend-user run lint",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/design-lint.log",
+    "log_sha256": "257b1aa2f5c7a7e20e8399f2b1df17677bfac04b3a4ef1d48dc80f3c1819b341",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "design-build",
+    "command": "npm.cmd --prefix apps/frontend-user run build",
+    "exit_code": 0,
+    "seconds": null,
+    "log": "output/phase12-codex/design-build.log",
+    "log_sha256": "b71b4e9601632871b6893a148330a351a3de896a5af21c64377687044f86f84e",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "design-browser",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js --project=chromium",
+    "exit_code": 1,
+    "seconds": null,
+    "log": "output/phase12-codex/design-browser.log",
+    "log_sha256": "e09034df49aa5263c6e664cfc53841e1a16e076156c188b82ce9a4093577b7e6",
+    "hash_valid": true,
+    "summary": [],
+    "note": "True observed exit from tool transcript. Early same-ID retries may have overwritten local log; no fabricated missing transcript is supplied."
+  },
+  {
+    "id": "final-cross-phase",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js",
+    "exit_code": null,
+    "seconds": null,
+    "summary": [
+      "INTERRUPTED; not a completed green run"
+    ],
+    "log": "output/phase12-codex/checks/final-cross-phase.log",
+    "log_sha256": "4e9052c74a5870930bb7433030b3c3f621f3407a830c1cdfb338ab43d878a72b",
+    "hash_valid": true
+  },
+  {
+    "id": "corrected-cross-phase",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js",
+    "exit_code": null,
+    "seconds": null,
+    "summary": [
+      "INTERRUPTED; not a completed green run"
+    ],
+    "log": "output/phase12-codex/checks/corrected-cross-phase.log",
+    "log_sha256": "d5ec93e7ac951792c52b9f6dad0553a26f813d1d34e4e0e14e0c4a440455ce2d",
+    "hash_valid": true
+  },
+  {
+    "id": "final-owner-33",
+    "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js",
+    "exit_code": null,
+    "seconds": null,
+    "summary": [
+      "INTERRUPTED; not a completed green run"
+    ],
+    "log": "output/phase12-codex/checks/final-owner-33.log",
+    "log_sha256": "31841a5043ef19d4e64c5d1ea8d5390caa509c4e9df2be31c2e2aa81c75f013f",
+    "hash_valid": true
+  },
+  {
+    "id": "rollback-initial",
+    "command": "git apply --reverse --check docs/uxui/phase12-codex-owner-dashboard-audit-2026-11-19/evidence/codex-owned-hunks.patch",
+    "exit_code": 1,
+    "seconds": null,
+    "log": null,
+    "log_sha256": null,
+    "hash_valid": null,
+    "summary": [
+      "Observed tool transcript: LF patch versus CRLF working files did not match. Read-only check; nothing changed. Follow-up --ignore-space-change check passed."
+    ]
+  }
+]

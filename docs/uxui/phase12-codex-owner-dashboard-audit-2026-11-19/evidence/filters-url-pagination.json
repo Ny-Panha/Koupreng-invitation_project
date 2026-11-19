@@ -1,0 +1,26 @@
+{
+  "query_keys": [
+    "q",
+    "status",
+    "type",
+    "sort",
+    "view",
+    "period",
+    "page"
+  ],
+  "search": "NFC, trimmed for matching, original input retained; replace history while typing",
+  "navigation": "Filter/view/page changes push history; clear preserves module and unrelated keys. Page bounds use known loaded filtered records.",
+  "sort": "Finite updatedAt/createdAt descending, numeric-aware ID ties; locale title; validated local date with unknown last.",
+  "period": "Invalid/missing dates excluded from upcoming and past.",
+  "unit_counts": [
+    0,
+    1,
+    11,
+    12,
+    13,
+    25,
+    100
+  ],
+  "browser": "25 records with range/history/search; 100-record grid; existing delete-last-page regression retained.",
+  "limits": "Invalid view/sort/period uses safe default without destructive URL canonicalization; no claim of server-total pagination."
+}

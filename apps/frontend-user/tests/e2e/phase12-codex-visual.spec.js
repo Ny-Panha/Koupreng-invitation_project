@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import process from 'node:process';
 import AxeBuilder from '@axe-core/playwright';
 import { establishUserSession, setupMockApis } from './phase12-codex-fixtures';
 

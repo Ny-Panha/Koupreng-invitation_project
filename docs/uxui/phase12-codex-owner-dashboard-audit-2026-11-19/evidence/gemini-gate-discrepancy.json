@@ -1,0 +1,128 @@
+{
+  "json_parsed": 25,
+  "screenshots": [
+    {
+      "file": "01-events-list-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "02-events-list-mobile-393-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "03-events-list-tablet-768-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "04-events-list-narrow-320-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "05-events-list-landscape-844-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "06-events-list-khmer-desktop-1440.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "07-events-calendar-month-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "08-events-calendar-agenda-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "09-events-calendar-mobile-393-km.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "10-events-empty-state-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "11-events-search-filter-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "12-workspace-dashboard-desktop-1440-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "13-workspace-dashboard-mobile-393-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "14-workspace-dashboard-khmer-1440.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "15-workspace-permission-denied-desktop-en.png",
+      "exists": true,
+      "hash_matches": true
+    },
+    {
+      "file": "16-workspace-mobile-drawer-393-en.png",
+      "exists": true,
+      "hash_matches": true
+    }
+  ],
+  "source_hashes": [
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.jsx",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/EventsFeature.css",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCard.jsx",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.jsx",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/components/EventCalendar.css",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "matches_reported_post": true
+    },
+    {
+      "path": "apps/frontend-user/src/features/dashboard/DashboardFeature.jsx",
+      "matches_reported_post": true
+    }
+  ],
+  "itemized_counts": {
+    "VERIFIED—LOCAL": 41,
+    "REVIEW REQUIRED": 2,
+    "PARTIALLY COMPLETE": 1
+  },
+  "summary_counts": {
+    "VERIFIED—LOCAL": 39,
+    "REVIEW REQUIRED": 3,
+    "PARTIALLY COMPLETE": 2,
+    "FAILED": 0,
+    "BLOCKED—EXTERNAL": 0,
+    "NOT APPLICABLE": 0
+  }
+}

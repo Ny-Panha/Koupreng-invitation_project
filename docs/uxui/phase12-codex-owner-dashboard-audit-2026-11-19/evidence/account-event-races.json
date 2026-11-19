@@ -1,0 +1,13 @@
+{
+  "C12-001": "First committed frame and deferred account replies; old modal/records and late sync suppressed.",
+  "C12-010": "Initial access and refresh share revision ordering; newest revocation wins and removes identity/navigation. Opened Studio retains existing read-only draft recovery.",
+  "C12-012": "Unowned legacy drafts stay stored, hidden from authenticated list and auto-sync.",
+  "event_switch": "Existing user/event-keyed VerifiedWorkspace remount is the actual synchronous boundary; effect reset alone is not proof.",
+  "tests": [
+    "Phase12CodexAccountIsolation.test.jsx",
+    "workspace/Phase12CodexRevocation.test.jsx",
+    "workspace/EventWorkspace.test.jsx",
+    "workspace/Phase12_1WorkspaceAuthority.test.jsx"
+  ],
+  "live_multiuser_certification": false
+}

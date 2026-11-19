@@ -1,0 +1,72 @@
+[
+  {
+    "label": "Guest records",
+    "field": "totalGuests",
+    "unit": "Persisted Guest rows, not seats",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Invited records",
+    "field": "totalInvited",
+    "unit": "Server invited predicate, not totalGuests",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Attending",
+    "field": "attending",
+    "unit": "RSVP records, not attendeeCount",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Declined",
+    "field": "declined",
+    "unit": "NOT_ATTENDING response records",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Maybe",
+    "field": "maybe",
+    "unit": "MAYBE response records",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Awaiting reply",
+    "field": "pending",
+    "unit": "Server pending guest predicate",
+    "api": "GET /api/v1/invitations/:id/dashboard",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  },
+  {
+    "label": "Checked in",
+    "field": "checkInSummary.checkedIn",
+    "unit": "Active guest check-in records",
+    "api": "GET /api/v1/invitations/:id/check-in/summary",
+    "permission": "Owner overview; collaborator overview renders separate role-limited surface",
+    "missing": "Unavailable",
+    "zero": "0 preserved",
+    "test": "Phase12CodexDataTruth / inherited DashboardFeature tests"
+  }
+]

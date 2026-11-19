@@ -1,0 +1,3350 @@
+[
+  {
+    "path": "output/phase12-codex/before/list-chromium-geometry.json",
+    "cases": [
+      {
+        "filename": "list-chromium-1440x900-en-light.png",
+        "sha256": "777344f2f8d26b5e770ce5914940d0155360ccc5f99b319160d86696fc8ccf5c",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 57.59375,
+            "y": 8,
+            "width": 1324.796875,
+            "height": 72,
+            "bottom": 80
+          },
+          ".events-page-header": {
+            "x": 40,
+            "y": 143.1875,
+            "width": 1360,
+            "height": 151.578125,
+            "bottom": 294.765625
+          },
+          ".events-filters-container": {
+            "x": 40,
+            "y": 314.765625,
+            "width": 1360,
+            "height": 185.484375,
+            "bottom": 500.25
+          },
+          ".event-card": {
+            "x": 40,
+            "y": 566.546875,
+            "width": 437.328125,
+            "height": 569.234375,
+            "bottom": 1135.78125
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1920x1080-en-light.png",
+        "sha256": "4f092689fec6ee0afdeefd083f04f7200bd55cf618f46c90e0d5a82909c420e2",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 240,
+            "y": 8,
+            "width": 1440,
+            "height": 72,
+            "bottom": 80
+          },
+          ".events-page-header": {
+            "x": 200,
+            "y": 160,
+            "width": 1520,
+            "height": 151.578125,
+            "bottom": 311.578125
+          },
+          ".events-filters-container": {
+            "x": 200,
+            "y": 331.578125,
+            "width": 1520,
+            "height": 185.484375,
+            "bottom": 517.0625
+          },
+          ".event-card": {
+            "x": 200,
+            "y": 583.359375,
+            "width": 464,
+            "height": 532.828125,
+            "bottom": 1116.1875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1280x720-en-light.png",
+        "sha256": "3fbc1d8e65ee434c853eb85769e88f420a52ddf1b043ff28ca714ebc42813bd4",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 51.203125,
+            "y": 8,
+            "width": 1177.59375,
+            "height": 72,
+            "bottom": 80
+          },
+          ".events-page-header": {
+            "x": 40,
+            "y": 160,
+            "width": 1200,
+            "height": 151.578125,
+            "bottom": 311.578125
+          },
+          ".events-filters-container": {
+            "x": 40,
+            "y": 331.578125,
+            "width": 1200,
+            "height": 185.484375,
+            "bottom": 517.0625
+          },
+          ".event-card": {
+            "x": 40,
+            "y": 583.359375,
+            "width": 384,
+            "height": 582.4375,
+            "bottom": 1165.796875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1024x768-en-light.png",
+        "sha256": "f31dcfee28ae07276359d8d18d3773ad56c1450f55f9e398bad47b6f96ad1c7a",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 40.953125,
+            "y": 8,
+            "width": 942.078125,
+            "height": 72,
+            "bottom": 80
+          },
+          ".events-page-header": {
+            "x": 38.390625,
+            "y": 132,
+            "width": 947.21875,
+            "height": 151.578125,
+            "bottom": 283.578125
+          },
+          ".events-filters-container": {
+            "x": 38.390625,
+            "y": 303.578125,
+            "width": 947.21875,
+            "height": 185.484375,
+            "bottom": 489.0625
+          },
+          ".event-card": {
+            "x": 38.390625,
+            "y": 555.359375,
+            "width": 461.609375,
+            "height": 530.890625,
+            "bottom": 1086.25
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-768x1024-en-light.png",
+        "sha256": "a7e8c72ae12759b5372c47ea8e5beeade515d374bcc6495119bde9e6865fea1e",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 10,
+            "y": 8,
+            "width": 748,
+            "height": 58,
+            "bottom": 66
+          },
+          ".events-page-header": {
+            "x": 23.03125,
+            "y": 124,
+            "width": 721.9375,
+            "height": 175.375,
+            "bottom": 299.375
+          },
+          ".events-filters-container": {
+            "x": 23.03125,
+            "y": 319.375,
+            "width": 721.9375,
+            "height": 272.671875,
+            "bottom": 592.046875
+          },
+          ".event-card": {
+            "x": 23.03125,
+            "y": 658.34375,
+            "width": 721.9375,
+            "height": 670.140625,
+            "bottom": 1328.484375
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-393x851-en-light.png",
+        "sha256": "46d3b5be49dda61ef5b8dafe1281417f664f6381eff87bdf26c7d4f1e5b2a715",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 10,
+            "y": 8,
+            "width": 373,
+            "height": 58,
+            "bottom": 66
+          },
+          ".events-page-header": {
+            "x": 16,
+            "y": 116,
+            "width": 361,
+            "height": 235.171875,
+            "bottom": 351.171875
+          },
+          ".events-filters-container": {
+            "x": 16,
+            "y": 367.171875,
+            "width": 361,
+            "height": 447.046875,
+            "bottom": 814.21875
+          },
+          ".event-card": {
+            "x": 16,
+            "y": 880.515625,
+            "width": 361,
+            "height": 519.125,
+            "bottom": 1399.640625
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-360x800-en-light.png",
+        "sha256": "37f19d878351e2f92da048b4de417bac73760fed74edc348cd168425a7c3d06d",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 10,
+            "y": 8,
+            "width": 340,
+            "height": 58,
+            "bottom": 66
+          },
+          ".events-page-header": {
+            "x": 16,
+            "y": 116,
+            "width": 328,
+            "height": 292.5625,
+            "bottom": 408.5625
+          },
+          ".events-filters-container": {
+            "x": 16,
+            "y": 424.5625,
+            "width": 328,
+            "height": 447.046875,
+            "bottom": 871.609375
+          },
+          ".event-card": {
+            "x": 16,
+            "y": 937.90625,
+            "width": 328,
+            "height": 536.5625,
+            "bottom": 1474.46875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-320x568-en-light.png",
+        "sha256": "361f5df6b78904c2f39c0ac46d6c7e9a40301df806248f8b5247a92761198cd4",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 10,
+            "y": 8,
+            "width": 300,
+            "height": 58,
+            "bottom": 66
+          },
+          ".events-page-header": {
+            "x": 16,
+            "y": 116,
+            "width": 288,
+            "height": 292.5625,
+            "bottom": 408.5625
+          },
+          ".events-filters-container": {
+            "x": 16,
+            "y": 424.5625,
+            "width": 288,
+            "height": 447.046875,
+            "bottom": 871.609375
+          },
+          ".event-card": {
+            "x": 16,
+            "y": 937.90625,
+            "width": 288,
+            "height": 514.0625,
+            "bottom": 1451.96875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-844x390-en-light.png",
+        "sha256": "3cfdb66d91403e2d781cf88cc833cde555f9f8892b86ca187f70308b474ff541",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 33.765625,
+            "y": 8,
+            "width": 776.46875,
+            "height": 72,
+            "bottom": 80
+          },
+          ".events-page-header": {
+            "x": 25.3125,
+            "y": 132,
+            "width": 793.375,
+            "height": 151.578125,
+            "bottom": 283.578125
+          },
+          ".events-filters-container": {
+            "x": 25.3125,
+            "y": 303.578125,
+            "width": 793.375,
+            "height": 185.484375,
+            "bottom": 489.0625
+          },
+          ".event-card": {
+            "x": 25.3125,
+            "y": 555.359375,
+            "width": 384.6875,
+            "height": 532.4375,
+            "bottom": 1087.796875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/before/overview-chromium-geometry.json",
+    "cases": [
+      {
+        "filename": "overview-chromium-1440x900-en-light.png",
+        "sha256": "89f5d6cc552115628d11ecdc7b48b13c90c35abfa1303c566856a49ea57f41e8",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 28.796875,
+            "y": 96,
+            "width": 256,
+            "height": 788,
+            "bottom": 884
+          },
+          ".overview-hero": {
+            "x": 312.796875,
+            "y": 225.59375,
+            "width": 660.25,
+            "height": 441.640625,
+            "bottom": 667.234375
+          },
+          ".overview-preparation": {
+            "x": 995.046875,
+            "y": 225.59375,
+            "width": 400.140625,
+            "height": 441.640625,
+            "bottom": 667.234375
+          },
+          ".overview-metrics": {
+            "x": 312.796875,
+            "y": 689.234375,
+            "width": 1082.390625,
+            "height": 340.78125,
+            "bottom": 1030.015625
+          }
+        },
+        "scrollOwners": [
+          {
+            "className": "event-navigation-body",
+            "height": 518,
+            "scrollHeight": 776
+          },
+          {
+            "className": "event-workspace-main",
+            "height": 788,
+            "scrollHeight": 1199
+          }
+        ]
+      },
+      {
+        "filename": "overview-chromium-1920x1080-en-light.png",
+        "sha256": "89067a01302b209de69385035b2e03a48e2025490dfa520b2e0e733d38325ed4",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 32,
+            "y": 96,
+            "width": 256,
+            "height": 968,
+            "bottom": 1064
+          },
+          ".overview-hero": {
+            "x": 316,
+            "y": 225.59375,
+            "width": 955.125,
+            "height": 390.5,
+            "bottom": 616.09375
+          },
+          ".overview-preparation": {
+            "x": 1293.125,
+            "y": 225.59375,
+            "width": 578.875,
+            "height": 390.5,
+            "bottom": 616.09375
+          },
+          ".overview-metrics": {
+            "x": 316,
+            "y": 638.09375,
+            "width": 1556,
+            "height": 304.78125,
+            "bottom": 942.875
+          }
+        },
+        "scrollOwners": [
+          {
+            "className": "event-navigation-body",
+            "height": 698,
+            "scrollHeight": 776
+          },
+          {
+            "className": "event-workspace-main",
+            "height": 968,
+            "scrollHeight": 1112
+          }
+        ]
+      },
+      {
+        "filename": "overview-chromium-1280x720-en-light.png",
+        "sha256": "72e8db2845384540e79103fd79ef9dcc000213d43f3c2cb79be97633096f4109",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 25.59375,
+            "y": 96,
+            "width": 72,
+            "height": 608,
+            "bottom": 704
+          },
+          ".overview-hero": {
+            "x": 125.59375,
+            "y": 301.59375,
+            "width": 679.171875,
+            "height": 387.921875,
+            "bottom": 689.515625
+          },
+          ".overview-preparation": {
+            "x": 826.765625,
+            "y": 301.59375,
+            "width": 411.625,
+            "height": 387.921875,
+            "bottom": 689.515625
+          },
+          ".overview-metrics": {
+            "x": 125.59375,
+            "y": 711.515625,
+            "width": 1112.796875,
+            "height": 340.78125,
+            "bottom": 1052.296875
+          }
+        },
+        "scrollOwners": [
+          {
+            "className": "event-navigation-body",
+            "height": 429,
+            "scrollHeight": 986
+          },
+          {
+            "className": "event-workspace-main",
+            "height": 608,
+            "scrollHeight": 1221
+          }
+        ]
+      },
+      {
+        "filename": "overview-chromium-1024x768-en-light.png",
+        "sha256": "bad11fa540705e86f2abaa3823311a02391357bbfa0ecd1b7f70583391391946",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 20.46875,
+            "y": 96,
+            "width": 72,
+            "height": 656,
+            "bottom": 752
+          },
+          ".overview-hero": {
+            "x": 120.46875,
+            "y": 288.296875,
+            "width": 867.0625,
+            "height": 378.203125,
+            "bottom": 666.5
+          },
+          ".overview-preparation": {
+            "x": 120.46875,
+            "y": 1043.28125,
+            "width": 867.0625,
+            "height": 334.796875,
+            "bottom": 1378.078125
+          },
+          ".overview-metrics": {
+            "x": 120.46875,
+            "y": 684.5,
+            "width": 867.0625,
+            "height": 340.78125,
+            "bottom": 1025.28125
+          }
+        },
+        "scrollOwners": [
+          {
+            "className": "event-navigation-body",
+            "height": 477,
+            "scrollHeight": 986
+          },
+          {
+            "className": "event-workspace-main",
+            "height": 656,
+            "scrollHeight": 1683
+          }
+        ]
+      },
+      {
+        "filename": "overview-chromium-768x1024-en-light.png",
+        "sha256": "3ee49cbd63e40a034e2ee9c1bbd0cb25c3934270b39c949f600630e2e149d35d",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 285.390625,
+            "width": 736,
+            "height": 377.296875,
+            "bottom": 662.6875
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1075.46875,
+            "width": 736,
+            "height": 334.796875,
+            "bottom": 1410.265625
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 680.6875,
+            "width": 736,
+            "height": 376.78125,
+            "bottom": 1057.46875
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-393x851-en-light.png",
+        "sha256": "64debf971a2414487c981bf102f3707db4c09159a074fc6f611b1b7c8bd53e0c",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 299.96875,
+            "width": 369,
+            "height": 517.234375,
+            "bottom": 817.203125
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1330.953125,
+            "width": 369,
+            "height": 326.796875,
+            "bottom": 1657.75
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 835.203125,
+            "width": 369,
+            "height": 477.75,
+            "bottom": 1312.953125
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-360x800-en-light.png",
+        "sha256": "152d718c6db79476ceb1e11ee5efc956721c5df306d2f8b373aa0e5e0cd8e24d",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 299.96875,
+            "width": 336,
+            "height": 517.234375,
+            "bottom": 817.203125
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1431.734375,
+            "width": 336,
+            "height": 326.796875,
+            "bottom": 1758.53125
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 835.203125,
+            "width": 336,
+            "height": 578.53125,
+            "bottom": 1413.734375
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-320x568-en-light.png",
+        "sha256": "190032c6158688a116dc62a4893570e817b600473da8c106d535441d03202941",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 299.96875,
+            "width": 296,
+            "height": 612.359375,
+            "bottom": 912.328125
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1580.25,
+            "width": 296,
+            "height": 326.796875,
+            "bottom": 1907.046875
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 930.328125,
+            "width": 296,
+            "height": 631.921875,
+            "bottom": 1562.25
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-844x390-en-light.png",
+        "sha256": "d86a0259e86da9453fb9e3888b9f7120f87625113d8ac889b72edd1d83cfb06a",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 56,
+            "bottom": 64
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 285.390625,
+            "width": 812,
+            "height": 377.296875,
+            "bottom": 662.6875
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1039.46875,
+            "width": 812,
+            "height": 334.796875,
+            "bottom": 1374.265625
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 680.6875,
+            "width": 812,
+            "height": 340.78125,
+            "bottom": 1021.46875
+          }
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/list-chromium-geometry.json",
+    "cases": [
+      {
+        "filename": "list-chromium-1440x900-en-light.png",
+        "sha256": "7280ee572a00c3cd44d5555e1fa5fc1de5bc11414e4d4a6f8306f3accfe0c06e",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1376,
+            "height": 100.890625,
+            "bottom": 196.890625
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 212.890625,
+            "width": 1376,
+            "height": 129.390625,
+            "bottom": 342.28125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 399.46875,
+            "width": 442.65625,
+            "height": 472.53125,
+            "bottom": 872
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1920x1080-en-light.png",
+        "sha256": "a7eb36619f4dc1aa644c7fe8231a91ae5e8c1cefc3fa9fbd4dad11308e98bb3f",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 152,
+            "y": 96,
+            "width": 1616,
+            "height": 100.890625,
+            "bottom": 196.890625
+          },
+          ".events-filters-container": {
+            "x": 152,
+            "y": 212.890625,
+            "width": 1616,
+            "height": 129.390625,
+            "bottom": 342.28125
+          },
+          ".event-card": {
+            "x": 152,
+            "y": 399.46875,
+            "width": 522.65625,
+            "height": 507.53125,
+            "bottom": 907
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1280x720-en-light.png",
+        "sha256": "dc6fa2fbc5525ce61cbd05ad579ddf40c4075a31de4595a3765b0251a3e84741",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1216,
+            "height": 97.6875,
+            "bottom": 193.6875
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 209.6875,
+            "width": 1216,
+            "height": 129.390625,
+            "bottom": 339.078125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 396.265625,
+            "width": 389.328125,
+            "height": 449.203125,
+            "bottom": 845.46875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-1024x768-en-light.png",
+        "sha256": "41906ea9bb51276e23a28e0b9afc23d1b19a3b3c3a81acb3e49872e31c0a95ce",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 960,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 960,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 468,
+            "height": 478.65625,
+            "bottom": 950.71875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-768x1024-en-light.png",
+        "sha256": "5fff4bcc3e3ef7446cae708c1313f49c6ad35a554ab3df4faf787bb044c06733",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 704,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 704,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 340,
+            "height": 508.25,
+            "bottom": 980.3125
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-393x851-en-light.png",
+        "sha256": "7e37197c538586ab209aab1aa1a36ac4ea84d179cc6240e9ee75e0b36b890be8",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 329,
+            "height": 207.78125,
+            "bottom": 299.78125
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.78125,
+            "width": 329,
+            "height": 300.171875,
+            "bottom": 615.953125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.140625,
+            "width": 329,
+            "height": 503.4375,
+            "bottom": 1176.578125
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-360x800-en-light.png",
+        "sha256": "1ef7049c492cd9f0c0a2de9db4f79fc7b3653fdbbf023065c1ce78915804d789",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 296,
+            "height": 207.78125,
+            "bottom": 299.78125
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.78125,
+            "width": 296,
+            "height": 300.171875,
+            "bottom": 615.953125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.140625,
+            "width": 296,
+            "height": 489,
+            "bottom": 1162.140625
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-320x568-en-light.png",
+        "sha256": "007bd5875c502909932179737892ad941c095c88fd19531811a56ca1e4677fe7",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 28,
+            "y": 92,
+            "width": 264,
+            "height": 231.578125,
+            "bottom": 323.578125
+          },
+          ".events-filters-container": {
+            "x": 28,
+            "y": 339.578125,
+            "width": 264,
+            "height": 300.171875,
+            "bottom": 639.75
+          },
+          ".event-card": {
+            "x": 28,
+            "y": 696.9375,
+            "width": 264,
+            "height": 475,
+            "bottom": 1171.9375
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-chromium-844x390-en-light.png",
+        "sha256": "50a2b960288dfb097f6a866d8e00b93c0305a164862421a3ecd74f84677c1dd6",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 780,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 780,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 378,
+            "height": 439.28125,
+            "bottom": 911.34375
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/list-firefox-geometry.json",
+    "cases": [
+      {
+        "filename": "list-firefox-1440x900-en-light.png",
+        "sha256": "7f17352163ee1e03e5dbd973a7482acde61dd21cdd1f41772e07542ef4c1a645",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1376,
+            "height": 100.89999389648438,
+            "bottom": 196.89999389648438
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 212.89999389648438,
+            "width": 1376,
+            "height": 129.40000915527344,
+            "bottom": 342.3000030517578
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 399.5,
+            "width": 442.66668701171875,
+            "height": 472.58331298828125,
+            "bottom": 872.0833129882812
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-1920x1080-en-light.png",
+        "sha256": "532e8f679c7e723ae642cd9b1e94aefd8a2db047a893e779f5db36abfe366606",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 152,
+            "y": 96,
+            "width": 1616,
+            "height": 100.89999389648438,
+            "bottom": 196.89999389648438
+          },
+          ".events-filters-container": {
+            "x": 152,
+            "y": 212.89999389648438,
+            "width": 1616,
+            "height": 129.40000915527344,
+            "bottom": 342.3000030517578
+          },
+          ".event-card": {
+            "x": 152,
+            "y": 399.5,
+            "width": 522.6666870117188,
+            "height": 507.58331298828125,
+            "bottom": 907.0833129882812
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-1280x720-en-light.png",
+        "sha256": "5897100301cc5369257fad4df1523a2057095a8ab6d2d265eb8ed09bcd36f4a8",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1216,
+            "height": 97.69999694824219,
+            "bottom": 193.6999969482422
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 209.6999969482422,
+            "width": 1216,
+            "height": 129.40000915527344,
+            "bottom": 339.1000061035156
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 396.29998779296875,
+            "width": 389.33331298828125,
+            "height": 449.25,
+            "bottom": 845.5499877929688
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-1024x768-en-light.png",
+        "sha256": "5111e1ff474628d305fe8593e06c719b5f18c4bbfc49a8e085feb1a65592abcb",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 960,
+            "height": 88.10000610351562,
+            "bottom": 184.10000610351562
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.10000610351562,
+            "width": 960,
+            "height": 214.79998779296875,
+            "bottom": 414.8999938964844
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.1000061035156,
+            "width": 468,
+            "height": 478.70001220703125,
+            "bottom": 950.8000183105469
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-768x1024-en-light.png",
+        "sha256": "671df82a017d3098897523477bb992d0f158041a958d99a5bc5a62f6b7623a89",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 704,
+            "height": 88.10000610351562,
+            "bottom": 184.10000610351562
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.10000610351562,
+            "width": 704,
+            "height": 214.79998779296875,
+            "bottom": 414.8999938964844
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.1000061035156,
+            "width": 340,
+            "height": 508.29998779296875,
+            "bottom": 980.3999938964844
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-393x851-en-light.png",
+        "sha256": "eb35b73cb9d6022aca214f9e6ff4136cfea9dad6061286d5100220e8584c7c6e",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 329,
+            "height": 207.8000030517578,
+            "bottom": 299.8000030517578
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.79998779296875,
+            "width": 329,
+            "height": 300.20001220703125,
+            "bottom": 616
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.2000122070312,
+            "width": 329,
+            "height": 503.5,
+            "bottom": 1176.7000122070312
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-360x800-en-light.png",
+        "sha256": "ec4a1053a080db28d5653d06748471e8bea0c405aab17e03c64bae855aa499e7",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 296,
+            "height": 207.8000030517578,
+            "bottom": 299.8000030517578
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.79998779296875,
+            "width": 296,
+            "height": 300.20001220703125,
+            "bottom": 616
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.2000122070312,
+            "width": 296,
+            "height": 489.04998779296875,
+            "bottom": 1162.25
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-320x568-en-light.png",
+        "sha256": "b58ea95d6bc6e89f2bb1fea76afa3c3055a3d1da5b0fa090ea13223cef10bd33",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 28,
+            "y": 92,
+            "width": 264,
+            "height": 231.60000610351562,
+            "bottom": 323.6000061035156
+          },
+          ".events-filters-container": {
+            "x": 28,
+            "y": 339.6000061035156,
+            "width": 264,
+            "height": 300.20001220703125,
+            "bottom": 639.8000183105469
+          },
+          ".event-card": {
+            "x": 28,
+            "y": 697,
+            "width": 264,
+            "height": 475.04998779296875,
+            "bottom": 1172.0499877929688
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-firefox-844x390-en-light.png",
+        "sha256": "db1d841fa4ac47ee7f4bbd19de767919c8887bfccac9acd4857e86889ad29ff5",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 780,
+            "height": 88.10000610351562,
+            "bottom": 184.10000610351562
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.10000610351562,
+            "width": 780,
+            "height": 214.79998779296875,
+            "bottom": 414.8999938964844
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.1000061035156,
+            "width": 378,
+            "height": 439.33331298828125,
+            "bottom": 911.4333190917969
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/list-webkit-geometry.json",
+    "cases": [
+      {
+        "filename": "list-webkit-1440x900-en-light.png",
+        "sha256": "be570104032f0a78b0fef016e698f59fc9f01eed3b335866685b5e53f8e737d7",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1376,
+            "height": 100.890625,
+            "bottom": 196.890625
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 212.890625,
+            "width": 1376,
+            "height": 129.390625,
+            "bottom": 342.28125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 399.46875,
+            "width": 442.65625,
+            "height": 472.53125,
+            "bottom": 872
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-1920x1080-en-light.png",
+        "sha256": "474476a03a1b3973c6614160f86d7a63401ed3c5831a9a3144325f9f6349555f",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 152,
+            "y": 96,
+            "width": 1616,
+            "height": 100.890625,
+            "bottom": 196.890625
+          },
+          ".events-filters-container": {
+            "x": 152,
+            "y": 212.890625,
+            "width": 1616,
+            "height": 129.390625,
+            "bottom": 342.28125
+          },
+          ".event-card": {
+            "x": 152,
+            "y": 399.46875,
+            "width": 522.65625,
+            "height": 507.53125,
+            "bottom": 907
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-1280x720-en-light.png",
+        "sha256": "277e206a126d833bca354bc70683fbc502e7b9ea3635d6744f05c5a9f23ec2af",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 1216,
+            "height": 97.6875,
+            "bottom": 193.6875
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 209.6875,
+            "width": 1216,
+            "height": 129.390625,
+            "bottom": 339.078125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 396.265625,
+            "width": 389.328125,
+            "height": 449.203125,
+            "bottom": 845.46875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-1024x768-en-light.png",
+        "sha256": "ef9d6a2881a790fcb74048f67b76bfe4b04b7f6680d8966c2268365fb7f4cd86",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 960,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 960,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 468,
+            "height": 478.65625,
+            "bottom": 950.71875
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-768x1024-en-light.png",
+        "sha256": "267a2082fb09fab51f716d0da529ca9fd5dd9aca8ef59ce31e1ee6b020acbcf7",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 704,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 704,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 340,
+            "height": 508.25,
+            "bottom": 980.3125
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-393x851-en-light.png",
+        "sha256": "bcd5d2a074c6b766476aa07313cd637985c80e42a6468a01ea784ccc98ecf3cf",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 329,
+            "height": 207.78125,
+            "bottom": 299.78125
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.78125,
+            "width": 329,
+            "height": 300.171875,
+            "bottom": 615.953125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.140625,
+            "width": 329,
+            "height": 503.4375,
+            "bottom": 1176.578125
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-360x800-en-light.png",
+        "sha256": "dec0da66e78eec74ff9e1386698a26474662788f8064738f048ee5d57ccaa1c2",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 92,
+            "width": 296,
+            "height": 207.78125,
+            "bottom": 299.78125
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 315.78125,
+            "width": 296,
+            "height": 300.171875,
+            "bottom": 615.953125
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 673.140625,
+            "width": 296,
+            "height": 489,
+            "bottom": 1162.140625
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-320x568-en-light.png",
+        "sha256": "975149c2e27141b4433f7fde60160be09ba9be1e33dde7a2edda6f62370cc087",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 28,
+            "y": 92,
+            "width": 264,
+            "height": 231.578125,
+            "bottom": 323.578125
+          },
+          ".events-filters-container": {
+            "x": 28,
+            "y": 339.578125,
+            "width": 264,
+            "height": 300.171875,
+            "bottom": 639.75
+          },
+          ".event-card": {
+            "x": 28,
+            "y": 696.9375,
+            "width": 264,
+            "height": 475,
+            "bottom": 1171.9375
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "list-webkit-844x390-en-light.png",
+        "sha256": "a71cb3f2ad7fd5308d7efa1402a6128b3e0e50952aab42ba1823110a076c9d86",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": {
+            "x": 32,
+            "y": 96,
+            "width": 780,
+            "height": 88.09375,
+            "bottom": 184.09375
+          },
+          ".events-filters-container": {
+            "x": 32,
+            "y": 200.09375,
+            "width": 780,
+            "height": 214.78125,
+            "bottom": 414.875
+          },
+          ".event-card": {
+            "x": 32,
+            "y": 472.0625,
+            "width": 378,
+            "height": 439.28125,
+            "bottom": 911.34375
+          },
+          ".event-workspace-sidebar": null,
+          ".overview-hero": null,
+          ".overview-preparation": null,
+          ".overview-metrics": null
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/overview-chromium-geometry.json",
+    "cases": [
+      {
+        "filename": "overview-chromium-1440x900-en-light.png",
+        "sha256": "048dfc37bec31fa7cfcace709f77bbf5d8770a5d55a11527024cf21aacd78962",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 28.796875,
+            "y": 88,
+            "width": 240,
+            "height": 993.78125,
+            "bottom": 1081.78125
+          },
+          ".overview-hero": {
+            "x": 292.796875,
+            "y": 200.796875,
+            "width": 1118.390625,
+            "height": 320.765625,
+            "bottom": 521.5625
+          },
+          ".overview-preparation": {
+            "x": 953.53125,
+            "y": 705.75,
+            "width": 457.65625,
+            "height": 330.390625,
+            "bottom": 1036.140625
+          },
+          ".overview-metrics": {
+            "x": 292.796875,
+            "y": 541.5625,
+            "width": 1118.390625,
+            "height": 144.1875,
+            "bottom": 685.75
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-1920x1080-en-light.png",
+        "sha256": "1b0646cee2651156804547483414311b3755ea884dbedc53feaacaa49dff09ee",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 32,
+            "y": 88,
+            "width": 240,
+            "height": 993.78125,
+            "bottom": 1081.78125
+          },
+          ".overview-hero": {
+            "x": 296,
+            "y": 200.796875,
+            "width": 1592,
+            "height": 320.765625,
+            "bottom": 521.5625
+          },
+          ".overview-preparation": {
+            "x": 1233,
+            "y": 705.75,
+            "width": 655,
+            "height": 330.390625,
+            "bottom": 1036.140625
+          },
+          ".overview-metrics": {
+            "x": 296,
+            "y": 541.5625,
+            "width": 1592,
+            "height": 144.1875,
+            "bottom": 685.75
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-1280x720-en-light.png",
+        "sha256": "53530dd24046d0ceff89422e773f85579ec6d8bfc67a70a7bf03c501536b7478",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 25.59375,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 121.59375,
+            "y": 200.796875,
+            "width": 1132.796875,
+            "height": 318.828125,
+            "bottom": 519.625
+          },
+          ".overview-preparation": {
+            "x": 790.71875,
+            "y": 703.8125,
+            "width": 463.671875,
+            "height": 330.390625,
+            "bottom": 1034.203125
+          },
+          ".overview-metrics": {
+            "x": 121.59375,
+            "y": 539.625,
+            "width": 1132.796875,
+            "height": 144.1875,
+            "bottom": 683.8125
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-1024x768-en-light.png",
+        "sha256": "389617d306a21bc3c844301fe442ff437ec59effcf91f947db53d1f1656e88c7",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 20.46875,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 116.46875,
+            "y": 200.796875,
+            "width": 887.0625,
+            "height": 309.484375,
+            "bottom": 510.28125
+          },
+          ".overview-preparation": {
+            "x": 116.46875,
+            "y": 1029.203125,
+            "width": 887.0625,
+            "height": 330.390625,
+            "bottom": 1359.59375
+          },
+          ".overview-metrics": {
+            "x": 116.46875,
+            "y": 530.28125,
+            "width": 887.0625,
+            "height": 144.1875,
+            "bottom": 674.46875
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-768x1024-en-light.png",
+        "sha256": "aa09e189c3eb1a07c871b72e80d6c6fe025dc03c79b07e76f8852f4a6d6cf287",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 282.796875,
+            "width": 736,
+            "height": 307.265625,
+            "bottom": 590.0625
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1132.375,
+            "width": 736,
+            "height": 330.390625,
+            "bottom": 1462.765625
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 610.0625,
+            "width": 736,
+            "height": 167.578125,
+            "bottom": 777.640625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-393x851-en-light.png",
+        "sha256": "b7a9dec7b4593fb84211956b5576a568b8f547830401f3b06e6e13fe7a371515",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 369,
+            "height": 471.546875,
+            "bottom": 768.921875
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1439.796875,
+            "width": 369,
+            "height": 330.390625,
+            "bottom": 1770.1875
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.921875,
+            "width": 369,
+            "height": 296.140625,
+            "bottom": 1085.0625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-360x800-en-light.png",
+        "sha256": "e882472cc3d4076fd59727f1b440db48ced70d10bde1b28620bd5236b4adad54",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 336,
+            "height": 471.546875,
+            "bottom": 768.921875
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1439.796875,
+            "width": 336,
+            "height": 330.390625,
+            "bottom": 1770.1875
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.921875,
+            "width": 336,
+            "height": 296.140625,
+            "bottom": 1085.0625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-320x568-en-light.png",
+        "sha256": "a7303f7d25149bf0fe8109cb123f84218cc96140a770fd659da2f43c6760a0e0",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 296,
+            "height": 471.546875,
+            "bottom": 768.921875
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1519.5625,
+            "width": 296,
+            "height": 330.390625,
+            "bottom": 1849.953125
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.921875,
+            "width": 296,
+            "height": 350.71875,
+            "bottom": 1139.640625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-chromium-844x390-en-light.png",
+        "sha256": "3429fde0026f9a5cbb51256283118f04b31c01ba08dcb6301a36e2a32dabfe92",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 282.796875,
+            "width": 812,
+            "height": 307.265625,
+            "bottom": 590.0625
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1132.375,
+            "width": 812,
+            "height": 330.390625,
+            "bottom": 1462.765625
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 610.0625,
+            "width": 812,
+            "height": 167.578125,
+            "bottom": 777.640625
+          }
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/overview-firefox-geometry.json",
+    "cases": [
+      {
+        "filename": "overview-firefox-1440x900-en-light.png",
+        "sha256": "435185c9e9b82607d02004339e91ea573309f04388c86e6f882e8c3aef396b4f",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 28.800003051757812,
+            "y": 88,
+            "width": 240,
+            "height": 993.7999877929688,
+            "bottom": 1081.7999877929688
+          },
+          ".overview-hero": {
+            "x": 292.79998779296875,
+            "y": 200.8000030517578,
+            "width": 1118.4000244140625,
+            "height": 319.8999938964844,
+            "bottom": 520.6999969482422
+          },
+          ".overview-preparation": {
+            "x": 953.5333251953125,
+            "y": 704.9000244140625,
+            "width": 457.6666564941406,
+            "height": 330.4000244140625,
+            "bottom": 1035.300048828125
+          },
+          ".overview-metrics": {
+            "x": 292.79998779296875,
+            "y": 540.7000122070312,
+            "width": 1118.4000244140625,
+            "height": 144.1999969482422,
+            "bottom": 684.9000091552734
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-1920x1080-en-light.png",
+        "sha256": "b29e40c65a544ae983ff44dc16a72efb3c3beb177ee6e28184d50063387d7f65",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 32,
+            "y": 88,
+            "width": 240,
+            "height": 993.7999877929688,
+            "bottom": 1081.7999877929688
+          },
+          ".overview-hero": {
+            "x": 296,
+            "y": 200.8000030517578,
+            "width": 1592,
+            "height": 319.8999938964844,
+            "bottom": 520.6999969482422
+          },
+          ".overview-preparation": {
+            "x": 1233,
+            "y": 704.9000244140625,
+            "width": 655,
+            "height": 330.4000244140625,
+            "bottom": 1035.300048828125
+          },
+          ".overview-metrics": {
+            "x": 296,
+            "y": 540.7000122070312,
+            "width": 1592,
+            "height": 144.1999969482422,
+            "bottom": 684.9000091552734
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-1280x720-en-light.png",
+        "sha256": "7043166d3a8fcdb12e2119fbab2297fa915ff4f9a846845842b1681782a3d419",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 25.600006103515625,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 121.60000610351562,
+            "y": 200.8000030517578,
+            "width": 1132.800048828125,
+            "height": 317.9666748046875,
+            "bottom": 518.7666778564453
+          },
+          ".overview-preparation": {
+            "x": 790.7333374023438,
+            "y": 702.9666748046875,
+            "width": 463.6666564941406,
+            "height": 330.4000244140625,
+            "bottom": 1033.36669921875
+          },
+          ".overview-metrics": {
+            "x": 121.60000610351562,
+            "y": 538.7666625976562,
+            "width": 1132.800048828125,
+            "height": 144.1999969482422,
+            "bottom": 682.9666595458984
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-1024x768-en-light.png",
+        "sha256": "72854ac0a913caa92a1054455548b4f07b0fc7cd6c753f5cf085c6bc72ac2e0f",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 20.466659545898438,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 116.46665954589844,
+            "y": 200.8000030517578,
+            "width": 887.066650390625,
+            "height": 308.5999755859375,
+            "bottom": 509.3999786376953
+          },
+          ".overview-preparation": {
+            "x": 116.46665954589844,
+            "y": 1028.4000244140625,
+            "width": 887.066650390625,
+            "height": 330.4000244140625,
+            "bottom": 1358.800048828125
+          },
+          ".overview-metrics": {
+            "x": 116.46665954589844,
+            "y": 529.4000244140625,
+            "width": 887.066650390625,
+            "height": 144.20001220703125,
+            "bottom": 673.6000366210938
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-768x1024-en-light.png",
+        "sha256": "5fb17cc416456f4c06b78641e524b350674ddd9b5bdfe83bceff88dcc8d7db20",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 282.79998779296875,
+            "width": 736,
+            "height": 306.3999938964844,
+            "bottom": 589.1999816894531
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1131.5999755859375,
+            "width": 736,
+            "height": 330.3999938964844,
+            "bottom": 1461.9999694824219
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 609.2000122070312,
+            "width": 736,
+            "height": 167.60000610351562,
+            "bottom": 776.8000183105469
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-393x851-en-light.png",
+        "sha256": "05320875b9a3cccd6e4a4817844c9c352ce03b1c0b48114588653fc6109f924f",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.3999938964844,
+            "width": 369,
+            "height": 470.70001220703125,
+            "bottom": 768.1000061035156
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1439.0999755859375,
+            "width": 369,
+            "height": 330.3999938964844,
+            "bottom": 1769.4999694824219
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.0999755859375,
+            "width": 369,
+            "height": 296.20001220703125,
+            "bottom": 1084.2999877929688
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-360x800-en-light.png",
+        "sha256": "31206c310b89010f7c9f25a70252bcd30db79ad61e6c6af157a071fd2f75842a",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.3999938964844,
+            "width": 336,
+            "height": 470.70001220703125,
+            "bottom": 768.1000061035156
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1439.0999755859375,
+            "width": 336,
+            "height": 330.3999938964844,
+            "bottom": 1769.4999694824219
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.0999755859375,
+            "width": 336,
+            "height": 296.20001220703125,
+            "bottom": 1084.2999877929688
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-320x568-en-light.png",
+        "sha256": "e5bcfb68aa80c3efeba836ab436f41468d2b0fcad67d804ebfb790daee4eb6f6",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.3999938964844,
+            "width": 296,
+            "height": 470.70001220703125,
+            "bottom": 768.1000061035156
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1517.5,
+            "width": 296,
+            "height": 330.3999938964844,
+            "bottom": 1847.8999938964844
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.0999755859375,
+            "width": 296,
+            "height": 349.3999938964844,
+            "bottom": 1137.4999694824219
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-firefox-844x390-en-light.png",
+        "sha256": "51b4d4bd866be5bebc80726862152d5beb8d6b8c097ac3c90359b07ef260ca31",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 282.79998779296875,
+            "width": 812,
+            "height": 306.3999938964844,
+            "bottom": 589.1999816894531
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1131.5999755859375,
+            "width": 812,
+            "height": 330.3999938964844,
+            "bottom": 1461.9999694824219
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 609.2000122070312,
+            "width": 812,
+            "height": 167.60000610351562,
+            "bottom": 776.8000183105469
+          }
+        },
+        "scrollOwners": []
+      }
+    ]
+  },
+  {
+    "path": "output/phase12-codex/after/overview-webkit-geometry.json",
+    "cases": [
+      {
+        "filename": "overview-webkit-1440x900-en-light.png",
+        "sha256": "429f786ad106382b2cc29134eb077aa1f0faa56915d7e909c29938c4a7d8e72e",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "scrollWidth": 1440,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1408,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 28.796875,
+            "y": 88,
+            "width": 240,
+            "height": 993.78125,
+            "bottom": 1081.78125
+          },
+          ".overview-hero": {
+            "x": 292.796875,
+            "y": 200.796875,
+            "width": 1118.40625,
+            "height": 319.859375,
+            "bottom": 520.65625
+          },
+          ".overview-preparation": {
+            "x": 953.53125,
+            "y": 704.84375,
+            "width": 457.671875,
+            "height": 330.390625,
+            "bottom": 1035.234375
+          },
+          ".overview-metrics": {
+            "x": 292.796875,
+            "y": 540.65625,
+            "width": 1118.40625,
+            "height": 144.1875,
+            "bottom": 684.84375
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-1920x1080-en-light.png",
+        "sha256": "658932aff5ee860054afd34f63ffaa94612ae045c88cfe41a36741052336a8c3",
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "scrollWidth": 1920,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1888,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 32,
+            "y": 88,
+            "width": 240,
+            "height": 993.78125,
+            "bottom": 1081.78125
+          },
+          ".overview-hero": {
+            "x": 296,
+            "y": 200.796875,
+            "width": 1591.984375,
+            "height": 319.859375,
+            "bottom": 520.65625
+          },
+          ".overview-preparation": {
+            "x": 1232.984375,
+            "y": 704.84375,
+            "width": 655,
+            "height": 330.390625,
+            "bottom": 1035.234375
+          },
+          ".overview-metrics": {
+            "x": 296,
+            "y": 540.65625,
+            "width": 1591.984375,
+            "height": 144.1875,
+            "bottom": 684.84375
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-1280x720-en-light.png",
+        "sha256": "c2f72e43224e8b412f7e55db8c210915378dac2e1d1afe5cc338cc6ce2214a90",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "scrollWidth": 1280,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 1248,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 25.59375,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 121.59375,
+            "y": 200.796875,
+            "width": 1132.8125,
+            "height": 317.890625,
+            "bottom": 518.6875
+          },
+          ".overview-preparation": {
+            "x": 790.734375,
+            "y": 702.875,
+            "width": 463.671875,
+            "height": 330.390625,
+            "bottom": 1033.265625
+          },
+          ".overview-metrics": {
+            "x": 121.59375,
+            "y": 538.6875,
+            "width": 1132.8125,
+            "height": 144.1875,
+            "bottom": 682.875
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-1024x768-en-light.png",
+        "sha256": "3129fe467ca2ab126cc90db6e3b7641b759724462309b79e3dce744b8941a6a5",
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "scrollWidth": 1024,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 992,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": {
+            "x": 20.46875,
+            "y": 88,
+            "width": 72,
+            "height": 1121,
+            "bottom": 1209
+          },
+          ".overview-hero": {
+            "x": 116.46875,
+            "y": 200.796875,
+            "width": 887.0625,
+            "height": 308.578125,
+            "bottom": 509.375
+          },
+          ".overview-preparation": {
+            "x": 116.46875,
+            "y": 1028.296875,
+            "width": 887.0625,
+            "height": 330.390625,
+            "bottom": 1358.6875
+          },
+          ".overview-metrics": {
+            "x": 116.46875,
+            "y": 529.375,
+            "width": 887.0625,
+            "height": 144.1875,
+            "bottom": 673.5625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-768x1024-en-light.png",
+        "sha256": "44c1368999085057ae88c2536309040231e9ac757101f3681aa110639385e960",
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "scrollWidth": 768,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 736,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 16,
+            "y": 282.796875,
+            "width": 736,
+            "height": 306.359375,
+            "bottom": 589.15625
+          },
+          ".overview-preparation": {
+            "x": 16,
+            "y": 1131.46875,
+            "width": 736,
+            "height": 330.390625,
+            "bottom": 1461.859375
+          },
+          ".overview-metrics": {
+            "x": 16,
+            "y": 609.15625,
+            "width": 736,
+            "height": 167.578125,
+            "bottom": 776.734375
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-393x851-en-light.png",
+        "sha256": "6f3fb466fd399de4db7f098b0259cd5adbcc5ce85d30d230884d44de1e3e8c35",
+        "viewport": {
+          "width": 393,
+          "height": 851
+        },
+        "scrollWidth": 393,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 377,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 369,
+            "height": 470.640625,
+            "bottom": 768.015625
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1438.890625,
+            "width": 369,
+            "height": 330.390625,
+            "bottom": 1769.28125
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.015625,
+            "width": 369,
+            "height": 296.140625,
+            "bottom": 1084.15625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-360x800-en-light.png",
+        "sha256": "cab2437a1181ccf06e01e228181e59b325c18fea74adff69071d5006da16980d",
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "scrollWidth": 360,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 344,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 336,
+            "height": 470.640625,
+            "bottom": 768.015625
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1438.890625,
+            "width": 336,
+            "height": 330.390625,
+            "bottom": 1769.28125
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.015625,
+            "width": 336,
+            "height": 296.140625,
+            "bottom": 1084.15625
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-320x568-en-light.png",
+        "sha256": "a2120dbaee2f629531802f3d0e489ed6aa978b7ba89f23ce59bd424dc0b81d87",
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "scrollWidth": 320,
+        "rects": {
+          ".host-header-container": {
+            "x": 8,
+            "y": 8,
+            "width": 304,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 297.375,
+            "width": 296,
+            "height": 470.640625,
+            "bottom": 768.015625
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1517.21875,
+            "width": 296,
+            "height": 330.390625,
+            "bottom": 1847.609375
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 788.015625,
+            "width": 296,
+            "height": 349.28125,
+            "bottom": 1137.296875
+          }
+        },
+        "scrollOwners": []
+      },
+      {
+        "filename": "overview-webkit-844x390-en-light.png",
+        "sha256": "06d328913a3320c1f82393813641791014ac4e0784ee835ef9a9ecc2c37f03da",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "scrollWidth": 844,
+        "rects": {
+          ".host-header-container": {
+            "x": 16,
+            "y": 8,
+            "width": 812,
+            "height": 64,
+            "bottom": 72
+          },
+          ".events-page-header": null,
+          ".events-filters-container": null,
+          ".event-card": null,
+          ".event-workspace-sidebar": null,
+          ".overview-hero": {
+            "x": 12,
+            "y": 282.796875,
+            "width": 820,
+            "height": 298.359375,
+            "bottom": 581.15625
+          },
+          ".overview-preparation": {
+            "x": 12,
+            "y": 1090.46875,
+            "width": 820,
+            "height": 330.390625,
+            "bottom": 1420.859375
+          },
+          ".overview-metrics": {
+            "x": 12,
+            "y": 601.15625,
+            "width": 820,
+            "height": 134.578125,
+            "bottom": 735.734375
+          }
+        },
+        "scrollOwners": []
+      }
+    ]
+  }
+]

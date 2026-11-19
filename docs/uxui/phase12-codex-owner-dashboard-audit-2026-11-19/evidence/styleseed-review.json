@@ -1,0 +1,16 @@
+{
+  "bundle": "Retained legacy operations-console × product-ui × productivity/list",
+  "deterministic_result": "SS000: .styleseed/project.json registry missing; legacy --from-lock also fails because root lock is absent. No configuration was invented.",
+  "manual_craft_review": {
+    "color": 14,
+    "hierarchy_typography": 14,
+    "layout": 11,
+    "cards_elevation": 9,
+    "states_a11y": 14,
+    "motion": 5,
+    "coherence": 10,
+    "distinctiveness": 8,
+    "total": 85
+  },
+  "scope": "Manual source/pixel assessment, not deterministic StyleSeed compliance or human design acceptance."
+}
