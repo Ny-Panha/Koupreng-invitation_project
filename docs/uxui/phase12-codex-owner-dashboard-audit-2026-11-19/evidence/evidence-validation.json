@@ -2,7 +2,7 @@
   "markdown_count": 32,
   "json_count_including_validation": 35,
   "reviewed_visual_count": 14,
-  "relative_links_checked": 128,
+  "relative_links_checked": 129,
   "relative_link_errors": [],
   "json_parse_errors": [],
   "f12_rows": 44,
@@ -127,7 +127,7 @@
     },
     {
       "path": "30-safe-commit-push-ci-verification.md",
-      "sha256": "ec196d1461b589201e161aaef0bfc395b793cd8592372ba741b90cf316a3fd59"
+      "sha256": "cca619f25627523d01d4faac56bce51b3b7d0a03d2267c43a37c939a714e543d"
     },
     {
       "path": "31-phase13-1-gemini-studio-execution-handoff.md",
@@ -179,7 +179,7 @@
     },
     {
       "path": "evidence/f12-independent-44.json",
-      "sha256": "1e9f1636dee99b4bb4b8c7a0b471df501de7acd57fff0e4df1d2efc69874b7ec"
+      "sha256": "5cd15797b6a61e261edcff3e5d87221409cb71adb0976327afb3143606718453"
     },
     {
       "path": "evidence/file-attribution.json",
@@ -227,11 +227,11 @@
     },
     {
       "path": "evidence/publication-gates.json",
-      "sha256": "415ed903329fad18e14441a856c1326fd25a6bebc34af8076f9b692f18c2a7f4"
+      "sha256": "542214e465fda11b75d11c16e5bf712ee28b38b2e1412f9303f788f8d5c5e795"
     },
     {
       "path": "evidence/publication-result.json",
-      "sha256": "e369912b014c5e4200c521d2f936a85214e5a2e90f0e8531d51a34257429c82a"
+      "sha256": "3474339c28f51f917b60f4147c974c9f10b8a489d5c8893a580197d6b5e962be"
     },
     {
       "path": "evidence/regression-comparison.json",
@@ -283,7 +283,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "4c3131f622244d8ad6a6b879e83b8957128d116abd1acdcce23a9270cb24ffd3"
+      "sha256": "15a1264a1673ef19f0f303732e7a71486a3a46bd0899eed742ec8a1dd60e5fbc"
     },
     {
       "path": "visuals/after-khmer-dark.png",

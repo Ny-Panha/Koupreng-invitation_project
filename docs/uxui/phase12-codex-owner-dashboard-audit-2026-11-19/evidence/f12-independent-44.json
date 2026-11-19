@@ -349,7 +349,7 @@
       "topic": "Gemini-only handoff with Phase 12 Codex + later push policy",
       "gemini_verdict": "VERIFIED—LOCAL",
       "codex_verdict": "PARTIALLY COMPLETE",
-      "evidence": "User-published concurrent checkpoint acknowledged; this audit publication result is separate.",
+      "evidence": "Source checkpoint published and remote verified; publication-result records actual CI snapshot. Broader release/handoff certification remains open.",
       "owner": "Codex / relevant domain owner"
     }
   ],

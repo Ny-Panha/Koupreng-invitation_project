@@ -1,5 +1,90 @@
 {
-  "status": "NOT YET PUBLISHED BY CODEX",
-  "user_published_checkpoint": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
-  "note": "Do not confuse user concurrent publication with a completed Codex audit."
+  "status": "PUBLISHED — DEVELOPMENT CHECKPOINT",
+  "source_commit": "319e251e3b5f2a979d487928902784b807bb9b5f",
+  "commit_url": "https://github.com/Ny-Panha/Koupreng-invitation_project/commit/319e251e3b5f2a979d487928902784b807bb9b5f",
+  "branch": "main",
+  "parent": "b18aae3f144ea599da29c13f2ef448aa33ba08a2",
+  "changed_files": 102,
+  "push_exit_code": 0,
+  "fetch_exit_code": 0,
+  "origin_main_matches": true,
+  "ls_remote_matches": true,
+  "tracked_and_untracked_status_after_source_push": "clean",
+  "staged_secret_findings": 0,
+  "staged_package_hash_errors": [],
+  "ci_snapshot": {
+    "run": {
+      "id": 44531652842,
+      "head_sha": "319e251e3b5f2a979d487928902784b807bb9b5f",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44531652842",
+      "updated_at": "2026-11-19T13:15:34Z"
+    },
+    "jobs": [
+      {
+        "id": 135586235993,
+        "name": "Admin Frontend Lint, Test, Analysis & Build",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236480,
+        "name": "Secret Scan",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 135586236543,
+        "name": "Fresh MySQL Flyway Migration",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236684,
+        "name": "Backend Static & Dependency Usage Analysis",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236711,
+        "name": "Telegram Bot Lint, Test & Compile",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135586236727,
+        "name": "Deployment Configuration & Docker Applicability",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236737,
+        "name": "Backend Build, Test, Coverage & Static Analysis",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236753,
+        "name": "Real HTTP MySQL Ownership, RBAC & Entitlements",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236775,
+        "name": "Dependency Vulnerability Audit",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 135586236928,
+        "name": "User Frontend Lint, Test, Analysis & Build",
+        "status": "in_progress",
+        "conclusion": null
+      }
+    ]
+  },
+  "production_release_certified": false,
+  "deployed": false,
+  "note": "This records the source checkpoint push. A separate forward documentation commit ships the observed publication result; its resulting HEAD and new CI run are reported in the final response. CI can cancel the preceding run under the unchanged concurrency policy."
 }

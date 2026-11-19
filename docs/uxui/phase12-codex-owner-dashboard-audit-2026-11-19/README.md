@@ -4,6 +4,8 @@
 
 The entry was ad02a263 with Gemini work dirty. The user independently published b18aae3 during this audit, confirmed its origin, and authorized review/resumption. This report distinguishes that checkpoint from any later Codex publication.
 
+The reviewed source checkpoint **319e251e3b5f2a979d487928902784b807bb9b5f** was pushed to main and independently matched origin/main and ls-remote. New CI was in progress with Secret Scan already failed at inspection. The [actual publication record](evidence/publication-result.json) includes the observed jobs. A forward documentation follow-up records this result; no deployment or production certification occurred.
+
 Final local results: **1,779 user tests**, **202 admin tests**, **33 owner browser cases across Chromium/Firefox/WebKit**, **54 Phase 11 browser cases**, and **11 focused H2 contract tests passed**. Both linters/builds, token synchronization, 24 route tests and three repository-policy checks passed. Suites overlap and are not added together. Phase 06/08/09/10 replay: 456 passed, 65 configured skips, one pre-navigation Chromium connection failure; that exact case passed separately. The original run remains recorded as failed.
 
 Phase 02: 26 passed/six failed versus historical 25/seven; all six failing case identities are inherited. Both guest-filter failures reproduced unchanged. The whole reviewed tree has three classified pre-existing Gitleaks matches; the actual Phase 12 diff scan found zero. CI is not certified green. Native Khmer approval, physical AT/devices/native zoom, legacy draft-consumer breadth, asset rights, providers/MySQL/settlement and field RUM remain open.

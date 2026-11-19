@@ -111,8 +111,8 @@
     },
     {
       "id": 5,
-      "status": "SATISFIED; RECHECK IMMEDIATELY BEFORE PUSH",
-      "evidence": "Authenticated GitHub read and fetch succeeded; reviewed origin equals local expected ancestor. Never force."
+      "status": "SATISFIED AT SOURCE PUSH",
+      "evidence": "Source commit 319e251e3b5f2a979d487928902784b807bb9b5f matched local HEAD, fetched origin/main and ls-remote after successful normal main push."
     },
     {
       "id": 6,
