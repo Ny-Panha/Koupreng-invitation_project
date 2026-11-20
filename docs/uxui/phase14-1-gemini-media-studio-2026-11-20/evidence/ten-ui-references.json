@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "evaluatedCatalogs": [
+    {
+      "name": "Animate UI",
+      "decision": "Draw original inspiration",
+      "license": "Custom/Restricted terms",
+      "reason": "Adopted restrained spring-curve timing variables in MediaLibrary.css without copying proprietary code",
+      "accessibility": "Full prefers-reduced-motion fallback implemented"
+    },
+    {
+      "name": "Badtz UI",
+      "decision": "Draw original inspiration",
+      "license": "Commercial restriction note",
+      "reason": "Applied high-density card metadata footer pattern using native semantic elements",
+      "accessibility": "High-contrast border tokens applied"
+    },
+    {
+      "name": "Lightswind UI",
+      "decision": "Draw original inspiration",
+      "license": "Restricted redistribution",
+      "reason": "Studied media focal framing overlay geometry; implemented independent SVG crosshair canvas",
+      "accessibility": "Keyboard accessible sliders paired with visual drag"
+    },
+    {
+      "name": "Kokonut UI",
+      "decision": "Draw original inspiration",
+      "license": "MIT with attribution caveats",
+      "reason": "Implemented multi-file preflight queue tray with individual progress bars and cancel buttons",
+      "accessibility": "Role status announcements on each state change"
+    },
+    {
+      "name": "Untitled UI",
+      "decision": "Draw original inspiration",
+      "license": "Commercial kit",
+      "reason": "Adapted category segmented controls and asset action menu ergonomics into KoupReng palette",
+      "accessibility": "Strict 44x44px touch bounding boxes"
+    },
+    {
+      "name": "shadcn/ui",
+      "decision": "Adopt existing project patterns",
+      "license": "MIT",
+      "reason": "Maintained existing Radix-inspired accessible modal pattern for focal point inspector",
+      "accessibility": "Native focus trapping and ESC key dismissal"
+    },
+    {
+      "name": "React Bits",
+      "decision": "Reject / Avoid runtime dependency",
+      "license": "Unclear attribution conditions",
+      "reason": "Avoided heavy canvas/WebGL shader components that harm low-end Cambodian mobile performance",
+      "accessibility": "Replaced with pure CSS hardware-accelerated transforms"
+    },
+    {
+      "name": "Aceternity UI",
+      "decision": "Draw original inspiration",
+      "license": "Free tier with restrictions",
+      "reason": "Inspired subtle card hover depth using CSS box-shadow without framer-motion bloat",
+      "accessibility": "Disabled under prefers-reduced-motion"
+    },
+    {
+      "name": "Magic UI",
+      "decision": "Draw original inspiration",
+      "license": "Commercial / MIT mix",
+      "reason": "Adopted micro-progress pulse for upload confirmation checkmarks without noisy confetti",
+      "accessibility": "ARIA live polite announcements"
+    },
+    {
+      "name": "Skiper UI",
+      "decision": "Draw original inspiration",
+      "license": "Commercial template terms",
+      "reason": "Implemented keyboard-driven gallery reordering with move earlier/later actions",
+      "accessibility": "Full screen-reader announcements on item position change"
+    }
+  ]
+}

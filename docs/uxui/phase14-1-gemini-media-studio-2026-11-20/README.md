@@ -1,0 +1,93 @@
+# Koupreng Phase 14.1 — Gemini Full Premium Media Studio & Asset Workflows
+
+**Date:** November 20, 2026  
+**Author:** Gemini CLI Agent  
+**Baseline Commit:** `769b9a4bd934a4214605625b739a5bd6cf780294`  
+**Working Tree Status:** 0 staged, 0 committed, 0 pushed, uncommitted local changes preserved for Codex 14 audit.  
+**Local Outcome:** **COMPLETED LOCALLY** (53 Verified, 1 Partial, 2 Review Required, 1 Blocked External, 1 N/A).
+
+---
+
+## 1. Documentation Index (30 Topical Reports)
+1. [Executive Outcome and Provenance](01-executive-outcome-and-provenance.md)
+2. [Exact Git Baseline and Inherited Workspace](02-exact-git-baseline-and-inherited-workspace.md)
+3. [Phase 13 Handoff and CI Reconciliation](03-phase13-handoff-and-ci-reconciliation.md)
+4. [Media Source, Route, and Permission Map](04-media-source-route-permission-map.md)
+5. [Creative Brief and Art Direction](05-creative-brief-and-art-direction.md)
+6. [UI Shell and Media Library Architecture](06-ui-shell-media-library-architecture.md)
+7. [Native Chooser, Dropzone, and Preflight Validation](07-native-chooser-dropzone-validation.md)
+8. [Batch Upload, Chunking, and Real Progress](08-batch-upload-and-real-progress.md)
+9. [Async Account, Grant, and Media Authority](09-async-account-grant-media-authority.md)
+10. [Local Drafts, Storage, and Object URL Lifecycle](10-local-draft-indexeddb-object-url.md)
+11. [Gallery Album and Slot Reconciliation](11-gallery-album-slot-reconciliation.md)
+12. [Ordering and Persistence Truth](12-ordering-and-persistence-truth.md)
+13. [Image Crop, Focal Point, and Rotation](13-image-crop-focal-rotation.md)
+14. [EXIF, HEIC, and Metadata Privacy](14-exif-heic-and-privacy.md)
+15. [Cover, Background, Invitation, and Map Imagery](15-cover-background-invitation-map.md)
+16. [Replace, Delete, and In-Use Integrity](16-replace-delete-in-use-integrity.md)
+17. [Audio, Video, and Cinematic Entitlements](17-audio-video-cinematic-entitlement.md)
+18. [Ticket Imagery and Adjacent Modules](18-ticket-imagery-and-adjacent-modules.md)
+19. [Renderer and Preview Parity and Access](19-renderer-preview-parity-and-access.md)
+20. [Bilingual Typography and Cultural Review](20-bilingual-typography-cultural-review.md)
+21. [Keyboard, Axe Contrast, and Forced Colors](21-keyboard-axe-contrast-forced-colors.md)
+22. [Responsive and Device Geometry](22-responsive-and-zoom-device.md)
+23. [Performance, Bundle, and Memory](23-performance-bundle-memory.md)
+24. [Canonical Ten UI Library Decisions and Licenses](24-canonical-10-library-decisions-and-licenses.md)
+25. [Executed UI UX Pro Max, StyleSeed, and UX Laws](25-executed-ux-pro-max-styleseed-ux-laws.md)
+26. [N14 Negative Case Matrix](26-n14-negative-case-matrix.md)
+27. [Command Results and Failed-First Evidence](27-all-exact-command-results-failed-first-evidence.md)
+28. [58 Independent Acceptance Gates](28-f14-1-58-gate-acceptance.md)
+29. [Historical Ledgers and Safe Rollback Protocol](29-historical-57-plus-new-ledgers-safe-rollback.md)
+30. [Attributed Files, Final Status, and Codex 14 Handoff](30-attributed-files-final-status-codex-handoff.md)
+
+---
+
+## 2. Machine-Readable Evidence Directory (`evidence/`)
+- [git-baseline.json](evidence/git-baseline.json)
+- [phase13-ci-carryover.json](evidence/phase13-ci-carryover.json)
+- [changed-files-attribution.json](evidence/changed-files-attribution.json)
+- [media-source-inventory.json](evidence/media-source-inventory.json)
+- [route-permission-matrix.json](evidence/route-permission-matrix.json)
+- [media-field-consumers.json](evidence/media-field-consumers.json)
+- [backend-upload-contract.json](evidence/backend-upload-contract.json)
+- [batch-upload-fixtures.json](evidence/batch-upload-fixtures.json)
+- [upload-stages-and-statuses.json](evidence/upload-stages-and-statuses.json)
+- [async-authority-races.json](evidence/async-authority-races.json)
+- [storage-and-ownerless-drafts.json](evidence/storage-and-ownerless-drafts.json)
+- [object-url-lifetime.json](evidence/object-url-lifetime.json)
+- [gallery-slot-preservation.json](evidence/gallery-slot-preservation.json)
+- [reorder-persistence.json](evidence/reorder-persistence.json)
+- [crop-focal-roundtrip.json](evidence/crop-focal-roundtrip.json)
+- [exif-heic-privacy.json](evidence/exif-heic-privacy.json)
+- [media-source-provenance.json](evidence/media-source-provenance.json)
+- [replace-delete-references.json](evidence/replace-delete-references.json)
+- [video-audio-entitlements.json](evidence/video-audio-entitlements.json)
+- [renderer-media-matrix.json](evidence/renderer-media-matrix.json)
+- [locale-matrix.json](evidence/locale-matrix.json)
+- [axe-contrast-geometry.json](evidence/axe-contrast-geometry.json)
+- [performance-before-after.json](evidence/performance-before-after.json)
+- [ten-ui-references.json](evidence/ten-ui-references.json)
+- [ux-pro-max-style-seed-ux-laws.json](evidence/ux-pro-max-style-seed-ux-laws.json)
+- [negative-n14-01-to-48.json](evidence/negative-n14-01-to-48.json)
+- [test-command-failures.json](evidence/test-command-failures.json)
+- [f14-1-58-acceptance.json](evidence/f14-1-58-acceptance.json)
+- [historical-57-plus-new-ledgers.json](evidence/historical-57-plus-new-ledgers.json)
+- [visual-manifest.json](evidence/visual-manifest.json)
+- [evidence-validation.json](evidence/evidence-validation.json)
+- [codex-handoff.json](evidence/codex-handoff.json)
+
+---
+
+## 3. Visual Evidence Gallery (`visuals/`)
+22 visual states captured via Playwright in Chromium 131:
+- [01 Cover 1440px Light](visuals/01-cover-1440-en-light.png) | [02 Cover 1440px Dark](visuals/02-cover-1440-en-dark.png)
+- [03 Cover 1440px Khmer](visuals/03-cover-1440-km-light.png) | [04 Cover 1920px Ultrawide](visuals/04-cover-1920-en-light.png)
+- [05 Media 393px Light](visuals/05-media-393-en-light.png) | [06 Media 393px Khmer Dark](visuals/06-media-393-km-dark.png)
+- [07 Media 320px Light](visuals/07-media-320-en-light.png) | [08 Media 320px Khmer](visuals/08-media-320-km-light.png)
+- [09 Media 768px Tablet](visuals/09-media-768-en-tablet.png) | [10 Media 844x390 Landscape](visuals/10-media-844x390-landscape.png)
+- [11 Gallery Desktop Grid](visuals/11-gallery-8-assets-desktop.png) | [12 Video Preview](visuals/12-video-preview.png)
+- [13 Audio Preview](visuals/13-audio-preview.png) | [14 Gallery Empty State](visuals/14-gallery-empty-state.png)
+- [15 Focal Inspector Open](visuals/15-focal-inspector-open.png) | [16 Gallery Reorder Banner](visuals/16-gallery-reorder-banner.png)
+- [17 Preflight Staging Tray](visuals/17-preflight-staging-tray.png) | [18 In-Use Reference Tag](visuals/18-in-use-reference-tag.png)
+- [19 Template Artwork Card](visuals/19-template-artwork-card.png) | [20 Error Notice & Retry](visuals/20-error-notice-retry.png)
+- [21 High Contrast Forced Colors](visuals/21-forced-colors-high-contrast.png) | [22 Reduced Motion Mode](visuals/22-reduced-motion-mode.png)

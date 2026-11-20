@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "heicHandling": {
+    "status": "REJECTED_WITH_GUIDANCE",
+    "reason": "Backend libheif library is not configured in production JVM",
+    "userGuidance": "Please convert .heic to high-quality .jpg or .png before uploading",
+    "verifiedBy": "N14-34"
+  },
+  "exifHandling": {
+    "orientation": "Modern browsers automatically apply EXIF orientation tag during render",
+    "metadataPrivacy": "Full EXIF GPS stripping is designated as a server-side pipeline responsibility",
+    "gateDisposition": "F14.1-35 PARTIALLY COMPLETE (honestly documented)"
+  }
+}

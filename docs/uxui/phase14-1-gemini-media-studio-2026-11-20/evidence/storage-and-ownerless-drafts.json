@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "storageStrategy": "Session-scoped staged items with explicit eventId keying",
+  "ownerlessProtection": "Unauthenticated access to draft storage blocked; media must bind to valid event entity",
+  "quotaHandling": "IndexedDB/LocalQuota overflow caught gracefully; fallback to in-memory staging with user warning",
+  "verifiedBy": [
+    "N14-25",
+    "N14-26",
+    "N14-27"
+  ]
+}

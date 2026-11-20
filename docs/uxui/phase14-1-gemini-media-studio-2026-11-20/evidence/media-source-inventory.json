@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "categories": [
+    "cover",
+    "gallery",
+    "video",
+    "music"
+  ],
+  "linkedModules": [
+    "ticket",
+    "studio"
+  ],
+  "backendEndpoints": {
+    "upload": "POST /api/events/{eventId}/media (multipart/form-data, max 5 files/request)",
+    "list": "GET /api/events/{eventId}/media",
+    "delete": "DELETE /api/events/{eventId}/media/{mediaId}"
+  },
+  "defaultAssets": {
+    "covers": [
+      {
+        "id": "def-cov-1",
+        "url": "/templates/traditional-gold/cover.jpg",
+        "category": "cover",
+        "source": "template_asset"
+      },
+      {
+        "id": "def-cov-2",
+        "url": "/templates/modern-minimal/cover.jpg",
+        "category": "cover",
+        "source": "template_asset"
+      }
+    ],
+    "music": [
+      {
+        "id": "def-mus-1",
+        "url": "/audio/traditional-wedding-song.mp3",
+        "title": "Traditional Khmer Blessing",
+        "source": "licensed_library"
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "wcagLevel": "WCAG 2.2 AA",
+  "contrastChecks": [
+    {
+      "element": "Forest Ink text on Warm Ivory background",
+      "ratio": "13.2:1",
+      "required": "4.5:1",
+      "status": "PASS"
+    },
+    {
+      "element": "Champagne Gold badge on Forest Ink background",
+      "ratio": "4.8:1",
+      "required": "3.0:1",
+      "status": "PASS"
+    },
+    {
+      "element": "Secondary muted text on Ivory",
+      "ratio": "5.6:1",
+      "required": "4.5:1",
+      "status": "PASS"
+    },
+    {
+      "element": "Error banner text on Crimson background",
+      "ratio": "5.1:1",
+      "required": "4.5:1",
+      "status": "PASS"
+    }
+  ],
+  "touchTargetSizes": [
+    {
+      "control": "Category Tab Buttons",
+      "size": "44px height x 110px width",
+      "minimum": "44x44px",
+      "status": "PASS"
+    },
+    {
+      "control": "Reorder Move Earlier/Later Buttons",
+      "size": "44px x 44px",
+      "minimum": "44x44px",
+      "status": "PASS"
+    },
+    {
+      "control": "Focal Point Open Button",
+      "size": "44px x 44px",
+      "minimum": "44x44px",
+      "status": "PASS"
+    },
+    {
+      "control": "Upload Preflight Trigger",
+      "size": "48px height",
+      "minimum": "44x44px",
+      "status": "PASS"
+    }
+  ],
+  "accessibilityAudits": {
+    "axeViolations": 0,
+    "ariaRolesVerified": [
+      "group",
+      "dialog",
+      "status",
+      "slider"
+    ],
+    "forcedColorsCompliant": true,
+    "reducedMotionCompliant": true
+  },
+  "verifiedBy": [
+    "N14-46",
+    "N14-47",
+    "Playwright test 21 & 22"
+  ]
+}

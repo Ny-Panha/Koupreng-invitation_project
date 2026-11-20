@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "scenarios": [
+    {
+      "name": "6 files uploaded to gallery",
+      "fileCount": 6,
+      "expectedChunks": 2,
+      "chunk1Count": 5,
+      "chunk2Count": 1,
+      "verifiedBy": "N14-05"
+    },
+    {
+      "name": "12 files uploaded in bulk",
+      "fileCount": 12,
+      "expectedChunks": 3,
+      "chunk1Count": 5,
+      "chunk2Count": 5,
+      "chunk3Count": 2,
+      "verifiedBy": "Vitest model unit tests"
+    },
+    {
+      "name": "Partial failure in chunk 2",
+      "chunk1Status": 200,
+      "chunk2Status": 500,
+      "recoveryBehavior": "Chunk 1 files confirmed and retained; only chunk 2 files kept in retry queue",
+      "verifiedBy": "N14-09"
+    }
+  ]
+}

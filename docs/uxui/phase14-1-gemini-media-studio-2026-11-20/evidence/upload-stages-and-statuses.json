@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "stages": [
+    {
+      "id": "IDLE",
+      "label": "Idle / Not Started",
+      "terminal": false
+    },
+    {
+      "id": "QUEUED",
+      "label": "Queued in Preflight",
+      "terminal": false
+    },
+    {
+      "id": "PREFLIGHT",
+      "label": "Client Validation (MIME, size, signature)",
+      "terminal": false
+    },
+    {
+      "id": "UPLOADING",
+      "label": "Multipart Network Transfer",
+      "terminal": false
+    },
+    {
+      "id": "PROCESSING",
+      "label": "Server Ingestion / Thumbnail Gen",
+      "terminal": false
+    },
+    {
+      "id": "CONFIRMED",
+      "label": "Server Persisted & Ready",
+      "terminal": true
+    },
+    {
+      "id": "FAILED",
+      "label": "Rejected with Actionable Guidance",
+      "terminal": true
+    }
+  ],
+  "constantName": "MEDIA_LIFECYCLE_STAGES",
+  "location": "apps/frontend-user/src/features/invitations/mediaLibraryModel.js"
+}

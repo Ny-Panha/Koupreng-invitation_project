@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "backendController": "com.koupreng.backend.media.api.MediaController",
+  "backendService": "com.koupreng.backend.media.application.MediaService",
+  "frontendService": "apps/frontend-user/src/features/invitations/api/mediaApi.js",
+  "securityProperties": "app.security.upload.*",
+  "maxFilesPerRequest": 5,
+  "maxGalleryFilesPerInvitation": 0,
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/cover",
+      "contentType": "multipart/form-data",
+      "maxBytes": 5242880,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ],
+      "allowedExts": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/gallery",
+      "contentType": "multipart/form-data",
+      "maxBytes": 5242880,
+      "maxFiles": 5,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ],
+      "allowedExts": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/video",
+      "contentType": "multipart/form-data",
+      "maxBytes": 52428800,
+      "allowedMimes": [
+        "video/mp4",
+        "video/webm"
+      ],
+      "allowedExts": [
+        ".mp4",
+        ".webm"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/music",
+      "contentType": "multipart/form-data",
+      "maxBytes": 15728640,
+      "allowedMimes": [
+        "audio/mpeg",
+        "audio/mp3",
+        "audio/wav",
+        "audio/ogg"
+      ],
+      "allowedExts": [
+        ".mp3",
+        ".wav",
+        ".ogg"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/ticket-image",
+      "contentType": "multipart/form-data",
+      "maxBytes": 5242880,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ],
+      "allowedExts": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/invitations/{id}/media/pre-wedding-video",
+      "contentType": "multipart/form-data",
+      "maxBytes": 52428800,
+      "allowedMimes": [
+        "video/mp4",
+        "video/webm"
+      ],
+      "allowedExts": [
+        ".mp4",
+        ".webm"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/invitations/{id}/media",
+      "response": "MediaListResponse"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/invitations/{id}/media/{mediaId}/replace",
+      "contentType": "multipart/form-data",
+      "response": "MediaResponse"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/invitations/{id}/media/{mediaId}",
+      "response": "ApiResponse<Void>"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/invitations/{slug}/media",
+      "response": "MediaListResponse"
+    }
+  ]
+}

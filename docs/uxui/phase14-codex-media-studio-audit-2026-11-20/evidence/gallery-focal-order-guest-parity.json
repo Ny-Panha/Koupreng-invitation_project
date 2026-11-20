@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "focalControls": {
+    "x": [
+      0,
+      100
+    ],
+    "y": [
+      0,
+      100
+    ],
+    "fit": [
+      "cover",
+      "contain"
+    ]
+  },
+  "styleMapping": "focalPointStyle(focalPoint, fit) -> { objectPosition: `${x}% ${y}%`, objectFit }",
+  "guestParity": "Public guest view renders confirmed media assets according to published invitation contentJson/designJson."
+}

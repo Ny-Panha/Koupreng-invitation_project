@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "batchChunkSize": 5,
+  "chunkingFunction": "chunkBatch(items, 5)",
+  "lifecycleStages": [
+    "selected",
+    "validated",
+    "queued",
+    "transferring",
+    "finalizing",
+    "server_confirmed",
+    "preview_verified",
+    "failed",
+    "cancelled",
+    "offline",
+    "local_draft"
+  ],
+  "retryPolicy": "Only failed items remain in preflightFiles; confirmed files revoked and removed; retry dispatches next batch without re-uploading confirmed items."
+}

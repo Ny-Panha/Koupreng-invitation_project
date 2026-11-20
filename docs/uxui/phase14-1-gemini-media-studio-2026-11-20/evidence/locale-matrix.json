@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "totalLocalizedKeys": 38,
+  "languages": [
+    "en",
+    "km"
+  ],
+  "fontPairing": {
+    "khmerDisplay": "Moul / Kantumruy Pro",
+    "khmerBody": "Kantumruy Pro / Battambang",
+    "latinDisplay": "Cinzel / Playfair Display",
+    "latinBody": "Plus Jakarta Sans / Inter"
+  },
+  "sampleKeys": [
+    {
+      "key": "mediaLibraryTitle",
+      "en": "Media Atelier",
+      "km": "\u179f\u17d2\u1791\u17bc\u178c\u17b8\u1799\u17c4\u179a\u17bc\u1794\u1797\u17b6\u1796 \u1793\u17b7\u1784\u1798\u17c1\u178c\u17c0"
+    },
+    {
+      "key": "preflightTitle",
+      "en": "Staged for Upload",
+      "km": "\u178f\u17d2\u179a\u17c0\u1798\u1794\u1789\u17d2\u1785\u17bc\u179b"
+    },
+    {
+      "key": "focalPointTitle",
+      "en": "Focal Point & Framing",
+      "km": "\u1785\u17c6\u178e\u17bb\u1785\u1780\u178e\u17d2\u178a\u17b6\u179b \u1793\u17b7\u1784\u1794\u17d2\u179b\u1784\u17cb\u179a\u17bc\u1794"
+    },
+    {
+      "key": "reorderBanner",
+      "en": "Local preview order. Save design in Studio to persist across guest views.",
+      "km": "\u179b\u17c6\u178a\u17b6\u1794\u17cb\u1794\u1784\u17d2\u17a0\u17b6\u1789\u1794\u178e\u17d2\u178a\u17c4\u17c7\u17a2\u17b6\u179f\u1793\u17d2\u1793\u17d4 \u179f\u17bc\u1798\u179a\u1780\u17d2\u179f\u17b6\u1791\u17bb\u1780\u1780\u17d2\u1793\u17bb\u1784\u179f\u17d2\u1791\u17bc\u178c\u17b8\u1799\u17c4\u178a\u17be\u1798\u17d2\u1794\u17b8\u17a2\u1793\u17bb\u179c\u178f\u17d2\u178f\u1787\u17b6\u1795\u17d2\u179b\u17bc\u179c\u1780\u17b6\u179a\u17d4"
+    }
+  ],
+  "verifiedBy": [
+    "N14-44",
+    "N14-45"
+  ]
+}

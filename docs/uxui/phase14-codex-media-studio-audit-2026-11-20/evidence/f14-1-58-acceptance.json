@@ -1,0 +1,362 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "totalGates": 58,
+  "distribution": {
+    "VERIFIED \u2014 LOCAL": 51,
+    "PARTIALLY COMPLETE": 4,
+    "REVIEW REQUIRED": 2,
+    "BLOCKED \u2014 EXTERNAL": 1,
+    "NOT APPLICABLE": 0,
+    "FAILED": 0
+  },
+  "gates": [
+    {
+      "id": "F14.1-01",
+      "objective": "Git/local/remote baseline and dirty inventory",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "git status matches origin/main; 4 tracked modified, 0 staged"
+    },
+    {
+      "id": "F14.1-02",
+      "objective": "Phase 13 P1 security/data-loss preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Studio authority, RSVP privacy, and draft JSON roundtrip verified"
+    },
+    {
+      "id": "F14.1-03",
+      "objective": "CI failures and pending jobs classified",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Live GitHub Actions run 44684755034 classified across all 11 jobs"
+    },
+    {
+      "id": "F14.1-04",
+      "objective": "Phase 14 source/consumer/API inventory",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Authoritative /api/v1/invitations/{id}/media endpoints verified"
+    },
+    {
+      "id": "F14.1-05",
+      "objective": "No unauthorized backend/Flyway/payment mutation",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "0 backend, 0 migration, 0 payment files touched"
+    },
+    {
+      "id": "F14.1-06",
+      "objective": "Original KoupReng Media Atelier design",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Forest ink, champagne gold, warm ivory palette verified"
+    },
+    {
+      "id": "F14.1-07",
+      "objective": "Navbar/sidebar/Studio integration",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Workspace header, breadcrumbs, and Studio links verified"
+    },
+    {
+      "id": "F14.1-08",
+      "objective": "Ten UI references individually reviewed",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Canonical 10 reference libraries reviewed; zero unapproved vendor code"
+    },
+    {
+      "id": "F14.1-09",
+      "objective": "Executed UI UX Pro Max searches",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Real search.py executions logged across ux, style, and a11y domains"
+    },
+    {
+      "id": "F14.1-10",
+      "objective": "StyleSeed status represented honestly (SS000)",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Honest SS000 declaration; no fabricated registry lock"
+    },
+    {
+      "id": "F14.1-11",
+      "objective": "Applicable UX laws mapped to controls",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Fitts, Hick, Jakob, Miller, Tesler, Doherty laws mapped to UI controls"
+    },
+    {
+      "id": "F14.1-12",
+      "objective": "Owner media workspace routes preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "/app/events/:eventId/media accessible and functional"
+    },
+    {
+      "id": "F14.1-13",
+      "objective": "Owner vs collaborator permissions",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-26 passes; MANAGE_INVITATION required for write operations"
+    },
+    {
+      "id": "F14.1-14",
+      "objective": "Media categories and state hierarchy",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Cover, Gallery, Video, Music tabs and multi-state feedback functional"
+    },
+    {
+      "id": "F14.1-15",
+      "objective": "Native picker and dropzone usability",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Accessible native file picker with optional drag-and-drop"
+    },
+    {
+      "id": "F14.1-16",
+      "objective": "Per-kind MIME, size, and signature rules",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "5MB images, 50MB video, 15MB music; mp3/wav/ogg enforced"
+    },
+    {
+      "id": "F14.1-17",
+      "objective": "Five-file batch chunking",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "chunkBatch(items, 5) strictly enforces backend 5-file cap"
+    },
+    {
+      "id": "F14.1-18",
+      "objective": "Retained authored records > 10 preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-06 passes; existing galleries with >10 photos preserved"
+    },
+    {
+      "id": "F14.1-19",
+      "objective": "Preflight staging tray and item cancel",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Staging tray with per-item remove, format tag, and error display"
+    },
+    {
+      "id": "F14.1-20",
+      "objective": "Truthful 6-stage upload lifecycle",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Real Axios progress; 100% shows finalizing until server confirms"
+    },
+    {
+      "id": "F14.1-21",
+      "objective": "Partial success and retry without duplicates",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-09 passes; confirmed files evicted, only failed retried"
+    },
+    {
+      "id": "F14.1-22",
+      "objective": "Authority snapshotting at async awaits",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "authorityRef protects state across route/account transitions"
+    },
+    {
+      "id": "F14.1-23",
+      "objective": "Aborts and late responses handled",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-23 passes; unmount aborts cleanly; stale responses dropped"
+    },
+    {
+      "id": "F14.1-24",
+      "objective": "401/403/500/offline handled truthfully",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-21, N14-24, N14-25 pass; actionable error banners rendered"
+    },
+    {
+      "id": "F14.1-25",
+      "objective": "Local blob vs remote saved state",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Local drafts display statusLocalDraft; confirmed display statusConfirmed"
+    },
+    {
+      "id": "F14.1-26",
+      "objective": "Legacy ownerless media access guarded",
+      "codexStatus": "PARTIALLY COMPLETE",
+      "evidence": "Handled via weddingStorage; cross-session migration is cross-phase boundary"
+    },
+    {
+      "id": "F14.1-27",
+      "objective": "Object URL cleanup and storage safety",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-27 passes; objectUrls Set revoked on eviction and unmount"
+    },
+    {
+      "id": "F14.1-28",
+      "objective": "Cover/background template defaults",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "resolveEventCover distinguishes owner upload vs template artwork"
+    },
+    {
+      "id": "F14.1-29",
+      "objective": "Invite front/back and map images preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "invitationMediaReferences deep traversal preserves all image fields"
+    },
+    {
+      "id": "F14.1-30",
+      "objective": "Gallery deletion with in-use warning",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-30 passes; delete confirmation warns if asset in active design"
+    },
+    {
+      "id": "F14.1-31",
+      "objective": "Keyboard/touch photo reordering",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-31/N14-32 pass; Move earlier/later buttons accessible"
+    },
+    {
+      "id": "F14.1-32",
+      "objective": "Reorder persistence never falsely certified",
+      "codexStatus": "PARTIALLY COMPLETE",
+      "evidence": "Local preview only; banner warns user to save in Studio; no backend reorder API"
+    },
+    {
+      "id": "F14.1-33",
+      "objective": "Accessible 2D focal point inspector",
+      "codexStatus": "PARTIALLY COMPLETE",
+      "evidence": "Inspector and CSS object-position functional; database persistence pending backend API"
+    },
+    {
+      "id": "F14.1-34",
+      "objective": "HEIC format rejected with advice",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-04/N14-34 pass; HEIC rejected pre-network with conversion advice"
+    },
+    {
+      "id": "F14.1-35",
+      "objective": "EXIF orientation and metadata truth",
+      "codexStatus": "PARTIALLY COMPLETE",
+      "evidence": "Browser handles orientation; server GPS stripping is backend responsibility"
+    },
+    {
+      "id": "F14.1-36",
+      "objective": "In-use references prevent orphaned media",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-36 passes; in-use badges indicate active template references"
+    },
+    {
+      "id": "F14.1-37",
+      "objective": "Video/audio entitlement tiers",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-37 passes; upgrade modal presented for free tier video upload"
+    },
+    {
+      "id": "F14.1-38",
+      "objective": "Pre-wedding video privacy protection",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-38 passes; private events require authenticated token"
+    },
+    {
+      "id": "F14.1-39",
+      "objective": "Ticket imagery handoff preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-39 passes; links directly to Ticket Designer"
+    },
+    {
+      "id": "F14.1-40",
+      "objective": "Ten renderer families preserved",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-40 passes; all 10 templates mount media safely"
+    },
+    {
+      "id": "F14.1-41",
+      "objective": "Guest view mutation endpoints blocked",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-41 passes; guest routes are read-only; RSVP privacy intact"
+    },
+    {
+      "id": "F14.1-42",
+      "objective": "Draft restore with unknown JSON",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-42 passes; safe JSON.parse roundtrip preserves unmodeled fields"
+    },
+    {
+      "id": "F14.1-43",
+      "objective": "Stable retry queue without duplicates",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-09/N14-11 pass; retry preserves stable payload"
+    },
+    {
+      "id": "F14.1-44",
+      "objective": "Bilingual labels and text expansion",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "38 EN/KM message pairs verified with zero missing keys"
+    },
+    {
+      "id": "F14.1-45",
+      "objective": "Khmer native cultural approval",
+      "codexStatus": "REVIEW REQUIRED",
+      "evidence": "Translations verified locally; native Cambodian signoff required"
+    },
+    {
+      "id": "F14.1-46",
+      "objective": "Keyboard navigation and focus trapping",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-46 passes; focus trapped in focal modal, restored to opener"
+    },
+    {
+      "id": "F14.1-47",
+      "objective": "Axe contrast and >=44px touch targets",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "N14-47 passes; 4.5:1 text contrast and 44px touch targets met"
+    },
+    {
+      "id": "F14.1-48",
+      "objective": "Physical screen reader device certification",
+      "codexStatus": "BLOCKED \u2014 EXTERNAL",
+      "evidence": "Requires physical iOS VoiceOver and Android TalkBack hardware testing"
+    },
+    {
+      "id": "F14.1-49",
+      "objective": "Responsive 320px to 1920px + landscape",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Playwright verified across 6 viewports without horizontal overflow"
+    },
+    {
+      "id": "F14.1-50",
+      "objective": "Reduced motion and hover accessibility",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "prefers-reduced-motion respected; no audio/video autoplay"
+    },
+    {
+      "id": "F14.1-51",
+      "objective": "Memory, bundle, and upload feedback",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "0 new deps; +3.8kB gzip user bundle; object URLs revoked"
+    },
+    {
+      "id": "F14.1-52",
+      "objective": "Commercial asset rights review",
+      "codexStatus": "REVIEW REQUIRED",
+      "evidence": "Synthetic test fixtures cleared; client media requires commercial review"
+    },
+    {
+      "id": "F14.1-53",
+      "objective": "Full regression suites clean pass",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Vitest user (1889 pass), admin (202 pass), 0 lint errors, 2 builds passed"
+    },
+    {
+      "id": "F14.1-54",
+      "objective": "Prior phase regression retention",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Phase 02, 10, 12, 13 regression suites pass cleanly"
+    },
+    {
+      "id": "F14.1-55",
+      "objective": "All 48 N14 negative tests pass",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "48/48 negative scenarios passed in Vitest"
+    },
+    {
+      "id": "F14.1-56",
+      "objective": "Full attribution and evidence hashes",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "21 JSON files, 32 reports, visual hashes verified"
+    },
+    {
+      "id": "F14.1-57",
+      "objective": "Historical 57-gate ledger reconciled",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "All 57 authoritative historical rows itemized and preserved"
+    },
+    {
+      "id": "F14.1-58",
+      "objective": "Gemini-only uncommitted Codex 14 handoff",
+      "codexStatus": "VERIFIED \u2014 LOCAL",
+      "evidence": "Independently audited, repaired, and confirmed by Codex"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "toolCapabilities": {
+    "focalX": "0% to 100% (default 50%)",
+    "focalY": "0% to 100% (default 50%)",
+    "objectFit": "cover | contain",
+    "interactiveCrosshair": "2D click/drag target with real-time preview",
+    "keyboardSliders": "Accessible range sliders for X and Y with step 1%",
+    "nonDestructive": "Original image on server is never mutated; focal styles applied via CSS object-position"
+  },
+  "helperFunction": "focalPointStyle(focalX, focalY, fit)",
+  "verifiedBy": [
+    "N14-33",
+    "Playwright test 15"
+  ]
+}

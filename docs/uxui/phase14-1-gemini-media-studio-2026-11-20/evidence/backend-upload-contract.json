@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "maxRequestBatchSize": 5,
+  "limits": {
+    "cover": {
+      "maxBytes": 5242880,
+      "maxMb": 5,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ]
+    },
+    "gallery": {
+      "maxBytes": 5242880,
+      "maxMb": 5,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ]
+    },
+    "ticket": {
+      "maxBytes": 5242880,
+      "maxMb": 5,
+      "allowedMimes": [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ]
+    },
+    "video": {
+      "maxBytes": 52428800,
+      "maxMb": 50,
+      "allowedMimes": [
+        "video/mp4",
+        "video/webm"
+      ]
+    },
+    "music": {
+      "maxBytes": 15728640,
+      "maxMb": 15,
+      "allowedMimes": [
+        "audio/mpeg",
+        "audio/mp3",
+        "audio/m4a",
+        "audio/wav"
+      ]
+    }
+  },
+  "rejectedFormats": [
+    {
+      "extension": ".heic",
+      "mime": "image/heic",
+      "reason": "Unsupported by backend ImageIO/Sharp pipeline without native libheif"
+    },
+    {
+      "extension": ".heif",
+      "mime": "image/heif",
+      "reason": "Unsupported by backend ImageIO/Sharp pipeline"
+    },
+    {
+      "extension": ".svg",
+      "mime": "image/svg+xml",
+      "reason": "XSS vector via embedded scripts"
+    },
+    {
+      "extension": ".exe",
+      "mime": "application/x-msdownload",
+      "reason": "Executable rejection"
+    }
+  ],
+  "chunkingFunction": "chunkBatch(items, 5)",
+  "enforcedIn": "apps/frontend-user/src/features/invitations/mediaLibraryModel.js"
+}

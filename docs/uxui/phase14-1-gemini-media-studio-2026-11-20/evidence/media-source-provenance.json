@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "assetSources": [
+    {
+      "type": "user_uploaded",
+      "storage": "AWS S3 / MinIO via backend MediaService",
+      "authority": "User event owner"
+    },
+    {
+      "type": "template_asset",
+      "storage": "/templates/* static bundle",
+      "authority": "KoupReng platform curated"
+    },
+    {
+      "type": "audio_library",
+      "storage": "/audio/* static bundle",
+      "authority": "Licensed traditional Khmer recordings"
+    },
+    {
+      "type": "generated_ticket",
+      "storage": "Transient canvas / PDF pass generator",
+      "authority": "Event guest access"
+    }
+  ]
+}

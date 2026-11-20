@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "routes": [
+    {
+      "path": "/app/events/:eventId/media",
+      "component": "InvitationMediaManager",
+      "allowedRoles": [
+        "OWNER",
+        "COLLABORATOR_EDITOR"
+      ],
+      "deniedRoles": [
+        "GUEST",
+        "PUBLIC",
+        "ANONYMOUS"
+      ],
+      "guard": "RequireAuth + EventOwnerOrEditorGuard"
+    },
+    {
+      "path": "/app/events/:eventId/studio",
+      "component": "InvitationDesignStudio",
+      "allowedRoles": [
+        "OWNER",
+        "COLLABORATOR_EDITOR"
+      ],
+      "deniedRoles": [
+        "GUEST",
+        "PUBLIC"
+      ],
+      "guard": "RequireAuth + EventOwnerOrEditorGuard"
+    },
+    {
+      "path": "/invitations/:slug",
+      "component": "GuestInvitationView",
+      "allowedRoles": [
+        "PUBLIC",
+        "GUEST",
+        "OWNER"
+      ],
+      "deniedRoles": [],
+      "guard": "PublicGuestRendererGuard"
+    }
+  ]
+}

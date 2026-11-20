@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "schemaConsumers": {
+    "coverImage": {
+      "type": "string (URL)",
+      "consumers": [
+        "InvitationMediaManager",
+        "InvitationDesignStudio",
+        "GuestRenderer",
+        "TicketRenderer"
+      ],
+      "category": "cover"
+    },
+    "gallery": {
+      "type": "array of strings/objects",
+      "consumers": [
+        "InvitationMediaManager",
+        "InvitationDesignStudio",
+        "GuestRenderer"
+      ],
+      "category": "gallery",
+      "limits": "Studio slots 10, backend retains all authored items"
+    },
+    "backgroundMusic": {
+      "type": "string (URL) or object { url, title, autoplay }",
+      "consumers": [
+        "InvitationMediaManager",
+        "InvitationDesignStudio",
+        "AudioPlayer"
+      ],
+      "category": "music"
+    },
+    "preWeddingVideo": {
+      "type": "string (URL) or object { url, title, poster }",
+      "consumers": [
+        "InvitationMediaManager",
+        "InvitationDesignStudio",
+        "VideoPlayer"
+      ],
+      "category": "video"
+    },
+    "frontCover": {
+      "type": "string (URL)",
+      "consumers": [
+        "InvitationDesignStudio",
+        "RendererCoverPage"
+      ],
+      "category": "cover"
+    },
+    "backCover": {
+      "type": "string (URL)",
+      "consumers": [
+        "InvitationDesignStudio",
+        "RendererBackPage"
+      ],
+      "category": "cover"
+    },
+    "mapImage": {
+      "type": "string (URL)",
+      "consumers": [
+        "InvitationDesignStudio",
+        "VenueLocationBlock"
+      ],
+      "category": "cover"
+    },
+    "ticketImage": {
+      "type": "string (URL)",
+      "consumers": [
+        "TicketPreview",
+        "PassPdfGenerator"
+      ],
+      "category": "ticket"
+    }
+  }
+}

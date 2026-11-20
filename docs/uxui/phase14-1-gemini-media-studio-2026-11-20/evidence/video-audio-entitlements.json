@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "entitlementRules": {
+    "video": {
+      "tierRequired": "PREMIUM",
+      "freeTierFallback": "Displays upgrade modal or informative lock card"
+    },
+    "music": {
+      "tierRequired": "STANDARD_OR_PREMIUM",
+      "freeTierFallback": "Default instrumental blessings available"
+    },
+    "galleryCount": {
+      "freeLimit": 5,
+      "premiumLimit": "Unlimited server storage, 10 active layout slots"
+    }
+  },
+  "verifiedBy": [
+    "N14-37",
+    "N14-38"
+  ]
+}

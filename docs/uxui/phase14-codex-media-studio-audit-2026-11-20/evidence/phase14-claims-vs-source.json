@@ -1,0 +1,89 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "probes": [
+    {
+      "id": "C14-INV-01",
+      "geminiClaim": "Media upload is POST /api/events/{id}/media, also referenced in batch/order docs.",
+      "sourceTruth": "MediaController.java maps /api/v1/invitations/{invitationId}/media/cover, /gallery, /video, /music, /ticket-image, /pre-wedding-video; frontend mediaApi.js targets /v1/invitations/...",
+      "discrepancy": "Documentation hallucinated /api/events/{id}/media endpoints which do not exist.",
+      "codexAction": "Documented exact backend contract; rejected invented endpoints; noted documentation defect D14-04."
+    },
+    {
+      "id": "C14-INV-02",
+      "geminiClaim": "Audio allows audio/m4a in backend-upload-contract.json.",
+      "sourceTruth": "MediaService.java only allowlists audio/mpeg, audio/mp3, audio/wav, audio/ogg and .mp3, .wav, .ogg. No .m4a support.",
+      "discrepancy": "Gemini evidence JSON erroneously listed audio/m4a in allowed MIME types.",
+      "codexAction": "Corrected backend contract; mediaLibraryModel.js strictly enforces mp3, wav, ogg. Defect D14-05."
+    },
+    {
+      "id": "C14-INV-03",
+      "geminiClaim": "Local gallery reorder is persisted through PUT /api/events/{eventId}/draft in InvitationDesignStudio.jsx.",
+      "sourceTruth": "InvitationDesignStudio.jsx does not exist; backend has no reorder endpoint; reordering in media manager is local preview only.",
+      "discrepancy": "Falsely asserted persistence in non-existent component.",
+      "codexAction": "UI displays explicit banner 'Local preview order. Save design in Studio to persist across guest views'. Gate F14.1-32 classified as PARTIALLY COMPLETE."
+    },
+    {
+      "id": "C14-INV-04",
+      "geminiClaim": "53/58 locally verified including EXIF, rights, mobile, media persistence.",
+      "sourceTruth": "Independent verification shows reorder persistence (F14.1-32), focal persistence (F14.1-33), and EXIF stripping (F14.1-35) cannot be claimed as fully verified locally.",
+      "discrepancy": "Overclaimed verification of unpersisted backend features.",
+      "codexAction": "Regraded 58 gates independently: 50 VERIFIED, 4 PARTIAL, 3 REVIEW, 1 BLOCKED."
+    },
+    {
+      "id": "C14-INV-05",
+      "geminiClaim": "F14.1-26 legacy ownerless media migration is N/A with no risk.",
+      "sourceTruth": "Local draft IDs (wed-*) load via weddingStorage.js; cross-session ownerless draft migration remains an open boundary.",
+      "discrepancy": "Improper N/A classification without evidence.",
+      "codexAction": "Regraded F14.1-26 as PARTIALLY COMPLETE / REVIEW REQUIRED with explicit boundary notes."
+    },
+    {
+      "id": "C14-INV-06",
+      "geminiClaim": "Full 57 historical entries retained intact.",
+      "sourceTruth": "Gemini historical-57-plus-new-ledgers.json provided phase summaries rather than 57 itemized rows.",
+      "discrepancy": "Historical ledger flattened.",
+      "codexAction": "Restored all 57 itemized historical rows from authoritative Phase 13 ledger. Defect D14-06."
+    },
+    {
+      "id": "C14-INV-07",
+      "geminiClaim": "32 JSON/31 Markdown/22 PNG fully valid links.",
+      "sourceTruth": "06-ui-shell-media-library-architecture.md line 19 contained relative path ../../apps/... resolving to docs/apps/... (non-existent).",
+      "discrepancy": "Broken relative link.",
+      "codexAction": "Repaired to ../../../apps/frontend-user/src/features/invitations/InvitationMediaManager.jsx. Defect D14-03."
+    },
+    {
+      "id": "C14-INV-08",
+      "geminiClaim": "Real cancellation, true codec signatures, EXIF handling and no memory leaks.",
+      "sourceTruth": "Axios request cancellation supported; object URLs tracked and revoked; codec validation checks extensions and MIME pairs.",
+      "discrepancy": "Server-side EXIF stripping and raw codec byte decoding are backend/storage responsibilities.",
+      "codexAction": "Accurately scoped client-side vs backend-side validation."
+    },
+    {
+      "id": "C14-INV-09",
+      "geminiClaim": "authorityRef has eventId, userId, generation sufficient to protect writes.",
+      "sourceTruth": "authorityRef prevents late async responses from mutating state after event or account switches.",
+      "discrepancy": "Pre-dispatch account switch requires immediate generation bump and state clearing.",
+      "codexAction": "Verified authorityRef update and selection clearing in useEffect."
+    },
+    {
+      "id": "C14-INV-10",
+      "geminiClaim": "Batch 2 retry always avoids duplicates.",
+      "sourceTruth": "Successful batches are evicted from preflight queue and their object URLs revoked; only failed items remain in preflight queue.",
+      "discrepancy": "Ambiguous server commits require refresh before retry.",
+      "codexAction": "Verified preflightFiles filtering and refresh() synchronization."
+    },
+    {
+      "id": "C14-INV-11",
+      "geminiClaim": "10 Studio photo slots and five-file uploads fully reconciled.",
+      "sourceTruth": "5 is per-request upload cap (app.security.upload.max-files); max-gallery-files-per-invitation defaults to 0 (unlimited); UI slot notice informs user.",
+      "discrepancy": "Conflation of UI slot recommendations and server upload chunk limits.",
+      "codexAction": "Verified chunkBatch(items, 5) and retained authored photo preservation in N14-06."
+    },
+    {
+      "id": "C14-INV-12",
+      "geminiClaim": "UI has non-destructive focal/crop and server/guest persistence.",
+      "sourceTruth": "Focal inspector applies CSS objectPosition and objectFit locally; notice explicitly warns user to save in Studio.",
+      "discrepancy": "Cannot certify durable database persistence without backend schema.",
+      "codexAction": "Truthful UI notification; gate F14.1-33 regraded to PARTIALLY COMPLETE."
+    }
+  ]
+}

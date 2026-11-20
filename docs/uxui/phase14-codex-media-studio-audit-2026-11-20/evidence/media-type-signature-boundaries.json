@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "cover": {
+    "maxBytes": 5242880,
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "mimes": [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ]
+  },
+  "gallery": {
+    "maxBytes": 5242880,
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "mimes": [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ]
+  },
+  "ticket": {
+    "maxBytes": 5242880,
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "mimes": [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ]
+  },
+  "video": {
+    "maxBytes": 52428800,
+    "extensions": [
+      "mp4",
+      "webm"
+    ],
+    "mimes": [
+      "video/mp4",
+      "video/webm"
+    ]
+  },
+  "music": {
+    "maxBytes": 15728640,
+    "extensions": [
+      "mp3",
+      "wav",
+      "ogg"
+    ],
+    "mimes": [
+      "audio/mpeg",
+      "audio/mp3",
+      "audio/wav",
+      "audio/ogg"
+    ]
+  },
+  "blockedExtensions": [
+    "exe",
+    "bat",
+    "cmd",
+    "com",
+    "js",
+    "jar",
+    "msi",
+    "ps1",
+    "scr",
+    "sh",
+    "heic",
+    "heif",
+    "svg"
+  ]
+}

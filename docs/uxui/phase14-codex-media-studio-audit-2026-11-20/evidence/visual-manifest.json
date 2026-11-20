@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "totalVisuals": 22,
+  "manifest": [
+    {
+      "file": "01-cover-1440-en-light.png",
+      "path": "visuals/01-cover-1440-en-light.png",
+      "sha256": "4ff767ee018f12f97140a4727dbda2b67b08eb2ab99550899243eaa8bd9add3e"
+    },
+    {
+      "file": "02-cover-1440-en-dark.png",
+      "path": "visuals/02-cover-1440-en-dark.png",
+      "sha256": "98524808a13b3977905c4c40a0559268e58ba0ce38f04ec41cdd3a5e3ced7d8d"
+    },
+    {
+      "file": "03-cover-1440-km-light.png",
+      "path": "visuals/03-cover-1440-km-light.png",
+      "sha256": "137b2fcc8f3dc7dae5872d336c5c7dd505e41fb760c6b4c88996d9e891f23d4a"
+    },
+    {
+      "file": "04-cover-1920-en-light.png",
+      "path": "visuals/04-cover-1920-en-light.png",
+      "sha256": "0e958655fab2b21f838f0ecbd27e3439968a130e2480efdce5cb5113008ac919"
+    },
+    {
+      "file": "05-media-393-en-light.png",
+      "path": "visuals/05-media-393-en-light.png",
+      "sha256": "710bb840d1ccedc1dfa3c3807822318306280a8dd2604226a91494426e00be5b"
+    },
+    {
+      "file": "06-media-393-km-dark.png",
+      "path": "visuals/06-media-393-km-dark.png",
+      "sha256": "7e18ac15a675f7f3d0ea001b9cfded93bb70ae210d11f3d1e27249a19837936a"
+    },
+    {
+      "file": "07-media-320-en-light.png",
+      "path": "visuals/07-media-320-en-light.png",
+      "sha256": "8ab6014fe1c718c8679f4202be3e314da8731de3289ba471883caa20aa133d8d"
+    },
+    {
+      "file": "08-media-320-km-light.png",
+      "path": "visuals/08-media-320-km-light.png",
+      "sha256": "30efe6ddd6daa1eb321fc4d6ff436564315805a80d33a7321ca5eb35f3868d26"
+    },
+    {
+      "file": "09-media-768-en-tablet.png",
+      "path": "visuals/09-media-768-en-tablet.png",
+      "sha256": "02115bd4de1b87ba98eeaf06bfbd2e95ec2ef803d5e0523b8dd181f6aefe7297"
+    },
+    {
+      "file": "10-media-844x390-landscape.png",
+      "path": "visuals/10-media-844x390-landscape.png",
+      "sha256": "bf3a2c105025010bd0f6b4738d9874c564ca1f6704f0a2c7edbe9a608c07b708"
+    },
+    {
+      "file": "11-gallery-8-assets-desktop.png",
+      "path": "visuals/11-gallery-8-assets-desktop.png",
+      "sha256": "4ce898494ee33a6a4996a754f8478e0c5dec7e0c595061f1e682336b487b6a11"
+    },
+    {
+      "file": "12-video-preview.png",
+      "path": "visuals/12-video-preview.png",
+      "sha256": "cdd153529ab46612031436bf253a3a0fc983efb0d48746cd3d9f14a041f15c7c"
+    },
+    {
+      "file": "13-audio-preview.png",
+      "path": "visuals/13-audio-preview.png",
+      "sha256": "0251f5a10923adcdf4858cfdc8f2e3bb2166598b811703fbb6d6ef13e81665da"
+    },
+    {
+      "file": "14-gallery-empty-state.png",
+      "path": "visuals/14-gallery-empty-state.png",
+      "sha256": "6df17a064164913581bf078b3d812f826940dd365433f22d4a26f52009226fea"
+    },
+    {
+      "file": "15-focal-inspector-open.png",
+      "path": "visuals/15-focal-inspector-open.png",
+      "sha256": "238b372781ddd7ac3341444a2a2349aa815e61f7dc75c1d617e6f72105d50e82"
+    },
+    {
+      "file": "16-gallery-reorder-banner.png",
+      "path": "visuals/16-gallery-reorder-banner.png",
+      "sha256": "654f862d8d10ff12496d1dd09757cdef847bf16e8454c5660545f64f683cbc66"
+    },
+    {
+      "file": "17-preflight-staging-tray.png",
+      "path": "visuals/17-preflight-staging-tray.png",
+      "sha256": "a622fc5b6784c529f7f88313ae9c46d6820671eb39afe42383761c9c6d2c5501"
+    },
+    {
+      "file": "18-in-use-reference-tag.png",
+      "path": "visuals/18-in-use-reference-tag.png",
+      "sha256": "98524808a13b3977905c4c40a0559268e58ba0ce38f04ec41cdd3a5e3ced7d8d"
+    },
+    {
+      "file": "19-template-artwork-card.png",
+      "path": "visuals/19-template-artwork-card.png",
+      "sha256": "6c2b6a389b2ad2cdffc570dd7b8f06122b7e201bc5f57cf320d07691a069b8a8"
+    },
+    {
+      "file": "20-error-notice-retry.png",
+      "path": "visuals/20-error-notice-retry.png",
+      "sha256": "156cf58658c05f11a3b138af6a769a4979c720494bf1db173262c1fe025d2949"
+    },
+    {
+      "file": "21-forced-colors-high-contrast.png",
+      "path": "visuals/21-forced-colors-high-contrast.png",
+      "sha256": "fda5369fa6646031e6880748dab39d0e7cf3dab5bc11ffa7210d8c6e1b98b1e4"
+    },
+    {
+      "file": "22-reduced-motion-mode.png",
+      "path": "visuals/22-reduced-motion-mode.png",
+      "sha256": "fcb8d7d9fc7d2c9add8bb48bdcba89e8b4131654047962d070e3f4b5e1868bcf"
+    }
+  ]
+}

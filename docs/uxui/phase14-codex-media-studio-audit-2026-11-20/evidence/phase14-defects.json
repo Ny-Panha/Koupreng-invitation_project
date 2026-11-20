@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "defects": [
+    {
+      "id": "D14-01",
+      "severity": "P2",
+      "title": "Trailing EOF blank line in mediaLibraryModel.js",
+      "reproduction": "git diff --check failed with exit code 1",
+      "repair": "Removed extraneous newline at line 133",
+      "verified": true
+    },
+    {
+      "id": "D14-02",
+      "severity": "P1",
+      "title": "Local draft asset falsely displayed statusConfirmed (Saved to server)",
+      "reproduction": "InvitationMediaManager.jsx line 1096 rendered statusConfirmed for blob/draft assets",
+      "repair": "Added isLocalDraft check rendering statusLocalDraft for local/blob files",
+      "verified": true
+    },
+    {
+      "id": "D14-03",
+      "severity": "P2",
+      "title": "Broken relative source link in 06-ui-shell-media-library-architecture.md",
+      "reproduction": "Link ../../apps/frontend-user/... resolved to docs/apps/...",
+      "repair": "Fixed relative path to ../../../apps/frontend-user/...",
+      "verified": true
+    },
+    {
+      "id": "D14-04",
+      "severity": "P2",
+      "title": "Hallucinated /api/events/{id}/media in documentation",
+      "reproduction": "04-media-source-route-permission-map.md and 08-batch-upload-and-real-progress.md cited /api/events endpoints",
+      "repair": "Documented authoritative /api/v1/invitations/{id}/media endpoints",
+      "verified": true
+    },
+    {
+      "id": "D14-05",
+      "severity": "P1",
+      "title": "Incorrect audio/m4a MIME type in backend upload contract evidence",
+      "reproduction": "backend-upload-contract.json listed audio/m4a which backend MediaService.java rejects",
+      "repair": "Enforced backend-accurate mp3, wav, ogg allowlist in actual contract evidence",
+      "verified": true
+    },
+    {
+      "id": "D14-06",
+      "severity": "P2",
+      "title": "Historical 57-gate ledger collapsed into phase summaries",
+      "reproduction": "historical-57-plus-new-ledgers.json omitted itemized historical IDs",
+      "repair": "Restored full 57 itemized entries from Phase 13 authoritative ledger",
+      "verified": true
+    }
+  ]
+}

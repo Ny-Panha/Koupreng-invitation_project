@@ -1,0 +1,295 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "totalScenarios": 48,
+  "allPassed": true,
+  "scenarios": [
+    {
+      "id": "N14-01",
+      "description": "PNG file exactly 5 MiB accepted; 5 MiB + 1 rejected",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-02",
+      "description": "Zero-byte image rejected with field-specific guidance",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-03",
+      "description": "Mismatched extension/MIME pair rejected",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-04",
+      "description": "SVG, executable, and HEIC files rejected before network send",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-05",
+      "description": "6-file selection chunked into batches of max 5",
+      "target": "chunkBatch",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-06",
+      "description": "Legacy gallery with >10 photos preserved without truncation",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-07",
+      "description": "Server gallery limit conflict preserves current gallery",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-08",
+      "description": "Mixed photo, cover, map images routed correctly",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-09",
+      "description": "Partial failure retries only failed items",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-10",
+      "description": "Upload progress at 100% displays finalizing, not premature complete",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-11",
+      "description": "Network timeout during upload shows per-file retry",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-12",
+      "description": "Double-click upload does not spawn duplicate requests",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-13",
+      "description": "Special characters and traversal syntax in filenames sanitized",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-14",
+      "description": "Deep folder drag-and-drop traverses files without crashing",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-15",
+      "description": "Corrupted or zero-byte file fails preflight before network send",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-16",
+      "description": "Audio upload with video extension rejected",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-17",
+      "description": "Video file exceeding 50 MiB rejected with size guidance",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-18",
+      "description": "Audio file exceeding 15 MiB rejected with size guidance",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-19",
+      "description": "Unsupported audio codec inside .mp3 wrapper rejected",
+      "target": "validateLibraryFile",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-20",
+      "description": "Cancel button during upload aborts network request immediately",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-21",
+      "description": "Server 500 error on upload displays actionable error banner",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-22",
+      "description": "Account switch during upload isolates uploads to active event",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-23",
+      "description": "Unmounting media component during upload does not leak memory",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-24",
+      "description": "401 Unauthorized during upload presents login prompt without data loss",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-25",
+      "description": "Offline state triggers offline notice and retry queue",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-26",
+      "description": "Unauthorized collaborator cannot delete or replace owner media",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-27",
+      "description": "Revocation of object URLs does not crash active image previews",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-28",
+      "description": "Switching browser tabs while upload in progress maintains state",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-29",
+      "description": "Replacing cover image updates thumbnail without breaking references",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-30",
+      "description": "Deleting gallery item in use displays reference warning dialog",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-31",
+      "description": "Reordering gallery first item earlier is cleanly disabled in UI",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-32",
+      "description": "Reordering gallery last item later is cleanly disabled in UI",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-33",
+      "description": "Focal point adjustment outside 0-100% clamped cleanly",
+      "target": "focalPointStyle",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-34",
+      "description": "HEIC image upload displays specific conversion advice modal",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-35",
+      "description": "EXIF GPS metadata disclosure note displayed when location present",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-36",
+      "description": "In-use media badge accurately reflects active invitation references",
+      "target": "invitationMediaReferences",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-37",
+      "description": "Free tier user attempting video upload sees premium upgrade modal",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-38",
+      "description": "Pre-wedding video privacy controls respected for private events",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-39",
+      "description": "Ticket preview image remains accessible across ticket designer view",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-40",
+      "description": "Switching renderer templates maintains uploaded media associations",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-41",
+      "description": "Guest preview cannot trigger media deletion or replacement endpoints",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-42",
+      "description": "Draft restore with unknown media metadata parses safely without crash",
+      "target": "invitationMediaReferences",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-43",
+      "description": "Network disconnect during delete shows retry without orphaned UI state",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-44",
+      "description": "Khmer locale displays all media terms without text truncation",
+      "target": "workspaceMessages.js",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-45",
+      "description": "Khmer numbers in file sizes formatted accurately with Khmer numerals",
+      "target": "workspaceMessages.js",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-46",
+      "description": "Keyboard focus remains trapped in focal point modal while open",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-47",
+      "description": "High contrast mode ensures 4.5:1 ratio on all media control labels",
+      "target": "MediaLibrary.css",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    },
+    {
+      "id": "N14-48",
+      "description": "Screen reader receives polite live announcements on upload milestones",
+      "target": "InvitationMediaManager",
+      "codexStatus": "VERIFIED \u2014 LOCAL"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "architecture": {
+    "backendSupport": "No dedicated reorder endpoint exists in MediaController.java",
+    "frontendPresentation": "Keyboard (ArrowLeft/Right, Move Earlier/Later) and Touch reordering updates local preview array",
+    "transparencyBanner": "UI explicitly announces 'Local preview order. Save design in Studio to persist across guest views'",
+    "persistenceChannel": "Persisted through PUT /api/events/{eventId}/draft in InvitationDesignStudio.jsx"
+  },
+  "verifiedBy": [
+    "N14-31",
+    "N14-32",
+    "Playwright test 16"
+  ]
+}

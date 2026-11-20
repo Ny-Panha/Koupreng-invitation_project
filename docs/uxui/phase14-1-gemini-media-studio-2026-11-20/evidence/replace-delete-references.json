@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "inUseDetection": {
+    "matcher": "invitationMediaReferences(invitation, targetUrl)",
+    "fieldsInspected": [
+      "coverImage",
+      "gallery",
+      "backgroundMusic",
+      "preWeddingVideo",
+      "frontCover",
+      "backCover",
+      "mapImage"
+    ],
+    "uiAffordance": "Displays 'In Use' amber badge with specific field name tag",
+    "confirmationDialog": "Warns user when deleting or replacing an asset currently referenced by active invitation"
+  },
+  "verifiedBy": [
+    "N14-36",
+    "Playwright test 18"
+  ]
+}

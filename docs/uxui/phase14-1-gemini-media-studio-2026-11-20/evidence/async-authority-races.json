@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "authorityRefFields": [
+    "eventId",
+    "userId",
+    "generation"
+  ],
+  "raceScenariosTested": [
+    {
+      "scenario": "User switches events during upload",
+      "result": "Upload discarded safely without mutating wrong event",
+      "verifiedBy": "N14-22"
+    },
+    {
+      "scenario": "Component unmounts during network transfer",
+      "result": "Abort controller signals and state update suppressed",
+      "verifiedBy": "N14-23"
+    },
+    {
+      "scenario": "Auth token expires during batch 2",
+      "result": "401 captured, retry preserved with credentials required message",
+      "verifiedBy": "N14-24"
+    }
+  ]
+}

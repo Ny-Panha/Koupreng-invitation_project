@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "authorityRefStructure": {
+    "eventId": "string|number",
+    "userId": "string|number",
+    "generation": "number"
+  },
+  "scenarios": [
+    {
+      "trigger": "User switches event during upload",
+      "guard": "authSnapshot.eventId === authorityRef.current.eventId",
+      "result": "Late response dropped, UI state isolated, no cross-event bleeding"
+    },
+    {
+      "trigger": "User logs out / switches account during upload",
+      "guard": "authSnapshot.userId === authorityRef.current.userId",
+      "result": "Late response dropped, new credentials never dispatched to old event"
+    },
+    {
+      "trigger": "Rapid repeated uploads",
+      "guard": "generation increment on every action",
+      "result": "Only latest generation updates state; stale generation ignored"
+    },
+    {
+      "trigger": "Component unmounts during transfer",
+      "guard": "active boolean flag and cleanup",
+      "result": "No setState on unmounted component; object URLs revoked cleanly"
+    }
+  ]
+}

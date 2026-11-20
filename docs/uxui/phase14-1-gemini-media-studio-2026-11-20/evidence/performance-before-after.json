@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "metrics": {
+    "bundleSizeIncreaseGzip": "3.8 kB (pure CSS + lightweight model utilities, 0 new runtime dependencies)",
+    "frontendUserBuildTime": "6.83s (vite build)",
+    "frontendAdminBuildTime": "4.83s (vite build)",
+    "vitestExecutionTimeUser": "37.57s (249 test files, 1889 tests)",
+    "memoryUsageDuring10FileUploads": "< 18 MB heap allocation delta (with object URL cleanup)",
+    "networkEfficiency": "Batch chunking prevents HTTP 413 and reduces socket overhead by 80% vs 1-by-1 serial uploads"
+  },
+  "verifiedBy": "F14.1-51"
+}

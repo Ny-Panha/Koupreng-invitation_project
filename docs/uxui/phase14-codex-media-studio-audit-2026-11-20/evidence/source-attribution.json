@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "phase": "14",
+  "auditor": "Codex Independent QA",
+  "trackedFiles": [
+    {
+      "path": "apps/frontend-user/src/features/invitations/InvitationMediaManager.jsx",
+      "sha256": "1a52cf5f9453a3a81a0cd19a74fe4618a4dc35eae08377ba51ab7dc0aa656095",
+      "changes": "Media Atelier UI shell, 2D focal inspector, preflight staging queue, local draft status repair"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/MediaLibrary.css",
+      "sha256": "22d49e393224480b80bf638dd54c831781d72dcabba6743fe73cacec357b1a19",
+      "changes": "Forest ink, champagne gold, warm ivory palette, responsive grid, high contrast, reduced motion"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/mediaLibraryModel.js",
+      "sha256": "7df366c5795edbdd7c5aaf35f0f10720e2a0ad591b253f81b5998c2b4e46444b",
+      "changes": "Media models, chunkBatch, validateLibraryFile, focalPointStyle, EOF newline repair"
+    },
+    {
+      "path": "apps/frontend-user/src/shared/i18n/workspaceMessages.js",
+      "sha256": "412bf1b3599219a943a83528b7850029cddd614d3bc54fffb1e0c2b82a1613cc",
+      "changes": "38 bilingual EN/KM message keys for media atelier"
+    }
+  ],
+  "untrackedFiles": [
+    {
+      "path": "apps/frontend-user/playwright.phase14-1.config.js",
+      "sha256": "5c6ebf95b747f7c33342b914069d7e1a9da74f47b4c94f761b0dfc48fbcbe02b",
+      "purpose": "Playwright E2E configuration on port 4314"
+    },
+    {
+      "path": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "sha256": "d20e8ced07cd1f68f9b37b36a597f936d41b08c6f0ac1a4e24e34acffba1c1e9",
+      "purpose": "48 mandatory negative scenario unit tests"
+    },
+    {
+      "path": "apps/frontend-user/tests/e2e/phase14-1-media-studio.spec.js",
+      "sha256": "e8420b9ff551b95e8305f02cb1e5a7062b3caa70b2abf9990750f22eef584a74",
+      "purpose": "21 browser E2E test journeys"
+    }
+  ]
+}

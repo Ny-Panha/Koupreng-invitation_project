@@ -1,0 +1,343 @@
+{
+  "total": 48,
+  "passed": 48,
+  "failed": 0,
+  "scenarios": [
+    {
+      "id": "N14-01",
+      "description": "PNG file exactly 5 MiB accepted if signature and other checks pass",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-02",
+      "description": "Empty/zero-byte image rejected with field-specific guidance",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-03",
+      "description": "File .png containing JPEG MIME or mismatched signature rejected",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-04",
+      "description": "SVG/GIF/HEIC/HEIF/executable disguised as picture rejected; clear advice provided",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-05",
+      "description": "Gallery selection of six files is batched max five/request, transparent to user",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-06",
+      "description": "Legacy gallery with more than ten retained images is not deleted or truncated",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-07",
+      "description": "Server configured max-gallery-count conflict preserves existing assets",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-08",
+      "description": "Mixed photo + invitation front/back + sketch-map five-file batch routed correctly",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-09",
+      "description": "Batch one succeeds and batch two fails: only remaining files retried",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-10",
+      "description": "Upload progress reaches 100% but server rejects: not marked complete",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-11",
+      "description": "Network stall/timeout during multi-file upload shows per-file retry option",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-12",
+      "description": "Rapid double-click on upload does not create duplicate media entities",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-13",
+      "description": "Invalid characters or spaces in filename sanitized safely",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-14",
+      "description": "Deep folder drag-and-drop traverses files without crashing",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-15",
+      "description": "Corrupted or truncated image payload fails preflight before network send",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-16",
+      "description": "Audio upload with video extension rejected by media validator",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-17",
+      "description": "Video file exceeding 50 MiB limit rejected with helpful size guidance",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-18",
+      "description": "Audio file exceeding 15 MiB limit rejected with helpful size guidance",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-19",
+      "description": "Unsupported audio codec inside .mp3 wrapper rejected gracefully",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-20",
+      "description": "Cancel button during upload aborts network request immediately",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-21",
+      "description": "Server 500 error on upload displays actionable server error message",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-22",
+      "description": "Account switch during upload isolates uploads to current active event",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-23",
+      "description": "Unmounting media component during upload does not throw memory leak error",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-24",
+      "description": "401 Unauthorized during upload presents login prompt without data loss",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-25",
+      "description": "Offline state triggers clear offline banner and queues retry",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-26",
+      "description": "Unauthorized collaborator cannot delete or replace owner media",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-27",
+      "description": "Revocation of object URLs does not crash active image previews",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-28",
+      "description": "Switching tabs while upload in progress maintains upload state",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-29",
+      "description": "Replacing cover image updates thumbnail without breaking existing references",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-30",
+      "description": "Deleting gallery item in use displays reference warning dialog",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-31",
+      "description": "Reordering gallery first item backward is cleanly disabled in UI",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-32",
+      "description": "Reordering gallery last item forward is cleanly disabled in UI",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-33",
+      "description": "Focal point adjustment outside 0-100% bounds clamped to 0 or 100",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-34",
+      "description": "HEIC image upload shows specific conversion recommendation dialog",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-35",
+      "description": "EXIF GPS metadata disclosure note displayed when location present",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-36",
+      "description": "In-use media badge reflects active invitation fields accurately",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-37",
+      "description": "Free tier user attempting video upload sees premium upgrade modal",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-38",
+      "description": "Pre-wedding video privacy controls respected for private events",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-39",
+      "description": "Ticket preview image remains accessible across ticket designer view",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-40",
+      "description": "Switching renderer templates maintains uploaded media associations",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-41",
+      "description": "Guest preview cannot trigger media deletion or replacement endpoints",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-42",
+      "description": "Draft restore with unknown media metadata parses safely without crash",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-43",
+      "description": "Network disconnect during delete shows retry without orphaned UI state",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-44",
+      "description": "Khmer locale displays all media terms without text truncation or overflow",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-45",
+      "description": "Khmer numbers in file sizes formatted accurately with Khmer numerals",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-46",
+      "description": "Keyboard focus remains trapped in focal point modal while open",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-47",
+      "description": "High contrast mode ensures 4.5:1 ratio on all media control labels",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    },
+    {
+      "id": "N14-48",
+      "description": "Screen reader receives polite live announcements on upload milestones",
+      "testFile": "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx",
+      "status": "PASSED",
+      "verifiedLocally": true
+    }
+  ]
+}

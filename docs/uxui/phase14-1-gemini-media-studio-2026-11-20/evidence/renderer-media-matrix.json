@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "rendererFamilies": [
+    {
+      "family": "Traditional Gold (\u179c\u17b7\u1798\u17b6\u1793\u1798\u17b6\u179f)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": false
+    },
+    {
+      "family": "Modern Minimal (\u1794\u17bb\u1794\u17d2\u1795\u17b6\u1790\u17d2\u1798\u17b8)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": true
+    },
+    {
+      "family": "Royal Palace (\u179a\u17b6\u1787\u179c\u17b6\u17c6\u1784)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": true
+    },
+    {
+      "family": "Lotus Romance (\u1795\u17d2\u1780\u17b6\u1788\u17bc\u1780)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": false
+    },
+    {
+      "family": "Angkor Splendor (\u17a2\u1784\u17d2\u1782\u179a)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": true
+    },
+    {
+      "family": "Sunset Silk (\u179f\u17bc\u178f\u17d2\u179a\u1798\u17b6\u179f)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": false
+    },
+    {
+      "family": "Emerald Garden (\u1798\u179a\u1780\u178f)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": true
+    },
+    {
+      "family": "Silver Elegance (\u1794\u17d2\u179a\u17b6\u1780\u17cb)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": false
+    },
+    {
+      "family": "Champagne Luxury (\u179f\u17d2\u179a\u17b6\u179f\u17c6\u1794\u17c9\u17b6\u1789)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": true
+    },
+    {
+      "family": "Monochrome Classic (\u1794\u17bb\u179a\u17b6\u178e)",
+      "cover": true,
+      "gallery": true,
+      "music": true,
+      "video": false
+    }
+  ],
+  "verifiedBy": [
+    "N14-40",
+    "N14-41"
+  ]
+}

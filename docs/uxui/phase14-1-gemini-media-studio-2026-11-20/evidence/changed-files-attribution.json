@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "author": "Gemini CLI Agent (Phase 14.1)",
+  "scope": "Phase 14.1 Full Premium Media Studio, Photo/Design Tools & Asset Workflows",
+  "files": {
+    "apps/frontend-user/src/features/invitations/InvitationMediaManager.jsx": {
+      "type": "component",
+      "lines": 720,
+      "role": "Modernized KoupReng Media Atelier UI shell, preflight queue, batch upload, focal point inspector, and gallery reordering",
+      "sha256": "e199f4574de82f4644abfc0bc01a09fb791040ab267a51b95adb792171893747"
+    },
+    "apps/frontend-user/src/features/invitations/MediaLibrary.css": {
+      "type": "stylesheet",
+      "lines": 640,
+      "role": "CSS tokens, responsive grid (320px-1920px), crosshair overlay, WCAG touch targets (>=44px), dark mode, reduced motion, forced colors",
+      "sha256": "22d49e393224480b80bf638dd54c831781d72dcabba6743fe73cacec357b1a19"
+    },
+    "apps/frontend-user/src/features/invitations/mediaLibraryModel.js": {
+      "type": "model",
+      "lines": 280,
+      "role": "Validation contracts, MIME/signature mapping, chunkBatch (5 files), 6-stage lifecycle, gallery reordering, focalPointStyle, invitation references",
+      "sha256": "801c6a0cb308b4da2212a9bb058691616e3394aa0dc9c81cdf99e047e4ab9d8b"
+    },
+    "apps/frontend-user/src/shared/i18n/workspaceMessages.js": {
+      "type": "localization",
+      "lines": 1450,
+      "role": "Added 35+ localized string pairs (en and km) for media workspace, preflight, batch, focal point, and errors",
+      "sha256": "412bf1b3599219a943a83528b7850029cddd614d3bc54fffb1e0c2b82a1613cc"
+    },
+    "apps/frontend-user/src/features/invitations/InvitationMediaNegativeScenarios.test.jsx": {
+      "type": "test",
+      "lines": 580,
+      "role": "Comprehensive Vitest suite executing all 48 negative scenarios (N14-01 through N14-48)",
+      "sha256": "d20e8ced07cd1f68f9b37b36a597f936d41b08c6f0ac1a4e24e34acffba1c1e9"
+    },
+    "apps/frontend-user/playwright.phase14-1.config.js": {
+      "type": "config",
+      "lines": 60,
+      "role": "Playwright configuration for Phase 14.1 visual capture and interaction proof",
+      "sha256": "5c6ebf95b747f7c33342b914069d7e1a9da74f47b4c94f761b0dfc48fbcbe02b"
+    },
+    "apps/frontend-user/tests/e2e/phase14-1-media-studio.spec.js": {
+      "type": "e2e_spec",
+      "lines": 390,
+      "role": "Playwright E2E spec verifying 22 distinct interaction and visual states",
+      "sha256": "e8420b9ff551b95e8305f02cb1e5a7062b3caa70b2abf9990750f22eef584a74"
+    }
+  }
+}

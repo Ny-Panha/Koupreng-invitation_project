@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "coordinator": "Gemini CLI Agent",
+  "auditor": "Codex 14 Independent Auditor",
+  "baselineCommit": "769b9a4bd934a4214605625b739a5bd6cf780294",
+  "gitStatus": {
+    "branch": "main",
+    "staged": 0,
+    "committed": 0,
+    "pushed": 0,
+    "deployed": 0,
+    "modifiedFilesCount": 4,
+    "untrackedFilesCount": 8
+  },
+  "keyAuditPrioritiesForCodex14": [
+    "1. Verify that apps/frontend-user/src/features/invitations/InvitationMediaManager.jsx does not mutate backend files",
+    "2. Run npm --prefix apps/frontend-user run test:run -- InvitationMediaNegativeScenarios.test.jsx (48/48 tests)",
+    "3. Confirm that chunkBatch(files, 5) prevents HTTP 413 and complies with MediaService max 5 files",
+    "4. Validate that reordering is explicitly labeled as local preview order until saved in Studio",
+    "5. Review F14.1-35 (EXIF), F14.1-45 (Khmer Native Signoff), F14.1-48 (Physical Devices), F14.1-52 (Commercial Rights)",
+    "6. Fast-forward commit only after independent review pass"
+  ]
+}

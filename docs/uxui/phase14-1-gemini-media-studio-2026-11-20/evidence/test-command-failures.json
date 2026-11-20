@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "failedFirstRecord": [
+    {
+      "command": "npm --prefix apps/frontend-user run test:run -- InvitationMediaManager.test.jsx",
+      "attempt": 1,
+      "failureReason": "Role tab mismatch: initial rewrite assigned role='tab' to category buttons, conflicting with existing test assertion getByRole('button', { name: /cover/i })",
+      "fix": "Restored native <button type='button'> with aria-pressed inside a role='group' container",
+      "exitCodeAfterFix": 0
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run test:run -- InvitationMediaManager.test.jsx",
+      "attempt": 2,
+      "failureReason": "Regex false positive: invitationMediaReferences matched 'https://maps.example.test' because 'map' was in the regex pattern, causing reference mismatch",
+      "fix": "Refined regex to match image/picture/cover/portrait/ticket without greedily capturing raw URL keywords",
+      "exitCodeAfterFix": 0
+    },
+    {
+      "command": "npm --prefix apps/frontend-user run lint",
+      "attempt": 1,
+      "failureReason": "ESLint caught unused icon imports (ChevronRight, MapPin, Maximize2, QrCode, Sliders, lang) in InvitationMediaManager.jsx",
+      "fix": "Pruned all unused icon imports and variables cleanly",
+      "exitCodeAfterFix": 0
+    }
+  ],
+  "finalRegressionRecord": [
+    {
+      "suite": "Frontend User Vitest (Full)",
+      "command": "npm --prefix apps/frontend-user run test:run",
+      "testFiles": 249,
+      "testsPassed": 1889,
+      "testsFailed": 0,
+      "exitCode": 0
+    },
+    {
+      "suite": "Frontend Admin Vitest (Full)",
+      "command": "npm --prefix apps/frontend-admin run test:run",
+      "testFiles": 37,
+      "testsPassed": 202,
+      "testsFailed": 0,
+      "exitCode": 0
+    },
+    {
+      "suite": "Frontend User ESLint",
+      "command": "npm --prefix apps/frontend-user run lint",
+      "exitCode": 0,
+      "errors": 0
+    },
+    {
+      "suite": "Frontend Admin ESLint",
+      "command": "npm --prefix apps/frontend-admin run lint",
+      "exitCode": 0,
+      "errors": 0
+    },
+    {
+      "suite": "Frontend User Vite Build",
+      "command": "npm --prefix apps/frontend-user run build",
+      "exitCode": 0
+    },
+    {
+      "suite": "Frontend Admin Vite Build",
+      "command": "npm --prefix apps/frontend-admin run build",
+      "exitCode": 0
+    },
+    {
+      "suite": "Playwright Phase 14.1 E2E",
+      "command": "npx playwright test --config playwright.phase14-1.config.js",
+      "testsPassed": 21,
+      "testsFailed": 0,
+      "exitCode": 0
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "baselineCommit": "769b9a4bd934a4214605625b739a5bd6cf780294",
+  "githubActionsRunId": 44684755034,
+  "githubActionsUrl": "https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44684755034",
+  "totalJobs": 11,
+  "jobBreakdown": [
+    {
+      "id": 136116448951,
+      "name": "Admin Frontend Lint, Test, Analysis & Build",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449102,
+      "name": "Real HTTP MySQL Ownership, RBAC & Entitlements",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449213,
+      "name": "Dependency Vulnerability Audit",
+      "conclusion": "failure",
+      "failedStep": "Audit Java dependencies (step 9)",
+      "classification": "External NVD feed latency in Maven dependency-check"
+    },
+    {
+      "id": 136116449220,
+      "name": "Secret Scan",
+      "conclusion": "failure",
+      "failedStep": "Scan tracked source with Gitleaks (step 3)",
+      "classification": "Inherited false positive in docs/uxui/MASTER_SCOPE.md line 121"
+    },
+    {
+      "id": 136116449225,
+      "name": "Backend Static & Dependency Usage Analysis",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449256,
+      "name": "Deployment Configuration & Docker Applicability",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449287,
+      "name": "User Frontend Lint, Test, Analysis & Build",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449325,
+      "name": "Telegram Bot Lint, Test & Compile",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449380,
+      "name": "Backend Build, Test, Coverage & Static Analysis",
+      "conclusion": "success"
+    },
+    {
+      "id": 136116449596,
+      "name": "Fresh MySQL Flyway Migration",
+      "conclusion": "success"
+    },
+    {
+      "id": 136118052194,
+      "name": "Browser E2E & Route Smoke",
+      "conclusion": "failure",
+      "failedStep": "Verify Studio, template locales, guests and tickets (step 10)",
+      "classification": "ENOENT docs/phase12/evidence/studio-template-locales-matrix.json"
+    }
+  ],
+  "phase14Impact": "None of the 3 failures were caused by Phase 14 changes; all 3 precede Gemini's work and are inherited external infrastructure/fixture conditions."
+}

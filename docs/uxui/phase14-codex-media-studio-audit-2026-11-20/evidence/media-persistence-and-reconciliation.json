@@ -1,0 +1,7 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "serverStorage": "Database stores cover, gallery, video, music via MediaFile entity with sort_order.",
+  "reorderPersistence": "Local preview only in Media Manager; banner explicitly directs user to save in Studio for invitation persistence.",
+  "focalPersistence": "Local CSS object-position preview only; permanent storage requires Studio save or backend schema update.",
+  "draftReconciliation": "Unknown nested JSON fields preserved through JSON roundtrip without corruption."
+}

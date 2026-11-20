@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "commands": [
+    {
+      "cmd": "node scripts/sync-design-tokens.cjs --check",
+      "exitCode": 0,
+      "result": "Verified 2 application token exports."
+    },
+    {
+      "cmd": "npm test -- InvitationMediaNegativeScenarios.test.jsx --run",
+      "exitCode": 0,
+      "result": "48/48 passed in 471ms"
+    },
+    {
+      "cmd": "npm test -- src/features/invitations/ --run",
+      "exitCode": 0,
+      "result": "30 test files passed, 252 tests passed in 10.27s"
+    },
+    {
+      "cmd": "npm run lint (frontend-user)",
+      "exitCode": 0,
+      "result": "0 errors, 0 warnings"
+    },
+    {
+      "cmd": "npm run lint (frontend-admin)",
+      "exitCode": 0,
+      "result": "0 errors, 0 warnings"
+    },
+    {
+      "cmd": "npm run build (frontend-user)",
+      "exitCode": 0,
+      "result": "Built in 4.83s"
+    },
+    {
+      "cmd": "npm run build (frontend-admin)",
+      "exitCode": 0,
+      "result": "Built in 680ms"
+    },
+    {
+      "cmd": "npm test (frontend-admin)",
+      "exitCode": 0,
+      "result": "37 test files passed, 202 tests passed in 5.54s"
+    },
+    {
+      "cmd": "npm test (frontend-user full suite)",
+      "exitCode": 0,
+      "result": "249 test files passed, 1889 tests passed in 41.72s"
+    },
+    {
+      "cmd": "playwright test --config playwright.phase14-1.config.js",
+      "exitCode": 0,
+      "result": "21/21 passed in 44.6s generating 22 visual proofs"
+    },
+    {
+      "cmd": "git diff --check",
+      "exitCode": 0,
+      "result": "0 whitespace/EOF errors after newline repair"
+    }
+  ]
+}

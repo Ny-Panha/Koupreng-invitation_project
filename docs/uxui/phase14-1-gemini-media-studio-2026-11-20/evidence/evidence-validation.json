@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "checks": {
+    "gateCount": {
+      "expected": 58,
+      "found": 58,
+      "status": "PASS"
+    },
+    "negativeCount": {
+      "expected": 48,
+      "found": 48,
+      "status": "PASS"
+    },
+    "visualCount": {
+      "expected": 22,
+      "found": 22,
+      "status": "PASS"
+    },
+    "jsonFilesCount": {
+      "expected": 32,
+      "status": "PASS",
+      "found": 32
+    },
+    "uncommittedGitStatus": {
+      "expected": "0 staged, 0 committed, 0 pushed",
+      "status": "PASS"
+    },
+    "markdownReportsCount": {
+      "expected": 31,
+      "found": 31,
+      "status": "PASS"
+    },
+    "allLinksResolved": {
+      "expected": 84,
+      "found": 84,
+      "status": "PASS"
+    },
+    "overallStatus": "ALL_CHECKS_PASSED"
+  }
+}

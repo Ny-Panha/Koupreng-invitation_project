@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "lifecyclePattern": {
+    "creation": "URL.createObjectURL(file) upon preflight file selection",
+    "storage": "Tracked in objectUrlMap ref keyed by stage item id",
+    "revocationOnUnmount": "useEffect cleanup revokes all registered object URLs",
+    "revocationOnConfirm": "Revoked once server returns persistent CDN/S3 URL",
+    "revocationOnCancel": "Revoked immediately when item removed from preflight"
+  },
+  "memoryLeakProtection": "Strictly verified in InvitationMediaManager.jsx line 95-108 and Playwright E2E",
+  "verifiedBy": "N14-27"
+}

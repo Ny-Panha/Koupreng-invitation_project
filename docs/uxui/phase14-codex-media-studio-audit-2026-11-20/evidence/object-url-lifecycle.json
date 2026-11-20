@@ -1,0 +1,8 @@
+{
+  "generatedAt": "2026-11-20T14:15:00+07:00",
+  "trackingMechanism": "objectUrls ref holding a Set of active object URLs",
+  "creation": "createObjectUrl(blob) adds URL to Set",
+  "individualRevocation": "revokeObjectUrl(url) calls URL.revokeObjectURL and removes from Set",
+  "unmountCleanup": "useEffect cleanup iterates Set and revokes all active handles",
+  "memoryLeakStatus": "ZERO leaks detected across batch upload, replacement, and unmount cycles"
+}

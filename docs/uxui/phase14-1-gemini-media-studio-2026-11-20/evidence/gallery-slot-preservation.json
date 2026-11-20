@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-11-20T13:45:00+07:00",
+  "rules": {
+    "legacyRetention": "If an event has 12 gallery photos from an earlier phase, all 12 are displayed and preserved",
+    "newSlotLimit": "Studio composer displays up to 10 active layout slots, but never deletes excess backend photos",
+    "nonDestructiveAddition": "New uploads append to existing gallery without overwriting prior items"
+  },
+  "verifiedBy": [
+    "N14-06",
+    "N14-07",
+    "N14-30"
+  ]
+}
