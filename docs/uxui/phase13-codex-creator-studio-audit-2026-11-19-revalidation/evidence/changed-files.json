@@ -332,7 +332,7 @@
     },
     {
       "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19-revalidation/30-publication-hard-gates.md",
-      "sha256": "96fc8659f90e94dc8df57f063a0562e3c8918b66ce8835e7bdf608b125f1d56f",
+      "sha256": "5d08886a108fbbc17182bb502fa6255ddf4d068706906c0a6877b7fe8cb9fcb6",
       "owner": "Codex Phase 13 revalidation",
       "reason": "Audit/evidence/handoff and claim supersession"
     },
@@ -344,7 +344,7 @@
     },
     {
       "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19-revalidation/README.md",
-      "sha256": "2716622bf2cfaeaf92728442d75a2560f40e88a139bde2799b7a77b1aba18049",
+      "sha256": "bb9dafc0f276f201204b000804b20610c91755109bd098aa9aa7e2779807c0dd",
       "owner": "Codex Phase 13 revalidation",
       "reason": "Audit/evidence/handoff and claim supersession"
     },
@@ -470,7 +470,7 @@
     },
     {
       "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19-revalidation/evidence/publication-result.json",
-      "sha256": "cb48824e720959b3c9f24ab84802d813fc49f98402193e324d64883117087b23",
+      "sha256": "35326899f30ebd09880c8a5e9974593b415c7763b5245bec784ca8a105ffd0ba",
       "owner": "Codex Phase 13 revalidation",
       "reason": "Audit/evidence/handoff and claim supersession"
     },

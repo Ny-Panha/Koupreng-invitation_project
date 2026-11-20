@@ -2,6 +2,8 @@
 
 **PHASE 13 STATUS — PARTIALLY COMPLETE.** This execution repairs confirmed local account/data-loss/UX defects. A reviewed development checkpoint is separate from production release certification. See [actual publication decision](evidence/publication-readiness.json) and [observed result](evidence/publication-result.json).
 
+Development checkpoint `79ec961cbd65d173a432cdfe22fa3dc5b550a6b2` was committed and pushed on 20 November 2026. GitHub commit and local/tracking/remote agreement were verified. [CI run 44684320485](https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44684320485) was **IN PROGRESS**, not passed, at the recorded observation. A documentation-only follow-up records these observed results.
+
 Entry was clean `main` at `54565a125e1c1cc13be9b1ed5039434f1d0b9450`, already published locally and remotely. The old purported Codex certification is superseded by this package. Every prior claim remains available in Git and its original package. The nine Gemini code/test/config hashes match the entry snapshot; only 5/16 inherited screenshot hashes match.
 
 Current exact command results, including failed attempts, are in [test-runs.json](evidence/test-runs.json). Suites overlap and are never summed. Entry full suites reproduced 1,821 user and 202 admin tests. Final full user: **1,841 passed / 248 files**, exit 0. Backend: 680 executed, zero failures/errors, 82 configured skips (598 non-skipped). Telegram: 74 passed. Final Studio: **78 passed** at one worker, plus **3 passed** dirty-exit cases; the earlier default two-worker run separately passed 75 cases before added assertions. Owner-dashboard replay: **27 passed**. All other cross-phase/CI replays are recorded individually; pending files are not passes.

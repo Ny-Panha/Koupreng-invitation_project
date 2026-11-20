@@ -1,6 +1,88 @@
 {
-  "status": "NOT PUBLISHED BY THIS EXECUTION",
-  "entry_already_published": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
-  "new_commit": null,
-  "new_ci": "NOT OBSERVED"
+  "observed_utc": "2026-11-20T05:57:05.906889+00:00",
+  "product_checkpoint": "79ec961cbd65d173a432cdfe22fa3dc5b550a6b2",
+  "github_commit_verified": true,
+  "runs": [
+    {
+      "id": 44684320485,
+      "head_sha": "79ec961cbd65d173a432cdfe22fa3dc5b550a6b2",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44684320485",
+      "jobs": [
+        {
+          "id": 136114913409,
+          "name": "Backend Build, Test, Coverage & Static Analysis",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913587,
+          "name": "Telegram Bot Lint, Test & Compile",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913612,
+          "name": "Admin Frontend Lint, Test, Analysis & Build",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913640,
+          "name": "User Frontend Lint, Test, Analysis & Build",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913690,
+          "name": "Real HTTP MySQL Ownership, RBAC & Entitlements",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913705,
+          "name": "Secret Scan",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913730,
+          "name": "Dependency Vulnerability Audit",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913737,
+          "name": "Fresh MySQL Flyway Migration",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913740,
+          "name": "Deployment Configuration & Docker Applicability",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 136114913756,
+          "name": "Backend Static & Dependency Usage Analysis",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    }
+  ],
+  "branch": "main",
+  "local": "79ec961cbd65d173a432cdfe22fa3dc5b550a6b2",
+  "tracking": "79ec961cbd65d173a432cdfe22fa3dc5b550a6b2",
+  "remote": "79ec961cbd65d173a432cdfe22fa3dc5b550a6b2",
+  "status": "PUBLISHED REVIEWED DEVELOPMENT CHECKPOINT",
+  "new_ci": "IN PROGRESS / NOT CERTIFIED",
+  "deployment": "NOT PERFORMED",
+  "metadata_note": "This observation concerns the product checkpoint. A later documentation-only commit may carry this record; no self-referential commit SHA is claimed.",
+  "secret_scans": {
+    "staged_commit": 0,
+    "published_range": 0
+  }
 }

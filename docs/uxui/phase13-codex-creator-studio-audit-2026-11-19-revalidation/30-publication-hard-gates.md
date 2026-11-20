@@ -13,3 +13,5 @@ Evidence:
 - [ci-observed.json](evidence/ci-observed.json)
 
 [Report index](README.md).
+
+Observed publication: product checkpoint `79ec961cbd65d173a432cdfe22fa3dc5b550a6b2` was committed with normal hooks and pushed to main. Local, tracking, remote and GitHub commit agreed. CI run 44684320485 was in progress at observation; no production deployment or release certification occurred. See publication-result.json for timestamped job states.
