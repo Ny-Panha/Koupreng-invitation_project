@@ -1,0 +1,10 @@
+{
+  "status": "DRY-RUN PASS",
+  "run_id": "rollback-final-reverse-check",
+  "exit_code": 0,
+  "patch": "codex-reviewed-final-hunks.patch",
+  "owned_paths": "rollback-final-owned-paths.json",
+  "actual_rollback": "NOT PERFORMED; explicit affected-file owner decision required",
+  "new_files": "Retain; no deletion authorized",
+  "excluded_outputs": "Generated backend/browser artifacts preserved without broad restore"
+}

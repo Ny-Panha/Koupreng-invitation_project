@@ -54,7 +54,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
     });
 
     // Save must fail closed, User B never receives User A's acknowledged state
-    expect(result.current.phase).toBe('failed');
+    expect(result.current.phase).toBe('denied');
     expect(result.current.dirty).toBe(true);
   });
 
@@ -72,7 +72,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
       await result.current.save();
     });
 
-    expect(result.current.phase).toBe('failed');
+    expect(result.current.phase).toBe('denied');
     expect(result.current.dirty).toBe(true);
     expect(result.current.failure?.status).toBe(403);
   });
@@ -80,7 +80,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
   // N13-04: 403/401/409/503 responses truthful status
   it.each([
     [401, 'expired', /session expired/i],
-    [403, 'failed', /forbidden|denied|access/i],
+    [403, 'denied', /forbidden|denied|access/i],
     [409, 'conflict', /newer version/i],
     [503, 'failed', /failed|retry/i],
   ])('N13-04: truthfully sets phase for HTTP %i without claiming saved', async (status, expectedPhase, messageMatch) => {

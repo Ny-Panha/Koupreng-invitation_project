@@ -1,0 +1,126 @@
+{
+  "sources": [
+    "apps/frontend-user/src/shared/preview/previewMessaging.js",
+    "apps/frontend-user/src/shared/preview/useStudioPreviewEditing.js",
+    "apps/frontend-user/src/features/invitations/LivePhoneSimulator.jsx"
+  ],
+  "assertions": [
+    "Explicit postMessage target origin",
+    "Origin/source/session nonce and message schema validation",
+    "Prototype, nesting, array and string bounds",
+    "Known edit section allowlist and interactive child exclusion"
+  ],
+  "tests": [
+    "apps/frontend-user/src/shared/preview/previewMessaging.test.js",
+    "apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+    "apps/frontend-user/tests/e2e/phase10-codex-renderers.spec.js"
+  ],
+  "runs": [
+    {
+      "id": "focused-security",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/ src/features/invitations/invitationPayloadUtils.test.js src/features/wedding-builder/ src/shared/preview/ src/features/events/onboarding/Phase11RequestAuthority.test.jsx src/features/events/Phase12CodexAccountIsolation.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:53:52.311648+00:00",
+      "finished_utc": "2026-11-19T14:53:57.858833+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 5.547,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/focused-security.log",
+      "log_sha256": "91b278e8fd8bc6e251e102d20a54717a32680166c99185d6ee23f75c0ca62a2d",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  25 passed (25)",
+        "Tests  186 passed (186)",
+        "Duration  4.85s (environment 42%, tests 18%, setup 16%, import 12%, transform 11%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "route-registry-form",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/app/ src/features/templates/registry/ src/features/invitations/InvitationForm.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:01:09.586593+00:00",
+      "finished_utc": "2026-11-19T15:01:24.591552+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 15.005,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/route-registry-form.log",
+      "log_sha256": "b3bda824dcf080cff83722b4e7231d212c553cd35f9a6939f7c285d41bfee1f4",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  11 passed (11)",
+        "Tests  90 passed (90)",
+        "Duration  13.92s (tests 40%, import 23%, environment 20%, transform 9%, setup 8%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "crossphase-06-08-09-10",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --output=../../output/phase13-codex-revalidation/crossphase/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:04:51.238683+00:00",
+      "finished_utc": "2026-11-19T15:25:12.720841+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 1221.483,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/crossphase-06-08-09-10.log",
+      "log_sha256": "ff5451002c4437022eb08fe53ce953421fccabbd6159187781d3f98cff713ece",
+      "log_hash_valid": true,
+      "result_lines": [
+        "8 failed",
+        "65 skipped",
+        "449 passed (20.3m)"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[mobile-chromium] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-webkit] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-webkit] › tests\\e2e\\phase10-codex-renderers.spec.js:83:3 › matrix khmer-celestial opens and paints",
+        "[desktop-webkit] › tests\\e2e\\phase10-codex-renderers.spec.js:83:3 › matrix the-digital-yes-wedding opens and paints",
+        "[mobile-webkit] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-firefox] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[mobile-firefox] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow"
+      ]
+    },
+    {
+      "id": "crossphase-webkit-isolated",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --project=desktop-webkit --grep \"matrix (khmer-celestial|the-digital-yes-wedding) opens and paints\" --workers=1 --retries=0 --output=../../output/phase13-codex-revalidation/crossphase-isolated/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:49:44.419462+00:00",
+      "finished_utc": "2026-11-19T15:50:03.231014+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 18.812,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/crossphase-webkit-isolated.log",
+      "log_sha256": "12927253aa1833abef2280ffb66dddbb3d4f057cd3db6c5c16d101ee18c10540",
+      "log_hash_valid": true,
+      "result_lines": [
+        "2 passed (18.1s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "full-user-frozen",
+      "command": "npm.cmd --prefix apps/frontend-user test",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:34:07.713283+00:00",
+      "finished_utc": "2026-11-19T15:35:42.883801+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 95.171,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/full-user-frozen.log",
+      "log_sha256": "d881da7dc6fde7c221ce41ae96a9e4867c4840f7b90c37af3c8f67019af40405",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  248 passed (248)",
+        "Tests  1841 passed (1841)",
+        "Duration  92.75s (environment 41%, setup 22%, tests 17%, import 15%, transform 4%)"
+      ],
+      "failure_names": []
+    }
+  ],
+  "limits": [
+    "buildPreviewUrl permits HTTP(S); controlled registry callers remain required",
+    "Fixtures and unit contracts do not certify live guest-token deployment privacy"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "entry_head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "entry_remote_main": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "entry_worktree": "clean",
+  "phase12_baseline": "8c1e930fbe1e39e8fc660c3ba2caf80d81e2b289",
+  "entry_commit_files": 121,
+  "source_provenance": "The nine Gemini source/test/config hashes match the entry snapshot. Prior Codex prose in the same published commit is a claim, not this execution.",
+  "snapshot_file_count_after_path_normalization": 190,
+  "snapshot_manifest_sha256": "7359d729bedf17b8f59d17e098ab6d836d2ec19ae7b56905337a9978de303d27",
+  "brief_sha256": "af4294a8517e25981c4d70bf838fea29d9b39b3d6d43690857b1b0d7e1718584",
+  "branch_at_generation": "main"
+}

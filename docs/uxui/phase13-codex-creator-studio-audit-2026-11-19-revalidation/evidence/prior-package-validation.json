@@ -1,0 +1,458 @@
+{
+  "gemini_json_count": 28,
+  "original_screenshot_hashes": [
+    {
+      "file": "evidence/screenshots/01-desktop-1440-en-light.png",
+      "actual_sha256": "e6a13173aaf6ac8c9b3670a14289ad1ef11bd58e6566fd52cda3103eeef22536",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/02-desktop-1440-en-dark.png",
+      "actual_sha256": "a763b812617846fd002d48fedede14297fd58e1318e711791c50ccc15673e282",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/03-desktop-1440-km-light.png",
+      "actual_sha256": "0d97eb0fed5f33218fcd854357410b868f302a2523ef1f95adc10d1b1c07dda1",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/04-desktop-1440-km-dark.png",
+      "actual_sha256": "c33911ecfad98fde5b4fe27e94b0aef341557d09ee541ceb96a10ced6fdeda6f",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/05-desktop-1920-en-light.png",
+      "actual_sha256": "add81c002f3932a25c2057ae9f7715abf7c6af9bed15a9d93ed6775f1c6d0bce",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/06-tablet-768-en-light.png",
+      "actual_sha256": "45c974b252732347f89821ad891fd8b8f5b673679f9141b47d3c4d1f11d7b63f",
+      "matches_claim": true
+    },
+    {
+      "file": "evidence/screenshots/07-tablet-768-km-light.png",
+      "actual_sha256": "4b57303dfe06d6b4859781d2d026685676b3da07d186a10013bd9bb11c1ebd05",
+      "matches_claim": true
+    },
+    {
+      "file": "evidence/screenshots/08-mobile-393-en-light.png",
+      "actual_sha256": "8827c01567183cbefaea79c48b5f53ce5983869097487cdd965356d3185a6f09",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/09-mobile-393-km-light.png",
+      "actual_sha256": "daeb550138c84ce250a613f94bdfb57b756896193e41bbf63674f172c575d578",
+      "matches_claim": true
+    },
+    {
+      "file": "evidence/screenshots/10-mobile-393-preview-sheet.png",
+      "actual_sha256": "441dac92439fab053ae8fb49550c2ae7626fcf23655fb50d5c2ba2d4d6c93a82",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/11-narrow-mobile-320-en-light.png",
+      "actual_sha256": "4d46404110c37f013c4cc90d8c0ba514568038d4725bb14d3c01910d0656e6dc",
+      "matches_claim": true
+    },
+    {
+      "file": "evidence/screenshots/12-narrow-mobile-320-km-light.png",
+      "actual_sha256": "83e205755ec5a5dd26905f1163f25520a5758aafb522cc89f50f18b066410991",
+      "matches_claim": true
+    },
+    {
+      "file": "evidence/screenshots/13-short-landscape-844x390-en.png",
+      "actual_sha256": "62667155dca63060ea1e58d4bc47e33c359856188b5152d4e24a0ad8b759b21b",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/14-short-landscape-844x390-km.png",
+      "actual_sha256": "9e1908d65aa2ee8c051d17ac006176d759e62206cadc1dc2680932eca7a8fc37",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/15-template-chooser-modal.png",
+      "actual_sha256": "5556a16919d01003fb449fc0840fc370fb83370e0db0c2a1f11e400e2c526256",
+      "matches_claim": false
+    },
+    {
+      "file": "evidence/screenshots/16-publish-review-modal.png",
+      "actual_sha256": "f770ae9c29c82321300e84c23173db1bd6215aed792f34f85ef7a9aeb0859e64",
+      "matches_claim": false
+    }
+  ],
+  "attribution_hashes": [
+    {
+      "file": "InvitationForm.jsx",
+      "path": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+      "claimed_sha256": "EB93385029D935D7E579AC40777B24A1F774C7C79670221DF7ADF8204332DE01",
+      "entry_sha256": "eb93385029d935d7e579ac40777b24a1f774c7c79670221df7adf8204332de01",
+      "matches": true
+    },
+    {
+      "file": "StudioChrome.css",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+      "claimed_sha256": "DBE1E96F27BCDF25194BA4E8E6BB6435A54A6635BF2A3644878E28046073872D",
+      "entry_sha256": "dbe1e96f27bcdf25194ba4e8e6bb6435a54a6635bf2a3644878e28046073872d",
+      "matches": true
+    },
+    {
+      "file": "StudioSections.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioSections.jsx",
+      "claimed_sha256": "06C281889A63EB41566541B53E01688D92204BD007F8DBD82D1259EDD9C842E2",
+      "entry_sha256": "06c281889a63eb41566541b53e01688d92204bd007f8dbd82d1259edd9c842e2",
+      "matches": true
+    },
+    {
+      "file": "StudioSections.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioSections.test.jsx",
+      "claimed_sha256": "78B81182FF39E6D1B1508C3A675011517F6118D085B6667648923601F7090196",
+      "entry_sha256": "78b81182ff39e6d1b1508c3a675011517f6118d085b6667648923601f7090196",
+      "matches": true
+    },
+    {
+      "file": "StudioToolbar.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+      "claimed_sha256": "A4F82D2D18E666FA32C94C372C7BFC43A85A9EA1844BF6CFC39156EC21132114",
+      "entry_sha256": "a4f82d2d18e666fa32c94c372c7bfc43a85a9ea1844bf6cfc39156ec21132114",
+      "matches": true
+    },
+    {
+      "file": "StudioToolbar.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx",
+      "claimed_sha256": "5F8C411D60568A2A1409D24026C72C43E34768148081F1B8A7EC0DC3610B1924",
+      "entry_sha256": "5f8c411d60568a2a1409d24026c72c43e34768148081f1b8a7ec0dc3610b1924",
+      "matches": true
+    },
+    {
+      "file": "InvitationStudioNegativeScenarios.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+      "claimed_sha256": "016E9606C52239CF8AF987BA9132E5E8FB08B1DEC9EB5326C6DBEB2071B428AF",
+      "entry_sha256": "016e9606c52239cf8af987ba9132e5e8fb08b1dec9eb5326c6dbeb2071b428af",
+      "matches": true
+    },
+    {
+      "file": "playwright.phase13-1.config.js",
+      "path": "apps/frontend-user/playwright.phase13-1.config.js",
+      "claimed_sha256": "ADB8929B1410F8A254FB8425D93A708292454DFDF20A6288334B34AF93C32074",
+      "entry_sha256": "adb8929b1410f8a254fb8425d93a708292454dfdf20a6288334b34af93c32074",
+      "matches": true
+    },
+    {
+      "file": "phase13-1-creator-studio-screenshots.spec.js",
+      "path": "apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js",
+      "claimed_sha256": "E4C9E9BE0A787FC94178238E4EE556EEB78A219D8BB6F3E698F3EB90CA586AF1",
+      "entry_sha256": "e4c9e9be0a787fc94178238e4ee556eeb78a219d8bb6f3e698f3eb90ca586af1",
+      "matches": true
+    }
+  ],
+  "read_report_inventory": [
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/01-git-baseline-source-attribution-and-protection.md",
+      "lines": 33,
+      "sha256": "8335e48403d26047e358960c4d762dcfa3502cdb260e194d6ff694c1c488bef1"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/02-phase12-handoff-open-gates-and-ci-reconciliation.md",
+      "lines": 20,
+      "sha256": "b4c0e6fd60b806564531909e8130d6a5fd6b85674d34e910b515ec8cac6bf025"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/03-studio-routes-and-authorization-ownership.md",
+      "lines": 15,
+      "sha256": "87d2420df58a414873f6358c769084e59072005cc68d8901545de7c0be79aa0c"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/04-source-map-editor-preview-api-serializers.md",
+      "lines": 20,
+      "sha256": "0f3bcf804289d956264032ac962a46363c4cca31d355a659aeb654325284fa87"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/05-premium-studio-art-direction-and-reference-research.md",
+      "lines": 16,
+      "sha256": "a4362b57b35a4380238f9fb4a050a641987edc67dd4516db9d8231523ec9858f"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/06-studio-top-toolbar-save-publish-and-history.md",
+      "lines": 24,
+      "sha256": "344e6f23dd1499433f0a62cd1804398bc590133c11636127e5b4869566b4edf7"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/07-guided-advanced-modes-and-section-ia.md",
+      "lines": 13,
+      "sha256": "271158ab00003d5508c2256312646005c9ffb5595364bfda92c3db683ce252ff"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/08-editing-inspector-forms-validations-and-content.md",
+      "lines": 13,
+      "sha256": "26f9ba70fe85b34316c182f02c1261c15fe7c23ede336ea317e90e38cd3d773b"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/09-family-event-story-schedule-and-venue.md",
+      "lines": 12,
+      "sha256": "4c83b56c3da1238767fcea7ffbef99c165d755f9f7aa513a1d8fc30ae209d9e0"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/10-template-chooser-entitlements-and-switching.md",
+      "lines": 12,
+      "sha256": "7374c544674b541d89f1c08830b0b21c63f0252254046f48f980a15e41b0ca39"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/11-preview-iframe-session-origin-and-edit-targets.md",
+      "lines": 13,
+      "sha256": "8560b1dc69ef05532dcf5228499ad898a27b82db05ca09babf8af6acd91eb647"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/12-live-preview-device-presets-zoom-and-geometry.md",
+      "lines": 12,
+      "sha256": "dbf3e6a952f94d164601ab37a011a5731f48c55945ec65c1056ff2b9f7db62dc"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/13-split-pane-keyboard-pointer-resize.md",
+      "lines": 13,
+      "sha256": "34d87ebb9821651585e0a6b231128e614e095602ae1bb74189a9ed3d01c6c28c"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/14-studio-data-persistence-autosave-and-revision.md",
+      "lines": 13,
+      "sha256": "0e544e312b6d8648de3830c39c0c83a36d6d0f805e936b9af4b4ea47e084f173"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/15-undo-redo-unsaved-navigation-recovery.md",
+      "lines": 12,
+      "sha256": "303a6092871d65d037bbd09386097e110275d163603440cf1b807f410ea01acc"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/16-draft-isolation-legacy-ownerless-and-json-roundtrips.md",
+      "lines": 12,
+      "sha256": "511a2fc636b70d3c4f2ef1596067effed12f2789091244910bab976e25d0df1d"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/17-publication-review-and-security-preservation.md",
+      "lines": 12,
+      "sha256": "e894aea5f6302c04e0bc8eeda3a944c47399696e0b0bd616b34cf377ffd91f12"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/18-media-editing-mime-ownership-and-rights.md",
+      "lines": 12,
+      "sha256": "61b609d8c4a1e14c1d1d07916e5df625ae8696b3e3181c414e2bf90769d8e37d"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/19-en-km-cultural-typography-and-timezones.md",
+      "lines": 11,
+      "sha256": "cc683c2fc420cadb8a10019bf327d3b01169fde23949c6942e53719daebd9456"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/20-responsive-mobile-landscape-and-physical-gates.md",
+      "lines": 13,
+      "sha256": "4b32404532e8d850097022fef35d17a0311edd3d77161dd79ab00106f5843478"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/21-keyboard-axe-contrast-forced-colors-motion.md",
+      "lines": 13,
+      "sha256": "fe3e0bd971894aa145678901b797072b8a8a530d682c6f60d61cc5d620b2c232"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/22-ten-react-ui-library-reference-license-matrix.md",
+      "lines": 18,
+      "sha256": "93c0f9cde6027ab24f2bbef67435a4981ff5ac963b6824c5504e68bc237cf50c"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/23-ui-ux-pro-max-styleseed-and-ux-law-traceability.md",
+      "lines": 15,
+      "sha256": "131d5cdc31746a849803874626b0eac578caf500f48c55251f0c2daa92d672ef"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/24-performance-bundle-memory-and-browser-reliability.md",
+      "lines": 14,
+      "sha256": "e5d94caeb4089d6c3946094f207f6edc9ec2cda51798ed9024789ed985abeb1b"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/25-negative-tests-defect-register-and-fix-evidence.md",
+      "lines": 15,
+      "sha256": "0ddc19187b0cbfdd7c6876c487a7a1967dbd8580aa8752ab5c78abc9cc8e0c73"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/26-exact-command-results-and-historical-regressions.md",
+      "lines": 17,
+      "sha256": "048ac871a81807d68da6b922ed305da4750078188eefb74cf6dbc7394d485b37"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/27-f13-1-01-to-54-acceptance-and-cross-phase-ledger.md",
+      "lines": 15,
+      "sha256": "67158e077eef6dcce0e0217cdab8c0d08f711f241607679027eb0bf388b25c63"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/28-attributed-changes-safe-rollback-and-phase13-codex-handoff.md",
+      "lines": 29,
+      "sha256": "bae06b25452aabf7fc7495f54ea40286bd65b59a97bca4323b0611a73679d7fa"
+    },
+    {
+      "path": "docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/README.md",
+      "lines": 87,
+      "sha256": "92b85365a5a849f8d52085fda436486d60b25ac92a03d88e1ddf04e2e6a2240a"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/01-executive-summary-audit-methodology.md",
+      "lines": 63,
+      "sha256": "5a172b899a418414e5a3cfcb5eebdc77190fb434a1d48917e16c522b672d7b34"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/02-claim-reconciliation-discrepancy-analysis.md",
+      "lines": 64,
+      "sha256": "fa2dfe9bb60f6a6c34f8da1b827b40a63f2aebf6f8a3b8d9f6ab614823972b9d"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/03-working-tree-git-baseline-audit.md",
+      "lines": 53,
+      "sha256": "258015eed5a35f5f9b9ff160e568d23eec0be785733475c9edd2be0940babbe0"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/04-react19-vite8-architectural-integrity.md",
+      "lines": 41,
+      "sha256": "6c1dd53dff33d839f7f6e5989dbbcc0363eeba776e74061c52dc4c1a2215b081"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/05-canonical-ui-libraries-zero-dependency-verification.md",
+      "lines": 46,
+      "sha256": "6c05588ed0c8189468113745e8f77fd2f2e6de4915a0d07e925125c1776c1985"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/06-deep-form-state-split-pane-architecture-audit.md",
+      "lines": 47,
+      "sha256": "04e37fcfa8654c42f0c7e93b583bf06973db3f76e443f930bdfbeae8a338273b"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/07-undo-redo-history-transaction-stack-verification.md",
+      "lines": 53,
+      "sha256": "28ae685998f1dfc3e5029d9a290ead46f6e2b124b59d822e68a7fc200cb52f39"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/08-autosave-persistence-dirty-state-lifecycle-audit.md",
+      "lines": 45,
+      "sha256": "4e6e37b952d5a154c1decec37308ba1c7b14fb30b1b6d206a7503a87c5c65919"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/09-unsaved-changes-navigation-guard-data-loss-audit.md",
+      "lines": 69,
+      "sha256": "393d0a8c37b2ee990ebef87d40b1aa410de5c72b6ed0beed57c63e97203df878"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/10-unknown-json-roundtrip-subtree-preservation-audit.md",
+      "lines": 65,
+      "sha256": "9333b9a38e19d81fb55c8d7f3f0866be3d62c1fc5f23d8bbf3e60a8c401d79f5"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/11-preview-postmessage-protocol-cross-origin-security-audit.md",
+      "lines": 40,
+      "sha256": "a3f0aebdb2f5dccc2eee5f2f386035b60b0745d18012f72f8ef0fe4f53ad7e99"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/12-section-editor-componentry-field-integrity-audit.md",
+      "lines": 36,
+      "sha256": "305fae9bebd03e6560eb8abf9df591e0cfc366d87315e891b212ce293345f58f"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/13-khmer-typography-unicode-bilingual-authoring-audit.md",
+      "lines": 48,
+      "sha256": "be2742e6b6fc3698a7315a8dbc9537152b35cab50f9ff4a8885927788aaa4823"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/14-mobile-virtual-keyboard-visualviewport-adaptation-audit.md",
+      "lines": 50,
+      "sha256": "807c32f50ec1163fa73dcd8796c7f935a3b7e61b4495b115d39565ef657b2134"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/15-responsive-layouts-844x390-landscape-geometry-audit.md",
+      "lines": 47,
+      "sha256": "488d22c3c88e0d33af8ef7cfaea22fb349f1a17966f0bdd8a8dcf0ef028db942"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/16-template-chooser-modal-entitlement-boundary-audit.md",
+      "lines": 33,
+      "sha256": "cc48a8496d721150270b2076acc02bf0146e413b6e240ebf2ece2a0d5094551e"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/17-illustrated-map-designer-integration-audit.md",
+      "lines": 31,
+      "sha256": "7aa3dacf002157cf59e21650ae80bf3b813745613a2c3b94ada83a025f5b4c8b"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/18-pre-wedding-video-media-field-handling-audit.md",
+      "lines": 32,
+      "sha256": "d4b66bc3d79e3a5dde294bd811cd3d0c0328ca422df81ecbe9f197182904c1f5"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/19-performance-characteristics-rendering-efficiency-audit.md",
+      "lines": 35,
+      "sha256": "18b24be8b77e039e41150eb05d0ea5af2bf515d14c15dfd6f1d75a0f0023ad7a"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/20-wcag22-aa-accessibility-keyboard-navigation-audit.md",
+      "lines": 34,
+      "sha256": "cec85e9b4848242a80e150d983fad15c022576fa977403956b5a88b5c458b0c6"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/21-negative-scenario-test-matrix-audit.md",
+      "lines": 55,
+      "sha256": "501a788c4fcded792b804be6290cefecaecf42707d679ea41b5706692ec211d8"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/22-vitest-unit-integration-test-suite-audit.md",
+      "lines": 43,
+      "sha256": "7b2fd33a43ad265966df87c6d1eb008f1bbf470b4b6bbb9b34308f73f6659fae"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/23-playwright-visual-e2e-test-suite-audit.md",
+      "lines": 43,
+      "sha256": "18d4694fea114c33838656f18584ce4192b937ae196a25f213c8800e0dd26abe"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/24-cross-subsystem-regression-audit.md",
+      "lines": 50,
+      "sha256": "1929daff38bbdc86705d4c94890286ca6ad9c65f4fe9c214ddc1711bcce0d462"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/25-security-threat-model-verification.md",
+      "lines": 25,
+      "sha256": "4fc6e453e65e844550754c89f8c353a2b37e1679a40b1163f150c7e4e11ce482"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/26-design-token-sync-css-variable-contract-audit.md",
+      "lines": 44,
+      "sha256": "38ed683341e695810207af5b53458ddd84d8df54239ab63d6c60525f496a7b5e"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/27-54-acceptance-gates-independent-evaluation.md",
+      "lines": 93,
+      "sha256": "b64f291642ec111e672b6bb3eb9ee6446dca74c3e48941935e3337fc9f3b5a87"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/28-safe-scoped-rollback-procedure-emergency-runbook.md",
+      "lines": 66,
+      "sha256": "3613b956798dd671d41b4c547f76d4d8a93ace2130dfdafd99226d505326b2ba"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/29-production-publication-safety-hard-gate-verification.md",
+      "lines": 60,
+      "sha256": "f5872908a0e22a575f4af3d243d54d1480d56efca85f4e8a9d155fb06226bcf2"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md",
+      "lines": 67,
+      "sha256": "056e8a8bc5d46fda77c30267171f5462fa7bc82a68cda0959687f800503a2412"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/31-phase14-1-gemini-media-studio-execution-handoff.md",
+      "lines": 61,
+      "sha256": "b43ca26e661d2477a7881e1fcf3cfa86172a2d8e381f63a6509347cfe12856f1"
+    },
+    {
+      "path": "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md",
+      "lines": 87,
+      "sha256": "605a304237784f14ec1daf92c1ea31c268b82a14c1981696d8b9559795032435"
+    }
+  ],
+  "broken_prior_markdown_links": []
+}

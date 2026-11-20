@@ -1,0 +1,1122 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index dc84085f..79685557 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -353,7 +353,11 @@ jobs:
+ 
+       - name: Verify Studio, template locales, guests and tickets
+         working-directory: apps/frontend-user
+-        run: npx playwright test tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js
++        env:
++          PHASE12_WRITE_MATRIX: "true"
++        run: |
++          npx vitest run src/features/templates/registry/phase12ContractMatrix.test.jsx
++          npx playwright test tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js
+ 
+       - name: Verify mobile package purchase and activation contracts
+         working-directory: apps/frontend-user
+diff --git a/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx b/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx
+index 76cc3006..829f7866 100644
+--- a/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx
++++ b/apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx
+@@ -17,6 +17,8 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
+     vi.clearAllMocks();
+     localStorage.clear();
+     sessionStorage.clear();
++    // Storage readers must see the same authenticated owner as the hook fixture.
++    sessionStorage.setItem('koupreng.auth', JSON.stringify({ accessToken: 'fixture-only', user: { id: 'user-owner-1' } }));
+     useLanguageStore.setState({ lang: "en" });
+   });
+ 
+@@ -60,6 +62,8 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
+ 
+     saveDraft({
+       id: "wed-failed-sync",
++      // SYNC_FAILED represents a previously created server event with pending changes.
++      backendInvitationId: 999,
+       ownerUserId: "user-owner-1",
+       title: "Failed Sync Ceremony",
+       eventType: "ENGAGEMENT",
+diff --git a/apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx b/apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx
+index e7d2ba0b..835cfdb6 100644
+--- a/apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx
++++ b/apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx
+@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
+ import InvitationForm from "./InvitationForm";
+ import { invitationService } from "@/features/invitations/api/invitationApi";
+ import { mediaService } from "@/features/invitations/api/mediaApi";
+-import { getDraft } from "@/shared/storage/weddingStorage";
++import { getDraft, isUnclaimedDraft } from "@/shared/storage/weddingStorage";
+ import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "../templates/data/templatesData";
+ import { templateCatalogService } from "../templates/api/templateCatalogApi";
+ import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
+@@ -14,6 +14,12 @@ import { TemplateUnavailable } from "../templates/experience/TemplateRenderGuard
+ import "@/features/events/EventsFeature.css";
+ 
+ export default function InvitationEditPage() {
++    const { eventId, id } = useParams();
++    const { user } = useAuth();
++    return <VerifiedInvitationEditor key={`${user?.id || user?.userId}:${eventId || id || 'new'}`} />;
++}
++
++function VerifiedInvitationEditor() {
+     const { eventId, id = eventId } = useParams();
+     const location = useLocation();
+     const createEventUrl = `/app/events/new${location.search}`;
+@@ -22,6 +28,7 @@ export default function InvitationEditPage() {
+     const [invitation, setInvitation] = useState(null);
+     const [loading, setLoading] = useState(true);
+     const [templateError, setTemplateError] = useState(false);
++    const [unclaimed, setUnclaimed] = useState(false);
+ 
+     useEffect(() => {
+         let active = true;
+@@ -34,6 +41,7 @@ export default function InvitationEditPage() {
+             let catalogItems;
+             try {
+                 catalogItems = await templateCatalogService.list();
++                if (!active) return;
+                 registerDynamicTemplates(catalogItems || []);
+                 if (!catalogItems?.length) throw new Error("Template catalog unavailable");
+             } catch {
+@@ -43,6 +51,10 @@ export default function InvitationEditPage() {
+ 
+             const ownerUserId = user?.id || user?.userId;
+             const targetId = id;
++            if (!eventId && targetId && ownerUserId && isUnclaimedDraft(targetId)) {
++                if (active) { setUnclaimed(true); setLoading(false); }
++                return;
++            }
+             const localDraft = !eventId && targetId ? getDraft(targetId, ownerUserId) : null;
+ 
+             // 1. Check local wedding draft storage first
+@@ -184,6 +196,12 @@ export default function InvitationEditPage() {
+ 
+     // A route without an id is a local, unsaved editor draft.
+     if (templateError) return <TemplateUnavailable />;
++    if (unclaimed) return <main className="events-page" role="alert">
++        <h1>Draft recovery required · ត្រូវការស្ដារពង្រាង</h1>
++        <p>This older draft has no verified owner. Its original data remains on this device. Recover ownership before editing or syncing it.</p>
++        <p lang="km">ពង្រាងចាស់នេះមិនមានម្ចាស់ដែលបានផ្ទៀងផ្ទាត់ទេ។ ទិន្នន័យដើមនៅលើឧបករណ៍នេះ។ សូមស្ដារភាពជាម្ចាស់ មុនកែសម្រួល ឬរក្សាទុកលើម៉ាស៊ីនមេ។</p>
++        <Link to="/app/events">My events · កម្មវិធីរបស់ខ្ញុំ</Link>
++    </main>;
+     if (!invitation) {
+         return (
+             <main className="events-page">
+diff --git a/apps/frontend-user/src/features/invitations/InvitationForm.jsx b/apps/frontend-user/src/features/invitations/InvitationForm.jsx
+index 0adeec89..28b213b1 100644
+--- a/apps/frontend-user/src/features/invitations/InvitationForm.jsx
++++ b/apps/frontend-user/src/features/invitations/InvitationForm.jsx
+@@ -39,6 +39,7 @@ import StudioAppearance from "./studio/StudioAppearance";
+ const InvitationStyleEditor = lazy(() => import('./studio/InvitationStyleEditor'));
+ import CinematicIntroEditor from './studio/CinematicIntroEditor';
+ import { useStudioPersistence } from "./studio/useStudioPersistence";
++import { useStudioAuthority } from "./studio/useStudioAuthority";
+ import { normalizeStudioImage, replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
+ import "./studio/InvitationStudio.css";
+ import "./studio/StudioChrome.css";
+@@ -74,7 +75,7 @@ import Modal from "@/shared/ui/Modal";
+ import { invitationService } from "@/features/invitations/api/invitationApi";
+ import { mediaService } from "@/features/invitations/api/mediaApi";
+ import { saveDraft } from "@/shared/storage/weddingStorage";
+-import { dataUrlToFile, stripInlineMedia } from "./invitationPayloadUtils";
++import { dataUrlToFile, stripInlineMedia, preserveStudioJson, studioGallery, acknowledgeStudioMedia } from "./invitationPayloadUtils";
+ import {
+     getTemplateById,
+     getTemplatePreset,
+@@ -622,9 +623,6 @@ export default function InvitationForm({ invitation }) {
+                 while (list.length < 5) {
+                     list.push({ id: `p${list.length + 1}`, url: "" });
+                 }
+-                if (list.length > 10) {
+-                    list = list.slice(0, 10);
+-                }
+                 return list;
+             })(),
+             showStory: customParsed.showStory !== undefined ? customParsed.showStory : (tpl?.enabledSections?.story !== false),
+@@ -743,6 +741,7 @@ export default function InvitationForm({ invitation }) {
+     }, [isTemplateModalOpen, catalogRetry]);
+ 
+     const canEdit = workspace ? workspace.can?.("MANAGE_INVITATION") === true : true;
++    const authority = useStudioAuthority(canEdit);
+     const editAccess = useRef(canEdit);
+     useEffect(() => { editAccess.current = canEdit; }, [canEdit]);
+     const brandingAccess = useFeatureAccess({ feature: 'CUSTOM_BRANDING', permission: 'MANAGE_INVITATION' });
+@@ -790,18 +789,23 @@ export default function InvitationForm({ invitation }) {
+     const [isLocating, setIsLocating] = useState(false);
+     const serverRevision = useRef(invitation?.updatedAt || null);
+     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
++    const [clientRequestId] = useState(() => invitation?.clientRequestId || generateSecureUuid());
++    const createAttempt = useRef(invitation?.createAttempt || null);
+ 
+     const handleChangeTemplate = async (candidate) => {
+-        if (!candidate) return;
++        const request = authority.begin();
++        if (!candidate || !request.isCurrent()) return;
+         let template;
+         try {
+             const fresh = await templateService.getPublicBySlug(candidate.code || candidate.slug);
++            if (!request.isCurrent()) return;
+             if (!isPublicCatalogTemplate(fresh)) throw new Error("Template is unavailable");
+             const nextCatalog = catalogTemplates.map(item => String(item.backendId) === String(fresh.id) ? fresh : item);
+             registerDynamicTemplates(nextCatalog);
+             template = getTemplateById(fresh.code);
+             if (!template || Number(template.backendId) !== Number(fresh.id)) throw new Error("Template identity changed");
+         } catch {
++            if (!request.isCurrent()) return;
+             toast(englishUI ? "This design is unavailable. Refresh the collection and try again." : "គំរូនេះមិនអាចប្រើបានទេ។ សូមផ្ទុកបញ្ជីឡើងវិញ។", "error");
+             setCatalogRetry(value => value + 1);
+             return;
+@@ -823,11 +827,13 @@ export default function InvitationForm({ invitation }) {
+                 const access = workspace?.isOwner === false
+                     ? await invitationService.templateAccess(workspace.eventId, template.backendId)
+                     : await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
++                if (!request.isCurrent()) return;
+                 if (!access?.hasAccess) {
+                     void feedback.upgrade({ feature: "PREMIUM_TEMPLATES", template, event: workspace, permission: "MANAGE_INVITATION" });
+                     return;
+                 }
+             } catch (error) {
++                if (!request.isCurrent()) return;
+                 if (!feedback.explain(error, { event: workspace, permission: "MANAGE_INVITATION", feature: "PREMIUM_TEMPLATES" })) {
+                     toast.error(englishUI ? "Could not verify template access. Try again." : "មិនអាចផ្ទៀងផ្ទាត់សិទ្ធិគំរូបានទេ។ សូមសាកម្តងទៀត។");
+                 }
+@@ -837,7 +843,7 @@ export default function InvitationForm({ invitation }) {
+         if (!await feedback.confirm({ title: uiCopy("បញ្ជាក់ការប្តូរគំរូ", "Confirm template change"), message: englishUI
+             ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
+             : "ប្ដូរគំរូសំបុត្រអញ្ជើញ? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។"})) return;
+-        if (!editAccess.current) { void feedback.permissionDenied({ event: workspace }); return; }
++        if (!request.isCurrent() || !editAccess.current) { return; }
+         const preset = getTemplatePreset(template) || {};
+         const uploadedCoverUrl = form.uploadedCoverUrl || "";
+ 
+@@ -1233,6 +1239,10 @@ export default function InvitationForm({ invitation }) {
+         });
+     };
+     const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false, deliberate = false } = {}) => {
++        const request = authority.begin();
++        const stopped = () => ({ synced: false, status: 403, error: uiCopy('សិទ្ធិ ឬវគ្គចូលប្រើបានផ្លាស់ប្ដូរ។ បើកកម្មវិធីម្ដងទៀត។', 'Access or session changed. Reopen the event before saving.') });
++        if (!request.isCurrent()) return stopped();
++        const requestOptions = { suppressAuthRedirect: true, signal: request.signal };
+         const event = resolveEvent(form);
+         const end = form.eventEndTime ? wallTimeToInstant(form.eventEndDate || event.date, form.eventEndTime, event.timezone) : null;
+         if (!validTimezone(event.timezone) || (event.validDate && event.time && event.instant === null) || (form.eventEndTime && (end === null || event.instant === null || end <= event.instant))) {
+@@ -1268,7 +1278,7 @@ export default function InvitationForm({ invitation }) {
+         setIsSaving(true);
+         try {
+             let savedPhotos = form.photos || [];
+-            const designPayload = {
++            const designPayload = preserveStudioJson(safeJson(invitation?.designJson), {
+                 ...safeJson(invitation?.designJson),
+                 studioStyle: form.studioStyle,
+                 fontKhmer: form.fontKhmer,
+@@ -1312,9 +1322,9 @@ export default function InvitationForm({ invitation }) {
+                 musicUrl: form.musicUrl,
+                 showBrandMark: form.showBrandMark !== false,
+                 brandMarkUrl: form.brandMarkUrl || "",
+-            };
++            });
+ 
+-            const contentPayload = {
++            const contentPayload = preserveStudioJson(safeJson(invitation?.contentJson), {
+                 ...safeJson(invitation?.contentJson),
+                 ...invitationFeatureFields(form),
+                 ...(form.localizedContentV1 ? { localizedContentV1: localeContent(form) } : {}),
+@@ -1371,16 +1381,14 @@ export default function InvitationForm({ invitation }) {
+                 party: form.party || [],
+                 showFaq: form.showFaq !== false,
+                 faq: form.faq || [],
+-                gallery: savedPhotos
+-                    .filter((photo) => photo?.url)
+-                    .map(({ id, url }) => ({ id, preview: url, type: "image" })),
++                gallery: studioGallery(savedPhotos, safeJson(invitation?.contentJson).gallery),
+                 khqrDollar: form.khqrDollar,
+                 khqrRiel: form.khqrRiel,
+                 thankYouTitle: form.thankYouTitle,
+                 thankYouText: form.thankYouText,
+                 apologyTitle: form.apologyTitle,
+                 apologyText: form.apologyText,
+-            };
++            });
+ 
+             const payload = {
+                 expectedUpdatedAt: serverRevision.current,
+@@ -1427,13 +1435,24 @@ export default function InvitationForm({ invitation }) {
+             try {
+                 if (!payload.templateId) throw new Error(uiCopy("គំរូដែលបានជ្រើសមិនមានក្នុងបណ្ណាល័យទេ។ សូមជ្រើសគំរូដែលអាចប្រើបាន មុនពេលរក្សាទុកលើម៉ាស៊ីនមេ។", "The selected template is unavailable in the catalog. Choose an available template before saving online."));
+                 if (effectiveBackendId) {
+-                    saved = await invitationService.update(effectiveBackendId, payload, { suppressAuthRedirect: true });
++                    saved = await invitationService.update(effectiveBackendId, payload, requestOptions);
+                 } else {
+-                    saved = await invitationService.create(payload);
++                    // An ambiguous create retry repeats the first immutable request.
++                    createAttempt.current ||= { ...payload, clientRequestId };
++                    saved = await invitationService.create(createAttempt.current, requestOptions);
++                    if (!request.isCurrent()) return stopped();
++                    if (saved?.id) savedBackendId.current = saved.id;
++                    if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
++                    const { clientRequestId: attemptId, ...firstPayload } = createAttempt.current;
++                    if (attemptId && saved?.id && JSON.stringify(firstPayload) !== JSON.stringify(payload)) {
++                        saved = await invitationService.update(saved.id, { ...payload, expectedUpdatedAt: serverRevision.current }, requestOptions);
++                    }
+                 }
++                if (!request.isCurrent()) return stopped();
+                 if (saved?.id) savedBackendId.current = saved.id;
+                 if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
+             } catch (apiErr) {
++                if (!request.isCurrent()) return stopped();
+                 apiFailure = apiErr;
+                 if (!quiet || deliberate) feedback.explain(apiErr, { event: workspace, permission: "MANAGE_INVITATION" });
+                 apiSyncFailed = true;
+@@ -1451,11 +1470,13 @@ export default function InvitationForm({ invitation }) {
+             const coverFile = pendingCoverFile || dataUrlToFile(form.coverImage, "cover.jpg");
+             if (coverFile && backendId && !apiSyncFailed) {
+                 try {
+-                    const uploaded = await mediaService.uploadCover(backendId, coverFile);
++                    const uploaded = await mediaService.uploadCover(backendId, coverFile, undefined, requestOptions);
++                    if (!request.isCurrent()) return stopped();
+                     savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
+-                    setPendingCoverFile(null);
+-                    update("coverImage", savedCoverUrl);
++                    setPendingCoverFile(current => current === pendingCoverFile ? null : current);
++                    setForm(previous => acknowledgeStudioMedia(previous, form, "coverImage", savedCoverUrl));
+                 } catch (uploadError) {
++                    if (!request.isCurrent()) return stopped();
+                     mediaSyncError = uploadError?.message || "Cover image upload failed";
+                 }
+             }
+@@ -1478,7 +1499,8 @@ export default function InvitationForm({ invitation }) {
+                       // Keep mixed saves within the server's five-file request limit.
+                       for (let offset = 0; offset < galleryUploads.length; offset += 5) {
+                         const batch = galleryUploads.slice(offset, offset + 5);
+-                        const uploadedGallery = await mediaService.uploadGallery(backendId, batch.map((item) => item.file));
++                        const uploadedGallery = await mediaService.uploadGallery(backendId, batch.map((item) => item.file), undefined, undefined, requestOptions);
++                        if (!request.isCurrent()) return stopped();
+                         const uploadedItems = Array.isArray(uploadedGallery) ? uploadedGallery : uploadedGallery?.items || uploadedGallery?.data || [];
+                         for (const [uploadIndex, upload] of batch.entries()) {
+                             const fileUrl = uploadedItems[uploadIndex]?.fileUrl;
+@@ -1487,19 +1509,20 @@ export default function InvitationForm({ invitation }) {
+                                 savedPhotos = savedPhotos.map((photo, index) => index === upload.index ? { ...photo, url: fileUrl } : photo);
+                             } else if (upload.purpose === "invitation") {
+                                 savedInvitationUrl = fileUrl;
+-                                setPendingInvitationFile(null);
+-                                update("invitationImage", fileUrl);
++                                setPendingInvitationFile(current => current === pendingInvitationFile ? null : current);
++                    setForm(previous => acknowledgeStudioMedia(previous, form, "invitationImage", fileUrl));
+                             } else if (upload.purpose === "invitation2") {
+                                 savedInvitationUrl2 = fileUrl;
+-                                setPendingInvitation2File(null);
+-                                update("invitationImage2", fileUrl);
++                                setPendingInvitation2File(current => current === pendingInvitation2File ? null : current);
++                    setForm(previous => acknowledgeStudioMedia(previous, form, "invitationImage2", fileUrl));
+                             } else if (upload.purpose === 'map') {
+                                 savedSketchMapUrl = fileUrl;
+-                                update('sketchMapImage', fileUrl);
++                                setForm(previous => acknowledgeStudioMedia(previous, form, 'sketchMapImage', fileUrl));
+                             }
+                         }
+                       }
+                     } catch (uploadError) {
++                        if (!request.isCurrent()) return stopped();
+                         mediaSyncError ||= uploadError?.message || "Gallery upload failed";
+                     }
+                 }
+@@ -1509,12 +1532,14 @@ export default function InvitationForm({ invitation }) {
+             const coverBgFile = pendingCoverBgFile || dataUrlToFile(form.coverBackgroundImage, "cover-bg.jpg");
+             if (coverBgFile && backendId && !apiSyncFailed) {
+                 try {
+-                    const items = await mediaService.uploadGallery(backendId, [coverBgFile]);
++                    const items = await mediaService.uploadGallery(backendId, [coverBgFile], undefined, undefined, requestOptions);
++                    if (!request.isCurrent()) return stopped();
+                     const uploadedCoverBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
+                     savedCoverBgUrl = uploadedCoverBg?.fileUrl || uploadedCoverBg?.data?.fileUrl || form.coverBackgroundImage;
+-                    setPendingCoverBgFile(null);
+-                    update("coverBackgroundImage", savedCoverBgUrl);
++                    setPendingCoverBgFile(current => current === pendingCoverBgFile ? null : current);
++                    setForm(previous => acknowledgeStudioMedia(previous, form, "coverBackgroundImage", savedCoverBgUrl));
+                 } catch (uploadError) {
++                    if (!request.isCurrent()) return stopped();
+                     mediaSyncError ||= uploadError?.message || "Cover background upload failed";
+                 }
+             }
+@@ -1523,12 +1548,14 @@ export default function InvitationForm({ invitation }) {
+             const bgFile = pendingBackgroundFile || dataUrlToFile(form.backgroundImage, "background.jpg");
+             if (bgFile && backendId && !apiSyncFailed) {
+                 try {
+-                    const items = await mediaService.uploadGallery(backendId, [bgFile]);
++                    const items = await mediaService.uploadGallery(backendId, [bgFile], undefined, undefined, requestOptions);
++                    if (!request.isCurrent()) return stopped();
+                     const uploadedBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
+                     savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
+-                    setPendingBackgroundFile(null);
+-                    update("backgroundImage", savedBgUrl);
++                    setPendingBackgroundFile(current => current === pendingBackgroundFile ? null : current);
++                    setForm(previous => acknowledgeStudioMedia(previous, form, "backgroundImage", savedBgUrl));
+                 } catch (uploadError) {
++                    if (!request.isCurrent()) return stopped();
+                     mediaSyncError ||= uploadError?.message || "Background upload failed";
+                 }
+             }
+@@ -1539,13 +1566,17 @@ export default function InvitationForm({ invitation }) {
+                 photos: savedPhotos, coverBackgroundImage: savedCoverBgUrl || null, backgroundImage: savedBgUrl || null,
+                 invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2, sketchMapImage: savedSketchMapUrl };
+             const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2", 'sketchMapImage', 'coverFocalPoint', 'couplePhoto'].map(key => [key, finalDesign[key]])),
+-                gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })) };
++                gallery: studioGallery(savedPhotos, contentPayload.gallery) };
+             let extraMedia = new globalThis.Map();
+             if (backendId && !apiSyncFailed) {
+                 try {
+-                    extraMedia = await uploadInlineReferences([finalDesign, finalContent], files => mediaService.uploadGallery(backendId, files));
++                    extraMedia = await uploadInlineReferences([finalDesign, finalContent], files => {
++                        if (!request.isCurrent()) throw new Error('Studio request is no longer current');
++                        return mediaService.uploadGallery(backendId, files, undefined, undefined, requestOptions);
++                    });
++                    if (!request.isCurrent()) return stopped();
+                     if (extraMedia.size) setForm(previous => replaceMediaReferences(previous, extraMedia));
+-                } catch (error) { mediaSyncError ||= error.message; }
++                } catch (error) { if (!request.isCurrent()) return stopped(); mediaSyncError ||= error.message; }
+             }
+             const hasMediaUpdates = backendId && (
+                 extraMedia.size ||
+@@ -1580,15 +1611,17 @@ export default function InvitationForm({ invitation }) {
+                         contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
+                             ...contentPayload,
+                             coverImage: savedCoverUrl || contentPayload.coverImage,
+-                            gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })),
++                            gallery: studioGallery(savedPhotos, contentPayload.gallery),
+                             coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
+                             backgroundImage: savedBgUrl || form.backgroundImage || null,
+                             invitationImage: savedInvitationUrl || form.invitationImage || null,
+                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
+                             sketchMapImage: savedSketchMapUrl || null,
+                         }, extraMedia))),
+-                    }, { suppressAuthRedirect: true });
++                    }, requestOptions);
++                    if (!request.isCurrent()) return stopped();
+                 } catch (updateError) {
++                    if (!request.isCurrent()) return stopped();
+                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
+                     apiSyncStatus = updateError?.status || updateError?.response?.status;
+                 }
+@@ -1598,9 +1631,12 @@ export default function InvitationForm({ invitation }) {
+             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
+ 
+             // Always persist to local wedding draft storage
++            if (!request.isCurrent()) return stopped();
+             saveDraft(stripInlineMedia(replaceMediaReferences({
+                 ownerUserId: user?.id || user?.userId,
+                 id: targetDraftId,
++                clientRequestId,
++                createAttempt: createAttempt.current,
+                 rsvpDeadline: invitation?.rsvpDeadline || null,
+                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
+                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
+@@ -1732,6 +1768,7 @@ export default function InvitationForm({ invitation }) {
+             }
+             return finalSavedId;
+         } catch (err) {
++            if (!request.isCurrent()) return stopped();
+             toast.error(err.message || (t("savedError") || "មិនអាចរក្សាទុកបានទេ (Save error)"));
+             return null;
+         } finally {
+@@ -1781,17 +1818,21 @@ export default function InvitationForm({ invitation }) {
+         toast(uiCopy("បានផ្សព្វផ្សាយសំបុត្រអញ្ជើញ", "Invitation published"), "success");
+     }
+     async function checkPublication() {
++        const request = authority.begin();
++        if (!request.isCurrent()) return;
+         setIsPublishing(true);
+         try {
+-            const result = await invitationService.get(savedBackendId.current);
++            const result = await invitationService.get(savedBackendId.current, { signal: request.signal, suppressAuthRedirect: true });
++            if (!request.isCurrent()) return;
+             if (result?.status === "PUBLISHED") confirmPublished(result);
+             else setPublishError(uiCopy("ម៉ាស៊ីនមេបង្ហាញថានៅជាពង្រាង។ អ្នកអាចព្យាយាមផ្សព្វផ្សាយម្ដងទៀត។", "The server still reports a draft. You can retry publication."));
+-        } catch { setPublishError(uiCopy("មិនអាចពិនិត្យស្ថានភាពបាន។ ពិនិត្យការតភ្ជាប់ រួចព្យាយាមម្ដងទៀត។", "Could not check publication. Reconnect and check again before sharing.")); }
++        } catch { if (request.isCurrent()) setPublishError(uiCopy("មិនអាចពិនិត្យស្ថានភាពបាន។ ពិនិត្យការតភ្ជាប់ រួចព្យាយាមម្ដងទៀត។", "Could not check publication. Reconnect and check again before sharing.")); }
+         finally { setIsPublishing(false); }
+     }
+ 
+     async function publishInvitation() {
+-        if (isPublishing) return;
++        const request = authority.begin();
++        if (isPublishing || !canPublish || !request.isCurrent()) return;
+         if (!String(authoredForm.venueAddress || "").trim()) {
+             setVenueAddressError(englishUI ? "Enter the venue address before publishing." : "សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។");
+             setSelectedSection("venue");
+@@ -1800,13 +1841,17 @@ export default function InvitationForm({ invitation }) {
+         setIsPublishing(true);
+         try {
+             if (!await studio.flush()) {
++                if (!request.isCurrent()) return;
+                 setPublishError(uiCopy("ពង្រាងមិនទាន់បានរក្សាទុក។ ត្រឡប់ទៅកែសម្រួល ដើម្បីពិនិត្យស្ថានភាពរក្សាទុក។", "The draft has not been saved. Keep editing to review the save status before publishing."));
+                 return;
+             }
+-            const result = await invitationService.publish(savedBackendId.current);
++            if (!request.isCurrent()) return;
++            const result = await invitationService.publish(savedBackendId.current, { signal: request.signal, suppressAuthRedirect: true });
++            if (!request.isCurrent()) return;
+             if (result?.status !== "PUBLISHED") throw new Error(uiCopy("ម៉ាស៊ីនមេមិនទាន់បានបញ្ជាក់ការផ្សព្វផ្សាយទេ។ សូមព្យាយាមម្ដងទៀត។", "The server has not confirmed publication. Please retry."));
+             confirmPublished(result);
+         } catch (error) {
++            if (!request.isCurrent()) return;
+             if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
+                 setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
+                 completePublishField({ section: "venue", field: "venueAddress" });
+@@ -3225,7 +3270,7 @@ export default function InvitationForm({ invitation }) {
+                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
+                 return mount ? createPortal(toolbar, mount) : toolbar;
+             })()}
+-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
++            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired", "denied"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired", "denied"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
+             <div className="studio-workflow-bar">
+                 <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
+                 {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} focusEditor={focusEditor} onFocusEditor={() => setFocusEditor(value => !value)} />}
+diff --git a/apps/frontend-user/src/features/invitations/api/invitationApi.js b/apps/frontend-user/src/features/invitations/api/invitationApi.js
+index 974f1aca..2c937c19 100644
+--- a/apps/frontend-user/src/features/invitations/api/invitationApi.js
++++ b/apps/frontend-user/src/features/invitations/api/invitationApi.js
+@@ -49,9 +49,9 @@ export const invitationService = {
+     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));
+     return api.patch(`/v1/invitations/${id}/draft`).then(unwrap);
+   },
+-  publish: (id) => {
++  publish: (id, options) => {
+     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));
+-    return api.patch(`/v1/invitations/${id}/publish`).then(unwrap);
++    return api.patch(`/v1/invitations/${id}/publish`, undefined, options).then(unwrap);
+   },
+   unpublish: (id) => {
+     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));
+diff --git a/apps/frontend-user/src/features/invitations/api/mediaApi.js b/apps/frontend-user/src/features/invitations/api/mediaApi.js
+index 9b7bde50..b9ff3b48 100644
+--- a/apps/frontend-user/src/features/invitations/api/mediaApi.js
++++ b/apps/frontend-user/src/features/invitations/api/mediaApi.js
+@@ -95,7 +95,7 @@ export const mediaService = {
+     }
+     return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file), { ...options, onUploadProgress }).then(unwrap);
+   },
+-  uploadGallery: (invitationId, files, sortOrder, onUploadProgress) => {
++  uploadGallery: (invitationId, files, sortOrder, onUploadProgress, options) => {
+     if (isLocalDraftId(invitationId)) {
+       const list = Array.from(files || []).map((f, idx) => ({
+         id: `local-gallery-${Date.now()}-${idx}`,
+@@ -104,7 +104,7 @@ export const mediaService = {
+       }));
+       return Promise.resolve(list);
+     }
+-    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder), { onUploadProgress }).then(unwrap);
++    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder), { ...options, onUploadProgress }).then(unwrap);
+   },
+   uploadVideo: (invitationId, file, onUploadProgress) => {
+     if (isLocalDraftId(invitationId)) {
+diff --git a/apps/frontend-user/src/features/invitations/invitationPayloadUtils.js b/apps/frontend-user/src/features/invitations/invitationPayloadUtils.js
+index 5d90fa38..f135c666 100644
+--- a/apps/frontend-user/src/features/invitations/invitationPayloadUtils.js
++++ b/apps/frontend-user/src/features/invitations/invitationPayloadUtils.js
+@@ -1,3 +1,29 @@
++const unsafeKeys = new Set(['__proto__', 'prototype', 'constructor']);
++const isRecord = value => value && typeof value === 'object' && !Array.isArray(value)
++  && [Object.prototype, null].includes(Object.getPrototypeOf(value));
++
++// Preserve future object fields in the Studio's content/design documents.
++// Edited arrays replace arrays: never restore removed/reordered rows by index.
++export function preserveStudioJson(previous, edited) {
++  if (!isRecord(edited)) return edited;
++  const before = isRecord(previous) ? previous : {};
++  return Object.fromEntries([...new Set([...Object.keys(before), ...Object.keys(edited)])]
++    .filter(key => !unsafeKeys.has(key))
++    .map(key => [key, edited[key] === undefined ? before[key]
++      : isRecord(edited[key]) ? preserveStudioJson(before[key], edited[key]) : edited[key]]));
++}
++
++export function studioGallery(photos, previous = []) {
++  const byId = new Map((Array.isArray(previous) ? previous : []).filter(row => row?.id != null).map(row => [String(row.id), row]));
++  return photos.filter(photo => photo?.url).map(({ id, url }) => ({
++    ...(byId.get(String(id)) || {}), id, preview: url, type: 'image',
++  }));
++}
++
++export function acknowledgeStudioMedia(current, sent, field, savedUrl) {
++  return current[field] === sent[field] ? { ...current, [field]: savedUrl } : current;
++}
++
+ export function stripInlineMedia(value) {
+   if (typeof value === "string") {
+     return /^(?:data:|blob:)/i.test(value) ? null : value;
+diff --git a/apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js b/apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js
+index 0d84ff5e..58040239 100644
+--- a/apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js
++++ b/apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js
+@@ -1,7 +1,24 @@
+ import { describe, expect, it } from "vitest";
+-import { dataUrlToFile, stripInlineMedia } from "./invitationPayloadUtils";
++import { dataUrlToFile, stripInlineMedia, preserveStudioJson, studioGallery, acknowledgeStudioMedia } from "./invitationPayloadUtils";
+ 
+ describe("invitation payload media handling", () => {
++  it('N13-32 late media upload cannot overwrite a replacement selected during the save', () => {
++    const sent = { coverImage: 'data:old', title: 'Before' };
++    const current = { coverImage: 'data:new', title: 'Typed while saving' };
++    expect(acknowledgeStudioMedia(current, sent, 'coverImage', 'https://example.invalid/old.webp')).toBe(current);
++    expect(acknowledgeStudioMedia({ ...sent, title: current.title }, sent, 'coverImage', 'https://example.invalid/old.webp')).toEqual({ coverImage: 'https://example.invalid/old.webp', title: current.title });
++  });
++  it('preserves nested extension values while honoring explicit nulls, array deletions and order', () => {
++    const previous = { appearance: { future: { list: [null, false] }, known: 'old' }, rows: [{ id: 'removed' }, { id: 'kept' }] };
++    expect(preserveStudioJson(previous, { appearance: { known: null }, rows: [{ id: 'kept' }] })).toEqual({ appearance: { future: { list: [null, false] }, known: null }, rows: [{ id: 'kept' }] });
++    expect(previous.appearance.known).toBe('old');
++  });
++  it('does not merge prototype keys or align reordered gallery metadata by array index', () => {
++    const poisoned = JSON.parse('{"__proto__":{"polluted":true},"nested":{"constructor":{"prototype":{"polluted":true}},"safe":null}}');
++    expect(preserveStudioJson({}, poisoned)).toEqual({ nested: { safe: null } });
++    expect({}.polluted).toBeUndefined();
++    expect(studioGallery([{ id: 'b', url: 'new-b' }], [{ id: 'a', future: 'A' }, { id: 'b', future: 'B' }])).toEqual([{ id: 'b', future: 'B', preview: 'new-b', type: 'image' }]);
++  });
+   it("removes data and blob URLs from nested API JSON while preserving remote URLs", () => {
+     expect(stripInlineMedia({
+       coverImage: "data:image/jpeg;base64,AA==",
+diff --git a/apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx b/apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx
+index c4fbf9cd..0666c64d 100644
+--- a/apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx
++++ b/apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx
+@@ -54,7 +54,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
+     });
+ 
+     // Save must fail closed, User B never receives User A's acknowledged state
+-    expect(result.current.phase).toBe('failed');
++    expect(result.current.phase).toBe('denied');
+     expect(result.current.dirty).toBe(true);
+   });
+ 
+@@ -72,7 +72,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
+       await result.current.save();
+     });
+ 
+-    expect(result.current.phase).toBe('failed');
++    expect(result.current.phase).toBe('denied');
+     expect(result.current.dirty).toBe(true);
+     expect(result.current.failure?.status).toBe(403);
+   });
+@@ -80,7 +80,7 @@ describe('Phase 13.1 Creator Studio Negative Test Matrix (N13-01 to N13-35)', ()
+   // N13-04: 403/401/409/503 responses truthful status
+   it.each([
+     [401, 'expired', /session expired/i],
+-    [403, 'failed', /forbidden|denied|access/i],
++    [403, 'denied', /forbidden|denied|access/i],
+     [409, 'conflict', /newer version/i],
+     [503, 'failed', /failed|retry/i],
+   ])('N13-04: truthfully sets phase for HTTP %i without claiming saved', async (status, expectedPhase, messageMatch) => {
+diff --git a/apps/frontend-user/src/features/invitations/studio/StudioChrome.css b/apps/frontend-user/src/features/invitations/studio/StudioChrome.css
+index a9f704dc..85dc4779 100644
+--- a/apps/frontend-user/src/features/invitations/studio/StudioChrome.css
++++ b/apps/frontend-user/src/features/invitations/studio/StudioChrome.css
+@@ -547,4 +547,72 @@
+   .invitation-studio .pe-editor-scroll-body {
+     padding: 12px 16px 80px;
+   }
++  #invitation-studio-toolbar .studio-toolbar-actions {
++    padding-block: 0;
++  }
++  #invitation-studio-toolbar :is(.studio-action,.studio-more summary) {
++    height: 44px;
++    min-height: 44px;
++    padding-block: 6px;
++    font-size: 13px;
++    line-height: 1.8;
++  }
++  .invitation-studio[data-editor-mode=advanced] .studio-workflow-bar {
++    min-height: 52px;
++  }
++  .invitation-studio[data-editor-mode=advanced] .studio-guide {
++    padding-block: 4px;
++  }
++  .invitation-studio .studio-guide-modes {
++    padding: 0;
++  }
++  .invitation-studio .studio-guide-modes button {
++    padding-block: 4px;
++  }
++  .invitation-studio .studio-sections,
++  .invitation-studio .pe-lang-sub-banner {
++    padding-block: 4px;
++  }
++  .invitation-studio .studio-tab-heading {
++    font-size: 18px;
++    line-height: 1.4;
++    padding-bottom: 4px;
++    margin-bottom: 4px;
++  }
++  .invitation-studio .studio-subsection > summary {
++    min-height: 44px;
++    padding-block: 4px;
++  }
++  .invitation-studio .studio-subsection-body {
++    padding-block: 4px 12px;
++  }
++  .invitation-studio .studio-section-guidance {
++    margin-block: 4px;
++  }
++}
++
++/* Portal toolbar and editor use the same accessible management colors. */
++#invitation-studio-toolbar .studio-template-button { color: #76572d; }
++:root[data-color-mode=dark] .invitation-studio .studio-section-list button span { color: var(--app-ink); }
++:root[data-color-mode=dark] #invitation-studio-toolbar .studio-template-button { color: var(--app-ink); }
++
++@media (max-width: 767px) {
++  .studio-toolbar-actions[data-keyboard-open=true] {
++    visibility: visible;
++    pointer-events: auto;
++    bottom: var(--studio-keyboard-inset, 0px);
++  }
++}
++@media (prefers-reduced-motion: reduce) {
++  #invitation-studio-toolbar *, #invitation-studio-toolbar *::before, #invitation-studio-toolbar *::after,
++  .invitation-studio *, .invitation-studio *::before, .invitation-studio *::after {
++    animation: none !important;
++    transition: none !important;
++  }
++}
++@media (forced-colors: active) {
++  :is(.invitation-studio, #invitation-studio-toolbar) :is(button, summary, input, select, textarea) {
++    border: 1px solid ButtonText;
++  }
++  .invitation-studio .studio-section-list button[aria-current] { outline: 2px solid Highlight; }
+ }
+diff --git a/apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx b/apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx
+index 2c5ef1f1..caa7d6b3 100644
+--- a/apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx
++++ b/apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx
+@@ -9,6 +9,7 @@ import BrandLogo from '@/shared/branding/BrandLogo';
+ export default function StudioToolbar({ title, templateName, english, studio, saving, publishing, published, canPublish, canEdit = true, onTemplate, onPreview, previewOpen, onPublish, onBack }) {
+   const workspace = useEventWorkspace();
+   const [keyboardOpen, setKeyboardOpen] = useState(false);
++  const [keyboardInset, setKeyboardInset] = useState(0);
+ 
+   useEffect(() => {
+     const viewport = window.visualViewport;
+@@ -16,6 +17,7 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
+       const isShrunk = Boolean(viewport && window.innerHeight - viewport.height > 150);
+       const isInputActive = Boolean(document.activeElement?.matches("input,textarea,select,[contenteditable=true]"));
+       setKeyboardOpen(isShrunk && isInputActive);
++      setKeyboardInset(isShrunk && isInputActive ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop) : 0);
+     };
+     viewport?.addEventListener("resize", update);
+     document.addEventListener("focusin", update);
+@@ -32,21 +34,26 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
+     : { saved:"បានរក្សាទុក", unsaved:"មិនទាន់រក្សាទុក", saving:"កំពុងរក្សាទុក…", failed:"រក្សាទុកបរាជ័យ", offline:"គ្មានអ៊ីនធឺណិត" };
+   labels.conflict = english ? "Newer version on server" : "មានកំណែថ្មីលើម៉ាស៊ីនមេ";
+   labels.expired = english ? "Session expired" : "វគ្គចូលប្រើផុតកំណត់";
+-  const blocked = ["conflict", "expired"].includes(studio.phase);
++  labels.denied = english ? "Access denied" : "មិនមានសិទ្ធិរក្សាទុក";
++  const blocked = ["conflict", "expired", "denied"].includes(studio.phase);
+   const StatusIcon = studio.phase === "saved" ? Check
+     : studio.phase === "saving" ? LoaderCircle
+     : studio.phase === "conflict" ? AlertTriangle
+-    : studio.phase === "expired" ? Lock
++    : ["expired", "denied"].includes(studio.phase) ? Lock
+     : CloudOff;
+ 
+   useEffect(() => {
+     const handleKeyDown = (event) => {
+-      const isTextEditable = event.target?.matches?.("input, textarea, select, [contenteditable=true]");
++      if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || event.altKey
++        || !(event.ctrlKey || event.metaKey) || saving || blocked || !canEdit) return;
++      if (event.target?.closest?.('[role="dialog"],dialog')) return;
++      const editable = event.target?.closest?.('input,textarea,select,[contenteditable]');
++      const isTextEditable = editable && editable.getAttribute('contenteditable') !== 'false';
+ 
+       // Ctrl/Cmd + S -> Save
+       if ((event.ctrlKey || event.metaKey) && (event.key === 's' || event.key === 'S')) {
+-        event.preventDefault();
+-        if (!saving && !blocked && canEdit) {
++        if (!event.shiftKey) {
++          event.preventDefault();
+           studio.flush({ deliberate: true }).then((saved) => {
+             if (saved) {
+               feedback.success({
+@@ -63,15 +70,13 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
+       // Studio document-level Undo / Redo when not focused in an editable text control
+       if ((event.ctrlKey || event.metaKey) && !isTextEditable) {
+         if (event.key === 'z' || event.key === 'Z') {
+-          event.preventDefault();
+           if (event.shiftKey) {
+-            if (studio.canRedo && canEdit) studio.redo();
++            if (studio.canRedo) { event.preventDefault(); studio.redo(); }
+           } else {
+-            if (studio.canUndo && canEdit) studio.undo();
++            if (studio.canUndo) { event.preventDefault(); studio.undo(); }
+           }
+         } else if (event.key === 'y' || event.key === 'Y') {
+-          event.preventDefault();
+-          if (studio.canRedo && canEdit) studio.redo();
++          if (!event.shiftKey && studio.canRedo) { event.preventDefault(); studio.redo(); }
+         }
+       }
+     };
+@@ -86,23 +91,23 @@ export default function StudioToolbar({ title, templateName, english, studio, sa
+       <BrandLogo variant="icon" className="studio-brand" priority />
+       <div className="studio-document-copy">
+         <h1 title={title}>{title || (english ? "Invitation studio" : "ស្ទូឌីយោសំបុត្រអញ្ជើញ")}</h1>
+-        <button type="button" className="studio-template-button" disabled={!canEdit} onClick={onTemplate} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
++        <button type="button" className="studio-template-button" disabled={!canEdit} onClick={event => { event.currentTarget.focus({ preventScroll: true }); onTemplate?.(); }} aria-label={`${english ? "Change template" : "ប្ដូរគំរូ"}: ${templateName || ''}`}>
+           <Palette size={14} aria-hidden="true" /><span className="pe-template-tag">{templateName}</span>
+         </button>
+       </div>
+     </div>
+     <div className="studio-navbar-preferences"><DisplayPreferences compact /></div>
+     <span className="studio-save-status" data-phase={studio.phase} role="status" aria-live="polite"><StatusIcon size={16} className={studio.phase === "saving" ? "animate-spin" : undefined} aria-hidden="true" />{labels[studio.phase]}</span>
+-    <StudioActionBar data-keyboard-open={keyboardOpen}>
+-      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលសំបុត្រអញ្ជើញជាមុន"} onClick={onPreview}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
++    <StudioActionBar data-keyboard-open={keyboardOpen} style={{ '--studio-keyboard-inset': `${keyboardInset}px` }}>
++      <button type="button" className="studio-action studio-action--preview" aria-haspopup="dialog" aria-expanded={Boolean(previewOpen)} aria-label={english ? "Preview invitation" : "មើលសំបុត្រអញ្ជើញជាមុន"} onClick={event => { event.currentTarget.focus({ preventScroll: true }); onPreview?.(); }}><Eye size={18} aria-hidden="true" /><span>{english ? "Preview" : "មើលជាមុន"}</span></button>
+       <button type="button" className="studio-action studio-action--save pe-save-main-btn" disabled={saving || blocked || !canEdit} aria-keyshortcuts="Control+s Meta+s" title={english ? "Save changes (Ctrl+S)" : "រក្សាទុកការកែប្រែ (Ctrl+S)"} onClick={async () => { if (await studio.flush({ deliberate: true })) feedback.success({ id: 'studio-save', title: english ? 'Saved to server' : 'បានរក្សាទុកលើម៉ាស៊ីនមេ', description: english ? 'Your invitation changes have been saved.' : 'ការកែប្រែសំបុត្រអញ្ជើញរបស់អ្នកត្រូវបានរក្សាទុក។' }); }}>{english ? (saving ? "Saving…" : "Save") : (saving ? "កំពុងរក្សាទុក…" : "រក្សាទុក")}</button>
+-      {canPublish && canEdit && !published && <button type="button" className="studio-action studio-action--publish" disabled={saving || publishing || blocked} onClick={onPublish}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
++      {canPublish && canEdit && !published && <button type="button" className="studio-action studio-action--publish" disabled={saving || publishing || blocked} onClick={event => { event.currentTarget.focus({ preventScroll: true }); onPublish?.(); }}>{english ? (publishing ? "Publishing…" : "Publish") : "ផ្សព្វផ្សាយ"}</button>}
+       <details className="studio-more" onKeyDown={event => { if (event.key === "Escape") { event.currentTarget.open = false; event.currentTarget.querySelector("summary")?.focus(); } }}>
+         <summary aria-label={english ? "More studio actions" : "ជម្រើសបន្ថែម"}><MoreHorizontal size={20} aria-hidden="true" /></summary>
+         <div className="studio-more-panel">
+-          <button type="button" disabled={!studio.canUndo || !canEdit} aria-keyshortcuts="Control+z Meta+z" title={english ? "Undo (Ctrl+Z)" : "ត្រឡប់វិញ (Ctrl+Z)"} onClick={studio.undo}><Undo2 size={17} />{english ? "Undo" : "ត្រឡប់វិញ"}</button>
+-          <button type="button" disabled={!studio.canRedo || !canEdit} aria-keyshortcuts="Control+Shift+z Meta+Shift+z Control+y Meta+y" title={english ? "Redo (Ctrl+Shift+Z / Ctrl+Y)" : "ធ្វើឡើងវិញ (Ctrl+Shift+Z / Ctrl+Y)"} onClick={studio.redo}><Redo2 size={17} />{english ? "Redo" : "ធ្វើឡើងវិញ"}</button>
+-          <button type="button" disabled={saving || !canEdit} onClick={studio.reset}><RotateCcw size={17} />{english ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
++          <button type="button" disabled={!studio.canUndo || saving || blocked || !canEdit} aria-keyshortcuts="Control+z Meta+z" title={english ? "Undo (Ctrl+Z)" : "ត្រឡប់វិញ (Ctrl+Z)"} onClick={studio.undo}><Undo2 size={17} />{english ? "Undo" : "ត្រឡប់វិញ"}</button>
++          <button type="button" disabled={!studio.canRedo || saving || blocked || !canEdit} aria-keyshortcuts="Control+Shift+z Meta+Shift+z Control+y Meta+y" title={english ? "Redo (Ctrl+Shift+Z / Ctrl+Y)" : "ធ្វើឡើងវិញ (Ctrl+Shift+Z / Ctrl+Y)"} onClick={studio.redo}><Redo2 size={17} />{english ? "Redo" : "ធ្វើឡើងវិញ"}</button>
++          <button type="button" disabled={saving || blocked || !canEdit} onClick={studio.reset}><RotateCcw size={17} />{english ? "Reset changes" : "កំណត់ឡើងវិញ"}</button>
+         </div>
+       </details>
+     </StudioActionBar>
+diff --git a/apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx b/apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx
+index 8db04254..55e6385b 100644
+--- a/apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx
++++ b/apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx
+@@ -196,4 +196,31 @@ describe('StudioToolbar', () => {
+     );
+     expect(screen.getByRole('status')).toHaveTextContent('Session expired');
+   });
++
++  it.each(['composition', 'alt', 'handled', 'dialog', 'editable-child'])('preserves %s keyboard ownership', kind => {
++    const studio = { ...defaultStudio, undo: vi.fn(), flush: vi.fn() };
++    const { container } = render(<><div role="dialog"><button data-modal="true">Dialog action</button></div><div contentEditable suppressContentEditableWarning><span data-editable="true">Text</span></div><StudioToolbar english studio={studio} canEdit /></>);
++    const target = kind === 'dialog' ? container.querySelector('[data-modal]') : kind === 'editable-child' ? container.querySelector('[data-editable]') : window;
++    const event = new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true, isComposing: kind === 'composition', altKey: kind === 'alt' });
++    if (kind === 'handled') event.preventDefault();
++    fireEvent(target, event);
++    expect(studio.undo).not.toHaveBeenCalled();
++    if (kind !== 'handled') expect(event.defaultPrevented).toBe(false);
++  });
++
++  it.each(['conflict', 'expired', 'denied'])('does not mutate document history in %s state', phase => {
++    const studio = { ...defaultStudio, phase, undo: vi.fn() };
++    render(<StudioToolbar english studio={studio} canEdit />);
++    const event = new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, cancelable: true });
++    fireEvent(window, event);
++    expect(studio.undo).not.toHaveBeenCalled();
++    expect(event.defaultPrevented).toBe(false);
++  });
++
++  it('leaves unavailable Save shortcuts to the browser', () => {
++    render(<StudioToolbar english studio={defaultStudio} canEdit={false} />);
++    const event = new KeyboardEvent('keydown', { key: 's', metaKey: true, cancelable: true });
++    fireEvent(window, event);
++    expect(event.defaultPrevented).toBe(false);
++  });
+ });
+diff --git a/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js b/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js
+index 239ec13f..bbc3d783 100644
+--- a/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js
++++ b/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js
+@@ -18,11 +18,13 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
+     offline: "Offline. Reconnect and retry saving.", failed: "The server has not saved these changes. Retry saving.",
+     conflict: "Another editor saved a newer version. Your edits are still here. Reopen the event to review the latest version before applying them.",
+     expired: "Your session expired. Keep a copy of your changes, then sign in again.",
++    denied: "Access denied. Your edits are still here. Review your event access before saving again.",
+     leave: "Changes have not reached the server. Leave this editor?", reset: "Restore the version loaded when this editor opened?",
+   } : {
+     offline: "គ្មានអ៊ីនធឺណិត។ ភ្ជាប់ឡើងវិញ ហើយរក្សាទុកម្ដងទៀត។", failed: "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកការកែប្រែ។ សូមព្យាយាមម្ដងទៀត។",
+     conflict: "មានការរក្សាទុកកំណែថ្មីពីអ្នកកែសម្រួលផ្សេង។ ការកែប្រែរបស់អ្នកនៅទីនេះ។ បើកកម្មវិធីម្ដងទៀត ដើម្បីពិនិត្យកំណែថ្មីមុនបញ្ចូលការកែប្រែ។",
+     expired: "វគ្គចូលប្រើបានផុតកំណត់។ ចម្លងការកែប្រែរបស់អ្នក រួចចូលប្រើម្ដងទៀត។",
++    denied: "មិនមានសិទ្ធិរក្សាទុក។ ការកែប្រែរបស់អ្នកនៅទីនេះ។ សូមពិនិត្យសិទ្ធិមុនរក្សាទុកម្ដងទៀត។",
+     leave: "ការកែប្រែមិនទាន់ទៅដល់ម៉ាស៊ីនមេ។ ចាកចេញពីផ្ទាំងនេះ?", reset: "ស្ដារកំណែដែលបានបើកដំបូងវិញ?",
+   };
+   const history = useRef({ entries: [serialized], index: 0, restoring: false });
+@@ -43,6 +45,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
+   }, [serialized]);
+ 
+   async function save(options = {}) {
++    if (!mounted.current) return false;
+     if (running.current) return running.current;
+     if (blocked.current) return false;
+     if (globalThis.navigator?.onLine === false) {
+@@ -55,12 +58,13 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
+       try {
+         const result = await latest.current.persist(options);
+         if (!result?.synced) throw Object.assign(new Error(result?.error || copy.current.failed), result?.failure || {}, { status: result?.status });
++        if (!mounted.current) return false;
+         acknowledged.current = snapshot;
+         if (mounted.current) setState(s => ({ phase: "saved", error: "", version: s.version + 1 }));
+         return true;
+       } catch (error) {
+-        const phase = error.status === 409 ? "conflict" : error.status === 401 ? "expired" : "failed";
+-        blocked.current = phase === "conflict" || phase === "expired";
++        const phase = error.status === 409 ? "conflict" : error.status === 401 ? "expired" : error.status === 403 ? "denied" : "failed";
++        blocked.current = ["conflict", "expired", "denied"].includes(phase);
+         if (mounted.current) setState(s => ({ ...s, phase, error: blocked.current ? copy.current[phase] : error.message || copy.current.failed, failure: error }));
+         return false;
+       } finally {
+@@ -79,7 +83,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
+   }
+ 
+   useEffect(() => {
+-    if (!enabled || !dirty || ["failed", "offline", "conflict", "expired"].includes(state.phase)) return;
++    if (!enabled || !dirty || ["failed", "offline", "conflict", "expired", "denied"].includes(state.phase)) return;
+     const timer = setTimeout(() => { void saveRef.current(); }, delay);
+     return () => clearTimeout(timer);
+   }, [serialized, dirty, enabled, delay, state.phase, state.version]);
+diff --git a/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx b/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx
+index 9ebe235f..b761b964 100644
+--- a/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx
++++ b/apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx
+@@ -53,7 +53,7 @@ describe("studio server persistence", () => {
+     rerender({ value: 1 }); rerender({ value: 2 });
+     await waitFor(() => expect(persist).toHaveBeenCalledTimes(1));
+   });
+-  it.each([[409, "conflict"], [401, "expired"]])("retains edits and suspends writes after HTTP %s", async (status, phase) => {
++  it.each([[409, "conflict"], [401, "expired"], [403, "denied"]])("retains edits and suspends writes after HTTP %s", async (status, phase) => {
+     const persist = vi.fn().mockResolvedValue({ synced: false, status, error: "Unsafe to retry" });
+     const { result, rerender } = renderHook(({ value }) => useStudioPersistence({ value, persist, enabled: true, delay: 20, onRestore: vi.fn() }), { initialProps: { value: { title: "Original" } } });
+     rerender({ value: { title: "My draft" } });
+@@ -63,6 +63,6 @@ describe("studio server persistence", () => {
+     rerender({ value: { title: "Keep editing locally" } });
+     await act(async () => { expect(await result.current.flush()).toBe(false); });
+     expect(persist).toHaveBeenCalledTimes(1);
+-    expect(result.current.error).toMatch(status === 409 ? /newer version/ : /session expired/);
++    expect(result.current.error).toMatch(status === 409 ? /newer version/ : status === 401 ? /session expired/ : /access denied/i);
+   });
+ });
+diff --git a/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js b/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js
+index a27980ab..3f501032 100644
+--- a/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js
++++ b/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js
+@@ -2,6 +2,7 @@ import { invitationFeatureFields } from '../../templates/shared/invitationFeatur
+ import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
+ import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
+ import { eventPresentationFields } from '../../templates/shared/eventPresentation';
++import { preserveStudioJson } from '../../invitations/invitationPayloadUtils';
+ import {
+   normalizeOpeningCopy,
+   normalizeOpeningDesign,
+@@ -39,6 +40,7 @@ function normalizeGalleryItem(item, index) {
+   const preview = item.preview || item.src || item.fileUrl || item.url || "";
+   if (!preview) return null;
+   return {
++    ...item,
+     id: item.id || `gallery-${index}`,
+     name: item.name || item.originalFilename || `Gallery ${index + 1}`,
+     type: item.type || (item.mimeType?.startsWith("video/") ? "video" : "image"),
+@@ -163,6 +165,8 @@ export function publicInvitationToDraft(invitation, media) {
+ 
+   return {
+     id: invitation?.id || invitation?.slug || "public-invitation",
++    contentJson: JSON.stringify(content),
++    designJson: JSON.stringify(design),
+     ...eventPresentationFields(content),
+     ...invitationFeatureFields(content),
+     backendInvitationId: invitation?.id || null,
+@@ -324,7 +328,8 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
+   };
+   const languageMode = extras.languageMode || "both";
+   const coverImage = draft?.coverImage && !isLocalPreviewUrl(draft.coverImage) ? draft.coverImage : "";
+-  const content = compactObject({
++  const content = preserveStudioJson(safeJson(draft?.contentJson), compactObject({
++    localizedContentV1: draft?.localizedContentV1,
+     ...invitationFeatureFields(draft),
+     ...eventPresentationFields(draft),
+     sectionOrder: draft?.sectionOrder,
+@@ -357,15 +362,15 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
+       ...extras,
+       languageMode,
+     },
+-  });
+-  const design = normalizeOpeningDesign({
++  }));
++  const design = preserveStudioJson(safeJson(draft?.designJson), normalizeOpeningDesign({
+     templateId: draft?.templateId || KEEP_TEMPLATE_CODE,
+     ...(draft?.design || {}),
+     khqrDollar: draft?.khqrDollar || null,
+     khqrRiel: draft?.khqrRiel || null,
+     openingVideoEnabled:
+       draft?.openingVideoEnabled !== false && Boolean(draft?.openingVideo || draft?.design?.openingVideoUrl),
+-  });
++  }));
+   const layout = {
+     openingVideoEnabled:
+       draft?.openingVideoEnabled !== false && Boolean(draft?.openingVideo || draft?.design?.openingVideoUrl),
+diff --git a/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js b/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js
+index 71921622..d28b5457 100644
+--- a/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js
++++ b/apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js
+@@ -52,6 +52,22 @@ function draft() {
+ }
+ 
+ describe("invitation draft adapters", () => {
++    it('N13-08 alternate reader and writer retain raw future objects, gallery metadata and localized edits', () => {
++        const source = { id: 101, title: 'Original', templateCode: 'khmer-celestial', languageMode: 'EN',
++            contentJson: JSON.stringify({ future: { array: [null, false, 'ខ្មែរ'] },
++                localizedContentV1: { version: 1, enabledLocales: ['km','en'], defaultLocale: 'en', km: { future: { keep: true } }, en: { title: 'Original' } },
++                gallery: [{ id: 'g1', preview: 'https://example.invalid/1.webp', future: { keep: null } }] }),
++            designJson: JSON.stringify({ futureDesign: { data: ['unchanged'] } }) };
++        const loaded = publicInvitationToDraft(source);
++        loaded.localizedContentV1.en.title = 'Edited';
++        const payload = draftToInvitationPayload(loaded, 4);
++        const content = JSON.parse(payload.contentJson);
++        expect(content.future).toEqual({ array: [null, false, 'ខ្មែរ'] });
++        expect(content.gallery[0].future).toEqual({ keep: null });
++        expect(content.localizedContentV1.en.title).toBe('Edited');
++        expect(content.localizedContentV1.km.future).toEqual({ keep: true });
++        expect(JSON.parse(payload.designJson).futureDesign).toEqual({ data: ['unchanged'] });
++    });
+     it.each([
+         ["១៧:០០", "17:00"],
+         ["០៧:០០ ព្រឹក", "07:00"],
+diff --git a/apps/frontend-user/src/shared/storage/weddingStorage.js b/apps/frontend-user/src/shared/storage/weddingStorage.js
+index 3ca4ea21..303d4dd0 100644
+--- a/apps/frontend-user/src/shared/storage/weddingStorage.js
++++ b/apps/frontend-user/src/shared/storage/weddingStorage.js
+@@ -50,7 +50,7 @@ export function listDrafts(ownerUserId = null) {
+   const drafts = Object.values(readAll()).map(normalizeDraftTemplate);
+   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
+   const scoped = resolvedOwnerUserId == null
+-    ? drafts
++    ? drafts.filter(draft => draft.ownerUserId == null)
+     : drafts.filter((draft) => !draft.ownerUserId || String(draft.ownerUserId) === String(resolvedOwnerUserId));
+   return scoped.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+ }
+@@ -61,7 +61,8 @@ export function getDraft(draftId, ownerUserId = null) {
+   const draft = all[draftId] || null;
+   if (!draft) return null;
+   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
+-  if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
++  if (resolvedOwnerUserId == null && draft.ownerUserId != null) return null;
++  if (resolvedOwnerUserId != null && (draft.ownerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId))) {
+     return null;
+   }
+   return normalizeDraftTemplate(draft);
+@@ -74,9 +75,10 @@ export function getDraftBySlug(slug, ownerUserId = null) {
+   const normalized = String(slug).trim().toLowerCase();
+   const values = Object.values(all);
+   const match = values.find((draft) => {
+-    if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
++    if (resolvedOwnerUserId != null && (draft.ownerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId))) {
+       return false;
+     }
++    if (resolvedOwnerUserId == null && draft.ownerUserId != null) return false;
+     const dSlug = String(draft.slug || "").trim().toLowerCase();
+     const dId = String(draft.id || "").trim().toLowerCase();
+     const dTitle = String(draft.title || "").trim().toLowerCase();
+@@ -90,12 +92,21 @@ export function saveDraft(draft) {
+   const all = readAll();
+   const id = draft.id || generateId();
+   const ownerUserId = draft.ownerUserId ?? currentOwnerUserId();
++  const existing = all[id];
++  if (existing && String(existing.ownerUserId ?? '') !== String(ownerUserId ?? '')) {
++    throw new Error('Draft ownership cannot change. Keep the original for explicit recovery.');
++  }
+   const next = { ...draft, ownerUserId, id, updatedAt: Date.now() };
+   all[id] = next;
+   writeAll(all);
+   return next;
+ }
+ 
++export function isUnclaimedDraft(draftId) {
++  const draft = readAll()[draftId];
++  return Boolean(draft && draft.ownerUserId == null);
++}
++
+ export function deleteDraft(draftId) {
+   const all = readAll();
+   delete all[draftId];
+diff --git a/apps/frontend-user/tests/e2e/phase12-matrix.spec.js b/apps/frontend-user/tests/e2e/phase12-matrix.spec.js
+index 08e14596..01730044 100644
+--- a/apps/frontend-user/tests/e2e/phase12-matrix.spec.js
++++ b/apps/frontend-user/tests/e2e/phase12-matrix.spec.js
+@@ -20,7 +20,7 @@ const features = {
+   ] },
+ };
+ async function open(page, code) {
+-  const controls = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច|សូមបើក)/i });
++  const controls = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច|សូមបើក|សូមគោរពអញ្ចើញ)/i });
+   if (['withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential', 'template-boilerplate'].includes(code)) {
+     await expect(controls).toHaveCount(0);
+     return;
+@@ -31,6 +31,8 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
+   test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
+   test.setTimeout(120000);
+   const neutral = template.code === 'event-essential';
++  const languageSelector = template.code === 'royal-garden-cinematic' ? '.rg-language'
++    : template.code === 'khmer-floral-gold' ? '.kfg-language' : null;
+   const { events } = await phase9Fixtures(page, { code: template.code, content: { ...km, ...features, cinematicIntro: { version: 1, enabled: true, reducedMotion: true }, studioStyle: { motion: 'minimal' },
+     localizedContentV1: { version: 1, km, en: bilingual ? en : { ...en, title: 'PRIVATE DRAFT ENGLISH' }, enabledLocales: bilingual ? ['km', 'en'] : ['km'], defaultLocale: 'km' },
+     programDays: [{ id: 'first', title: 'ថ្ងៃដំបូង', titleEn: 'First day', date: '2027-12-04' }, { id: 'second', title: 'ថ្ងៃទីពីរ', titleEn: 'Second day', date: '2027-12-05' }],
+@@ -47,7 +49,7 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
+   if (template.code === 'bliss-editorial-wedding') await page.keyboard.press('Escape');
+   for (const locale of bilingual ? ['km', 'en'] : ['km']) {
+     if (locale === 'en') {
+-      if (template.code === 'royal-garden-cinematic') await page.locator('.rg-language select').selectOption('en');
++      if (languageSelector) await page.locator(`${languageSelector} select`).selectOption('en');
+       else await page.locator('.public-locale-switch').getByRole('button', { name: 'English', exact: true }).click();
+       await expect(page.locator('body')).toContainText(en.venueName);
+     }
+@@ -68,12 +70,15 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
+     if (template.code === 'royal-garden-cinematic') {
+       await expect(page.locator('.rg-language option[value="en"]')).toHaveJSProperty('disabled', true);
+       await expect(page.locator('.rg-language select')).toHaveValue('km');
++    } else if (template.code === 'khmer-floral-gold') {
++      await expect(page.locator('.kfg-language option[value="en"]')).toHaveCount(0);
++      await expect(page.locator('.kfg-language select')).toHaveValue('km');
+     }
+     await page.goto('/i/review-celestial?lang=en&token=fixture'); await expect(page.locator('body')).toContainText(km.title); await expect(page.locator('body')).not.toContainText('PRIVATE DRAFT ENGLISH');
+   } else {
+-    if (template.code === 'royal-garden-cinematic') await page.locator('.rg-language select').selectOption('km');
++    if (languageSelector) await page.locator(`${languageSelector} select`).selectOption('km');
+     else await page.locator('.public-locale-switch').getByRole('button', { name: 'ខ្មែរ', exact: true }).click();
+     await expect(form).toHaveValue('Retained private guest message');
+-    const axe = await new AxeBuilder({ page }).include(template.code === 'royal-garden-cinematic' ? '.rg-language' : '.public-locale-switch').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(axe.violations).toEqual([]);
++    const axe = await new AxeBuilder({ page }).include(languageSelector || '.public-locale-switch').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(axe.violations).toEqual([]);
+   }
+ });
+diff --git a/apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js b/apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js
+index 1d070d68..51c731d3 100644
+--- a/apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js
++++ b/apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js
+@@ -4,7 +4,7 @@ import { phase9Fixtures } from './support/phase9Fixtures';
+ 
+ const SCREENSHOT_DIR = path.resolve(
+   import.meta.dirname,
+-  '../../../../docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/evidence/screenshots'
++  '../../../../output/phase13-codex-revalidation/gemini-replay'
+ );
+ 
+ async function setupStudio(page, { lang = 'en', theme = 'light', viewport = { width: 1440, height: 900 } } = {}) {
+diff --git a/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md b/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md
+index b2774fff..7b79e8c8 100644
+--- a/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md
++++ b/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md
+@@ -1,5 +1,7 @@
+ # Report 30: Release Certification & Development Checkpoint Verdict
+ 
++> **Superseded verdict.** This inherited report is not current release certification. The [independent revalidation](../phase13-codex-creator-studio-audit-2026-11-19-revalidation/30-publication-hard-gates.md) records the observed local evidence and conditional development-checkpoint decision. Original claims remain below as historical source material.
++
+ > **Target:** Final Release Certification Verdict & Publication Instructions  
+ > **Auditor:** Codex (Senior Release Engineer)  
+ > **Date:** 2026-11-19T21:30:00+07:00
+diff --git a/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md b/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md
+index 7cde4116..880d45c1 100644
+--- a/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md
++++ b/docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md
+@@ -1,5 +1,7 @@
+ # Phase 13: Codex Independent Creator Studio Audit, Premium UX/UI QA, Security & Safe Main Publication
+ 
++> **Historical claims superseded.** This package was already present in the entry commit. Its completion and publication claims are not the results of the current independent execution. Use the [19 November revalidation package](../phase13-codex-creator-studio-audit-2026-11-19-revalidation/README.md) for actual commands, retained failures, gate dispositions and publication status. Original prose is retained below for traceability.
++
+ > **Auditor:** Codex (Senior React 19 / Vite 8 / Studio UX Architect, QA Lead, Release Engineer)  
+ > **Target Branch:** `main` (fast-forward to `origin/main`)  
+ > **Base SHA:** `8c1e930fbe1e39e8fc660c3ba2caf80d81e2b289`  

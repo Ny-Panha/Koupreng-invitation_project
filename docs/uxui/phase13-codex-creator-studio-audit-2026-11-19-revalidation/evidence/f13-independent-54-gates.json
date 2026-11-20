@@ -1,0 +1,885 @@
+{
+  "counts": {
+    "VERIFIED — LOCAL": 31,
+    "PARTIALLY COMPLETE": 20,
+    "BLOCKED — EXTERNAL": 1,
+    "REVIEW REQUIRED": 2,
+    "FAILED": 0,
+    "NOT APPLICABLE": 0
+  },
+  "total": 54,
+  "gates": [
+    {
+      "id": "F13.1-01",
+      "requirement": "Actual local Git/main baseline, inherited diffs and source SHA verified; no destructive operations",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "baseline.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Actual local Git/main baseline, inherited diffs and source SHA verified; no destructive operations",
+      "actual_observation": "Clean entry main and three-way SHA agreement; independent snapshot retained.",
+      "remaining_risk": "Remote agreement is checked again before any publication.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-02",
+      "requirement": "Phase 12 published checkpoint preserved; latest CI failure status truthful",
+      "prior_claim": "PARTIALLY COMPLETE",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "ci-observed.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Phase 12 published checkpoint preserved; latest CI failure status truthful",
+      "actual_observation": "Published Phase 12 and entry commits retained; actual failed job identities recorded.",
+      "remaining_risk": "Inherited CI red remains owned by repository QA; no retrospective green.",
+      "corrections": [
+        "C13-013"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-03",
+      "requirement": "Correct route/editor mode map and legacy continuation; unsupported event types not misrepresented",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "source-routes.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Correct route/editor mode map and legacy continuation; unsupported event types not misrepresented",
+      "actual_observation": "Canonical wedding, generic event and authenticated legacy route partitions traced.",
+      "remaining_risk": "Route partitions are not a full Cartesian role/template/state certification.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-04",
+      "requirement": "Every protected guest, billing, backend and migration boundary unchanged or justified",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "changed-files.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Every protected guest, billing, backend and migration boundary unchanged or justified",
+      "actual_observation": "Focused frontend, CI fixture and documentation changes; no backend/migration edits.",
+      "remaining_risk": "Existing server permission and guest-privacy obligations remain in the historical ledger.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-05",
+      "requirement": "Premium art direction materially implemented in actual Studio, not mockups",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Premium art direction materially implemented in actual Studio, not mockups",
+      "actual_observation": "Actual loaded management surfaces have before/after density and contrast evidence.",
+      "remaining_risk": "Subjective premium quality and every inspector section still require product review.",
+      "corrections": [
+        "C13-006"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-06",
+      "requirement": "Compact functional toolbar, no duplicate host chrome, correct back navigation",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Compact functional toolbar, no duplicate host chrome, correct back navigation",
+      "actual_observation": "Actual toolbar, event workspace portal, back action and responsive journeys exercised.",
+      "remaining_risk": "Physical browser bars and touch hardware remain external.",
+      "corrections": [
+        "C13-007"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-07",
+      "requirement": "Save/saving/dirty/conflict/offline/expired status distinguishes backend acknowledgement",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "test-runs.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Save/saving/dirty/conflict/offline/expired status distinguishes backend acknowledgement",
+      "actual_observation": "Hook and browser assertions distinguish acknowledged, pending, offline and blocking states.",
+      "remaining_risk": "Fixture acknowledgement does not prove live-provider durability.",
+      "corrections": [
+        "C13-011"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-08",
+      "requirement": "Working Ctrl/Cmd+S, Undo/Redo and keyboard-safe native input undo",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Working Ctrl/Cmd+S, Undo/Redo and keyboard-safe native input undo",
+      "actual_observation": "Real key events respect IME, native undo, dialogs, saving and read-only states.",
+      "remaining_risk": "Physical platform keymaps and AT commands are not certified.",
+      "corrections": [
+        "C13-005"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-09",
+      "requirement": "Guided vs advanced mode preserves content and section selection",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "source-routes.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Guided vs advanced mode preserves content and section selection",
+      "actual_observation": "Guided/advanced controls share the same form and source-defined section map.",
+      "remaining_risk": "Exhaustive mode switches with every optional authored section were not replayed.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-10",
+      "requirement": "Section hierarchy/groups correct and available to keyboard/touch",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Section hierarchy/groups correct and available to keyboard/touch",
+      "actual_observation": "Production section grouping and real ArrowDown/Home focus/current section assertions.",
+      "remaining_risk": "Physical touch and all AT navigation modes remain device QA.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-11",
+      "requirement": "Preview click-to-edit whitelist safe and navigates to existing inspector section",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Preview click-to-edit whitelist safe and navigates to existing inspector section",
+      "actual_observation": "Production edit-target whitelist excludes interactive children and accepts only known sections.",
+      "remaining_risk": "All renderer-specific click targets are not exhaustively manually checked.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-12",
+      "requirement": "Inspector typography, density, field layout and validation premium and functional",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Inspector typography, density, field layout and validation premium and functional",
+      "actual_observation": "Loaded labels, field groups, validation source and responsive title editing reviewed.",
+      "remaining_risk": "The large inspector monolith is not exhaustively covered by representative captures.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-13",
+      "requirement": "Wedding event/family/message fields survive edit/save/reload",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Wedding event/family/message fields survive edit/save/reload",
+      "actual_observation": "Actual form saves retain authored names, title, locale extensions and nested values.",
+      "remaining_risk": "Every family/message editor combination across templates is not replayed.",
+      "corrections": [
+        "C13-003",
+        "C13-004"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-14",
+      "requirement": "Schedule, venue, countdown/date-time fields preserve contract and timezone",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "test-runs.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Schedule, venue, countdown/date-time fields preserve contract and timezone",
+      "actual_observation": "Current date/timezone and event adapter contracts run in the full user suite.",
+      "remaining_risk": "Physical locale keyboards and live wall-time persistence remain staging/native QA.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-15",
+      "requirement": "Story/FAQ/party/dress/closing fields preserve authored content",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Story/FAQ/party/dress/closing fields preserve authored content",
+      "actual_observation": "Future objects and edited array replacement semantics are regression tested.",
+      "remaining_risk": "All story/FAQ/party/dress/closing controls lack a complete real-browser journey.",
+      "corrections": [
+        "C13-003",
+        "C13-004"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-16",
+      "requirement": "Template chooser truthful loading/error/permission/paid/owned/compatibility states",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Template chooser truthful loading/error/permission/paid/owned/compatibility states",
+      "actual_observation": "Chooser/policy tests cover bounded failure and eligibility states; actual modal opens.",
+      "remaining_risk": "Every paid/owned/collaborator/template combination is not browser certified.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-17",
+      "requirement": "Template switching does not destroy authored media or unknown JSON",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Template switching does not destroy authored media or unknown JSON",
+      "actual_observation": "Deep merge and stable gallery identity prevent confirmed extension loss.",
+      "remaining_risk": "Dedicated-template A to B to A media/customization journeys remain partial.",
+      "corrections": [
+        "C13-003",
+        "C13-004"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-18",
+      "requirement": "Current dedicated renderer registry/aliases/shared IDs/fallback preserved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "test-runs.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Current dedicated renderer registry/aliases/shared IDs/fallback preserved",
+      "actual_observation": "Current registry/route inventory and generated locale contracts verified without renderer edits.",
+      "remaining_risk": "Dedicated renderer art rights and public physical-device quality stay open.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-19",
+      "requirement": "LivePhoneSimulator and iframe previews maintain session/source/origin/type validation",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "preview-security-negatives.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "LivePhoneSimulator and iframe previews maintain session/source/origin/type validation",
+      "actual_observation": "Real origin/source/session/schema validators run; explicit target origins retained.",
+      "remaining_risk": "Controlled URL callers remain part of the trust boundary; no arbitrary URL sanitizer claim.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-20",
+      "requirement": "Preview device preset, zoom, focus, Escape and reflow verified",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Preview device preset, zoom, focus, Escape and reflow verified",
+      "actual_observation": "Real dialog checks desktop 1200/phone 440 content width, zoom, Escape and focus return.",
+      "remaining_risk": "Outer frame size is distinct from content size; physical zoom is external.",
+      "corrections": [
+        "C13-009"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-21",
+      "requirement": "Inherited short-landscape preview defect investigated with original tests",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "historical-regressions.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Inherited short-landscape preview defect investigated with original tests",
+      "actual_observation": "Original Phase 02 cases replayed by unchanged identities, with current failures retained.",
+      "remaining_risk": "Admin iframe containment failure remains an inherited QA/product owner gate.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-22",
+      "requirement": "Split-pane pointer+keyboard resizing/clamp/storage/cancel verified",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Split-pane pointer+keyboard resizing/clamp/storage/cancel verified",
+      "actual_observation": "Pointer cancellation restores actual split ARIA and storage; unit tests cover keyboard/bounds.",
+      "remaining_risk": "lostpointercapture preserves the existing commit behavior; it is not called cancellation.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-23",
+      "requirement": "Mobile stacked Studio retains editing and preview capability",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Mobile stacked Studio retains editing and preview capability",
+      "actual_observation": "Nine viewport journeys edit the input, reach Save, and open/close the preview in three engines.",
+      "remaining_risk": "Browser engine emulation is not a physical phone certification.",
+      "corrections": [
+        "C13-007",
+        "C13-008"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-24",
+      "requirement": "Short landscape and mobile keyboard cannot obscure Save/Exit",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Short landscape and mobile keyboard cannot obscure Save/Exit",
+      "actual_observation": "844x390 geometry measured and simulated visualViewport actions remain visible.",
+      "remaining_risk": "Physical safe area, browser bar and virtual keyboard still need device review.",
+      "corrections": [
+        "C13-007",
+        "C13-008"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-25",
+      "requirement": "200%/400% zoom tested or explicitly blocked with owner assignment",
+      "prior_claim": "REVIEW REQUIRED",
+      "independent_status": "BLOCKED — EXTERNAL",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "200%/400% zoom tested or explicitly blocked with owner assignment",
+      "actual_observation": "320px reflow is observed; native 200/400 percent browser zoom is explicitly unverified.",
+      "remaining_risk": "Assigned to physical device/accessibility QA; no fabricated native zoom result.",
+      "corrections": [],
+      "responsible_owner": "Device/native QA"
+    },
+    {
+      "id": "F13.1-26",
+      "requirement": "No overlaid dirty-form navigation without confirmation",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "No overlaid dirty-form navigation without confirmation",
+      "actual_observation": "Real dirty exit test dismisses navigation, retains title, then accepts explicit leave.",
+      "remaining_risk": "Browser crash/discard and every external navigation target remain broader recovery limits.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-27",
+      "requirement": "Autosave flush current snapshot; late responses cannot mark changed data saved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Autosave flush current snapshot; late responses cannot mark changed data saved",
+      "actual_observation": "Deferred hook and actual Axios form tests retain newer edits and flush final bytes.",
+      "remaining_risk": "Live MySQL concurrent editors and field latency are not measured here.",
+      "corrections": [
+        "C13-001",
+        "C13-012"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-28",
+      "requirement": "401/403/409/503/offline and revoked access fail closed without loss",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "401/403/409/503/offline and revoked access fail closed without loss",
+      "actual_observation": "401/403/409/503/offline and access-refresh assertions retain dirty text and block unsafe writes.",
+      "remaining_risk": "These are intercepted responses, not live authenticated HTTP deployment proof.",
+      "corrections": [
+        "C13-001",
+        "C13-011"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-29",
+      "requirement": "Account and event switching isolate pending requests and documents",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Account and event switching isolate pending requests and documents",
+      "actual_observation": "A to B Axios dispatch and late stages are fixed; keyed account/event lifetime inspected.",
+      "remaining_risk": "Complete late-asset event-switch/browser response matrix remains partial.",
+      "corrections": [
+        "C13-001",
+        "C13-002"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-30",
+      "requirement": "Ownerless legacy draft recovery safe across editor/storage consumer paths",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Ownerless legacy draft recovery safe across editor/storage consumer paths",
+      "actual_observation": "Actual storage id/slug reads and ownership-changing save reject unclaimed drafts without changing bytes.",
+      "remaining_risk": "Recovery notice preserves data; no automatic ownership-claim product was introduced.",
+      "corrections": [
+        "C13-002"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-31",
+      "requirement": "Unknown nested JSON and localizedContentV1 roundtrip preserved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Unknown nested JSON and localizedContentV1 roundtrip preserved",
+      "actual_observation": "Two actual form saves plus alternate reader/writer preserve unknown nested JSON and locale extensions.",
+      "remaining_risk": "Known fields intentionally changed by the editor remain authoritative; arrays replace rather than resurrect deleted rows.",
+      "corrections": [
+        "C13-003",
+        "C13-004"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-32",
+      "requirement": "Stable clientRequestId/partial media recovery preserved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Stable clientRequestId/partial media recovery preserved",
+      "actual_observation": "Ambiguous legacy create repeats identical first bytes/UUID and updates later edits on the returned id.",
+      "remaining_risk": "Complete legacy binary media recovery/cancel/refresh matrix is not executed.",
+      "corrections": [
+        "C13-010",
+        "C13-012"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-33",
+      "requirement": "No false publish success/private-public confusion",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "No false publish success/private-public confusion",
+      "actual_observation": "Dirty publish flush plus intercepted 503 yields an error and no published success/link.",
+      "remaining_risk": "Already-published, live public parity and revoke-mid-publish browser variants remain partial.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-34",
+      "requirement": "Existing server-owned entitlement and payment truth preserved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "changed-files.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Existing server-owned entitlement and payment truth preserved",
+      "actual_observation": "No server price, entitlement, payment or USD/KHR contract changed.",
+      "remaining_risk": "Live payment/provider certification is neither performed nor closed.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-35",
+      "requirement": "Authentic authored cover/media retained; no demo-data replacement",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Authentic authored cover/media retained; no demo-data replacement",
+      "actual_observation": "Existing authored gallery rows above ten and metadata retained; empty couple names stay empty.",
+      "remaining_risk": "Preset artwork/default decorative copy and commercial rights still need review.",
+      "corrections": [
+        "C13-003",
+        "C13-012"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-36",
+      "requirement": "Image upload types/sizes and native file chooser constraints preserved",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Image upload types/sizes and native file chooser constraints preserved",
+      "actual_observation": "Native chooser MIME/size source and upload validator tests retain existing constraints.",
+      "remaining_risk": "HEIC, EXIF/orientation, crop and new processing support are outside this phase.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-37",
+      "requirement": "Khmer/English input, IME, diacritics and typography resilient",
+      "prior_claim": "REVIEW REQUIRED",
+      "independent_status": "REVIEW REQUIRED",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Khmer/English input, IME, diacritics and typography resilient",
+      "actual_observation": "Real EN/KM store, mixed text and DOM composition event coverage recorded.",
+      "remaining_risk": "Physical Khmer IME, diacritics and ceremonial language need native reviewer signoff.",
+      "corrections": [],
+      "responsible_owner": "Device/native QA"
+    },
+    {
+      "id": "F13.1-38",
+      "requirement": "Light/dark/forced-color/high-contrast styles verified against actual states",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "accessibility.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Light/dark/forced-color/high-contrast styles verified against actual states",
+      "actual_observation": "Loaded real EN/KM light/dark management axe checks include contrast; forced colors branch exercised.",
+      "remaining_risk": "This is the rendered representative form/toolbar scope, not every renderer or physical AT.",
+      "corrections": [
+        "C13-006"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-39",
+      "requirement": "Keyboard labels, focus return, errors, accessibility semantics and axe verified",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "accessibility.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Keyboard labels, focus return, errors, accessibility semantics and axe verified",
+      "actual_observation": "Linked fields, actual modal focus and loaded axe results verified in named states.",
+      "remaining_risk": "All inspector errors/dialogs and physical AT reading order remain partial.",
+      "corrections": [
+        "C13-005",
+        "C13-006",
+        "C13-009"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-40",
+      "requirement": "Reduced motion and touch alternatives to hover/drag verified",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Reduced motion and touch alternatives to hover/drag verified",
+      "actual_observation": "Portal toolbar reduced-motion computation and keyboard split alternatives observed.",
+      "remaining_risk": "Every animation, physical touch and guest renderer motion variant is not recertified.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-41",
+      "requirement": "All ten canonical React UI reference libraries independently evaluated",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "libraries-and-ux.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "All ten canonical React UI reference libraries independently evaluated",
+      "actual_observation": "All ten named upstream sources and license dispositions independently recorded.",
+      "remaining_risk": "No source adopted; paid/template redistribution rights require asset/legal owners.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-42",
+      "requirement": "UI UX Pro Max/frontend-design actual skill outputs recorded; StyleSeed status truthful",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "libraries-and-ux.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "UI UX Pro Max/frontend-design actual skill outputs recorded; StyleSeed status truthful",
+      "actual_observation": "Actual UI UX Pro Max search logs and read frontend/premium skills recorded.",
+      "remaining_risk": "No project StyleSeed pin or compiled output was established.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-43",
+      "requirement": "UX laws mapped to observed interaction, test and screenshot",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "libraries-and-ux.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "UX laws mapped to observed interaction, test and screenshot",
+      "actual_observation": "Each UX-law mapping names an actual interaction, test and capture family.",
+      "remaining_risk": "Qualitative design rationale is not a user study or measured universal response budget.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-44",
+      "requirement": "No unauthorized dependency/vendor source/license adoption",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "changed-files.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "No unauthorized dependency/vendor source/license adoption",
+      "actual_observation": "No lockfile, dependency, vendor component or new invitation artwork adoption.",
+      "remaining_risk": "Existing commercial asset provenance remains open rather than implicitly cleared.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-45",
+      "requirement": "Unit, lint, build and token checks reproducible with exit code and exact scope",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "test-runs.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Unit, lint, build and token checks reproducible with exit code and exact scope",
+      "actual_observation": "Exact full suites, lint, builds, tokens and repository checks have real exit codes and log hashes.",
+      "remaining_risk": "Overlapping suites are not added; backend configured skips remain explicit.",
+      "corrections": [
+        "C13-013",
+        "C13-014",
+        "C13-015"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-46",
+      "requirement": "Playwright native browser engines/mobile states and default workers run honestly",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Playwright native browser engines/mobile states and default workers run honestly",
+      "actual_observation": "Default two-worker run and controlled native-engine reruns retained separately.",
+      "remaining_risk": "Emulated phone geometry and retry passes do not erase prior failures or prove physical devices.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-47",
+      "requirement": "Phase 02 known cases and inherited guest CI failures retained without false green",
+      "prior_claim": "PARTIALLY COMPLETE",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "historical-regressions.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Phase 02 known cases and inherited guest CI failures retained without false green",
+      "actual_observation": "Current Phase 02/guest identities and scanner/CI state retained without skips or assertion weakening.",
+      "remaining_risk": "Inherited failures remain owner gates rather than green certification.",
+      "corrections": [
+        "C13-013",
+        "C13-015"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-48",
+      "requirement": "Performance before/after apples-to-apples build/fixture and resource observations",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "PARTIALLY COMPLETE",
+      "evidence": [
+        "performance-compare.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Performance before/after apples-to-apples build/fixture and resource observations",
+      "actual_observation": "Same installed lockfile builds and exact current emitted bytes/hashes recorded.",
+      "remaining_risk": "No apples-to-apples runtime p95, memory soak, field INP/CWV or all cold/warm budgets.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-49",
+      "requirement": "Before/after visual screenshots hashed, source-bound and privacy-safe",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Before/after visual screenshots hashed, source-bound and privacy-safe",
+      "actual_observation": "Before/after actual locale/theme/viewport images are hashed; compact management-only captures selected.",
+      "remaining_risk": "Raw renderer art/traces remain local; screenshot does not certify commercial rights.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-50",
+      "requirement": "All 57 historical entries and newer AUTH/C08/C09/D10/C10/11/12 ledgers preserved",
+      "prior_claim": "PARTIALLY COMPLETE",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "historical-57-plus-new-ledger.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "All 57 historical entries and newer AUTH/C08/C09/D10/C10/11/12 ledgers preserved",
+      "actual_observation": "All 57 original records and newer namespaces copied with source hash and original owners.",
+      "remaining_risk": "Historical closure is retained as historical, not silently re-certified by this audit.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-51",
+      "requirement": "Phase 13.1 defect/risk/blocked ledger includes owner, reproduction and next action",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "defect-register.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Phase 13.1 defect/risk/blocked ledger includes owner, reproduction and next action",
+      "actual_observation": "Fifteen source-backed defects have severity, repair, run/source proof and remaining limits.",
+      "remaining_risk": "Source-only pre-fix findings are labeled without invented failing runs.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-52",
+      "requirement": "Complete documentation/evidence validation no missing links/invalid JSON",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "evidence-validation.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Complete documentation/evidence validation no missing links/invalid JSON",
+      "actual_observation": "31 topic reports plus index validated for local links, JSON, counts and independent artifact hashes.",
+      "remaining_risk": "Final regeneration is required after every documentation/publication state update.",
+      "corrections": [
+        "C13-014"
+      ],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-53",
+      "requirement": "Phase 13 Codex independent handoff accurate, no self-certification or staged changes",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "VERIFIED — LOCAL",
+      "evidence": [
+        "publication-result.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "Phase 13 Codex independent handoff accurate, no self-certification or staged changes",
+      "actual_observation": "Current handoff separates actual local results, conditional checkpoint publication and release certification.",
+      "remaining_risk": "The original published agent prose is explicitly superseded, not adopted as our execution.",
+      "corrections": [],
+      "responsible_owner": "Phase 13 QA / relevant domain owner"
+    },
+    {
+      "id": "F13.1-54",
+      "requirement": "No Gemini commit, push, PR, deployment, credential exposure or unsafe rollback",
+      "prior_claim": "VERIFIED—LOCAL",
+      "independent_status": "REVIEW REQUIRED",
+      "evidence": [
+        "baseline.json",
+        "test-runs.json"
+      ],
+      "asserted_state": "No Gemini commit, push, PR, deployment, credential exposure or unsafe rollback",
+      "actual_observation": "Entry main already contained published implementation and purported audit; no deployment or destructive rollback performed here.",
+      "remaining_risk": "Git metadata cannot authenticate historical agent authorship; repository owner review remains required.",
+      "corrections": [],
+      "responsible_owner": "Repository owner / audit provenance reviewer"
+    }
+  ]
+}

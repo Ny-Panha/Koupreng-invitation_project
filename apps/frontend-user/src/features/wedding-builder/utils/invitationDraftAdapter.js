@@ -2,6 +2,7 @@ import { invitationFeatureFields } from '../../templates/shared/invitationFeatur
 import { KEEP_TEMPLATE_CODE } from "@/features/templates/data/templatesData";
 import { legacyProgram, normalizeProgram } from "../../templates/shared/program";
 import { eventPresentationFields } from '../../templates/shared/eventPresentation';
+import { preserveStudioJson } from '../../invitations/invitationPayloadUtils';
 import {
   normalizeOpeningCopy,
   normalizeOpeningDesign,
@@ -39,6 +40,7 @@ function normalizeGalleryItem(item, index) {
   const preview = item.preview || item.src || item.fileUrl || item.url || "";
   if (!preview) return null;
   return {
+    ...item,
     id: item.id || `gallery-${index}`,
     name: item.name || item.originalFilename || `Gallery ${index + 1}`,
     type: item.type || (item.mimeType?.startsWith("video/") ? "video" : "image"),
@@ -163,6 +165,8 @@ export function publicInvitationToDraft(invitation, media) {
 
   return {
     id: invitation?.id || invitation?.slug || "public-invitation",
+    contentJson: JSON.stringify(content),
+    designJson: JSON.stringify(design),
     ...eventPresentationFields(content),
     ...invitationFeatureFields(content),
     backendInvitationId: invitation?.id || null,
@@ -324,7 +328,8 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
   };
   const languageMode = extras.languageMode || "both";
   const coverImage = draft?.coverImage && !isLocalPreviewUrl(draft.coverImage) ? draft.coverImage : "";
-  const content = compactObject({
+  const content = preserveStudioJson(safeJson(draft?.contentJson), compactObject({
+    localizedContentV1: draft?.localizedContentV1,
     ...invitationFeatureFields(draft),
     ...eventPresentationFields(draft),
     sectionOrder: draft?.sectionOrder,
@@ -357,15 +362,15 @@ export function draftToInvitationPayload(draft, backendTemplateId) {
       ...extras,
       languageMode,
     },
-  });
-  const design = normalizeOpeningDesign({
+  }));
+  const design = preserveStudioJson(safeJson(draft?.designJson), normalizeOpeningDesign({
     templateId: draft?.templateId || KEEP_TEMPLATE_CODE,
     ...(draft?.design || {}),
     khqrDollar: draft?.khqrDollar || null,
     khqrRiel: draft?.khqrRiel || null,
     openingVideoEnabled:
       draft?.openingVideoEnabled !== false && Boolean(draft?.openingVideo || draft?.design?.openingVideoUrl),
-  });
+  }));
   const layout = {
     openingVideoEnabled:
       draft?.openingVideoEnabled !== false && Boolean(draft?.openingVideo || draft?.design?.openingVideoUrl),

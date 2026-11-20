@@ -95,7 +95,7 @@ export const mediaService = {
     }
     return api.post(`/v1/invitations/${invitationId}/media/cover`, fileForm(file), { ...options, onUploadProgress }).then(unwrap);
   },
-  uploadGallery: (invitationId, files, sortOrder, onUploadProgress) => {
+  uploadGallery: (invitationId, files, sortOrder, onUploadProgress, options) => {
     if (isLocalDraftId(invitationId)) {
       const list = Array.from(files || []).map((f, idx) => ({
         id: `local-gallery-${Date.now()}-${idx}`,
@@ -104,7 +104,7 @@ export const mediaService = {
       }));
       return Promise.resolve(list);
     }
-    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder), { onUploadProgress }).then(unwrap);
+    return api.post(`/v1/invitations/${invitationId}/media/gallery`, galleryForm(files, sortOrder), { ...options, onUploadProgress }).then(unwrap);
   },
   uploadVideo: (invitationId, file, onUploadProgress) => {
     if (isLocalDraftId(invitationId)) {

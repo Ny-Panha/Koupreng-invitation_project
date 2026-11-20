@@ -1,0 +1,66 @@
+{
+  "status": "READY FOR REVIEWED DEVELOPMENT CHECKPOINT; NOT PRODUCTION CERTIFICATION",
+  "observed_utc": "2026-11-19T15:53:41.059197+00:00",
+  "branch": "main",
+  "entry_head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "tracking": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "remote_main": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "new_unresolved_P0_P1": 0,
+  "defects_repaired_locally": {
+    "P1": 5,
+    "P2": 9,
+    "P3": 1
+  },
+  "validation": {
+    "full_user": "1841 passed / 248 files",
+    "full_admin": "202 passed / 37 files",
+    "backend": "680 run, zero failures/errors, 82 configured skips",
+    "telegram": "74 passed",
+    "studio": "75 default-worker run; later 78 one-worker cases + 3 dirty-exit cases passed, overlapping scopes",
+    "owner": "27 browser cases passed",
+    "ci_replay": "86 passed, 6 failed, 2 configured skips; final Floral-specific replay 4 passed; unchanged guest pair remains failing",
+    "isolated_transport_reruns": "Firefox Phase11 1 passed; WebKit renderer 2 passed",
+    "lint_build_tokens_repo": "Recorded checks passed; last probe lint passed after correcting command cwd"
+  },
+  "inherited_open_gates": [
+    {
+      "gate": "Secret Scan",
+      "state": "FAILED BEFORE THIS CHECKPOINT",
+      "classification": "One unchanged master-scope natural-language false positive; existing scanner rules unchanged",
+      "owner": "Repository/security CI owner"
+    },
+    {
+      "gate": "Guest E2E",
+      "state": "FAILED BEFORE THIS CHECKPOINT",
+      "classification": "Add guest expected 0, received 1 in unchanged desktop/mobile test",
+      "owner": "Guest workspace QA owner"
+    },
+    {
+      "gate": "Phase02",
+      "state": "26 passed / six unchanged failures",
+      "owner": "Admin Studio / onboarding locale QA"
+    },
+    {
+      "gate": "Phase06 admin popup",
+      "state": "Six origin expectation failures in broad run",
+      "classification": "Unchanged default admin build points to localhost:5173; test expects 127.0.0.1:4173",
+      "owner": "Test/build configuration owner"
+    }
+  ],
+  "historical_dump": "Repository owner confirmed all records disposable fixtures in this task; no values copied into evidence, no history rewrite",
+  "production_release": "NOT CERTIFIED; external/native/rights/provider/MySQL/RUM gates remain open",
+  "exact_staged_secret_scan": {
+    "run": "staged-secret-final",
+    "exit_code": 0,
+    "findings": 0,
+    "rules_unchanged": true
+  },
+  "no_deployment": true,
+  "staged_review": {
+    "files": 107,
+    "protected_or_generated_files_staged": false,
+    "deletions": false,
+    "whitespace_check_exit": 0
+  },
+  "staged_scan_initial": "One copied prose excerpt re-triggered the inherited generic detector. Removed the redundant excerpt from evidence; retained location, hash and classification. No scanner rule changed."
+}

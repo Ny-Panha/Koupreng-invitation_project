@@ -1,0 +1,15 @@
+{
+  "baseline_build_run": "baseline-build",
+  "final_build_run": "final-layout-build",
+  "baseline_editor_raw_kb": 241.35,
+  "baseline_editor_gzip_kb": 63.13,
+  "baseline_studio_raw_kb": 47.35,
+  "baseline_studio_gzip_kb": 14.08,
+  "final_editor_raw_kb": 245.56,
+  "final_editor_gzip_kb": 64.39,
+  "final_studio_raw_kb": 47.78,
+  "final_studio_gzip_kb": 14.15,
+  "units": "Vite rounded decimal kB from actual build logs; current exact assets in ignored source-freeze.json",
+  "cold_warm_latency_p95_memory_cwv": "NOT MEASURED / NOT CERTIFIED",
+  "build_duration_not_comparable": "Host load differs. Compatibility replay was not a frozen performance experiment."
+}

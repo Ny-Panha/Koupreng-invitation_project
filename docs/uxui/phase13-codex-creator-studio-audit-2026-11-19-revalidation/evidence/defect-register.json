@@ -1,0 +1,418 @@
+[
+  {
+    "id": "C13-001",
+    "severity": "P1",
+    "symptom": "A Studio payload dispatched with B credentials after account switch",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+    "pre_fix_run": "pre-fix-negatives",
+    "post_fix_run": "authority-fix",
+    "repair": "Abort synchronously on session changes; bind every save/media/publish stage to one document lifetime.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/useStudioAuthority.js",
+    "repair_line": 6,
+    "related_gates": [
+      "F13.1-27",
+      "F13.1-28",
+      "F13.1-29"
+    ],
+    "companion_files": [
+      "StudioAuthority.test.jsx",
+      "InvitationForm.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-negatives",
+      "authority-fix"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-002",
+    "severity": "P1",
+    "symptom": "Ownerless legacy drafts could be read and silently adopted",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+    "pre_fix_run": "pre-fix-negatives",
+    "post_fix_run": "authority-fix",
+    "repair": "Block ownerless authenticated reads, reject owner changes, preserve original bytes and show a recovery notice.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/shared/storage/weddingStorage.js",
+    "repair_line": 58,
+    "related_gates": [
+      "F13.1-29",
+      "F13.1-30"
+    ],
+    "companion_files": [
+      "StudioAuthority.test.jsx",
+      "InvitationEditFeature.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-negatives",
+      "authority-fix"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-003",
+    "severity": "P1",
+    "symptom": "Nested design fields, gallery extensions and records beyond ten were lost",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+    "pre_fix_run": "pre-fix-json",
+    "post_fix_run": "json-fix",
+    "repair": "Preserve object extensions, honor array replacement/deletion, identify gallery rows by id, retain existing records above the new-upload limit.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/invitationPayloadUtils.js",
+    "repair_line": 7,
+    "related_gates": [
+      "F13.1-13",
+      "F13.1-15",
+      "F13.1-17",
+      "F13.1-31",
+      "F13.1-35"
+    ],
+    "companion_files": [
+      "StudioRoundtrip.test.jsx",
+      "InvitationForm.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-json",
+      "json-fix"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-004",
+    "severity": "P1",
+    "symptom": "Alternate draft reader/writer discarded future content and locales",
+    "proof_source": "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js",
+    "pre_fix_run": "pre-fix-alternate",
+    "post_fix_run": "alternate-fixed",
+    "repair": "Carry original JSON documents through the adapter and overlay authored fields without dropping extensions.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js",
+    "repair_line": 90,
+    "related_gates": [
+      "F13.1-13",
+      "F13.1-15",
+      "F13.1-17",
+      "F13.1-31"
+    ],
+    "companion_files": [
+      "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-alternate",
+      "alternate-fixed"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-005",
+    "severity": "P2",
+    "symptom": "Document shortcuts intercepted composition, inherited editable regions, modal commands and unavailable actions",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx",
+    "pre_fix_run": "pre-fix-negatives",
+    "post_fix_run": "authority-fix",
+    "repair": "Respect event ownership, IME, Alt, editable ancestors, read-only/saving/conflict/expired/denied states.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "repair_line": 46,
+    "related_gates": [
+      "F13.1-08",
+      "F13.1-39"
+    ],
+    "companion_files": [
+      "StudioToolbar.test.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-negatives",
+      "authority-fix"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-006",
+    "severity": "P2",
+    "symptom": "Actual dark section labels and light template tag failed contrast",
+    "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+    "pre_fix_run": "baseline-functional",
+    "post_fix_run": "final-frozen-browsers",
+    "repair": "Use readable management text colors; scope reduced motion and forced colors to the portal toolbar too.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+    "repair_line": 594,
+    "related_gates": [
+      "F13.1-05",
+      "F13.1-38",
+      "F13.1-39"
+    ],
+    "companion_files": [
+      "phase13-codex-functional.spec.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "baseline-functional",
+      "final-frozen-browsers"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-007",
+    "severity": "P2",
+    "symptom": "Short landscape stacked chrome placed the first field below the viewport",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+    "pre_fix_run": "baseline-functional",
+    "post_fix_run": "final-frozen-browsers",
+    "repair": "Compress mode/section/language spacing and retain 44px command controls; report actual geometry, not a CSS minimum.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+    "repair_line": 551,
+    "related_gates": [
+      "F13.1-06",
+      "F13.1-23",
+      "F13.1-24"
+    ],
+    "companion_files": [
+      "phase13-codex-functional.spec.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "baseline-functional",
+      "final-frozen-browsers"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-008",
+    "severity": "P2",
+    "symptom": "Mobile actions were deliberately hidden while the keyboard branch was active",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "pre_fix_run": null,
+    "post_fix_run": "final-frozen-browsers",
+    "repair": "Position actions above the visual viewport inset; physical keyboard verification stays external.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Source-backed defect; no independently captured failing automated run is claimed",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "repair_line": 12,
+    "related_gates": [
+      "F13.1-23",
+      "F13.1-24"
+    ],
+    "companion_files": [
+      "StudioChrome.css",
+      "phase13-codex-functional.spec.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "final-frozen-browsers"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-009",
+    "severity": "P2",
+    "symptom": "WebKit pointer opening did not focus the modal invoker",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "pre_fix_run": "repaired-browsers",
+    "post_fix_run": "browser-isolated-rerun",
+    "repair": "Focus the actual Studio invoker before opening its modal, allowing existing modal restoration to work.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "repair_line": 94,
+    "related_gates": [
+      "F13.1-20",
+      "F13.1-39"
+    ],
+    "companion_files": [
+      "phase13-codex-functional.spec.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "repaired-browsers",
+      "browser-isolated-rerun"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-010",
+    "severity": "P1",
+    "symptom": "Ambiguous legacy Studio create retry lacked a stable request id",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+    "pre_fix_run": "pre-fix-create-retry",
+    "post_fix_run": "retry-fixed",
+    "repair": "Reuse immutable first-create bytes and request id; apply later edits by update on the returned server id.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+    "repair_line": 1441,
+    "related_gates": [
+      "F13.1-32"
+    ],
+    "companion_files": [
+      "StudioRoundtrip.test.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "pre-fix-create-retry",
+      "retry-fixed"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-011",
+    "severity": "P2",
+    "symptom": "HTTP 403 remained a generic failure with retry affordances",
+    "proof_source": "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx",
+    "pre_fix_run": null,
+    "post_fix_run": "focused-security",
+    "repair": "Add a denied state that suspends writes and preserves local recovery.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Source-backed defect; no independently captured failing automated run is claimed",
+    "repair_source": "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js",
+    "repair_line": 66,
+    "related_gates": [
+      "F13.1-07",
+      "F13.1-28"
+    ],
+    "companion_files": [
+      "useStudioPersistence.test.jsx",
+      "StudioToolbar.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "focused-security"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-012",
+    "severity": "P2",
+    "symptom": "Late media upload completion could replace a newer selected image",
+    "proof_source": "apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js",
+    "pre_fix_run": null,
+    "post_fix_run": "retry-fixed",
+    "repair": "Only acknowledge an uploaded reference if the current field still equals the sent field; keep a newer pending file.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Source-backed defect; no independently captured failing automated run is claimed",
+    "repair_source": "apps/frontend-user/src/features/invitations/invitationPayloadUtils.js",
+    "repair_line": 23,
+    "related_gates": [
+      "F13.1-27",
+      "F13.1-32",
+      "F13.1-35"
+    ],
+    "companion_files": [
+      "invitationPayloadUtils.test.js",
+      "InvitationForm.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "retry-fixed"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-013",
+    "severity": "P2",
+    "symptom": "Current CI browser job failed before test collection because a generated matrix was absent",
+    "proof_source": ".github/workflows/ci.yml",
+    "pre_fix_run": null,
+    "post_fix_run": "ci-matrix-generation",
+    "repair": "Generate the source-derived matrix in the browser job with its existing opt-in before collecting the E2E suite.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Source-backed defect; no independently captured failing automated run is claimed",
+    "repair_source": ".github/workflows/ci.yml",
+    "repair_line": 357,
+    "related_gates": [
+      "F13.1-02",
+      "F13.1-45",
+      "F13.1-47"
+    ],
+    "companion_files": [
+      "phase12ContractMatrix.test.jsx"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "ci-matrix-generation"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-014",
+    "severity": "P3",
+    "symptom": "Repository verification failed on a missing documented setup page",
+    "proof_source": "docs/development/AI_SKILLS_SETUP.md",
+    "pre_fix_run": "routing-check",
+    "post_fix_run": "routing-repaired",
+    "repair": "Restore the referenced verification guide without changing skills or dependencies.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "docs/development/AI_SKILLS_SETUP.md",
+    "repair_line": 1,
+    "related_gates": [
+      "F13.1-45",
+      "F13.1-52"
+    ],
+    "companion_files": [
+      "scripts/validate-agent-routing.py"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "routing-check",
+      "routing-repaired"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  },
+  {
+    "id": "C13-015",
+    "severity": "P2",
+    "symptom": "Public locale matrix assumed a shared opening label and button-based locale switch for Floral",
+    "proof_source": "apps/frontend-user/tests/e2e/phase12-matrix.spec.js",
+    "pre_fix_run": "ci-browser-local",
+    "post_fix_run": "floral-native-controls",
+    "repair": "Probe the exact observed Khmer opening label and Floral’s native locale select; retain activation, suppression, guest-message, eight-width and axe assertions.",
+    "owner": "Codex Phase 13 revalidation",
+    "status": "REPAIRED — LOCAL; scope and external limits retained",
+    "causal_evidence": "Recorded pre-fix failing execution",
+    "repair_source": "apps/frontend-user/tests/e2e/phase12-matrix.spec.js",
+    "repair_line": 23,
+    "related_gates": [
+      "F13.1-45",
+      "F13.1-47"
+    ],
+    "companion_files": [
+      "support/activateOpening.js"
+    ],
+    "reproduction": "Run the named pre-fix test/source scenario against the retained entry snapshot; exact commands, assertions and failures are in the linked run record/log. No customer account is needed.",
+    "before_after_proof": [
+      "ci-browser-local",
+      "floral-native-controls"
+    ],
+    "remaining_limit": "Local source/adapter/browser fixture proof only; corresponding external and broader state gates remain in the owner matrix."
+  }
+]

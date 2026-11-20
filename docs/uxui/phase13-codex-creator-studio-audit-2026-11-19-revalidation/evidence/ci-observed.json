@@ -1,0 +1,163 @@
+{
+  "phase12": {
+    "run_id": 44532062068,
+    "jobs": [
+      {
+        "id": 135587841263,
+        "name": "Admin Frontend Lint, Test, Analysis & Build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841525,
+        "name": "Dependency Vulnerability Audit",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841594,
+        "name": "Deployment Configuration & Docker Applicability",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841651,
+        "name": "User Frontend Lint, Test, Analysis & Build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841753,
+        "name": "Backend Build, Test, Coverage & Static Analysis",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841801,
+        "name": "Fresh MySQL Flyway Migration",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841821,
+        "name": "Backend Static & Dependency Usage Analysis",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841893,
+        "name": "Telegram Bot Lint, Test & Compile",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587841955,
+        "name": "Real HTTP MySQL Ownership, RBAC & Entitlements",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 135587842018,
+        "name": "Secret Scan",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 135590015988,
+        "name": "Browser E2E & Route Smoke",
+        "status": "completed",
+        "conclusion": "failure"
+      }
+    ]
+  },
+  "entry": {
+    "run_id": 44544967826,
+    "head_sha": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "url": "https://github.com/Ny-Panha/Koupreng-invitation_project/actions/runs/44544967826",
+    "jobs": [
+      {
+        "id": 135633006394,
+        "name": "User Frontend Lint, Test, Analysis & Build",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633006846,
+        "name": "Dependency Vulnerability Audit",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633006889,
+        "name": "Telegram Bot Lint, Test & Compile",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007005,
+        "name": "Admin Frontend Lint, Test, Analysis & Build",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007057,
+        "name": "Real HTTP MySQL Ownership, RBAC & Entitlements",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007086,
+        "name": "Deployment Configuration & Docker Applicability",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007151,
+        "name": "Fresh MySQL Flyway Migration",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007169,
+        "name": "Backend Build, Test, Coverage & Static Analysis",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007265,
+        "name": "Backend Static & Dependency Usage Analysis",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      },
+      {
+        "id": 135633007361,
+        "name": "Secret Scan",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Scan tracked source with Gitleaks"
+        ]
+      },
+      {
+        "id": 135635162853,
+        "name": "Browser E2E & Route Smoke",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Verify Studio, template locales, guests and tickets"
+        ]
+      }
+    ],
+    "browser_failure": "ENOENT docs/phase12/evidence/studio-template-locales-matrix.json at phase12-matrix.spec.js:9; the current run did not reach guest-filter assertions.",
+    "secret_log": "Gitleaks reported one finding; classification requires the redacted artifact/local replay."
+  }
+}

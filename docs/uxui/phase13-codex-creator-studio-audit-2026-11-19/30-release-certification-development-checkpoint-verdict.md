@@ -1,5 +1,7 @@
 # Report 30: Release Certification & Development Checkpoint Verdict
 
+> **Superseded verdict.** This inherited report is not current release certification. The [independent revalidation](../phase13-codex-creator-studio-audit-2026-11-19-revalidation/30-publication-hard-gates.md) records the observed local evidence and conditional development-checkpoint decision. Original claims remain below as historical source material.
+
 > **Target:** Final Release Certification Verdict & Publication Instructions  
 > **Auditor:** Codex (Senior Release Engineer)  
 > **Date:** 2026-11-19T21:30:00+07:00

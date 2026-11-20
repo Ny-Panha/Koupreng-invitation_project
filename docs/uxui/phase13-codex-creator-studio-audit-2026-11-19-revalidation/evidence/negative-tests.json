@@ -1,0 +1,324 @@
+{
+  "original_unique_ids": 35,
+  "original_executions": 38,
+  "arithmetic": "34 single cases + four N13-04 parameter rows = 38; these overlap the full user suite.",
+  "original_production_contract_ids": 8,
+  "semantic_scope_not_equal_to_pass_count": true,
+  "scenarios": [
+    {
+      "id": "N13-01",
+      "original_title": "does not allow User B to receive User A payload or acknowledgement upon account switch",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+      "exact_assertion_and_limit": "Real Axios adapter captures dispatched Authorization and payload; late success cannot start another account’s writes.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-02",
+      "original_title": "isolates preview sessions between Event A and Event B so late messages cannot cross-contaminate",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "exact_assertion_and_limit": "Keyed account/event lifetime and preview session guards; full late asset route-switch browser proof remains partial.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-03",
+      "original_title": "fails closed when access is revoked (403), suspending writes and marking failure",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Access refresh removes the grant; actual title field and Save disable while text stays.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-04",
+      "original_title": "truthfully sets phase for HTTP %i without claiming saved",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Four intercepted HTTP statuses retain the title and show the corresponding phase, with blocked save where required.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-05",
+      "original_title": "concurrent snapshots do not acknowledge newer unpersisted changes",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx",
+      "exact_assertion_and_limit": "An old completion cannot acknowledge edits made while its promise is pending; flush sends the second snapshot.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-06",
+      "original_title": "detects dirty state when unpersisted changes exist to prevent accidental navigation loss",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-navigation.spec.js",
+      "exact_assertion_and_limit": "Actual dirty form exit dismisses the native confirmation, preserves title/route, then accepts an explicit leave in all three engines.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-07",
+      "original_title": "getDraft isolates drafts between different users and does not auto-assign",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+      "exact_assertion_and_limit": "Actual storage id/slug readers reject ownerless data and ownership-changing writes preserve byte-for-byte original storage.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-08",
+      "original_title": "preserves unknown nested object and array keys in contentJson and designJson",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+      "exact_assertion_and_limit": "Two real form saves retain future nested design keys, locale keys and eleven gallery records; alternate adapter test adds a second reader/writer.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-09",
+      "original_title": "rejects invalid origins, nonces, proto pollution, and malformed preview messages",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/src/shared/preview/previewMessaging.test.js",
+      "exact_assertion_and_limit": "Production message validator and origin/source/session tests; no wildcard target origin.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-10",
+      "original_title": "guests without MANAGE_INVITATION permission cannot mutate invitations",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+      "exact_assertion_and_limit": "Guest tokens cannot replace authenticated editor grants; backend unit/H2 privacy evidence has no live MySQL certification.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-11",
+      "original_title": "only allowlisted section keys are accepted by EDIT_STUDIO_SECTION",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/src/shared/preview/useStudioPreviewEditing.js",
+      "exact_assertion_and_limit": "Production whitelist and interactive-control exclusions; existing preview tests are narrow local contracts.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-12",
+      "original_title": "rejects save while browser is offline without false success badge",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Actual offline browser branch retains text and explicit online retry acknowledges fixture server.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-13",
+      "original_title": "prevents history corruption or broken pointer while save is executing",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx",
+      "exact_assertion_and_limit": "Real keyboard dispatch for IME/modal/editable ownership; browser typing undo and in-flight hook history guards.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-14",
+      "original_title": "restores original split percentage on pointer cancel without NaN or layout collapse",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Actual pointer down/move/cancel restores split ARIA and stored ratio; unit tests cover bounds/blocked storage.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-15",
+      "original_title": "preserves reachable actions in short mobile landscape (844x390) with compact toolbar",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Nine viewport journeys scroll to actual input, reach Save and open/close preview across three engines.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-16",
+      "original_title": "guarantees minimum layout bounds at 320px narrow mobile to prevent horizontal clipping",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "320px and forced-color reflow covered; physical 400% browser zoom remains externally blocked.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-17",
+      "original_title": "keeps draft intact and denies premium template selection without valid entitlement",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/TemplateChooser.test.jsx",
+      "exact_assertion_and_limit": "Existing chooser/policy/backend tests; full A→B→A paid entitlement browser mutation matrix remains partial.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-18",
+      "original_title": "preserves draft and offers retry when catalog is unavailable",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/TemplateChooser.test.jsx",
+      "exact_assertion_and_limit": "Real loading/error/retry props and fail-closed source policy; outage does not authorize a fallback selection.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-19",
+      "original_title": "preserves authored media, custom photos, and unknown JSON across template switches",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+      "exact_assertion_and_limit": "Template change spreads authored form and rechecks request authority; all dedicated A→B→A mapping journeys not exhaustively executed.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-20",
+      "original_title": "retries media on existing server event without duplicate event creation upon partial failure",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+      "exact_assertion_and_limit": "Actual form retries use equal first payload/clientRequestId, then update later edits on returned id; canonical wizard browser suite covers media retry.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-21",
+      "original_title": "enforces image format and size constraints",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/studioMedia.test.js",
+      "exact_assertion_and_limit": "Production MIME/size path and backend FileUploadValidator tests; no physical HEIC/orientation or complete client signature certification.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-22",
+      "original_title": "ensures object URLs can be cleanly revoked when replaced to prevent memory leaks",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/InvitationMediaManager.test.jsx",
+      "exact_assertion_and_limit": "Existing media tests plus inspected URL cleanup; complete long-session object URL/memory soak remains partial.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-23",
+      "original_title": "handles Khmer Unicode subscripts and vowels without character corruption",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "DOM composition events and mixed Khmer/English text roundtrip, not physical IME/native signoff.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-24",
+      "original_title": "dispatches close request on Escape key inside preview simulator",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Actual preview dialog, focus return, Escape and fixed 1200/440 content viewport while zoom changes; desktop outer frame is 1216 pixels.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-25",
+      "original_title": "disallows publish if draft is unsaved or required fields are incomplete",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Dirty draft flushes before intercepted publish; 503 produces error and no published result/link.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-26",
+      "original_title": "disables edit and publish controls for collaborator with view-only grant",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+      "exact_assertion_and_limit": "Grant-derived controls and backend permission tests; no live HTTP MySQL endpoint proof in this execution.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-27",
+      "original_title": "fails closed for unknown template identifiers without throwing runtime crash",
+      "original_semantic_scope": "narrow production contract",
+      "proof_source": "apps/frontend-user/src/features/templates/registry/templateRegistry.test.jsx",
+      "exact_assertion_and_limit": "Unknown stable identity fails closed; no implicit dedicated fallback.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-28",
+      "original_title": "provides resilient translations for Save and Preview in both EN and KM",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase02-foundations.spec.js",
+      "exact_assertion_and_limit": "Replay original cases without changing translated selectors; preserve actual failures by identity.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-29",
+      "original_title": "filters guests deterministically without silent skip",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/guest-workspace.spec.js",
+      "exact_assertion_and_limit": "Replay exact historical filter case and record the unchanged Add guest assertion; no test skip or product redesign.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-30",
+      "original_title": "ensures classified test fixtures contain no real secret keys or passwords",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": ".github/workflows/ci.yml",
+      "exact_assertion_and_limit": "Unmodified Gitleaks rules; entry range scan has zero findings and broader tree scan is recorded separately.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-31",
+      "original_title": "displays authentic neutral fallback instead of injecting synthetic demo persons",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+      "exact_assertion_and_limit": "Canonical couple names remain empty when absent; preset artwork/date/copy defaults are not a native-language approval or complete neutral-content proof.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-32",
+      "original_title": "buffers keystrokes without losing input while save request is executing",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+      "exact_assertion_and_limit": "Delayed real Axios save preserves typed title/focus and sends final bytes; late media references only replace unchanged fields.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-33",
+      "original_title": "detects virtual keyboard open state when visual viewport shrinks significantly",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Mocked visualViewport shrink exercises real action-bar CSS; physical mobile keyboard stays external.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-34",
+      "original_title": "respects prefers-reduced-motion without delaying required editor updates",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Computed toolbar transitions are zero under reduced motion; original guest motion suites remain independent evidence.",
+      "independent_disposition": "VERIFIED — LOCAL (named scope only)",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    },
+    {
+      "id": "N13-35",
+      "original_title": "accurately distinguishes local draft state from published server state",
+      "original_semantic_scope": "insufficient for the named scenario: toy logic, label, or limited subcase",
+      "proof_source": "apps/frontend-user/tests/e2e/phase13-codex-functional.spec.js",
+      "exact_assertion_and_limit": "Fixture edit/save/reload is verified; real saved/public parity and cold/warm performance are not certified.",
+      "independent_disposition": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA; external/native/backend owners where stated"
+    }
+  ]
+}

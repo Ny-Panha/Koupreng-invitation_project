@@ -39,6 +39,7 @@ import StudioAppearance from "./studio/StudioAppearance";
 const InvitationStyleEditor = lazy(() => import('./studio/InvitationStyleEditor'));
 import CinematicIntroEditor from './studio/CinematicIntroEditor';
 import { useStudioPersistence } from "./studio/useStudioPersistence";
+import { useStudioAuthority } from "./studio/useStudioAuthority";
 import { normalizeStudioImage, replaceMediaReferences, uploadInlineReferences } from "./studio/studioMedia";
 import "./studio/InvitationStudio.css";
 import "./studio/StudioChrome.css";
@@ -74,7 +75,7 @@ import Modal from "@/shared/ui/Modal";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
 import { saveDraft } from "@/shared/storage/weddingStorage";
-import { dataUrlToFile, stripInlineMedia } from "./invitationPayloadUtils";
+import { dataUrlToFile, stripInlineMedia, preserveStudioJson, studioGallery, acknowledgeStudioMedia } from "./invitationPayloadUtils";
 import {
     getTemplateById,
     getTemplatePreset,
@@ -622,9 +623,6 @@ export default function InvitationForm({ invitation }) {
                 while (list.length < 5) {
                     list.push({ id: `p${list.length + 1}`, url: "" });
                 }
-                if (list.length > 10) {
-                    list = list.slice(0, 10);
-                }
                 return list;
             })(),
             showStory: customParsed.showStory !== undefined ? customParsed.showStory : (tpl?.enabledSections?.story !== false),
@@ -743,6 +741,7 @@ export default function InvitationForm({ invitation }) {
     }, [isTemplateModalOpen, catalogRetry]);
 
     const canEdit = workspace ? workspace.can?.("MANAGE_INVITATION") === true : true;
+    const authority = useStudioAuthority(canEdit);
     const editAccess = useRef(canEdit);
     useEffect(() => { editAccess.current = canEdit; }, [canEdit]);
     const brandingAccess = useFeatureAccess({ feature: 'CUSTOM_BRANDING', permission: 'MANAGE_INVITATION' });
@@ -790,18 +789,23 @@ export default function InvitationForm({ invitation }) {
     const [isLocating, setIsLocating] = useState(false);
     const serverRevision = useRef(invitation?.updatedAt || null);
     const savedBackendId = useRef(invitation?.backendInvitationId || (/^[1-9]\d*$/.test(String(invitationId)) ? invitationId : null));
+    const [clientRequestId] = useState(() => invitation?.clientRequestId || generateSecureUuid());
+    const createAttempt = useRef(invitation?.createAttempt || null);
 
     const handleChangeTemplate = async (candidate) => {
-        if (!candidate) return;
+        const request = authority.begin();
+        if (!candidate || !request.isCurrent()) return;
         let template;
         try {
             const fresh = await templateService.getPublicBySlug(candidate.code || candidate.slug);
+            if (!request.isCurrent()) return;
             if (!isPublicCatalogTemplate(fresh)) throw new Error("Template is unavailable");
             const nextCatalog = catalogTemplates.map(item => String(item.backendId) === String(fresh.id) ? fresh : item);
             registerDynamicTemplates(nextCatalog);
             template = getTemplateById(fresh.code);
             if (!template || Number(template.backendId) !== Number(fresh.id)) throw new Error("Template identity changed");
         } catch {
+            if (!request.isCurrent()) return;
             toast(englishUI ? "This design is unavailable. Refresh the collection and try again." : "គំរូនេះមិនអាចប្រើបានទេ។ សូមផ្ទុកបញ្ជីឡើងវិញ។", "error");
             setCatalogRetry(value => value + 1);
             return;
@@ -823,11 +827,13 @@ export default function InvitationForm({ invitation }) {
                 const access = workspace?.isOwner === false
                     ? await invitationService.templateAccess(workspace.eventId, template.backendId)
                     : await paymentService.templateAccess(resolveNumericTemplateId(template.code || template.id));
+                if (!request.isCurrent()) return;
                 if (!access?.hasAccess) {
                     void feedback.upgrade({ feature: "PREMIUM_TEMPLATES", template, event: workspace, permission: "MANAGE_INVITATION" });
                     return;
                 }
             } catch (error) {
+                if (!request.isCurrent()) return;
                 if (!feedback.explain(error, { event: workspace, permission: "MANAGE_INVITATION", feature: "PREMIUM_TEMPLATES" })) {
                     toast.error(englishUI ? "Could not verify template access. Try again." : "មិនអាចផ្ទៀងផ្ទាត់សិទ្ធិគំរូបានទេ។ សូមសាកម្តងទៀត។");
                 }
@@ -837,7 +843,7 @@ export default function InvitationForm({ invitation }) {
         if (!await feedback.confirm({ title: uiCopy("បញ្ជាក់ការប្តូរគំរូ", "Confirm template change"), message: englishUI
             ? "Change invitation template? Your event details and uploaded images will stay. Template-specific appearance and optional sections may change; unsupported customizations remain saved for recovery."
             : "ប្ដូរគំរូសំបុត្រអញ្ជើញ? ព័ត៌មានកម្មវិធី និងរូបភាពផ្ទាល់ខ្លួនត្រូវបានរក្សា។ រចនាបថ និងផ្នែកពិសេសមួយចំនួនអាចផ្លាស់ប្ដូរ។"})) return;
-        if (!editAccess.current) { void feedback.permissionDenied({ event: workspace }); return; }
+        if (!request.isCurrent() || !editAccess.current) { return; }
         const preset = getTemplatePreset(template) || {};
         const uploadedCoverUrl = form.uploadedCoverUrl || "";
 
@@ -1233,6 +1239,10 @@ export default function InvitationForm({ invitation }) {
         });
     };
     const handleSave = async ({ redirectToPreview = false, stayInStudio = false, quiet = false, deliberate = false } = {}) => {
+        const request = authority.begin();
+        const stopped = () => ({ synced: false, status: 403, error: uiCopy('សិទ្ធិ ឬវគ្គចូលប្រើបានផ្លាស់ប្ដូរ។ បើកកម្មវិធីម្ដងទៀត។', 'Access or session changed. Reopen the event before saving.') });
+        if (!request.isCurrent()) return stopped();
+        const requestOptions = { suppressAuthRedirect: true, signal: request.signal };
         const event = resolveEvent(form);
         const end = form.eventEndTime ? wallTimeToInstant(form.eventEndDate || event.date, form.eventEndTime, event.timezone) : null;
         if (!validTimezone(event.timezone) || (event.validDate && event.time && event.instant === null) || (form.eventEndTime && (end === null || event.instant === null || end <= event.instant))) {
@@ -1268,7 +1278,7 @@ export default function InvitationForm({ invitation }) {
         setIsSaving(true);
         try {
             let savedPhotos = form.photos || [];
-            const designPayload = {
+            const designPayload = preserveStudioJson(safeJson(invitation?.designJson), {
                 ...safeJson(invitation?.designJson),
                 studioStyle: form.studioStyle,
                 fontKhmer: form.fontKhmer,
@@ -1312,9 +1322,9 @@ export default function InvitationForm({ invitation }) {
                 musicUrl: form.musicUrl,
                 showBrandMark: form.showBrandMark !== false,
                 brandMarkUrl: form.brandMarkUrl || "",
-            };
+            });
 
-            const contentPayload = {
+            const contentPayload = preserveStudioJson(safeJson(invitation?.contentJson), {
                 ...safeJson(invitation?.contentJson),
                 ...invitationFeatureFields(form),
                 ...(form.localizedContentV1 ? { localizedContentV1: localeContent(form) } : {}),
@@ -1371,16 +1381,14 @@ export default function InvitationForm({ invitation }) {
                 party: form.party || [],
                 showFaq: form.showFaq !== false,
                 faq: form.faq || [],
-                gallery: savedPhotos
-                    .filter((photo) => photo?.url)
-                    .map(({ id, url }) => ({ id, preview: url, type: "image" })),
+                gallery: studioGallery(savedPhotos, safeJson(invitation?.contentJson).gallery),
                 khqrDollar: form.khqrDollar,
                 khqrRiel: form.khqrRiel,
                 thankYouTitle: form.thankYouTitle,
                 thankYouText: form.thankYouText,
                 apologyTitle: form.apologyTitle,
                 apologyText: form.apologyText,
-            };
+            });
 
             const payload = {
                 expectedUpdatedAt: serverRevision.current,
@@ -1427,13 +1435,24 @@ export default function InvitationForm({ invitation }) {
             try {
                 if (!payload.templateId) throw new Error(uiCopy("គំរូដែលបានជ្រើសមិនមានក្នុងបណ្ណាល័យទេ។ សូមជ្រើសគំរូដែលអាចប្រើបាន មុនពេលរក្សាទុកលើម៉ាស៊ីនមេ។", "The selected template is unavailable in the catalog. Choose an available template before saving online."));
                 if (effectiveBackendId) {
-                    saved = await invitationService.update(effectiveBackendId, payload, { suppressAuthRedirect: true });
+                    saved = await invitationService.update(effectiveBackendId, payload, requestOptions);
                 } else {
-                    saved = await invitationService.create(payload);
+                    // An ambiguous create retry repeats the first immutable request.
+                    createAttempt.current ||= { ...payload, clientRequestId };
+                    saved = await invitationService.create(createAttempt.current, requestOptions);
+                    if (!request.isCurrent()) return stopped();
+                    if (saved?.id) savedBackendId.current = saved.id;
+                    if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
+                    const { clientRequestId: attemptId, ...firstPayload } = createAttempt.current;
+                    if (attemptId && saved?.id && JSON.stringify(firstPayload) !== JSON.stringify(payload)) {
+                        saved = await invitationService.update(saved.id, { ...payload, expectedUpdatedAt: serverRevision.current }, requestOptions);
+                    }
                 }
+                if (!request.isCurrent()) return stopped();
                 if (saved?.id) savedBackendId.current = saved.id;
                 if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
             } catch (apiErr) {
+                if (!request.isCurrent()) return stopped();
                 apiFailure = apiErr;
                 if (!quiet || deliberate) feedback.explain(apiErr, { event: workspace, permission: "MANAGE_INVITATION" });
                 apiSyncFailed = true;
@@ -1451,11 +1470,13 @@ export default function InvitationForm({ invitation }) {
             const coverFile = pendingCoverFile || dataUrlToFile(form.coverImage, "cover.jpg");
             if (coverFile && backendId && !apiSyncFailed) {
                 try {
-                    const uploaded = await mediaService.uploadCover(backendId, coverFile);
+                    const uploaded = await mediaService.uploadCover(backendId, coverFile, undefined, requestOptions);
+                    if (!request.isCurrent()) return stopped();
                     savedCoverUrl = uploaded?.fileUrl || uploaded?.data?.fileUrl || savedCoverUrl;
-                    setPendingCoverFile(null);
-                    update("coverImage", savedCoverUrl);
+                    setPendingCoverFile(current => current === pendingCoverFile ? null : current);
+                    setForm(previous => acknowledgeStudioMedia(previous, form, "coverImage", savedCoverUrl));
                 } catch (uploadError) {
+                    if (!request.isCurrent()) return stopped();
                     mediaSyncError = uploadError?.message || "Cover image upload failed";
                 }
             }
@@ -1478,7 +1499,8 @@ export default function InvitationForm({ invitation }) {
                       // Keep mixed saves within the server's five-file request limit.
                       for (let offset = 0; offset < galleryUploads.length; offset += 5) {
                         const batch = galleryUploads.slice(offset, offset + 5);
-                        const uploadedGallery = await mediaService.uploadGallery(backendId, batch.map((item) => item.file));
+                        const uploadedGallery = await mediaService.uploadGallery(backendId, batch.map((item) => item.file), undefined, undefined, requestOptions);
+                        if (!request.isCurrent()) return stopped();
                         const uploadedItems = Array.isArray(uploadedGallery) ? uploadedGallery : uploadedGallery?.items || uploadedGallery?.data || [];
                         for (const [uploadIndex, upload] of batch.entries()) {
                             const fileUrl = uploadedItems[uploadIndex]?.fileUrl;
@@ -1487,19 +1509,20 @@ export default function InvitationForm({ invitation }) {
                                 savedPhotos = savedPhotos.map((photo, index) => index === upload.index ? { ...photo, url: fileUrl } : photo);
                             } else if (upload.purpose === "invitation") {
                                 savedInvitationUrl = fileUrl;
-                                setPendingInvitationFile(null);
-                                update("invitationImage", fileUrl);
+                                setPendingInvitationFile(current => current === pendingInvitationFile ? null : current);
+                    setForm(previous => acknowledgeStudioMedia(previous, form, "invitationImage", fileUrl));
                             } else if (upload.purpose === "invitation2") {
                                 savedInvitationUrl2 = fileUrl;
-                                setPendingInvitation2File(null);
-                                update("invitationImage2", fileUrl);
+                                setPendingInvitation2File(current => current === pendingInvitation2File ? null : current);
+                    setForm(previous => acknowledgeStudioMedia(previous, form, "invitationImage2", fileUrl));
                             } else if (upload.purpose === 'map') {
                                 savedSketchMapUrl = fileUrl;
-                                update('sketchMapImage', fileUrl);
+                                setForm(previous => acknowledgeStudioMedia(previous, form, 'sketchMapImage', fileUrl));
                             }
                         }
                       }
                     } catch (uploadError) {
+                        if (!request.isCurrent()) return stopped();
                         mediaSyncError ||= uploadError?.message || "Gallery upload failed";
                     }
                 }
@@ -1509,12 +1532,14 @@ export default function InvitationForm({ invitation }) {
             const coverBgFile = pendingCoverBgFile || dataUrlToFile(form.coverBackgroundImage, "cover-bg.jpg");
             if (coverBgFile && backendId && !apiSyncFailed) {
                 try {
-                    const items = await mediaService.uploadGallery(backendId, [coverBgFile]);
+                    const items = await mediaService.uploadGallery(backendId, [coverBgFile], undefined, undefined, requestOptions);
+                    if (!request.isCurrent()) return stopped();
                     const uploadedCoverBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
                     savedCoverBgUrl = uploadedCoverBg?.fileUrl || uploadedCoverBg?.data?.fileUrl || form.coverBackgroundImage;
-                    setPendingCoverBgFile(null);
-                    update("coverBackgroundImage", savedCoverBgUrl);
+                    setPendingCoverBgFile(current => current === pendingCoverBgFile ? null : current);
+                    setForm(previous => acknowledgeStudioMedia(previous, form, "coverBackgroundImage", savedCoverBgUrl));
                 } catch (uploadError) {
+                    if (!request.isCurrent()) return stopped();
                     mediaSyncError ||= uploadError?.message || "Cover background upload failed";
                 }
             }
@@ -1523,12 +1548,14 @@ export default function InvitationForm({ invitation }) {
             const bgFile = pendingBackgroundFile || dataUrlToFile(form.backgroundImage, "background.jpg");
             if (bgFile && backendId && !apiSyncFailed) {
                 try {
-                    const items = await mediaService.uploadGallery(backendId, [bgFile]);
+                    const items = await mediaService.uploadGallery(backendId, [bgFile], undefined, undefined, requestOptions);
+                    if (!request.isCurrent()) return stopped();
                     const uploadedBg = (Array.isArray(items) ? items : items?.items || items?.data || [])[0];
                     savedBgUrl = uploadedBg?.fileUrl || uploadedBg?.data?.fileUrl || form.backgroundImage;
-                    setPendingBackgroundFile(null);
-                    update("backgroundImage", savedBgUrl);
+                    setPendingBackgroundFile(current => current === pendingBackgroundFile ? null : current);
+                    setForm(previous => acknowledgeStudioMedia(previous, form, "backgroundImage", savedBgUrl));
                 } catch (uploadError) {
+                    if (!request.isCurrent()) return stopped();
                     mediaSyncError ||= uploadError?.message || "Background upload failed";
                 }
             }
@@ -1539,13 +1566,17 @@ export default function InvitationForm({ invitation }) {
                 photos: savedPhotos, coverBackgroundImage: savedCoverBgUrl || null, backgroundImage: savedBgUrl || null,
                 invitationImage: savedInvitationUrl || designPayload.invitationImage, invitationImage2: savedInvitationUrl2 || designPayload.invitationImage2, sketchMapImage: savedSketchMapUrl };
             const finalContent = { ...contentPayload, ...Object.fromEntries(["coverImage", "coverBackgroundImage", "backgroundImage", "invitationImage", "invitationImage2", 'sketchMapImage', 'coverFocalPoint', 'couplePhoto'].map(key => [key, finalDesign[key]])),
-                gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })) };
+                gallery: studioGallery(savedPhotos, contentPayload.gallery) };
             let extraMedia = new globalThis.Map();
             if (backendId && !apiSyncFailed) {
                 try {
-                    extraMedia = await uploadInlineReferences([finalDesign, finalContent], files => mediaService.uploadGallery(backendId, files));
+                    extraMedia = await uploadInlineReferences([finalDesign, finalContent], files => {
+                        if (!request.isCurrent()) throw new Error('Studio request is no longer current');
+                        return mediaService.uploadGallery(backendId, files, undefined, undefined, requestOptions);
+                    });
+                    if (!request.isCurrent()) return stopped();
                     if (extraMedia.size) setForm(previous => replaceMediaReferences(previous, extraMedia));
-                } catch (error) { mediaSyncError ||= error.message; }
+                } catch (error) { if (!request.isCurrent()) return stopped(); mediaSyncError ||= error.message; }
             }
             const hasMediaUpdates = backendId && (
                 extraMedia.size ||
@@ -1580,15 +1611,17 @@ export default function InvitationForm({ invitation }) {
                         contentJson: JSON.stringify(stripInlineMedia(replaceMediaReferences({
                             ...contentPayload,
                             coverImage: savedCoverUrl || contentPayload.coverImage,
-                            gallery: savedPhotos.filter(photo => photo?.url).map(({ id, url }) => ({ id, preview: url, type: "image" })),
+                            gallery: studioGallery(savedPhotos, contentPayload.gallery),
                             coverBackgroundImage: savedCoverBgUrl || form.coverBackgroundImage || null,
                             backgroundImage: savedBgUrl || form.backgroundImage || null,
                             invitationImage: savedInvitationUrl || form.invitationImage || null,
                             invitationImage2: savedInvitationUrl2 || form.invitationImage2 || null,
                             sketchMapImage: savedSketchMapUrl || null,
                         }, extraMedia))),
-                    }, { suppressAuthRedirect: true });
+                    }, requestOptions);
+                    if (!request.isCurrent()) return stopped();
                 } catch (updateError) {
+                    if (!request.isCurrent()) return stopped();
                     mediaSyncError ||= updateError?.message || "Invitation photo references could not be saved";
                     apiSyncStatus = updateError?.status || updateError?.response?.status;
                 }
@@ -1598,9 +1631,12 @@ export default function InvitationForm({ invitation }) {
             const targetDraftId = invitationId || saved?.id || `wed-${Date.now().toString(36)}`;
 
             // Always persist to local wedding draft storage
+            if (!request.isCurrent()) return stopped();
             saveDraft(stripInlineMedia(replaceMediaReferences({
                 ownerUserId: user?.id || user?.userId,
                 id: targetDraftId,
+                clientRequestId,
+                createAttempt: createAttempt.current,
                 rsvpDeadline: invitation?.rsvpDeadline || null,
                 slug: saved?.slug || invitation?.slug || form.slug || "wedding",
                 backendInvitationId: saved?.id || invitation?.backendInvitationId || (!isNaN(Number(invitationId)) ? Number(invitationId) : null),
@@ -1732,6 +1768,7 @@ export default function InvitationForm({ invitation }) {
             }
             return finalSavedId;
         } catch (err) {
+            if (!request.isCurrent()) return stopped();
             toast.error(err.message || (t("savedError") || "មិនអាចរក្សាទុកបានទេ (Save error)"));
             return null;
         } finally {
@@ -1781,17 +1818,21 @@ export default function InvitationForm({ invitation }) {
         toast(uiCopy("បានផ្សព្វផ្សាយសំបុត្រអញ្ជើញ", "Invitation published"), "success");
     }
     async function checkPublication() {
+        const request = authority.begin();
+        if (!request.isCurrent()) return;
         setIsPublishing(true);
         try {
-            const result = await invitationService.get(savedBackendId.current);
+            const result = await invitationService.get(savedBackendId.current, { signal: request.signal, suppressAuthRedirect: true });
+            if (!request.isCurrent()) return;
             if (result?.status === "PUBLISHED") confirmPublished(result);
             else setPublishError(uiCopy("ម៉ាស៊ីនមេបង្ហាញថានៅជាពង្រាង។ អ្នកអាចព្យាយាមផ្សព្វផ្សាយម្ដងទៀត។", "The server still reports a draft. You can retry publication."));
-        } catch { setPublishError(uiCopy("មិនអាចពិនិត្យស្ថានភាពបាន។ ពិនិត្យការតភ្ជាប់ រួចព្យាយាមម្ដងទៀត។", "Could not check publication. Reconnect and check again before sharing.")); }
+        } catch { if (request.isCurrent()) setPublishError(uiCopy("មិនអាចពិនិត្យស្ថានភាពបាន។ ពិនិត្យការតភ្ជាប់ រួចព្យាយាមម្ដងទៀត។", "Could not check publication. Reconnect and check again before sharing.")); }
         finally { setIsPublishing(false); }
     }
 
     async function publishInvitation() {
-        if (isPublishing) return;
+        const request = authority.begin();
+        if (isPublishing || !canPublish || !request.isCurrent()) return;
         if (!String(authoredForm.venueAddress || "").trim()) {
             setVenueAddressError(englishUI ? "Enter the venue address before publishing." : "សូមបញ្ចូលអាសយដ្ឋានទីកន្លែងមុនពេលផ្សព្វផ្សាយ។");
             setSelectedSection("venue");
@@ -1800,13 +1841,17 @@ export default function InvitationForm({ invitation }) {
         setIsPublishing(true);
         try {
             if (!await studio.flush()) {
+                if (!request.isCurrent()) return;
                 setPublishError(uiCopy("ពង្រាងមិនទាន់បានរក្សាទុក។ ត្រឡប់ទៅកែសម្រួល ដើម្បីពិនិត្យស្ថានភាពរក្សាទុក។", "The draft has not been saved. Keep editing to review the save status before publishing."));
                 return;
             }
-            const result = await invitationService.publish(savedBackendId.current);
+            if (!request.isCurrent()) return;
+            const result = await invitationService.publish(savedBackendId.current, { signal: request.signal, suppressAuthRedirect: true });
+            if (!request.isCurrent()) return;
             if (result?.status !== "PUBLISHED") throw new Error(uiCopy("ម៉ាស៊ីនមេមិនទាន់បានបញ្ជាក់ការផ្សព្វផ្សាយទេ។ សូមព្យាយាមម្ដងទៀត។", "The server has not confirmed publication. Please retry."));
             confirmPublished(result);
         } catch (error) {
+            if (!request.isCurrent()) return;
             if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
                 setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
                 completePublishField({ section: "venue", field: "venueAddress" });
@@ -3225,7 +3270,7 @@ export default function InvitationForm({ invitation }) {
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired", "denied"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired", "denied"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
             <div className="studio-workflow-bar">
                 <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
                 {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} focusEditor={focusEditor} onFocusEditor={() => setFocusEditor(value => !value)} />}

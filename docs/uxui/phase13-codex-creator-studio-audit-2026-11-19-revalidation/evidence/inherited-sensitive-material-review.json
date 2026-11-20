@@ -1,0 +1,20 @@
+{
+  "historical_path": "backups/koupreng_db_pre_demo_seed_20261022.sql",
+  "commit": "be9f2693",
+  "available": true,
+  "is_ancestor_of_entry": true,
+  "bytes": 265247,
+  "sha256": "84c09ee6137eb15a0a6de92779bcf14fde8268de02246d59671655fda2c75d36",
+  "has_users_insert": true,
+  "has_guests_insert": true,
+  "has_bcrypt_hashes": true,
+  "has_guest_token_column": true,
+  "has_contact_columns": true,
+  "production_validity": "NOT VERIFIED; source presence is not proof that accounts/tokens remain live",
+  "values_not_published": true,
+  "owner_confirmation": "All records are confirmed disposable fixtures",
+  "confirmed_by": "Repository owner in this task",
+  "recorded_utc": "2026-11-19T15:38:43.582874+00:00",
+  "disposition": "Owner classification resolved; no production-validity claim or data values published",
+  "history_rewrite": "Not authorized or performed"
+}

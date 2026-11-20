@@ -1,0 +1,314 @@
+[
+  {
+    "path": "output/admin-reporting/all-reports.xlsx",
+    "sha256": "bfda388f7c8ef1a922515e54cc4b2aba523defd73b2a7c6beda4cd07a3c63a2f",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/definitions.json",
+    "sha256": "933ac00b7c2199460c861e29cdd2c252c5e2478a6a3d82abf58172bd3eff04b8",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/dictionary.csv",
+    "sha256": "a179f2b9fad735471f8b6e29a8890cd09c7f19a85872fb7ae49b828731ea1764",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/dictionary.html",
+    "sha256": "515de51a828edb5a89145870264a6ae499004f6000c226abb652f053b5c0ae70",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/dictionary.json",
+    "sha256": "b296dc706d364f95a1949e038527be0e394114cda03e0058f5306c27d2229c47",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/engagement.html",
+    "sha256": "f78ec510f387a0a0739911ba2c20237407b386493febb21c23c6f1a3dffe25ae",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/engagement.json",
+    "sha256": "98aa526c637f12f643cbe99ebbc78b57f263c0b7fd59eb4f36eb4df68b731d56",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/executive.csv",
+    "sha256": "26b86e1d9104c4876768db665d810861f4bd0b8551bc78b8d71c26ab65565f2e",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/executive.html",
+    "sha256": "2be8eb8d17d7862cb5d6a088d4efbcc84eeca61f3c3d33e41d854f2322daf9eb",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/executive.json",
+    "sha256": "30c7a83b1efb582c97d1a51bab2623ff01a3fce0970a21f408af8e36fc9c039d",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/invitations.html",
+    "sha256": "29bd2114c8ab452140225bb9328373cab16de7e33977f673e5bd54500e21cf88",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/invitations.json",
+    "sha256": "4e5fb6b2a525d9430034342f1dd334ae3b8da6fcc33a4f582cabbd6601283e15",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/large-invitations.html",
+    "sha256": "4426b304a5a9f7dfd59b00fe9240197c4111a7037742e9955f19e22c43deab83",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/large-invitations.xlsx",
+    "sha256": "204181a11ebffef71d2febbc6694e378e473c669902e87a91f3343bb9d40de15",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/large-payments.xlsx",
+    "sha256": "285a50f375056d67e7a509bbc5dcd2f0206558d6ee5e92a3560f6da3a2238687",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/payments-KHR.xlsx",
+    "sha256": "9dae979e31de3ceb0d7e257e18670259f765cff9e080d2cb0228dd7cfc2d8cc1",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/payments-USD.xlsx",
+    "sha256": "f295e9a14b57d336773b5202a61a7f169006d0015bb4db940e6ca836cd8def8b",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/payments.xlsx",
+    "sha256": "9b8f21657e852ed44b60b41b1746b4bebdf2831bd63d01db8f7b2f1e68427ac3",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/templates.html",
+    "sha256": "959d474a985f901e920097003ae838a7aa4be52a935723cda1ee418176f283aa",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/templates.json",
+    "sha256": "d71f95f3648bd420995f49196b49ddc28300f6bf2724bab47dbd9c507a98e1bc",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/users.html",
+    "sha256": "d3908ded68ed6a7e5e51b604982d68ac0957daddb355f71404c28a1b73efbc2b",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/admin-reporting/users.json",
+    "sha256": "571b43050b9bbef73b1dde37175bb67636da7bbdd024082993920ddab81d294f",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/confirmation-desktop-chromium.jpg",
+    "sha256": "f0c27d48d9308e405e42e7fac93b27d25290fad7608e9eb943e01b82458978d8",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/confirmation-mobile-chromium.jpg",
+    "sha256": "770f39582735c49be72e6d6c7755362b153cc44742e7ecf493c307c1a6812a28",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/revoked-draft-desktop-chromium.jpg",
+    "sha256": "0babf925834a39ebbb915b9d0da9168e2f2414af4273d5f163cdf32a6f507df7",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/revoked-draft-mobile-chromium.jpg",
+    "sha256": "f1d7154cf31367ac823e4a3775d6c75d9575d7e11ab511e8401b50549540ced5",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/save-failure-desktop-chromium.jpg",
+    "sha256": "40ac95dc41f08b84e36877915323336fdd471efec5344a2e981c58b92ca8ba79",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/save-failure-mobile-chromium.jpg",
+    "sha256": "8a39c6efdf05696a8220c90dec131fc34bb18498c7bc70068cabe220f2010a64",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/save-success-desktop-chromium.jpg",
+    "sha256": "95644a8bbc9f54c3a7a656fcf04a472a662a057803e052a4e7ead161348f7b28",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/save-success-mobile-chromium.jpg",
+    "sha256": "f59429471c422af5a17c88222209a142723e24f1e87f7fb5ff04edbc43a84862",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-designCover-1440.jpg",
+    "sha256": "a7776c44cbab12bd160be7dcf53ce595ff43ac3062292bb631f494ea400183ba",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-designCover-390.jpg",
+    "sha256": "9b80aafec772d9868ba9669e9ec24034e32eb7e5d4fc2082b7040527ca121a20",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-eventInformation-1440.jpg",
+    "sha256": "31bea934cf5af1ff45ff23e0690a5ca9607cb5b5d94d23916a69df6e0cff9354",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-eventInformation-390.jpg",
+    "sha256": "335849eb66966020e051b844e8d331b875da42a5c1d3532e54c006c0bb7b520a",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-guestExperience-1440.jpg",
+    "sha256": "92a2964e99eb5405b30ccda7c7de60a63bcd8e0e591dd9e2998adf668d049a30",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-guestExperience-390.jpg",
+    "sha256": "eeebfe0a77cedd5492fa0e630f0581e26b7a774bac2994d6c1608c5f23b93bc2",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-mediaOpening-1440.jpg",
+    "sha256": "f71c641fbc630666747b3038b783c9f22c0b2ab16d16fdcab250d011901df321",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-mediaOpening-390.jpg",
+    "sha256": "636bcdb321fa558906701e09a2924ecf4389a5de0c5bbce794255cf8346ed9ab",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-scheduleVenue-1440.jpg",
+    "sha256": "bb6fa659ac803115b91328099fe3ac1d96e34147de1e2c0690d011a71ac2490c",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-scheduleVenue-390.jpg",
+    "sha256": "c9f837992be845e58151c216644774303d9cf060cef499de65e5bacd2fe3e54c",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-ticketsQr-1440.jpg",
+    "sha256": "20d2d246e0f796b431874d8a04a7a259080fa9cab0c5587c73b8d8b60c81fd03",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/studio-ticketsQr-390.jpg",
+    "sha256": "6185f2228352c100d9a84aa094eac76752fa87c40c4bb318bbfb886dc2aa5421",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-1024.jpg",
+    "sha256": "30204a7c06879d6400d930b53f34ba89b51b254cba3bd2efca9d4458a91e4293",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-1366.jpg",
+    "sha256": "1a83715e947d42c898dd7a81b33779f79c13d8a0935d20b5c1de452a4673e35f",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-1440.jpg",
+    "sha256": "0492f5105ae2414987fae5380934b4e61af083fe81068cb9d635f46247f8837a",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-1920.jpg",
+    "sha256": "114472e4baf6f1042033cdd45ab09ff057dcbff6271bf3808824171fb4c84c5e",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-320.jpg",
+    "sha256": "4e007e3863cc38325b300bacb8f6e59759ff0e0dcb6e6bd1353bf98f52362f21",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-375.jpg",
+    "sha256": "2c90bde8f712edeb05f5db3c3e962cb48ea601bc8fa4a8b656b756c13c544523",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-390.jpg",
+    "sha256": "65bb12f1d81094c332b1756f4f5ce2b724859cbef9857c3b7cf0ef1bb25378ac",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-430.jpg",
+    "sha256": "d0fe03421723c7eeafba4f3a247cc71cb01211ce1621cea97eeb0c7d1a0bff8d",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-desktop-chromium-768.jpg",
+    "sha256": "8739aa2e4ed929538bbfa56a6b0728de132367015933db563e3f44965227fe81",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  },
+  {
+    "path": "output/playwright/next-studio-ux/after/upgrade-mobile-chromium-390.jpg",
+    "sha256": "58ee45888cd2a68f3f6a5c731320dda610a7a6fde1e33317d52e070a8621762c",
+    "owner": "Backend or browser test fixture generator during this execution",
+    "publication": "EXCLUDED; retained without broad rollback"
+  }
+]

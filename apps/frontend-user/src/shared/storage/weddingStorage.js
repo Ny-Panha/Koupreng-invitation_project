@@ -50,7 +50,7 @@ export function listDrafts(ownerUserId = null) {
   const drafts = Object.values(readAll()).map(normalizeDraftTemplate);
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
   const scoped = resolvedOwnerUserId == null
-    ? drafts
+    ? drafts.filter(draft => draft.ownerUserId == null)
     : drafts.filter((draft) => !draft.ownerUserId || String(draft.ownerUserId) === String(resolvedOwnerUserId));
   return scoped.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
 }
@@ -61,7 +61,8 @@ export function getDraft(draftId, ownerUserId = null) {
   const draft = all[draftId] || null;
   if (!draft) return null;
   const resolvedOwnerUserId = resolveOwnerUserId(ownerUserId);
-  if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
+  if (resolvedOwnerUserId == null && draft.ownerUserId != null) return null;
+  if (resolvedOwnerUserId != null && (draft.ownerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId))) {
     return null;
   }
   return normalizeDraftTemplate(draft);
@@ -74,9 +75,10 @@ export function getDraftBySlug(slug, ownerUserId = null) {
   const normalized = String(slug).trim().toLowerCase();
   const values = Object.values(all);
   const match = values.find((draft) => {
-    if (resolvedOwnerUserId != null && draft.ownerUserId != null && String(draft.ownerUserId) !== String(resolvedOwnerUserId)) {
+    if (resolvedOwnerUserId != null && (draft.ownerUserId == null || String(draft.ownerUserId) !== String(resolvedOwnerUserId))) {
       return false;
     }
+    if (resolvedOwnerUserId == null && draft.ownerUserId != null) return false;
     const dSlug = String(draft.slug || "").trim().toLowerCase();
     const dId = String(draft.id || "").trim().toLowerCase();
     const dTitle = String(draft.title || "").trim().toLowerCase();
@@ -90,10 +92,19 @@ export function saveDraft(draft) {
   const all = readAll();
   const id = draft.id || generateId();
   const ownerUserId = draft.ownerUserId ?? currentOwnerUserId();
+  const existing = all[id];
+  if (existing && String(existing.ownerUserId ?? '') !== String(ownerUserId ?? '')) {
+    throw new Error('Draft ownership cannot change. Keep the original for explicit recovery.');
+  }
   const next = { ...draft, ownerUserId, id, updatedAt: Date.now() };
   all[id] = next;
   writeAll(all);
   return next;
+}
+
+export function isUnclaimedDraft(draftId) {
+  const draft = readAll()[draftId];
+  return Boolean(draft && draft.ownerUserId == null);
 }
 
 export function deleteDraft(draftId) {

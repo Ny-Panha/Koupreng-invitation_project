@@ -1,0 +1,247 @@
+[
+  {
+    "path": "docs/phase12/evidence/studio-template-locales-matrix.json",
+    "sha256": "80f91c72bb6d78b95a34643c31fed57a5c79c19614ee2ab5ce18bf9e8419ce39",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-1024.png",
+    "sha256": "3562b949dae7c995e6cbbd5d217609c447ab61327472bddbc9324b9325f4e4cc",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-1440.png",
+    "sha256": "a3d5aeef3b781dd46a7a36151759da3d3c88194c1b08e4f2ffc5469d04e5b746",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-1920.png",
+    "sha256": "c58fcedfce24fc77c57e1b2aba4efd0c59d6ea714f3937ca0454d4199eaff98d",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-320.png",
+    "sha256": "c8cf0c54927a75762586e75291c5fceb06bf86b48535323700e39ec2bea70bec",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-375.png",
+    "sha256": "c769183cb93a5c03ea6d5cb0c4133f4e9b81c65105af114a3dc2ff553fef59c3",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-390.png",
+    "sha256": "7e04403dc7f0dfddea28a310a6e8234415c4ed3651feea720eebce7e0026d6ac",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-430.png",
+    "sha256": "6660152d6f26cba60f41a041552fef66be3b5a9c55180ceed762a3d2791ec41b",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-en-768.png",
+    "sha256": "b5d15e2edf6bdea603158b5b8498852ad247be9c30ec56e6b9a7b9edbfe29a3f",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-1024.png",
+    "sha256": "ce53e0cb3ceeb1e8ab976a44c4ae77db5e14335e0b9b43ab889870d165cc9598",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-1440.png",
+    "sha256": "63a79f4179023cc84de2d3c1494a1210318611aa26fe8ecfa2da29a42de1c26b",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-1920.png",
+    "sha256": "b9fa10d353ac0edbea76a549365252aa99f095a730ea74f6f2805fc23ea76973",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-320.png",
+    "sha256": "8fb081d69e61326a643819d39d0b20c8d079a247a7cf4d4786321c880d540222",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-375.png",
+    "sha256": "195f7d4269810330a732942c62965f851badbff4544cd139d8c5f2bec55fd285",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-390.png",
+    "sha256": "e8713a8f892d2b00f36324419556a10128cff5d30cc70deee3da2edfa0201abb",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-430.png",
+    "sha256": "d69317730f2588f8aca9739111bd5b135a7ad3d33f999e6be0074a84d1fe5675",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/designer-km-768.png",
+    "sha256": "e6909fa1d74d3a02f52a359cc8487e85cc59e36dcfb331288ae9cebb69132665",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-1024.png",
+    "sha256": "098f6ade4516b6086fbe286adee54e3e77d5a587a74ab4c019d1973a3cca9611",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-1440.png",
+    "sha256": "bec0807b71d2eafac3728bf63cfd524e5e21fa97dec06945f49e1c743ab2b6d2",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-1920.png",
+    "sha256": "ca5be0469c1db60e90a519368def5bf6a4bb28edf679bcd464f11be9d997459b",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-320.png",
+    "sha256": "2dbb0b5f7d73d786cb63eb43c8fd49ae2b5bae73687ed3f4df871df2e3ba4ac3",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-375.png",
+    "sha256": "fd22dca64b213c295468dce7ef01d3d7fe6dd52e0fdb912e49f859a37b994895",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-390.png",
+    "sha256": "3d92592da73256853265a2c291e905bb6becf6b138464d4c98ebbfc1b25e8f64",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-430.png",
+    "sha256": "08dc211ae06a7d43c277300fa62ffae5e1519ca926b00a78c287f57cab9c3bf4",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-en-768.png",
+    "sha256": "12f6613ea8be3df4a8552305a84f66f0017f51ea825e6982e82a56d780fc9d35",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-1024.png",
+    "sha256": "1b5707304988f67bebab0554069cb694f5cf7ff18be84991aab90e72a15684b9",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-1440.png",
+    "sha256": "332ef0147a28958c561ca0adb79aa919f4fcde9d3e23e0cc4f635ac8ef0d1361",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-1920.png",
+    "sha256": "e331c5fdadb232c2d0c6189a3728b1693080e4af0e04a2ae7ec4b8c812cf4e90",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-320.png",
+    "sha256": "3b3fa11e49d48a75175f0fbfb1925196580d890fd02ea7ec1b6ec20f28ac2ad2",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-375.png",
+    "sha256": "b24c30cceda0fefd33853be6e29a1d00037c52aa0e343453aee9b1ba1b8f8f1a",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-390.png",
+    "sha256": "3cfa4544402d37cdf7cd3da920810c283747a43473bb12dfbee6a24e93257685",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-430.png",
+    "sha256": "8b1a39c3b5aab82740bc3bf2cec8f08888fbb9a0121bef9da18b7e0441d0ce5d",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/editor-km-768.png",
+    "sha256": "e68ca1d3d0ab51d8fbc55dc319fb40471155c238b6172d7cee252101f93127ec",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/floral-2x-desktop-chromium.png",
+    "sha256": "aaff0daa40d50c2fed8a00bbf7f1c48486645a54ff30b0eb906f6307af8948de",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/floral-2x-mobile-chromium.png",
+    "sha256": "aaff0daa40d50c2fed8a00bbf7f1c48486645a54ff30b0eb906f6307af8948de",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/floral-3x-desktop-chromium.png",
+    "sha256": "3649ef59363fc1cc312824abaf60b6174bc435ad068c0c47df85a35a8483574d",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/floral-3x-mobile-chromium.png",
+    "sha256": "3649ef59363fc1cc312824abaf60b6174bc435ad068c0c47df85a35a8483574d",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/gold-2x-desktop-chromium.png",
+    "sha256": "f30a4c9a2e1d464e93e7c187c105e77167309931393a853e88fe70db1b686148",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/gold-2x-mobile-chromium.png",
+    "sha256": "f30a4c9a2e1d464e93e7c187c105e77167309931393a853e88fe70db1b686148",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/gold-3x-desktop-chromium.png",
+    "sha256": "28b14ccc52ea10f7af3626a0b7e73aead50344a60843993b827189d7e2da33e3",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/gold-3x-mobile-chromium.png",
+    "sha256": "28b14ccc52ea10f7af3626a0b7e73aead50344a60843993b827189d7e2da33e3",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/ivory-2x-desktop-chromium.png",
+    "sha256": "f426356d11e9591c7953823c5ead27da45de36cae465608836c396e5de44a7cb",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/ivory-2x-mobile-chromium.png",
+    "sha256": "f426356d11e9591c7953823c5ead27da45de36cae465608836c396e5de44a7cb",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/ivory-3x-desktop-chromium.png",
+    "sha256": "c4b2b5e988c026578ee8868488a208eaab17718a1dd46f658d580b9f9539f7a4",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/ivory-3x-mobile-chromium.png",
+    "sha256": "c4b2b5e988c026578ee8868488a208eaab17718a1dd46f658d580b9f9539f7a4",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/minimal-2x-desktop-chromium.png",
+    "sha256": "744feadecc3da8c72d3ed93b5883c7da5e4b76f7dd76f53d4413d9525f2fa36f",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/minimal-2x-mobile-chromium.png",
+    "sha256": "744feadecc3da8c72d3ed93b5883c7da5e4b76f7dd76f53d4413d9525f2fa36f",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/minimal-3x-desktop-chromium.png",
+    "sha256": "19d76deb31c584c80a376d38d425e8c8e636d9dac89fdae73b9f5882b5d64408",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  },
+  {
+    "path": "docs/qa/ux-overhaul/studio-tickets/exports/minimal-3x-mobile-chromium.png",
+    "sha256": "19d76deb31c584c80a376d38d425e8c8e636d9dac89fdae73b9f5882b5d64408",
+    "reason": "Generated unit/browser fixture or screenshot; retained locally, not a publication candidate"
+  }
+]

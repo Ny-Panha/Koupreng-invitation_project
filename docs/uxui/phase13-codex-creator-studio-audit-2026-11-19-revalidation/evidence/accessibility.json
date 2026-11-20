@@ -1,0 +1,691 @@
+{
+  "scans": [
+    {
+      "stage": "before-ui",
+      "path": "output/phase13-codex-revalidation/before-ui/axe-en-false-chromium.json",
+      "sha256": "8eb820d35d088a49b49083e6f05c8989766e383842f5c2c4d4f2e8918f7ea1d3",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".pe-template-tag"
+            ]
+          ]
+        }
+      ],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "before-ui",
+      "path": "output/phase13-codex-revalidation/before-ui/axe-en-true-chromium.json",
+      "sha256": "52dad9991cedcfd1593af423f885b66d22279e4ae5efa263fd7ec6fac756bc59",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "button[data-studio-tab=\"eventInformation\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"scheduleVenue\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"mediaOpening\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"designCover\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"guestExperience\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"ticketsQr\"] > .studio-section-title"
+            ]
+          ]
+        }
+      ],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "before-ui",
+      "path": "output/phase13-codex-revalidation/before-ui/axe-km-false-chromium.json",
+      "sha256": "5e76fa875840cecf3ddb3b8cf53a66d702912ddb7c1ff6ea4a7befee9a319b78",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".pe-template-tag"
+            ]
+          ]
+        }
+      ],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "before-ui",
+      "path": "output/phase13-codex-revalidation/before-ui/axe-km-true-chromium.json",
+      "sha256": "2f9492cafb9af6c2b74e19a44e01f5b23599a917f9fd1a3839c2088460c4f7f1",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              "button[data-studio-tab=\"eventInformation\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"scheduleVenue\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"designCover\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"guestExperience\"] > .studio-section-title"
+            ],
+            [
+              "button[data-studio-tab=\"ticketsQr\"] > .studio-section-title"
+            ]
+          ]
+        }
+      ],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-false-chromium.json",
+      "sha256": "34169325d8ae5695c979a9fc125cad4596cb8f20db972cecd64c35d9477c3d1c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-false-firefox.json",
+      "sha256": "89bc3a02d9c85fc18d8f4dcdbcb44c9d9c71fb3b437c5879dcc471685f7f86e3",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-false-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-true-chromium.json",
+      "sha256": "dc87cf1ae53d814d34660be6dd2955b4d37051a620c669cfe87753f1d437b191",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-true-firefox.json",
+      "sha256": "0d51928531a943696c5172a67a8b6f2ce1525d9ed8fe28052f34adebdf963781",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-en-true-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-false-chromium.json",
+      "sha256": "3e1904ce2b9ebc805de4a12abe81de77c4ca49c45656d02e1ed1a27909ca3ae9",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-false-firefox.json",
+      "sha256": "23791c115713988e8f290609e900f3a75e25b2e8e9ddb6539dfcffaf6b694117",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-false-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-true-chromium.json",
+      "sha256": "498c286b51b163a16c2daee6d4468bf38b50e7769928740d87ed71e5b1e80260",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-true-firefox.json",
+      "sha256": "4e24d6a1caf1259d04e1e2d67d2d560a752eb55ad92a11a20987129715cb3e59",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "after-ui",
+      "path": "output/phase13-codex-revalidation/after-ui/axe-km-true-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-false-chromium.json",
+      "sha256": "aadca6472f3d6d560dd79a93188b6a9ce59559dd0630b3b4a9723c9b59e1df9a",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-false-firefox.json",
+      "sha256": "bb1f7d25c768c5d8258e5d8fb8df20f439ea37ca9e42f63746f59505c03c4cdb",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-false-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-true-chromium.json",
+      "sha256": "dc87cf1ae53d814d34660be6dd2955b4d37051a620c669cfe87753f1d437b191",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-true-firefox.json",
+      "sha256": "0d51928531a943696c5172a67a8b6f2ce1525d9ed8fe28052f34adebdf963781",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-en-true-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-false-chromium.json",
+      "sha256": "b589cd0a1fa8ecdff4d6947aadc5c06990a8b2be6fe98d4577a34cca42120355",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-false-firefox.json",
+      "sha256": "23791c115713988e8f290609e900f3a75e25b2e8e9ddb6539dfcffaf6b694117",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-false-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-true-chromium.json",
+      "sha256": "b589cd0a1fa8ecdff4d6947aadc5c06990a8b2be6fe98d4577a34cca42120355",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-true-firefox.json",
+      "sha256": "bf5382200f9b51a842640ea58bdf49723d39fc831e6e645c108f171fd9f606c2",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-default",
+      "path": "output/phase13-codex-revalidation/final-default/axe-km-true-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-false-chromium.json",
+      "sha256": "aadca6472f3d6d560dd79a93188b6a9ce59559dd0630b3b4a9723c9b59e1df9a",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-false-firefox.json",
+      "sha256": "961cff787c5da15ddd1fcc6fd4a7aee36880d9a1f0990034e042fc90f6b14b06",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-false-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-true-chromium.json",
+      "sha256": "aadca6472f3d6d560dd79a93188b6a9ce59559dd0630b3b4a9723c9b59e1df9a",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-true-firefox.json",
+      "sha256": "b0b9e35f5cd19cbf12c8a8d4718db7bf7d5e7640ca001d9e2f409c17380d1c2e",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-en-true-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-false-chromium.json",
+      "sha256": "b589cd0a1fa8ecdff4d6947aadc5c06990a8b2be6fe98d4577a34cca42120355",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-false-firefox.json",
+      "sha256": "1f5a2fbd150ca0ad96ab0e1ca1bfcaf97b7a0b67355c777903bc86a2e05add58",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-false-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-true-chromium.json",
+      "sha256": "b589cd0a1fa8ecdff4d6947aadc5c06990a8b2be6fe98d4577a34cca42120355",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-true-firefox.json",
+      "sha256": "4e24d6a1caf1259d04e1e2d67d2d560a752eb55ad92a11a20987129715cb3e59",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "final-frozen",
+      "path": "output/phase13-codex-revalidation/final-frozen/axe-km-true-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-false-chromium.json",
+      "sha256": "aadca6472f3d6d560dd79a93188b6a9ce59559dd0630b3b4a9723c9b59e1df9a",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-false-firefox.json",
+      "sha256": "961cff787c5da15ddd1fcc6fd4a7aee36880d9a1f0990034e042fc90f6b14b06",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-false-webkit.json",
+      "sha256": "f79bc67801dc166b6048e9880155e7a155768b1efade21471f11a0caff1534b0",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-true-chromium.json",
+      "sha256": "aadca6472f3d6d560dd79a93188b6a9ce59559dd0630b3b4a9723c9b59e1df9a",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-true-firefox.json",
+      "sha256": "0d51928531a943696c5172a67a8b6f2ce1525d9ed8fe28052f34adebdf963781",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-en-true-webkit.json",
+      "sha256": "5ad6ab0a233503fe26a4c1d489197151de087f4bd4b2b2edceed925ec9f5d7b6",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-false-chromium.json",
+      "sha256": "acc7e7f2783c28517fb1a05d1a811da48b890d49404b3c1591f52a36b2e27a96",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-false-firefox.json",
+      "sha256": "95cbd815db4c8d872df8cb1c4cd9c68af2a7949bbb69d0048b4539d2a47ca06e",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-false-webkit.json",
+      "sha256": "eb01f9e3316ee230edeb5ba7e2f527f99236c539b396f411586eb37c7295386c",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-true-chromium.json",
+      "sha256": "b589cd0a1fa8ecdff4d6947aadc5c06990a8b2be6fe98d4577a34cca42120355",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-true-firefox.json",
+      "sha256": "4e24d6a1caf1259d04e1e2d67d2d560a752eb55ad92a11a20987129715cb3e59",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    },
+    {
+      "stage": "corrected-final",
+      "path": "output/phase13-codex-revalidation/corrected-final/axe-km-true-webkit.json",
+      "sha256": "6866ba61a83b0ad2d4b6d95528b1503944a54d5a309f083280ae77eec8a3b3ab",
+      "violations": [],
+      "color_contrast_executed": true,
+      "incomplete_rules": [
+        "aria-prohibited-attr",
+        "aria-valid-attr-value",
+        "color-contrast"
+      ]
+    }
+  ],
+  "scope": "Loaded management form and portal toolbar; dialog focus/failure states have separate functional checks. Not physical AT or all Studio sections certified."
+}

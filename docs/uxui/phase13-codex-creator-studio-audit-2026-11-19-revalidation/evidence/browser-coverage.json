@@ -1,0 +1,442 @@
+{
+  "runs": [
+    {
+      "id": "baseline-visuals",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-1.config.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:38:36.128279+00:00",
+      "finished_utc": "2026-11-19T14:39:19.715869+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 43.588,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/baseline-visuals.log",
+      "log_sha256": "eec13552e3f79d9ddfc1bed8c4c041f8bc3a63c46e6b39d2dbce2a9345f47f5f",
+      "log_hash_valid": true,
+      "result_lines": [
+        "16 passed (42.9s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "baseline-functional",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js --project=chromium",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:45:00.745160+00:00",
+      "finished_utc": "2026-11-19T14:45:54.899937+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 54.155,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/baseline-functional.log",
+      "log_sha256": "83867735d17b320948d52bfb8390a913da72fa77a73e8e193de1311b540001ae",
+      "log_hash_valid": true,
+      "result_lines": [
+        "4 failed",
+        "13 passed (53.2s)"
+      ],
+      "failure_names": [
+        "[chromium] › tests\\e2e\\phase13-codex-functional.spec.js:51:3 › loaded contrast en light ────────",
+        "[chromium] › tests\\e2e\\phase13-codex-functional.spec.js:51:3 › loaded contrast en dark ─────────",
+        "[chromium] › tests\\e2e\\phase13-codex-functional.spec.js:51:3 › loaded contrast km light ────────",
+        "[chromium] › tests\\e2e\\phase13-codex-functional.spec.js:51:3 › loaded contrast km dark ─────────"
+      ]
+    },
+    {
+      "id": "repaired-browsers",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:47:40.155345+00:00",
+      "finished_utc": "2026-11-19T14:51:36.107719+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 235.953,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/repaired-browsers.log",
+      "log_sha256": "60aa17cb792596aa27d586d4ddc7ae24e9cd9dbbde53c2a38dd86c8e39208fbb",
+      "log_hash_valid": true,
+      "result_lines": [
+        "2 failed",
+        "49 passed (3.9m)"
+      ],
+      "failure_names": [
+        "[firefox] › tests\\e2e\\phase13-codex-functional.spec.js:35:3 › N13-15/16 responsive 844x390 ─────",
+        "[webkit] › tests\\e2e\\phase13-codex-functional.spec.js:106:1 › N13-17 chooser and preview dialogs open and return focus"
+      ]
+    },
+    {
+      "id": "browser-isolated-rerun",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js --project=firefox --project=webkit --grep \"844x390|dialogs open\" --workers=1",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:57:52.715262+00:00",
+      "finished_utc": "2026-11-19T14:58:10.304895+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 17.59,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/browser-isolated-rerun.log",
+      "log_sha256": "06842ffe9b9042ae22680b7796666284a4bca0ec744a606204bc84e1c364ee46",
+      "log_hash_valid": true,
+      "result_lines": [
+        "4 passed (16.9s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "final-browsers-default",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:00:35.883470+00:00",
+      "finished_utc": "2026-11-19T15:03:47.612920+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 191.73,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/final-browsers-default.log",
+      "log_sha256": "d0a7704d104ae2e7a7d5d41c59c8f7b792e94dba1eeb09e811e2335d0480b891",
+      "log_hash_valid": true,
+      "result_lines": [
+        "75 passed (3.2m)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "final-frozen-browsers",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:11:04.012200+00:00",
+      "finished_utc": "2026-11-19T15:20:07.602974+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 543.593,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/final-frozen-browsers.log",
+      "log_sha256": "0dcae7bb2028fd835e2e0eb5696bd2ada7a2408ac3d80efd06750bf6f6fe733d",
+      "log_hash_valid": true,
+      "result_lines": [
+        "5 failed",
+        "73 passed (9.0m)"
+      ],
+      "failure_names": [
+        "[chromium] › tests\\e2e\\phase13-codex-functional.spec.js:106:1 › N13-17 chooser and preview dialogs open and return focus",
+        "[firefox] › tests\\e2e\\phase13-codex-functional.spec.js:106:1 › N13-17 chooser and preview dialogs open and return focus",
+        "[webkit] › tests\\e2e\\phase13-codex-functional.spec.js:106:1 › N13-17 chooser and preview dialogs open and return focus",
+        "[webkit] › tests\\e2e\\phase13-codex-functional.spec.js:136:3 › N13-04 HTTP 401 retains edits with expired status",
+        "[webkit] › tests\\e2e\\phase13-codex-functional.spec.js:136:3 › N13-04 HTTP 409 retains edits with conflict status"
+      ]
+    },
+    {
+      "id": "corrected-final-browsers",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js --workers=1",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:23:02.205059+00:00",
+      "finished_utc": "2026-11-19T15:31:57.271260+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 535.066,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/corrected-final-browsers.log",
+      "log_sha256": "bbea8f93f454598a162192edf328e89604cf3428e7b7ef92f83d310d0ea41ef1",
+      "log_hash_valid": true,
+      "result_lines": [
+        "78 passed (8.9m)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "studio-navigation",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase13-codex.config.js phase13-codex-navigation.spec.js --workers=1",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:33:02.989730+00:00",
+      "finished_utc": "2026-11-19T15:33:19.721152+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 16.731,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/studio-navigation.log",
+      "log_sha256": "40566f3d42153a3af3f2c44ba972541733084eee369fb7e570eded8be917945b",
+      "log_hash_valid": true,
+      "result_lines": [
+        "3 passed (15.9s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "phase11-browsers",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase11-codex.config.js --output=../../output/phase13-codex-revalidation/phase11/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:04:51.223383+00:00",
+      "finished_utc": "2026-11-19T15:08:51.096704+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 239.873,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/phase11-browsers.log",
+      "log_sha256": "400079d6a87f77c419e7afe3e90eedc2dfe4b40310176e439ccdb0bd94b60570",
+      "log_hash_valid": true,
+      "result_lines": [
+        "1 failed",
+        "53 passed (4.0m)"
+      ],
+      "failure_names": [
+        "[firefox] › tests\\e2e\\phase11-codex.spec.js:212:1 › N11-08 response lost retry reuses original payload and client request ID"
+      ]
+    },
+    {
+      "id": "phase11-isolated",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase11-codex.config.js --project=firefox --grep N11-08 --workers=1 --output=../../output/phase13-codex-revalidation/phase11-isolated/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:34:58.515791+00:00",
+      "finished_utc": "2026-11-19T15:35:33.417921+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 34.902,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/phase11-isolated.log",
+      "log_sha256": "6f34636c718dc666a9da4954c010558d14c63998fa9fd3527be055bf01045cef",
+      "log_hash_valid": true,
+      "result_lines": [
+        "1 passed (29.3s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "phase12-owner-browsers",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-codex.config.js phase12-codex-behavior.spec.js --workers=2 --output=../../output/phase13-codex-revalidation/phase12/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:36:00.324562+00:00",
+      "finished_utc": "2026-11-19T15:37:46.134036+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 105.81,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/phase12-owner-browsers.log",
+      "log_sha256": "1c88be878900c96031e289e79f41fe6dcc54717bfb6c00fa0a93774f6d85dcda",
+      "log_hash_valid": true,
+      "result_lines": [
+        "27 passed (1.8m)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "phase02-historical",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase02-foundations.config.js phase02-foundations.spec.js --project=desktop-chromium --project=mobile-chromium --workers=2 --output=../../output/phase13-codex-revalidation/phase02/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:26:17.357718+00:00",
+      "finished_utc": "2026-11-19T15:29:14.605305+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 177.248,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/phase02-historical.log",
+      "log_sha256": "e8ee062f26feba1226fe52fdbbbd9b285eab00ef193b1989847075b77f0be1be",
+      "log_hash_valid": true,
+      "result_lines": [
+        "6 failed",
+        "26 passed (2.9m)"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\phase02-foundations.spec.js:129:1 › responsive Studio retains edits, preview viewport and all sections across widths",
+        "[desktop-chromium] › tests\\e2e\\phase02-foundations.spec.js:196:3 › Khmer route contract uses the active controls: create-event",
+        "[desktop-chromium] › tests\\e2e\\phase02-foundations.spec.js:208:34 › Studio and contrast roles remain usable in km and dark mode",
+        "[mobile-chromium] › tests\\e2e\\phase02-foundations.spec.js:129:1 › responsive Studio retains edits, preview viewport and all sections across widths",
+        "[mobile-chromium] › tests\\e2e\\phase02-foundations.spec.js:196:3 › Khmer route contract uses the active controls: create-event",
+        "[mobile-chromium] › tests\\e2e\\phase02-foundations.spec.js:208:34 › Studio and contrast roles remain usable in km and dark mode"
+      ]
+    },
+    {
+      "id": "historical-guest",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/guest-workspace.spec.js --grep \"guest list filters intersect\" --workers=2 --retries=0 --output=../../output/phase13-codex-revalidation/guest/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:30:24.095318+00:00",
+      "finished_utc": "2026-11-19T15:30:36.096492+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 12.001,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/historical-guest.log",
+      "log_sha256": "6282bf9a7313cad2ba690b7c8e7945e008a4cad6946ad25c55cbbe3375170c22",
+      "log_hash_valid": true,
+      "result_lines": [
+        "2 failed"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\guest-workspace.spec.js:149:1 › guest list filters intersect and reset; invitation and tools remain usable",
+        "[mobile-chromium] › tests\\e2e\\guest-workspace.spec.js:149:1 › guest list filters intersect and reset; invitation and tools remain usable"
+      ]
+    },
+    {
+      "id": "crossphase-06-08-09-10",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --output=../../output/phase13-codex-revalidation/crossphase/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:04:51.238683+00:00",
+      "finished_utc": "2026-11-19T15:25:12.720841+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 1221.483,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/crossphase-06-08-09-10.log",
+      "log_sha256": "ff5451002c4437022eb08fe53ce953421fccabbd6159187781d3f98cff713ece",
+      "log_hash_valid": true,
+      "result_lines": [
+        "8 failed",
+        "65 skipped",
+        "449 passed (20.3m)"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[mobile-chromium] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-webkit] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-webkit] › tests\\e2e\\phase10-codex-renderers.spec.js:83:3 › matrix khmer-celestial opens and paints",
+        "[desktop-webkit] › tests\\e2e\\phase10-codex-renderers.spec.js:83:3 › matrix the-digital-yes-wedding opens and paints",
+        "[mobile-webkit] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[desktop-firefox] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow",
+        "[mobile-firefox] › tests\\e2e\\phase06-layout-navigation.spec.js:163:1 › Studio keyboard resizer, preview destination and five sections survive desktop reflow"
+      ]
+    },
+    {
+      "id": "crossphase-webkit-isolated",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --config=playwright.phase12-regressions.config.js --project=desktop-webkit --grep \"matrix (khmer-celestial|the-digital-yes-wedding) opens and paints\" --workers=1 --retries=0 --output=../../output/phase13-codex-revalidation/crossphase-isolated/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:49:44.419462+00:00",
+      "finished_utc": "2026-11-19T15:50:03.231014+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 18.812,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/crossphase-webkit-isolated.log",
+      "log_sha256": "12927253aa1833abef2280ffb66dddbb3d4f057cd3db6c5c16d101ee18c10540",
+      "log_hash_valid": true,
+      "result_lines": [
+        "2 passed (18.1s)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "ci-browser-collection",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- --list tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:30:21.921594+00:00",
+      "finished_utc": "2026-11-19T15:30:23.932100+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 2.011,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/ci-browser-collection.log",
+      "log_sha256": "699b77173fdef7f5d289f59501a78a441d2f83a9f12d0c8e32e3c172a2ff136e",
+      "log_hash_valid": true,
+      "result_lines": [],
+      "failure_names": []
+    },
+    {
+      "id": "ci-browser-local",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js --workers=2 --retries=0 --output=../../output/phase13-codex-revalidation/ci-browser/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:36:32.097220+00:00",
+      "finished_utc": "2026-11-19T15:41:59.926523+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 327.83,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/ci-browser-local.log",
+      "log_sha256": "d2c67ae8b5ba807c0eaeb7e981243b7989e8e223eebc6add931407732c55a834",
+      "log_hash_valid": true,
+      "result_lines": [
+        "6 failed",
+        "2 skipped",
+        "86 passed (5.4m)"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\guest-workspace.spec.js:149:1 › guest list filters intersect and reset; invitation and tools remain usable",
+        "[desktop-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold Khmer only with draft suppression current catalogue and eight widths",
+        "[desktop-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold approved bilingual current catalogue and eight widths",
+        "[mobile-chromium] › tests\\e2e\\guest-workspace.spec.js:149:1 › guest list filters intersect and reset; invitation and tools remain usable",
+        "[mobile-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold Khmer only with draft suppression current catalogue and eight widths",
+        "[mobile-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold approved bilingual current catalogue and eight widths"
+      ]
+    },
+    {
+      "id": "floral-selector-isolated",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/phase12-matrix.spec.js --grep khmer-floral-gold --workers=1 --retries=0 --output=../../output/phase13-codex-revalidation/floral-isolated/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:43:22.637733+00:00",
+      "finished_utc": "2026-11-19T15:47:35.822610+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 253.185,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/floral-selector-isolated.log",
+      "log_sha256": "395e974ac811cf8d5dc94f5ffcc827a012a6c1aa87a67eb70317cec34d20a686",
+      "log_hash_valid": true,
+      "result_lines": [
+        "2 failed",
+        "2 passed (4.2m)"
+      ],
+      "failure_names": [
+        "[desktop-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold approved bilingual current catalogue and eight widths",
+        "[mobile-chromium] › tests\\e2e\\phase12-matrix.spec.js:30:85 › khmer-floral-gold approved bilingual current catalogue and eight widths"
+      ]
+    },
+    {
+      "id": "floral-native-controls",
+      "command": "npm.cmd --prefix apps/frontend-user run test:e2e -- tests/e2e/phase12-matrix.spec.js --grep khmer-floral-gold --workers=1 --retries=0 --output=../../output/phase13-codex-revalidation/floral-native/artifacts --reporter=list",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:47:52.351419+00:00",
+      "finished_utc": "2026-11-19T15:48:05.024229+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 12.673,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/floral-native-controls.log",
+      "log_sha256": "35c3858968d0eaa9e2843c76ff6f765d41f1228e3afc55989070cd3a39b3bdda",
+      "log_hash_valid": true,
+      "result_lines": [
+        "4 passed (12.0s)"
+      ],
+      "failure_names": []
+    }
+  ],
+  "suite_totals_overlap": true,
+  "native_engines": [
+    "Chromium",
+    "Firefox",
+    "WebKit"
+  ],
+  "physical_devices_certified": false,
+  "creator_viewports": [
+    [
+      1920,
+      1080
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1280,
+      900
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      393,
+      851
+    ],
+    [
+      375,
+      812
+    ],
+    [
+      320,
+      568
+    ]
+  ],
+  "locales": [
+    "en",
+    "km"
+  ],
+  "actual_theme_key": "koupreng.colorMode",
+  "actual_theme_attribute": "data-color-mode",
+  "configured_workers": {
+    "phase13-codex": 2,
+    "phase12-regressions": 2,
+    "phase02-foundations": 2
+  },
+  "controlled_workers": "Exact command overrides are retained per run; one-worker corrected Studio run is separate from two-worker default run.",
+  "limits": [
+    "No physical mobile browser/AT/Khmer IME or native 200/400 percent zoom signoff",
+    "Simulated visualViewport shrink tests the application branch only",
+    "Late CSS-only rebuild occurred during initial broader compatibility replay, which is not frozen performance evidence"
+  ]
+}

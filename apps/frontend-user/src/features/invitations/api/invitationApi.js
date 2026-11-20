@@ -49,9 +49,9 @@ export const invitationService = {
     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));
     return api.patch(`/v1/invitations/${id}/draft`).then(unwrap);
   },
-  publish: (id) => {
+  publish: (id, options) => {
     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));
-    return api.patch(`/v1/invitations/${id}/publish`).then(unwrap);
+    return api.patch(`/v1/invitations/${id}/publish`, undefined, options).then(unwrap);
   },
   unpublish: (id) => {
     if (isLocalDraftId(id)) return Promise.resolve(getDraft(id));

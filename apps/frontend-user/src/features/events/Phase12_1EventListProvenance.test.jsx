@@ -17,6 +17,8 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
     vi.clearAllMocks();
     localStorage.clear();
     sessionStorage.clear();
+    // Storage readers must see the same authenticated owner as the hook fixture.
+    sessionStorage.setItem('koupreng.auth', JSON.stringify({ accessToken: 'fixture-only', user: { id: 'user-owner-1' } }));
     useLanguageStore.setState({ lang: "en" });
   });
 
@@ -60,6 +62,8 @@ describe("Phase 12.1 Event List Provenance & Deterministic Actions", () => {
 
     saveDraft({
       id: "wed-failed-sync",
+      // SYNC_FAILED represents a previously created server event with pending changes.
+      backendInvitationId: 999,
       ownerUserId: "user-owner-1",
       title: "Failed Sync Ceremony",
       eventType: "ENGAGEMENT",

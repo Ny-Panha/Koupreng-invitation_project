@@ -18,11 +18,13 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
     offline: "Offline. Reconnect and retry saving.", failed: "The server has not saved these changes. Retry saving.",
     conflict: "Another editor saved a newer version. Your edits are still here. Reopen the event to review the latest version before applying them.",
     expired: "Your session expired. Keep a copy of your changes, then sign in again.",
+    denied: "Access denied. Your edits are still here. Review your event access before saving again.",
     leave: "Changes have not reached the server. Leave this editor?", reset: "Restore the version loaded when this editor opened?",
   } : {
     offline: "គ្មានអ៊ីនធឺណិត។ ភ្ជាប់ឡើងវិញ ហើយរក្សាទុកម្ដងទៀត។", failed: "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកការកែប្រែ។ សូមព្យាយាមម្ដងទៀត។",
     conflict: "មានការរក្សាទុកកំណែថ្មីពីអ្នកកែសម្រួលផ្សេង។ ការកែប្រែរបស់អ្នកនៅទីនេះ។ បើកកម្មវិធីម្ដងទៀត ដើម្បីពិនិត្យកំណែថ្មីមុនបញ្ចូលការកែប្រែ។",
     expired: "វគ្គចូលប្រើបានផុតកំណត់។ ចម្លងការកែប្រែរបស់អ្នក រួចចូលប្រើម្ដងទៀត។",
+    denied: "មិនមានសិទ្ធិរក្សាទុក។ ការកែប្រែរបស់អ្នកនៅទីនេះ។ សូមពិនិត្យសិទ្ធិមុនរក្សាទុកម្ដងទៀត។",
     leave: "ការកែប្រែមិនទាន់ទៅដល់ម៉ាស៊ីនមេ។ ចាកចេញពីផ្ទាំងនេះ?", reset: "ស្ដារកំណែដែលបានបើកដំបូងវិញ?",
   };
   const history = useRef({ entries: [serialized], index: 0, restoring: false });
@@ -43,6 +45,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
   }, [serialized]);
 
   async function save(options = {}) {
+    if (!mounted.current) return false;
     if (running.current) return running.current;
     if (blocked.current) return false;
     if (globalThis.navigator?.onLine === false) {
@@ -55,12 +58,13 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
       try {
         const result = await latest.current.persist(options);
         if (!result?.synced) throw Object.assign(new Error(result?.error || copy.current.failed), result?.failure || {}, { status: result?.status });
+        if (!mounted.current) return false;
         acknowledged.current = snapshot;
         if (mounted.current) setState(s => ({ phase: "saved", error: "", version: s.version + 1 }));
         return true;
       } catch (error) {
-        const phase = error.status === 409 ? "conflict" : error.status === 401 ? "expired" : "failed";
-        blocked.current = phase === "conflict" || phase === "expired";
+        const phase = error.status === 409 ? "conflict" : error.status === 401 ? "expired" : error.status === 403 ? "denied" : "failed";
+        blocked.current = ["conflict", "expired", "denied"].includes(phase);
         if (mounted.current) setState(s => ({ ...s, phase, error: blocked.current ? copy.current[phase] : error.message || copy.current.failed, failure: error }));
         return false;
       } finally {
@@ -79,7 +83,7 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
   }
 
   useEffect(() => {
-    if (!enabled || !dirty || ["failed", "offline", "conflict", "expired"].includes(state.phase)) return;
+    if (!enabled || !dirty || ["failed", "offline", "conflict", "expired", "denied"].includes(state.phase)) return;
     const timer = setTimeout(() => { void saveRef.current(); }, delay);
     return () => clearTimeout(timer);
   }, [serialized, dirty, enabled, delay, state.phase, state.version]);

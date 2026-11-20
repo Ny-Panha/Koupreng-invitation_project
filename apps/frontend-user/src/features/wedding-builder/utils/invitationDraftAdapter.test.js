@@ -52,6 +52,22 @@ function draft() {
 }
 
 describe("invitation draft adapters", () => {
+    it('N13-08 alternate reader and writer retain raw future objects, gallery metadata and localized edits', () => {
+        const source = { id: 101, title: 'Original', templateCode: 'khmer-celestial', languageMode: 'EN',
+            contentJson: JSON.stringify({ future: { array: [null, false, 'ខ្មែរ'] },
+                localizedContentV1: { version: 1, enabledLocales: ['km','en'], defaultLocale: 'en', km: { future: { keep: true } }, en: { title: 'Original' } },
+                gallery: [{ id: 'g1', preview: 'https://example.invalid/1.webp', future: { keep: null } }] }),
+            designJson: JSON.stringify({ futureDesign: { data: ['unchanged'] } }) };
+        const loaded = publicInvitationToDraft(source);
+        loaded.localizedContentV1.en.title = 'Edited';
+        const payload = draftToInvitationPayload(loaded, 4);
+        const content = JSON.parse(payload.contentJson);
+        expect(content.future).toEqual({ array: [null, false, 'ខ្មែរ'] });
+        expect(content.gallery[0].future).toEqual({ keep: null });
+        expect(content.localizedContentV1.en.title).toBe('Edited');
+        expect(content.localizedContentV1.km.future).toEqual({ keep: true });
+        expect(JSON.parse(payload.designJson).futureDesign).toEqual({ data: ['unchanged'] });
+    });
     it.each([
         ["១៧:០០", "17:00"],
         ["០៧:០០ ព្រឹក", "07:00"],

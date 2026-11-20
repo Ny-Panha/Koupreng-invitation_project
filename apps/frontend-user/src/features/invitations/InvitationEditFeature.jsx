@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import InvitationForm from "./InvitationForm";
 import { invitationService } from "@/features/invitations/api/invitationApi";
 import { mediaService } from "@/features/invitations/api/mediaApi";
-import { getDraft } from "@/shared/storage/weddingStorage";
+import { getDraft, isUnclaimedDraft } from "@/shared/storage/weddingStorage";
 import { getTemplateById, getTemplatePreset, registerDynamicTemplates } from "../templates/data/templatesData";
 import { templateCatalogService } from "../templates/api/templateCatalogApi";
 import { useBackendMessages } from "@/shared/i18n/useBackendMessages";
@@ -14,6 +14,12 @@ import { TemplateUnavailable } from "../templates/experience/TemplateRenderGuard
 import "@/features/events/EventsFeature.css";
 
 export default function InvitationEditPage() {
+    const { eventId, id } = useParams();
+    const { user } = useAuth();
+    return <VerifiedInvitationEditor key={`${user?.id || user?.userId}:${eventId || id || 'new'}`} />;
+}
+
+function VerifiedInvitationEditor() {
     const { eventId, id = eventId } = useParams();
     const location = useLocation();
     const createEventUrl = `/app/events/new${location.search}`;
@@ -22,6 +28,7 @@ export default function InvitationEditPage() {
     const [invitation, setInvitation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [templateError, setTemplateError] = useState(false);
+    const [unclaimed, setUnclaimed] = useState(false);
 
     useEffect(() => {
         let active = true;
@@ -34,6 +41,7 @@ export default function InvitationEditPage() {
             let catalogItems;
             try {
                 catalogItems = await templateCatalogService.list();
+                if (!active) return;
                 registerDynamicTemplates(catalogItems || []);
                 if (!catalogItems?.length) throw new Error("Template catalog unavailable");
             } catch {
@@ -43,6 +51,10 @@ export default function InvitationEditPage() {
 
             const ownerUserId = user?.id || user?.userId;
             const targetId = id;
+            if (!eventId && targetId && ownerUserId && isUnclaimedDraft(targetId)) {
+                if (active) { setUnclaimed(true); setLoading(false); }
+                return;
+            }
             const localDraft = !eventId && targetId ? getDraft(targetId, ownerUserId) : null;
 
             // 1. Check local wedding draft storage first
@@ -184,6 +196,12 @@ export default function InvitationEditPage() {
 
     // A route without an id is a local, unsaved editor draft.
     if (templateError) return <TemplateUnavailable />;
+    if (unclaimed) return <main className="events-page" role="alert">
+        <h1>Draft recovery required · ត្រូវការស្ដារពង្រាង</h1>
+        <p>This older draft has no verified owner. Its original data remains on this device. Recover ownership before editing or syncing it.</p>
+        <p lang="km">ពង្រាងចាស់នេះមិនមានម្ចាស់ដែលបានផ្ទៀងផ្ទាត់ទេ។ ទិន្នន័យដើមនៅលើឧបករណ៍នេះ។ សូមស្ដារភាពជាម្ចាស់ មុនកែសម្រួល ឬរក្សាទុកលើម៉ាស៊ីនមេ។</p>
+        <Link to="/app/events">My events · កម្មវិធីរបស់ខ្ញុំ</Link>
+    </main>;
     if (!invitation) {
         return (
             <main className="events-page">

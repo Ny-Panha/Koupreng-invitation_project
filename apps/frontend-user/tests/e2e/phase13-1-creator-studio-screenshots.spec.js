@@ -4,7 +4,7 @@ import { phase9Fixtures } from './support/phase9Fixtures';
 
 const SCREENSHOT_DIR = path.resolve(
   import.meta.dirname,
-  '../../../../docs/uxui/phase13-1-gemini-creator-studio-2026-11-19/evidence/screenshots'
+  '../../../../output/phase13-codex-revalidation/gemini-replay'
 );
 
 async function setupStudio(page, { lang = 'en', theme = 'light', viewport = { width: 1440, height: 900 } } = {}) {

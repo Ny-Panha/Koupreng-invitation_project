@@ -20,7 +20,7 @@ const features = {
   ] },
 };
 async function open(page, code) {
-  const controls = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច|សូមបើក)/i });
+  const controls = page.getByRole('button', { name: /^(Open invitation|View invitation details|បើកសំបុត្រ|បើកធៀប|ចុចទីនេះ|ចុចដើម្បីបើក|សូមចុច|សូមបើក|សូមគោរពអញ្ចើញ)/i });
   if (['withjoy-modern-portal', 'bliss-editorial-wedding', 'event-essential', 'template-boilerplate'].includes(code)) {
     await expect(controls).toHaveCount(0);
     return;
@@ -31,6 +31,8 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
   test.skip(['garden-royal-khmer-wedding','khmer-royal-lotus'].includes(template.code), 'Retired by V50; inactive exclusion is tested separately');
   test.setTimeout(120000);
   const neutral = template.code === 'event-essential';
+  const languageSelector = template.code === 'royal-garden-cinematic' ? '.rg-language'
+    : template.code === 'khmer-floral-gold' ? '.kfg-language' : null;
   const { events } = await phase9Fixtures(page, { code: template.code, content: { ...km, ...features, cinematicIntro: { version: 1, enabled: true, reducedMotion: true }, studioStyle: { motion: 'minimal' },
     localizedContentV1: { version: 1, km, en: bilingual ? en : { ...en, title: 'PRIVATE DRAFT ENGLISH' }, enabledLocales: bilingual ? ['km', 'en'] : ['km'], defaultLocale: 'km' },
     programDays: [{ id: 'first', title: 'ថ្ងៃដំបូង', titleEn: 'First day', date: '2027-12-04' }, { id: 'second', title: 'ថ្ងៃទីពីរ', titleEn: 'Second day', date: '2027-12-05' }],
@@ -47,7 +49,7 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
   if (template.code === 'bliss-editorial-wedding') await page.keyboard.press('Escape');
   for (const locale of bilingual ? ['km', 'en'] : ['km']) {
     if (locale === 'en') {
-      if (template.code === 'royal-garden-cinematic') await page.locator('.rg-language select').selectOption('en');
+      if (languageSelector) await page.locator(`${languageSelector} select`).selectOption('en');
       else await page.locator('.public-locale-switch').getByRole('button', { name: 'English', exact: true }).click();
       await expect(page.locator('body')).toContainText(en.venueName);
     }
@@ -68,12 +70,15 @@ for (const template of matrix.presentations) for (const bilingual of [false, tru
     if (template.code === 'royal-garden-cinematic') {
       await expect(page.locator('.rg-language option[value="en"]')).toHaveJSProperty('disabled', true);
       await expect(page.locator('.rg-language select')).toHaveValue('km');
+    } else if (template.code === 'khmer-floral-gold') {
+      await expect(page.locator('.kfg-language option[value="en"]')).toHaveCount(0);
+      await expect(page.locator('.kfg-language select')).toHaveValue('km');
     }
     await page.goto('/i/review-celestial?lang=en&token=fixture'); await expect(page.locator('body')).toContainText(km.title); await expect(page.locator('body')).not.toContainText('PRIVATE DRAFT ENGLISH');
   } else {
-    if (template.code === 'royal-garden-cinematic') await page.locator('.rg-language select').selectOption('km');
+    if (languageSelector) await page.locator(`${languageSelector} select`).selectOption('km');
     else await page.locator('.public-locale-switch').getByRole('button', { name: 'ខ្មែរ', exact: true }).click();
     await expect(form).toHaveValue('Retained private guest message');
-    const axe = await new AxeBuilder({ page }).include(template.code === 'royal-garden-cinematic' ? '.rg-language' : '.public-locale-switch').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(axe.violations).toEqual([]);
+    const axe = await new AxeBuilder({ page }).include(languageSelector || '.public-locale-switch').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze(); expect(axe.violations).toEqual([]);
   }
 });

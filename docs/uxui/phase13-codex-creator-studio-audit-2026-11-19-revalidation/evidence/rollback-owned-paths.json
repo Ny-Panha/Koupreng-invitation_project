@@ -1,0 +1,28 @@
+{
+  "tracked_paths": [
+    ".github/workflows/ci.yml",
+    "apps/frontend-user/src/features/events/Phase12_1EventListProvenance.test.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+    "apps/frontend-user/src/features/invitations/api/invitationApi.js",
+    "apps/frontend-user/src/features/invitations/api/mediaApi.js",
+    "apps/frontend-user/src/features/invitations/invitationPayloadUtils.js",
+    "apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js",
+    "apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+    "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx",
+    "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js",
+    "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx",
+    "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js",
+    "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js",
+    "apps/frontend-user/src/shared/storage/weddingStorage.js",
+    "apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js",
+    "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/30-release-certification-development-checkpoint-verdict.md",
+    "docs/uxui/phase13-codex-creator-studio-audit-2026-11-19/README.md"
+  ],
+  "patch_sha256": "f0a44289335c8cc071b81ea8aaf1adbc21a4fefd0f058cd49d36900ed7cc659f",
+  "base": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+  "new_files": "Retain; hash inventory only, no deletion",
+  "excluded": "All backend-generated output/admin-reporting and unrelated files"
+}

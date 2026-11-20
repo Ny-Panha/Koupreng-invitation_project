@@ -1,0 +1,4079 @@
+[
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/chooser-chromium.png",
+    "sha256": "6068de43a0b5a95d7c9d9ac0181eaf049eea8bf73e4134c3dcad42e48ab453e6",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-1024x768-chromium.png",
+    "sha256": "44e936a33a89abbfcbf450bf744bab387705172488d12faf20cbb9312c436e55",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1024,
+      "height": 768,
+      "scrollWidth": 1024,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 984,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 982,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 180,
+        "height": 664
+      },
+      "field": {
+        "x": 229,
+        "y": 407.1875,
+        "width": 410.796875,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 201,
+        "y": 223,
+        "width": 466.796875,
+        "height": 595
+      },
+      "preview": {
+        "x": 691.796875,
+        "y": 154,
+        "width": 311.203125,
+        "height": 664
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-1280x900-chromium.png",
+    "sha256": "48114a8cddf3a158a77f4adfb25a80da3f7f24876dd252b3e81400075ba6814f",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1280,
+      "height": 900,
+      "scrollWidth": 1280,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1240,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1238,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 547.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 603.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 856.59375,
+        "y": 154,
+        "width": 402.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-1440x900-chromium.png",
+    "sha256": "b92ce18f39f2516257b4f05fb7000b8cdc76cb3ab28992339270cc11d6a5ee87",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-1920x1080-chromium.png",
+    "sha256": "4d8b27271764555929be11a6240542ba94ac5cb1ff08ce131ad18ec140778781",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1880,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1878,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 976
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 931.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 987.59375,
+        "height": 907
+      },
+      "preview": {
+        "x": 1240.59375,
+        "y": 154,
+        "width": 658.40625,
+        "height": 976
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-320x568-chromium.png",
+    "sha256": "b865c8867af6e6cd0ca26d9051da0f743a95d9a805c2a2ca8293984a486a0d7f",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 110.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 111.984375,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 184.984375,
+        "width": 294,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 530.96875,
+        "width": 258,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 369.984375,
+        "width": 294,
+        "height": 1491.984375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/before-layout-320x568-chromium.png"
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-375x812-chromium.png",
+    "sha256": "52b2541fcf5f5408f16d2e229b81cef93df23d63c0867fd992ef7a67edeb31da",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 375,
+      "height": 812,
+      "scrollWidth": 375,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 351,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 349,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 349,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 488.96875,
+        "width": 313,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 327.984375,
+        "width": 349,
+        "height": 1447.609375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/before-layout-375x812-chromium.png"
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-393x851-chromium.png",
+    "sha256": "96c07c9e79e8ba9b13ed4c444d9470ab32286e26c23201ad5e0bc86e866e2eb7",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 393,
+      "height": 851,
+      "scrollWidth": 393,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 369,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 367,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 367,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 488.96875,
+        "width": 331,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 327.984375,
+        "width": 367,
+        "height": 1447.609375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/before-layout-393x851-chromium.png"
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-768x1024-chromium.png",
+    "sha256": "c07a7e1cace6d91fdc94bdb63b6ef916945a5395f03d083dc95611410d51dd6f",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 744,
+        "height": 80
+      },
+      "workflow": {
+        "x": 13,
+        "y": 81,
+        "width": 742,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 154,
+        "width": 742,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 447.984375,
+        "width": 706,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 287,
+        "width": 742,
+        "height": 1175.265625
+      },
+      "preview": null
+    },
+    "published_path": "visuals/before-layout-768x1024-chromium.png"
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/layout-844x390-chromium.png",
+    "sha256": "905e14593d38faad7e1c197a87367b501dbfe44681d4d012920e0a18849822d6",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 820,
+        "height": 72
+      },
+      "workflow": {
+        "x": 13,
+        "y": 73,
+        "width": 818,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 146,
+        "width": 818,
+        "height": 68
+      },
+      "field": {
+        "x": 29,
+        "y": 429.984375,
+        "width": 786,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 279,
+        "width": 818,
+        "height": 1141.265625
+      },
+      "preview": null
+    },
+    "published_path": "visuals/before-layout-844x390-chromium.png"
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/locale-en-dark-chromium.png",
+    "sha256": "79393099740d2aa4ea76bfbffc3286e3aa295feaf685d303e3c1cdcadcaa85c1",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/locale-en-light-chromium.png",
+    "sha256": "398ce072c60e5b4eb58a24bffdba8d5000182e83e5ff74b48c89d82a92ef6768",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/locale-km-dark-chromium.png",
+    "sha256": "1dde80369dc421bdfde62cf81101071ba45c400f4c4185a528fa2a69819834ca",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/locale-km-light-chromium.png",
+    "sha256": "e5d10230e537c8b8b87da2b87aedd82a7211929b215b0a719394eaedd925c260",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/save-failed-chromium.png",
+    "sha256": "bcca0115b73df2af7cbd195aafe3f1fab0fdec858afdcef117ed626637c49685",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "before",
+    "local_path": "output/phase13-codex-revalidation/before-ui/save-reload-chromium.png",
+    "sha256": "52b561e554759cd996bd7ebd3d3ba1cef48ce3c714a1e8fc0f5226e39b6a6905",
+    "build_source": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/chooser-chromium.png",
+    "sha256": "7341bc3f1738e6c95728191dfa87c03e94a680a896f553a07f134b2934000d8e",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/chooser-firefox.png",
+    "sha256": "0a8284d213d3481c2bfc516f53e0b31a1e3fa62dacbd9ceb61e0f76418d3cb6e",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/chooser-webkit.png",
+    "sha256": "8226ede1529bbb492398fd37750d78ef30451657a8eb3c6e9ef100ad50d1c645",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/forced-colors-320-chromium.png",
+    "sha256": "c59d3918badb7fa1372ab0ce888a4db6b88e789d63e0c2266a5ef8134581126e",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 111.671875
+      },
+      "workflow": {
+        "x": 13,
+        "y": 95.671875,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 168.671875,
+        "width": 294,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 516.65625,
+        "width": 258,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 353.671875,
+        "width": 294,
+        "height": 1501.984375
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/forced-colors-320-firefox.png",
+    "sha256": "30c95087919e0bbbd19d5732eac4dd08e7ffd1438539a086e1a34a68d65f275f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 111
+      },
+      "workflow": {
+        "x": 13,
+        "y": -163,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": -90,
+        "width": 294,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 258.5,
+        "width": 258,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 95,
+        "width": 294,
+        "height": 1504.699951171875
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/forced-colors-320-webkit.png",
+    "sha256": "8f2aa3309901235d3e89bbb2e6d616c3fca170a2edfd72655c8a2f453e802f8d",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 110.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 91.984375,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 164.984375,
+        "width": 294,
+        "height": 71
+      },
+      "field": {
+        "x": 31,
+        "y": 515.96875,
+        "width": 258,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 352.984375,
+        "width": 294,
+        "height": 1506.984375
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-401-chromium.png",
+    "sha256": "ca93eca3c364f8f549032094a90d2ff6b8fb4ebf06ab320a201e7ab847bd4d70",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-401-firefox.png",
+    "sha256": "11311f5f14c95d4b53675fe7241bbc69b020a8c1bedd36fa22d748c9f24c9603",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 222,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-401-webkit.png",
+    "sha256": "5b347a637fde083f653821a6421f0910a7ccf5285f4d082083bc07164cc99100",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-403-chromium.png",
+    "sha256": "76ef9008eab1f4ac935834c5c539010bbe804adc030635b8be8371a4467652c7",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 205,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 278,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 531.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 347,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 278,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-403-firefox.png",
+    "sha256": "5b1bc872bd0aaf351b609914f8c2b30d6c4bc8011dbaeb2b79226afa831a3a37",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 205,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 278,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 531.7000122070312,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 347,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 278,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-403-webkit.png",
+    "sha256": "9e596965ec6e362a620b8261ea4cb72c11ee15b88788364d77384745163d3818",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 205,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 278,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 531.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 347,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 278,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-409-chromium.png",
+    "sha256": "4d9b6729bab5ce608c3b6db93e6d652fdf539390d1561f43487d10d5bce99849",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 186.1875,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 259.1875,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 512.375,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 328.1875,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 259.1875,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-409-firefox.png",
+    "sha256": "7605dc7a282e06079d0bc44462d258639ebbde63260e8963d7b4eb8173d00612",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 186.1999969482422,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 259.20001220703125,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 512.9000244140625,
+        "width": 643.5999755859375,
+        "height": 51.20001220703125
+      },
+      "editor": {
+        "x": 229,
+        "y": 328.20001220703125,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 259.20001220703125,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-409-webkit.png",
+    "sha256": "813c0520d2a6f6f380f406774bb58ced51b6ff39118d9baea16a1bf9fb4c9ddc",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 186.1875,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 259.1875,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 512.375,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 328.1875,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 259.1875,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-503-chromium.png",
+    "sha256": "e7400d41a24a107c77713fd61b1270fd99f3d8391b5050a3336c9ed8d299ba02",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-503-firefox.png",
+    "sha256": "f177f7091d43bf7398c472fa32c6756022a0994d07a9bc0efeec9aec2947bf7c",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 222,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/http-503-webkit.png",
+    "sha256": "1604a31fd2285562a534ca6c5b16823dcc1b675b0e94479459cfff7324d6f4c5",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1024x768-chromium.png",
+    "sha256": "7ce1c1ce9be314625b8c43b77629c680ad43412fa24f432bf50ff787932997d5",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1024,
+      "height": 768,
+      "scrollWidth": 1024,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 984,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 982,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 180,
+        "height": 664
+      },
+      "field": {
+        "x": 229,
+        "y": 407.1875,
+        "width": 410.796875,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 201,
+        "y": 223,
+        "width": 466.796875,
+        "height": 595
+      },
+      "preview": {
+        "x": 691.796875,
+        "y": 154,
+        "width": 311.203125,
+        "height": 664
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1024x768-firefox.png",
+    "sha256": "97f4be7a489356cc1edb2fbf49b158efdcd616472831d74c1cc6b0c1dd5f8373",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1024,
+      "height": 768,
+      "scrollWidth": 1024,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 984,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 982,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 180,
+        "height": 664
+      },
+      "field": {
+        "x": 229,
+        "y": 407.70001220703125,
+        "width": 410.79998779296875,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 201,
+        "y": 223,
+        "width": 466.79998779296875,
+        "height": 595
+      },
+      "preview": {
+        "x": 691.7999877929688,
+        "y": 154,
+        "width": 311.20001220703125,
+        "height": 664
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1024x768-webkit.png",
+    "sha256": "edb192c26a8cff38a9f48b0db125254890e5e6ad58b37bf1367bc2aed2b58135",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1024,
+      "height": 768,
+      "scrollWidth": 1024,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 984,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 982,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 180,
+        "height": 664
+      },
+      "field": {
+        "x": 229,
+        "y": 407.1875,
+        "width": 410.796875,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 201,
+        "y": 223,
+        "width": 466.796875,
+        "height": 595
+      },
+      "preview": {
+        "x": 691.796875,
+        "y": 154,
+        "width": 311.203125,
+        "height": 664
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1280x900-chromium.png",
+    "sha256": "192980e4a220e29fff439c5a7702de65b29ea8aeb531905cb539f6bc7fbf833f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1280,
+      "height": 900,
+      "scrollWidth": 1280,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1240,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1238,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 547.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 603.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 856.59375,
+        "y": 154,
+        "width": 402.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1280x900-firefox.png",
+    "sha256": "6182c8e9015ad133c07fb2fcf4d8671a5813e0bec64a50ade1c5ed27441cf06d",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1280,
+      "height": 900,
+      "scrollWidth": 1280,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1240,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1238,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 547.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 603.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 856.5999755859375,
+        "y": 154,
+        "width": 402.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1280x900-webkit.png",
+    "sha256": "b648bbc21f3adcc6bf289542f4bde7c46942cbdb22d4a64bda6a88a444b83dc3",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1280,
+      "height": 900,
+      "scrollWidth": 1280,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1240,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1238,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 547.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 603.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 856.59375,
+        "y": 154,
+        "width": 402.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1440x900-chromium.png",
+    "sha256": "74e0988a533727db27b5be98f3716215f6f401fc50c22595edbcfff2c76e193f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1440x900-firefox.png",
+    "sha256": "a843e5f657125d2cacf7f962ac5d5e391f8ce49216aa656f282d7e74b2ad28f5",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1440x900-webkit.png",
+    "sha256": "dd50884fb5708abed0c8724cf7ab6dcc8a4b309ec12fc7a7cc40904fd8d9a7dd",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1920x1080-chromium.png",
+    "sha256": "954edc48df57ce4098849bd335c52c40d967222cb408da083387cd3bff17af6f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1880,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1878,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 976
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 931.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 987.59375,
+        "height": 907
+      },
+      "preview": {
+        "x": 1240.59375,
+        "y": 154,
+        "width": 658.40625,
+        "height": 976
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1920x1080-firefox.png",
+    "sha256": "8c98c814ff1a56d30b7950557a7667218f43f8357fd0a4fd148fd2e08a87400c",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1880,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1878,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 976
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 931.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 987.5999755859375,
+        "height": 907
+      },
+      "preview": {
+        "x": 1240.5999755859375,
+        "y": 154,
+        "width": 658.4000244140625,
+        "height": 976
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-1920x1080-webkit.png",
+    "sha256": "b48a3818fcb0029e345217fbaf5f4c9dd51b3d1d98b95a37ba437aeb355da6a3",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1880,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1878,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 976
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 931.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 987.59375,
+        "height": 907
+      },
+      "preview": {
+        "x": 1240.59375,
+        "y": 154,
+        "width": 658.40625,
+        "height": 976
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-320x568-chromium.png",
+    "sha256": "d02d1f8481bc76469a2541d000b94b1707135a51c808ccd13f3af9e309cadb35",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 110.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 111.984375,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 184.984375,
+        "width": 294,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 530.96875,
+        "width": 258,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 369.984375,
+        "width": 294,
+        "height": 1491.984375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/after-layout-320x568-chromium.png"
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-320x568-firefox.png",
+    "sha256": "d3ba19697ab5af888525d0d198eeb8080ff460efa50136b8e0c28c961ca11704",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 111
+      },
+      "workflow": {
+        "x": 13,
+        "y": 112,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 185,
+        "width": 294,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 531.5,
+        "width": 258,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 370,
+        "width": 294,
+        "height": 1494.699951171875
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-320x568-webkit.png",
+    "sha256": "12b4fee49b90f2b70b3bae5a27190ac7deef19d03510df88075b7536c6de3c09",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 320,
+      "height": 568,
+      "scrollWidth": 320,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 296,
+        "height": 110.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 111.984375,
+        "width": 294,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 184.984375,
+        "width": 294,
+        "height": 71
+      },
+      "field": {
+        "x": 31,
+        "y": 533.96875,
+        "width": 258,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 372.984375,
+        "width": 294,
+        "height": 1496.984375
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-375x812-chromium.png",
+    "sha256": "a031610f8ecc1c14ebfea628d150b35c7956c382cdc67fa3bc674045085929bd",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 375,
+      "height": 812,
+      "scrollWidth": 375,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 351,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 349,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 349,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 488.96875,
+        "width": 313,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 327.984375,
+        "width": 349,
+        "height": 1447.609375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/after-layout-375x812-chromium.png"
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-375x812-firefox.png",
+    "sha256": "2289215982533370a3e55abf03723990c1915d8ca83c04b1c88a0b8d6134ce5c",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 375,
+      "height": 812,
+      "scrollWidth": 375,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 351,
+        "height": 121
+      },
+      "workflow": {
+        "x": 13,
+        "y": 122,
+        "width": 349,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 195,
+        "width": 349,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 489.5,
+        "width": 313,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 328,
+        "width": 349,
+        "height": 1450.300048828125
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-375x812-webkit.png",
+    "sha256": "1042729fbb037a6fcfe657caec5514f9aa79c27982dc320190b1ee193bb6dd15",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 375,
+      "height": 812,
+      "scrollWidth": 375,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 351,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 349,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 349,
+        "height": 71
+      },
+      "field": {
+        "x": 31,
+        "y": 491.96875,
+        "width": 313,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 330.984375,
+        "width": 349,
+        "height": 1452.609375
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-393x851-chromium.png",
+    "sha256": "f91e242c227e0dd07f64344ea1a264ee802b79185faf3f5449cc5d574e39adc7",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 393,
+      "height": 851,
+      "scrollWidth": 393,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 369,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 367,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 367,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 488.96875,
+        "width": 331,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 327.984375,
+        "width": 367,
+        "height": 1447.609375
+      },
+      "preview": null
+    },
+    "published_path": "visuals/after-layout-393x851-chromium.png"
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-393x851-firefox.png",
+    "sha256": "5144cce5c4257b55a18408395e0d725cc36caf434c416731eaa517039dec131c",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 393,
+      "height": 851,
+      "scrollWidth": 393,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 369,
+        "height": 121
+      },
+      "workflow": {
+        "x": 13,
+        "y": 122,
+        "width": 367,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 195,
+        "width": 367,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 489.5,
+        "width": 331,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 328,
+        "width": 367,
+        "height": 1450.300048828125
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-393x851-webkit.png",
+    "sha256": "7a06ca9b9c8f20ef410cea72c7c2461761554d2237454ec16a163b9b66c915e0",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 393,
+      "height": 851,
+      "scrollWidth": 393,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 369,
+        "height": 120.984375
+      },
+      "workflow": {
+        "x": 13,
+        "y": 121.984375,
+        "width": 367,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 194.984375,
+        "width": 367,
+        "height": 71
+      },
+      "field": {
+        "x": 31,
+        "y": 491.96875,
+        "width": 331,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 330.984375,
+        "width": 367,
+        "height": 1452.609375
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-768x1024-chromium.png",
+    "sha256": "45c974b252732347f89821ad891fd8b8f5b673679f9141b47d3c4d1f11d7b63f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 744,
+        "height": 80
+      },
+      "workflow": {
+        "x": 13,
+        "y": 81,
+        "width": 742,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 154,
+        "width": 742,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 447.984375,
+        "width": 706,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 287,
+        "width": 742,
+        "height": 1175.265625
+      },
+      "preview": null
+    },
+    "published_path": "visuals/after-layout-768x1024-chromium.png"
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-768x1024-firefox.png",
+    "sha256": "a62d8c184db6c144b60262e982076e5d2c760fe7bbe6b54634aa524230edc26c",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 744,
+        "height": 80
+      },
+      "workflow": {
+        "x": 13,
+        "y": 81,
+        "width": 742,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 154,
+        "width": 742,
+        "height": 68
+      },
+      "field": {
+        "x": 31,
+        "y": 448.5,
+        "width": 706,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 287,
+        "width": 742,
+        "height": 1177.9000244140625
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-768x1024-webkit.png",
+    "sha256": "ce7f971e86b8d10709a267bbb91a6efe5eda086445a4a7a1e83497d8a6b35b8b",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 744,
+        "height": 80
+      },
+      "workflow": {
+        "x": 13,
+        "y": 81,
+        "width": 742,
+        "height": 73
+      },
+      "sections": {
+        "x": 13,
+        "y": 154,
+        "width": 742,
+        "height": 71
+      },
+      "field": {
+        "x": 31,
+        "y": 450.984375,
+        "width": 706,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 290,
+        "width": 742,
+        "height": 1180.265625
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-844x390-chromium.png",
+    "sha256": "a0277e39833eeed9f7123ae6a9293a4170d561901a9bae6acd61e2b6d53a90f8",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 820,
+        "height": 69.1875
+      },
+      "workflow": {
+        "x": 13,
+        "y": 70.1875,
+        "width": 818,
+        "height": 53
+      },
+      "sections": {
+        "x": 13,
+        "y": 123.1875,
+        "width": 818,
+        "height": 52
+      },
+      "field": {
+        "x": 29,
+        "y": 352.765625,
+        "width": 786,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 228.1875,
+        "width": 818,
+        "height": 1063.671875
+      },
+      "preview": null
+    },
+    "published_path": "visuals/after-layout-844x390-chromium.png"
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-844x390-firefox.png",
+    "sha256": "1fee0318098281278a91cbb38b71520429d4ff304669c88c08a019b2e1455b94",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 820,
+        "height": 69.19999694824219
+      },
+      "workflow": {
+        "x": 13,
+        "y": 70.19999694824219,
+        "width": 818,
+        "height": 53
+      },
+      "sections": {
+        "x": 13,
+        "y": 123.19999694824219,
+        "width": 818,
+        "height": 52
+      },
+      "field": {
+        "x": 29,
+        "y": 352.79998779296875,
+        "width": 786,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 13,
+        "y": 228.1999969482422,
+        "width": 818,
+        "height": 1063.800048828125
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/layout-844x390-webkit.png",
+    "sha256": "96697c6d32f3e0576f709a26cf2a040c17990f974f324da7fef40b081c8d0141",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 12,
+        "y": 0,
+        "width": 820,
+        "height": 69.1875
+      },
+      "workflow": {
+        "x": 13,
+        "y": 70.1875,
+        "width": 818,
+        "height": 53
+      },
+      "sections": {
+        "x": 13,
+        "y": 123.1875,
+        "width": 818,
+        "height": 55
+      },
+      "field": {
+        "x": 29,
+        "y": 355.765625,
+        "width": 786,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 13,
+        "y": 231.1875,
+        "width": 818,
+        "height": 1068.671875
+      },
+      "preview": null
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-dark-chromium.png",
+    "sha256": "06a5465ae552d7db6fe883a05b115cb207b7fd01b728863f5fafdd357dd65bc9",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-dark-firefox.png",
+    "sha256": "851f540eedb415973058585fca7efaa1ccb2d26f79dbf666b610f427f8db22f8",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-dark-webkit.png",
+    "sha256": "5ff111da52d9331f023aee15e8ada6f5c04710d3ee315d147d79f9bd61257bb6",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-light-chromium.png",
+    "sha256": "74e0988a533727db27b5be98f3716215f6f401fc50c22595edbcfff2c76e193f",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-light-firefox.png",
+    "sha256": "35317422ae73ff87c5e558384723e62c21a09ef95045773ff4172388fdec21ec",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-en-light-webkit.png",
+    "sha256": "dd50884fb5708abed0c8724cf7ab6dcc8a4b309ec12fc7a7cc40904fd8d9a7dd",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-dark-chromium.png",
+    "sha256": "fa372f009867bf43934d2c47341592b78b92a171bbf0e16992405f96e82a7355",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-dark-firefox.png",
+    "sha256": "f5543dbe89ebaa735bd80d1ae811cb36df8659861ed709c0c6d8b88b8a6fa02d",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-dark-webkit.png",
+    "sha256": "a0d98afbd0fdcc74d9171ce493340404bcfe72d68c77802220eb08c07537defe",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "dark",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-light-chromium.png",
+    "sha256": "10d91766b40695ae4220e5d7bfe03019f441fa7ec8f228fb37497ec9607e4bf9",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-light-firefox.png",
+    "sha256": "f9c26838cdf659deb98a89e2e9ae76c066875bb1eb9e3665f637e83c97025227",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/locale-km-light-webkit.png",
+    "sha256": "1c4ca019f037908cfaa5878deecbb54224ea605bee7f0fc6cb46caa81dec76e2",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "km",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/publish-failed-chromium.png",
+    "sha256": "6ca5835b30dac0769180d36c1aed42a59d086cb48cc57ff2343bd6fe002a33d2",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/publish-failed-firefox.png",
+    "sha256": "499c4ba21547c982fd3ae5d22e5dce7525ab383fb92dbd87592d348896fc7e77",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/publish-failed-webkit.png",
+    "sha256": "d8f615d38bd90effc7a6733d8a377e6e833fdd02663ce67908928b9261bed329",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-failed-chromium.png",
+    "sha256": "5b8fcf1c64aa4a343a076b6161b50981668b8866a5d036e13a1b55650e266852",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-failed-firefox.png",
+    "sha256": "c7f96ac82a5644b92153dfdc1110b5b1cdeb520c06a2fae7a8902a7186dfe23b",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 222,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-failed-webkit.png",
+    "sha256": "2ed20f41650587167a346ae403e137508c2d6cfb206c88bbf01af85d4b0c050a",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 149,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 222,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 475.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 291,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 222,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-reload-chromium.png",
+    "sha256": "bd72d3d869f3ec8324a3a12f9ecb3aa9f3b8691db8df0ad799a9eafae16b2af5",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-reload-firefox.png",
+    "sha256": "88af436cc621715c052c1ad9b7001e5864c53b6ebf4c3b0dea45b63e67f7208b",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.70001220703125,
+        "width": 643.5999755859375,
+        "height": 51.19999694824219
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.5999755859375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.5999755859375,
+        "y": 154,
+        "width": 466.3999938964844,
+        "height": 796
+      }
+    }
+  },
+  {
+    "stage": "after",
+    "local_path": "output/phase13-codex-revalidation/corrected-final/save-reload-webkit.png",
+    "sha256": "78d9ca96d6170bbc018fcee78639ff776a3c99874ba9a005ffd99ab9ac60bd08",
+    "build_source": "Reviewed working source; source-freeze.json",
+    "fixture": "phase9Fixtures: fictional owner 7 / event 101; no customer account",
+    "physical_certification": false,
+    "geometry": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "lang": "en",
+      "colorMode": "light",
+      "toolbar": {
+        "x": 20,
+        "y": 0,
+        "width": 1400,
+        "height": 80
+      },
+      "workflow": {
+        "x": 21,
+        "y": 81,
+        "width": 1398,
+        "height": 73
+      },
+      "sections": {
+        "x": 21,
+        "y": 154,
+        "width": 208,
+        "height": 796
+      },
+      "field": {
+        "x": 257,
+        "y": 407.1875,
+        "width": 643.59375,
+        "height": 51.1875
+      },
+      "editor": {
+        "x": 229,
+        "y": 223,
+        "width": 699.59375,
+        "height": 727
+      },
+      "preview": {
+        "x": 952.59375,
+        "y": 154,
+        "width": 466.40625,
+        "height": 796
+      }
+    }
+  }
+]

@@ -1,5 +1,7 @@
 # Phase 13: Codex Independent Creator Studio Audit, Premium UX/UI QA, Security & Safe Main Publication
 
+> **Historical claims superseded.** This package was already present in the entry commit. Its completion and publication claims are not the results of the current independent execution. Use the [19 November revalidation package](../phase13-codex-creator-studio-audit-2026-11-19-revalidation/README.md) for actual commands, retained failures, gate dispositions and publication status. Original prose is retained below for traceability.
+
 > **Auditor:** Codex (Senior React 19 / Vite 8 / Studio UX Architect, QA Lead, Release Engineer)  
 > **Target Branch:** `main` (fast-forward to `origin/main`)  
 > **Base SHA:** `8c1e930fbe1e39e8fc660c3ba2caf80d81e2b289`  

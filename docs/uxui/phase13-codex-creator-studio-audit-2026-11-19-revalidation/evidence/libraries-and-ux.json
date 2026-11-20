@@ -1,0 +1,131 @@
+{
+  "no_source_or_dependency_adoption": true,
+  "adopted_version": null,
+  "missing_expected_project_docs": [
+    "docs/design/TEN_LIBRARY_INTEGRATION_MATRIX.md",
+    "docs/design/THIRD_PARTY_UI_LICENSES.md"
+  ],
+  "references": [
+    {
+      "name": "Animate UI",
+      "url": "https://raw.githubusercontent.com/imskyleen/animate-ui/main/LICENSE.md",
+      "observed_terms": "MIT + Commons Clause; component redistribution restricted",
+      "disposition": "reviewed reference",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Badtz UI",
+      "url": "https://raw.githubusercontent.com/badtzx0/badtz-ui/main/LICENSE.md",
+      "observed_terms": "MIT text plus commercial redistribution modification restriction",
+      "disposition": "rejected/deferred",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Lightswind UI",
+      "url": "https://lightswind.com/license",
+      "observed_terms": "v3.2.4 page permits commercial applications but restricts raw-source competing-library/UI-builder resale",
+      "disposition": "rejected/deferred",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Kokonut UI",
+      "url": "https://raw.githubusercontent.com/kokonut-labs/kokonutui/main/LICENSE",
+      "observed_terms": "Free repository MIT; this does not license every PRO item",
+      "disposition": "reviewed reference",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Untitled UI",
+      "url": "https://raw.githubusercontent.com/untitleduico/react/main/LICENSE",
+      "observed_terms": "Public React repository MIT; paid product terms separate",
+      "disposition": "reviewed reference",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "shadcn/ui",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/LICENSE.md",
+      "observed_terms": "MIT with notice",
+      "disposition": "reviewed reference",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "React Bits",
+      "url": "https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md",
+      "observed_terms": "MIT + Commons Clause v1.0; component/tool/export redistribution restrictions",
+      "disposition": "rejected/deferred",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Aceternity UI",
+      "url": "https://ui.aceternity.com/licence",
+      "observed_terms": "Pro license restricts marketplace/template/source redistribution",
+      "disposition": "rejected/deferred",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Magic UI",
+      "url": "https://raw.githubusercontent.com/magicuidesign/magicui/main/LICENSE.md",
+      "observed_terms": "Public repository MIT with notice; no paid-source adoption",
+      "disposition": "reviewed reference",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    },
+    {
+      "name": "Skiper UI",
+      "url": "https://skiper-ui.com/docs/terms-of-service",
+      "observed_terms": "Website terms reserve IP and restrict republication/redistribution; no blanket source clearance",
+      "disposition": "rejected/deferred",
+      "upstream_ref": "Current public page / main observed 2026-11-19; no version adopted"
+    }
+  ],
+  "ux_laws": [
+    {
+      "law": "Jakob",
+      "interaction": "Familiar Save and native text undo, coherent preview return",
+      "test_source": "StudioToolbar.test.jsx / functional native text undo",
+      "screenshot_family": "layout-1440x900"
+    },
+    {
+      "law": "Hick",
+      "interaction": "Six section categories and progressive subsection disclosure",
+      "test_source": "StudioSections.test.jsx",
+      "screenshot_family": "layout-768x1024"
+    },
+    {
+      "law": "Fitts",
+      "interaction": "44px landscape commands and reachable Save/preview",
+      "test_source": "functional responsive journeys",
+      "screenshot_family": "layout-844x390"
+    },
+    {
+      "law": "Miller",
+      "interaction": "Semantic grouping reduces an unstructured section list",
+      "test_source": "studioNavigation.js / StudioSections.test.jsx",
+      "screenshot_family": "layout-1440x900"
+    },
+    {
+      "law": "Tesler",
+      "interaction": "Snapshot/authority/JSON complexity remains in the writer",
+      "test_source": "StudioAuthority.test.jsx / StudioRoundtrip.test.jsx",
+      "screenshot_family": "save-reload"
+    },
+    {
+      "law": "Doherty",
+      "interaction": "Immediate dirty/saving feedback while async work continues; no measured universal latency promised",
+      "test_source": "useStudioPersistence.test.jsx",
+      "screenshot_family": "http-503"
+    },
+    {
+      "law": "Gestalt proximity/common region",
+      "interaction": "Related inspector labels/help/actions stay within the same field group",
+      "test_source": "loaded contrast scans and field label assertions",
+      "screenshot_family": "layout-393x851"
+    },
+    {
+      "law": "Nielsen",
+      "interaction": "Visible save state, explicit failure recovery and prevention of stale-account writes",
+      "test_source": "functional status/retry/revocation cases",
+      "screenshot_family": "save-failed"
+    }
+  ],
+  "styleseed": "No project pin/compiled registry established; existing token check is not a StyleSeed pin."
+}

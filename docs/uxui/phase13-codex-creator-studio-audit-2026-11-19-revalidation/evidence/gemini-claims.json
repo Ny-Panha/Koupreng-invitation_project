@@ -1,0 +1,118 @@
+{
+  "entry_already_published": true,
+  "source_attribution": [
+    {
+      "file": "InvitationForm.jsx",
+      "path": "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+      "claimed_sha256": "EB93385029D935D7E579AC40777B24A1F774C7C79670221DF7ADF8204332DE01",
+      "entry_sha256": "eb93385029d935d7e579ac40777b24a1f774c7c79670221df7adf8204332de01",
+      "matches": true
+    },
+    {
+      "file": "StudioChrome.css",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioChrome.css",
+      "claimed_sha256": "DBE1E96F27BCDF25194BA4E8E6BB6435A54A6635BF2A3644878E28046073872D",
+      "entry_sha256": "dbe1e96f27bcdf25194ba4e8e6bb6435a54a6635bf2a3644878e28046073872d",
+      "matches": true
+    },
+    {
+      "file": "StudioSections.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioSections.jsx",
+      "claimed_sha256": "06C281889A63EB41566541B53E01688D92204BD007F8DBD82D1259EDD9C842E2",
+      "entry_sha256": "06c281889a63eb41566541b53e01688d92204bd007f8dbd82d1259edd9c842e2",
+      "matches": true
+    },
+    {
+      "file": "StudioSections.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioSections.test.jsx",
+      "claimed_sha256": "78B81182FF39E6D1B1508C3A675011517F6118D085B6667648923601F7090196",
+      "entry_sha256": "78b81182ff39e6d1b1508c3a675011517f6118d085b6667648923601f7090196",
+      "matches": true
+    },
+    {
+      "file": "StudioToolbar.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.jsx",
+      "claimed_sha256": "A4F82D2D18E666FA32C94C372C7BFC43A85A9EA1844BF6CFC39156EC21132114",
+      "entry_sha256": "a4f82d2d18e666fa32c94c372c7bfc43a85a9ea1844bf6cfc39156ec21132114",
+      "matches": true
+    },
+    {
+      "file": "StudioToolbar.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/StudioToolbar.test.jsx",
+      "claimed_sha256": "5F8C411D60568A2A1409D24026C72C43E34768148081F1B8A7EC0DC3610B1924",
+      "entry_sha256": "5f8c411d60568a2a1409d24026c72c43e34768148081f1b8a7ec0dc3610b1924",
+      "matches": true
+    },
+    {
+      "file": "InvitationStudioNegativeScenarios.test.jsx",
+      "path": "apps/frontend-user/src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+      "claimed_sha256": "016E9606C52239CF8AF987BA9132E5E8FB08B1DEC9EB5326C6DBEB2071B428AF",
+      "entry_sha256": "016e9606c52239cf8af987ba9132e5e8fb08b1dec9eb5326c6dbeb2071b428af",
+      "matches": true
+    },
+    {
+      "file": "playwright.phase13-1.config.js",
+      "path": "apps/frontend-user/playwright.phase13-1.config.js",
+      "claimed_sha256": "ADB8929B1410F8A254FB8425D93A708292454DFDF20A6288334B34AF93C32074",
+      "entry_sha256": "adb8929b1410f8a254fb8425d93a708292454dfdf20a6288334b34af93c32074",
+      "matches": true
+    },
+    {
+      "file": "phase13-1-creator-studio-screenshots.spec.js",
+      "path": "apps/frontend-user/tests/e2e/phase13-1-creator-studio-screenshots.spec.js",
+      "claimed_sha256": "E4C9E9BE0A787FC94178238E4EE556EEB78A219D8BB6F3E698F3EB90CA586AF1",
+      "entry_sha256": "e4c9e9be0a787fc94178238e4ee556eeb78a219d8bb6f3e698f3eb90ca586af1",
+      "matches": true
+    }
+  ],
+  "reconciliations": [
+    {
+      "claim": "28 negative tests / 35 IDs / 38 passes are interchangeable",
+      "observation": "35 IDs and 38 executions, but only eight original IDs exercise a narrow production contract. Most other tests cannot prove their advertised scenario."
+    },
+    {
+      "claim": "2158 tests provide a disjoint global total",
+      "observation": "Targeted/negative/full suites overlap. Full entry user 1821 and admin 202 reproduced; later final counts live in test-runs.json. No combined pass total is asserted."
+    },
+    {
+      "claim": "All unknown nested JSON survives a shallow spread",
+      "observation": "Independent real form and alternate adapter regressions failed before C13-003/004 repairs."
+    },
+    {
+      "claim": "Account-switch safety was verified secure",
+      "observation": "Actual Axios adapter dispatched A bytes with B credentials before C13-001."
+    },
+    {
+      "claim": "54px CSS minimum proves 330px usable editor",
+      "observation": "Baseline actual header 72px and first title input y=429.98 at 844x390; current geometry is measured in visual-manifest.json."
+    },
+    {
+      "claim": "Dark screenshots verify real dark mode",
+      "observation": "Inherited fixtures wrote theme/data-theme, while the app reads koupreng.colorMode/data-color-mode. New fixtures use the actual key."
+    },
+    {
+      "claim": "Sixteen screenshot hashes are current",
+      "observation": "Only 5 of 16 original screenshot hash claims match entry bytes. Original files preserved; new captures have current hashes."
+    },
+    {
+      "claim": "No publication has occurred yet",
+      "observation": "Entry local/remote main already matched 54565a125e1c1cc13be9b1ed5039434f1d0b9450; 121 files include both implementation and purported audit."
+    },
+    {
+      "claim": "Current browser CI is the two guest-filter assertions",
+      "observation": "Entry run 44544967826 actually stopped on missing generated Studio matrix before collecting those tests. Historical guest cases are replayed separately."
+    },
+    {
+      "claim": "There are ten section tabs / fallback always renders KhmerCelestial",
+      "observation": "Actual Studio has six grouped-button categories. Unknown stable registry identity fails closed, with explicit shared/fallback identities retained."
+    },
+    {
+      "claim": "Broad checkout/remove commands are a safe rollback",
+      "observation": "Rejected. The current package permits only dry-run reverse checking of attributable hunks, with original work retained."
+    },
+    {
+      "claim": "Performance/rights/AT are certified by build or mock tests",
+      "observation": "Bundle outputs and scoped fixture observations only. External/native/provider/rights/RUM owners remain open."
+    }
+  ]
+}

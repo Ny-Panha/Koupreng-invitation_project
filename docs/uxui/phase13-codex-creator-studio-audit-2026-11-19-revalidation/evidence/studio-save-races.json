@@ -1,0 +1,165 @@
+{
+  "production_sources": [
+    "apps/frontend-user/src/features/invitations/studio/useStudioAuthority.js",
+    "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js",
+    "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+    "apps/frontend-user/src/shared/storage/weddingStorage.js"
+  ],
+  "actual_test_sources": [
+    "apps/frontend-user/src/features/invitations/studio/StudioAuthority.test.jsx",
+    "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+    "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.test.jsx"
+  ],
+  "assertions": [
+    "A bytes cannot dispatch using B credentials",
+    "Late A response cannot start more requests or write B storage",
+    "Ownerless id/slug reads and reassignment reject without changing bytes",
+    "An old acknowledgement does not clear newer dirty edits",
+    "Real typed title/focus survive delayed Axios save and final bytes are sent",
+    "Ambiguous create retries reuse first payload and clientRequestId, then update newer bytes on one returned id"
+  ],
+  "runs": [
+    {
+      "id": "pre-fix-negatives",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioAuthority.test.jsx src/features/invitations/studio/StudioToolbar.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:39:44.688625+00:00",
+      "finished_utc": "2026-11-19T14:39:46.716229+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 2.028,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/pre-fix-negatives.log",
+      "log_sha256": "b32c65784b766c4e373a2df3f38bc4b377b1cc6a376cf067cd3625bbee862075",
+      "log_hash_valid": true,
+      "result_lines": [
+        "❯ src/features/invitations/studio/StudioToolbar.test.jsx (17 tests | 9 failed) 128ms",
+        "❯ src/features/invitations/studio/StudioAuthority.test.jsx (3 tests | 3 failed) 458ms",
+        "⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯",
+        "Test Files  2 failed (2)",
+        "Tests  12 failed | 8 passed (20)",
+        "Duration  1.43s (tests 29%, environment 25%, import 19%, transform 17%, setup 11%)"
+      ],
+      "failure_names": [
+        "FAIL  src/features/invitations/studio/StudioAuthority.test.jsx > N13-07 blocks ownerless legacy reads and adoption, preserving original bytes",
+        "FAIL  src/features/invitations/studio/StudioAuthority.test.jsx > N13-01 real Axios adapter never dispatches A Studio payload using B credentials",
+        "FAIL  src/features/invitations/studio/StudioAuthority.test.jsx > N13-01 late first save cannot start media/reference writes after account switch",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > preserves composition keyboard ownership",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > preserves alt keyboard ownership",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > preserves handled keyboard ownership",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > preserves dialog keyboard ownership",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > preserves editable-child keyboard ownership",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > does not mutate document history in conflict state",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > does not mutate document history in expired state",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > does not mutate document history in denied state",
+        "FAIL  src/features/invitations/studio/StudioToolbar.test.jsx > StudioToolbar > leaves unavailable Save shortcuts to the browser"
+      ]
+    },
+    {
+      "id": "authority-fix",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioAuthority.test.jsx src/features/invitations/studio/StudioToolbar.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:41:28.450293+00:00",
+      "finished_utc": "2026-11-19T14:41:30.904578+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 2.454,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/authority-fix.log",
+      "log_sha256": "9880fdbb0bc06d3890572c5a4c7c12f5eb72659a5cb30e247f6dd89fa59ab9cc",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  2 passed (2)",
+        "Tests  20 passed (20)",
+        "Duration  1.76s (tests 28%, transform 24%, environment 20%, import 18%, setup 9%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "pre-fix-create-retry",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioRoundtrip.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:55:29.564418+00:00",
+      "finished_utc": "2026-11-19T14:55:32.028278+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 2.464,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/pre-fix-create-retry.log",
+      "log_sha256": "4bf34bb4b217e87c098c940f1a2a3416cb63a071af3d320f0e292d891c48a3b1",
+      "log_hash_valid": true,
+      "result_lines": [
+        "❯ src/features/invitations/studio/StudioRoundtrip.test.jsx (2 tests | 1 failed) 703ms",
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        "Test Files  1 failed (1)",
+        "Tests  1 failed | 1 passed (2)",
+        "Duration  1.81s (tests 41%, transform 19%, import 19%, environment 14%, setup 6%)"
+      ],
+      "failure_names": [
+        "FAIL  src/features/invitations/studio/StudioRoundtrip.test.jsx > N13-20 retries an ambiguous legacy create with the same request id and immutable first payload"
+      ]
+    },
+    {
+      "id": "retry-fixed",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioRoundtrip.test.jsx src/features/invitations/invitationPayloadUtils.test.js src/features/events/Phase12_1EventListProvenance.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:56:02.537568+00:00",
+      "finished_utc": "2026-11-19T14:56:05.232796+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 2.695,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/retry-fixed.log",
+      "log_sha256": "e69eb8c6cc0493fff4e5ebe2183a6ccc128698b8f5a72a53300851fd951a8de8",
+      "log_hash_valid": true,
+      "result_lines": [
+        "❯ src/features/events/Phase12_1EventListProvenance.test.jsx (3 tests | 1 failed) 166ms",
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        "Test Files  1 failed | 2 passed (3)",
+        "Tests  1 failed | 9 passed (10)",
+        "Duration  1.99s (tests 28%, environment 27%, import 18%, transform 16%, setup 10%)"
+      ],
+      "failure_names": [
+        "FAIL  src/features/events/Phase12_1EventListProvenance.test.jsx > Phase 12.1 Event List Provenance & Deterministic Actions > differentiates server events, local drafts, failed sync, and shared events with truthful badges and actions"
+      ]
+    },
+    {
+      "id": "real-typing-race",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioAuthority.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:10:41.445657+00:00",
+      "finished_utc": "2026-11-19T15:11:27.622836+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 46.177,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/real-typing-race.log",
+      "log_sha256": "e00a66833e710227d904f53d36abe8c456531be98b9414de2bc091552f16eb2d",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  1 passed (1)",
+        "Tests  4 passed (4)",
+        "Duration  42.96s (environment 34%, setup 28%, import 15%, transform 14%, tests 10%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "full-user-frozen",
+      "command": "npm.cmd --prefix apps/frontend-user test",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:34:07.713283+00:00",
+      "finished_utc": "2026-11-19T15:35:42.883801+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 95.171,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/full-user-frozen.log",
+      "log_sha256": "d881da7dc6fde7c221ce41ae96a9e4867c4840f7b90c37af3c8f67019af40405",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  248 passed (248)",
+        "Tests  1841 passed (1841)",
+        "Duration  92.75s (environment 41%, setup 22%, tests 17%, import 15%, transform 4%)"
+      ],
+      "failure_names": []
+    }
+  ],
+  "limits": [
+    "Frontend Axios adapter and local storage proof; no live cookie/MySQL concurrency claim",
+    "Complete legacy binary recovery and event-switch late-asset matrix remain partial"
+  ]
+}

@@ -353,7 +353,11 @@ jobs:
 
       - name: Verify Studio, template locales, guests and tickets
         working-directory: apps/frontend-user
-        run: npx playwright test tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js
+        env:
+          PHASE12_WRITE_MATRIX: "true"
+        run: |
+          npx vitest run src/features/templates/registry/phase12ContractMatrix.test.jsx
+          npx playwright test tests/e2e/guest-workspace.spec.js tests/e2e/studio-tickets.spec.js tests/e2e/next-studio-ux.spec.js tests/e2e/phase12-matrix.spec.js
 
       - name: Verify mobile package purchase and activation contracts
         working-directory: apps/frontend-user

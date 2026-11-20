@@ -196,4 +196,31 @@ describe('StudioToolbar', () => {
     );
     expect(screen.getByRole('status')).toHaveTextContent('Session expired');
   });
+
+  it.each(['composition', 'alt', 'handled', 'dialog', 'editable-child'])('preserves %s keyboard ownership', kind => {
+    const studio = { ...defaultStudio, undo: vi.fn(), flush: vi.fn() };
+    const { container } = render(<><div role="dialog"><button data-modal="true">Dialog action</button></div><div contentEditable suppressContentEditableWarning><span data-editable="true">Text</span></div><StudioToolbar english studio={studio} canEdit /></>);
+    const target = kind === 'dialog' ? container.querySelector('[data-modal]') : kind === 'editable-child' ? container.querySelector('[data-editable]') : window;
+    const event = new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true, isComposing: kind === 'composition', altKey: kind === 'alt' });
+    if (kind === 'handled') event.preventDefault();
+    fireEvent(target, event);
+    expect(studio.undo).not.toHaveBeenCalled();
+    if (kind !== 'handled') expect(event.defaultPrevented).toBe(false);
+  });
+
+  it.each(['conflict', 'expired', 'denied'])('does not mutate document history in %s state', phase => {
+    const studio = { ...defaultStudio, phase, undo: vi.fn() };
+    render(<StudioToolbar english studio={studio} canEdit />);
+    const event = new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, cancelable: true });
+    fireEvent(window, event);
+    expect(studio.undo).not.toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(false);
+  });
+
+  it('leaves unavailable Save shortcuts to the browser', () => {
+    render(<StudioToolbar english studio={defaultStudio} canEdit={false} />);
+    const event = new KeyboardEvent('keydown', { key: 's', metaKey: true, cancelable: true });
+    fireEvent(window, event);
+    expect(event.defaultPrevented).toBe(false);
+  });
 });

@@ -1,0 +1,62 @@
+{
+  "partitions": [
+    {
+      "route": "/app/events/:eventId/invitation",
+      "role": "owner / accepted MANAGE_INVITATION collaborator",
+      "event": "WEDDING",
+      "template": "supported dedicated renderer; not event-essential",
+      "storage": "server",
+      "result": "advanced editor, server mutation authority required"
+    },
+    {
+      "route": "/app/events/:eventId/invitation",
+      "role": "owner / authorized collaborator",
+      "event": "non-wedding or event-essential",
+      "template": "event-essential / generic",
+      "storage": "server",
+      "result": "EventDetails; no new advanced non-wedding editor claimed"
+    },
+    {
+      "route": "/app/events/:eventId/invitation",
+      "role": "revoked collaborator after opening",
+      "event": "WEDDING",
+      "storage": "server + dirty memory",
+      "result": "recovery editor remains, fields/save disabled; cancelled work cannot resume after regrant"
+    },
+    {
+      "route": "/dashboard/invitations/:id/edit",
+      "role": "authenticated",
+      "event": "numeric id",
+      "storage": "server",
+      "result": "redirect to canonical event invitation route with existing query/hash behavior"
+    },
+    {
+      "route": "/dashboard/invitations/:id/edit",
+      "role": "matching authenticated owner",
+      "event": "legacy nonnumeric id",
+      "storage": "local owner-scoped draft",
+      "result": "keyed loader and editor; existing JSON retained"
+    },
+    {
+      "route": "/dashboard/invitations/:id/edit",
+      "role": "signed-in account / ownerless draft",
+      "event": "legacy nonnumeric id",
+      "storage": "unclaimed local bytes",
+      "result": "recovery notice; no assignment, deletion or upload"
+    },
+    {
+      "route": "protected editor",
+      "role": "anonymous / session checking / verification error",
+      "storage": "any",
+      "result": "RequireAuth redirect, skeleton or error; guest token is not an editing grant"
+    }
+  ],
+  "source_paths": [
+    "apps/frontend-user/src/app/routes/hostRoutes.jsx",
+    "apps/frontend-user/src/app/guards/RequireAuth.jsx",
+    "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationEditFeature.jsx",
+    "apps/frontend-user/src/features/invitations/InvitationForm.jsx"
+  ],
+  "limitations": "Partitions are source-backed, with current unit/browser proof for high-risk transitions; no Cartesian enumeration or new generic advanced editor is claimed."
+}

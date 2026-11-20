@@ -1,0 +1,259 @@
+{
+  "phase13_open": [
+    {
+      "id": "F13.1-02",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Published Phase 12 and entry commits retained; actual failed job identities recorded.",
+      "next_action": "Inherited CI red remains owned by repository QA; no retrospective green.",
+      "evidence": [
+        "ci-observed.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-05",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Actual loaded management surfaces have before/after density and contrast evidence.",
+      "next_action": "Subjective premium quality and every inspector section still require product review.",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-09",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Guided/advanced controls share the same form and source-defined section map.",
+      "next_action": "Exhaustive mode switches with every optional authored section were not replayed.",
+      "evidence": [
+        "source-routes.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-12",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Loaded labels, field groups, validation source and responsive title editing reviewed.",
+      "next_action": "The large inspector monolith is not exhaustively covered by representative captures.",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-13",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Actual form saves retain authored names, title, locale extensions and nested values.",
+      "next_action": "Every family/message editor combination across templates is not replayed.",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-14",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Current date/timezone and event adapter contracts run in the full user suite.",
+      "next_action": "Physical locale keyboards and live wall-time persistence remain staging/native QA.",
+      "evidence": [
+        "test-runs.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-15",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Future objects and edited array replacement semantics are regression tested.",
+      "next_action": "All story/FAQ/party/dress/closing controls lack a complete real-browser journey.",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-16",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Chooser/policy tests cover bounded failure and eligibility states; actual modal opens.",
+      "next_action": "Every paid/owned/collaborator/template combination is not browser certified.",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-17",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Deep merge and stable gallery identity prevent confirmed extension loss.",
+      "next_action": "Dedicated-template A to B to A media/customization journeys remain partial.",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-21",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Original Phase 02 cases replayed by unchanged identities, with current failures retained.",
+      "next_action": "Admin iframe containment failure remains an inherited QA/product owner gate.",
+      "evidence": [
+        "historical-regressions.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-24",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "844x390 geometry measured and simulated visualViewport actions remain visible.",
+      "next_action": "Physical safe area, browser bar and virtual keyboard still need device review.",
+      "evidence": [
+        "visual-manifest.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-25",
+      "status": "BLOCKED — EXTERNAL",
+      "owner": "Device/native QA",
+      "observed": "320px reflow is observed; native 200/400 percent browser zoom is explicitly unverified.",
+      "next_action": "Assigned to physical device/accessibility QA; no fabricated native zoom result.",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-29",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "A to B Axios dispatch and late stages are fixed; keyed account/event lifetime inspected.",
+      "next_action": "Complete late-asset event-switch/browser response matrix remains partial.",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-32",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Ambiguous legacy create repeats identical first bytes/UUID and updates later edits on the returned id.",
+      "next_action": "Complete legacy binary media recovery/cancel/refresh matrix is not executed.",
+      "evidence": [
+        "studio-save-races.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-33",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Dirty publish flush plus intercepted 503 yields an error and no published success/link.",
+      "next_action": "Already-published, live public parity and revoke-mid-publish browser variants remain partial.",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-35",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Existing authored gallery rows above ten and metadata retained; empty couple names stay empty.",
+      "next_action": "Preset artwork/default decorative copy and commercial rights still need review.",
+      "evidence": [
+        "unknown-json-roundtrip.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-37",
+      "status": "REVIEW REQUIRED",
+      "owner": "Device/native QA",
+      "observed": "Real EN/KM store, mixed text and DOM composition event coverage recorded.",
+      "next_action": "Physical Khmer IME, diacritics and ceremonial language need native reviewer signoff.",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-39",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Linked fields, actual modal focus and loaded axe results verified in named states.",
+      "next_action": "All inspector errors/dialogs and physical AT reading order remain partial.",
+      "evidence": [
+        "accessibility.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-40",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Portal toolbar reduced-motion computation and keyboard split alternatives observed.",
+      "next_action": "Every animation, physical touch and guest renderer motion variant is not recertified.",
+      "evidence": [
+        "negative-tests.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-46",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Default two-worker run and controlled native-engine reruns retained separately.",
+      "next_action": "Emulated phone geometry and retry passes do not erase prior failures or prove physical devices.",
+      "evidence": [
+        "browser-coverage.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-47",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Current Phase 02/guest identities and scanner/CI state retained without skips or assertion weakening.",
+      "next_action": "Inherited failures remain owner gates rather than green certification.",
+      "evidence": [
+        "historical-regressions.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-48",
+      "status": "PARTIALLY COMPLETE",
+      "owner": "Phase 13 QA / relevant domain owner",
+      "observed": "Same installed lockfile builds and exact current emitted bytes/hashes recorded.",
+      "next_action": "No apples-to-apples runtime p95, memory soak, field INP/CWV or all cold/warm budgets.",
+      "evidence": [
+        "performance-compare.json",
+        "test-runs.json"
+      ]
+    },
+    {
+      "id": "F13.1-54",
+      "status": "REVIEW REQUIRED",
+      "owner": "Repository owner / audit provenance reviewer",
+      "observed": "Entry main already contained published implementation and purported audit; no deployment or destructive rollback performed here.",
+      "next_action": "Git metadata cannot authenticate historical agent authorship; repository owner review remains required.",
+      "evidence": [
+        "baseline.json",
+        "test-runs.json"
+      ]
+    }
+  ],
+  "historical_owner_source": "historical-57-plus-new-ledger.json; original owner rows retained in full",
+  "release_gate_policy": "Local development-checkpoint readiness is independent of production certification; no external gate is automatically closed."
+}

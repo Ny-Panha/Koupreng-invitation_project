@@ -1,0 +1,167 @@
+{
+  "production_sources": [
+    "apps/frontend-user/src/features/invitations/invitationPayloadUtils.js",
+    "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+    "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.js"
+  ],
+  "tests": [
+    "apps/frontend-user/src/features/invitations/studio/StudioRoundtrip.test.jsx",
+    "apps/frontend-user/src/features/invitations/invitationPayloadUtils.test.js",
+    "apps/frontend-user/src/features/wedding-builder/utils/invitationDraftAdapter.test.js"
+  ],
+  "assertions": [
+    "Two real form saves retain nested future design/content/localized keys, arrays, null, false and Khmer text",
+    "Eleven existing photos survive; ten-new-photo limit does not truncate authored rows",
+    "Gallery extensions follow stable id, not array index",
+    "Edited arrays replace arrays, retaining explicit deletion/reorder/null",
+    "Alternate public reader/writer carries raw JSON extensions and locale content",
+    "Late media acknowledgement cannot replace a newer selection"
+  ],
+  "runs": [
+    {
+      "id": "pre-fix-json",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/InvitationForm.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:41:56.491145+00:00",
+      "finished_utc": "2026-11-19T14:42:07.566107+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 11.075,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/pre-fix-json.log",
+      "log_sha256": "efee46fd7eae16baa8667f982587c15d208f12f995599c38a67a9b7d40608fdc",
+      "log_hash_valid": true,
+      "result_lines": [
+        "❯ src/features/invitations/InvitationForm.test.jsx (21 tests | 1 failed) 9073ms",
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        "Test Files  1 failed (1)",
+        "Tests  1 failed | 20 passed (21)",
+        "Duration  10.42s (tests 88%, import 5%, transform 4%, environment 2%, setup 1%)"
+      ],
+      "failure_names": [
+        "FAIL  src/features/invitations/InvitationForm.test.jsx > InvitationForm render test > N13-08 preserves future nested design data and all gallery records through two real form saves"
+      ]
+    },
+    {
+      "id": "json-fix",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/InvitationForm.test.jsx src/features/invitations/studio/",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:42:34.205827+00:00",
+      "finished_utc": "2026-11-19T14:42:51.513950+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 17.308,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/json-fix.log",
+      "log_sha256": "c0433b584c2e9d60370606106f904f00808345748c25a8c367c8bf0f2eb908cb",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  17 passed (17)",
+        "Tests  139 passed (139)",
+        "Duration  16.32s (tests 37%, environment 32%, setup 14%, import 11%, transform 6%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "pre-fix-alternate",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/wedding-builder/utils/invitationDraftAdapter.test.js",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:49:34.269304+00:00",
+      "finished_utc": "2026-11-19T14:49:37.497298+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 3.228,
+      "exit_code": 1,
+      "log": "output/phase13-codex-revalidation/checks/pre-fix-alternate.log",
+      "log_sha256": "115a6da696e34a83c61aa180142a2f9dd56170d5e5eb52f4540b36bf5def3992",
+      "log_hash_valid": true,
+      "result_lines": [
+        "❯ src/features/wedding-builder/utils/invitationDraftAdapter.test.js (18 tests | 1 failed) 21ms",
+        "⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯",
+        "Test Files  1 failed (1)",
+        "Tests  1 failed | 17 passed (18)",
+        "Duration  2.13s (import 33%, transform 33%, environment 24%, setup 9%, tests 1%)"
+      ],
+      "failure_names": [
+        "FAIL  src/features/wedding-builder/utils/invitationDraftAdapter.test.js > invitation draft adapters > N13-08 alternate reader and writer retain raw future objects, gallery metadata and localized edits"
+      ]
+    },
+    {
+      "id": "alternate-fixed",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/wedding-builder/utils/invitationDraftAdapter.test.js src/features/wedding-builder/utils/draftToTemplate.test.js src/features/invitations/studio/StudioAuthority.test.jsx src/shared/storage/",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:49:50.010162+00:00",
+      "finished_utc": "2026-11-19T14:49:53.677712+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 3.668,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/alternate-fixed.log",
+      "log_sha256": "90c34e2d02798df2d75341906301f6fc8c74c638e26a04e14b85bc3017c3da05",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  4 passed (4)",
+        "Tests  32 passed (32)",
+        "Duration  2.61s (environment 37%, import 21%, transform 16%, tests 13%, setup 13%, worker 1%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "roundtrip-isolated",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/StudioRoundtrip.test.jsx src/features/invitations/studio/InvitationStudioNegativeScenarios.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:50:37.623264+00:00",
+      "finished_utc": "2026-11-19T14:50:43.090606+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 5.467,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/roundtrip-isolated.log",
+      "log_sha256": "7cf87b1e817629fed7797167a26f774072949bd25c90d83e9d23c233e76605b5",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  2 passed (2)",
+        "Tests  39 passed (39)",
+        "Duration  3.76s (environment 31%, tests 26%, import 17%, transform 13%, setup 12%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "focused-security",
+      "command": "npm.cmd --prefix apps/frontend-user test -- src/features/invitations/studio/ src/features/invitations/invitationPayloadUtils.test.js src/features/wedding-builder/ src/shared/preview/ src/features/events/onboarding/Phase11RequestAuthority.test.jsx src/features/events/Phase12CodexAccountIsolation.test.jsx",
+      "cwd": ".",
+      "started_utc": "2026-11-19T14:53:52.311648+00:00",
+      "finished_utc": "2026-11-19T14:53:57.858833+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 5.547,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/focused-security.log",
+      "log_sha256": "91b278e8fd8bc6e251e102d20a54717a32680166c99185d6ee23f75c0ca62a2d",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  25 passed (25)",
+        "Tests  186 passed (186)",
+        "Duration  4.85s (environment 42%, tests 18%, setup 16%, import 12%, transform 11%)"
+      ],
+      "failure_names": []
+    },
+    {
+      "id": "full-user-frozen",
+      "command": "npm.cmd --prefix apps/frontend-user test",
+      "cwd": ".",
+      "started_utc": "2026-11-19T15:34:07.713283+00:00",
+      "finished_utc": "2026-11-19T15:35:42.883801+00:00",
+      "head": "54565a125e1c1cc13be9b1ed5039434f1d0b9450",
+      "seconds": 95.171,
+      "exit_code": 0,
+      "log": "output/phase13-codex-revalidation/checks/full-user-frozen.log",
+      "log_sha256": "d881da7dc6fde7c221ce41ae96a9e4867c4840f7b90c37af3c8f67019af40405",
+      "log_hash_valid": true,
+      "result_lines": [
+        "Test Files  248 passed (248)",
+        "Tests  1841 passed (1841)",
+        "Duration  92.75s (environment 41%, setup 22%, tests 17%, import 15%, transform 4%)"
+      ],
+      "failure_names": []
+    }
+  ],
+  "limits": [
+    "No full dedicated-template A to B to A matrix",
+    "No claim that all unknown semantics can be edited by current controls"
+  ]
+}
