@@ -23,7 +23,7 @@ describe("admin workspace navigation", () => {
     shell();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     const nav = screen.getByRole("navigation", { name: "Admin navigation" });
-    expect(within(nav).getAllByRole("link")).toHaveLength(9);
+    expect(within(nav).getAllByRole("link")).toHaveLength(8);
     for (const link of within(nav).getAllByRole("link")) expect(link).toHaveAccessibleName();
     expect(screen.getByRole("button", { name: "Open navigation" })).toHaveAttribute("aria-expanded", "false");
   });
@@ -41,31 +41,6 @@ describe("admin workspace navigation", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Close navigation" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(document.body.style.overflow).toBe("");
-    expect(trigger).toHaveFocus();
-  });
-
-  it("searches destinations, shows a useful empty result and navigates to the selected page", () => {
-    shell();
-    fireEvent.click(screen.getByRole("button", { name: "Find a page in your workspace" }));
-    const dialog = screen.getByRole("dialog", { name: "Find an admin page" });
-    const input = within(dialog).getByLabelText("Page name");
-    expect(input).toHaveFocus();
-    fireEvent.change(input, { target: { value: "no such page" } });
-    expect(within(dialog).getByRole("status")).toHaveTextContent("Try a different page name");
-    fireEvent.change(input, { target: { value: "PAYMENTS" } });
-    expect(within(dialog).getAllByRole("link")).toHaveLength(1);
-    fireEvent.click(within(dialog).getByRole("link", { name: "KHQR payments" }));
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Payment monitoring" })).toBeInTheDocument();
-  });
-
-  it("cancels the search dialog and restores its trigger", () => {
-    shell();
-    const trigger = screen.getByRole("button", { name: "Find a page in your workspace" });
-    trigger.focus(); fireEvent.click(trigger);
-    const dialog = screen.getByRole("dialog");
-    fireEvent(dialog, new Event("cancel", { cancelable: true, bubbles: true }));
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
   });
 

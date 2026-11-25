@@ -147,7 +147,7 @@ export function QaSessionBar({
                   />
                   <button
                     type="submit"
-                    className="rounded-lg bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white hover:bg-amber-600"
+                    className="btn-primary rounded-lg px-2.5 py-1 text-xs font-semibold"
                   >
                     {lang === "km" ? "រក្សាទុក" : "Save"}
                   </button>

@@ -135,7 +135,7 @@ export default function TemplateGallerySection({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-sm hover:brightness-110 active:scale-95 transition cursor-pointer"
+            className="btn-primary flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold active:scale-95 transition cursor-pointer"
           >
             <Upload className="h-3.5 w-3.5" />
             <span>{lang === "en" ? "Upload Photos" : "Upload រូបភាព"}</span>
@@ -165,7 +165,7 @@ export default function TemplateGallerySection({
           <button
             type="button"
             onClick={onAddGalleryImage}
-            className="h-9 px-3.5 rounded-lg bg-amber-500 text-black text-xs font-bold hover:brightness-110 transition shrink-0 cursor-pointer"
+            className="btn-primary h-9 px-3.5 rounded-lg text-xs font-bold transition shrink-0 cursor-pointer"
           >
             {lang === "en" ? "Add" : "បន្ថែម"}
           </button>
@@ -210,7 +210,7 @@ export default function TemplateGallerySection({
                   <button
                     type="button"
                     onClick={() => onMoveImage(idx, idx - 1)}
-                    className="p-1 rounded-md bg-black/70 hover:bg-amber-500 hover:text-black text-zinc-300 backdrop-blur-md border border-white/10 transition shadow-sm opacity-0 group-hover:opacity-100 cursor-pointer"
+                    className="p-1 rounded-md bg-black/70 hover:bg-primary hover:text-primary-foreground text-zinc-300 backdrop-blur-md border border-white/10 transition shadow-sm opacity-0 group-hover:opacity-100 cursor-pointer"
                     title={lang === "en" ? "Move earlier" : "ផ្លាស់ទីទៅមុខ"}
                   >
                     <ChevronLeft className="h-3 w-3" />
@@ -222,7 +222,7 @@ export default function TemplateGallerySection({
                   <button
                     type="button"
                     onClick={() => onMoveImage(idx, idx + 1)}
-                    className="p-1 rounded-md bg-black/70 hover:bg-amber-500 hover:text-black text-zinc-300 backdrop-blur-md border border-white/10 transition shadow-sm opacity-0 group-hover:opacity-100 cursor-pointer"
+                    className="p-1 rounded-md bg-black/70 hover:bg-primary hover:text-primary-foreground text-zinc-300 backdrop-blur-md border border-white/10 transition shadow-sm opacity-0 group-hover:opacity-100 cursor-pointer"
                     title={lang === "en" ? "Move later" : "ផ្លាស់ទីទៅក្រោយ"}
                   >
                     <ChevronRight className="h-3 w-3" />
@@ -259,7 +259,7 @@ export default function TemplateGallerySection({
                   <button
                     type="button"
                     onClick={() => saveEditing(idx)}
-                    className="p-1 rounded bg-amber-500 text-black hover:brightness-110 cursor-pointer"
+                    className="btn-primary p-1 rounded cursor-pointer"
                     title="រក្សាទុក"
                   >
                     <Check className="h-3 w-3" />

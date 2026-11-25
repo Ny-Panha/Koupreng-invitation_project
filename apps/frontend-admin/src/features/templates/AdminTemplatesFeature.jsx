@@ -1183,7 +1183,7 @@ export default function AdminTemplatesPage() {
                   type="submit"
                   form="template-studio-form"
                   disabled={submitting}
-                  className="flex items-center gap-1.5 px-6 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/25 hover:from-amber-600 hover:to-amber-700 transition-all disabled:opacity-50 cursor-pointer"
+                  className="btn-primary flex items-center gap-1.5 px-6 py-2 text-xs font-bold rounded-xl transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {submitting ? (
                     <>

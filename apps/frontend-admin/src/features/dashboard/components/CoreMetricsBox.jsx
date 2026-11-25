@@ -1,146 +1,29 @@
-import {
-  Users,
-  Palette,
-  Mail,
-  UserCheck,
-  CreditCard,
-  TrendingUp,
-  LayoutGrid,
-} from "lucide-react";
-import AnimatedNumber from "./AnimatedNumber";
+import { Users, Mail, UserCheck, Palette } from "lucide-react";
 
-export default function CoreMetricsBox({ data = {}, lang = "km", t = (k, d) => d, formatRevenue }) {
+export default function CoreMetricsBox({ data = {}, lang = "km", t = (key, fallback) => fallback }) {
+  const en = lang === "en";
+  const count = value => value == null ? "—" : Number(value).toLocaleString("en-US");
   const metrics = [
-    {
-      id: "users",
-      label: t("dashboard.totalUsers", "អ្នកប្រើសរុប"),
-      value: data.totalUsers ?? 0,
-      note: lang === "en" ? `${data.activeUsers ?? 0} Active` : `${data.activeUsers ?? 0} Active`,
-      icon: Users,
-      tone: "cyan",
-    },
-    {
-      id: "templates",
-      label: t("dashboard.totalTemplates", "គំរូសំបុត្រអញ្ជើញ"),
-      value: data.totalTemplates ?? 0,
-      note: `${data.premiumTemplates ?? 0} Premium`,
-      icon: Palette,
-      tone: "purple",
-      badge: "TEMPLATES",
-    },
-    {
-      id: "invitations",
-      label: t("dashboard.totalInvitations", "សំបុត្រអញ្ជើញសរុប"),
-      value: data.totalInvitations ?? 0,
-      note: lang === "en" ? `${data.publishedInvitations ?? 0} Published` : `${data.publishedInvitations ?? 0} បានផ្សាយ`,
-      icon: Mail,
-      tone: "amber",
-    },
-    {
-      id: "guests",
-      label: t("dashboard.totalGuests", "ភ្ញៀវសរុប (Guests)"),
-      value: data.totalGuests ?? 0,
-      note: t("dashboard.allGuestsNote", "ភ្ញៀវក្នុងសំបុត្រអញ្ជើញ"),
-      icon: UserCheck,
-      tone: "emerald",
-      badge: "GUESTS",
-    },
-    {
-      id: "payments",
-      label: t("dashboard.totalPayments", "ការទូទាត់សរុប"),
-      value: data.totalPayments ?? 0,
-      note: lang === "en" ? `${data.failedPayments ?? 0} Failed` : `${data.failedPayments ?? 0} បរាជ័យ`,
-      icon: CreditCard,
-      tone: "rose",
-    },
-    {
-      id: "revenue",
-      label: t("dashboard.totalRevenue", "ចំណូលសរុប"),
-      value: data.totalRevenue || 0,
-      isMoney: true,
-      note: "ABA PayWay",
-      icon: TrendingUp,
-      tone: "amber",
-      badge: "ABA",
-    },
+    { key: "users", label: t("dashboard.totalUsers", en ? "Total users" : "អ្នកប្រើសរុប"), value: data.totalUsers,
+      note: en ? `${count(data.activeUsers)} active accounts` : `${count(data.activeUsers)} គណនីសកម្ម`, icon: Users },
+    { key: "invitations", label: t("dashboard.totalInvitations", en ? "Total invitations" : "សំបុត្រអញ្ជើញសរុប"), value: data.totalInvitations,
+      note: en ? `${count(data.publishedInvitations)} published` : `${count(data.publishedInvitations)} បានផ្សាយ`, icon: Mail },
+    { key: "guests", label: t("dashboard.totalGuests", en ? "Total guests" : "ភ្ញៀវសរុប"), value: data.totalGuests,
+      note: en ? "Guest records across all invitations" : "កំណត់ត្រាភ្ញៀវក្នុងសំបុត្រអញ្ជើញទាំងអស់", icon: UserCheck },
+    { key: "templates", label: t("dashboard.totalTemplates", en ? "Templates" : "គំរូសំបុត្រអញ្ជើញ"), value: data.totalTemplates,
+      note: en ? `${count(data.premiumTemplates)} premium templates` : `${count(data.premiumTemplates)} គំរូ Premium`, icon: Palette },
   ];
 
-  const toneMap = {
-    cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
-    purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-    amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-    emerald: "bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/20",
-    rose: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
-  };
-
   return (
-    <div className="relative overflow-hidden rounded-[24px] border border-slate-200/90 bg-white/95 p-5 shadow-xs dark:border-slate-800/80 dark:bg-[#121622]/95 dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 flex flex-col justify-between h-full">
-      {/* Box Header */}
-      <div className="flex items-center justify-between gap-2 mb-3.5">
-        <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-500">
-            <LayoutGrid className="h-4 w-4" />
+    <section aria-label={en ? "Platform summary" : "ស្ថិតិទូទៅនៃប្រព័ន្ធ"}>
+      <dl className="dashboard-metrics">
+        {metrics.map(({ key, label, value, note, icon: Icon }) => (
+          <div key={key} className="dashboard-metric">
+            <dt><span>{label}</span><Icon size={18} aria-hidden="true" /></dt>
+            <dd><strong>{count(value)}</strong><span>{note}</span></dd>
           </div>
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-              {lang === "en" ? "System Core Metrics" : "ស្ថិតិទូទៅនៃប្រព័ន្ធ"}
-            </h3>
-            <span className="text-[11px] text-slate-600 dark:text-slate-300 block">
-              {lang === "en" ? "Overview of users, invitations & revenue" : "ទិដ្ឋភាពទូទៅនៃអ្នកប្រើប្រាស់ សំបុត្រអញ្ជើញ និងចំណូល"}
-            </span>
-          </div>
-        </div>
-        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-[#1f2738] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60">
-          6 METRICS
-        </span>
-      </div>
-
-      {/* 3x2 Compact Metric Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 flex-1">
-        {metrics.map((m) => {
-          const Icon = m.icon;
-          const toneClass = toneMap[m.tone] || toneMap.cyan;
-
-          return (
-            <div
-              key={m.id}
-              className="group relative flex flex-col justify-between p-3 rounded-2xl bg-slate-50/80 dark:bg-[#171e2c]/80 border border-slate-100 dark:border-slate-800/60 hover:border-amber-500/40 transition-all duration-200"
-            >
-              <div className="flex items-center justify-between gap-1 mb-1.5">
-                <div className={`flex h-6 w-6 items-center justify-center rounded-lg border ${toneClass}`}>
-                  <Icon className="h-3.5 w-3.5" />
-                </div>
-                {m.trend && (
-                  <span className="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 px-1.5 py-0.2 rounded-md">
-                    {m.trend}
-                  </span>
-                )}
-                {m.badge && (
-                  <span className="text-[9px] font-extrabold text-slate-700 dark:text-slate-200 bg-slate-200/50 dark:bg-slate-700/50 px-1.5 py-0.2 rounded-md uppercase tracking-wider">
-                    {m.badge}
-                  </span>
-                )}
-              </div>
-
-              <div>
-                <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-200 block truncate">
-                  {m.label}
-                </span>
-                <strong className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight block">
-                  {m.isMoney ? (
-                    formatRevenue ? formatRevenue(data) : (lang === 'en' ? 'Revenue unavailable' : 'មិនទាន់មានចំណូល')
-                  ) : (
-                    <AnimatedNumber value={m.value} duration={1000} />
-                  )}
-                </strong>
-                <span className="text-[10px] font-medium text-slate-700 dark:text-slate-200 block truncate mt-0.5">
-                  {m.note}
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+        ))}
+      </dl>
+    </section>
   );
 }

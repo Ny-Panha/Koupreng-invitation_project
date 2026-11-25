@@ -10,7 +10,14 @@
   border-radius: 14px; border: 1px solid var(--ui-theme-border); background: var(--ui-theme-surface);
   box-shadow: none; backdrop-filter: none; gap: 32px;
 }
-.dash-wrapper .host-nav-links { justify-content: flex-start; gap: 4px; }
+.dash-wrapper .host-nav-links { justify-content: center; gap: 4px; }
+@media (min-width: 1201px) {
+  .dash-wrapper .host-header-container { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .dash-wrapper .host-logo-box { justify-self: start; }
+  .dash-wrapper .host-user-actions { justify-self: end; min-width: 0; max-width: 100%; }
+  .dash-wrapper .host-profile-selector { min-width: 0; }
+  .dash-wrapper .host-profile-pill { max-width: 100%; }
+}
 .dash-wrapper .host-nav-link { border-radius: 8px; font-size: 14px; padding-inline: 12px; font-weight: 600; color: var(--ui-theme-muted); }
 .dash-wrapper .host-nav-link.active { background: var(--ui-theme-action-soft); color: var(--ui-theme-action); border-color: transparent; }
 .dash-wrapper .host-logo-box:hover { transform: none; }

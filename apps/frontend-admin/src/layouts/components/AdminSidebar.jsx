@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Search, X, Plus } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import AdminDialog from "./AdminDialog";
 import { adminNavigation, filterAdminNavigation } from "./adminNavigation";
 import BrandLogo from "../../shared/branding/BrandLogo";
 
-export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
+export default function AdminSidebar({ isMobileOpen, onNavigate }) {
   const { lang } = useAdminLanguage();
   const en = lang === "en";
   const items = adminNavigation(lang);
@@ -14,11 +14,9 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
   const mobileItems = filterAdminNavigation(items, query);
   return <>
     <aside className="admin-dock" aria-label={en ? "Admin sidebar" : "របាររដ្ឋបាល"}>
-      <button type="button" className="admin-icon-button admin-dock-tool" onClick={event => { event.currentTarget.focus(); onSearch(); }} aria-label={en ? "Find an admin page" : "ស្វែងរកទំព័ររដ្ឋបាល"} title={en ? "Find a page" : "ស្វែងរកទំព័រ"}><Search size={19} aria-hidden="true" /></button>
       <nav aria-label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"}>
         {items.map(({ to, icon: Icon, label, exact }) => <div className="admin-dock-item" key={to}><NavLink to={to} end={exact} aria-label={label} onClick={onNavigate}><Icon size={19} aria-hidden="true" /></NavLink><span className="admin-dock-tooltip" aria-hidden="true">{label}</span></div>)}
       </nav>
-      <NavLink className="admin-dock-create admin-icon-button" to="/templates/new" aria-label={en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ជើញ"} title={en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ជើញ"}><Plus size={20} aria-hidden="true" /></NavLink>
     </aside>
     {isMobileOpen && <AdminDialog id="admin-mobile-navigation" label={en ? "Admin navigation" : "ម៉ឺនុយរដ្ឋបាល"} className="admin-navigation-dialog" onClose={onNavigate}>
       <div className="admin-navigation-panel">
@@ -29,7 +27,6 @@ export default function AdminSidebar({ isMobileOpen, onNavigate, onSearch }) {
           {mobileItems.map(({ to, icon: Icon, label, exact }) => <NavLink key={to} to={to} end={exact} onClick={onNavigate}><Icon size={20} aria-hidden="true" /><span>{label}</span></NavLink>)}
           {!mobileItems.length && <p className="admin-search-empty" role="status">{en ? "No pages found. Try a different page name." : "រកមិនឃើញទំព័រ។ សូមសាកឈ្មោះទំព័រផ្សេងទៀត។"}</p>}
         </nav>
-        <NavLink className="admin-drawer-create" to="/templates/new" onClick={onNavigate}><Plus size={18} aria-hidden="true" />{en ? "Create invitation template" : "បង្កើតគំរូសំបុត្រអញ្ជើញ"}</NavLink>
       </div>
     </AdminDialog>}
   </>;

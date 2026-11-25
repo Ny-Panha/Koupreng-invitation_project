@@ -1,16 +1,46 @@
-import { AdminSkeleton } from '../../../shared/ui/AdminSkeleton';
-import { Link } from 'react-router-dom';
-import { formatMoney, formatDateTime } from '../../../shared/utils';
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { formatMoney, formatDateTime } from "../../../shared/utils";
 
-// The legacy dashboard API supplies current receipt totals, not a daily time series.
-export default function AnimatedTrendChart({ lang = 'km', report, loading = false }) {
-  const en=lang==='en', summary=report?.summary;
-  const currencies=Object.keys(summary?.paidRevenueByCurrency || summary?.revenueByCurrency || {}).sort();
-  return <section className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#121622]">
-    <h3 className="font-bold text-slate-900 dark:text-white">{en?'Recorded platform receipts':'ប្រាក់ដែលបានកត់ត្រារបស់ប្រព័ន្ធ'}</h3>
-    <p className="my-3 text-sm text-slate-600 dark:text-slate-300">{en?'All recorded paid orders, grouped by currency. Demo grants are not receipts. Daily comparison is unavailable.':'បញ្ជាទិញដែលបានទូទាត់ទាំងអស់ បែងចែកតាមរូបិយប័ណ្ណ។ សិទ្ធិសាកល្បងមិនមែនចំណូលទេ។ មិនទាន់មានទិន្នន័យប្រៀបធៀបប្រចាំថ្ងៃ។'}</p>
-    {loading ? <AdminSkeleton layout="chart" /> : !summary ? <p role="status">{en?'Receipt report unavailable. Open reports or refresh to retry.':'មិនទាន់មានរបាយការណ៍ប្រាក់។ សូមបើករបាយការណ៍ ឬផ្ទុកឡើងវិញ។'}</p> : currencies.length ? <div className="overflow-auto" tabIndex={0} role="region" aria-label={en?'Receipt totals by currency':'ប្រាក់តាមរូបិយប័ណ្ណ'}><table className="w-full text-sm"><caption className="sr-only">{en?'Recorded receipt totals':'ប្រាក់ដែលបានកត់ត្រា'}</caption><thead><tr><th scope="col" className="p-3 text-left">{en?'Currency':'រូបិយប័ណ្ណ'}</th><th scope="col" className="p-3 text-left">{en?'Paid receipts':'ប្រាក់ទទួល'}</th></tr></thead><tbody>{currencies.map(currency => <tr key={currency}><th scope="row" className="p-3 text-left">{currency}</th><td className="p-3">{formatMoney((summary.paidRevenueByCurrency || summary.revenueByCurrency)[currency],currency)}</td></tr>)}</tbody></table></div> : <p>{en?'No recorded receipts.':'មិនមានប្រាក់ទទួលដែលបានកត់ត្រា។'}</p>}
-    {report?.generatedAt && <p className="my-3 text-xs text-slate-500">{en?'Generated':'បង្កើតនៅ'}: {formatDateTime(report.generatedAt)}</p>}
-    <Link to="/reports" className="mt-3 inline-block font-semibold text-amber-700 dark:text-amber-300">{en?'Open dated reports and exports':'បើករបាយការណ៍តាមកាលបរិច្ឆេទ និងការនាំចេញ'}</Link>
-  </section>;
+// This API provides all-time receipt totals, not a daily trend series.
+export default function AnimatedTrendChart({ lang = "km", report, loading = false, data = {} }) {
+  const en = lang === "en";
+  const summary = report?.summary;
+  const totals = summary?.paidRevenueByCurrency || summary?.revenueByCurrency || {};
+  const currencies = Object.keys(totals).sort();
+
+  return (
+    <section className="dashboard-panel dashboard-receipts" aria-labelledby="dashboard-receipts-title">
+      <div className="dashboard-panel-header">
+        <div>
+          <h2 id="dashboard-receipts-title">{en ? "Recorded receipts" : "ប្រាក់ទទួលដែលបានកត់ត្រា"}</h2>
+          <p>{en ? "Paid orders, shown separately by currency." : "បញ្ជាទិញដែលបានទូទាត់ បែងចែកតាមរូបិយប័ណ្ណ។"}</p>
+        </div>
+        <span className="dashboard-period">{en ? "All time" : "គ្រប់ពេល"}</span>
+      </div>
+
+      {loading ? <p className="dashboard-empty" role="status">{en ? "Loading receipts…" : "កំពុងផ្ទុកប្រាក់ទទួល…"}</p>
+        : !summary ? <p className="dashboard-empty" role="status">{en ? "Receipt report unavailable. Open reports or refresh to retry." : "មិនទាន់មានរបាយការណ៍ប្រាក់។ សូមបើករបាយការណ៍ ឬផ្ទុកឡើងវិញ។"}</p>
+        : currencies.length ? (
+          <table className="dashboard-receipt-table">
+            <caption className="sr-only">{en ? "Recorded receipt totals by currency" : "ប្រាក់ទទួលតាមរូបិយប័ណ្ណ"}</caption>
+            <thead><tr><th scope="col">{en ? "Currency" : "រូបិយប័ណ្ណ"}</th><th scope="col">{en ? "Paid receipts" : "ប្រាក់ទទួល"}</th></tr></thead>
+            <tbody>{currencies.map(currency => (
+              <tr key={currency}><th scope="row">{currency}</th><td>{formatMoney(totals[currency], currency)}</td></tr>
+            ))}</tbody>
+          </table>
+        ) : <p className="dashboard-empty">{en ? "No recorded receipts." : "មិនមានប្រាក់ទទួលដែលបានកត់ត្រា។"}</p>}
+
+      <dl className="dashboard-payment-counts">
+        <div><dt>{en ? "Payment records" : "កំណត់ត្រាការទូទាត់"}</dt><dd>{data.totalPayments ?? "—"}</dd></div>
+        <div><dt>{en ? "Failed payments" : "ការទូទាត់បរាជ័យ"}</dt><dd>{data.failedPayments ?? "—"}</dd></div>
+      </dl>
+      <details className="dashboard-details">
+        <summary>{en ? "About these totals" : "អំពីចំនួនសរុបទាំងនេះ"}</summary>
+        <p>{en ? "All recorded paid orders, grouped by currency. Demo grants are not receipts. Daily comparison is unavailable." : "បញ្ជាទិញដែលបានទូទាត់ទាំងអស់ បែងចែកតាមរូបិយប័ណ្ណ។ សិទ្ធិសាកល្បងមិនមែនចំណូលទេ។ មិនទាន់មានទិន្នន័យប្រៀបធៀបប្រចាំថ្ងៃ។"}</p>
+        {report?.generatedAt && <p>{en ? "Generated" : "បង្កើតនៅ"}: {formatDateTime(report.generatedAt)}</p>}
+      </details>
+      <Link to="/reports" className="dashboard-text-link dashboard-panel-footer">{en ? "View financial reports" : "មើលរបាយការណ៍ហិរញ្ញវត្ថុ"}<ArrowUpRight size={16} aria-hidden="true" /></Link>
+    </section>
+  );
 }

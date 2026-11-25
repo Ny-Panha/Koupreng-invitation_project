@@ -252,7 +252,7 @@ export function TimePicker({
             <button
               type="button"
               onClick={() => handleApply()}
-              className="px-3 py-1 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-lg transition-all shadow-md shadow-amber-500/20 cursor-pointer flex items-center gap-1"
+              className="btn-primary px-3 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center gap-1"
             >
               <Check className="w-3.5 h-3.5" />
               កំណត់ម៉ោង

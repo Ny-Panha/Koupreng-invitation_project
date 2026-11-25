@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../app/providers/AdminAuthProvider";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
-import { Lock, Mail, ArrowRight, Loader2, ShieldCheck, Eye, EyeOff, AlertCircle, Globe } from "lucide-react";
+import { ArrowRight, Loader2, ShieldCheck, Eye, EyeOff, AlertCircle, LockKeyhole } from "lucide-react";
 import BrandLogo from "../../shared/branding/BrandLogo";
+import { USER_APP_URL } from "../../shared/config/runtime";
+import "./LoginPage.css";
 
 function safeNext(searchParams) {
   const next = searchParams.get("next");
@@ -21,28 +23,15 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  // Safely retrieve language from AdminLanguageProvider, with fallback
-  let lang = "km";
-  let setLang = () => {};
-  try {
-    const langContext = useAdminLanguage();
-    if (langContext) {
-      lang = langContext.lang;
-      setLang = langContext.setLang;
-    }
-  } catch {
-    // fallback if outside provider
-  }
-
+  const language = useAdminLanguage();
+  const lang = language?.lang || "km";
   const isKm = lang === "km";
-
-  // Check for expired or unauthorized query params
   const isExpired = searchParams.get("expired") === "true";
   const isUnauthorized = searchParams.get("error") === "unauthorized";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError("");
     setLoading(true);
     try {
@@ -61,176 +50,128 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 bg-[#09090b] overflow-hidden">
-      {/* Background Decorative Gradients */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-amber-600/5 rounded-full blur-[100px] pointer-events-none" />
-
-      {/* Language Toggle in Top Right */}
-      <div className="absolute top-6 right-6 z-20">
-        <div className="flex items-center gap-1 bg-[#121215]/80 backdrop-blur-md border border-zinc-800 rounded-full p-1 text-xs">
-          <Globe className="h-3.5 w-3.5 text-zinc-400 ml-2 mr-1" />
-          <button
-            type="button"
-            onClick={() => setLang("km")}
-            className={`px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer ${
-              isKm ? "bg-amber-500 text-slate-950 font-bold" : "text-zinc-400 hover:text-zinc-200"
-            }`}
-            aria-pressed={isKm}
-          >
-            ខ្មែរ
-          </button>
-          <button
-            type="button"
-            onClick={() => setLang("en")}
-            className={`px-2.5 py-1 rounded-full font-medium transition-colors cursor-pointer ${
-              !isKm ? "bg-amber-500 text-slate-950 font-bold" : "text-zinc-400 hover:text-zinc-200"
-            }`}
-            aria-pressed={!isKm}
-          >
-            EN
-          </button>
-        </div>
-      </div>
-
-      <div className="relative w-full max-w-md">
-        {/* Card */}
-        <div className="rounded-3xl border border-zinc-800 bg-[#121215]/90 p-8 sm:p-10 shadow-2xl backdrop-blur-xl transition-all">
-          {/* Brand Header */}
-          <div className="flex flex-col items-center text-center mb-8">
-            <BrandLogo variant="auth" priority />
-            <h1 className="sr-only">{isKm ? "គូព្រេង" : "Koupreng"}</h1>
-            <p className="text-xs text-zinc-400 mt-1">
-              {isKm
-                ? "ចូលប្រើប្រាស់ផ្ទាំងគ្រប់គ្រងសម្រាប់អ្នកគ្រប់គ្រងប្រព័ន្ធ"
-                : "Sign in to administrative console"}
-            </p>
-            <div className="mt-3 flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-[11px] font-semibold text-amber-400 border border-amber-500/20">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              <span>Admin Portal v1.0</span>
-            </div>
+    <main className="admin-login" lang={lang}>
+      <div className="admin-login-container">
+        <div className="admin-login-topbar">
+          <div className="admin-login-language" role="group" aria-label={isKm ? "ជ្រើសរើសភាសា" : "Language selection"}>
+            <button type="button" onClick={() => language?.setLang("km")} aria-pressed={isKm} lang="km">
+              ខ្មែរ
+            </button>
+            <span aria-hidden="true">/</span>
+            <button type="button" onClick={() => language?.setLang("en")} aria-pressed={!isKm} lang="en">
+              EN
+            </button>
           </div>
+        </div>
 
-          {/* Session Expired / Unauthorized Alert */}
+        <a href={USER_APP_URL} className="admin-login-brand" aria-label={isKm ? "គូព្រេង · ទំព័រដើម" : "Koupreng · Home"}>
+          <BrandLogo variant="auth" priority decorative />
+        </a>
+
+        <section className="admin-login-card" aria-labelledby="admin-login-title">
+          <header className="admin-login-header">
+            <p className="admin-login-badge">
+              <ShieldCheck size={15} aria-hidden="true" />
+              {isKm ? "ផ្ទាំងគ្រប់គ្រង" : "Admin portal"}
+            </p>
+            <h1 id="admin-login-title">{isKm ? "សូមស្វាគមន៍មកវិញ" : "Welcome Back"}</h1>
+            <p className="admin-login-subtitle">
+              {isKm ? "ចូលគណនីដើម្បីគ្រប់គ្រងគូព្រេង។" : "Sign in to manage the Koupreng platform."}
+            </p>
+          </header>
+
           {isExpired && !error && (
-            <div role="status" className="mb-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 p-3.5 text-xs font-semibold text-amber-300 flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0 text-amber-400" />
-              <span>
-                {isKm
-                  ? "សម័យការរបស់អ្នកបានផុតកំណត់។ សូមចូលគណនីម្តងទៀត។"
-                  : "Your session has expired. Please sign in again."}
-              </span>
+            <div role="status" className="admin-login-notice admin-login-notice--warning">
+              <AlertCircle size={18} aria-hidden="true" />
+              <span>{isKm
+                ? "សម័យការរបស់អ្នកបានផុតកំណត់។ សូមចូលគណនីម្តងទៀត។"
+                : "Your session has expired. Please sign in again."}</span>
             </div>
           )}
 
           {isUnauthorized && !error && (
-            <div role="status" className="mb-6 rounded-2xl bg-red-500/10 border border-red-500/20 p-3.5 text-xs font-semibold text-red-300 flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
-              <span>
-                {isKm
-                  ? "អ្នកមិនមានសិទ្ធិចូលទំព័រនោះទេ។ សូមប្រើគណនី Admin។"
-                  : "You do not have permission to view that resource. Please sign in as an Admin."}
-              </span>
+            <div role="status" className="admin-login-notice admin-login-notice--error">
+              <AlertCircle size={18} aria-hidden="true" />
+              <span>{isKm
+                ? "អ្នកមិនមានសិទ្ធិចូលទំព័រនោះទេ។ សូមប្រើគណនី Admin។"
+                : "You do not have permission to view that resource. Please sign in as an Admin."}</span>
             </div>
           )}
 
-          {/* Error Alert */}
           {error && (
-            <div role="alert" className="mb-6 rounded-2xl bg-red-500/10 border border-red-500/20 p-3.5 text-xs font-semibold text-red-400 animate-in fade-in flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
+            <div id="admin-login-error" role="alert" className="admin-login-notice admin-login-notice--error">
+              <AlertCircle size={18} aria-hidden="true" />
               <span>{error}</span>
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="identifier"
-                className="block text-xs font-semibold text-zinc-300 mb-1.5"
-              >
-                {isKm ? "អ៊ីមែល ឬ លេខទូរស័ព្ទ" : "Email or Phone"}
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
-                <input
-                  id="identifier"
-                  type="text"
-                  value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="admin@koupreng.com"
-                  autoComplete="username"
-                  required
-                  disabled={loading}
-                  className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-amber-500 focus:bg-zinc-900 focus:ring-2 focus:ring-amber-500/20 disabled:opacity-50"
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="admin-login-form" aria-busy={loading}>
+            <div className="admin-login-field">
+              <label htmlFor="identifier">{isKm ? "អ៊ីមែល ឬ លេខទូរស័ព្ទ" : "Email or Phone"}</label>
+              <input
+                id="identifier"
+                type="text"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder={isKm ? "បញ្ចូលអ៊ីមែល ឬ លេខទូរស័ព្ទ" : "Enter your email or phone"}
+                autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
+                required
+                disabled={loading}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? "admin-login-error" : undefined}
+              />
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-xs font-semibold text-zinc-300 mb-1.5"
-              >
-                {isKm ? "លេខសម្ងាត់" : "Password"}
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
+            <div className="admin-login-field">
+              <label htmlFor="password">{isKm ? "លេខសម្ងាត់" : "Password"}</label>
+              <div className="admin-login-password">
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder={isKm ? "បញ្ចូលលេខសម្ងាត់" : "Enter your password"}
                   autoComplete="current-password"
                   required
                   disabled={loading}
-                  className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 pl-10 pr-10 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition focus:border-amber-500 focus:bg-zinc-900 focus:ring-2 focus:ring-amber-500/20 disabled:opacity-50"
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? "admin-login-error" : undefined}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none transition-colors p-1 cursor-pointer"
-                  aria-label={
-                    showPassword
-                      ? isKm ? "លាក់លេខសម្ងាត់" : "Hide password"
-                      : isKm ? "បង្ហាញលេខសម្ងាត់" : "Show password"
-                  }
+                  className="admin-login-eye"
+                  aria-pressed={showPassword}
+                  aria-label={showPassword
+                    ? isKm ? "លាក់លេខសម្ងាត់" : "Hide password"
+                    : isKm ? "បង្ហាញលេខសម្ងាត់" : "Show password"}
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
+                  {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                 </button>
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-sm font-bold text-slate-950 transition-all hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-amber-500/20 cursor-pointer"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>{isKm ? "កំពុងផ្ទៀងផ្ទាត់..." : "Authenticating..."}</span>
-                </>
-              ) : (
-                <>
-                  <span>{isKm ? "ចូលគណនី" : "Sign In"}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
+            <button type="submit" disabled={loading} className="admin-login-submit">
+              {loading ? <Loader2 size={18} className="admin-login-spinner" aria-hidden="true" /> : null}
+              <span>{loading
+                ? isKm ? "កំពុងផ្ទៀងផ្ទាត់..." : "Authenticating..."
+                : isKm ? "ចូលគណនី" : "Sign In"}</span>
+              {!loading && <ArrowRight size={18} aria-hidden="true" />}
             </button>
           </form>
 
-          {/* Footer Note */}
-          <div className="admin-auth-footer mt-8 text-center text-[11px]">
-            © 2026 Koupreng Platform. All rights reserved.
-          </div>
-        </div>
+          <p className="admin-login-access-note">
+            <LockKeyhole size={15} aria-hidden="true" />
+            <span>{isKm ? "សម្រាប់តែអ្នកគ្រប់គ្រងដែលមានសិទ្ធិ" : "For authorized administrators only"}</span>
+          </p>
+        </section>
+
+        <footer className="admin-login-footer">
+          {isKm ? "© 2026 គូព្រេង។ រក្សាសិទ្ធិគ្រប់យ៉ាង។" : "© 2026 Koupreng. All rights reserved."}
+        </footer>
       </div>
-    </div>
+    </main>
   );
 }

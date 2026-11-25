@@ -1,0 +1,81 @@
+/* Match the customer auth shell using the shared application tokens. */
+.admin-login {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: var(--ui-theme-canvas);
+  color: var(--ui-theme-ink);
+  font-family: var(--ui-font-management);
+  line-height: 1.75;
+}
+
+.admin-login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 85%, rgb(176 146 106 / 18%), transparent 55%),
+    radial-gradient(ellipse at 90% 30%, rgb(212 175 55 / 14%), transparent 50%);
+}
+
+.admin-login-container { width: 100%; max-width: 440px; min-width: 0; }
+.admin-login :where(button, input) { font: inherit; }
+.admin-login :is(a, button, input):focus-visible { outline: 3px solid var(--ui-theme-focus); outline-offset: 3px; }
+.admin-login-topbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 24px; }
+.admin-login-language { display: inline-flex; align-items: center; gap: 4px; padding: 0 8px; border: 1px solid var(--ui-theme-border); border-radius: 999px; background: var(--ui-theme-surface); }
+.admin-login-language button { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 4px; border: 0; border-radius: 999px; background: transparent; color: var(--ui-theme-muted); font-size: 12px; cursor: pointer; }
+.admin-login-language button[aria-pressed="true"] { color: var(--ui-theme-ink); font-weight: 700; }
+.admin-login-language > span { color: var(--ui-theme-gold); font-size: 12px; }
+.admin-login-brand { display: flex; justify-content: center; width: fit-content; max-width: 100%; margin: 0 auto 24px; border-radius: 4px; }
+.admin-login-card { padding: 32px; border: 1px solid var(--ui-theme-border); border-radius: 26px; background: var(--ui-theme-surface); box-shadow: var(--ui-theme-shadow); }
+.admin-login-header { margin-bottom: 24px; text-align: center; }
+.admin-login-badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin: 0 0 12px; padding: 4px 12px; border: 1px solid var(--ui-theme-border); border-radius: 999px; background: var(--ui-theme-action-soft); color: var(--ui-theme-action); font-size: 12px; font-weight: 600; }
+.admin-login-header h1 { margin: 0; font-size: clamp(22px, 4vw, 26px); font-weight: 700; line-height: 1.8; }
+.admin-login-subtitle { margin: 8px 0 0; color: var(--ui-theme-muted); font-size: 14px; line-height: 1.7; }
+.admin-login-form { display: flex; flex-direction: column; gap: 16px; }
+.admin-login-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.admin-login-field label { font-size: 13px; font-weight: 600; }
+.admin-login-field input { width: 100%; min-width: 0; height: 50px; padding: 0 16px; border: 1px solid var(--ui-theme-control-border); border-radius: 14px; background: var(--ui-theme-surface); color: var(--ui-theme-ink); font-size: 16px; transition: border-color var(--ui-duration-feedback), background-color var(--ui-duration-feedback); }
+.admin-login-field input::placeholder { color: var(--ui-theme-muted); opacity: 1; }
+.admin-login-field input:focus { border-color: var(--ui-theme-focus); background: var(--ui-theme-raised); }
+.admin-login-field input[aria-invalid="true"] { border-color: var(--ui-theme-danger); }
+.admin-login-field input:disabled { opacity: .65; }
+.admin-login-password { position: relative; }
+.admin-login-password input { padding-right: 52px; }
+.admin-login-eye { position: absolute; top: 3px; right: 4px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 10px; background: transparent; color: var(--ui-theme-muted); cursor: pointer; }
+.admin-login-eye:hover { background: var(--ui-theme-subtle); color: var(--ui-theme-ink); }
+.admin-login-submit { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 52px; margin-top: 8px; padding: 10px 16px; border: 0; border-radius: 999px; background: var(--ui-theme-action); color: var(--ui-theme-on-action); font-size: 15px; font-weight: 700; box-shadow: var(--ui-theme-shadow); cursor: pointer; transition: opacity var(--ui-duration-feedback); }
+.admin-login-submit:hover:not(:disabled) { opacity: .9; }
+.admin-login-submit:active:not(:disabled) { opacity: .8; }
+.admin-login-submit:disabled { opacity: .65; cursor: wait; }
+.admin-login-notice { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 20px; padding: 12px; border: 1px solid currentColor; border-radius: 12px; font-size: 13px; overflow-wrap: anywhere; }
+.admin-login-notice svg { flex-shrink: 0; margin-top: 2px; }
+.admin-login-notice--warning { color: var(--ui-theme-warning); background: var(--ui-theme-warning-soft); }
+.admin-login-notice--error { color: var(--ui-theme-danger); background: var(--ui-theme-danger-soft); }
+.admin-login-access-note { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 24px 0 0; padding-top: 20px; border-top: 1px solid var(--ui-theme-border); color: var(--ui-theme-muted); font-size: 12px; text-align: center; }
+.admin-login-access-note svg { flex-shrink: 0; }
+.admin-login-footer { margin-top: 24px; color: var(--ui-theme-muted); font-size: 12px; text-align: center; }
+.admin-login-spinner { animation: admin-login-spin 1s linear infinite; }
+@keyframes admin-login-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 480px) {
+  .admin-login-card { padding: 28px 20px 24px; border-radius: 20px; }
+  .admin-login-topbar { margin-bottom: 20px; }
+}
+
+@media (max-width: 360px) {
+  .admin-login { padding-inline: 12px; }
+  .admin-login-card { padding: 24px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-login :is(input, button) { transition: none; }
+  .admin-login-spinner { animation: none; }
+}

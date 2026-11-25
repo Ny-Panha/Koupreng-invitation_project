@@ -511,7 +511,7 @@ export default function ApiMonitorFeature() {
 
               <button
                 type="button"
-                className="btn btn-primary bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold w-full sm:w-auto"
+                className="btn btn-danger text-xs font-semibold w-full sm:w-auto"
                 disabled={clearBusy}
                 onClick={handleConfirmServerClear}
               >

@@ -508,7 +508,7 @@ export default function AdminNotificationsPage() {
               </button>
               <button
                 type="button"
-                className="btn btn-primary bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold"
+                className="btn btn-primary text-xs font-semibold"
                 disabled={busy}
                 onClick={executeDispatch}
               >

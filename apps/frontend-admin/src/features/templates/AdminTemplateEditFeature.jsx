@@ -1655,7 +1655,7 @@ export default function AdminTemplateEditPage() {
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="flex h-9 items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 text-xs font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:brightness-110 active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="btn-primary flex h-9 items-center gap-2 rounded-xl px-5 text-xs font-bold transition active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             <Save className="h-4 w-4" />
             <span>{saving ? t("templateEditor.saving", "កំពុងរក្សាទុក...") : t("templateEditor.save", "រក្សាទុក & ផ្សព្វផ្សាយ")}</span>
@@ -4279,7 +4279,7 @@ export default function AdminTemplateEditPage() {
                   type="button"
                   onClick={() => handleAddGoogleFont()}
                   disabled={!newFontName.trim()}
-                  className="w-full h-10 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/10"
+                  className="btn-primary w-full h-10 rounded-xl disabled:opacity-50 font-bold text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
                 >
                   <Plus className="h-4 w-4" />
                   <span>+ Add & Apply This Google Font</span>

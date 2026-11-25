@@ -3,21 +3,18 @@ import { Suspense, useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
-import AdminNavigationSearch from "./components/AdminNavigationSearch";
 import { useAdminLanguage } from "../app/providers/AdminLanguageProvider";
 import { adminNavigation } from './components/adminNavigation';
 import "./AdminLayout.css";
 
 export default function AdminLayout() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const { lang } = useAdminLanguage();
   const currentPage = adminNavigation(lang).find(item => item.exact ? location.pathname === item.to : location.pathname === item.to || location.pathname.startsWith(`${item.to}/`));
 
   useEffect(() => {
     setIsMobileOpen(false);
-    setIsSearchOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -65,7 +62,6 @@ export default function AdminLayout() {
       {/* Modern Tavola-Style Left Floating Dock */}
       <AdminSidebar
         isMobileOpen={isMobileOpen}
-        onSearch={() => setIsSearchOpen(true)}
         onNavigate={() => {
           if (window.innerWidth < 1024) setIsMobileOpen(false);
         }}
@@ -78,7 +74,6 @@ export default function AdminLayout() {
         <AdminHeader
           onShowSidebar={() => setIsMobileOpen(!isMobileOpen)}
           isMobileOpen={isMobileOpen}
-          onSearch={() => setIsSearchOpen(true)}
           isDark={isDark}
           onToggleTheme={() => setIsDark(!isDark)}
         />
@@ -96,7 +91,6 @@ export default function AdminLayout() {
           </div>
         </main>
       </div>
-      {isSearchOpen && <AdminNavigationSearch onClose={() => setIsSearchOpen(false)} />}
     </div>
   );
 }

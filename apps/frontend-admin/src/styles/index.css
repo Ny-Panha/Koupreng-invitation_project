@@ -394,7 +394,9 @@ table.data tbody tr:hover {
 }
 
 .btn-primary {
-  @apply bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold hover:brightness-110 shadow-sm shadow-amber-500/20 border-0;
+  @apply bg-primary text-primary-foreground font-bold hover:brightness-95 border-0;
+  background-image: none;
+  box-shadow: none;
 }
 
 .btn-ghost {
@@ -759,14 +761,14 @@ table.data tbody tr:hover {
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid #f59e0b;
-  background: #f59e0b;
-  color: #111;
+  border: 1px solid var(--ui-theme-action);
+  background: var(--ui-theme-action);
+  color: var(--ui-theme-on-action);
   transition: all 0.15s;
 }
 
 .reports-page.is-print-preview .report-preview-action:hover {
-  background: #d97706;
+  filter: brightness(.95);
 }
 
 .reports-page.is-print-preview .report-preview-close {

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Palette, Layers, CreditCard, LineChart, Bell, Activity, Terminal } from "lucide-react";
+import { LayoutDashboard, Users, Palette, Layers, CreditCard, LineChart, Bell, Activity } from "lucide-react";
 
 export function adminNavigation(lang) {
   const en = lang === "en";
@@ -11,7 +11,6 @@ export function adminNavigation(lang) {
     { to: "/reports", icon: LineChart, label: en ? "Financial reports" : "របាយការណ៍ហិរញ្ញវត្ថុ" },
     { to: "/notifications", icon: Bell, label: en ? "Notifications" : "ការជូនដំណឹង" },
     { to: "/system-logs", icon: Activity, label: en ? "System logs" : "កំណត់ហេតុប្រព័ន្ធ" },
-    { to: "/dev/api-monitor", icon: Terminal, label: en ? "API monitor" : "តាមដាន API" },
   ];
 }
 

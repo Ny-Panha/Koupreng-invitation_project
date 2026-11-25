@@ -562,7 +562,7 @@ export default function AdminPackagesPage() {
           <button
             type="button"
             onClick={openCreateDrawer}
-            className="btn btn-primary h-9 px-4 text-xs shadow-md shadow-amber-500/20 font-bold"
+            className="btn btn-primary h-9 px-4 text-xs font-bold"
           >
             <Plus className="h-4 w-4" />
             <span>{t("packages.createBtn", lang === "en" ? "+ New Package" : "+ បង្កើតកញ្ចប់ថ្មី")}</span>
@@ -1512,7 +1512,7 @@ export default function AdminPackagesPage() {
                   type="submit"
                   form="package-form"
                   disabled={busyId === (editingId || "new")}
-                  className="btn btn-primary px-5 py-2 font-bold shadow-md shadow-amber-500/20"
+                  className="btn btn-primary px-5 py-2 font-bold"
                 >
                   {editingId ? t("packages.saveBtn", "រក្សាទុកការកែប្រែ") : t("packages.createSubmitBtn", "បង្កើតកញ្ចប់ថ្មី")}
                 </button>
