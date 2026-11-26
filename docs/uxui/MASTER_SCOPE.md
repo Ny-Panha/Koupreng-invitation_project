@@ -118,7 +118,7 @@ No active route, feature, reusable component, modal/drawer, responsive breakpoin
 #### Phase 08 — Identity, authorization-facing UX, profiles and account life cycle
 **Coverage:** registration, email/password login, Google and Telegram login, forgot/reset/change password, email verification if present, session expiry, admin-vs-customer entry, profile/account security, logout and return-to-intended-page.
 
-**Work:** premium but conventional form UX; password toggles, strength/validation feedback, clear access-denied, failed-provider/cancel/retry states, safe account recovery, keyboard labels, locale copy, mobile virtual keyboard and session restoration. Preserve validated `next` targets, real auth boundaries and server trust.
+**Work:** premium but conventional form UX; password visibility toggles and clear validation feedback, clear access-denied, failed-provider/cancel/retry states, safe account recovery, keyboard labels, locale copy, mobile virtual keyboard and session restoration. Preserve validated `next` targets, real auth boundaries and server trust.
 
 **Exit:** all normal/error/expired/cancel/return states tested; staging-provider paths marked verified or blocked honestly; no auth/security logic changed purely for visual novelty.
 

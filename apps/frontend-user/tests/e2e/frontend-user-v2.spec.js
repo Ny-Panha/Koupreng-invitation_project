@@ -27,7 +27,7 @@ const MOCK_INVITATION = {
 };
 
 async function installOwnerFixtures(page, { invitation = { ...MOCK_INVITATION }, lang = "en", colorMode = "light", capturePayloads = [] } = {}) {
-  const token = "header.eyJzdWIiOiI3IiwiZXhwIjo0MTAyNDQ0ODAwfQ.sig";
+  const token = "header.eyJzdWIiOiI3IiwiZXhwIjo0MTAyNDQ0ODAwfQ.sig"; // gitleaks:allow
 
   await page.addInitScript(({ authKey, authToken, langVal, modeVal }) => {
     window.localStorage.setItem("koupreng.lang", langVal);
