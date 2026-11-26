@@ -65,4 +65,28 @@ describe("studio server persistence", () => {
     expect(persist).toHaveBeenCalledTimes(1);
     expect(result.current.error).toMatch(status === 409 ? /newer version/ : status === 401 ? /session expired/ : /access denied/i);
   });
+  it("supports acknowledge transform for clearing transient fields while preserving concurrent edits", async () => {
+    let complete;
+    const persist = vi.fn(() => new Promise(resolve => { complete = resolve; }));
+    const { result, rerender } = renderHook(({ value }) => useStudioPersistence({ value, persist, enabled: false, onRestore: vi.fn() }), { initialProps: { value: { title: "A", accessPassword: "secret" } } });
+    let saving;
+    act(() => { saving = result.current.save(); });
+    rerender({ value: { title: "A", accessPassword: "" } });
+    await act(async () => {
+      complete({ synced: true, acknowledge: snap => ({ ...snap, accessPassword: "" }) });
+      await saving;
+    });
+    expect(result.current.dirty).toBe(false);
+    expect(result.current.phase).toBe("saved");
+
+    rerender({ value: { title: "B", accessPassword: "pw2" } });
+    act(() => { saving = result.current.save(); });
+    rerender({ value: { title: "C", accessPassword: "pw2" } });
+    await act(async () => {
+      complete({ synced: true, acknowledge: snap => ({ ...snap, accessPassword: "" }) });
+      await saving;
+    });
+    expect(result.current.dirty).toBe(true);
+    expect(result.current.phase).toBe("unsaved");
+  });
 });

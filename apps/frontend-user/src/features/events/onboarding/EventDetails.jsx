@@ -38,12 +38,18 @@ export default function EventDetails() {
   const [mode, setMode] = useState(params.get('mode') === 'guided' ? 'guided' : 'advanced');
   const [step, setStep] = useState(0), [review, setReview] = useState(false), [publishing, setPublishing] = useState(false);
   const revision = useRef(event.updatedAt);
+  const savedVisibility = useRef(event.visibility);
   const settingsForm = useRef(null);
   const [form, setForm] = useState(() => {
     const content = readContent(event.contentJson);
     return { ...event, storyText: event.storyText ?? content.messageText ?? "", localizedContentV1: content.localizedContentV1, ...invitationFeatureFields(content), ...eventPresentationFields(content), preWeddingVideo: content.preWeddingVideo, saveTheDate: content.saveTheDate || { enabled: false }, venueAddress: event.venueAddress ?? content.venueAddress ?? content.event?.venueAddress ?? '',
-      googleMapUrl: event.googleMapUrl ?? content.googleMapUrl ?? content.event?.mapLink ?? '' };
+      googleMapUrl: event.googleMapUrl ?? content.googleMapUrl ?? content.event?.mapLink ?? '',
+      accessPassword: '' };
   });
+  const [hasSavedPassword, setHasSavedPassword] = useState(() => Boolean(
+    event?.visibility === 'PASSWORD_PROTECTED' &&
+    (event?.accessPasswordRequired || event?.hasAccessPassword || Boolean(event?.id))
+  ));
   const [authorLocale, setAuthorLocale] = useState(() => form.languageMode === "EN" ? "en" : "km");
   const [content] = useState(() => readContent(event.contentJson));
   const [contact, setContact] = useState(content.contact || {});
@@ -54,42 +60,110 @@ export default function EventDetails() {
   const persistence = useStudioPersistence({ value: { form, contact, schedule }, enabled: false, english: en,
     onRestore: value => { setForm(value.form); setContact(value.contact); setSchedule(value.schedule); },
     persist: async () => {
-      if (form.visibility !== event.visibility && !await feedback.confirm({ message: en ? 'Change who can access this invitation?' : 'ប្ដូរសិទ្ធិមើលសំបុត្រអញ្ជើញនេះឬ?', destructive: true })) {
+      if (form.visibility !== savedVisibility.current && !await feedback.confirm({ message: en ? 'Change who can access this invitation?' : 'ប្ដូរសិទ្ធិមើលសំបុត្រអញ្ជើញនេះឬ?', destructive: true })) {
         return { synced: false, error: en ? 'Access change cancelled. Your edits are still here.' : 'បានបោះបង់ការប្ដូរសិទ្ធិមើល។ ការកែប្រែរបស់អ្នកនៅទីនេះ។' };
       }
+      const rawPassword = form.accessPassword || '';
       const payload = { ...eventPayload(form, event.eventType), expectedUpdatedAt: revision.current };
+      if (form.visibility !== 'PASSWORD_PROTECTED' || !String(rawPassword).trim()) {
+        delete payload.accessPassword;
+      } else {
+        payload.accessPassword = String(rawPassword).trim();
+      }
       const localized = form.localizedContentV1 ? { localizedContentV1: eventLocaleModel(form, schedule).localizedContentV1 } : {};
       if (form.localizedContentV1) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...localized });
       if (generic) payload.contentJson = JSON.stringify({ ...readContent(payload.contentJson), ...localized, ...invitationFeatureFields(form), ...eventPresentationFields(form), ...(form.preWeddingVideo ? { preWeddingVideo: form.preWeddingVideo } : {}), eventDate: form.eventDate, eventTime: form.eventTime || '', messageText: form.storyText || "", contact, schedule });
       if (generic) payload.enabledSections = JSON.stringify({ ...readContent(payload.enabledSections), countdown: form.saveTheDate?.enabled !== false, schedule: form.showSchedule !== false });
       const saved = await invitationService.update(eventId, payload, { suppressAuthRedirect: true });
-      revision.current = saved.updatedAt; updateEvent(saved); return { synced: true };
+      revision.current = saved.updatedAt;
+      const nextSavedVisibility = saved?.visibility || form.visibility;
+      savedVisibility.current = nextSavedVisibility;
+      if (nextSavedVisibility === 'PASSWORD_PROTECTED' && String(rawPassword).trim()) {
+        setHasSavedPassword(true);
+      } else if (nextSavedVisibility && nextSavedVisibility !== 'PASSWORD_PROTECTED') {
+        setHasSavedPassword(false);
+      }
+      if (rawPassword) {
+        setForm(current => (current.accessPassword || '') === rawPassword ? { ...current, accessPassword: '' } : current);
+      }
+      updateEvent(saved);
+      return {
+        synced: true,
+        ...(rawPassword ? { acknowledge: snap => ({ ...snap, form: { ...snap.form, accessPassword: '' } }) } : {}),
+      };
     },
   });
   const saving = persistence.phase === 'saving', saved = persistence.phase === 'saved' && !persistence.dirty && persistence.version > 0;
-  const checks = publishReadiness(eventPayload(form,event.eventType),event.eventType);
+  const checks = publishReadiness({ ...eventPayload(form, event.eventType), hasSavedPassword }, event.eventType);
   const published = event.status === 'PUBLISHED';
   const publishedUrl = published && event.slug ? `${window.location.origin}/i/${encodeURIComponent(event.slug)}` : '';
+  const previewUrl = publishedUrl || (event?.slug ? `${window.location.origin}/i/${encodeURIComponent(event.slug)}` : '');
   const blocked = ['conflict','expired'].includes(persistence.phase);
   const go = async module => { if (await persistence.flush()) navigate(eventPath(eventId,module)); };
-  const field = check => { setMode('guided'); setStep(0); setReview(false); requestAnimationFrame(() => document.getElementById(`event-${check.key}`)?.focus()); };
+  const field = check => {
+    if (check?.key === 'accessPassword' || check?.field === 'accessPassword') {
+      setReview(true);
+      requestAnimationFrame(() => document.getElementById('publish-review-password')?.focus());
+      return;
+    }
+    setMode('guided'); setStep(0); setReview(false); requestAnimationFrame(() => document.getElementById(`event-${check.key}`)?.focus());
+  };
   async function publish() {
     if (publishing || isOwner === false) return;
+    if (form.visibility === 'PASSWORD_PROTECTED' && !hasSavedPassword && !String(form.accessPassword || '').trim()) {
+      setReview(true);
+      setError(en ? 'Set an access password before publishing in Password Protected mode.' : 'សូមកំណត់ពាក្យសម្ងាត់មុនពេលផ្សព្វផ្សាយក្នុងរបៀបការពារដោយពាក្យសម្ងាត់។');
+      requestAnimationFrame(() => document.getElementById('publish-review-password')?.focus());
+      return;
+    }
     setPublishing(true); setError('');
     try {
       if (!await persistence.flush()) return;
       const result = await invitationService.publish(eventId);
       if (result.status !== 'PUBLISHED' || !result.slug) throw new Error(en ? 'Publication could not be confirmed. Check its status.' : 'មិនអាចបញ្ជាក់ការផ្សព្វផ្សាយ។ សូមពិនិត្យស្ថានភាព។');
-      revision.current = result.updatedAt; updateEvent(result); setReview(false); setStep(4);
-    } catch (err) { setError(err.message); }
+      revision.current = result.updatedAt; updateEvent(result); setReview(false); setMode('guided'); setStep(4);
+    } catch (err) {
+      if (/Publish requirements missing:.*\baccessPassword\b/.test(err?.message || '')) {
+        setHasSavedPassword(false);
+        setReview(true);
+        setError(en ? 'No access password is saved on the server yet. Enter a password before publishing.' : 'ម៉ាស៊ីនមេមិនទាន់មានពាក្យសម្ងាត់ការពារទេ។ សូមបញ្ចូលពាក្យសម្ងាត់មុនពេលផ្សព្វផ្សាយ។');
+        requestAnimationFrame(() => document.getElementById('publish-review-password')?.focus());
+      } else {
+        setError(err?.message || (en ? 'Publication could not be confirmed. Check its status.' : 'មិនអាចបញ្ជាក់ការផ្សព្វផ្សាយ។ សូមពិនិត្យស្ថានភាព។'));
+      }
+    }
     finally { setPublishing(false); }
   }
+  async function updatePublishedAccess() {
+    if (publishing || isOwner === false) return;
+    if (form.visibility === 'PASSWORD_PROTECTED' && !hasSavedPassword && !String(form.accessPassword || '').trim()) {
+      setError(en ? 'Enter an access password for password-protected invitations.' : 'សូមបញ្ចូលពាក្យសម្ងាត់ការពារសំបុត្រអញ្ជើញ។');
+      requestAnimationFrame(() => document.getElementById('publish-review-password')?.focus());
+      return;
+    }
+    setPublishing(true); setError('');
+    try {
+      if (!await persistence.flush()) return;
+      setReview(false);
+      feedback.success({
+        id: 'event-settings-access-updated',
+        title: en ? 'Visibility & access updated' : 'បានធ្វើបច្ចុប្បន្នភាពការកំណត់សិទ្ធិ',
+        description: en ? 'Your published invitation access rules are saved.' : 'ការកំណត់ភាពមើលឃើញត្រូវបានរក្សាទុក។',
+      });
+    } catch (err) {
+      setError(err?.message || (en ? 'Could not save visibility settings.' : 'មិនទាន់អាចរក្សាទុកការកំណត់សិទ្ធិបានទេ។'));
+    } finally {
+      setPublishing(false);
+    }
+  }
   async function checkPublication() {
-    try { const result = await invitationService.get(eventId); if (result.status === 'PUBLISHED') { revision.current=result.updatedAt; updateEvent(result); setReview(false); setStep(4); } else setError(en ? 'The server has not confirmed publication. Review before trying again.' : 'ម៉ាស៊ីនមេមិនទាន់បញ្ជាក់ការផ្សព្វផ្សាយ។ សូមពិនិត្យមុនព្យាយាមម្ដងទៀត។'); }
+    try { const result = await invitationService.get(eventId); if (result.status === 'PUBLISHED') { revision.current=result.updatedAt; updateEvent(result); setReview(false); setMode('guided'); setStep(4); } else setError(en ? 'The server has not confirmed publication. Review before trying again.' : 'ម៉ាស៊ីនមេមិនទាន់បញ្ជាក់ការផ្សព្វផ្សាយ។ សូមពិនិត្យមុនព្យាយាមម្ដងទៀត។'); }
     catch (err) { setError(err.message); }
   }
   function downloadEdits() {
-    const blob = new Blob([JSON.stringify({ ...eventPayload(form,event.eventType), contact, schedule },null,2)], { type: 'application/json' });
+    const safePayload = { ...eventPayload(form, event.eventType) };
+    delete safePayload.accessPassword;
+    const blob = new Blob([JSON.stringify({ ...safePayload, contact, schedule }, null, 2)], { type: 'application/json' });
     const url=URL.createObjectURL(blob), link=document.createElement('a'); link.href=url; link.download=`event-${eventId}-unsaved-private.json`; link.click(); URL.revokeObjectURL(url);
   }
   const save = async e => {
@@ -98,7 +172,7 @@ export default function EventDetails() {
     await persistence.save();
   };
   return <main className="event-wizard event-settings workspace-page"><header className="workspace-page-heading"><div><h1>{en ? "Event settings" : "ការកំណត់កម្មវិធី"}</h1><p>{en ? 'Keep your invitation details, venue and visibility up to date.' : 'កែព័ត៌មានសំបុត្រអញ្ជើញ ទីកន្លែង និងការមើលកម្មវិធីរបស់អ្នក។'}</p></div><Link className="workspace-button" to={eventPath(eventId, 'invitation')}>{en ? 'Open invitation Studio' : 'បើករចនាសំបុត្រអញ្ជើញ'}</Link></header>
-    <StudioGuide mode={mode} onMode={setMode} step={step} onStep={value => { setStep(value); requestAnimationFrame(() => document.getElementById('studio-guide-heading')?.focus()); }} sections={['eventInfo','invitation']} activeSection={step === 0 ? 'eventInfo' : 'invitation'} onSection={value => setStep(value === 'eventInfo' ? 0 : 1)} english={en} checks={checks} onField={field} onPreview={() => go('preview')} onGuests={() => go('guests')} onRsvp={() => go('rsvp')} onPublish={() => setReview(true)} published={published} publishedUrl={publishedUrl} saving={saving || publishing || blocked} canPublish={isOwner !== false} canManageGuests={workspace.can?.('MANAGE_GUESTS') !== false} />
+    <StudioGuide mode={mode} onMode={setMode} step={step} onStep={value => { setStep(value); requestAnimationFrame(() => document.getElementById('studio-guide-heading')?.focus()); }} sections={['eventInfo','invitation']} activeSection={step === 0 ? 'eventInfo' : 'invitation'} onSection={value => setStep(value === 'eventInfo' ? 0 : 1)} english={en} checks={checks} onField={field} onPreview={() => go('preview')} onGuests={() => go('guests')} onRsvp={() => go('rsvp')} onPublish={() => { setError(''); setReview(true); }} visibility={form.visibility} published={published} publishedUrl={publishedUrl} saving={saving || publishing || blocked} canPublish={isOwner !== false} canManageGuests={workspace.can?.('MANAGE_GUESTS') !== false} />
     {(error || persistence.error) && <div role="alert"><p>{error || persistence.error}</p>{persistence.dirty && <button type="button" className="workspace-button" onClick={downloadEdits}>{en ? 'Download private unsaved edits' : 'ទាញយកការកែប្រែមិនទាន់រក្សាទុក'}</button>}{blocked && <button type="button" className="workspace-button" onClick={() => window.location.reload()}>{en ? 'Reload latest event' : 'ផ្ទុកកម្មវិធីចុងក្រោយឡើងវិញ'}</button>}</div>}
     <nav className="event-settings-nav" aria-label={en ? 'Settings sections' : 'ផ្នែកការកំណត់'}>
       <a href="#settings-general">{en ? 'General' : 'ព័ត៌មានទូទៅ'}</a><a href="#settings-access">{en ? 'Privacy & access' : 'ឯកជនភាព និងសិទ្ធិ'}</a><a href="#settings-rsvp">{en ? 'RSVP & guests' : 'ការឆ្លើយតប និងភ្ញៀវ'}</a><a href="#settings-team">{en ? 'Team' : 'ក្រុមការងារ'}</a>
@@ -136,14 +210,18 @@ export default function EventDetails() {
       </fieldset>}
       <details className="studio-subsection"><summary>{en ? 'Media & Opening' : 'មេឌៀ និងការបើកសំបុត្រអញ្ជើញ'}</summary><div className="studio-subsection-body"><PreWeddingVideoEditor eventId={eventId} value={form.preWeddingVideo} english={en} onChange={value => setForm(current => ({ ...current, preWeddingVideo: value }))} /></div></details>
     </>}{!generic && <p>{en ? 'Design artwork and optional media in the invitation and media tools.' : 'រចនារូបភាព និងមាតិកាជាជម្រើសក្នុងឧបករណ៍រចនា និងរូបភាព។'}</p>}<Link className="workspace-button" to={eventPath(eventId,'media')}>{en ? 'Media tools' : 'ឧបករណ៍រូបភាព'}</Link></div>
-    <fieldset id="settings-access" hidden={mode === 'guided' && step !== 0} disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'Privacy & access' : 'ឯកជនភាព និងសិទ្ធិ'}</legend><p>{isOwner === false ? (en ? 'Only the event owner can change access settings.' : 'មានតែម្ចាស់កម្មវិធីអាចប្ដូរសិទ្ធិមើលបាន។') : (en ? 'Private invitations require their access link. Public invitations become discoverable after publication. Changes apply when you save.' : 'ការប្ដូរសិទ្ធិមើលមានប្រសិទ្ធភាពពេលរក្សាទុក។')}</p><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => setForm(current => ({ ...current, visibility: e.target.value }))}>
+    <fieldset id="settings-access" hidden={mode === 'guided' && step !== 0} disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'Privacy & access' : 'ឯកជនភាព និងសិទ្ធិ'}</legend><p>{isOwner === false ? (en ? 'Only the event owner can change access settings.' : 'មានតែម្ចាស់កម្មវិធីអាចប្ដូរសិទ្ធិមើលបាន។') : (en ? 'Private invitations require their access link. Public invitations become discoverable after publication. Changes apply when you save.' : 'ការប្ដូរសិទ្ធិមើលមានប្រសិទ្ធភាពពេលរក្សាទុក។')}</p><label>{en ? "Invitation visibility" : "ការមើលសំបុត្រអញ្ជើញ"}<select value={form.visibility || "PRIVATE"} onChange={e => {
+      const nextVis = e.target.value;
+      setError('');
+      setForm(current => ({ ...current, visibility: nextVis, accessPassword: nextVis === "PASSWORD_PROTECTED" ? current.accessPassword : "" }));
+    }}>
       <option value="PRIVATE">{en ? "Private" : "ឯកជន"}</option><option value="PUBLIC">{en ? "Public when published" : "សាធារណៈពេលផ្សាយ"}</option><option value="PASSWORD_PROTECTED">{en ? "Password protected" : "ការពារដោយពាក្យសម្ងាត់"}</option>
     </select></label>
-    {form.visibility === "PASSWORD_PROTECTED" && <label>{en ? "Invitation password (leave blank to keep the current password)" : "ពាក្យសម្ងាត់សំបុត្រអញ្ជើញ (ទុកទទេដើម្បីរក្សាពាក្យសម្ងាត់ចាស់)"}<input type="password" autoComplete="new-password" value={form.accessPassword || ""} onChange={e => setForm(current => ({ ...current, accessPassword: e.target.value }))} /></label>}
+    {form.visibility === "PASSWORD_PROTECTED" && <label>{en ? "Invitation password (leave blank to keep the current password)" : "ពាក្យសម្ងាត់សំបុត្រអញ្ជើញ (ទុកទទេដើម្បីរក្សាពាក្យសម្ងាត់ចាស់)"}<input type="password" autoComplete="new-password" value={form.accessPassword || ""} onChange={e => { setError(''); setForm(current => ({ ...current, accessPassword: e.target.value })); }} /></label>}
     </fieldset>
     <fieldset id="settings-rsvp" hidden={mode === 'guided' && step !== 0} disabled={isOwner === false} className="event-settings-section"><legend>{en ? 'RSVP & guests' : 'ការឆ្លើយតប និងភ្ញៀវ'}</legend><p>{en ? 'Set an optional response deadline. Manage individual responses in RSVP.' : 'កំណត់ថ្ងៃផុតកំណត់សម្រាប់ការឆ្លើយតប និងគ្រប់គ្រងចម្លើយក្នុងផ្នែក RSVP។'}</p><label htmlFor="settings-rsvp-deadline">{en ? 'RSVP deadline' : 'ថ្ងៃផុតកំណត់ឆ្លើយតប'}<input id="settings-rsvp-deadline" type="date" max={form.eventDate || undefined} value={form.rsvpDeadline || ''} onChange={e => setForm(current => ({ ...current, rsvpDeadline: e.target.value || null }))} /></label></fieldset>
     <section id="settings-team" className="event-settings-section"><h2>{en ? 'Team & permissions' : 'ក្រុមការងារ និងសិទ្ធិ'}</h2><p>{en ? 'Manage collaborators and their roles in your event team.' : 'គ្រប់គ្រងសមាជិក និងតួនាទីក្នុងក្រុមការងាររបស់កម្មវិធី។'}</p><Link className="workspace-button" to={eventPath(eventId, 'team')}>{en ? 'Open event team' : 'បើកក្រុមការងារ'}</Link></section>
-    <div className="event-settings-save"><button className="workspace-button primary" disabled={saving || blocked} type="submit">{saving ? en ? "Saving…" : "កំពុងរក្សាទុក…" : en ? "Save details" : "រក្សាទុក"}</button><span role="status">{saved ? en ? 'Saved to event' : 'បានរក្សាទុកទៅកម្មវិធី' : persistence.dirty ? en ? 'Unsaved changes' : 'មិនទាន់រក្សាទុកការកែប្រែ' : ''}</span>{isOwner !== false && !published && <button type="button" className="workspace-button" onClick={() => setReview(true)} disabled={saving || blocked}>{en ? 'Review publication' : 'ពិនិត្យមុនផ្សព្វផ្សាយ'}</button>}</div></form>
-    <PublishReview open={review} onClose={() => setReview(false)} onConfirm={publish} onCheck={checkPublication} onField={field} checks={checks} english={en} publishing={publishing} error={error || persistence.error} visibility={form.visibility} published={published} />
+    <div className="event-settings-save"><button className="workspace-button primary" disabled={saving || blocked} type="submit">{saving ? en ? "Saving…" : "កំពុងរក្សាទុក…" : en ? "Save details" : "រក្សាទុក"}</button><span role="status">{saved ? en ? 'Saved to event' : 'បានរក្សាទុកទៅកម្មវិធី' : persistence.dirty ? en ? 'Unsaved changes' : 'មិនទាន់រក្សាទុកការកែប្រែ' : ''}</span>{isOwner !== false && !published && <button type="button" className="workspace-button" onClick={() => { setError(''); setReview(true); }} disabled={saving || blocked}>{en ? 'Review publication' : 'ពិនិត្យមុនផ្សព្វផ្សាយ'}</button>}</div></form>
+    <PublishReview open={review} onClose={() => setReview(false)} onConfirm={published ? updatePublishedAccess : publish} onCheck={checkPublication} onField={field} checks={checks} english={en} publishing={publishing} error={error || persistence.error} visibility={form.visibility} onVisibilityChange={nextVis => { setError(''); setForm(current => ({ ...current, visibility: nextVis, accessPassword: nextVis === 'PASSWORD_PROTECTED' ? current.accessPassword : '' })); }} accessPassword={form.accessPassword} onPasswordChange={nextPass => { setError(''); setForm(current => ({ ...current, accessPassword: nextPass })); }} hasSavedPassword={hasSavedPassword} previewUrl={previewUrl} published={published} />
   </main>;
 }

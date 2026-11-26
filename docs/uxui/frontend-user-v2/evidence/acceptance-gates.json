@@ -1,0 +1,836 @@
+{
+  "program": "Koupreng Frontend User 2.0 + Phase 15",
+  "baseline_sha": "53896aa72a8eeee6570fb5c75e9b3b867ec27e11",
+  "evaluated_at": "2026-11-26T14:02:00+07:00",
+  "owner": "Gemini Coding Agent",
+  "total_gates": 44,
+  "summary": {
+    "VERIFIED_LOCAL": 38,
+    "VERIFIED_STAGING": 0,
+    "PARTIAL": 5,
+    "FAILED": 0,
+    "REVIEW_REQUIRED": 0,
+    "BLOCKED_EXTERNAL": 1,
+    "NOT_APPLICABLE": 0
+  },
+  "gates": [
+    {
+      "id": "FUV2-G01",
+      "title": "Logo and actual colors reconciled with accessible semantic tokens",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/public/branding/",
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test -- src/shared/styles/semanticTokens.test.js",
+        "node scripts/sync-design-tokens.cjs --check"
+      ],
+      "results": "RGB clusters extracted from official logo assets; semantic tokens meet >=4.5:1 text & >=3.0:1 focus contrast; semanticTokens.test.js passed",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Visual brand taste sign-off rests with product owner on review"
+    },
+    {
+      "id": "FUV2-G02",
+      "title": "Management light and dark mode complete across major routes",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/public/color-mode.js",
+        "apps/frontend-user/src/app/providers/ThemeProvider.jsx",
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css",
+        "apps/frontend-user/src/features/guests/GuestWorkspace.css",
+        "apps/frontend-user/src/shared/ui/ErrorState.css",
+        "apps/frontend-user/src/shared/ui/ConfirmDialog.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Pre-paint theme init avoids FOWT; DisplayPreferences 3/3 pass; axe=0 across all 20 non-iframe AFTER captures (22/22 AFTER renders including dark guests, dashboard, events, templates, login, home, settings, seating, calendar, budget)",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/15-guests-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "22 mocked views sampled visually (20 with axe + 2 Studio iframe captures excluded from axe); tail settings subtabs checked via shared token architecture rather than individual dark captures"
+    },
+    {
+      "id": "FUV2-G03",
+      "title": "No management theme leaks into dedicated published invitation recipes",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/app-experience.css",
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "Dark mode rules scoped strictly to management/marketing/auth/modal selectors; invitation template stylesheets keep isolated ceremony palettes",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/17-public-password-gate-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Full all-8-template visual regression belongs to Phase 16 domain certification"
+    },
+    {
+      "id": "FUV2-G04",
+      "title": "Semantic typographic density consistent for Khmer and English",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Khmer line-height 1.65-1.8 and fluid clamp() scales prevent clipping in en and km across 320px-1440px",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/13-dashboard-mobile-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Browser-level 200% zoom certified via equivalent 320px/720px viewport reflow checks, not desktop zoom slider UI"
+    },
+    {
+      "id": "FUV2-G05",
+      "title": "Modern visual hierarchy clearly improved in same-context before/after proof",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "scripts/qa/capture-fuv2-visuals.mjs",
+        "docs/uxui/frontend-user-v2/08-after-visual-proof.md"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=before",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "17 paired BEFORE/AFTER captures (01..17) + 5 AFTER-only dark secondary captures (18..22) under identical fixtures/viewports/locales/themes: axe failures dropped from 4 BEFORE captures (19 nodes) to 0 across 20 non-iframe AFTER captures; sidebar scroll drift reduced from -612px to 0px; Guests (14/15) and Seating (20) mocks fixed to real /guests/page, /guests/overview, and /seating contracts",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/11-dashboard-dark-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G06",
+      "title": "Distinct marketing, SaaS workspace and guest art direction established",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/marketing/MarketingFeature.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/invitations/InvitationPages.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Three distinct surface systems implemented: editorial marketing/auth, Deep Botanical Atelier SaaS workspace rail, and isolated ceremonial invitations",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G07",
+      "title": "Sidebar remains viewport-persistent during 1500+ px content scroll",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/layouts/HostShell.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Measured sidebar getBoundingClientRect().top=96 at scrollY=0 and top=96 at scrollY=700 (0px drift); passes on Chromium, Firefox, WebKit",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/10-dashboard-scrolled-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G08",
+      "title": "Sidebar internal navigation scroll reaches last action in short viewport",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "At 1024x600 viewport, sidebar height bounded to 492px (bottom 588 <= 600) with .event-navigation-body overflowY=auto (scrollHeight=972, clientHeight=313)",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/12-dashboard-short-768x600.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G09",
+      "title": "Collapsible sidebar remembers preference without cross-account leak",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/workspace/useEventNavigation.js",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "Preferences keyed per koupreng.eventNavigation.<userId>; collapse state verified across page.reload() in Chromium, Firefox, and WebKit",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/12-dashboard-short-768x600.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G10",
+      "title": "Active route, event context and focus remain visible",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/shared/styles/app-experience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "Active route ring, Atelier gold focus outlines, breadcrumb navigation, and scroll-padding-top >= 80px verified",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G11",
+      "title": "Header/sidebar/main layering has no clip or duplicate scroll lock",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/layouts/HostShell.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "Single-document scroll (overflow-x: clip; main overflowY: visible) cleanly avoids double scrollbar traps and sticky breakage",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/10-dashboard-scrolled-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G12",
+      "title": "Desktop and 1024px layout visually coherent",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --workers=2 tests/e2e/event-workspaces.spec.js"
+      ],
+      "results": "Verified 1024x600 collapsed rail, 1440x900 expanded rail, and event-workspaces 1024/1440 overflow checks",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/12-dashboard-short-768x600.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G13",
+      "title": "320-430px routine headings/buttons are compact yet comfortably tappable",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+        "apps/frontend-user/src/features/invitations/InvitationPages.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Fixed mobile dashboard heading flex alignment; 320px & 390px renders fit cleanly with >=44px interactive targets",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/13-dashboard-mobile-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Emulated Pixel 7 / 320px viewports tested in browser; physical Android/iOS tap feel not run"
+    },
+    {
+      "id": "FUV2-G14",
+      "title": "Tablet 600-1024px layout is deliberate, not stretched phone",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/EventsFeature.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css"
+      ],
+      "commands": [
+        "npx playwright test --workers=2 tests/e2e/event-workspaces.spec.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "event-workspaces.spec.js:100 verified 768px & 1024px across core workspace routes with <=1px scrollWidth delta; phase12-codex verified 720px reflow",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/12-dashboard-short-768x600.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "No standalone tablet-only portrait/landscape screenshot in evidence/after; relying on automated tests + 1024x600 capture"
+    },
+    {
+      "id": "FUV2-G15",
+      "title": "No unintentional horizontal overflow at supported breakpoints",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/app-experience.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/guests/GuestWorkspace.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "0px horizontal overflow across all 22/22 after captures and all 4 Playwright browser projects down to 320px",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/08-events-dark-km-320.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G16",
+      "title": "Mobile drawer keyboard, focus, backdrop, safe-area and virtual keyboard pass",
+      "status": "PARTIAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+        "apps/frontend-user/src/shared/ui/Modal.jsx",
+        "apps/frontend-user/index.html"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "Mobile navigation dialog trap, Escape focus return to Toggle modules menu trigger, and scroll lock verified across Chromium/Firefox/WebKit; real hardware virtual keyboard overlap cannot be tested in headless emulation",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/13-dashboard-mobile-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Physical Android/iOS soft-keyboard Studio editing requires real-device test during Phase 26"
+    },
+    {
+      "id": "FUV2-G17",
+      "title": "Large text/200-400% zoom reflows without losing core task",
+      "status": "PARTIAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css",
+        "apps/frontend-user/src/shared/styles/app-experience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "Equivalent reflow verified at 320px (400% of 1280px) & 720px (200% of 1440px) cleanly without overflow; native desktop browser zoom UI % slider not separately automated",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/08-events-dark-km-320.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Manual browser zoom (Ctrl+ at 200%/400%) certification still recommended in QA checklist"
+    },
+    {
+      "id": "FUV2-G18",
+      "title": "Long Khmer content and digits render without clipping",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Long 60+ char Khmer titles wrap cleanly in dark & light themes down to 320px with zero axe contrast/clipping failures",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/08-events-dark-km-320.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G19",
+      "title": "Smooth intentional navigation and overlay transitions with measured cost",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/motion/variants.js",
+        "apps/frontend-user/src/features/marketing/components/LandingHero.jsx",
+        "apps/frontend-user/src/features/marketing/MarketingFeature.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Functional transitions trimmed to 120-240ms and hero LCP FadeContent to 0.12s (zero blurred mid-fade axe errors)",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Low-end mobile CPU frame-time trace not recorded; durations rely strictly on compositor opacity/transform"
+    },
+    {
+      "id": "FUV2-G20",
+      "title": "Hover/pressed/touch feedback meaningfully upgraded",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/workspace-ui.css",
+        "apps/frontend-user/src/shared/styles/app-experience.css",
+        "apps/frontend-user/src/layouts/OwnerExperience.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run build",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "Neutralized OwnerExperience shadow/hover killers replaced with subtle tactile card elevation and fast button press feedback",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/07-events-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G21",
+      "title": "Skeleton/loading states represent real content and state",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/ui/LoadingState.jsx",
+        "apps/frontend-user/src/shared/ui/RouteLoadingSkeleton.jsx",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "Geometry-matched workspace/studio skeletons and localized loading status roles verified across unit & Playwright flows",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G22",
+      "title": "Success/errors/empty/denied/offline implemented and translated",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/ui/ErrorState.css",
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx",
+        "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test -- src/features/invitations/studio/phase15PublishingAccess.test.jsx",
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "Dark-mode ErrorState fixed; bilingual 403/429 gate alerts & offline/clipboard fallback statuses verified",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/17-public-password-gate-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G23",
+      "title": "prefers-reduced-motion disables nonessential motion without flow loss",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/app/providers/ThemeProvider.jsx",
+        "apps/frontend-user/src/shared/styles/app-experience.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "Global <MotionConfig reducedMotion='user'> + CSS media query verified under emulated reducedMotion='reduce' in 4 Playwright projects",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G24",
+      "title": "No fake saving/upload/RSVP/payment completion",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+        "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx",
+        "apps/frontend-user/src/features/invitations/studio/publishReadiness.js"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test -- src/features/invitations/studio/StudioGuide.test.jsx src/features/invitations/InvitationForm.test.jsx"
+      ],
+      "results": "Confirm publication stays strictly gated behind validation & server response status === 'PUBLISHED'; offline/409 save conflicts block false success",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/16-studio-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Live backend server settlement verification sits outside static build"
+    },
+    {
+      "id": "FUV2-G25",
+      "title": "Marketing and discovery routes upgraded with meaningful before/after proof",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/marketing/MarketingFeature.css",
+        "apps/frontend-user/src/features/marketing/components/LandingHero.jsx"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Home 1440 light (axe=1/9 nodes -> axe=0) and 390 dark km (axe=0) visually verified",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Sub-routes /venues/:id, /pricing, /contact derive from MarketingFeature.css shared tokens without separate screenshots"
+    },
+    {
+      "id": "FUV2-G26",
+      "title": "Auth/account routes upgraded and full security intact",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/auth/AuthPage.css",
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "/login light & dark Khmer captures verified with axe=0 and overflow=0px; token handling untouched",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/04-login-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G27",
+      "title": "Template/pricing/catalog routes modernized without entitlement changes",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/templates/components/templates.css",
+        "apps/frontend-user/src/features/marketing/MarketingFeature.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "Fixed .tp-price-pill.is-active dark mode 2.2:1 contrast bug (-> axe=0); pricing/checkout entitlements preserved server-side",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/06-templates-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G28",
+      "title": "Event onboarding/owner dashboard/workspace improved",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/layouts/OwnerExperience.css",
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.css",
+        "apps/frontend-user/src/features/dashboard/EventOverview.css"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "Atelier rail, sticky pinning, mobile Khmer heading alignment, placeholder framing, and dark overview contrast all verified",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/10-dashboard-scrolled-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "event-workspaces.spec.js:79 pre-existing spec needs update to upload required celebrant photo before submitting /app/events/new"
+    },
+    {
+      "id": "FUV2-G29",
+      "title": "Creator Studio/media/preview visually improved, data persistence preserved",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+        "apps/frontend-user/src/features/events/onboarding/EventDetails.jsx",
+        "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js",
+        "apps/frontend-user/src/features/invitations/studio/PublishReview.jsx",
+        "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx",
+        "apps/frontend-user/src/features/invitations/studio/StudioChrome.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test",
+        "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.frontend-user-v2.config.js"
+      ],
+      "results": "InvitationForm.test.jsx (22/22), EventDetails.test.jsx (9/9), useStudioPersistence.test.jsx (9/9), StudioGuide.test.jsx (4/4), phase15PublishingAccess.test.jsx (5/5) & Studio + Event Settings Step 4/5 Playwright pass; expectedUpdatedAt & draft guards intact",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/16-studio-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G30",
+      "title": "Public invitation all registered renderers handled independently",
+      "status": "PARTIAL",
+      "source_files": [
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx",
+        "apps/frontend-user/src/features/invitations/InvitationPages.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test",
+        "npx playwright test --workers=2 tests/e2e/invitation-publishing-address.spec.js"
+      ],
+      "results": "Template artwork isolation preserved cleanly and invitation-publishing-address.spec.js passed; comprehensive per-renderer ceremony walkthrough awaits Phase 16",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/17-public-password-gate-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Phase 16 domain certification required before certifying full guest player UX on every template"
+    },
+    {
+      "id": "FUV2-G31",
+      "title": "Guest/RSVP/delivery/wishes UI improved with privacy preserved",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/guests/GuestWorkspace.css",
+        "apps/frontend-user/src/shared/styles/workspace-ui.css"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npx playwright test --workers=2 tests/e2e/event-workspaces.spec.js"
+      ],
+      "results": "Fixed Guests dark-mode white filter pills (8 failing axe nodes -> 0); fixed Guests QA/E2E mocks to real /guests/page and /guests/overview contracts so real desktop rows & dark Khmer mobile guest cards render cleanly with axe=0 & 0px overflow; C10-001 guest privacy preserved",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/15-guests-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "Deep CRM/RSVP/wishes business rule verification belongs to Phases 17-18"
+    },
+    {
+      "id": "FUV2-G32",
+      "title": "Seating/tickets/QR/check-in UX improved and controls remain functional",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/shared/styles/workspace-ui.css",
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css",
+        "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx",
+        "apps/frontend-user/src/features/seating/SeatingPage.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test",
+        "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.frontend-user-v2.config.js",
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after"
+      ],
+      "results": "Shared workspace tokens/controls + real QR SVG card & export + dark Seating table cards (VIP Table 1, Table 2, Capacity 20, assigned guests) verified with axe=0 & 0px overflow; underlying seating/check-in unit suite passed within 250/250 Vitest run",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/20-seating-dark-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "Deep seating/scanning certification belongs to Phases 19-20"
+    },
+    {
+      "id": "FUV2-G33",
+      "title": "Gift/payment/reporting UI improved with authoritative financial states",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/payments/PaymentPages.css",
+        "apps/frontend-user/src/shared/styles/workspace-ui.css",
+        "apps/frontend-user/src/shared/styles/semantic-tokens.css"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test",
+        "npm --prefix apps/frontend-user run build"
+      ],
+      "results": "Dark mode/contrast tokens added cleanly to PaymentPages.css; server USD/KHR separation and authoritative order verification preserved intact",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Deep gift/ABA PayWay domain signoff belongs to Phase 21"
+    },
+    {
+      "id": "FUV2-G34",
+      "title": "All active aliases, overlays and edge states inventoried and classified",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/01-route-feature-state-inventory.csv",
+        "apps/frontend-user/src/app/App.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test -- src/app/phase06ShellInventory.test.jsx src/app/batch11RouteInventory.test.jsx"
+      ],
+      "results": "All 111 routes/redirects mapped cleanly with dispositions (`UPGRADED`, `PRESERVED+VERIFIED`) in CSV inventory",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G35",
+      "title": "Historical 57 IDs and Phase14 residuals recorded intact",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/11-security-and-historical-carryover.md"
+      ],
+      "commands": [
+        "python scripts/validate-agent-routing.py"
+      ],
+      "results": "Documented F14.1-26 arithmetic reconciliation (51/4/2/1 JSON vs 50/4/3/1 prose) and preserved original Phase 14 artifacts without alteration",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/16-studio-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G36",
+      "title": "C10-001 and C08-013 preserved and status evidenced",
+      "status": "PARTIAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/11-security-and-historical-carryover.md",
+        "apps/frontend-user/src/features/payments/PaymentPages.css",
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "Frontend boundaries strictly preserved; live PayWay / Telegram webhook settlement (C08-013) remains unverified outside live staging sandbox",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/17-public-password-gate-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Live PSP sandbox & backend staging required for C08-013 live certification"
+    },
+    {
+      "id": "FUV2-G37",
+      "title": "Cross-account stale-data and private preview tests pass",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/src/features/events/workspace/EventWorkspace.jsx",
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx",
+        "apps/frontend-user/src/features/invitations/studio/phase15PublishingAccess.test.jsx"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npx playwright test --workers=2 tests/e2e/event-workspaces.spec.js",
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "Stale sessionStorage access tokens cleared on 403; event isolation and user-scoped nav preferences verified",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/17-public-password-gate-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G38",
+      "title": "48 FUV2 negatives have explicit outcome and real tests",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/07-negative-test-matrix.md"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js",
+        "npm --prefix apps/frontend-user run test"
+      ],
+      "results": "All 48 negatives (FUV2-N01..N48) inventoried explicitly with honest AUTOMATED PASS / PRESERVED+VERIFIED / NOT VERIFIED LIVE outcomes",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/15-guests-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "N42-N44 require live payment PSP & physical mobile hardware"
+    },
+    {
+      "id": "FUV2-G39",
+      "title": "Relevant Vitest/lint/build/Playwright/screenshot results logged",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/09-test-command-ledger.md"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run lint",
+        "npm --prefix apps/frontend-user run test",
+        "npm --prefix apps/frontend-user run build",
+        "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.frontend-user-v2.config.js"
+      ],
+      "results": "250/250 Vitest (1900 tests), 38/38 admin Vitest (205 tests), 0 lint/knip/deps errors, both builds clean (3102 user modules, 2121 admin modules), 27 passed (5 desktop-only skipped on mobile) V2 Playwright across 4 projects, 17 BEFORE + 22 AFTER captures",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G40",
+      "title": "Admin compatibility verified when shared tokens change",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-admin/src/styles/application-tokens.css",
+        "scripts/sync-design-tokens.cjs"
+      ],
+      "commands": [
+        "node scripts/sync-design-tokens.cjs --check",
+        "npm --prefix apps/frontend-admin run lint",
+        "npm --prefix apps/frontend-admin run test",
+        "npm --prefix apps/frontend-admin run build"
+      ],
+      "results": "Admin tokens verified in sync; admin lint 0 errors, 38 files / 205 tests pass, Vite build clean (2121 modules, zero visual JSX changes to admin)",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/09-dashboard-top-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G41",
+      "title": "PWA cache scope validated or honestly marked blocked",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "apps/frontend-user/public/manifest.webmanifest",
+        "apps/frontend-user/index.html"
+      ],
+      "commands": [
+        "npx playwright test --config=playwright.frontend-user-v2.config.js"
+      ],
+      "results": "manifest.webmanifest + verified 192/512 PNG icons return HTTP 200; serviceWorker registrations verified === 0 to prevent authenticated HTML/API PII leak (SW intentionally deferred)",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Offline asset precaching omitted intentionally for security until scoped allowlist + logout cache purge is built"
+    },
+    {
+      "id": "FUV2-G42",
+      "title": "No critical accessibility/keyboard/visual regression in tested routes",
+      "status": "VERIFIED_LOCAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/10-performance-a11y-and-PWA.md",
+        "docs/uxui/frontend-user-v2/evidence/after/metrics.json"
+      ],
+      "commands": [
+        "node scripts/qa/capture-fuv2-visuals.mjs --stage=after",
+        "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.frontend-user-v2.config.js",
+        "npx playwright test --config=playwright.phase12-codex.config.js --project=chromium"
+      ],
+      "results": "Zero WCAG 2.2 AA axe violations across 20 non-iframe captures + all dark secondary views (27 passed, 5 desktop-only skipped on mobile), Escape focus returns verified, 0px overflow across all 22 AFTER captures",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/15-guests-dark-km-390.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "None locally"
+    },
+    {
+      "id": "FUV2-G43",
+      "title": "Phase 15 publishing acceptance separately completed before claiming Phase 15",
+      "status": "PARTIAL",
+      "source_files": [
+        "apps/frontend-user/src/features/invitations/InvitationForm.jsx",
+        "apps/frontend-user/src/features/events/onboarding/EventDetails.jsx",
+        "apps/frontend-user/src/features/invitations/studio/useStudioPersistence.js",
+        "apps/frontend-user/src/features/invitations/studio/PublishReview.jsx",
+        "apps/frontend-user/src/features/invitations/studio/StudioGuide.jsx",
+        "apps/frontend-user/src/features/invitations/studio/publishReadiness.js",
+        "apps/frontend-user/src/features/wedding-site/PublicInvitationFeature.jsx"
+      ],
+      "commands": [
+        "npm --prefix apps/frontend-user run test -- src/features/invitations/studio/phase15PublishingAccess.test.jsx src/features/invitations/studio/StudioGuide.test.jsx src/features/invitations/studio/useStudioPersistence.test.jsx src/features/invitations/InvitationForm.test.jsx src/features/events/onboarding/EventDetails.test.jsx",
+        "npx --prefix apps/frontend-user playwright test --config=apps/frontend-user/playwright.frontend-user-v2.config.js",
+        "mvnw.cmd -Dtest=*Invitation* test"
+      ],
+      "results": "Studio + EventDetails PublishReview wiring (visibility/password/hasSavedPassword/previewUrl), post-save password clearing via useStudioPersistence acknowledge + downloadEdits stripping, empty-password & missing-password server recovery, post-publish Visibility & password editing, QR SVG export, Share Atelier, Studio Unpublish, protected gate (/i/:slug 403/429 + stale token wipe), EventDetails.test.jsx 9/9, useStudioPersistence.test.jsx 9/9, InvitationForm.test.jsx 22/22, phase15PublishingAccess.test.jsx 5/5, StudioGuide.test.jsx 4/4, Playwright Studio & Event Settings E2E, and 57/57 backend *Invitation* JUnit tests VERIFIED_LOCAL; live Spring Boot + MySQL 8 HTTP staging journey pending configured disposable/staging DB",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/16-studio-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T14:02:00+07:00",
+      "remaining_risk": "Live Spring Boot + MySQL 8 HTTP staging journey & bcrypt unlock smoke required before Phase 15 production sign-off"
+    },
+    {
+      "id": "FUV2-G44",
+      "title": "CI failure classification and safe Git publication gates recorded",
+      "status": "BLOCKED_EXTERNAL",
+      "source_files": [
+        "docs/uxui/frontend-user-v2/11-security-and-historical-carryover.md",
+        "docs/uxui/frontend-user-v2/12-Phase15-and-frontend-v2-handoff.md"
+      ],
+      "commands": [
+        "git status --short",
+        "git diff --check"
+      ],
+      "results": "Historical CI runs #44694507572 (Secret Scan, Browser E2E failed) and #45649809538 (Secret Scan, Admin Frontend failed; Browser E2E skipped) classified honestly via GitHub REST API; local checkpoint kept uncommitted cleanly pending owner review & push",
+      "screenshot": "docs/uxui/frontend-user-v2/evidence/after/01-home-light-en-1440.png",
+      "owner": "Gemini Coding Agent",
+      "timestamp": "2026-11-26T09:23:00+07:00",
+      "remaining_risk": "Remote CI green verification blocked until owner commits/pushes and resolves Secret Scan + Browser E2E workflow causes on GitHub Actions"
+    }
+  ]
+}

@@ -1446,10 +1446,146 @@
 .public-state {
     display: grid;
     place-items: center;
-    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 24px 16px;
     text-align: center;
-    color: #44362a;
-    background: #fbf7ef;
+    color: var(--ui-theme-ink, #1e2824);
+    background: var(--ui-theme-canvas, #f7f5f0);
+    box-sizing: border-box;
+}
+
+.protected-gate-card {
+    width: min(100%, 440px);
+    display: grid;
+    gap: 16px;
+    padding: clamp(24px, 4vw, 36px);
+    border-radius: 22px;
+    background: var(--ui-theme-surface, #fffefb);
+    border: 1px solid var(--ui-theme-border, #e4dccd);
+    box-shadow: var(--ui-theme-shadow-elevated, 0 18px 40px rgba(28, 40, 34, 0.1));
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.protected-gate-card-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ui-theme-gold-soft, #f6efe0);
+    border: 1px solid var(--ui-theme-border, #e4dccd);
+    color: var(--ui-theme-gold, #8c6628);
+}
+
+.protected-gate-card .pub-kicker {
+    margin: 0;
+    color: var(--ui-theme-gold, #8c6628);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.protected-gate-card h1 {
+    margin: 0;
+    color: var(--ui-theme-ink, #1e2824);
+    font-size: clamp(22px, 3vw, 26px);
+    font-weight: 750;
+    line-height: 1.5;
+}
+
+.protected-gate-card > p:not(.pub-kicker) {
+    margin: 0;
+    color: var(--ui-theme-muted, #525f58);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.protected-gate-field {
+    display: grid;
+    gap: 8px;
+    color: var(--ui-theme-ink, #1e2824);
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.protected-gate-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.protected-gate-input-wrap input {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 48px 10px 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--ui-theme-control-border, #8e7b62);
+    background: var(--ui-theme-subtle, #efebe2);
+    color: var(--ui-theme-ink, #1e2824);
+    font: inherit;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color var(--ui-duration-feedback, 160ms) ease, box-shadow var(--ui-duration-feedback, 160ms) ease, background var(--ui-duration-feedback, 160ms) ease;
+}
+
+.protected-gate-input-wrap input:focus-visible {
+    outline: 3px solid var(--ui-theme-focus, #176f67);
+    outline-offset: 2px;
+    border-color: var(--ui-theme-focus, #176f67);
+    background: var(--ui-theme-surface, #fffefb);
+}
+
+.protected-gate-toggle {
+    position: absolute;
+    right: 4px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ui-theme-muted, #525f58);
+    cursor: pointer;
+}
+
+.protected-gate-toggle:hover {
+    color: var(--ui-theme-ink, #1e2824);
+    background: var(--ui-theme-hover, rgba(0, 0, 0, 0.05));
+}
+
+.protected-gate-card .inv-error {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    background: var(--ui-theme-danger-soft, #fff0ed);
+    color: var(--ui-theme-danger, #b91c1c);
+    border: 1px solid color-mix(in srgb, var(--ui-theme-danger, #b91c1c) 30%, transparent);
+}
+
+.protected-gate-card .inv-primary-btn {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 12px;
+    background: var(--ui-theme-action, #1c3a32);
+    color: var(--ui-theme-on-action, #ffffff);
+    font-size: 15px;
+    font-weight: 700;
+    border: 0;
+    cursor: pointer;
+    transition: background var(--ui-duration-feedback, 160ms) ease, transform var(--ui-duration-press, 120ms) ease;
+}
+
+.protected-gate-card .inv-primary-btn:hover:not(:disabled) {
+    background: var(--ui-theme-action-hover, #142b25);
+}
+
+.protected-gate-card .inv-primary-btn:active:not(:disabled) {
+    transform: scale(var(--ui-motion-scale, 0.985));
 }
 
 @media (max-width: 920px) {

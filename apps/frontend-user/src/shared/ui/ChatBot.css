@@ -292,3 +292,59 @@
   outline: 3px solid #7D6443;
   outline-offset: 4px;
 }
+
+.chatbot-wrapper:not(.chatbot-wrapper--workspace) .chat-toggle-btn {
+  background-color: var(--ui-theme-accent, #244632);
+  color: var(--ui-theme-on-accent, #fdfaf4);
+  border: 1px solid color-mix(in srgb, var(--ui-theme-gold, #c3a26b) 48%, transparent);
+  box-shadow: 0 10px 26px rgba(20, 34, 27, 0.28);
+}
+
+.chatbot-wrapper:not(.chatbot-wrapper--workspace) .chat-toggle-btn:hover {
+  background-color: var(--ui-theme-accent-hover, #1b3627);
+}
+
+@media (max-width: 640px) {
+  .chatbot-wrapper:not(.chatbot-wrapper--workspace) {
+    bottom: 14px;
+    right: 14px;
+  }
+  .chatbot-wrapper:not(.chatbot-wrapper--workspace) .chat-toggle-btn {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper--workspace:not(.is-open) {
+  background: var(--app-canvas);
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper--workspace:not(.is-open) .chat-toggle-btn {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper--workspace:not(.is-open) .chat-toggle-btn:hover {
+  background: var(--app-raised);
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper .chat-window {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  border: 1px solid var(--app-border);
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper .chat-bubble.admin-bubble,
+:root[data-color-mode="dark"] .chatbot-wrapper .chat-greeting-internal,
+:root[data-color-mode="dark"] .chatbot-wrapper .chat-footer {
+  background: var(--app-subtle);
+  color: var(--app-ink);
+  border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .chatbot-wrapper .chat-input {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  border-color: var(--app-control-border);
+}

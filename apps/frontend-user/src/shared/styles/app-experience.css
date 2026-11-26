@@ -1,14 +1,18 @@
 /* Application chrome. Public invitation renderers keep their authored palette. */
 :root {
+  scroll-padding-top: calc(var(--host-nav-offset, 84px) + 16px);
   --app-canvas: var(--ui-theme-canvas);
   --app-surface: var(--ui-theme-surface);
   --app-subtle: var(--ui-theme-subtle);
   --app-raised: var(--ui-theme-raised);
+  --app-hover: var(--ui-theme-hover, var(--ui-theme-subtle));
+  --app-pressed: var(--ui-theme-pressed, var(--ui-theme-subtle));
   --app-ink: var(--ui-theme-ink);
   --app-muted: var(--ui-theme-muted);
   --app-border: var(--ui-theme-border);
   --app-control-border: var(--ui-theme-control-border);
   --app-accent: var(--ui-theme-action);
+  --app-accent-hover: var(--ui-theme-action-hover, var(--ui-theme-action));
   --app-on-accent: var(--ui-theme-on-action);
   --app-accent-soft: var(--ui-theme-action-soft);
   --app-gold: var(--ui-theme-gold);
@@ -16,6 +20,7 @@
   --app-focus: var(--ui-theme-focus);
   --app-danger: var(--ui-theme-danger);
   --app-shadow: var(--ui-theme-shadow);
+  --app-shadow-elevated: var(--ui-theme-shadow-elevated, var(--ui-theme-shadow));
 }
 .app-preferences { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .app-language-control { display: block; margin: 0; min-width: 0; }
@@ -133,7 +138,8 @@
 :root[data-color-mode=dark] .dash-wrapper :is(.overview-hero,.overview-metrics>a,.overview-preparation,.overview-shortcuts,.overview-notifications,.overview-tool-grid a) { background: var(--app-surface); border-color: var(--app-border); }
 :root[data-color-mode=dark] .dash-wrapper .event-overview { --overview-muted: var(--app-muted); --overview-border: var(--app-border); }
 :root[data-color-mode=dark] .event-overview :is(h1,h2,h3,strong,.overview-checklist strong) { color: var(--app-ink); }
-:root[data-color-mode=dark] .event-overview :is(.overview-metrics span,.overview-event-meta,.overview-publication-controls summary) { color: var(--app-muted); }
+:root[data-color-mode=dark] .event-overview :is(.overview-metrics span,.overview-metric-sub,.overview-event-meta,.overview-publication-controls summary,.overview-activity p,.overview-rsvp>p) { color: var(--app-muted); }
+:root[data-color-mode=dark] .event-overview .overview-countdown-pill { background: var(--app-gold-soft); color: var(--app-gold); border-color: color-mix(in srgb, var(--app-gold) 35%, transparent); }
 :root[data-color-mode=dark] .event-overview :is(.overview-metric-icon,.overview-metric-heading svg,.workspace-badge) { background: var(--app-subtle); color: var(--app-gold); }
 :root[data-color-mode=dark] .event-overview .overview-checklist li { border-color: var(--app-border); }
 :root[data-color-mode=dark] .event-overview .overview-tool-grid a { color: var(--app-ink); }

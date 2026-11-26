@@ -3,12 +3,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 1.5rem;
+  padding: 2.25rem 1.5rem;
   text-align: center;
-  background: var(--status-danger-bg, #fee2e2);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: var(--ui-theme-danger-soft, #fff0ed);
+  border: 1px solid color-mix(in srgb, var(--ui-theme-danger, #b91c1c) 28%, transparent);
   border-radius: var(--radius-xl, 20px);
-  line-height: var(--leading-relaxed, 1.65);
+  line-height: var(--leading-relaxed, 1.7);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -17,8 +17,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: rgba(220, 38, 38, 0.1);
-  color: var(--status-danger-fg, #dc2626);
+  background: color-mix(in srgb, var(--ui-theme-danger, #b91c1c) 14%, transparent);
+  color: var(--ui-theme-danger, #b91c1c);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,13 +30,13 @@
   font-family: var(--font-sans);
   font-size: var(--text-lg, 1.125rem);
   font-weight: var(--weight-bold, 700);
-  color: #991b1b;
+  color: var(--ui-theme-danger, #b91c1c);
   margin-bottom: 0.375rem;
 }
 
 .k-error-message {
   font-size: var(--text-sm, 0.875rem);
-  color: #7f1d1d;
+  color: var(--ui-theme-ink, #1e2824);
   max-width: 420px;
   margin-bottom: 1.25rem;
 }
@@ -48,18 +48,22 @@
   padding: 0.5rem 1.125rem;
   min-height: var(--ui-control-min-height, 44px);
   border-radius: var(--radius-md, 10px);
-  background: var(--status-danger-fg, #dc2626);
-  color: #ffffff;
+  background: var(--ui-theme-danger-action, #b91c1c);
+  color: var(--ui-theme-on-danger-action, #ffffff);
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background var(--ui-duration-feedback, 160ms) ease;
+  transition: background var(--ui-duration-feedback, 160ms) ease, transform var(--ui-duration-press, 120ms) ease;
 }
 
 .k-error-retry-btn:hover {
-  background: #b91c1c;
+  filter: brightness(0.92);
+}
+
+.k-error-retry-btn:active {
+  transform: scale(var(--ui-motion-scale, 0.985));
 }
 
 .k-error-retry-btn:focus-visible {

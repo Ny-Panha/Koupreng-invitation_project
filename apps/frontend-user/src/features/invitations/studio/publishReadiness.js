@@ -12,6 +12,18 @@ export function publishReadiness(form, eventType = 'WEDDING') {
     ['venueName', 'venueName', 'venue', 'Venue name', 'ឈ្មោះទីកន្លែង'],
     ['venueAddress', 'venueAddress', 'venue', 'Venue address', 'អាសយដ្ឋានទីកន្លែង'],
   ];
-  return fields.map(([key, field, section, en, km]) => ({ key, field, section, en, km,
+  const base = fields.map(([key, field, section, en, km]) => ({ key, field, section, en, km,
     complete: Boolean(String(form[key] || (key === 'hostName' ? form.groomName : '') || '').trim()) }));
+  if (form?.visibility === 'PASSWORD_PROTECTED') {
+    const hasPassword = Boolean(form.hasSavedPassword || String(form.accessPassword || '').trim());
+    base.push({
+      key: 'accessPassword',
+      field: 'accessPassword',
+      section: 'publishing',
+      en: 'Access password',
+      km: 'ពាក្យសម្ងាត់ការពារសន្លឹកការ',
+      complete: hasPassword,
+    });
+  }
+  return base;
 }

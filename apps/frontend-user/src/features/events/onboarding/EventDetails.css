@@ -215,6 +215,15 @@
   color: var(--ws-emerald);
 }
 
+.event-settings-save [role="status"]:empty {
+  display: none;
+}
+
+:root[data-color-mode="dark"] .event-settings-save [role="status"] {
+  background: var(--app-accent-soft);
+  color: var(--app-ink);
+}
+
 .event-settings .studio-inline-check input {
   width: 20px;
   min-height: 20px;
@@ -245,4 +254,41 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+:root[data-color-mode="dark"] .event-settings {
+  --ws-gold: var(--app-gold);
+  --ws-gold-dark: var(--app-gold);
+  --ws-gold-light: var(--app-gold-soft);
+  --ws-surface: var(--app-surface);
+  --ws-canvas: var(--app-canvas);
+  --ws-border: var(--app-border);
+  --ws-border-strong: var(--app-control-border);
+  --ws-ink: var(--app-ink);
+  --ws-muted: var(--app-muted);
+  --ws-emerald: var(--app-accent);
+  color-scheme: dark;
+}
+
+:root[data-color-mode="dark"] .event-settings :is(form, .event-settings-section, .event-settings-nav a, .event-settings-save) {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .event-settings .event-settings-nav a:hover,
+:root[data-color-mode="dark"] .event-settings .event-settings-nav a.is-active {
+  background: var(--app-accent-soft);
+  border-color: var(--app-accent);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .event-settings .event-settings-section {
+  background: var(--app-subtle);
+}
+
+:root[data-color-mode="dark"] .event-settings .event-settings-save .workspace-button.primary {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-on-accent);
 }

@@ -63,3 +63,37 @@
   .seating-layout .mobile-hidden { display: none; }
   .seating-unassigned-list { max-height: none; }
 }
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page :is(.workspace-summary article, .seating-table-card, .seating-assignment-panel.workspace-section) {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page :is(.workspace-summary strong, .seating-table-workspace > .workspace-section-heading h2, .seating-table-head h3, .seating-assignment-panel h2, .seating-guest-list strong, .seating-unassigned-header h3) {
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page :is(.workspace-summary span, .seating-guest-list small, .seating-unassigned-list small) {
+  color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page :is(.seating-guest-list li, .seating-unassigned-list button) {
+  background: var(--app-subtle);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page .seating-unassigned-list button[aria-pressed="true"] {
+  background: var(--app-accent-soft);
+  border-color: var(--app-accent);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page .seating-unassigned-header {
+  border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .seating-page .seating-capacity meter::-webkit-meter-bar {
+  background: var(--app-subtle);
+}

@@ -3,12 +3,13 @@
    ───────────────────────────────────────────────────────────── */
 
 .k-modal-container.k-confirm-dialog {
-  max-width: 375px;
+  max-width: 390px;
   border-radius: 20px;
   padding: 22px 24px 20px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+  background: var(--ui-theme-surface, #fffefb);
+  color: var(--ui-theme-ink, #1e2824);
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+  box-shadow: var(--ui-theme-shadow-elevated);
 }
 
 .k-confirm-dialog .k-modal-header {
@@ -22,26 +23,28 @@
 
 .k-confirm-dialog .k-modal-title {
   font-family: inherit;
-  font-size: 1.0625rem; /* ~17px */
+  font-size: 1.0625rem;
   font-weight: 700;
-  color: #111827;
-  line-height: 1.4;
+  color: var(--ui-theme-ink, #1e2824);
+  line-height: 1.5;
   margin: 0;
 }
 
 .k-confirm-dialog .k-modal-close-btn {
-  color: #9ca3af;
-  padding: 2px;
+  color: var(--ui-theme-muted, #525f58);
+  padding: 4px;
+  min-width: 44px;
+  min-height: 44px;
   font-size: 1.2rem;
-  margin-top: -2px;
-  margin-right: -4px;
+  margin-top: -6px;
+  margin-right: -6px;
   border-radius: 50%;
-  transition: all 0.15s ease;
+  transition: background var(--ui-duration-feedback, 160ms) ease, color var(--ui-duration-feedback, 160ms) ease;
 }
 
 .k-confirm-dialog .k-modal-close-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--ui-theme-subtle, #efebe2);
+  color: var(--ui-theme-ink, #1e2824);
 }
 
 .k-confirm-dialog .k-modal-body {
@@ -57,9 +60,9 @@
 
 .k-confirm-message {
   font-family: inherit;
-  font-size: 0.84375rem; /* ~13.5px */
-  color: #6b7280;
-  line-height: 1.55;
+  font-size: 0.875rem;
+  color: var(--ui-theme-muted, #525f58);
+  line-height: 1.65;
   margin: 0;
 }
 

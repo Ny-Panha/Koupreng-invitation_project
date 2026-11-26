@@ -965,15 +965,23 @@
 :root[data-color-mode="dark"] .tp-price-pill,
 :root[data-color-mode="dark"] .tp-sort-select,
 :root[data-color-mode="dark"] .kp-catalog-search input {
-  background: var(--ui-theme-surface, #1a1e24);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
-  color: var(--ui-theme-ink, #f1f5f9);
+  background: var(--ui-theme-surface, #182520);
+  border-color: var(--ui-theme-border, #33473f);
+  color: var(--ui-theme-ink, #f4f3ee);
 }
 
 :root[data-color-mode="dark"] .tp-price-pill:hover,
 :root[data-color-mode="dark"] .tp-sort-select:hover {
-  background: var(--ui-theme-subtle, #222730);
-  border-color: var(--kp-gold, #c3a26b);
+  background: var(--ui-theme-subtle, #20312b);
+  border-color: var(--ui-theme-gold, #d8b875);
+}
+
+:root[data-color-mode="dark"] .tp-price-pill.is-active,
+:root[data-color-mode="dark"] .tp-price-pill[aria-pressed="true"],
+:root[data-color-mode="dark"] .tp-category-buttons button[aria-pressed="true"] {
+  background: var(--ui-theme-action, #d8b875);
+  border-color: var(--ui-theme-action, #d8b875);
+  color: var(--ui-theme-on-action, #14221d);
 }
 
 :root[data-color-mode="dark"] .kp-action-preview {

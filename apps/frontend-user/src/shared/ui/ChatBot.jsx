@@ -91,8 +91,10 @@ export default function ChatBot() {
     setInputMsg("");
   };
 
-  // Hide chatbot on live invitation preview pages and public guest pages
+  // Hide chatbot on live invitation preview pages, public guest pages, and dedicated auth forms
+  const isAuthRoute = ["/login", "/register", "/forgot-password", "/reset-password"].includes(location.pathname);
   const isExcluded =
+    isAuthRoute ||
     location.pathname.startsWith("/w/") ||
     location.pathname.startsWith("/i/") ||
     location.pathname.startsWith("/preview/") ||

@@ -1,9 +1,10 @@
 .dash-wrapper {
-  --host-nav-offset: calc(clamp(104px, 8vw, 132px) + env(safe-area-inset-top, 0px));
+  --host-nav-offset: calc(clamp(92px, 7.2vw, 114px) + env(safe-area-inset-top, 0px));
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: #fbf6ee;
+  min-height: 100dvh;
+  background: var(--ui-theme-canvas, #f7f5f0);
+  color: var(--ui-theme-ink, #1e2824);
 }
 
 .dash-main-scroll {
@@ -13,22 +14,24 @@
   min-height: 0;
   padding-top: var(--host-nav-offset);
   overflow-x: clip;
+  overflow-y: visible;
 }
 .dash-wrapper.dash-wrapper--studio { --host-nav-offset: 0px; }
 
-/* Event management owns one fluid shell; public and account pages keep theirs. */
-.dash-wrapper.dash-wrapper--event { --host-nav-offset: calc(80px + env(safe-area-inset-top, 0px)); }
-.dash-wrapper--event > .dash-main-scroll { overflow: visible; }
-.dash-wrapper--event .host-header-wrapper { padding: 8px 0; background: var(--ui-canvas); border: 0; box-shadow: none; }
-.dash-wrapper--event .host-header-container { width: calc(100% - 32px); max-width: none; height: 56px; padding-inline: 20px; border-radius: 16px; background: var(--ui-surface); box-shadow: none; }
+/* Event management owns a deliberate single-document scroll shell; sidebar pins via sticky. */
+.dash-wrapper.dash-wrapper--event { --host-nav-offset: calc(84px + env(safe-area-inset-top, 0px)); }
+.dash-wrapper--event > .dash-main-scroll { overflow-x: clip; overflow-y: visible; }
+.dash-wrapper--event .host-header-wrapper { padding: 8px 0; background: transparent; border: 0; box-shadow: none; }
+.dash-wrapper--event .host-header-container { width: calc(100% - 32px); max-width: none; height: 64px; padding-inline: 22px; border-radius: 16px; background: color-mix(in srgb, var(--ui-theme-surface, #fffefb) 92%, transparent); backdrop-filter: blur(12px); box-shadow: var(--ui-theme-shadow); }
 .dash-wrapper--event .host-logo-box:hover { transform: none; }
 .dash-wrapper.dash-wrapper--event.dash-wrapper--studio { --host-nav-offset: 0px; }
 @media (min-width: 1024px) {
-  .dash-wrapper--event:not(.dash-wrapper--studio) { height: 100dvh; min-height: 0; overflow: hidden; }
-  .dash-wrapper--event:not(.dash-wrapper--studio) > .dash-main-scroll { box-sizing: border-box; overflow: hidden; }
+  .dash-wrapper--event:not(.dash-wrapper--studio) { height: auto; min-height: 100dvh; overflow-x: clip; overflow-y: visible; }
+  .dash-wrapper--event:not(.dash-wrapper--studio) > .dash-main-scroll { box-sizing: border-box; overflow-x: clip; overflow-y: visible; }
 }
 @media (max-width: 767px) {
-  .dash-wrapper--event .host-header-container { width: calc(100% - 16px); padding-inline: 14px; }
+  .dash-wrapper--event { --host-nav-offset: calc(78px + env(safe-area-inset-top, 0px)); }
+  .dash-wrapper--event .host-header-container { width: calc(100% - 16px); padding-inline: 12px; height: 58px; border-radius: 14px; }
 }
 
 /* Module headings must also work when opened directly, before another route's CSS loads. */

@@ -703,3 +703,138 @@
     transition: none;
   }
 }
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-container {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(
+  .event-calendar-month-heading,
+  .event-calendar-day-number,
+  .event-calendar-detail-title,
+  .event-calendar-agenda-title,
+  .event-calendar-agenda-date-box strong,
+  .event-calendar-selected-kicker
+) {
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(
+  .event-calendar-weekday,
+  .event-calendar-detail-time,
+  .event-calendar-detail-venue,
+  .event-calendar-agenda-venue,
+  .event-calendar-agenda-time,
+  .event-calendar-agenda-empty,
+  .event-calendar-no-events
+) {
+  color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(
+  .event-calendar-weekdays,
+  .event-calendar-subview-toggle,
+  .event-calendar-selected-details
+) {
+  background: var(--app-subtle);
+  border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-toggle-btn {
+  color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-toggle-btn:hover {
+  color: var(--app-ink);
+  background: var(--app-raised);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-toggle-btn.is-active {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(
+  .event-calendar-nav-btn,
+  .event-calendar-cell,
+  .event-calendar-detail-card,
+  .event-calendar-agenda-item,
+  .event-calendar-action-btn.secondary,
+  .event-calendar-clear-selection-btn
+) {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell:hover,
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-nav-btn:hover,
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-action-btn.secondary:hover,
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-clear-selection-btn:hover {
+  background: var(--app-raised);
+  border-color: var(--app-gold);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell--selected {
+  background: var(--app-accent-soft) !important;
+  border-color: var(--app-accent);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell--today {
+  background: color-mix(in srgb, var(--app-gold-soft) 55%, var(--app-surface)) !important;
+  border-color: var(--app-gold);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell--today .event-calendar-day-number {
+  background: var(--app-gold);
+  color: #161410;
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell--muted {
+  background: var(--app-canvas);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-cell--muted .event-calendar-day-number {
+  color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(
+  .event-calendar-event-count,
+  .event-calendar-event-badge,
+  .event-calendar-chip,
+  .event-calendar-detail-type,
+  .event-calendar-detail-status,
+  .event-calendar-agenda-date-box
+) {
+  background: var(--app-subtle);
+  color: var(--app-ink);
+  border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-chip.is-published,
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-detail-status.is-published {
+  background: var(--app-accent-soft);
+  color: #c5dcb5;
+  border-color: var(--app-accent);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-chip.is-local {
+  background: rgba(59, 130, 246, 0.18);
+  color: #bfdbfe;
+  border-color: rgba(147, 197, 253, 0.4);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .event-calendar-chip.is-sync-failed {
+  background: #402826;
+  color: #fecaca;
+  border-color: #80504a;
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(.event-calendar-today-btn, .event-calendar-action-btn.primary) {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-on-accent);
+}

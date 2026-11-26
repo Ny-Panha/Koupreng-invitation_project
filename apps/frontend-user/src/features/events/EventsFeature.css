@@ -1690,3 +1690,61 @@
     }
 }
 
+:root[data-color-mode="dark"] .dash-wrapper .events-view-toggle {
+    background: var(--app-subtle);
+    border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-view-btn {
+    color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-view-btn:hover {
+    color: var(--app-ink);
+    background: var(--app-raised);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-view-btn.is-active {
+    background: var(--app-surface);
+    color: var(--app-ink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-period-tab {
+    background: var(--app-surface);
+    border-color: var(--app-border);
+    color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-period-tab:hover {
+    color: var(--app-ink);
+    border-color: var(--app-control-border);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-period-tab.is-active {
+    background: var(--app-accent-soft);
+    color: var(--app-ink);
+    border-color: var(--app-accent);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(.events-empty-state, .events-empty, .events-modal, .event-card--featured, .event-card-menu, .event-card-dropdown) {
+    background: var(--app-surface);
+    border-color: var(--app-border);
+    color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(.events-empty-desc, .event-card-meta-item, .events-results-count) {
+    color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper :is(.events-filter-reset-btn, .event-card-dropdown button, .event-card-menu-btn) {
+    background: var(--app-subtle);
+    border-color: var(--app-border);
+    color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .dash-wrapper .events-mobile-fab {
+    background: var(--app-accent);
+    color: var(--app-on-accent);
+}
+

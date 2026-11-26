@@ -23,6 +23,8 @@ vi.mock("@/features/invitations/api/invitationApi", () => ({
     create: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug" }),
     update: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug" }),
     get: vi.fn().mockResolvedValue({}),
+    publish: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug", status: "PUBLISHED" }),
+    unpublish: vi.fn().mockResolvedValue({ id: 101, slug: "test-slug", status: "DRAFT" }),
   },
 }));
 
@@ -435,5 +437,197 @@ describe("Khmer Celestial Cover Image Fields", () => {
             expect(storedDraft).toBeDefined();
             expect(storedDraft.coverBackgroundImage).toBe("https://example.com/permanent-cover-bg.jpg");
         });
+    }, 15000);
+});
+
+describe("Phase 15 PublishReview password recovery and post-publish access updates in InvitationForm", () => {
+    const readyInvitation = {
+        id: 101,
+        templateId: 4,
+        templateCode: "khmer-celestial",
+        title: "Vannak & Kolab",
+        groomName: "Vannak",
+        brideName: "Kolab",
+        eventDate: "2027-11-28",
+        eventTime: "17:00",
+        venueName: "Sokha Hotel",
+        venueAddress: "Chroy Changvar, Phnom Penh",
+        languageMode: "EN",
+        status: "DRAFT",
+        visibility: "PASSWORD_PROTECTED",
+        slug: "vannak-kolab-101",
+    };
+
+    it("keeps PublishReview open and focuses #publish-review-password on completePublishField, clears stale password across visibility switches, and handles backend Publish requirements missing: accessPassword", async () => {
+        invitationService.update.mockResolvedValue({ ...readyInvitation, updatedAt: "2027-01-01T00:00:01Z" });
+        invitationService.publish.mockRejectedValueOnce(new Error("Publish requirements missing: accessPassword"));
+
+        const { container } = render(
+            <MemoryRouter>
+                <FeedbackHost />
+                <InvitationForm invitation={readyInvitation} />
+            </MemoryRouter>
+        );
+
+        const langSwitch = container.querySelector(".app-language-toggle");
+        if (langSwitch && langSwitch.getAttribute("aria-checked") !== "true") {
+            fireEvent.click(langSwitch);
+        }
+
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Publish" }));
+        });
+
+        const dialog = screen.getByRole("dialog", { name: "Review publication" });
+        expect(dialog).toBeInTheDocument();
+        expect(screen.getByText(/password is already configured on the server/i)).toBeInTheDocument();
+
+        // Trigger server rejection due to missing saved password on server
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Confirm publication" }));
+        });
+
+        await waitFor(() => {
+            expect(screen.queryByText(/password is already configured on the server/i)).not.toBeInTheDocument();
+        });
+        expect(screen.getByRole("dialog", { name: "Review publication" })).toBeInTheDocument();
+        expect(document.activeElement?.id).toBe("publish-review-password");
+
+        // Complete field button keeps PublishReview open and focuses password input
+        const completeBtns = screen.getAllByRole("button", { name: "Complete field" });
+        fireEvent.click(completeBtns[completeBtns.length - 1]);
+        expect(screen.getByRole("dialog", { name: "Review publication" })).toBeInTheDocument();
+        expect(document.activeElement?.id).toBe("publish-review-password");
+
+        // Switching away from PASSWORD_PROTECTED clears stale typed password
+        fireEvent.change(document.getElementById("publish-review-password"), { target: { value: "secret-123" } });
+        expect(document.getElementById("publish-review-password")).toHaveValue("secret-123");
+        fireEvent.click(screen.getByLabelText(/Public link/i));
+        fireEvent.click(screen.getByLabelText(/Password protected/i));
+        expect(document.getElementById("publish-review-password")).toHaveValue("");
+    }, 15000);
+
+    it("lets published invitations reopen PublishReview via StudioGuide and save updated visibility", async () => {
+        invitationService.update.mockClear();
+        invitationService.update.mockResolvedValue({
+            ...readyInvitation,
+            status: "PUBLISHED",
+            visibility: "PRIVATE",
+            updatedAt: "2027-01-01T00:00:02Z",
+        });
+
+        const { container } = render(
+            <MemoryRouter>
+                <FeedbackHost />
+                <InvitationForm invitation={{ ...readyInvitation, status: "PUBLISHED", visibility: "PUBLIC" }} />
+            </MemoryRouter>
+        );
+
+        const langSwitch = container.querySelector(".app-language-toggle");
+        if (langSwitch && langSwitch.getAttribute("aria-checked") !== "true") {
+            fireEvent.click(langSwitch);
+        }
+
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: /Guided creation/i }));
+        });
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: /Publish & share/i }));
+        });
+
+        const editAccessBtn = await screen.findByRole("button", { name: /Visibility & password/i });
+        fireEvent.click(editAccessBtn);
+
+        const dialog = screen.getByRole("dialog", { name: "Review publication" });
+        expect(dialog).toBeInTheDocument();
+        fireEvent.click(screen.getByLabelText(/Private/i));
+
+        const saveBtn = screen.getByRole("button", { name: "Save access settings" });
+        expect(saveBtn).toBeEnabled();
+        await act(async () => {
+            fireEvent.click(saveBtn);
+        });
+
+        await waitFor(() => {
+            expect(invitationService.update).toHaveBeenCalled();
+            expect(invitationService.update.mock.calls.at(-1)[1].visibility).toBe("PRIVATE");
+        });
+    }, 15000);
+
+    it("clears accessPassword after publish and access update without dirtying Studio or resending passwords on later edits", async () => {
+        invitationService.update.mockClear();
+        invitationService.publish.mockClear();
+        invitationService.update.mockImplementation(async (_id, payload) => ({
+            ...readyInvitation,
+            visibility: payload.visibility,
+            status: "PUBLISHED",
+            updatedAt: "2027-01-01T00:00:03Z",
+        }));
+        invitationService.publish.mockResolvedValue({
+            ...readyInvitation,
+            status: "PUBLISHED",
+            visibility: "PASSWORD_PROTECTED",
+            slug: "vannak-kolab-101",
+            updatedAt: "2027-01-01T00:00:04Z",
+        });
+
+        const { container } = render(
+            <MemoryRouter>
+                <FeedbackHost />
+                <InvitationForm invitation={{ ...readyInvitation, status: "DRAFT", visibility: "PUBLIC", updatedAt: "2027-01-01T00:00:00Z" }} />
+            </MemoryRouter>
+        );
+
+        const langSwitch = container.querySelector(".app-language-toggle");
+        if (langSwitch && langSwitch.getAttribute("aria-checked") !== "true") {
+            fireEvent.click(langSwitch);
+        }
+
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Publish" }));
+        });
+        fireEvent.click(screen.getByLabelText(/Password protected/i));
+        fireEvent.change(document.getElementById("publish-review-password"), { target: { value: "royal-2027" } });
+
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Confirm publication" }));
+        });
+
+        await waitFor(() => expect(invitationService.publish).toHaveBeenCalledWith(101, expect.any(Object)));
+        expect(invitationService.update).toHaveBeenCalledWith(
+            101,
+            expect.objectContaining({ visibility: "PASSWORD_PROTECTED", accessPassword: "royal-2027" }),
+            expect.any(Object)
+        );
+        expect(container.querySelector(".studio-save-status")?.getAttribute("data-phase")).toBe("saved");
+
+        // Reopening Visibility & password shows empty password box + saved-password hint
+        const editAccessBtn = await screen.findByRole("button", { name: /Visibility & password/i });
+        fireEvent.click(editAccessBtn);
+        expect(document.getElementById("publish-review-password")).toHaveValue("");
+        expect(screen.getByText(/A password is already configured on the server/i)).toBeInTheDocument();
+
+        // Saving a rotated password clears it cleanly without leaving Studio dirty
+        const callsBeforeRotate = invitationService.update.mock.calls.length;
+        fireEvent.change(document.getElementById("publish-review-password"), { target: { value: "rotated-2028" } });
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Save access settings" }));
+        });
+        await waitFor(() => expect(invitationService.update.mock.calls.length).toBe(callsBeforeRotate + 1));
+        expect(invitationService.update.mock.calls.at(-1)[1]).toMatchObject({
+            visibility: "PASSWORD_PROTECTED",
+            accessPassword: "rotated-2028",
+        });
+        expect(container.querySelector(".studio-save-status")?.getAttribute("data-phase")).toBe("saved");
+
+        // Reopening again confirms password cleared, and clicking Save omits accessPassword
+        fireEvent.click(await screen.findByRole("button", { name: /Visibility & password/i }));
+        expect(document.getElementById("publish-review-password")).toHaveValue("");
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Save access settings" }));
+        });
+        await waitFor(() => expect(invitationService.update.mock.calls.length).toBe(callsBeforeRotate + 2));
+        expect(invitationService.update.mock.calls.at(-1)[1]).not.toHaveProperty("accessPassword");
+        expect(container.querySelector(".studio-save-status")?.getAttribute("data-phase")).toBe("saved");
     }, 15000);
 });

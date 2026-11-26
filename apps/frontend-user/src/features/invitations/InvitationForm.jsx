@@ -442,6 +442,7 @@ const DEFAULT_STATE = {
     // Extra
     languageMode: "KH",
     visibility: "PUBLIC",
+    accessPassword: "",
 };
 
 export default function InvitationForm({ invitation }) {
@@ -608,6 +609,7 @@ export default function InvitationForm({ invitation }) {
             calendarUid: customParsed.calendarUid || generateSecureUuid(),
             languageMode: invitation?.languageMode || customParsed.languageMode || "KH",
             visibility: invitation?.visibility || "PUBLIC",
+            accessPassword: "",
             photos: (() => {
                 let list = Array.isArray(customParsed.photos)
                     ? [...customParsed.photos]
@@ -754,7 +756,12 @@ export default function InvitationForm({ invitation }) {
     const englishReadiness = translationReadiness({ ...form, translationCapabilities: templateCapabilities(getTemplateById(form.templateId) || {}), eventType: invitation?.eventType || "WEDDING" });
     const [isSaving, setIsSaving] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
+    const [isUnpublishing, setIsUnpublishing] = useState(false);
     const [published, setPublished] = useState(invitation?.status === "PUBLISHED");
+    const [hasSavedPassword, setHasSavedPassword] = useState(() => Boolean(
+        invitation?.visibility === "PASSWORD_PROTECTED" &&
+        (invitation?.accessPasswordRequired || invitation?.hasAccessPassword || Boolean(invitation?.id))
+    ));
 
     const [isMobilePreviewOpen, setIsMobilePreviewOpen] = useState(false);
     const rememberEditorPosition = () => {
@@ -1390,6 +1397,9 @@ export default function InvitationForm({ invitation }) {
                 apologyText: form.apologyText,
             });
 
+            const submittedPassword = (form.visibility || "PUBLIC") === "PASSWORD_PROTECTED"
+                ? String(form.accessPassword || "").trim()
+                : "";
             const payload = {
                 expectedUpdatedAt: serverRevision.current,
                 title: finalTitle,
@@ -1406,6 +1416,7 @@ export default function InvitationForm({ invitation }) {
                 storyText: form.messageText || "",
                 languageMode: form.languageMode || "KH",
                 visibility: form.visibility || "PUBLIC",
+                ...(submittedPassword ? { accessPassword: submittedPassword } : {}),
                 rsvpDeadline: invitation?.rsvpDeadline || null,
                 templateId: resolveNumericTemplateId(form.templateId),
                 designJson: JSON.stringify(stripInlineMedia(designPayload)),
@@ -1451,6 +1462,22 @@ export default function InvitationForm({ invitation }) {
                 if (!request.isCurrent()) return stopped();
                 if (saved?.id) savedBackendId.current = saved.id;
                 if (saved?.updatedAt) serverRevision.current = saved.updatedAt;
+                const nextSavedVisibility = saved?.visibility || form.visibility || "PUBLIC";
+                if (nextSavedVisibility === "PASSWORD_PROTECTED" && submittedPassword) {
+                    setHasSavedPassword(true);
+                } else if (nextSavedVisibility !== "PASSWORD_PROTECTED") {
+                    setHasSavedPassword(false);
+                }
+                if (submittedPassword) {
+                    setForm(previous =>
+                        String(previous.accessPassword || "").trim() === submittedPassword
+                            ? { ...previous, accessPassword: "" }
+                            : previous
+                    );
+                }
+                if (saved?.slug && published) {
+                    setPublishedUrl(new URL(`/i/${encodeURIComponent(saved.slug)}`, window.location.origin).href);
+                }
             } catch (apiErr) {
                 if (!request.isCurrent()) return stopped();
                 apiFailure = apiErr;
@@ -1754,8 +1781,16 @@ export default function InvitationForm({ invitation }) {
 
             const finalSavedId = saved?.id || targetDraftId;
             if (stayInStudio) {
-                if (!quiet) toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
-                return { id: finalSavedId, synced: !apiSyncFailed && !mediaSyncError, status: apiSyncStatus, failure: apiFailure, error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : "") };
+                const synced = !apiSyncFailed && !mediaSyncError;
+                if (!quiet) toast(successMsg, synced ? "success" : "warning");
+                return {
+                    id: finalSavedId,
+                    synced,
+                    status: apiSyncStatus,
+                    failure: apiFailure,
+                    error: mediaSyncError || (apiSyncFailed ? (apiSyncError || uiCopy("ម៉ាស៊ីនមេមិនអាចរក្សាទុកការកែប្រែបានទេ។ សូមរក្សាទុកម្ដងទៀត។", "The server could not save these changes. Retry saving.")) : ""),
+                    ...(synced && submittedPassword ? { acknowledge: snap => ({ ...snap, accessPassword: "" }) } : {}),
+                };
             }
             if (redirectToPreview && finalSavedId) {
                 toast(successMsg, apiSyncFailed || mediaSyncError ? "warning" : "success");
@@ -1782,7 +1817,7 @@ export default function InvitationForm({ invitation }) {
     }, persist: ({ deliberate = false } = {}) => handleSave({ stayInStudio: true, quiet: true, deliberate }),
         english: englishUI, enabled: canEdit && Boolean(invitationId && /^[1-9]\d*$/.test(String(invitationId))) && !pendingCoverFile && !pendingCoverBgFile && !pendingBackgroundFile && !pendingInvitationFile && !pendingInvitation2File && !JSON.stringify(form).includes("data:") });
 
-    const readiness = publishReadiness(form, invitation?.eventType || "WEDDING");
+    const readiness = publishReadiness({ ...form, hasSavedPassword }, invitation?.eventType || "WEDDING");
     const canPublish = canEdit && (workspace ? workspace.isOwner : true) && Boolean(invitation?.backendInvitationId || /^[1-9]\d*$/.test(String(invitationId || "")));
     function goToGuideStep(step) {
         setGuideStep(step);
@@ -1791,6 +1826,11 @@ export default function InvitationForm({ invitation }) {
         requestAnimationFrame(() => document.getElementById("studio-guide-heading")?.focus());
     }
     function completePublishField(check) {
+        if (check?.key === "accessPassword" || check?.field === "accessPassword") {
+            setPublishReviewOpen(true);
+            requestAnimationFrame(() => document.getElementById("publish-review-password")?.focus());
+            return;
+        }
         setPublishReviewOpen(false);
         setGuideStep(0);
         setSelectedSection(check.section);
@@ -1838,6 +1878,10 @@ export default function InvitationForm({ invitation }) {
             setSelectedSection("venue");
             return;
         }
+        if (form.visibility === "PASSWORD_PROTECTED" && !hasSavedPassword && !String(form.accessPassword || "").trim()) {
+            setPublishError(uiCopy("សូមកំណត់ពាក្យសម្ងាត់មុនពេលផ្សព្វផ្សាយក្នុងរបៀបការពារដោយពាក្យសម្ងាត់។", "Set an access password before publishing in Password Protected mode."));
+            return;
+        }
         setIsPublishing(true);
         try {
             if (!await studio.flush()) {
@@ -1855,9 +1899,74 @@ export default function InvitationForm({ invitation }) {
             if (/Publish requirements missing:.*\bvenueAddress\b/.test(error.message || "")) {
                 setVenueAddressError(englishUI ? "The server has not saved this venue address. Save it again before publishing." : "ម៉ាស៊ីនមេមិនទាន់រក្សាទុកអាសយដ្ឋាននេះទេ។ សូមរក្សាទុកម្ដងទៀតមុនផ្សព្វផ្សាយ។");
                 completePublishField({ section: "venue", field: "venueAddress" });
+            } else if (/Publish requirements missing:.*\baccessPassword\b/.test(error.message || "")) {
+                setHasSavedPassword(false);
+                setPublishReviewOpen(true);
+                setPublishError(uiCopy("ម៉ាស៊ីនមេមិនទាន់មានពាក្យសម្ងាត់ការពារទេ។ សូមបញ្ចូលពាក្យសម្ងាត់មុនពេលផ្សព្វផ្សាយ។", "No access password is saved on the server yet. Enter a password before publishing."));
+                requestAnimationFrame(() => document.getElementById("publish-review-password")?.focus());
             } else setPublishError(error.message || uiCopy("មិនទាន់អាចបញ្ជាក់ការផ្សព្វផ្សាយបានទេ។ ពិនិត្យស្ថានភាពម្ដងទៀត។", "Publication is not confirmed. Check the server status before sharing."));
         }
         finally { setIsPublishing(false); }
+    }
+
+    async function updatePublishedAccess() {
+        const request = authority.begin();
+        if (isPublishing || !canPublish || !request.isCurrent()) return;
+        if (form.visibility === "PASSWORD_PROTECTED" && !hasSavedPassword && !String(form.accessPassword || "").trim()) {
+            setPublishError(uiCopy("សូមបញ្ចូលពាក្យសម្ងាត់ការពារសំបុត្រអញ្ជើញ។", "Enter an access password for password-protected invitations."));
+            requestAnimationFrame(() => document.getElementById("publish-review-password")?.focus());
+            return;
+        }
+        setPublishError("");
+        setIsPublishing(true);
+        try {
+            const ok = await studio.flush({ deliberate: true });
+            if (!request.isCurrent()) return;
+            if (!ok) {
+                setPublishError(uiCopy("មិនទាន់អាចរក្សាទុកការកំណត់សិទ្ធិបានទេ។ ពិនិត្យស្ថានភាពម្ដងទៀត។", "Could not save visibility settings. Check the save status and try again."));
+                return;
+            }
+            if (form.visibility !== "PASSWORD_PROTECTED") {
+                setForm(prev => (prev.accessPassword ? { ...prev, accessPassword: "" } : prev));
+            }
+            setPublishReviewOpen(false);
+            feedback.success({
+                id: "studio-access-updated",
+                title: uiCopy("បានធ្វើបច្ចុប្បន្នភាពការកំណត់សិទ្ធិ", "Visibility & access updated"),
+                description: uiCopy("ការកំណត់ភាពមើលឃើញត្រូវបានរក្សាទុក។", "Your published invitation access rules are saved.")
+            });
+        } catch (error) {
+            if (!request.isCurrent()) return;
+            setPublishError(error.message || uiCopy("មិនទាន់អាចរក្សាទុកការកំណត់សិទ្ធិបានទេ។", "Could not save visibility settings."));
+        } finally {
+            setIsPublishing(false);
+        }
+    }
+
+    async function unpublishInvitation() {
+        const backendId = savedBackendId.current;
+        if (!backendId || isUnpublishing || !canPublish) return;
+        const confirmed = await feedback.confirm({
+            title: uiCopy("ផ្អាកការផ្សព្វផ្សាយសំបុត្រអញ្ជើញ", "Unpublish invitation"),
+            message: uiCopy(
+                "ភ្ញៀវនឹងមិនអាចបើកតំណសាធារណៈបានទេ រហូតដល់អ្នកផ្សព្វផ្សាយម្ដងទៀត។ ទិន្នន័យ និងបញ្ជីភ្ញៀវត្រូវបានរក្សាទុកដដែល។",
+                "Guests will not be able to open the public link until you publish again. Your draft and guest records stay intact."
+            ),
+        });
+        if (!confirmed) return;
+        setIsUnpublishing(true);
+        setPublishError("");
+        try {
+            const result = await invitationService.unpublish(backendId);
+            if (result?.updatedAt) serverRevision.current = result.updatedAt;
+            setPublished(false);
+            setPublishedUrl("");
+            toast(uiCopy("បានផ្អាកការផ្សព្វផ្សាយសំបុត្រអញ្ជើញ", "Invitation unpublished"), "success");
+        } catch (error) {
+            toast(error?.message || uiCopy("មិនអាចផ្អាកការផ្សព្វផ្សាយបានទេ។ សូមព្យាយាមម្ដងទៀត។", "Could not unpublish invitation. Please try again."), "error");
+        } finally {
+            setIsUnpublishing(false);
+        }
     }
 
     // --- Dynamic Section Renderers (Driven by templateFormFlowConfig) ---
@@ -3270,12 +3379,12 @@ export default function InvitationForm({ invitation }) {
                 const mount = params.eventId && document.getElementById("invitation-studio-toolbar");
                 return mount ? createPortal(toolbar, mount) : toolbar;
             })()}
-            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired", "denied"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired", "denied"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const url = URL.createObjectURL(new Blob([JSON.stringify(form, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
+            {studio.error && <div className="studio-save-error" role="alert"><span>{studio.error}</span>{studio.failure?.status === 403 && <button type="button" onClick={() => feedback.explain(studio.failure, { event: workspace, permission: "MANAGE_INVITATION" })}>{uiCopy('\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179f\u17b7\u1791\u17d2\u1792\u17b7', 'Review access')}</button>}{!["conflict", "expired", "denied"].includes(studio.phase) && <button type="button" onClick={() => studio.save({ deliberate: true })} disabled={isSaving || !canEdit}>{uiCopy("រក្សាទុកម្ដងទៀត", "Retry save")}</button>}{["conflict", "expired", "denied"].includes(studio.phase) && <><p>{uiCopy("ចម្លងអត្ថបទសំខាន់ ឬទាញយកពង្រាងនេះ មុនបើកកម្មវិធីម្ដងទៀត។", "Copy important text or download this draft before reopening the event.")}</p><button type="button" onClick={() => { const safeDraft = { ...form }; delete safeDraft.accessPassword; const url = URL.createObjectURL(new Blob([JSON.stringify(safeDraft, null, 2)], { type: "application/json" })); const link = document.createElement("a"); link.href = url; link.download = "invitation-unsaved-draft.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }}>{uiCopy("ទាញយកពង្រាងមិនទាន់រក្សាទុក", "Download unsaved draft")}</button></>}</div>}
             <div className="studio-workflow-bar">
-                <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
+                <StudioGuide mode={editorMode} onMode={mode => { setEditorMode(mode); if (mode === 'guided') goToGuideStep(guideStep); }} step={guideStep} onStep={goToGuideStep} sections={flowConfig.sectionOrder} activeSection={activeSection} onSection={setSelectedSection} english={englishUI} checks={readiness} onField={completePublishField} onPreview={openPreview} onGuests={() => openEventTool("guests")} onRsvp={() => openEventTool("rsvp")} onPublish={reviewPublication} onUnpublish={unpublishInvitation} unpublishing={isUnpublishing} visibility={form.visibility} published={published} publishedUrl={publishedUrl} saving={isSaving || isPublishing} canPublish={canPublish} canManageGuests={workspace ? workspace.can?.("MANAGE_GUESTS") : true} />
                 {!compactPreview && !isMobilePreviewOpen && <StudioSplitControls split={workspaceSplit} english={englishUI} focusEditor={focusEditor} onFocusEditor={() => setFocusEditor(value => !value)} />}
             </div>
-            <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} published={published} />
+            <PublishReview open={publishReviewOpen} onClose={() => setPublishReviewOpen(false)} onConfirm={published ? updatePublishedAccess : publishInvitation} onCheck={checkPublication} checks={readiness} onField={completePublishField} english={englishUI} publishing={isPublishing} error={publishError} visibility={form.visibility} onVisibilityChange={nextVis => { setPublishError(""); setForm(prev => ({ ...prev, visibility: nextVis, accessPassword: nextVis === "PASSWORD_PROTECTED" ? prev.accessPassword : "" })); }} accessPassword={form.accessPassword} onPasswordChange={nextPass => { setPublishError(""); setForm(prev => ({ ...prev, accessPassword: nextPass })); }} hasSavedPassword={hasSavedPassword} previewUrl={publishedUrl || (invitation?.slug ? new URL(`/i/${encodeURIComponent(invitation.slug)}`, window.location.origin).href : "")} published={published} />
             {/* The controls and preview continue to use the original template engine. */}
             <div className="pe-workspace-grid" ref={workspaceGrid} data-has-preview={!compactPreview && !isMobilePreviewOpen}>
                 {editorMode === "advanced" && <StudioSections sections={flowConfig.sectionOrder} active={activeSection}
@@ -3306,6 +3415,24 @@ export default function InvitationForm({ invitation }) {
                             {activeLangTab === "KH" ? (t("editingKh") || uiCopy("កំពុងកែសម្រួល៖ ភាសាខ្មែរ", "Editing: Khmer")) : (t("editingEn") || uiCopy("កំពុងកែសម្រួល៖ អង់គ្លេស", "Editing: English"))}
                         </span>
                         <details className="studio-authoring-options"><summary>{uiCopy('ភាសា និងការផ្សព្វផ្សាយ', 'Language & publishing')}</summary><fieldset className="studio-authoring-options-body" disabled={!canEdit}>
+                        <label>{uiCopy('ភាពមើលឃើញ និងសិទ្ធិមើល', 'Visibility & guest access')}
+                          <select value={form.visibility || 'PUBLIC'} onChange={e => {
+                            const nextVis = e.target.value;
+                            setPublishError('');
+                            setForm(previous => ({ ...previous, visibility: nextVis, accessPassword: nextVis === 'PASSWORD_PROTECTED' ? previous.accessPassword : '' }));
+                          }}>
+                            <option value="PUBLIC">{uiCopy('សាធារណៈ (បើកតាមតំណ)', 'Public link')}</option>
+                            <option value="PRIVATE">{uiCopy('ឯកជន (សម្រាប់តែតំណភ្ញៀវផ្ទាល់ខ្លួន)', 'Private (personal guest links only)')}</option>
+                            <option value="PASSWORD_PROTECTED">{uiCopy('ការពារដោយពាក្យសម្ងាត់', 'Password protected')}</option>
+                          </select>
+                        </label>
+                        {form.visibility === 'PASSWORD_PROTECTED' && (
+                          <label>{uiCopy('ពាក្យសម្ងាត់សំបុត្រអញ្ជើញ', 'Invitation access password')}
+                            <input type="password" value={form.accessPassword || ''} autoComplete="new-password"
+                              placeholder={hasSavedPassword ? uiCopy('ទុកទទេដើម្បីរក្សាពាក្យសម្ងាត់ចាស់', 'Leave blank to keep saved password') : uiCopy('បញ្ចូលពាក្យសម្ងាត់ថ្មី', 'Enter new password')}
+                              onChange={e => setForm(previous => ({ ...previous, accessPassword: e.target.value }))} />
+                          </label>
+                        )}
                         <small>{activeLangTab}: {JSON.stringify(localeContent(form)[activeLangTab === 'EN' ? 'en' : 'km']) !== JSON.stringify(studio.savedValue ? localeContent(studio.savedValue)[activeLangTab === 'EN' ? 'en' : 'km'] : null) ? uiCopy('មិនទាន់រក្សាទុក', 'Unsaved') : uiCopy('បានរក្សាទុក', 'Saved')} · {uiCopy('អង់គ្លេស៖ ', 'English: ')}{englishReadiness.complete}/{englishReadiness.total}</small>
                         <label className="studio-inline-check"><input type="checkbox" checked={localeContent(form).enabledLocales.includes('en')}
                           disabled={!(workspace ? workspace.isOwner : true) || (!englishReadiness.ready && !localeContent(form).enabledLocales.includes('en'))}

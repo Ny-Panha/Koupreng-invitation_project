@@ -3,6 +3,8 @@ import { guestLocale, localeContent, projectLocale } from '../templates/shared/l
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { IoHomeOutline, IoLockClosedOutline, IoSearchOutline } from "react-icons/io5";
+import { Eye, EyeOff, Lock } from "lucide-react";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 import PublicRsvpForm from "../invitations/PublicRsvpForm";
 import "../invitations/InvitationPages.css";
@@ -100,6 +102,7 @@ export default function PublicInvitationPage() {
     }, [draft, slug]);
     const shouldBackToDashboard = location.state?.backTo === "/dashboard";
     const queryAccessToken = searchParams.get("accessToken") || "";
+    const queryLang = searchParams.get("lang") || "";
     const accessStorageKey = slug ? `koupreng_invitation_access_${slug}` : "";
     const effectiveAccessToken = queryAccessToken || verifiedAccessToken;
     const loadCinematicVideo = useCallback(signal => mediaService.publicCinematicContent(slug, invitation?.cinematicOpening?.videoMediaId,
@@ -191,11 +194,18 @@ export default function PublicInvitationPage() {
             .catch((err) => {
                 if (active) {
                     const protectedError = err?.status === 403;
+                    if (protectedError && accessStorageKey && sessionStorage.getItem(accessStorageKey)) {
+                        sessionStorage.removeItem(accessStorageKey);
+                        setVerifiedAccessToken("");
+                    }
                     const is404 = err?.status === 404 || String(err?.message || "").toLowerCase().includes("not found");
                     const detectedType = is404 ? "NOT_FOUND" : "UNPUBLISHED";
+                    const fallbackLang = String(queryLang || useLanguageStore.getState().lang || "km").toUpperCase();
                     setErrorType(detectedType);
                     setProtectedMode(protectedError);
-                    setRemoteError(protectedError ? (err?.message || "សន្លឹកការនេះត្រូវការពាក្យសម្ងាត់។") : (err?.message || publicStateCopy(null, detectedType).message));
+                    setRemoteError(protectedError
+                        ? formatPublicAccessError(err, fallbackLang === "EN")
+                        : (err?.message || publicStateCopy(fallbackLang, detectedType).message));
                 }
             })
             .finally(() => {
@@ -207,7 +217,7 @@ export default function PublicInvitationPage() {
         return () => {
             active = false;
         };
-    }, [slug, inviteToken, effectiveAccessToken]);
+    }, [slug, inviteToken, effectiveAccessToken, accessStorageKey, queryLang]);
 
     const activeDraftId = activeDraft?.id;
 
@@ -259,7 +269,8 @@ export default function PublicInvitationPage() {
             }
             setProtectedMode(false);
         } catch (err) {
-            setRemoteError(err?.message || "Could not verify invitation access.");
+            const fallbackLang = String(invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang") || useLanguageStore.getState().lang || "km").toUpperCase();
+            setRemoteError(formatPublicAccessError(err, fallbackLang === "EN"));
         } finally {
             setVerifyingAccess(false);
         }
@@ -346,7 +357,7 @@ export default function PublicInvitationPage() {
                 error={remoteError}
                 loading={verifyingAccess}
                 onSubmit={verifyAccess}
-                languageMode={invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang")}
+                languageMode={invitation?.languageMode || activeDraft?.languageMode || searchParams.get("lang") || useLanguageStore.getState().lang || "km"}
             />
         );
     }
@@ -405,8 +416,30 @@ export default function PublicInvitationPage() {
     );
 }
 
+function formatPublicAccessError(err, isEn) {
+    const raw = String(err?.message || "");
+    const lower = raw.toLowerCase();
+    if (err?.status === 429 || lower.includes("too many") || lower.includes("rate limit")) {
+        return isEn
+            ? "Too many attempts. Please wait a minute and try again."
+            : "ព្យាយាមបញ្ចូលពាក្យសម្ងាត់ច្រើនដងពេក។ សូមរង់ចាំមួយភ្លែត រួចសាកល្បងម្តងទៀត។";
+    }
+    if (lower.includes("password required")) {
+        return isEn
+            ? "Please enter the invitation password."
+            : "សូមបញ្ចូលពាក្យសម្ងាត់ដើម្បីបើកសន្លឹកការ។";
+    }
+    if (lower.includes("invalid invitation password") || lower.includes("incorrect password") || err?.status === 403) {
+        return isEn
+            ? "Incorrect password. Please try again or use your personal guest link."
+            : "ពាក្យសម្ងាត់មិនត្រឹមត្រូវទេ។ សូមពិនិត្យម្តងទៀត ឬប្រើតំណភ្ជាប់ផ្ទាល់ខ្លួនរបស់ភ្ញៀវ។";
+    }
+    return raw || (isEn ? "This invitation requires a password." : "សន្លឹកការនេះត្រូវការពាក្យសម្ងាត់។");
+}
+
 function ProtectedInvitationGate({ error, loading, onSubmit, languageMode = "km" }) {
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const isEn = String(languageMode).toUpperCase() === "EN";
 
     return (
@@ -418,20 +451,37 @@ function ProtectedInvitationGate({ error, loading, onSubmit, languageMode = "km"
                     onSubmit(password);
                 }}
             >
+                <div className="protected-gate-card-badge" aria-hidden="true">
+                    <Lock size={24} />
+                </div>
                 <p className="pub-kicker">{isEn ? "Private Invitation" : "សន្លឹកការឯកជន"}</p>
                 <h1>{isEn ? "Enter Password" : "បញ្ចូលពាក្យសម្ងាត់"}</h1>
                 <p>{isEn ? "Please enter the password or use your secure guest link to view the invitation." : "សូមប្រើពាក្យសម្ងាត់ ឬតំណភ្ជាប់ភ្ញៀវដែលមានសុវត្ថិភាពដើម្បីបើកសន្លឹកការ។"}</p>
-                <label>
-                    {isEn ? "Password" : "ពាក្យសម្ងាត់"}
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        autoComplete="current-password"
-                        required
-                    />
+                <label className="protected-gate-field">
+                    <span>{isEn ? "Password" : "ពាក្យសម្ងាត់"}</span>
+                    <div className="protected-gate-input-wrap">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            autoComplete="current-password"
+                            aria-invalid={Boolean(error)}
+                            aria-describedby={error ? "protected-gate-error" : undefined}
+                            placeholder={isEn ? "Enter access password" : "វាយបញ្ចូលពាក្យសម្ងាត់"}
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="protected-gate-toggle"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            aria-label={showPassword ? (isEn ? "Hide password" : "លាក់ពាក្យសម្ងាត់") : (isEn ? "Show password" : "បង្ហាញពាក្យសម្ងាត់")}
+                            aria-pressed={showPassword}
+                        >
+                            {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                        </button>
+                    </div>
                 </label>
-                {error && <div className="inv-error">{error}</div>}
+                {error && <div id="protected-gate-error" className="inv-error" role="alert">{error}</div>}
                 <button className="inv-primary-btn" type="submit" disabled={loading}>
                     {loading ? (isEn ? "Checking..." : "កំពុងពិនិត្យ...") : (isEn ? "Unlock Invitation" : "បើកសន្លឹកការ")}
                 </button>
@@ -456,13 +506,13 @@ function PublicUnavailableView({
     return (
         <main
             style={{
-                minHeight: "100vh",
+                minHeight: "100dvh",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "24px",
-                background: "radial-gradient(ellipse at top, #fdfbf7 0%, #f4ede2 100%)",
-                fontFamily: "'Inter', 'Battambang', system-ui, -apple-system, sans-serif",
+                background: "var(--ui-theme-canvas, #f7f5f0)",
+                fontFamily: "var(--ui-font, 'DM Sans', 'Kantumruy Pro', system-ui, sans-serif)",
                 boxSizing: "border-box",
             }}
         >
@@ -470,75 +520,68 @@ function PublicUnavailableView({
                 style={{
                     width: "100%",
                     maxWidth: "460px",
-                    background: "rgba(255, 255, 255, 0.96)",
-                    backdropFilter: "blur(16px)",
-                    border: "1px solid rgba(185, 139, 66, 0.25)",
+                    background: "var(--ui-theme-surface, #fffefb)",
+                    border: "1px solid var(--ui-theme-border, rgba(185, 139, 66, 0.25))",
                     borderRadius: "24px",
                     padding: "44px 32px 36px",
                     textAlign: "center",
-                    boxShadow: "0 20px 48px -10px rgba(92, 64, 28, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04)",
+                    boxShadow: "var(--ui-theme-shadow-elevated, 0 20px 48px -10px rgba(28, 40, 34, 0.14))",
                 }}
             >
-                {/* Gold Icon Badge: 🔒 for UNPUBLISHED, 🔍 for NOT_FOUND */}
                 <div
                     style={{
                         width: "68px",
                         height: "68px",
                         margin: "0 auto 20px",
                         borderRadius: "22px",
-                        background: "linear-gradient(135deg, rgba(185, 139, 66, 0.18) 0%, rgba(185, 139, 66, 0.06) 100%)",
-                        border: "1px solid rgba(185, 139, 66, 0.3)",
+                        background: "var(--ui-theme-gold-soft, rgba(185, 139, 66, 0.14))",
+                        border: "1px solid var(--ui-theme-border, rgba(185, 139, 66, 0.3))",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "#b98b42",
+                        color: "var(--ui-theme-gold, #8c6628)",
                         fontSize: "2rem",
-                        boxShadow: "0 8px 24px rgba(185, 139, 66, 0.15)",
                     }}
                 >
                     {isNotFound ? <IoSearchOutline /> : <IoLockClosedOutline />}
                 </div>
 
-                {/* Kicker */}
                 <div
                     style={{
                         fontSize: "0.75rem",
                         fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
-                        color: "#b98b42",
+                        color: "var(--ui-theme-gold, #8c6628)",
                         marginBottom: "12px",
                     }}
                 >
                     {isEn ? "Digital Wedding Hub" : "គូព្រេង • សំបុត្រអញ្ជើញឌីជីថល"}
                 </div>
 
-                {/* Main Title */}
                 <h1
                     style={{
                         fontSize: "1.375rem",
                         fontWeight: 800,
-                        color: "#292524",
+                        color: "var(--ui-theme-ink, #1e2824)",
                         margin: "0 0 12px",
-                        lineHeight: 1.4,
+                        lineHeight: 1.5,
                     }}
                 >
                     {finalTitle}
                 </h1>
 
-                {/* Message */}
                 <p
                     style={{
                         fontSize: "0.9375rem",
-                        color: "#78716c",
-                        lineHeight: 1.65,
+                        color: "var(--ui-theme-muted, #525f58)",
+                        lineHeight: 1.7,
                         margin: isOwner ? "0 0 28px" : "0",
                     }}
                 >
                     {finalMessage}
                 </p>
 
-                {/* Action Button: render ONLY when the viewer is authenticated as the invitation owner */}
                 {isOwner && (
                     <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
                         <Link
@@ -548,14 +591,14 @@ function PublicUnavailableView({
                                 alignItems: "center",
                                 gap: "8px",
                                 padding: "11px 24px",
+                                minHeight: "44px",
                                 borderRadius: "14px",
-                                background: "var(--brand-primary, #b98b42)",
-                                color: "#ffffff",
+                                background: "var(--ui-theme-action, #1c3a32)",
+                                color: "var(--ui-theme-on-action, #ffffff)",
                                 fontSize: "0.875rem",
                                 fontWeight: 700,
                                 textDecoration: "none",
-                                boxShadow: "0 4px 16px rgba(185, 139, 66, 0.28)",
-                                transition: "all 0.2s ease",
+                                transition: "transform 0.15s ease",
                             }}
                         >
                             <IoHomeOutline style={{ fontSize: "1.1rem" }} />

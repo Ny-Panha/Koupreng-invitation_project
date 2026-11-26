@@ -1,0 +1,526 @@
+{
+  "stage": "before",
+  "capturedAt": "2026-11-26T01:28:31.293Z",
+  "results": [
+    {
+      "fileName": "01-home-light-en-1440.png",
+      "url": "/",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 6565,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "58px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 9,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "fileName": "02-home-dark-km-390.png",
+      "url": "/",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 9336,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "31.2px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "03-login-light-en-1440.png",
+      "url": "/login",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 900,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "26px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "04-login-dark-km-390.png",
+      "url": "/login",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 877,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "21.45px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "05-templates-light-en-1440.png",
+      "url": "/templates",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1780,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "56px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "06-templates-dark-km-390.png",
+      "url": "/templates",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 3666,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "32px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "fileName": "07-events-light-en-1440.png",
+      "url": "/app/events",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1057,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "34px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "08-events-dark-km-320.png",
+      "url": "/app/events",
+      "innerWidth": 320,
+      "innerHeight": 640,
+      "scrollWidth": 320,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2479,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "26px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "09-dashboard-top-light-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1856,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "24px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "static",
+        "top": "auto",
+        "height": "993.781px",
+        "rect": {
+          "x": 28.796875,
+          "y": 88,
+          "width": 240,
+          "height": 993.78125,
+          "top": 88,
+          "right": 268.796875,
+          "bottom": 1081.78125,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "visible",
+        "scrollHeight": 732,
+        "clientHeight": 732
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 292.796875,
+          "y": 88,
+          "width": 1118.40625,
+          "height": 1643.859375,
+          "top": 88,
+          "right": 1411.203125,
+          "bottom": 1731.859375,
+          "left": 292.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "10-dashboard-scrolled-light-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 700,
+      "docHeight": 1856,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "24px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "static",
+        "top": "auto",
+        "height": "993.781px",
+        "rect": {
+          "x": 28.796875,
+          "y": -612,
+          "width": 240,
+          "height": 993.78125,
+          "top": -612,
+          "right": 268.796875,
+          "bottom": 381.78125,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "visible",
+        "scrollHeight": 732,
+        "clientHeight": 732
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 292.796875,
+          "y": -612,
+          "width": 1118.40625,
+          "height": 1643.859375,
+          "top": -612,
+          "right": 1411.203125,
+          "bottom": 1031.859375,
+          "left": 292.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "11-dashboard-dark-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1856,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "24px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "static",
+        "top": "auto",
+        "height": "993.781px",
+        "rect": {
+          "x": 28.796875,
+          "y": 88,
+          "width": 240,
+          "height": 993.78125,
+          "top": 88,
+          "right": 268.796875,
+          "bottom": 1081.78125,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "visible",
+        "scrollHeight": 732,
+        "clientHeight": 732
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 292.796875,
+          "y": 88,
+          "width": 1118.40625,
+          "height": 1643.859375,
+          "top": 88,
+          "right": 1411.203125,
+          "bottom": 1731.859375,
+          "left": 292.796875
+        }
+      },
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "fileName": "12-dashboard-short-768x600.png",
+      "url": "/app/events/42",
+      "innerWidth": 1024,
+      "innerHeight": 600,
+      "scrollWidth": 1024,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2220,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "24px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "static",
+        "top": "auto",
+        "height": "1121px",
+        "rect": {
+          "x": 20.46875,
+          "y": 88,
+          "width": 72,
+          "height": 1121,
+          "top": 88,
+          "right": 92.46875,
+          "bottom": 1209,
+          "left": 20.46875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "visible",
+        "scrollHeight": 942,
+        "clientHeight": 942
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 116.46875,
+          "y": 88,
+          "width": 887.0625,
+          "height": 2008.4375,
+          "top": 88,
+          "right": 1003.53125,
+          "bottom": 2096.4375,
+          "left": 116.46875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "13-dashboard-mobile-km-390.png",
+      "url": "/app/events/42",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 3047,
+      "colorMode": "light",
+      "lang": "km",
+      "h1FontSize": "24px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 12,
+          "y": 88,
+          "width": 366,
+          "height": 2818.953125,
+          "top": 88,
+          "right": 378,
+          "bottom": 2906.953125,
+          "left": 12
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "14-guests-light-en-1440.png",
+      "url": "/app/events/42/guests",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1217,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "34px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "static",
+        "top": "auto",
+        "height": "993.781px",
+        "rect": {
+          "x": 28.796875,
+          "y": 88,
+          "width": 240,
+          "height": 993.78125,
+          "top": 88,
+          "right": 268.796875,
+          "bottom": 1081.78125,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "visible",
+        "scrollHeight": 732,
+        "clientHeight": 732
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 292.796875,
+          "y": 88,
+          "width": 1118.40625,
+          "height": 1004.828125,
+          "top": 88,
+          "right": 1411.203125,
+          "bottom": 1092.828125,
+          "left": 292.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "15-guests-dark-km-390.png",
+      "url": "/app/events/42/guests",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1900,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "24px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 12,
+          "y": 88,
+          "width": 366,
+          "height": 1672.25,
+          "top": 88,
+          "right": 378,
+          "bottom": 1760.25,
+          "left": 12
+        }
+      },
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 8,
+          "help": "Elements must meet minimum color contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "fileName": "16-studio-light-en-1440.png",
+      "url": "/app/events/42/invitation",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1063,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "18px",
+      "btnFontSize": "14px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 20,
+          "y": 0,
+          "width": 1400,
+          "height": 951,
+          "top": 0,
+          "right": 1420,
+          "bottom": 951,
+          "left": 20
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "17-public-password-gate-km-390.png",
+      "url": "/i/protected-sample",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 844,
+      "colorMode": "light",
+      "lang": "km",
+      "h1FontSize": "16px",
+      "btnFontSize": "16px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    }
+  ]
+}

@@ -59,7 +59,11 @@ export function useStudioPersistence({ value, onRestore, persist, enabled, initi
         const result = await latest.current.persist(options);
         if (!result?.synced) throw Object.assign(new Error(result?.error || copy.current.failed), result?.failure || {}, { status: result?.status });
         if (!mounted.current) return false;
-        acknowledged.current = snapshot;
+        const nextAcknowledged = typeof result.acknowledge === "function" ? JSON.stringify(result.acknowledge(JSON.parse(snapshot))) : snapshot;
+        acknowledged.current = nextAcknowledged;
+        if (typeof result.acknowledge === "function" && latest.current.serialized === snapshot) {
+          latest.current.serialized = nextAcknowledged;
+        }
         if (mounted.current) setState(s => ({ phase: "saved", error: "", version: s.version + 1 }));
         return true;
       } catch (error) {

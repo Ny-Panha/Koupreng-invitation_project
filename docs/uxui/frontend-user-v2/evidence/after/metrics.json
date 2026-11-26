@@ -1,0 +1,690 @@
+{
+  "stage": "after",
+  "capturedAt": "2026-11-26T07:06:55.563Z",
+  "results": [
+    {
+      "fileName": "01-home-light-en-1440.png",
+      "url": "/",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 6573,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "58px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "02-home-dark-km-390.png",
+      "url": "/",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 9081,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "31.2px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "03-login-light-en-1440.png",
+      "url": "/login",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 900,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "26px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "04-login-dark-km-390.png",
+      "url": "/login",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 877,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "21.45px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "05-templates-light-en-1440.png",
+      "url": "/templates",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1780,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "56px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "06-templates-dark-km-390.png",
+      "url": "/templates",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 3666,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "32px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "07-events-light-en-1440.png",
+      "url": "/app/events",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1057,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "34px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "08-events-dark-km-320.png",
+      "url": "/app/events",
+      "innerWidth": 320,
+      "innerHeight": 640,
+      "scrollWidth": 320,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2479,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "26px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "09-dashboard-top-light-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1926,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "28px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 762,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 1700.25,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 1794.25,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "10-dashboard-scrolled-light-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 700,
+      "docHeight": 1926,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "28px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 762,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": -606,
+          "width": 1098.40625,
+          "height": 1700.25,
+          "top": -606,
+          "right": 1411.203125,
+          "bottom": 1094.25,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "11-dashboard-dark-en-1440.png",
+      "url": "/app/events/42",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1926,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "28px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 762,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 1700.25,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 1794.25,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "12-dashboard-short-768x600.png",
+      "url": "/app/events/42",
+      "innerWidth": 1024,
+      "innerHeight": 600,
+      "scrollWidth": 1024,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2228,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "22.528px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "492px",
+        "rect": {
+          "x": 20.46875,
+          "y": 96,
+          "width": 72,
+          "height": 492,
+          "top": 96,
+          "right": 92.46875,
+          "bottom": 588,
+          "left": 20.46875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 972,
+        "clientHeight": 313
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 120.46875,
+          "y": 94,
+          "width": 883.0625,
+          "height": 2002.15625,
+          "top": 94,
+          "right": 1003.53125,
+          "bottom": 2096.15625,
+          "left": 120.46875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "13-dashboard-mobile-km-390.png",
+      "url": "/app/events/42",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 3030,
+      "colorMode": "light",
+      "lang": "km",
+      "h1FontSize": "22px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 12,
+          "y": 92,
+          "width": 366,
+          "height": 2798.234375,
+          "top": 92,
+          "right": 378,
+          "bottom": 2890.234375,
+          "left": 12
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "14-guests-light-en-1440.png",
+      "url": "/app/events/42/guests",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1407,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "34px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 762,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 1180.71875,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 1274.71875,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "15-guests-dark-km-390.png",
+      "url": "/app/events/42/guests",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2884,
+      "colorMode": "dark",
+      "lang": "km",
+      "h1FontSize": "24px",
+      "btnFontSize": "12px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 12,
+          "y": 92,
+          "width": 366,
+          "height": 2651.59375,
+          "top": 92,
+          "right": 378,
+          "bottom": 2743.59375,
+          "left": 12
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "16-studio-light-en-1440.png",
+      "url": "/app/events/42/invitation",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1063,
+      "colorMode": "light",
+      "lang": "en",
+      "h1FontSize": "18px",
+      "btnFontSize": "14px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 20,
+          "y": 0,
+          "width": 1400,
+          "height": 951,
+          "top": 0,
+          "right": 1420,
+          "bottom": 951,
+          "left": 20
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "17-public-password-gate-km-390.png",
+      "url": "/i/protected-sample",
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "scrollWidth": 390,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 844,
+      "colorMode": "light",
+      "lang": "km",
+      "h1FontSize": "22px",
+      "btnFontSize": "14px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "18-studio-dark-en-1440.png",
+      "url": "/app/events/42/invitation",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1063,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "18px",
+      "btnFontSize": "14px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 20,
+          "y": 0,
+          "width": 1400,
+          "height": 951,
+          "top": 0,
+          "right": 1420,
+          "bottom": 951,
+          "left": 20
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "19-settings-dark-en-1440.png",
+      "url": "/app/events/42/settings",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 2646,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "32px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 994,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 2419.640625,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 2513.640625,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "20-seating-dark-en-1440.png",
+      "url": "/app/events/42/seating",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1166,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "32px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 900,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 939.828125,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 1033.828125,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    },
+    {
+      "fileName": "21-calendar-dark-en-1440.png",
+      "url": "/app/events",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1339,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "34px",
+      "btnFontSize": "13px",
+      "sidebarStyle": null,
+      "navBodyStyle": null,
+      "mainStyle": null,
+      "axeViolations": []
+    },
+    {
+      "fileName": "22-budget-dark-en-1440.png",
+      "url": "/app/events/42/budget",
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollWidth": 1440,
+      "overflowPx": 0,
+      "scrollY": 0,
+      "docHeight": 1252,
+      "colorMode": "dark",
+      "lang": "en",
+      "h1FontSize": "36px",
+      "btnFontSize": "13px",
+      "sidebarStyle": {
+        "position": "sticky",
+        "top": "96px",
+        "height": "792px",
+        "rect": {
+          "x": 28.796875,
+          "y": 96,
+          "width": 256,
+          "height": 792,
+          "top": 96,
+          "right": 284.796875,
+          "bottom": 888,
+          "left": 28.796875
+        }
+      },
+      "navBodyStyle": {
+        "overflowY": "auto",
+        "scrollHeight": 762,
+        "clientHeight": 576
+      },
+      "mainStyle": {
+        "overflowY": "visible",
+        "rect": {
+          "x": 312.796875,
+          "y": 94,
+          "width": 1098.40625,
+          "height": 1026.15625,
+          "top": 94,
+          "right": 1411.203125,
+          "bottom": 1120.15625,
+          "left": 312.796875
+        }
+      },
+      "axeViolations": []
+    }
+  ]
+}

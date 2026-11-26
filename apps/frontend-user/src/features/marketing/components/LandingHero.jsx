@@ -7,12 +7,11 @@ import "./LandingHero.css";
 export default function LandingHero({ copy }) {
   return (
     <section className="kp-hero kp-hero--live" aria-labelledby="kp-hero-title">
-      <FadeContent className="kp-hero-copy" duration={0.6}>
+      <FadeContent className="kp-hero-copy" duration={0.12}>
         <div className="kp-hero-badge" role="text">
           <Sparkles size={14} aria-hidden="true" />
           <span>{copy("សំបុត្រអញ្ជើញមង្គលការឌីជីថល", "Digital wedding invitations, thoughtfully made")}</span>
         </div>
-        <p className="kp-hero-category">{copy("សំបុត្រអញ្ជើញមង្គលការឌីជីថល", "Digital wedding invitations")}</p>
         <h1 id="kp-hero-title">
           <span>{copy("សំបុត្រអញ្ជើញដែលបង្ហាញ", "Invitations crafted")}</span>
           <span>{copy("រឿងរ៉ាវរបស់អ្នក។", "around your story.")}</span>

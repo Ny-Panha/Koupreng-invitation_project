@@ -1747,3 +1747,44 @@
   background: #fbf2e3;
   border-color: #b0926a;
 }
+
+/* Frontend User 2.0 Semantic Surface & Dark Mode Integration */
+:root[data-color-mode="dark"] .checkout-theme-wrapper,
+:root[data-color-mode="dark"] .checkout-overlay {
+  background: var(--ui-theme-canvas);
+  color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .checkout-back-btn,
+:root[data-color-mode="dark"] .paid-btn-preview {
+  background: var(--ui-theme-surface);
+  color: var(--ui-theme-ink);
+  border-color: var(--ui-theme-border);
+}
+
+:root[data-color-mode="dark"] .checkout-back-btn:hover,
+:root[data-color-mode="dark"] .paid-btn-preview:hover {
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-gold);
+  color: var(--ui-theme-gold);
+}
+
+:root[data-color-mode="dark"] .checkout-summary-card,
+:root[data-color-mode="dark"] .checkout-method-card,
+:root[data-color-mode="dark"] .payment-status-card,
+:root[data-color-mode="dark"] .paid-template-card {
+  background: var(--ui-theme-surface);
+  color: var(--ui-theme-ink);
+  border-color: var(--ui-theme-border);
+  box-shadow: var(--ui-theme-shadow);
+}
+
+:root[data-color-mode="dark"] .paid-btn-use {
+  background: var(--ui-theme-action);
+  color: var(--ui-theme-on-action);
+}
+
+:root[data-color-mode="dark"] .paid-meta-row,
+:root[data-color-mode="dark"] .checkout-note {
+  color: var(--ui-theme-muted);
+}

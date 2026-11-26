@@ -652,15 +652,15 @@
   font-size: 12px;
   line-height: 1.8;
   text-align: center;
-  animation: kpPaperReveal 0.35s var(--kp-ease);
+  animation: kpPaperReveal 0.16s var(--kp-ease);
   box-sizing: border-box;
 }
 
 .kp-mini-kicker {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--kp-gold-ink);
+  color: #6f4b1a;
   margin-bottom: 8px;
 }
 
@@ -1626,10 +1626,13 @@
 .kp-guest-demo table th { font-weight: 550; }
 .kp-guest-demo table thead th { color: var(--kp-muted); font-size: 13px; }
 .kp-guest-demo table tr:last-child td, .kp-guest-demo table tr:last-child th { border-bottom: 0; }
-.kp-demo-status { display: inline-block; font-size: 12px; padding: 4px 10px; border-radius: 6px; }
-.kp-demo-status--attending { color: #216245; background: #EDF7F0; }
-.kp-demo-status--pending { color: #77572C; background: #FBF2E2; }
-.kp-demo-status--declined { color: #922B35; background: #FFF1F1; }
+.kp-demo-status { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+.kp-demo-status--attending { color: #164e34; background: #e3f4ea; }
+.kp-demo-status--pending { color: #6c4b1e; background: #f9eed9; }
+.kp-demo-status--declined { color: #87202b; background: #fdebec; }
+:root[data-color-mode="dark"] .kp-demo-status--attending { color: #b9ebd0; background: #1a3b2c; }
+:root[data-color-mode="dark"] .kp-demo-status--pending { color: #f4d38e; background: #382c16; }
+:root[data-color-mode="dark"] .kp-demo-status--declined { color: #ffb4ab; background: #402624; }
 .kp-guest-demo-note { padding: 16px 24px; border-top: 1px solid var(--kp-border); color: var(--kp-muted); font-size: 13px; line-height: 1.75; background: var(--kp-surface-soft); }
 .kp-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; list-style: none; padding: 0; margin: 0; }
 .kp-journey li { position: relative; border-top: 2px solid var(--kp-border); padding-top: 24px; }
@@ -1902,6 +1905,10 @@
 :root[data-color-mode="dark"] .kp-mini-invitation {
   background: var(--ui-theme-subtle);
   color: var(--ui-theme-ink);
+}
+
+:root[data-color-mode="dark"] .kp-mini-kicker {
+  color: var(--ui-theme-gold, #d8b875);
 }
 
 :root[data-color-mode="dark"] .kp-mini-detail {

@@ -616,3 +616,316 @@
   }
   .invitation-studio .studio-section-list button[aria-current] { outline: 2px solid Highlight; }
 }
+
+/* Phase 15 Publish Review & Share Atelier */
+.studio-publish-review-body {
+  display: grid;
+  gap: 16px;
+}
+.studio-access-fieldset {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+  border-radius: 14px;
+  background: var(--ui-theme-subtle, #efebe2);
+  display: grid;
+  gap: 12px;
+}
+.studio-access-fieldset legend {
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ui-theme-ink, #1e2824);
+}
+.studio-access-options {
+  display: grid;
+  gap: 8px;
+}
+.studio-access-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+  background: var(--ui-theme-surface, #fffefb);
+  color: var(--ui-theme-ink, #1e2824);
+  cursor: pointer;
+  transition: border-color var(--ui-duration-feedback, 160ms), background-color var(--ui-duration-feedback, 160ms);
+}
+.studio-access-option:hover {
+  border-color: var(--ui-theme-control-border, #8e7b62);
+}
+.studio-access-option.is-selected {
+  border-color: var(--ui-theme-action, #1c3a32);
+  background: var(--ui-theme-action-soft, #e6efe9);
+}
+.studio-access-option input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--ui-theme-action, #1c3a32);
+}
+.studio-access-option-icon {
+  margin-top: 2px;
+  color: var(--ui-theme-gold, #8c6628);
+  flex-shrink: 0;
+}
+.studio-access-option-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.studio-access-option-copy strong {
+  font-size: 13.5px;
+  font-weight: 650;
+}
+.studio-access-option-copy small {
+  color: var(--ui-theme-muted, #525f58);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.studio-access-password-box {
+  display: grid;
+  gap: 6px;
+}
+.studio-access-password-box label {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ui-theme-ink, #1e2824);
+}
+.studio-access-password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.studio-access-password-input-wrap input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 46px 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ui-theme-control-border, #8e7b62);
+  background: var(--ui-theme-surface, #fffefb);
+  color: var(--ui-theme-ink, #1e2824);
+  font: inherit;
+  font-size: 14px;
+}
+.studio-password-eye-btn {
+  position: absolute;
+  right: 2px;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ui-theme-muted, #525f58);
+  cursor: pointer;
+}
+.studio-access-saved-hint {
+  color: var(--ui-theme-success, #166534);
+  font-size: 12px;
+  font-weight: 600;
+}
+.studio-access-inline-alert {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--ui-theme-danger-soft, #fff0ed);
+  color: var(--ui-theme-danger, #b91c1c);
+  font-size: 13px;
+  font-weight: 600;
+}
+.studio-access-url-preview {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--ui-theme-subtle, #efebe2);
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+}
+.studio-access-url-preview span {
+  font-size: 12px;
+  color: var(--ui-theme-muted, #525f58);
+}
+.studio-access-url-preview code {
+  font-size: 12.5px;
+  color: var(--ui-theme-ink, #1e2824);
+  overflow-wrap: anywhere;
+}
+.studio-publish-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ui-theme-muted, #525f58);
+}
+.studio-share-atelier {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+  background: var(--ui-theme-surface, #fffefb);
+}
+.studio-published-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.studio-published-badge,
+.studio-visibility-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+.studio-published-badge {
+  background: var(--ui-theme-success-soft, #e8f5e9);
+  color: var(--ui-theme-success, #166534);
+}
+.studio-visibility-tag {
+  background: var(--ui-theme-gold-soft, #f6efe0);
+  color: var(--ui-theme-gold, #8c6628);
+}
+.studio-share-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+.studio-qr-card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+}
+.studio-qr-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #d9d1c2;
+  background: #f7f5f0;
+  color: #1e2824;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.studio-share-details {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+.studio-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.studio-share-actions :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--ui-theme-border, #e4dccd);
+  background: var(--ui-theme-subtle, #efebe2);
+  color: var(--ui-theme-ink, #1e2824);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+.studio-share-actions :is(a, button):hover {
+  border-color: var(--ui-theme-control-border, #8e7b62);
+  background: var(--ui-theme-hover, #f3efe5);
+}
+.studio-copy-status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ui-theme-success, #166534);
+  min-height: 20px;
+}
+.studio-unpublish-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--ui-theme-border, #e4dccd);
+  padding-top: 12px;
+}
+.studio-access-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--ui-theme-control-border, #d8ccb8);
+  background: var(--ui-theme-surface, #ffffff);
+  color: var(--ui-theme-ink, #17372d);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.studio-unpublish-btn {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--ui-theme-danger, #b91c1c) 35%, transparent);
+  background: var(--ui-theme-danger-soft, #fff0ed);
+  color: var(--ui-theme-danger, #b91c1c);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide, .studio-published-result, .studio-share-grid, .studio-qr-card, .studio-publish-review-card, .studio-access-option, .studio-access-password-box) {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-access-option[aria-checked="true"],
+:root[data-color-mode="dark"] .invitation-studio .studio-access-option.is-selected {
+  background: var(--app-accent-soft);
+  border-color: var(--app-accent);
+}
+
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide-navigation button, .studio-qr-download-btn, .studio-share-btn, .studio-access-edit-btn, .studio-copy-btn) {
+  background: var(--app-subtle);
+  border-color: var(--app-control-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide p, .studio-guide-navigation span, .studio-access-desc, .studio-publish-note) {
+  color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-published-badge, .studio-visibility-tag) {
+  background: var(--app-subtle);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-unpublish-btn {
+  background: #402826;
+  border-color: #80504a;
+  color: var(--app-danger);
+}
