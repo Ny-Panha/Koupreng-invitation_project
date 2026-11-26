@@ -16,6 +16,15 @@ public class PaymentProperties {
     private String providerMode = "static";
 
     private boolean autoConfirmTelegramDetected;
+    private boolean subscriptionPayWayTelegramAutoSettleEnabled;
+
+    public boolean isSubscriptionPayWayTelegramAutoSettleEnabled() {
+        return subscriptionPayWayTelegramAutoSettleEnabled;
+    }
+
+    public void setSubscriptionPayWayTelegramAutoSettleEnabled(boolean enabled) {
+        this.subscriptionPayWayTelegramAutoSettleEnabled = enabled;
+    }
     private String telegramGroupIds = "";
     private String telegramPaymentBotIds = "";
     private String telegramBotUrl = "";

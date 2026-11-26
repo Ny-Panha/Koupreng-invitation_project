@@ -9,6 +9,7 @@ The Spring Boot payment module owns prices, order lifecycles, reconciliation and
 | Fixed subscription checkout | COMPLETED for existing approved plan links | Price, currency, duration and benefits are captured by the backend. The buyer continues in ABA and React status polling reads the owner's order endpoint. |
 | Requested merchant link | PARTIAL | Playwright opened the ABA page on 26 November 2026 and verified the title `KOEURNG VIREAK`. The checkout rendered a language selector and ABA footer. Amount, currency, payment methods, remarks and unique checkout sessions remained unverified. The existing amount-verified route remains active. |
 | Dynamic KHQR and automatic bank verification | BLOCKED for the requested merchant link | The official ABA APIs require authorized merchant credentials. Merchant enrollment, agreement terms and API access for this account need confirmation from ABA. |
+| Subscription auto-settlement | Optional, disabled by default | A direct original PayWay alert delivered by the dedicated Admin Bot can settle one exact fixed-link subscription match after the operator enables the policy. |
 | Official bank record reconciliation | COMPLETED in code | Admin verifies the actual bank record and enters the merchant, currency, amount, transaction ID, matching notes and successful/unreversed attestation. Detected and late orders can be reconciled through this path. |
 | User Bot and merchant group | PARTIAL | Windows Computer Use identified Telegram Desktop, the pinned merchant group and a verified BotFather chat. Telegram Bot API `getMe`, `getWebhookInfo`, `getChat` and `getChatMember` confirmed one existing bot with a configured webhook and membership in the intended group. |
 | Independent Admin Bot and genuine PayWay delivery | BLOCKED live | A separate Admin Bot token, its webhook secret and a numeric allowlisted PayWay sender ID are required. Live group permissions and the current webhook were left in their observed configuration. |
@@ -42,13 +43,17 @@ sequenceDiagram
     Buyer->>ABA: Open official checkout
     ABA-->>Backend: Original merchant alert through Telegram adapter, when available
     Backend->>MySQL: Record normalized evidence and match or flag review
-    Admin->>ABA: Inspect official merchant record
-    Admin->>Backend: Submit authenticated verification
-    Backend->>MySQL: Claim transaction, settle order, activate entitlement and enqueue notice
+    alt Enabled policy and one exact direct PayWay match
+        Backend->>MySQL: Claim original alert, activate subscription and enqueue notice
+    else Needs verification
+        Admin->>ABA: Inspect official merchant record
+        Admin->>Backend: Submit authenticated verification
+        Backend->>MySQL: Claim transaction, activate entitlement and enqueue notice
+    end
     Backend-->>Buyer: Return committed state through authenticated status polling
 ```
 
-`PENDING` can enter review, expire, or be verified through the administrator workflow. A Telegram match writes `MATCHED_UNVERIFIED` to the separate evidence row and moves the order to review. A conflicting or ambiguous notification remains in review. `EXPIRED` remains eligible for documented manual reconciliation. The verified ABA API path remains available to its existing authorized template integration. Admin verification stamps method, merchant, reviewer, verification timestamp and reconciliation notes on the transaction evidence. The database transaction claims a unique ABA transaction across both template and subscription orders, updates the order and entitlements, and stores outbox records atomically. Failed notification delivery leaves the financial transaction committed.
+`PENDING` can enter review, expire, or be verified through the administrator workflow. A Telegram match writes `MATCHED_UNVERIFIED` to the separate evidence row and moves the order to review. A conflicting or ambiguous notification remains in review. `EXPIRED` remains eligible for documented manual reconciliation. With automatic settlement enabled, a new, unambiguous direct PayWay alert can move an eligible subscription directly to paid. Original automatic evidence is recorded as `PAYWAY_TELEGRAM`. The verified ABA API path remains available to its existing authorized template integration. Admin verification stamps method, merchant, reviewer, verification timestamp and reconciliation notes on the transaction evidence. The database transaction claims a unique ABA transaction across both template and subscription orders, updates the order and entitlements, and stores outbox records atomically. Failed notification delivery leaves the financial transaction committed.
 
 ```mermaid
 erDiagram
@@ -65,6 +70,8 @@ erDiagram
 ### Security and privacy
 
 - Route administrative settlement through JWT-backed ADMIN authorization. The internal worker secret authorizes evidence ingestion. Payer claims carry no settlement authority.
+- Enable `SUBSCRIPTION_PAYWAY_TELEGRAM_AUTO_SETTLE=true` only after verifying the dedicated Admin Bot webhook and original alerts from the genuine numeric PayWay sender. Use a merchant channel dedicated to Koupreng checkout. Off-platform payments with the same merchant, amount and payer may otherwise look like checkout payments. The legacy `AUTO_CONFIRM_TELEGRAM_DETECTED` setting has no settlement authority.
+- Automatic settlement validates the original successful alert, merchant, exact payer name, suffix, amount, currency, transaction and approval IDs, and the bank time inside the checkout window in Asia/Phnom_Penh. The alert and its delivery each have a five-minute freshness limit. A competing subscription or template, edited message, operator reply, or evidence previously sent for review cannot settle automatically.
 - Configure numeric chat and sender IDs. The worker checks original message metadata and rejects forwards and messages from unexpected senders. Messages are stored in normalized form without full bank account numbers.
 - Keep USD and KHR separate. KHR uses whole riel and USD accepts cent precision. Admin notes should name the evidence and describe the match without including account numbers or customer documents.
 - User Bot settings require an authenticated owner. A five-minute cryptographic challenge is stored as a hash, and a private chat consumes it once. Webhook updates are deduplicated by bot ID and update ID. Disconnect removes the link and makes outstanding deliveries ineligible when the worker claims them.

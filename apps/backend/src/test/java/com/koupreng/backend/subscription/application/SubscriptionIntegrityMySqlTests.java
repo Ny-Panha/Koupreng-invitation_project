@@ -1,6 +1,8 @@
 package com.koupreng.backend.subscription.application;
 
 import com.koupreng.backend.payment.api.dto.ConfirmPaymentRequest;
+import com.koupreng.backend.subscription.api.dto.TelegramDetectSubscriptionPaymentRequest;
+import com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus;
 import com.koupreng.backend.subscription.domain.Subscription;
 import com.koupreng.backend.subscription.domain.SubscriptionPackage;
 import com.koupreng.backend.subscription.infrastructure.persistence.SubscriptionRepository;
@@ -131,7 +133,7 @@ class SubscriptionIntegrityMySqlTests {
         pending.setPayerName("FIXTURE USER");
         pending.setPayerAccountLast3("982");
         subscriptions.saveAndFlush(pending);
-        var request = new com.koupreng.backend.subscription.api.dto.TelegramDetectSubscriptionPaymentRequest();
+        var request = new TelegramDetectSubscriptionPaymentRequest();
         request.setPaywayTransactionId("SIM-" + UUID.randomUUID());
         request.setRawMessage("USD 27.13 paid by FIXTURE USER (*982). Trx. ID: " + request.getPaywayTransactionId());
         request.setDetectedAmount(pending.getAmount());
@@ -144,7 +146,7 @@ class SubscriptionIntegrityMySqlTests {
         request.setTelegramMessageId("900000" + pending.getId());
         request.setTrustedMerchantAlert(true);
         request.setMerchantMessageAt(Instant.now());
-        assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
                 service.detectTelegramPayment(request).status());
         assertFalse(subscriptions.findById(pending.getId()).orElseThrow().isActive());
         var verification = new ConfirmPaymentRequest(pending.getOrderCode(), pending.getAmount(),
@@ -154,6 +156,110 @@ class SubscriptionIntegrityMySqlTests {
         service.confirmManualPayment(verification);
         assertEquals(end, subscriptions.findById(pending.getId()).orElseThrow().getEndDate());
         assertEquals("MANUAL_ADMIN", subscriptions.findById(pending.getId()).orElseThrow().getConfirmSource());
+    }
+
+    @Test
+    void directOriginalAlertAutoSettlesExactNameOnceAmongSameAmountAndSuffix() {
+        enableDirectAlertSettlement();
+        Subscription winner = alertsOrder("DEMO   PAYER", "831");
+        Subscription other = alertsOrder("ANOTHER PAYER", "831");
+        var alert = directAlert(winner);
+        alert.setPayerName("demo payer");
+        assertEquals(SubscriptionPaymentDetectionStatus.PAID, service.reconcileDirectPayWayAlert(alert).status());
+        assertEquals(SubscriptionPaymentDetectionStatus.ALREADY_PROCESSED, service.reconcileDirectPayWayAlert(alert).status());
+        var paid = subscriptions.findById(winner.getId()).orElseThrow();
+        assertEquals("PAID", paid.getPaymentStatus());
+        assertTrue(paid.isActive());
+        assertEquals("PAYWAY_TELEGRAM", paid.getConfirmSource());
+        assertFalse(subscriptions.findById(other.getId()).orElseThrow().isActive());
+        var evidence = evidenceRepository.findById(alert.getPaywayTransactionId()).orElseThrow();
+        assertEquals(paid.getOrderCode(), evidence.getOrderCode());
+        assertEquals("PAYWAY_TELEGRAM", evidence.getVerificationMethod());
+        assertEquals("telegram-bot:42", evidence.getVerifiedBy());
+    }
+
+    @Test
+    void anExistingReviewCandidateWithTheSamePayerPreventsAutomaticSettlement() {
+        enableDirectAlertSettlement();
+        Subscription pending = alertsOrder("DEMO PAYER", "832");
+        Subscription competing = alertsOrder("Demo Payer", "832");
+        competing.setStatus("REVIEW_REQUIRED");
+        subscriptions.saveAndFlush(competing);
+        var alert = directAlert(pending);
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED, service.reconcileDirectPayWayAlert(alert).status());
+        assertFalse(subscriptions.findById(pending.getId()).orElseThrow().isActive());
+        assertFalse(subscriptions.findById(competing.getId()).orElseThrow().isActive());
+        assertNull(evidenceRepository.findById(alert.getPaywayTransactionId()).orElseThrow().getVerificationMethod());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"merchant", "group", "sender", "amount", "name", "opt-out"})
+    void directAlertWithAConfirmationGuardFailureRemainsUnpaid(String failure) {
+        enableDirectAlertSettlement();
+        Subscription pending = alertsOrder("DEMO PAYER", "833");
+        var alert = directAlert(pending);
+        switch (failure) {
+            case "merchant" -> alert.setRawMessage(alert.getRawMessage().replace("KOEURNG VIREAK", "OTHER MERCHANT"));
+            case "group" -> alert.setTelegramChatId("-1002");
+            case "sender" -> alert.setTelegramSenderId("999");
+            case "amount" -> alert.setRawMessage(alert.getRawMessage().replace("$0.01", "$0.02"));
+            case "name" -> alert.setPayerName("Someone Else");
+            case "opt-out" -> paymentProperties.setSubscriptionPayWayTelegramAutoSettleEnabled(false);
+            default -> throw new AssertionError(failure);
+        }
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED, service.reconcileDirectPayWayAlert(alert).status());
+        assertFalse(subscriptions.findById(pending.getId()).orElseThrow().isActive());
+    }
+
+    @Test
+    void legacyIngestRemainsReviewOnlyWhenAutomaticSettlementIsEnabled() {
+        enableDirectAlertSettlement();
+        Subscription order = alertsOrder("DEMO PAYER", "834");
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED, service.detectTelegramPayment(directAlert(order)).status());
+    }
+
+    @org.junit.jupiter.api.AfterEach
+    void resetDirectAlertSettlement() {
+        paymentProperties.setSubscriptionPayWayTelegramAutoSettleEnabled(false);
+        paymentProperties.setAdminSecret("change-me-local-only");
+    }
+
+    private void enableDirectAlertSettlement() {
+        paymentProperties.setSubscriptionPayWayTelegramAutoSettleEnabled(true);
+        paymentProperties.setAdminSecret("test-administrator-key-".repeat(2));
+    }
+
+    private Subscription alertsOrder(String name, String suffix) {
+        var pending = order(user(), false, null);
+        pending.setProvider("ABA_PAYWAY_STATIC_TELEGRAM");
+        pending.setAmount(new BigDecimal("0.01"));
+        pending.setPayerName(name);
+        pending.setPayerAccountLast3(suffix);
+        return subscriptions.saveAndFlush(pending);
+    }
+
+    private TelegramDetectSubscriptionPaymentRequest directAlert(Subscription order) {
+        Instant posted = Instant.now();
+        String time = java.time.format.DateTimeFormatter.ofPattern("MMM d, hh:mm a", java.util.Locale.ENGLISH)
+                .withZone(java.time.ZoneId.of("Asia/Phnom_Penh")).format(posted);
+        String id = "990" + order.getId();
+        var alert = new TelegramDetectSubscriptionPaymentRequest();
+        alert.setRawMessage("$0.01 paid by DEMO PAYER (*" + order.getPayerAccountLast3()
+                + ") on " + time + " via ABA PAY at KOEURNG VIREAK. Trx. ID: " + id + ", APV: 123456.");
+        alert.setDetectedBy("telegram-payway-bot");
+        alert.setDetectedAmount(order.getAmount());
+        alert.setDetectedCurrency(order.getCurrency());
+        alert.setPayerName("DEMO PAYER");
+        alert.setPayerAccountLast3(order.getPayerAccountLast3());
+        alert.setPaywayTransactionId(id);
+        alert.setPaywayApprovalCode("123456");
+        alert.setTransactionDateText(time);
+        alert.setTelegramChatId("-1001");
+        alert.setTelegramSenderId("42");
+        alert.setTelegramMessageId(id);
+        alert.setMerchantMessageAt(posted);
+        alert.setTrustedMerchantAlert(true);
+        return alert;
     }
 
     @Test

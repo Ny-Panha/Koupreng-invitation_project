@@ -56,6 +56,7 @@ public class SubscriptionService {
     private static final String STATUS_REVIEW_REQUIRED = "REVIEW_REQUIRED";
     private static final String CONFIRM_SOURCE_MANUAL_ADMIN = "MANUAL_ADMIN";
     private static final String CONFIRM_SOURCE_TELEGRAM_ADMIN = "TELEGRAM_ADMIN_DETECT";
+    private static final String CONFIRM_SOURCE_PAYWAY_TELEGRAM = "PAYWAY_TELEGRAM";
     private static final ZoneId BUSINESS_ZONE = ZoneId.of("Asia/Phnom_Penh");
     private static final DateTimeFormatter ORDER_DATE_FORMAT = DateTimeFormatter.ofPattern("yyMMdd")
             .withZone(BUSINESS_ZONE);
@@ -271,14 +272,19 @@ public class SubscriptionService {
         }
     }
 
-    /**
-     * Reconciles static-link subscription payments using trusted merchant Telegram evidence.
-     * Official PayWay API verification can replace this evidence boundary without changing
-     * the subscription activation transaction.
-     */
     @Transactional
-    public SubscriptionPaymentDetectionResponse detectTelegramPayment(
-            TelegramDetectSubscriptionPaymentRequest request
+    public SubscriptionPaymentDetectionResponse detectTelegramPayment(TelegramDetectSubscriptionPaymentRequest request) {
+        return reconcileTelegramPayment(request, false);
+    }
+
+    @Transactional
+    public SubscriptionPaymentDetectionResponse reconcileDirectPayWayAlert(TelegramDetectSubscriptionPaymentRequest request) {
+        return reconcileTelegramPayment(request, paymentProperties.isSubscriptionPayWayTelegramAutoSettleEnabled()
+                && paymentProperties.getAdminSecret().length() >= 32);
+    }
+
+    private SubscriptionPaymentDetectionResponse reconcileTelegramPayment(
+            TelegramDetectSubscriptionPaymentRequest request, boolean autoSettle
     ) {
         Instant now = Instant.now();
         String transactionId = requireText(request.getPaywayTransactionId(), "PayWay transaction ID is required");
@@ -317,6 +323,10 @@ public class SubscriptionService {
             );
         }
 
+        if (autoSettle && evidence != null && evidence.isTrusted()) {
+            var settled = settleMatchedPayWayAlert(request, evidence, now);
+            if (settled != null) return settled;
+        }
         List<Subscription> matches = subscriptionRepository.findPendingMatchesForUpdate(
                 currency,
                 detectedAmount,
@@ -390,6 +400,45 @@ public class SubscriptionService {
         return detectionResponse(subscription, SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
                 matched ? "Payment matched. Waiting for verification against the official bank record."
                         : "Merchant evidence requires manual review.");
+    }
+
+    private SubscriptionPaymentDetectionResponse settleMatchedPayWayAlert(
+            TelegramDetectSubscriptionPaymentRequest request, PaymentEvidence evidence, Instant now
+    ) {
+        // The fixed checkout does not carry the Koupreng order code. Use the original ABA receipt fields.
+        Instant postedAt = request.getMerchantMessageAt();
+        var parsed = PayWaySubscriptionAlert.parse(request.getRawMessage(), postedAt, now);
+        if (parsed.isEmpty() || blankToNull(request.getDetectedOrderCode()) != null
+                || blankToNull(request.getRemark()) != null) return null;
+        var alert = parsed.get();
+        String payer = normalizedName(alert.payer());
+        if (!normalizedName(paymentProperties.getAba().getExpectedMerchant()).equals(normalizedName(alert.merchant()))
+                || !alert.transactionId().equals(evidence.getTransactionId())
+                || !alert.approvalCode().equals(evidence.getApprovalCode())
+                || !alert.currency().equals(evidence.getCurrency()) || alert.amount().compareTo(evidence.getAmount()) != 0
+                || !alert.suffix().equals(evidence.getPayerLast3()) || evidence.getPayerName() == null
+                || !payer.equals(normalizedName(evidence.getPayerName()))) return null;
+
+        Instant minuteEnd = alert.bankMinute().plusSeconds(60);
+        List<Subscription> candidates = subscriptionRepository.findPayWayCandidatesForUpdate(
+                alert.currency(), alert.amount(), alert.suffix(), alert.bankMinute(), minuteEnd, postedAt)
+                .stream().filter(candidate -> candidate.getPayerName() != null
+                        && payer.equals(normalizedName(candidate.getPayerName()))).toList();
+        if (candidates.size() != 1 || templatePaymentOrderRepository.hasCompetingPaymentAt(
+                alert.currency(), alert.amount(), alert.bankMinute(), minuteEnd)) return null;
+
+        Subscription selected = candidates.getFirst();
+        if (!STATUS_PENDING_PAYMENT.equals(selected.getStatus()) || !PAYMENT_STATUS_PENDING.equals(selected.getPaymentStatus())
+                || !selected.getPaymentExpiresAt().isAfter(now) || !selected.getPaymentExpiresAt().isAfter(postedAt)) return null;
+
+        evidenceService.claimTrustedPayWayAlert(evidence, selected.getOrderCode(), alert.amount(), alert.currency());
+        applyTelegramEvidence(selected, request, now);
+        selected.setPaywayTransactionId(evidence.getTransactionId());
+        activatePaidSubscription(selected, alert.amount(), now, CONFIRM_SOURCE_PAYWAY_TELEGRAM, evidence.getVerifiedBy());
+        auditDetection("SUBSCRIPTION_PAYMENT_CONFIRMED_PAYWAY_TELEGRAM", selected.getId(), request,
+                alert.amount(), alert.currency());
+        return detectionResponse(selected, SubscriptionPaymentDetectionStatus.PAID,
+                "Subscription payment confirmed from the original PayWay alert.");
     }
 
     private void requirePendingMatch(
@@ -544,19 +593,8 @@ public class SubscriptionService {
             subscription.setPaywayTransactionId(evidence.getTransactionId());
             subscription.setPaywayApprovalCode(evidence.getApprovalCode());
         }
-        deactivateActiveSubscriptions(subscription.getUser().getId(), now);
-        subscription.setPaidAmount(paidAmount);
-        subscription.setPaymentStatus(PAYMENT_STATUS_PAID);
-        subscription.setPaidAt(now);
-        subscription.setConfirmSource(CONFIRM_SOURCE_MANUAL_ADMIN);
-        subscription.setConfirmedBy(requireText(request.confirmedBy(), "Confirmed by is required"));
-        subscription.setConfirmedAt(now);
-        subscription.setStartDate(now);
-        subscription.setEndDate(endDate(now, PackageSnapshot.resolve(subscription).getDurationDays()));
-        subscription.setStatus(STATUS_ACTIVE);
-        subscription.setActive(true);
-        subscriptionRepository.save(subscription);
-        if (paymentNotifications != null) paymentNotifications.subscriptionConfirmed(subscription);
+        activatePaidSubscription(subscription, paidAmount, now, CONFIRM_SOURCE_MANUAL_ADMIN,
+                requireText(request.confirmedBy(), "Confirmed by is required"));
 
         if (auditLogService != null) {
             auditLogService.logSystemEvent(
@@ -571,6 +609,23 @@ public class SubscriptionService {
             );
         }
         return confirmationResponse(subscription, "Subscription payment confirmed and package activated.");
+    }
+
+    private void activatePaidSubscription(Subscription subscription, BigDecimal amount, Instant now,
+                                          String source, String verifiedBy) {
+        deactivateActiveSubscriptions(subscription.getUser().getId(), now);
+        subscription.setPaidAmount(amount);
+        subscription.setPaymentStatus(PAYMENT_STATUS_PAID);
+        subscription.setPaidAt(now);
+        subscription.setConfirmSource(source);
+        subscription.setConfirmedBy(verifiedBy);
+        subscription.setConfirmedAt(now);
+        subscription.setStartDate(now);
+        subscription.setEndDate(endDate(now, PackageSnapshot.resolve(subscription).getDurationDays()));
+        subscription.setStatus(STATUS_ACTIVE);
+        subscription.setActive(true);
+        subscriptionRepository.save(subscription);
+        if (paymentNotifications != null) paymentNotifications.subscriptionConfirmed(subscription);
     }
 
     private Instant endDate(Instant start, Integer durationDays) {

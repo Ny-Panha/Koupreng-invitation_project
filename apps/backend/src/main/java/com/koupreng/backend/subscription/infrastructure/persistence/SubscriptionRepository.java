@@ -94,6 +94,21 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
+            select s from Subscription s
+            where s.provider = 'ABA_PAYWAY_STATIC_TELEGRAM'
+              and s.currency = :currency and s.amount = :amount and s.payerAccountLast3 = :suffix
+              and s.createdAt < :minuteEnd and s.createdAt <= :postedAt and s.paymentExpiresAt > :bankMinute
+              and (s.paymentStatus in ('PENDING', 'EXPIRED')
+                   or (s.paymentStatus = 'PAID' and s.confirmedAt >= :bankMinute))
+            order by s.id
+            """)
+    List<Subscription> findPayWayCandidatesForUpdate(@Param("currency") String currency,
+            @Param("amount") BigDecimal amount, @Param("suffix") String suffix,
+            @Param("bankMinute") Instant bankMinute, @Param("minuteEnd") Instant minuteEnd,
+            @Param("postedAt") Instant postedAt);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
             select s
             from Subscription s
             where s.paymentStatus = 'PENDING'

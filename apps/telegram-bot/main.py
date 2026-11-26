@@ -600,6 +600,10 @@ async def process_telegram_update(update: dict):
         detected_by=f"telegram-payway-bot:{sender_identity(username, sender_id)}",
         payment=payment,
         merchant_message=message,
+        direct_payway_alert=(
+            ADMIN_BOT_ENABLED and update.get("message") is message
+            and chat.get("type") in {"group", "supergroup"} and not message.get("edit_date")
+        ),
     )
     return {"ok": True}
 
@@ -689,7 +693,8 @@ def original_merchant_message(message: dict) -> bool:
         and sender.get("is_bot") is True
         and message.get("message_id")
         and not any(message.get(key) for key in (
-            "forward_origin", "forward_from", "forward_from_chat", "forward_date", "is_automatic_forward"
+            "forward_origin", "forward_from", "forward_from_chat", "forward_date", "is_automatic_forward",
+            "sender_chat", "via_bot", "via_business_bot"
         ))
     )
 
@@ -740,6 +745,7 @@ async def handle_detect_message(
     payment: dict | None = None,
     evidence_message_id: str | None = None,
     merchant_message: dict | None = None,
+    direct_payway_alert: bool = False,
 ):
     payment = payment or parse_payment_alert(text)
     if not payment:
@@ -769,11 +775,11 @@ async def handle_detect_message(
         ),
     }
     subscription_payment = not payment.get("orderCode") or payment["orderCode"].startswith("SUB")
-    endpoint = (
-        "/api/v1/internal/subscription-payments/telegram-detect"
-        if subscription_payment
-        else "/api/v1/internal/template-payments/telegram-detect"
-    )
+    if subscription_payment:
+        operation = "payway-alert" if direct_payway_alert else "telegram-detect"
+        endpoint = f"/api/v1/internal/subscription-payments/{operation}"
+    else:
+        endpoint = "/api/v1/internal/template-payments/telegram-detect"
     result = await post_to_backend(endpoint, payload)
     require_backend_delivery(result)
     data = result.get("data") or {}

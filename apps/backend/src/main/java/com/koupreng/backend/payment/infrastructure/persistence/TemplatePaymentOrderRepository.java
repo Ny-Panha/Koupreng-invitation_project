@@ -24,6 +24,18 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
     boolean hasCompetingPendingPayment(@Param("currency") String currency, @Param("amount") java.math.BigDecimal amount,
                                       @Param("now") Instant now);
 
+    @Query("""
+            select count(o) > 0 from TemplatePaymentOrder o
+            where o.currency = :currency and o.amount = :amount
+              and o.createdAt < :minuteEnd and o.expiresAt > :bankMinute
+              and (o.status in (com.koupreng.backend.payment.domain.PaymentStatus.PENDING,
+                                com.koupreng.backend.payment.domain.PaymentStatus.PAID_PENDING_REVIEW,
+                                com.koupreng.backend.payment.domain.PaymentStatus.EXPIRED)
+                   or o.paidAt >= :bankMinute)
+            """)
+    boolean hasCompetingPaymentAt(@Param("currency") String currency, @Param("amount") java.math.BigDecimal amount,
+                                  @Param("bankMinute") Instant bankMinute, @Param("minuteEnd") Instant minuteEnd);
+
     @org.springframework.data.jpa.repository.Modifying
     @Query("""
             update TemplatePaymentOrder o

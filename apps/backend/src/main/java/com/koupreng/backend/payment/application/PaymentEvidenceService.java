@@ -58,6 +58,18 @@ public class PaymentEvidenceService {
         repository.saveAndFlush(evidence);
     }
 
+    public void claimTrustedPayWayAlert(PaymentEvidence evidence, String orderCode, BigDecimal amount, String currency) {
+        if (!evidence.isTrusted() || !"RECEIVED".equals(evidence.getOutcome())) {
+            throw new ApiException(HttpStatus.CONFLICT, "PAYMENT_EVIDENCE_CONFLICT",
+                    "A new original PayWay merchant alert is required");
+        }
+        evidence.setVerificationMethod("PAYWAY_TELEGRAM");
+        evidence.setVerifiedAt(Instant.now());
+        evidence.setVerifiedBy("telegram-bot:" + evidence.getSenderId());
+        evidence.setVerifiedMerchant(properties.getAba().getExpectedMerchant());
+        claim(evidence, orderCode, amount, currency);
+    }
+
     public PaymentEvidence claimReviewedBankRecord(String transactionId, String orderCode, BigDecimal amount,
             String currency, String reviewer, BankRecordVerification bankRecord) {
         if (bankRecord == null || !bankRecord.successfulAndUnreversed() || !currency.equals(bankRecord.currency())

@@ -1,4 +1,5 @@
 import logging
+from unittest.mock import AsyncMock
 
 import httpx
 import pytest
@@ -336,6 +337,37 @@ async def test_missing_order_code_never_calls_backend(monkeypatch):
 
     assert backend_called is False
     assert replies == ["Payment detected but no order code found. Please check manually."]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(("update_type", "chat_type", "operation"), [
+    ("message", "supergroup", "payway-alert"),
+    ("edited_message", "supergroup", "telegram-detect"),
+    ("message", "private", "telegram-detect"),
+])
+async def test_admin_bot_sends_only_direct_original_subscription_alerts_to_auto_settlement(
+    monkeypatch, update_type, chat_type, operation
+):
+    backend = AsyncMock(return_value={"ok": True, "data": {"status": "REVIEW_REQUIRED"}})
+    monkeypatch.setattr(main, "post_to_backend", backend)
+    monkeypatch.setattr(main, "send_message", AsyncMock(return_value=True))
+    monkeypatch.setattr(main, "ADMIN_BOT_ENABLED", True)
+    alert = (
+        "$0.01 paid by DEMO PAYER (*741) on Nov 26, 01:07 PM via ABA PAY at "
+        "DEMO MERCHANT. Trx. ID: 990000000001, APV: 123456."
+    )
+    update = message_update(212, alert, update_type=update_type)
+    update[update_type]["chat"]["type"] = chat_type
+    await main.telegram_webhook(FakeRequest(update))
+    backend.assert_awaited_once()
+    path, evidence = backend.call_args.args
+    assert path == f"/api/v1/internal/subscription-payments/{operation}"
+    assert evidence["trustedMerchantAlert"] is True
+    assert evidence["detectedAmount"] == "0.01"
+    assert evidence["detectedCurrency"] == "USD"
+    assert evidence["payerName"] == "DEMO PAYER"
+    assert evidence["payerAccountLast3"] == "741"
+    assert evidence["paywayTransactionId"] == "990000000001"
 
 
 @pytest.mark.asyncio

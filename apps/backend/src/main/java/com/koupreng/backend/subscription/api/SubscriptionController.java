@@ -3,6 +3,7 @@ package com.koupreng.backend.subscription.api;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Hidden;
 import com.koupreng.backend.shared.response.ApiResponse;
 import com.koupreng.backend.subscription.api.dto.PublicPackageResponse;
 import com.koupreng.backend.subscription.api.dto.SubscriptionPackageResponse;
@@ -113,6 +114,17 @@ public class SubscriptionController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Subscription payment detection processed",
                 subscriptionService.detectTelegramPayment(request)
+        ));
+    }
+
+    @Hidden
+    @PostMapping("/internal/subscription-payments/payway-alert")
+    public ResponseEntity<ApiResponse<SubscriptionPaymentDetectionResponse>> receivePayWayAlert(
+            @Valid @RequestBody TelegramDetectSubscriptionPaymentRequest request
+    ) {
+        return ResponseEntity.ok(ApiResponse.success(
+                "PayWay alert processed",
+                subscriptionService.reconcileDirectPayWayAlert(request)
         ));
     }
 

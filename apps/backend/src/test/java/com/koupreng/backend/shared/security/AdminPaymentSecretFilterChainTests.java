@@ -42,6 +42,7 @@ class AdminPaymentSecretFilterChainTests {
     private static final String ADMIN_TELEGRAM_DETECT_PATH = "/api/v1/admin/template-payments/telegram-detect";
     private static final String INTERNAL_SUBSCRIPTION_DETECT_PATH =
             "/api/v1/internal/subscription-payments/telegram-detect";
+    private static final String DIRECT_PAYWAY_ALERT = "/api/v1/internal/subscription-payments/payway-alert";
     private static final String CONFIRM_REQUEST_BODY = """
             {
               "orderCode": "EVT260529001",
@@ -205,6 +206,26 @@ class AdminPaymentSecretFilterChainTests {
                 .andExpect(jsonPath("$.data.status").value("PAID"));
 
         verify(subscriptionService).detectTelegramPayment(any(TelegramDetectSubscriptionPaymentRequest.class));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void directPayWayAlertRequiresTheWorkerSecretEvenForAnAuthenticatedUser() throws Exception {
+        mockMvc.perform(post(DIRECT_PAYWAY_ALERT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SUBSCRIPTION_DETECT_REQUEST_BODY))
+                .andExpect(status().isUnauthorized());
+        verifyNoInteractions(subscriptionService);
+    }
+
+    @Test
+    void directPayWayAlertCallsTheDedicatedReconciliationPath() throws Exception {
+        mockMvc.perform(post(DIRECT_PAYWAY_ALERT)
+                        .header(AdminPaymentSecretFilter.ADMIN_PAYMENT_SECRET_HEADER, "chain-secret")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SUBSCRIPTION_DETECT_REQUEST_BODY))
+                .andExpect(status().isOk());
+        verify(subscriptionService).reconcileDirectPayWayAlert(any(TelegramDetectSubscriptionPaymentRequest.class));
     }
 
     @Test
