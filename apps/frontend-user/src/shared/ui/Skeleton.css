@@ -105,3 +105,35 @@
     display: none;
   }
 }
+
+/* Neutral charcoal skeletons in dark mode (scoped to app shells so public invitation loading stays warm cream) */
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) .k-skeleton {
+  background: var(--ui-theme-subtle, #1c1c1c);
+}
+
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) .k-skeleton::after {
+  background: linear-gradient(
+    90deg,
+    var(--ui-theme-subtle, #1c1c1c) 25%,
+    var(--ui-theme-raised, #242424) 50%,
+    var(--ui-theme-subtle, #1c1c1c) 75%
+  );
+}
+
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) :is(.k-skeleton-card, .k-skeleton-table, .k-studio-loading) {
+  background: var(--ui-theme-surface, #141414);
+  border-color: var(--ui-theme-border, #303030);
+}
+
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) :is(.k-skeleton-table-header, .k-studio-loading-preview) {
+  background: var(--ui-theme-subtle, #1c1c1c);
+  border-color: var(--ui-theme-border, #303030);
+}
+
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) .k-skeleton-table-row {
+  border-bottom-color: var(--ui-theme-border, #303030);
+}
+
+:root[data-color-mode="dark"] :is(.dash-wrapper, .kp-marketing-shell, .auth-shell, .k-modal-container, .checkout-theme-wrapper, .checkout-overlay, .route-error-boundary) .k-loading-phone {
+  border-color: var(--ui-theme-border, #303030);
+}

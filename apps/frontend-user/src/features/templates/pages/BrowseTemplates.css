@@ -523,95 +523,97 @@
    Dark Mode Support for Host Browse Templates
    ========================================================================== */
 :root[data-color-mode="dark"] .pe-templates-browse-page {
-  --card-border: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
+  --card-border: var(--ui-theme-border);
 }
 
 :root[data-color-mode="dark"] .pe-templates-browse-page .dash-page-header h1 {
-  color: var(--ui-theme-ink, #f1f5f9);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .pe-templates-browse-page .dash-page-header p {
-  color: var(--ui-theme-muted, #94a3b8);
+  color: var(--ui-theme-muted);
 }
 
 :root[data-color-mode="dark"] .pe-templates-browse-page .pe-summary-card {
-  background: var(--ui-theme-surface, #1e293b);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
 }
 
 :root[data-color-mode="dark"] .pe-templates-browse-page .pe-summary-card strong {
-  color: var(--ui-theme-ink, #f1f5f9);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .pe-templates-browse-page .pe-summary-card span {
-  color: var(--ui-theme-muted, #94a3b8);
+  color: var(--ui-theme-muted);
 }
 
 :root[data-color-mode="dark"] .tb-toolbar {
-  background: var(--ui-theme-surface, #1e293b);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
 }
 
 :root[data-color-mode="dark"] .tb-category-chip {
-  background: var(--ui-theme-subtle, #0f172a);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
-  color: var(--ui-theme-ink, #f1f5f9);
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .tb-category-chip:hover {
-  background: rgba(185, 139, 66, 0.2);
-  color: #ffffff;
+  background: var(--ui-theme-hover);
+  border-color: var(--ui-theme-gold);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .tb-category-chip.active {
-  background: linear-gradient(135deg, #c59747 0%, #aa7c30 100%);
-  color: #ffffff;
+  background: var(--ui-theme-action);
+  border-color: var(--ui-theme-action);
+  color: var(--ui-theme-on-action);
 }
 
 :root[data-color-mode="dark"] .tb-search-wrap {
-  background: var(--ui-theme-subtle, #0f172a);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
+  background: var(--ui-theme-subtle);
+  border-color: var(--ui-theme-control-border);
 }
 
 :root[data-color-mode="dark"] .tb-search-input {
-  color: var(--ui-theme-ink, #f1f5f9);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .tb-card {
-  background: var(--ui-theme-surface, #1e293b);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
 }
 
 :root[data-color-mode="dark"] .tb-card-media {
-  background: var(--ui-theme-subtle, #0f172a);
+  background: var(--ui-theme-subtle);
 }
 
 :root[data-color-mode="dark"] .tb-card-title {
-  color: var(--ui-theme-ink, #f1f5f9);
+  color: var(--ui-theme-ink);
 }
 
 :root[data-color-mode="dark"] .tb-card-desc {
-  color: var(--ui-theme-muted, #94a3b8);
+  color: var(--ui-theme-muted);
 }
 
 :root[data-color-mode="dark"] .tb-btn--preview {
-  background: var(--ui-theme-subtle, #0f172a);
-  color: var(--ui-theme-ink, #f1f5f9);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.15));
+  background: var(--ui-theme-subtle);
+  color: var(--ui-theme-ink);
+  border-color: var(--ui-theme-control-border);
 }
 
 :root[data-color-mode="dark"] .tb-btn--preview:hover {
-  background: rgba(185, 139, 66, 0.15);
-  border-color: var(--brand-primary);
-  color: #ffffff;
+  background: var(--ui-theme-hover);
+  border-color: var(--ui-theme-gold);
+  color: var(--ui-theme-gold-bright);
 }
 
 :root[data-color-mode="dark"] .tb-empty {
-  background: var(--ui-theme-surface, #1e293b);
-  border-color: var(--ui-theme-border, rgba(255, 255, 255, 0.12));
-  color: var(--ui-theme-muted, #94a3b8);
+  background: var(--ui-theme-surface);
+  border-color: var(--ui-theme-border);
+  color: var(--ui-theme-muted);
 }
 
 :root[data-color-mode="dark"] .tb-empty h3 {
-  color: var(--ui-theme-ink, #f1f5f9);
+  color: var(--ui-theme-ink);
 }

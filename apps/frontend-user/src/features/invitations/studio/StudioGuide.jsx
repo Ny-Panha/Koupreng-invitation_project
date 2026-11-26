@@ -80,7 +80,7 @@ export default function StudioGuide({ mode, onMode, step, onStep, sections, acti
         </div>
         {publishedUrl && <div className="studio-share-grid">
           <div className="studio-qr-card" ref={qrContainerRef}>
-            <QRCode value={publishedUrl} size={132} level="M" bgColor="#ffffff" fgColor="#172b25" />
+            <QRCode value={publishedUrl} size={132} level="M" bgColor="#ffffff" fgColor="#141414" />
             <button type="button" className="studio-qr-download-btn" onClick={downloadQrSvg}><Download size={15} aria-hidden="true" />{text('Download QR', 'ទាញយក QR')}</button>
           </div>
           <div className="studio-share-details">

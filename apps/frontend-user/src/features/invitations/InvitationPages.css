@@ -2006,16 +2006,16 @@
 }
 
 :root[data-color-mode=dark] .checkin-quick-anchor {
-    background: var(--app-surface, #1e2621);
-    border-color: var(--app-border, #2d3832);
-    color: var(--app-ink, #e5ece8);
+    background: var(--app-surface, #141414);
+    border-color: var(--app-border, #303030);
+    color: var(--app-ink, #fafafa);
 }
 
 :root[data-color-mode=dark] .checkin-quick-anchor:hover,
 :root[data-color-mode=dark] .checkin-quick-anchor:focus-visible {
-    background: var(--app-subtle, #28332c);
-    border-color: var(--app-gold, #cbb085);
-    color: var(--app-gold, #cbb085);
+    background: var(--app-subtle, #1c1c1c);
+    border-color: var(--app-gold, #d8b875);
+    color: var(--ui-theme-gold-bright, #e8cc91);
 }
 
 @media (max-width: 767px) {
@@ -2434,15 +2434,15 @@
 }
 
 .checkin-status-badge.checked {
-    background: #ecfdf5;
-    color: #059669;
-    border: 1px solid #a7f3d0;
+    background: var(--ui-theme-success-soft, #ecfdf5);
+    color: var(--ui-theme-success, #059669);
+    border: 1px solid color-mix(in srgb, var(--ui-theme-success, #059669) 35%, transparent);
 }
 
 .checkin-status-badge.waiting {
-    background: #fefce8;
-    color: #b45309;
-    border: 1px solid #fef08a;
+    background: var(--ui-theme-warning-soft, #fefce8);
+    color: var(--ui-theme-warning, #b45309);
+    border: 1px solid color-mix(in srgb, var(--ui-theme-warning, #b45309) 35%, transparent);
 }
 
 .checkin-row-btn {
@@ -2472,9 +2472,9 @@
 }
 
 .checkin-row-btn.is-checked {
-    background: #ecfdf5;
-    color: #059669;
-    border: 1px solid #a7f3d0;
+    background: var(--ui-theme-success-soft, #ecfdf5);
+    color: var(--ui-theme-success, #059669);
+    border: 1px solid color-mix(in srgb, var(--ui-theme-success, #059669) 35%, transparent);
     cursor: default;
 }
 

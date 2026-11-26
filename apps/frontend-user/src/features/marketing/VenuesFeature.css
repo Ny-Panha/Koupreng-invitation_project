@@ -45,8 +45,8 @@
 :root[data-color-mode="dark"] .venues-page-wrapper .bg-gradient-cover {
   background: linear-gradient(
     to bottom,
-    rgba(23, 32, 25, 0.6) 0%,
-    rgba(23, 32, 25, 0.98) 100%
+    rgba(9, 9, 9, 0.65) 0%,
+    rgba(9, 9, 9, 0.98) 100%
   );
 }
 
@@ -244,9 +244,9 @@
 }
 
 :root[data-color-mode="dark"] .venue-tag {
-  background: rgba(32, 42, 36, 0.94);
-  color: #ffd18a;
-  border-color: var(--ui-theme-border, #425447);
+  background: rgba(20, 20, 20, 0.94);
+  color: var(--ui-theme-gold-bright, #e8cc91);
+  border-color: var(--ui-theme-border, #303030);
 }
 
 .venue-info {

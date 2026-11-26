@@ -1831,11 +1831,11 @@
    Marketing Landing Dark Mode
    ========================================================================== */
 :root[data-color-mode="dark"] .kp-landing {
-  --kp-deep: #1e2d26;
-  --kp-deep-hover: #17241e;
-  --kp-gold-ink: #d9b879;
-  --kp-emerald: #3d5a4d;
-  --kp-emerald-deep: #2e433a;
+  --kp-deep: var(--ui-theme-action);
+  --kp-deep-hover: var(--ui-theme-action-hover);
+  --kp-gold-ink: var(--ui-theme-gold);
+  --kp-emerald: var(--ui-theme-action);
+  --kp-emerald-deep: var(--ui-theme-action-hover);
   --kp-bg: var(--ui-theme-canvas);
   --kp-surface: var(--ui-theme-surface);
   --kp-ink: var(--ui-theme-ink);
@@ -1846,9 +1846,9 @@
 }
 
 :root[data-color-mode="dark"] .kp-hero-badge {
-  background: rgba(217, 184, 121, 0.12);
-  border-color: rgba(217, 184, 121, 0.3);
-  color: #ffd18a;
+  background: var(--ui-theme-gold-soft);
+  border-color: color-mix(in srgb, var(--ui-theme-gold) 36%, transparent);
+  color: var(--ui-theme-gold-bright);
 }
 
 :root[data-color-mode="dark"] .kp-hero-highlights {
@@ -1893,7 +1893,7 @@
 }
 
 :root[data-color-mode="dark"] .kp-final {
-  background: linear-gradient(145deg, #172019 0%, #111719 100%);
+  background: linear-gradient(145deg, var(--ui-theme-surface) 0%, var(--ui-theme-canvas) 100%);
   border-color: var(--ui-theme-border);
 }
 

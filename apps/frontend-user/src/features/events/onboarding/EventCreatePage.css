@@ -76,16 +76,16 @@
 
 :root[data-color-mode="dark"] .event-create,
 .dark .event-create {
-  --ws-gold: #c59b4e;
-  --ws-gold-dark: #dfb76c;
-  --ws-gold-light: #2c2518;
-  --ws-surface: #1e2420;
-  --ws-canvas: #141815;
-  --ws-border: #2d3830;
-  --ws-border-strong: #3f4e44;
-  --ws-ink: #f0ede6;
-  --ws-muted: #9eb0a4;
-  --ws-emerald: #91c5a4;
+  --ws-gold: var(--ui-theme-gold);
+  --ws-gold-dark: var(--ui-theme-action-hover);
+  --ws-gold-light: var(--ui-theme-gold-soft);
+  --ws-surface: var(--ui-theme-surface);
+  --ws-canvas: var(--ui-theme-canvas);
+  --ws-border: var(--ui-theme-border);
+  --ws-border-strong: var(--ui-theme-control-border);
+  --ws-ink: var(--ui-theme-ink);
+  --ws-muted: var(--ui-theme-muted);
+  --ws-emerald: var(--ui-theme-action);
   color-scheme: dark;
 }
 

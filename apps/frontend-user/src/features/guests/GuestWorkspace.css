@@ -60,7 +60,7 @@ body:has(.guest-workspace) .chat-greeting-bubble { display: none; }
 .guest-workspace .pe-summary-card:hover { transform: none; box-shadow: none; }
 .guest-workspace .pe-summary-card-inner { flex-direction: row-reverse; justify-content: space-between; gap: 10px; }
 .guest-workspace .pe-summary-icon-wrap { width: 38px; height: 38px; border-radius: 12px; color: var(--guest-green); background: var(--guest-green-tint); }
-.guest-workspace .pe-summary-card:first-child .pe-summary-icon-wrap { color: var(--guest-gold); background: #fbf4e7; }
+.guest-workspace .pe-summary-card:first-child .pe-summary-icon-wrap { color: var(--guest-gold); background: var(--ui-theme-gold-soft, #fbf4e7); }
 .guest-workspace .pe-summary-details { gap: 5px; }
 .guest-workspace .pe-summary-details span { color: var(--guest-muted); font-size: 13px; font-weight: 500; white-space: normal; overflow: visible; line-height: 1.65; }
 .guest-workspace .pe-summary-details strong { font-size: 29px; line-height: 1.25; font-weight: 700; color: var(--guest-ink); }

@@ -65,11 +65,11 @@ function playWarningBeep() {
 
 function SummaryCard({ label, value, subtitle, icon: Icon, theme = "gold" }) {
     const themeStyles = {
-        gold: { bg: "rgba(176, 146, 106, 0.14)", color: "#B0926A" },
-        green: { bg: "rgba(16, 185, 129, 0.12)", color: "#059669" },
-        amber: { bg: "rgba(245, 158, 11, 0.12)", color: "#d97706" },
-        emerald: { bg: "rgba(176, 146, 106, 0.18)", color: "var(--app-gold)" },
-    }[theme] || { bg: "rgba(176, 146, 106, 0.14)", color: "#B0926A" };
+        gold: { bg: "var(--ui-theme-gold-soft, rgba(176, 146, 106, 0.14))", color: "var(--ui-theme-gold, #B0926A)" },
+        green: { bg: "var(--ui-theme-success-soft, rgba(16, 185, 129, 0.12))", color: "var(--ui-theme-success, #059669)" },
+        amber: { bg: "var(--ui-theme-warning-soft, rgba(245, 158, 11, 0.12))", color: "var(--ui-theme-warning, #d97706)" },
+        emerald: { bg: "var(--ui-theme-gold-soft, rgba(176, 146, 106, 0.18))", color: "var(--app-gold)" },
+    }[theme] || { bg: "var(--ui-theme-gold-soft, rgba(176, 146, 106, 0.14))", color: "var(--ui-theme-gold, #B0926A)" };
 
     return (
         <article className="checkin-kpi-card guest-stat">
@@ -423,7 +423,7 @@ export default function InvitationCheckInPage() {
                         <h2 className="checkin-panel-title">
                             <Users size={20} color="var(--ui-action)" /> {copy("បញ្ជីភ្ញៀវ និងការចូលរួម", "Guest list and attendance")}
                         </h2>
-                        <span style={{ fontSize: "0.82rem", color: "var(--app-gold)", fontWeight: 700, background: "rgba(176, 146, 106, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
+                        <span style={{ fontSize: "0.82rem", color: "var(--ui-theme-gold, var(--app-gold))", fontWeight: 700, background: "var(--ui-theme-gold-soft, rgba(176, 146, 106, 0.12))", padding: "3px 12px", borderRadius: "999px" }}>
                             {filteredGuests.length} / {guests.length} {uiCopy("នាក់", "people")}
                         </span>
                     </div>
@@ -528,8 +528,8 @@ export default function InvitationCheckInPage() {
                                             </td>
                                             <td>
                                                 <div>
-                                                    <span style={{ fontWeight: 600, color: "#1f2421" }}>{guest.phone || copy("មិនមានលេខទូរស័ព្ទ", "No phone")}</span>
-                                                    {guest.email ? <small style={{ color: "#5c4f3d", display: "block" }}>{guest.email}</small> : null}
+                                                    <span style={{ fontWeight: 600, color: "var(--app-ink, #1f2421)" }}>{guest.phone || copy("មិនមានលេខទូរស័ព្ទ", "No phone")}</span>
+                                                    {guest.email ? <small style={{ color: "var(--app-muted, #5c4f3d)", display: "block" }}>{guest.email}</small> : null}
                                                 </div>
                                             </td>
                                             <td>
@@ -559,9 +559,9 @@ export default function InvitationCheckInPage() {
                                 })}
                                 {!filteredGuests.length && (
                                     <tr>
-                                        <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#5c4f3d" }}>
+                                        <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "var(--app-muted, #5c4f3d)" }}>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-                                                <Search size={28} color="#cbbeaa" />
+                                                <Search size={28} color="var(--app-muted, #cbbeaa)" />
                                                 <span>{uiCopy("រកមិនឃើញភ្ញៀវទេ។", "No guests found.")}</span>
                                             </div>
                                         </td>
@@ -577,9 +577,9 @@ export default function InvitationCheckInPage() {
             <section className="guest-table-panel checkin-list checkin-panel-card" style={{ marginTop: "24px" }}>
                 <div className="checkin-panel-header">
                     <h2 className="checkin-panel-title">
-                        <CheckCircle2 size={20} color="#059669" /> {uiCopy("ភ្ញៀវដែលបានកត់ត្រាវត្តមាន", "Checked-in guests")}
+                        <CheckCircle2 size={20} color="var(--ui-theme-success, #059669)" /> {uiCopy("ភ្ញៀវដែលបានកត់ត្រាវត្តមាន", "Checked-in guests")}
                     </h2>
-                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--ui-success)", background: "rgba(16, 185, 129, 0.12)", padding: "3px 12px", borderRadius: "999px" }}>
+                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--ui-theme-success, #059669)", background: "var(--ui-theme-success-soft, rgba(16, 185, 129, 0.12))", padding: "3px 12px", borderRadius: "999px" }}>
                         {uiCopy("សរុប", "Total")} {checkIns.length} {uiCopy("នាក់", "people")}
                     </span>
                 </div>
@@ -598,7 +598,7 @@ export default function InvitationCheckInPage() {
                             {checkIns.map((item) => (
                                 <tr key={item.id}>
                                     <td>
-                                        <div style={{ fontWeight: 700, color: "#1f2421" }}>
+                                        <div style={{ fontWeight: 700, color: "var(--app-ink, #1f2421)" }}>
                                             {item.guestName || uiCopy("ភ្ញៀវ", "Guest")}
                                             {item.tableNumber && (
                                                 <span className="checkin-tag-pill table" style={{ marginLeft: "8px" }}>
@@ -607,12 +607,12 @@ export default function InvitationCheckInPage() {
                                             )}
                                         </div>
                                         {item.giftAmount && (
-                                            <div style={{ fontSize: "0.8rem", color: "#0f766e", fontWeight: 700, marginTop: "2px" }}>
+                                            <div style={{ fontSize: "0.8rem", color: "var(--ui-theme-success, #0f766e)", fontWeight: 700, marginTop: "2px" }}>
                                                 {uiCopy("🎁 ចងដៃ៖", "🎁 Gift:")} {item.giftAmount} {item.giftCurrency || "USD"}
                                             </div>
                                         )}
                                         {item.note && (
-                                            <div style={{ fontSize: "0.78rem", color: "#5c4f3d", marginTop: "2px" }}>
+                                            <div style={{ fontSize: "0.78rem", color: "var(--app-muted, #5c4f3d)", marginTop: "2px" }}>
                                                 📝 {item.note}
                                             </div>
                                         )}
@@ -625,16 +625,16 @@ export default function InvitationCheckInPage() {
                                                 borderRadius: "6px",
                                                 fontSize: "0.74rem",
                                                 fontWeight: 600,
-                                                background: item.source?.includes("Camera") ? "#ecfdf5" : "#f7f1e6",
-                                                color: item.source?.includes("Camera") ? "#0f766e" : "#78664f",
-                                                border: item.source?.includes("Camera") ? "1px solid #a7f3d0" : "1px solid #ebdcc8",
+                                                background: item.source?.includes("Camera") ? "var(--ui-theme-success-soft, #ecfdf5)" : "var(--app-subtle, #f7f1e6)",
+                                                color: item.source?.includes("Camera") ? "var(--ui-theme-success, #0f766e)" : "var(--app-muted, #78664f)",
+                                                border: "1px solid var(--app-border)",
                                             }}
                                         >
                                             {item.source || "Manual"}
                                         </span>
                                     </td>
                                     <td>
-                                        <div style={{ fontSize: "0.82rem", color: "#1f2421", fontWeight: 600 }}>
+                                        <div style={{ fontSize: "0.82rem", color: "var(--app-ink, #1f2421)", fontWeight: 600 }}>
                                             {item.checkedInAt
                                                 ? new Intl.DateTimeFormat(en ? "en" : "km", {
                                                       dateStyle: "medium",
@@ -649,9 +649,9 @@ export default function InvitationCheckInPage() {
                                             onClick={() => undoCheckIn(item)}
                                             title={uiCopy("ដកការកត់ត្រាវត្តមានវិញ", "Undo check-in")}
                                             style={{
-                                                border: "1px solid #fed7aa",
-                                                background: "#fff7ed",
-                                                color: "#c2410c",
+                                                border: "1px solid color-mix(in srgb, var(--ui-theme-warning, #c2410c) 35%, transparent)",
+                                                background: "var(--ui-theme-warning-soft, #fff7ed)",
+                                                color: "var(--ui-theme-warning, #c2410c)",
                                                 borderRadius: "6px",
                                                 padding: "4px 8px",
                                                 fontSize: "0.74rem",
@@ -669,9 +669,9 @@ export default function InvitationCheckInPage() {
                             ))}
                             {!checkIns.length && (
                                 <tr>
-                                    <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "#64748b" }}>
+                                    <td colSpan="4" style={{ textAlign: "center", padding: "36px 16px", color: "var(--app-muted, #64748b)" }}>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-                                            <Clock size={28} color="#cbd5e1" />
+                                            <Clock size={28} color="var(--app-muted, #cbd5e1)" />
                                             <span>{uiCopy("មិនទាន់មានការកត់ត្រាវត្តមានទេ។", "No check-ins yet.")}</span>
                                         </div>
                                     </td>

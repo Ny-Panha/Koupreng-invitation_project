@@ -44,20 +44,23 @@
 .dash-main-scroll .enterprise-page { margin-top: 28px; }
 
 .dash-main {
-  --dash-gold: #b98b42;
-  --dash-teal: #0f766e;
-  --dash-cream: #fbf6ee;
-  --dash-ink: #1f2421;
-  --dash-muted: #6f766f;
+  --dash-gold: var(--ui-theme-gold, #b98b42);
+  --dash-teal: var(--ui-theme-focus, #0f766e);
+  --dash-cream: var(--ui-theme-canvas, #fbf6ee);
+  --dash-ink: var(--ui-theme-ink, #1f2421);
+  --dash-muted: var(--ui-theme-muted, #6f766f);
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
   padding-top: 0;
+  background: var(--ui-theme-canvas, #fbf6ee);
+  color: var(--dash-ink);
+  overflow-x: clip;
+}
+:root:not([data-color-mode="dark"]) .dash-main {
   background:
     linear-gradient(180deg, rgba(255, 250, 240, 0.92), rgba(251, 246, 238, 0.96) 42%, rgba(247, 246, 241, 1)),
     var(--dash-cream);
-  color: var(--dash-ink);
-  overflow-x: clip;
 }
 
 .dash-main * {

@@ -30,30 +30,31 @@
   --atelier-shadow-lg: 0 12px 28px rgba(15, 36, 28, 0.12);
 }
 
-[data-theme="dark"],
-.dark {
-  --atelier-bg: #121613;
-  --atelier-surface: #19201b;
-  --atelier-surface-subtle: #202923;
-  --atelier-surface-hover: #29342c;
-  --atelier-border: #2c3830;
-  --atelier-border-strong: #405246;
-  --atelier-forest-deep: #e8f2eb;
-  --atelier-forest: #cce0d2;
-  --atelier-forest-light: #3d7d60;
-  --atelier-forest-subtle: #1e2c23;
-  --atelier-gold: #d4af37;
-  --atelier-gold-deep: #f5e4a8;
-  --atelier-gold-subtle: #282417;
-  --atelier-gold-border: #5a4e27;
-  --atelier-text: #e6ece8;
-  --atelier-muted: #99a89e;
-  --atelier-danger: #f87171;
-  --atelier-danger-bg: #2d1818;
-  --atelier-danger-border: #592525;
-  --atelier-success: #4ade80;
-  --atelier-success-bg: #14281a;
-  --atelier-focus-ring: 0 0 0 3px rgba(212, 175, 55, 0.45);
+:root[data-color-mode="dark"] .media-library,
+.dark .media-library,
+[data-theme="dark"] .media-library {
+  --atelier-bg: var(--ui-theme-canvas, #090909);
+  --atelier-surface: var(--ui-theme-surface, #141414);
+  --atelier-surface-subtle: var(--ui-theme-subtle, #1c1c1c);
+  --atelier-surface-hover: var(--ui-theme-hover, #262626);
+  --atelier-border: var(--ui-theme-border, #303030);
+  --atelier-border-strong: var(--ui-theme-control-border, #777777);
+  --atelier-forest-deep: var(--ui-theme-ink, #fafafa);
+  --atelier-forest: var(--ui-theme-gold-bright, #e8cc91);
+  --atelier-forest-light: var(--ui-theme-action, #d8b875);
+  --atelier-forest-subtle: var(--ui-theme-action-soft, #32291a);
+  --atelier-gold: var(--ui-theme-gold, #d8b875);
+  --atelier-gold-deep: var(--ui-theme-gold-bright, #e8cc91);
+  --atelier-gold-subtle: var(--ui-theme-gold-soft, #32291a);
+  --atelier-gold-border: color-mix(in srgb, var(--ui-theme-gold, #d8b875) 45%, transparent);
+  --atelier-text: var(--ui-theme-ink, #fafafa);
+  --atelier-muted: var(--ui-theme-muted, #a3a3a3);
+  --atelier-danger: var(--ui-theme-danger, #ffb4ab);
+  --atelier-danger-bg: var(--ui-theme-danger-soft, #3e1d1b);
+  --atelier-danger-border: color-mix(in srgb, var(--ui-theme-danger, #ffb4ab) 38%, transparent);
+  --atelier-success: var(--ui-theme-success, #86efac);
+  --atelier-success-bg: var(--ui-theme-success-soft, #143321);
+  --atelier-focus-ring: 0 0 0 3px color-mix(in srgb, var(--ui-theme-focus, #f0cf8b) 45%, transparent);
 }
 
 /* Base Workspace Layout */

@@ -908,14 +908,38 @@
   border-color: var(--app-accent);
 }
 
-:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide-navigation button, .studio-qr-download-btn, .studio-share-btn, .studio-access-edit-btn, .studio-copy-btn) {
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide-navigation button, .studio-qr-download-btn, .studio-share-btn, .studio-access-edit-btn, .studio-copy-btn, .studio-guide-steps button, .studio-guide-sections button, .studio-guide-panel button, .studio-authoring-options-body > button) {
   background: var(--app-subtle);
   border-color: var(--app-control-border);
   color: var(--app-ink);
 }
 
-:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide p, .studio-guide-navigation span, .studio-access-desc, .studio-publish-note) {
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide-steps button[aria-current], .studio-guide-sections button[aria-pressed="true"], .studio-preview-tools button[aria-pressed="true"]) {
+  background: var(--app-accent-soft);
+  border-color: var(--app-accent);
+  color: var(--ui-theme-gold-bright);
+}
+
+:root[data-color-mode="dark"] .invitation-studio :is(.studio-guide p, .studio-guide-navigation span, .studio-access-desc, .studio-publish-note, .studio-section-guidance, .studio-access-url-preview span) {
   color: var(--app-muted);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-subsection {
+  border-bottom-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-access-url-preview {
+  background: var(--app-subtle);
+  border-color: var(--app-border);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-access-url-preview code {
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-access-saved-hint,
+:root[data-color-mode="dark"] .invitation-studio .studio-copy-status {
+  color: var(--ui-theme-success);
 }
 
 :root[data-color-mode="dark"] .invitation-studio :is(.studio-published-badge, .studio-visibility-tag) {
@@ -924,8 +948,56 @@
   color: var(--app-ink);
 }
 
+:root[data-color-mode="dark"] .invitation-studio .studio-published-badge {
+  background: var(--ui-theme-success-soft);
+  color: var(--ui-theme-success);
+  border-color: color-mix(in srgb, var(--ui-theme-success) 38%, transparent);
+}
+
+:root[data-color-mode="dark"] .invitation-studio .studio-visibility-tag {
+  background: var(--app-gold-soft);
+  color: var(--ui-theme-gold-bright);
+  border-color: color-mix(in srgb, var(--app-gold) 38%, transparent);
+}
+
 :root[data-color-mode="dark"] .invitation-studio .studio-unpublish-btn {
-  background: #402826;
-  border-color: #80504a;
+  background: var(--ui-theme-danger-soft);
+  border-color: color-mix(in srgb, var(--app-danger) 42%, transparent);
+  color: var(--app-danger);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-action--publish {
+  background: var(--app-gold-soft);
+  border-color: color-mix(in srgb, var(--app-gold) 45%, transparent);
+  color: var(--ui-theme-gold-bright);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-save-status {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-save-status[data-phase="saved"] {
+  background: var(--ui-theme-success-soft);
+  border-color: color-mix(in srgb, var(--ui-theme-success) 38%, transparent);
+  color: var(--ui-theme-success);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-save-status[data-phase="unsaved"] {
+  background: var(--ui-theme-warning-soft);
+  border-color: color-mix(in srgb, var(--ui-theme-warning) 38%, transparent);
+  color: var(--ui-theme-warning);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-save-status[data-phase="saving"] {
+  background: var(--app-subtle);
+  border-color: var(--app-border);
+  color: var(--app-ink);
+}
+
+:root[data-color-mode="dark"] :is(.invitation-studio, #invitation-studio-toolbar) .studio-save-status:is([data-phase="failed"], [data-phase="offline"], [data-phase="conflict"], [data-phase="expired"]) {
+  background: var(--ui-theme-danger-soft);
+  border-color: color-mix(in srgb, var(--app-danger) 40%, transparent);
   color: var(--app-danger);
 }

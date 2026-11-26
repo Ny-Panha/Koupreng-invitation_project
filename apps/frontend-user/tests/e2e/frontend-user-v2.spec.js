@@ -322,18 +322,41 @@ test.describe("Frontend User 2.0 cross-cutting architecture & Phase 15 acceptanc
     await expect(page.getByText("Visal Dara")).toBeVisible();
     await expect(page.getByText(/Something went wrong|Invalid guest page response|មានបញ្ហា/i)).toHaveCount(0);
 
-    const rootState = await page.evaluate(() => ({
-      dataMode: document.documentElement.dataset.colorMode,
-      hasDarkClass: document.documentElement.classList.contains("dark"),
-      scrollPadTop: parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop || "0"),
-      overflowPx: document.documentElement.scrollWidth - window.innerWidth,
-      panelBg: getComputedStyle(document.querySelector(".guest-list-panel")).backgroundColor,
-    }));
+    const rootState = await page.evaluate(() => {
+      const parseRgb = (css) => {
+        const m = String(css || "").match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+        return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
+      };
+      const canvasBg = getComputedStyle(document.querySelector(".guest-workspace")).backgroundColor;
+      const panelBg = getComputedStyle(document.querySelector(".guest-list-panel")).backgroundColor;
+      const rail = document.querySelector(".event-workspace-sidebar");
+      const railBg = rail ? getComputedStyle(rail).backgroundColor : null;
+      return {
+        dataMode: document.documentElement.dataset.colorMode,
+        hasDarkClass: document.documentElement.classList.contains("dark"),
+        scrollPadTop: parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop || "0"),
+        overflowPx: document.documentElement.scrollWidth - window.innerWidth,
+        canvasBg,
+        canvasRgb: parseRgb(canvasBg),
+        panelBg,
+        panelRgb: parseRgb(panelBg),
+        railBg,
+        railRgb: parseRgb(railBg),
+      };
+    });
     expect(rootState.dataMode).toBe("dark");
     expect(rootState.hasDarkClass).toBe(true);
     expect(rootState.scrollPadTop).toBeGreaterThanOrEqual(80);
     expect(rootState.overflowPx).toBe(0);
     expect(rootState.panelBg).not.toBe("rgb(255, 255, 255)");
+    expect(rootState.canvasRgb[0]).toBe(rootState.canvasRgb[1]);
+    expect(rootState.canvasRgb[1]).toBe(rootState.canvasRgb[2]);
+    expect(rootState.panelRgb[0]).toBe(rootState.panelRgb[1]);
+    expect(rootState.panelRgb[1]).toBe(rootState.panelRgb[2]);
+    if (rootState.railRgb) {
+      expect(rootState.railRgb[0]).toBe(rootState.railRgb[1]);
+      expect(rootState.railRgb[1]).toBe(rootState.railRgb[2]);
+    }
 
     const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     expect(axe.violations).toEqual([]);

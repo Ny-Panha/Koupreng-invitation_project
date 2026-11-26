@@ -37,9 +37,9 @@
 .event-switcher-arrow { position: absolute; right: 11px; top: 16px; pointer-events: none; color: var(--rail-muted); }
 .event-context-details { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; color: var(--rail-muted); font-size: 13px; line-height: 1.8; }
 .event-status-pill { display: inline-flex; padding: 2px 9px; border-radius: 99px; font-size: 13px; font-weight: 650; line-height: 1.8; }
-.badge-published { background: #1c4d3a; color: #ccf2df; border: 1px solid #357b5e; }
-.badge-draft { background: #473617; color: #f6ddb0; border: 1px solid #8a6b31; }
-.badge-unpublished, .badge-unknown { background: #2a3732; color: #dce4df; border: 1px solid #485b53; }
+.badge-published { background: #143321; color: #86efac; border: 1px solid #2b6a44; }
+.badge-draft { background: #32291a; color: #e8cc91; border: 1px solid #6b5630; }
+.badge-unpublished, .badge-unknown { background: #242424; color: #fafafa; border: 1px solid #525252; }
 .event-navigation-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: rgba(216, 184, 117, 0.35) transparent; scrollbar-gutter: stable; padding: 12px 10px 16px; scroll-padding-block: 8px; }
 .event-workspace-nav { display: flex; flex-direction: column; gap: 8px; }
 .event-primary-links, .event-nav-group-items { display: grid; gap: 3px; }
@@ -71,6 +71,7 @@
 .is-collapsed .event-navigation-footer :is(a,button) { justify-content: center; padding-inline: 8px; }
 .is-collapsed .event-navigation-body { padding-inline: 5px; scrollbar-gutter: auto; }
 .event-nav-tooltip { position: fixed; z-index: 6100; max-width: 240px; padding: 9px 12px; border-radius: 9px; background: var(--ui-ink); color: white; font-family: var(--ui-font); font-size: 14px; line-height: 1.8; pointer-events: none; box-shadow: 0 6px 20px rgb(0 0 0 / 12%); }
+:root[data-color-mode="dark"] .event-nav-tooltip { background: var(--ui-theme-raised, #242424); color: var(--ui-theme-ink, #fafafa); border: 1px solid var(--ui-theme-border, #303030); }
 .event-workspace :where(a,button,select):focus-visible, .event-navigation-dialog :where(a,button,select):focus-visible { outline: 3px solid var(--ui-focus); outline-offset: 2px; }
 .event-skip-link { position: fixed; top: 8px; left: 16px; z-index: 6100; padding: 12px 16px; background: var(--ws-ink); color: white; border-radius: 10px; clip-path: inset(50%); }
 .event-skip-link:focus { clip-path: none; }

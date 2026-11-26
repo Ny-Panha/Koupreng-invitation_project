@@ -2044,9 +2044,9 @@ export default function InvitationForm({ invitation }) {
                                     style={{
                                         padding: "4px 8px",
                                         fontSize: "0.78rem",
-                                        background: form.coverFocalPoint === pt ? "#2e433a" : "#fff",
-                                        color: form.coverFocalPoint === pt ? "#fff" : "#4b3f33",
-                                        borderColor: form.coverFocalPoint === pt ? "#2e433a" : "#dcd1c4"
+                                        background: form.coverFocalPoint === pt ? "var(--app-accent, #2e433a)" : "var(--app-surface, #fff)",
+                                        color: form.coverFocalPoint === pt ? "var(--app-on-accent, #fff)" : "var(--app-ink, #4b3f33)",
+                                        borderColor: form.coverFocalPoint === pt ? "var(--app-accent, #2e433a)" : "var(--app-control-border, #dcd1c4)"
                                     }}
                                     onClick={() => update("coverFocalPoint", pt)}
                                 >

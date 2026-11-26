@@ -854,12 +854,19 @@
 
 .wg-inline-save {
     background: var(--ws-gold, #926c34);
-    color: #fff;
+    color: var(--ui-theme-on-action, #fff);
 }
 
 .wg-inline-save:disabled {
     cursor: not-allowed;
     opacity: 0.55;
+}
+
+:root[data-color-mode="dark"] .wg-inline-save:disabled {
+    background: var(--ui-theme-disabled-bg, #202020);
+    color: var(--ui-theme-disabled, #a3a3a3);
+    border-color: var(--ui-theme-border, #303030);
+    opacity: 1;
 }
 
 .wg-inline-cancel {
@@ -871,13 +878,13 @@
 .wg-inline-error {
     display: block;
     margin-top: 5px;
-    color: #b42318;
+    color: var(--ui-theme-danger, #b42318);
     font-size: 11px;
 }
 
 .wg-inline-empty {
     padding: 28px 16px !important;
-    color: #7d6443 !important;
+    color: var(--app-muted) !important;
     text-align: center;
 }
 
@@ -924,7 +931,7 @@
 }
 
 .wg-table tbody tr {
-    border-bottom: 1px solid #f5efe5;
+    border-bottom: 1px solid var(--app-border);
     transition: background 0.15s;
 }
 
@@ -1043,7 +1050,7 @@
         align-items: center;
         gap: 12px;
         padding: 8px 0;
-        border-bottom: 1px solid #f5efe5;
+        border-bottom: 1px solid var(--app-border);
         text-align: right;
     }
 

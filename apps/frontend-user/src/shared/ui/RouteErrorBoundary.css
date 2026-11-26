@@ -141,3 +141,62 @@
   max-height: 200px;
   overflow-y: auto;
 }
+
+:root[data-color-mode="dark"] .route-error-boundary {
+  background-color: var(--ui-theme-canvas, #090909);
+}
+
+:root[data-color-mode="dark"] .route-error-card {
+  background: var(--ui-theme-surface, #141414);
+  border-color: var(--ui-theme-border, #303030);
+  box-shadow: var(--ui-theme-shadow-elevated);
+}
+
+:root[data-color-mode="dark"] .route-error-icon-box {
+  background: var(--ui-theme-danger-soft, #3e1d1b);
+  border-color: color-mix(in srgb, var(--ui-theme-danger, #ffb4ab) 38%, transparent);
+}
+
+:root[data-color-mode="dark"] .route-error-icon {
+  color: var(--ui-theme-danger, #ffb4ab);
+}
+
+:root[data-color-mode="dark"] .route-error-title {
+  color: var(--ui-theme-ink, #fafafa);
+}
+
+:root[data-color-mode="dark"] .route-error-desc,
+:root[data-color-mode="dark"] .route-error-dev-details summary {
+  color: var(--ui-theme-muted, #a3a3a3);
+}
+
+:root[data-color-mode="dark"] .route-error-btn-primary {
+  background: var(--ui-theme-action, #d8b875);
+  color: var(--ui-theme-on-action, #141414);
+  box-shadow: none;
+}
+
+:root[data-color-mode="dark"] .route-error-btn-secondary {
+  background: var(--ui-theme-subtle, #1c1c1c);
+  color: var(--ui-theme-ink, #fafafa);
+  border-color: var(--ui-theme-control-border, #777777);
+}
+
+:root[data-color-mode="dark"] .route-error-btn-secondary:hover,
+:root[data-color-mode="dark"] .route-error-btn-ghost:hover {
+  background: var(--ui-theme-hover, #262626);
+  color: var(--ui-theme-ink, #fafafa);
+}
+
+:root[data-color-mode="dark"] .route-error-btn-ghost {
+  color: var(--ui-theme-muted, #a3a3a3);
+}
+
+:root[data-color-mode="dark"] .route-error-dev-details {
+  background: var(--ui-theme-subtle, #1c1c1c);
+  border-color: var(--ui-theme-border, #303030);
+}
+
+:root[data-color-mode="dark"] .route-error-dev-stack {
+  color: var(--ui-theme-danger, #ffb4ab);
+}

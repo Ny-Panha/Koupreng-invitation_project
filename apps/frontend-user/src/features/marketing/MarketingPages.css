@@ -180,7 +180,7 @@
 
 :root[data-color-mode="dark"] .kp-contact-field :is(input, select, textarea):focus {
   border-color: var(--ui-theme-focus);
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-theme-focus) 28%, transparent);
 }
 
 :root[data-color-mode="dark"] .kp-contact-help a {

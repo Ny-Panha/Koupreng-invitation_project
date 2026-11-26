@@ -38,4 +38,17 @@ test('management text and focus roles retain contrast on their intended surfaces
     ['dark footer', light['--ui-on-dark-muted'], '#121214'],
   ]) expect(ratio(foreground, background), name).toBeGreaterThanOrEqual(4.5);
   expect(ratio(dark['--ui-theme-focus'], dark['--ui-theme-surface'])).toBeGreaterThanOrEqual(3);
+  expect(ratio(dark['--ui-theme-control-border'], dark['--ui-theme-raised'])).toBeGreaterThanOrEqual(3);
+  for (const role of [
+    '--ui-theme-canvas', '--ui-theme-surface', '--ui-theme-subtle', '--ui-theme-raised',
+    '--ui-theme-hover', '--ui-theme-pressed', '--ui-theme-disabled-bg', '--ui-theme-ink',
+    '--ui-theme-muted', '--ui-theme-border', '--ui-theme-control-border',
+    '--ui-rail-bg', '--ui-rail-surface', '--ui-rail-hover', '--ui-rail-ink', '--ui-rail-muted', '--ui-rail-border',
+    '--ui-studio-canvas', '--ui-studio-panel', '--ui-studio-ink', '--ui-studio-muted', '--ui-studio-border',
+  ]) {
+    const hex = dark[role];
+    expect(hex, `${role} should be defined`).toMatch(/^#[\da-f]{6}$/i);
+    expect(hex.slice(1, 3).toLowerCase(), `${role} R=G`).toBe(hex.slice(3, 5).toLowerCase());
+    expect(hex.slice(3, 5).toLowerCase(), `${role} G=B`).toBe(hex.slice(5, 7).toLowerCase());
+  }
 });

@@ -151,3 +151,39 @@
   border-color: #4f46e5 !important;
   transform: translateY(-1px);
 }
+
+:root[data-color-mode="dark"] .k-confirm-btn-cancel {
+  background: var(--ui-theme-secondary-action, #262626) !important;
+  color: var(--ui-theme-on-secondary-action, #fafafa) !important;
+  border-color: var(--ui-theme-control-border, #777777) !important;
+  box-shadow: none !important;
+}
+
+:root[data-color-mode="dark"] .k-confirm-btn-cancel:hover:not(:disabled) {
+  background: var(--ui-theme-hover, #262626) !important;
+  border-color: var(--ui-theme-gold, #d8b875) !important;
+  color: var(--ui-theme-ink, #fafafa) !important;
+}
+
+:root[data-color-mode="dark"] .k-confirm-btn-primary {
+  background: var(--ui-theme-action, #d8b875) !important;
+  color: var(--ui-theme-on-action, #141414) !important;
+  border-color: var(--ui-theme-action, #d8b875) !important;
+  box-shadow: none !important;
+}
+
+:root[data-color-mode="dark"] .k-confirm-btn-primary:hover:not(:disabled) {
+  background: var(--ui-theme-action-hover, #e8cc91) !important;
+  border-color: var(--ui-theme-action-hover, #e8cc91) !important;
+}
+
+:root[data-color-mode="dark"] .k-confirm-btn-danger {
+  background: var(--ui-theme-danger-action, #ffb4ab) !important;
+  color: var(--ui-theme-on-danger-action, #3e1d1b) !important;
+  border-color: var(--ui-theme-danger-action, #ffb4ab) !important;
+  box-shadow: none !important;
+}
+
+:root[data-color-mode="dark"] .k-confirm-btn-danger:hover:not(:disabled) {
+  filter: brightness(0.95);
+}

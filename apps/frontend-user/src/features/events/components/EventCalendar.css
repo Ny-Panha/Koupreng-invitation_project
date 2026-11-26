@@ -816,9 +816,9 @@
 
 :root[data-color-mode="dark"] .dash-wrapper .event-calendar-chip.is-published,
 :root[data-color-mode="dark"] .dash-wrapper .event-calendar-detail-status.is-published {
-  background: var(--app-accent-soft);
-  color: #c5dcb5;
-  border-color: var(--app-accent);
+  background: var(--ui-theme-success-soft);
+  color: var(--ui-theme-success);
+  border-color: color-mix(in srgb, var(--ui-theme-success) 38%, transparent);
 }
 
 :root[data-color-mode="dark"] .dash-wrapper .event-calendar-chip.is-local {

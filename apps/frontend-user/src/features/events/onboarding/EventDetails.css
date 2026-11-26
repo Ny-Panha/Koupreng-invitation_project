@@ -181,9 +181,9 @@
 }
 
 :root[data-color-mode=dark] .event-settings-save {
-  background: rgba(26, 32, 28, 0.96);
+  background: color-mix(in srgb, var(--ui-theme-surface) 96%, transparent);
   border-top-color: var(--ws-border);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
 }
 
 .event-settings-save .workspace-button {

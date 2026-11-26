@@ -441,3 +441,37 @@
   }
 }
 
+/* Outer stage management controls adapt to dark mode while inner invitation card keeps its authored theme. */
+:root[data-color-mode="dark"] .kp-stage-switcher {
+  background: var(--ui-theme-surface, #141414);
+  border-color: var(--ui-theme-border, #303030);
+  box-shadow: var(--ui-theme-shadow);
+}
+:root[data-color-mode="dark"] .kp-stage-switch-btn {
+  color: var(--ui-theme-muted, #a3a3a3);
+}
+:root[data-color-mode="dark"] .kp-stage-switch-btn:hover {
+  color: var(--ui-theme-ink, #fafafa);
+}
+:root[data-color-mode="dark"] .kp-stage-switch-btn[aria-pressed="true"] {
+  background: var(--ui-theme-action, #d8b875);
+  color: var(--ui-theme-on-action, #141414);
+  box-shadow: none;
+}
+:root[data-color-mode="dark"] .kp-stage-reset-btn {
+  background: var(--ui-theme-surface, #141414);
+  border-color: var(--ui-theme-border, #303030);
+  color: var(--ui-theme-ink, #fafafa);
+}
+:root[data-color-mode="dark"] .kp-stage-reset-btn:hover {
+  background: var(--ui-theme-hover, #262626);
+  border-color: var(--ui-theme-gold, #d8b875);
+  color: var(--ui-theme-gold-bright, #e8cc91);
+}
+:root[data-color-mode="dark"] .kp-stage-demo-link {
+  color: var(--ui-theme-gold, #d8b875);
+}
+:root[data-color-mode="dark"] .kp-stage-demo-link:hover {
+  color: var(--ui-theme-gold-bright, #e8cc91);
+}
+

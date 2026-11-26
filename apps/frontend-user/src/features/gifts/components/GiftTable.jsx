@@ -12,10 +12,10 @@ import { GuestSelectField } from "./GuestSelectField";
 import { formatLocalDate } from "@/shared/utils/localDate";
 
 const METHOD_STYLES = {
-    "Bakong QR": { bg: "#e0f2fe", color: "#0369a1", Icon: IoPhonePortraitOutline },
-    ABA: { bg: "#fef3c7", color: "#b45309", Icon: IoCardOutline },
-    Cash: { bg: "#dcfce7", color: "#15803d", Icon: IoCashOutline },
-    "សាច់ប្រាក់": { bg: "#dcfce7", color: "#15803d", Icon: IoCashOutline },
+    "Bakong QR": { bg: "var(--ui-theme-info-soft, #e0f2fe)", color: "var(--ui-theme-info, #0369a1)", Icon: IoPhonePortraitOutline },
+    ABA: { bg: "var(--ui-theme-warning-soft, #fef3c7)", color: "var(--ui-theme-warning, #b45309)", Icon: IoCardOutline },
+    Cash: { bg: "var(--ui-theme-success-soft, #dcfce7)", color: "var(--ui-theme-success, #15803d)", Icon: IoCashOutline },
+    "សាច់ប្រាក់": { bg: "var(--ui-theme-success-soft, #dcfce7)", color: "var(--ui-theme-success, #15803d)", Icon: IoCashOutline },
 };
 
 export function GiftTable({
