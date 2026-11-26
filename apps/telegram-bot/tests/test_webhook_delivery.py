@@ -12,6 +12,7 @@ import main
 
 @pytest.fixture(autouse=True)
 def isolated_bot(monkeypatch):
+    monkeypatch.setattr(main, "TELEGRAM_ALLOWED_PAYMENT_BOT_IDS", {"555"})
     main.PROCESSED_UPDATE_IDS.clear()
     monkeypatch.setattr(main, "TELEGRAM_BOT_TOKEN", "")
     monkeypatch.setattr(main, "TELEGRAM_WEBHOOK_SECRET", "test-webhook-secret")
@@ -37,8 +38,8 @@ def payment_update(update_id=32001):
         "message": {
             "message_id": 22,
             "chat": {"id": -1001},
-            "from": {"id": 999, "is_bot": False},
-            "text": "/paid EVT260529001 0.01 SIM-0001",
+            "from": {"id": 555, "is_bot": True, "username": "PayWayByABA_bot"},
+            "text": "Received: USD0.01 Note: EVT260529001 Trx. ID: SIM-0001 APV: 123",
         },
     }
 

@@ -54,6 +54,7 @@
 .pkg-checkout-status p { font-size:13px; line-height:1.9; margin:0; color:var(--ui-muted); }
 .pkg-checkout-status .pkg-status { font-size:12px; background:var(--ui-action-soft); color:var(--ui-action); padding:3px 9px; }
 .pkg-checkout-status:is([data-stage=waiting],[data-stage=review]) :is(.pkg-state-icon,.pkg-status) { color:var(--app-gold,#80602f); background:var(--app-gold-soft,#faf2e4); }
+.pkg-checkout-status:is([data-stage=waiting],[data-stage=review]) .pkg-status { color:var(--ui-ink); }
 .pkg-checkout-status:is([data-stage=expired],[data-stage=failed]) .pkg-status { color:var(--ui-danger); background:color-mix(in srgb,var(--ui-danger) 8%,var(--ui-surface)); }
 .pkg-checkout .pkg-payment-deadline { font-size:11px; line-height:1.9; border-top:1px solid var(--ui-border); width:100%; padding-top:14px; }
 .pkg-payment-deadline time { display:block; font-variant-numeric:tabular-nums; color:var(--ui-ink); font-size:12px; }

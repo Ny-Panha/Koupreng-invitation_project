@@ -233,6 +233,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/payway/callback",
                                 "/api/v1/payway/return",
                                 "/api/v1/payway/cancel").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/telegram/user/webhook").permitAll()
                         .requestMatchers("/api/v1/internal/template-payments/**").permitAll()
                         .requestMatchers("/api/v1/internal/subscription-payments/**").permitAll()
                         .requestMatchers("/api/v1/dev-monitor/telemetry").permitAll()

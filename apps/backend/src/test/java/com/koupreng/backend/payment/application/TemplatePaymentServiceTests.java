@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -303,7 +304,7 @@ class TemplatePaymentServiceTests {
     }
 
     @Test
-    void telegramDetectMarksMatchingStaticOrderPaidAndUnlocksTemplate() {
+    void telegramDetectRecordsMatchingStaticOrderWithoutUnlockingTemplate() {
         Fixture fixture = fixture();
         TemplatePaymentOrder order = order(fixture.owner, PaymentStatus.PENDING, new BigDecimal("0.01"));
         when(fixture.orderRepository.findForUpdateByOrderCode(order.getOrderCode())).thenReturn(Optional.of(order));
@@ -326,16 +327,16 @@ class TemplatePaymentServiceTests {
 
         PaymentConfirmResponse response = fixture.service.detectPaymentFromTelegram(request);
 
-        assertEquals(PaymentStatus.PAID, response.getStatus());
-        assertEquals(new BigDecimal("0.01"), order.getPaidAmount());
-        assertEquals(TemplatePaymentOrder.CONFIRM_SOURCE_TELEGRAM_ABA_ALERT, order.getConfirmSource());
-        assertEquals("telegram-bot", order.getConfirmedBy());
+        assertEquals(PaymentStatus.PAID_PENDING_REVIEW, response.getStatus());
+        assertNull(order.getPaidAmount());
+        assertNull(order.getConfirmSource());
+        assertNull(order.getConfirmedBy());
         assertEquals("PayWayByABA_bot", order.getTelegramSenderUsername());
         assertEquals("123456", order.getTelegramSenderId());
-        assertEquals("178002414241549", order.getPaywayTransactionId());
+        assertNull(order.getPaywayTransactionId());
         assertEquals("704787", order.getPaywayApprovalCode());
-        assertNotNull(order.getPaidAt());
-        verify(fixture.accessRepository).save(any(UserTemplateAccess.class));
+        assertNull(order.getPaidAt());
+        verify(fixture.accessRepository, never()).save(any(UserTemplateAccess.class));
     }
 
     @Test

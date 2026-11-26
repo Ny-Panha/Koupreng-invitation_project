@@ -1,5 +1,6 @@
 package com.koupreng.backend.payment.application;
 
+import com.koupreng.backend.payment.api.dto.BankRecordVerification;
 import com.koupreng.backend.payment.domain.PaymentEvidence;
 import com.koupreng.backend.payment.infrastructure.config.PaymentProperties;
 import com.koupreng.backend.payment.infrastructure.persistence.PaymentEvidenceRepository;
@@ -45,8 +46,8 @@ public class PaymentEvidenceService {
         return repository.saveAndFlush(evidence);
     }
 
-    public void claim(PaymentEvidence evidence, String orderCode, BigDecimal amount, String currency) {
-        if (!evidence.isTrusted() || "PAID".equals(evidence.getOutcome())
+    private void claim(PaymentEvidence evidence, String orderCode, BigDecimal amount, String currency) {
+        if (evidence.getVerificationMethod() == null || "PAID".equals(evidence.getOutcome())
                 || evidence.getAmount().compareTo(amount) != 0 || !currency.equals(evidence.getCurrency())
                 || (evidence.getOrderCode() != null && !orderCode.equals(evidence.getOrderCode()))) {
             throw new ApiException(HttpStatus.CONFLICT, "PAYMENT_EVIDENCE_CONFLICT",
@@ -57,15 +58,28 @@ public class PaymentEvidenceService {
         repository.saveAndFlush(evidence);
     }
 
-    public PaymentEvidence manualEvidence(String transactionId, String orderCode) {
-        PaymentEvidence evidence = repository.lock(requireTransactionId(transactionId))
-                .orElseThrow(() -> new ApiException(HttpStatus.CONFLICT, "Trusted merchant evidence is required"));
+    public PaymentEvidence claimReviewedBankRecord(String transactionId, String orderCode, BigDecimal amount,
+            String currency, String reviewer, BankRecordVerification bankRecord) {
+        if (bankRecord == null || !bankRecord.successfulAndUnreversed() || !currency.equals(bankRecord.currency())
+                || bankRecord.merchant() == null || bankRecord.merchant().length() > 120
+                || !properties.getAba().getExpectedMerchant().equalsIgnoreCase(bankRecord.merchant().strip())
+                || bankRecord.notes() == null || bankRecord.notes().isBlank() || bankRecord.notes().length() > 280
+                || reviewer == null || reviewer.isBlank()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "BANK_RECORD_VERIFICATION_REQUIRED",
+                    "Verify the official bank record, merchant, currency and settlement status before confirming");
+        }
+        String id = requireTransactionId(transactionId);
+        repository.reserve(id, amount, currency, Instant.now());
+        PaymentEvidence evidence = repository.lock(id).orElseThrow();
         if ("REVIEW_REQUIRED".equals(evidence.getOutcome()) && evidence.getChatId() == null) {
             throw new ApiException(HttpStatus.CONFLICT, "Historical transaction collision requires investigation");
         }
-        if (evidence.getOrderCode() != null && !orderCode.equals(evidence.getOrderCode())) {
-            throw new ApiException(HttpStatus.CONFLICT, "Transaction belongs to another order");
-        }
+        evidence.setVerificationMethod("ADMIN_BANK_RECORD");
+        evidence.setVerifiedAt(Instant.now());
+        evidence.setVerifiedBy(reviewer);
+        evidence.setVerifiedMerchant(properties.getAba().getExpectedMerchant());
+        evidence.setVerificationNotes(bankRecord.notes().strip());
+        claim(evidence, orderCode, amount, currency);
         return evidence;
     }
 
@@ -73,7 +87,8 @@ public class PaymentEvidenceService {
         String id = requireTransactionId(transactionId);
         repository.reserve(id, amount, currency, Instant.now());
         PaymentEvidence evidence = repository.lock(id).orElseThrow();
-        if ("RECEIVED".equals(evidence.getOutcome())) evidence.setTrusted(true);
+        evidence.setVerificationMethod("ABA_API");
+        evidence.setVerifiedAt(Instant.now());
         claim(evidence, orderCode, amount, currency);
     }
 

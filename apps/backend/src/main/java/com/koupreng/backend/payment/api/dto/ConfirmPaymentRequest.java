@@ -23,9 +23,15 @@ public record ConfirmPaymentRequest(
         @NotBlank(message = "Item type is required")
         @Size(max = 30)
         String itemType,
-        @Size(max = 100) String paywayTransactionId
+        @Size(max = 100) String paywayTransactionId,
+        @jakarta.validation.Valid BankRecordVerification bankRecord
 ) {
+    public ConfirmPaymentRequest(String orderCode, BigDecimal amount, String confirmedBy, String itemType,
+                                 String paywayTransactionId) {
+        this(orderCode, amount, confirmedBy, itemType, paywayTransactionId, null);
+    }
+
     public ConfirmPaymentRequest(String orderCode, BigDecimal amount, String confirmedBy, String itemType) {
-        this(orderCode, amount, confirmedBy, itemType, null);
+        this(orderCode, amount, confirmedBy, itemType, null, null);
     }
 }

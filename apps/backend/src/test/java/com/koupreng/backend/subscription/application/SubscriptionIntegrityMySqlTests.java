@@ -125,7 +125,7 @@ class SubscriptionIntegrityMySqlTests {
     }
 
     @Test
-    void strictOptInMerchantEvidenceActivatesOnlyOnceUsingTheRealPersistencePath() {
+    void merchantAlertRequiresBankRecordAndSettlementIsIdempotent() {
         Subscription pending = order(user(), false, null);
         pending.setAmount(new BigDecimal("27.13"));
         pending.setPayerName("FIXTURE USER");
@@ -144,19 +144,16 @@ class SubscriptionIntegrityMySqlTests {
         request.setTelegramMessageId("900000" + pending.getId());
         request.setTrustedMerchantAlert(true);
         request.setMerchantMessageAt(Instant.now());
-        paymentProperties.setAutoConfirmTelegramDetected(true);
-        try {
-            assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.PAID,
-                    service.detectTelegramPayment(request).status());
-            Instant end = subscriptions.findById(pending.getId()).orElseThrow().getEndDate();
-            assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.ALREADY_PROCESSED,
-                    service.detectTelegramPayment(request).status());
-            assertEquals(end, subscriptions.findById(pending.getId()).orElseThrow().getEndDate());
-            assertEquals("TRUSTED_TELEGRAM_MERCHANT_ALERT",
-                    subscriptions.findById(pending.getId()).orElseThrow().getConfirmSource());
-        } finally {
-            paymentProperties.setAutoConfirmTelegramDetected(false);
-        }
+        assertEquals(com.koupreng.backend.subscription.domain.SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+                service.detectTelegramPayment(request).status());
+        assertFalse(subscriptions.findById(pending.getId()).orElseThrow().isActive());
+        var verification = new ConfirmPaymentRequest(pending.getOrderCode(), pending.getAmount(),
+                "integrity-fixture", "SUBSCRIPTION", request.getPaywayTransactionId(), verifiedBankRecord());
+        service.confirmManualPayment(verification);
+        Instant end = subscriptions.findById(pending.getId()).orElseThrow().getEndDate();
+        service.confirmManualPayment(verification);
+        assertEquals(end, subscriptions.findById(pending.getId()).orElseThrow().getEndDate());
+        assertEquals("MANUAL_ADMIN", subscriptions.findById(pending.getId()).orElseThrow().getConfirmSource());
     }
 
     @Test
@@ -179,7 +176,12 @@ class SubscriptionIntegrityMySqlTests {
                     "FIXTURE", "247", null, order.getOrderCode()));
         }
         service.confirmManualPayment(new ConfirmPaymentRequest(order.getOrderCode(), BigDecimal.ONE,
-                "integrity-fixture", "SUBSCRIPTION", transactionId));
+                "integrity-fixture", "SUBSCRIPTION", transactionId, verifiedBankRecord()));
+    }
+
+    private com.koupreng.backend.payment.api.dto.BankRecordVerification verifiedBankRecord() {
+        return new com.koupreng.backend.payment.api.dto.BankRecordVerification(
+                "USD", "KOEURNG VIREAK", "Verified sandbox merchant record", true);
     }
 
     private long activeCount(AppUser user) {

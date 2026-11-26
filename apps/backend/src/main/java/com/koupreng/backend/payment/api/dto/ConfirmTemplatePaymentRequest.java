@@ -21,4 +21,6 @@ public class ConfirmTemplatePaymentRequest {
     private String confirmedBy;
     @jakarta.validation.constraints.Size(max = 100)
     private String paywayTransactionId;
+    @jakarta.validation.Valid
+    private BankRecordVerification bankRecord;
 }

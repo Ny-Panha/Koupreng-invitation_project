@@ -161,13 +161,19 @@ public class PaymentHistoryService {
 
     @Transactional
     public PaymentConfirmResponse confirmPayment(String orderCode, BigDecimal amount, String confirmedBy, String transactionId) {
+        return confirmPayment(orderCode, amount, confirmedBy, transactionId, null);
+    }
+
+    @Transactional
+    public PaymentConfirmResponse confirmPayment(String orderCode, BigDecimal amount, String confirmedBy,
+            String transactionId, com.koupreng.backend.payment.api.dto.BankRecordVerification bankRecord) {
         String code = normalizeOrderCode(orderCode);
         String reviewer = confirmedBy != null && !confirmedBy.isBlank() ? confirmedBy : "admin";
         java.util.Optional<TemplatePaymentOrder> optOrder = orderRepository.findByOrderCode(code);
         if (optOrder.isPresent()) {
             TemplatePaymentOrder order = optOrder.get();
             return paymentConfirmationService.confirm(new ConfirmPaymentRequest(
-                    code, amount != null ? amount : order.getAmount(), reviewer, "TEMPLATE", transactionId
+                    code, amount != null ? amount : order.getAmount(), reviewer, "TEMPLATE", transactionId, bankRecord
             ));
         }
 
@@ -175,7 +181,7 @@ public class PaymentHistoryService {
         if (optSub.isPresent()) {
             Subscription sub = optSub.get();
             return paymentConfirmationService.confirm(new ConfirmPaymentRequest(
-                    code, amount != null ? amount : sub.getAmount(), reviewer, "SUBSCRIPTION", transactionId
+                    code, amount != null ? amount : sub.getAmount(), reviewer, "SUBSCRIPTION", transactionId, bankRecord
             ));
         }
 

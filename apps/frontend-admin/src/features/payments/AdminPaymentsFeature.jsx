@@ -8,7 +8,9 @@ import { formatDate } from "../../shared/utils";
 import { useAdminLanguage } from "../../app/providers/AdminLanguageProvider";
 import adminManagementService from "../../shared/api/adminService";
 
-const ABA_PAYWAY_STATIC_LINK = "https://pay.ababank.com/oRF8/vx2dp884";
+const emptyBankRecord = {
+  reference: "", amount: "", currency: "", merchant: "", notes: "", successfulAndUnreversed: false,
+};
 
 function money(amount, currency = "USD") {
   if (amount === null || amount === undefined || amount === "") return "—";
@@ -23,21 +25,23 @@ export default function AdminPaymentsPage() {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [verifyingPayment, setVerifyingPayment] = useState(null);
-  const [transactionReference, setTransactionReference] = useState("");
+  const [bankRecord, setBankRecord] = useState(emptyBankRecord);
+  const updateBankRecord = (field, value) => setBankRecord((record) => ({ ...record, [field]: value }));
+  const copy = (en, km) => lang === "en" ? en : km;
   const [modalError, setModalError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast, show, clear } = useToast();
 
   const handleOpenVerifyModal = (payment) => {
     setVerifyingPayment(payment);
-    setTransactionReference(payment.paywayTransactionId || "");
+    setBankRecord(emptyBankRecord);
     setModalError("");
   };
 
   const handleManualVerifySubmit = async (e) => {
     e.preventDefault();
     if (!verifyingPayment) return;
-    const trimmedTx = transactionReference.trim();
+    const trimmedTx = bankRecord.reference.trim();
     if (!trimmedTx) {
       setModalError(lang === "en" ? "Transaction reference is required" : "សូមបញ្ចូលលេខប្រតិបត្តិការ");
       return;
@@ -46,16 +50,19 @@ export default function AdminPaymentsPage() {
     setIsSubmitting(true);
     setModalError("");
     try {
-      // Invariant: Server-authoritative amount, never fabricate 0.01
       const payload = {
         orderCode: verifyingPayment.orderCode,
         confirmedBy: "admin",
         itemType: verifyingPayment.itemType || (verifyingPayment.orderCode?.startsWith("SUB") ? "SUBSCRIPTION" : "TEMPLATE"),
         paywayTransactionId: trimmedTx,
+        amount: bankRecord.amount,
+        bankRecord: {
+          currency: bankRecord.currency,
+          merchant: bankRecord.merchant.trim(),
+          notes: bankRecord.notes.trim(),
+          successfulAndUnreversed: bankRecord.successfulAndUnreversed,
+        },
       };
-      if (verifyingPayment.amount != null) {
-        payload.amount = Number(verifyingPayment.amount);
-      }
 
       await adminManagementService.confirmPayment(payload);
 
@@ -65,7 +72,6 @@ export default function AdminPaymentsPage() {
         })
       );
       setVerifyingPayment(null);
-      setTransactionReference("");
       await reload();
     } catch (err) {
       setModalError(err?.message || (lang === "en" ? "Failed to confirm payment" : "បរាជ័យក្នុងការបញ្ជាក់ការទូទាត់"));
@@ -125,15 +131,6 @@ export default function AdminPaymentsPage() {
           <p className="page-subtitle">{t("payments.subtitle", "Template and subscription payment orders from the active admin API.")}</p>
         </div>
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          <a
-            href={ABA_PAYWAY_STATIC_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-ghost"
-            style={{ display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
-          >
-            <span>🔗 ABA Pay Link</span>
-          </a>
           <button type="button" className="btn btn-ghost" onClick={reload}>
             {t("common.refresh", "Refresh")}
           </button>
@@ -241,7 +238,7 @@ export default function AdminPaymentsPage() {
                     <td>{formatDate(payment.createdAt)}</td>
                     <td>{formatDate(payment.paidAt)}</td>
                     <td>
-                      {String(payment.status || "").includes("PENDING") || payment.status === "REVIEW_REQUIRED" ? (
+                      {String(payment.status || "").includes("PENDING") || ["REVIEW_REQUIRED", "EXPIRED"].includes(payment.status) ? (
                         <button
                           type="button"
                           className="btn btn-primary btn-sm"
@@ -325,24 +322,63 @@ export default function AdminPaymentsPage() {
             <form onSubmit={handleManualVerifySubmit} className="mt-4 space-y-4">
               <div>
                 <label htmlFor="tx-ref" className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 mb-1.5">
-                  {lang === "en" ? "ABA PayWay Transaction Reference / Merchant Alert ID" : "លេខកូដប្រតិបត្តិការ ABA PayWay / សារធនាគារ"} *
+                  {lang === "en" ? "Official ABA transaction ID" : "លេខកូដប្រតិបត្តិការផ្លូវការរបស់ ABA"} *
                 </label>
                 <input
                   id="tx-ref"
                   type="text"
                   required
                   disabled={isSubmitting}
-                  value={transactionReference}
-                  onChange={(e) => setTransactionReference(e.target.value)}
+                  value={bankRecord.reference}
+                  onChange={(e) => updateBankRecord("reference", e.target.value)}
+                  maxLength={100}
                   placeholder="e.g. 2026110598765432"
                   className="text-input w-full font-mono text-xs"
                 />
                 <span className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 block">
-                  {lang === "en"
-                    ? "Must match the official ABA Bank notification received in merchant alert channel."
-                    : "ត្រូវតែត្រូវគ្នានឹងសារផ្លូវការរបស់ធនាគារ ABA ដែលទទួលបានក្នុង Telegram Channel។"}
+                  {copy("Enter the ID from the official ABA Merchant Portal or Merchant App.",
+                    "បញ្ចូលលេខកូដពី ABA Merchant Portal ឬ ABA Merchant App ផ្លូវការ។")}
                 </span>
               </div>
+
+              <fieldset disabled={isSubmitting} className="space-y-3">
+                <legend className="text-xs font-semibold">
+                  {copy("Official merchant record", "កំណត់ត្រាផ្លូវការរបស់ពាណិជ្ជករ")}
+                </legend>
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="text-xs">
+                    {copy("Bank record amount", "ចំនួនទឹកប្រាក់ក្នុងកំណត់ត្រាធនាគារ")}
+                    <input className="text-input w-full" required inputMode="decimal" maxLength={15}
+                      pattern={bankRecord.currency === "KHR" ? "[0-9]+" : "[0-9]+(?:[.][0-9]{1,2})?"}
+                      value={bankRecord.amount} onChange={(event) => updateBankRecord("amount", event.target.value)} />
+                  </label>
+                  <label className="text-xs">
+                    {copy("Bank record currency", "រូបិយប័ណ្ណក្នុងកំណត់ត្រាធនាគារ")}
+                    <select className="text-input w-full" required value={bankRecord.currency}
+                      onChange={(event) => updateBankRecord("currency", event.target.value)}>
+                      <option value="">{copy("Select currency", "ជ្រើសរើសរូបិយប័ណ្ណ")}</option>
+                      <option value="USD">USD</option>
+                      <option value="KHR">KHR</option>
+                    </select>
+                  </label>
+                </div>
+                <label className="block text-xs">
+                  {copy("Merchant name on bank record", "ឈ្មោះពាណិជ្ជករក្នុងកំណត់ត្រាធនាគារ")}
+                  <input className="text-input w-full" required maxLength={120}
+                    value={bankRecord.merchant} onChange={(event) => updateBankRecord("merchant", event.target.value)} />
+                </label>
+                <label className="block text-xs">
+                  {copy("How did you match this transaction to the order?", "តើអ្នកបានផ្គូផ្គងប្រតិបត្តិការនេះនឹងការបញ្ជាទិញដោយរបៀបណា?")}
+                  <textarea className="text-input w-full" required maxLength={280}
+                    value={bankRecord.notes} onChange={(event) => updateBankRecord("notes", event.target.value)} />
+                </label>
+                <label className="flex items-start gap-2 text-xs">
+                  <input type="checkbox" required checked={bankRecord.successfulAndUnreversed}
+                    onChange={(event) => updateBankRecord("successfulAndUnreversed", event.target.checked)} />
+                  {copy("I verified that the official bank record shows a successful payment with no reversal.",
+                    "ខ្ញុំបានផ្ទៀងផ្ទាត់ថាកំណត់ត្រាផ្លូវការរបស់ធនាគារបង្ហាញការទូទាត់ជោគជ័យ និងគ្មានការលុបចោល។")}
+                </label>
+              </fieldset>
 
               <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-2.5 text-[11px] text-amber-700 dark:text-amber-400 leading-relaxed">
                 ⚠️ <strong>{lang === "en" ? "Audit Invariant:" : "គោលការណ៍សវនកម្ម៖"}</strong>{" "}
@@ -363,7 +399,7 @@ export default function AdminPaymentsPage() {
                 <button
                   type="submit"
                   className="btn btn-primary btn-sm"
-                  disabled={isSubmitting || !transactionReference.trim()}
+                  disabled={isSubmitting || !bankRecord.successfulAndUnreversed}
                 >
                   {isSubmitting
                     ? (lang === "en" ? "Verifying..." : "កំពុងផ្ទៀងផ្ទាត់...")

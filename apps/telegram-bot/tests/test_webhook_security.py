@@ -64,7 +64,7 @@ def test_invalid_webhook_secret_cannot_confirm_a_forged_admin_payment(supplied):
     assert not main.PROCESSED_UPDATE_IDS
 
 
-def test_authenticated_webhook_preserves_authorized_payment_and_health():
+def test_authenticated_webhook_cannot_settle_payments_and_health_stays_available():
     with TestClient(main.app) as client:
         assert client.get("/health").json() == {"ok": True}
         response = client.post(
@@ -74,8 +74,7 @@ def test_authenticated_webhook_preserves_authorized_payment_and_health():
         )
 
     assert response.status_code == 200
-    main.post_to_backend.assert_awaited_once()
-    assert main.post_to_backend.call_args.args[0] == "/api/v1/internal/template-payments/confirm"
+    main.post_to_backend.assert_not_awaited()
 
 
 def privileged_update():

@@ -27,6 +27,11 @@ public class PaymentEvidence {
     @Column(name = "transaction_date_text", length = 120) private String transactionDateText;
     @Column(name = "received_at") private Instant receivedAt;
     private boolean trusted;
+    @Column(name = "verification_method", length = 30) private String verificationMethod;
+    @Column(name = "verified_by", length = 120) private String verifiedBy;
+    @Column(name = "verified_at") private Instant verifiedAt;
+    @Column(name = "verified_merchant", length = 120) private String verifiedMerchant;
+    @Column(name = "verification_notes", length = 280) private String verificationNotes;
     @Column(name = "order_code") private String orderCode;
     private String outcome = "RECEIVED";
 }

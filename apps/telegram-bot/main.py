@@ -17,11 +17,18 @@ from pydantic import BaseModel, Field
 BOT_DIR = Path(__file__).resolve().parent
 load_dotenv(BOT_DIR / ".env")
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+USER_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+ADMIN_BOT_TOKEN = os.getenv("TELEGRAM_ADMIN_BOT_TOKEN", "").strip()
+ADMIN_BOT_ENABLED = bool(ADMIN_BOT_TOKEN)
+TELEGRAM_BOT_TOKEN = ADMIN_BOT_TOKEN or USER_BOT_TOKEN
 SPRING_API_BASE_URL = os.getenv("SPRING_API_BASE_URL", "http://localhost:8080").rstrip("/")
 FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:5173").rstrip("/")
 ADMIN_PAYMENT_SECRET = os.getenv("ADMIN_PAYMENT_SECRET", "")
-TELEGRAM_WEBHOOK_SECRET = os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
+USER_WEBHOOK_SECRET = os.getenv("TELEGRAM_USER_WEBHOOK_SECRET", "").strip()
+TELEGRAM_WEBHOOK_SECRET = (
+    os.getenv("TELEGRAM_ADMIN_WEBHOOK_SECRET", "") if ADMIN_BOT_ENABLED
+    else os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
+)
 WELCOME_PHOTO_FILE_ID = os.getenv("WELCOME_PHOTO_FILE_ID", "")
 TELEGRAM_ALLOWED_GROUP_IDS = {
     value
@@ -164,6 +171,9 @@ async def lifespan(_app: FastAPI):
     missing = missing_payment_security_configuration()
     if missing:
         raise RuntimeError("Missing required Telegram payment configuration: " + ", ".join(missing))
+    if ADMIN_BOT_ENABLED and (ADMIN_BOT_TOKEN == USER_BOT_TOKEN
+                              or TELEGRAM_WEBHOOK_SECRET == USER_WEBHOOK_SECRET):
+        raise RuntimeError("The User Bot and Admin Bot require distinct tokens and webhook secrets")
     await set_bot_commands()
     yield
 
@@ -225,6 +235,13 @@ async def set_bot_commands():
         {"command": "menu", "description": "Show main menu"},
         {"command": "help",  "description": "How to use & Support"},
     ]
+    if ADMIN_BOT_ENABLED:
+        commands = [{"command": cmd, "description": description} for cmd, description in {
+            "start": "Koupreng payment operations", "help": "Admin Bot help",
+            "payments": "Open payment operations", "pending": "Open pending payments",
+            "review": "Open reconciliation", "detect": "Reply to an original PayWay alert",
+            "stats": "Open payment reports", "status": "Open admin dashboard",
+        }.items()]
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/setMyCommands"
     try:
         async with httpx.AsyncClient(timeout=10) as client:
@@ -235,7 +252,7 @@ async def set_bot_commands():
         return
 
     if result.get("ok"):
-        logger.info("Bot commands registered: /start, /menu, /help")
+        logger.info("Bot commands registered")
     else:
         logger.warning("Failed to set bot commands: %s", result.get("description") or "rejected")
 
@@ -387,7 +404,15 @@ async def process_telegram_update(update: dict):
         bool(callback_query_id),
     )
 
-    if command_name(text) == "/start":
+    if ADMIN_BOT_ENABLED and (command_name(text) in {"/start", "/help", "/status", "/payments",
+                                                   "/pending", "/review", "/stats"}):
+        if sender_id in TELEGRAM_ALLOWED_ADMIN_IDS and not sender.get("is_bot"):
+            await send_message(chat_id, "Open the authenticated Koupreng Admin Dashboard to review payments.", message_id)
+        return {"ok": True}
+    if ADMIN_BOT_ENABLED and not group_allowed(chat_id):
+        return {"ok": True}
+
+    if not ADMIN_BOT_ENABLED and command_name(text) == "/start":
         import datetime as _dt
         first_name = str(sender.get("first_name") or "").strip()
         last_name  = str(sender.get("last_name")  or "").strip()
@@ -432,6 +457,10 @@ async def process_telegram_update(update: dict):
         await send_main_menu(chat_id)
         return {"ok": True}
 
+    if ADMIN_BOT_ENABLED and (callback_query_id or (
+            text.startswith("/") and command_name(text) not in {"/detect", "/confirm", "/paid"}
+    )):
+        return {"ok": True}
     if callback_query_id:
         await answer_callback_query(callback_query_id)
 
@@ -482,13 +511,11 @@ async def process_telegram_update(update: dict):
         )
         return {"ok": True}
 
-    if text.startswith("/paid"):
-        if chat_id not in TELEGRAM_ALLOWED_GROUP_IDS:
-            return {"ok": True}
-        if sender_id not in TELEGRAM_ALLOWED_ADMIN_IDS:
-            await send_message(chat_id, "You are not allowed to confirm payments.", message_id)
-            return {"ok": True}
-        await handle_paid_command(chat_id, message_id, text, sender_display)
+    if command_name(text) == "/paid":
+        if chat_id in TELEGRAM_ALLOWED_GROUP_IDS:
+            reply = ("Verify the official bank record in the Koupreng Admin Dashboard."
+                     if sender_id in TELEGRAM_ALLOWED_ADMIN_IDS else "You are not allowed to confirm payments.")
+            await send_message(chat_id, reply, message_id)
         return {"ok": True}
 
     if command_name(text) in {"/detect", "/confirm"}:
@@ -699,39 +726,6 @@ def command_name(text: str) -> str:
     if not text:
         return ""
     return text.split(maxsplit=1)[0].split("@", 1)[0]
-
-
-async def handle_paid_command(chat_id: str, message_id: str, text: str, username: str):
-    parts = text.split()
-    if len(parts) < 3:
-        await send_message(chat_id, "Usage: /paid EVT260520001 0.01", message_id)
-        return
-    if len(parts) != 4:
-        await send_message(
-            chat_id, "Usage: /paid ORDER AMOUNT REAL_ABA_TRANSACTION_ID (record /detect first)", message_id
-        )
-        return
-
-    order_code = parts[1].upper()
-    try:
-        amount = str(Decimal(parts[2]))
-    except InvalidOperation:
-        await send_message(chat_id, "Invalid amount.", message_id)
-        return
-
-    result = await post_to_backend(
-        "/api/v1/internal/subscription-payments/confirm" if order_code.startswith("SUB")
-        else "/api/v1/internal/template-payments/confirm",
-        {
-            "orderCode": order_code,
-            "amount": amount,
-            "confirmedBy": username,
-            "itemType": "SUBSCRIPTION" if order_code.startswith("SUB") else "TEMPLATE",
-            "paywayTransactionId": parts[3],
-        },
-    )
-    require_backend_delivery(result)
-    await reply_from_backend(chat_id, message_id, result, success_prefix=f"Payment confirmed: {order_code}")
 
 
 async def handle_detect_message(

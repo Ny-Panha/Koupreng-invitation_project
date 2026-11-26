@@ -127,16 +127,14 @@ class AdminPaymentSecretFilterChainTests {
     }
 
     @Test
-    void internalPaymentEndpointAllowsValidSecretWithoutAdminJwt() throws Exception {
+    void internalPaymentSecretCannotSettle() throws Exception {
         mockMvc.perform(post(INTERNAL_CONFIRM_PATH)
                         .header(AdminPaymentSecretFilter.ADMIN_PAYMENT_SECRET_HEADER, "chain-secret")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(CONFIRM_REQUEST_BODY))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.orderCode").value("EVT260529001"))
-                .andExpect(jsonPath("$.data.status").value("PAID"));
+                .andExpect(status().isNotFound());
 
-        verify(templatePaymentService).confirmManualPayment(any(ConfirmTemplatePaymentRequest.class));
+        verifyNoInteractions(templatePaymentService);
     }
 
     @Test

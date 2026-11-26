@@ -500,31 +500,15 @@ public class TemplatePaymentService {
                 && !alertAt.isAfter(Instant.now().plusSeconds(60)) && alertAt.isBefore(order.getExpiresAt());
         boolean validReference = request.getRemark() == null || request.getRemark().isBlank()
                 || orderCode.equalsIgnoreCase(request.getRemark().trim());
-        if (!paymentProperties.isAutoConfirmTelegramDetected() || !trusted || !validWindow || !validReference
-                || request.getPaywayTransactionId() == null || request.getPaywayTransactionId().isBlank()) {
-            if (evidence != null) {
-                evidence.setOutcome("REVIEW_REQUIRED");
-                if (trusted && validReference) evidence.setOrderCode(orderCode);
-            }
-            order.setStatus(PaymentStatus.PAID_PENDING_REVIEW);
-            orderRepository.save(order);
-            return PaymentConfirmResponse.builder()
-                    .message("Telegram payment detected. Waiting for admin review.")
-                    .orderCode(order.getOrderCode())
-                    .status(order.getStatus())
-                    .build();
+        boolean matched = trusted && validWindow && validReference;
+        if (evidence != null) {
+            evidence.setOutcome(matched ? "MATCHED_UNVERIFIED" : "REVIEW_REQUIRED");
+            if (matched) evidence.setOrderCode(orderCode);
         }
-
-        if (evidence != null) evidenceService.claim(evidence, orderCode, paidAmount, detectedCurrency);
-
-        markOrderPaid(
-                order,
-                paidAmount,
-                TemplatePaymentOrder.CONFIRM_SOURCE_TELEGRAM_ABA_ALERT,
-                requireText(request.getDetectedBy(), "Detected by is required")
-        );
+        order.setStatus(PaymentStatus.PAID_PENDING_REVIEW);
+        orderRepository.save(order);
         return PaymentConfirmResponse.builder()
-                .message("Trusted Telegram merchant evidence confirmed. Template unlocked.")
+                .message("Telegram payment detected. Waiting for verification against the official bank record.")
                 .orderCode(order.getOrderCode())
                 .status(order.getStatus())
                 .build();
@@ -543,7 +527,7 @@ public class TemplatePaymentService {
                     .build();
         }
 
-        if (isExpired(order)) {
+        if (isExpired(order) && request.getBankRecord() == null) {
             order.setStatus(PaymentStatus.EXPIRED);
             orderRepository.save(order);
             return PaymentConfirmResponse.builder()
@@ -553,7 +537,8 @@ public class TemplatePaymentService {
                     .build();
         }
 
-        if (!EXPIRABLE_STATUSES.contains(order.getStatus())) {
+        if (!EXPIRABLE_STATUSES.contains(order.getStatus())
+                && !(order.getStatus() == PaymentStatus.EXPIRED && request.getBankRecord() != null)) {
             throw new ApiException(HttpStatus.CONFLICT, "Payment order is no longer payable");
         }
 
@@ -564,8 +549,8 @@ public class TemplatePaymentService {
         }
 
         if (evidenceService != null) {
-            var evidence = evidenceService.manualEvidence(request.getPaywayTransactionId(), order.getOrderCode());
-            evidenceService.claim(evidence, order.getOrderCode(), paidAmount, order.getCurrency());
+            var evidence = evidenceService.claimReviewedBankRecord(request.getPaywayTransactionId(),
+                    order.getOrderCode(), paidAmount, order.getCurrency(), request.getConfirmedBy(), request.getBankRecord());
             order.setPaywayTransactionId(evidence.getTransactionId());
             order.setPaywayApprovalCode(evidence.getApprovalCode());
         }
@@ -727,16 +712,12 @@ public class TemplatePaymentService {
             TelegramDetectPaymentRequest request,
             BigDecimal detectedAmount
     ) {
-        order.setPaidAmount(detectedAmount);
-        order.setConfirmSource(TemplatePaymentOrder.CONFIRM_SOURCE_TELEGRAM_ABA_ALERT);
-        order.setConfirmedBy(requireText(request.getDetectedBy(), "Detected by is required"));
         order.setRawTelegramMessage("Normalized Telegram evidence; amount=" + detectedAmount
                 + " " + request.getDetectedCurrency() + "; transaction=" + request.getPaywayTransactionId());
         order.setTelegramChatId(blankToNull(request.getTelegramChatId()));
         order.setTelegramMessageId(blankToNull(request.getTelegramMessageId()));
         order.setTelegramSenderUsername(blankToNull(request.getTelegramSenderUsername()));
         order.setTelegramSenderId(blankToNull(request.getTelegramSenderId()));
-        order.setPaywayTransactionId(blankToNull(request.getPaywayTransactionId()));
         order.setPaywayApprovalCode(blankToNull(request.getPaywayApprovalCode()));
         order.setPaywayStatus(paywayStatusFromTelegram(request));
     }

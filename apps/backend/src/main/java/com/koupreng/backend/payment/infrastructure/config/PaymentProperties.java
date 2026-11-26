@@ -73,6 +73,12 @@ public class PaymentProperties {
         @NotBlank
         private String staticLink = "https://pay.ababank.com/oRF8/vx2dp884";
 
+        @NotBlank
+        private String expectedMerchant = "KOEURNG VIREAK";
+
+        public String getExpectedMerchant() { return expectedMerchant; }
+        public void setExpectedMerchant(String value) { expectedMerchant = value; }
+
         private final Subscription subscription = new Subscription();
 
         public String getStaticLink() {

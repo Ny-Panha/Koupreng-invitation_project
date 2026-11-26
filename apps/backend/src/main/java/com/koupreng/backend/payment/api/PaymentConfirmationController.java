@@ -41,7 +41,7 @@ public class PaymentConfirmationController {
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
                 paymentConfirmationService.confirm(new ConfirmPaymentRequest(request.orderCode(), request.amount(),
-                        authentication.getName(), request.itemType(), request.paywayTransactionId()))
+                        authentication.getName(), request.itemType(), request.paywayTransactionId(), request.bankRecord()))
         ));
     }
 }

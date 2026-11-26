@@ -356,15 +356,20 @@ public class InvitationService {
         return toResponse(save(invitation));
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.notification.application.TelegramOwnerNotifications telegramNotifications;
+
     @Transactional
     public InvitationResponse publish(Authentication authentication, Long id) {
         UserInvitation invitation = requireOwnedInvitation(authentication, id);
+        boolean publication = invitation.getStatus() == InvitationStatus.DRAFT;
         ensureSlug(invitation);
         ensureAccessToken(invitation);
         validatePublishReady(invitation);
         invitation.setStatus(InvitationStatus.PUBLISHED);
         invitation.setPublishedAt(Instant.now());
         UserInvitation saved = save(invitation);
+        if (publication && telegramNotifications != null) telegramNotifications.published(saved);
         if (auditLogService != null) {
             auditLogService.logSystemEvent("INVITATION_PUBLISHED", "INVITATION", saved.getId(), "Invitation published by owner", java.util.Map.of("userId", saved.getUser().getId()));
         }

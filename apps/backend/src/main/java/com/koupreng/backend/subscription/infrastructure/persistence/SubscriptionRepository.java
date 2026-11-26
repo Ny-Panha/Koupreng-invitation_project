@@ -33,6 +33,14 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
     @Query("select s from Subscription s where s.user.id = :userId and s.activeSlot = 1 order by s.id")
     List<Subscription> findActiveFlagForUserForUpdate(@Param("userId") Long userId);
 
+    @org.springframework.data.jpa.repository.Modifying
+    @Query("""
+            update Subscription s set s.status = 'EXPIRED', s.paymentStatus = 'EXPIRED'
+            where s.paymentStatus = 'PENDING' and s.status = 'PENDING_PAYMENT'
+              and s.paymentExpiresAt <= :now
+            """)
+    int expirePendingPayments(@Param("now") Instant now);
+
     Optional<Subscription> findByOrderCode(String orderCode);
 
     Optional<Subscription> findByOrderCodeAndUserId(String orderCode, Long userId);

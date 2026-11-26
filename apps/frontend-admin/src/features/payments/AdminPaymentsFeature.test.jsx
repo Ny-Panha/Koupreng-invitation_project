@@ -58,6 +58,16 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+function enterBankRecord(transactionId) {
+  const dialog = within(screen.getByRole("dialog"));
+  fireEvent.change(dialog.getByLabelText(/Official ABA transaction ID/i), { target: { value: transactionId } });
+  fireEvent.change(dialog.getByLabelText(/Bank record amount/i), { target: { value: "15.00" } });
+  fireEvent.change(dialog.getByLabelText(/Bank record currency/i), { target: { value: "USD" } });
+  fireEvent.change(dialog.getByLabelText(/Merchant name on bank record/i), { target: { value: "KOEURNG VIREAK" } });
+  fireEvent.change(dialog.getByLabelText(/How did you match/i), { target: { value: "Matched ABA Merchant Portal record" } });
+  fireEvent.click(dialog.getByRole("checkbox"));
+}
+
 describe("AdminPaymentsFeature Financial Verification & Safety", () => {
   beforeEach(() => {
     localStorage.setItem("koupreng.admin.lang", "en");
@@ -164,8 +174,7 @@ describe("AdminPaymentsFeature Financial Verification & Safety", () => {
     const confirmButtons = screen.getAllByRole("button", { name: /Confirm Payment/i });
     fireEvent.click(confirmButtons[0]);
 
-    const txInput = screen.getByLabelText(/ABA PayWay Transaction Reference/i);
-    fireEvent.change(txInput, { target: { value: "ABA-TXN-987654" } });
+    enterBankRecord("ABA-TXN-987654");
 
     const submitBtn = screen.getByRole("button", { name: /Confirm & Settle Order/i });
     fireEvent.click(submitBtn);
@@ -173,10 +182,16 @@ describe("AdminPaymentsFeature Financial Verification & Safety", () => {
     await waitFor(() => {
       expect(mockAdminService.confirmPayment).toHaveBeenCalledWith({
         orderCode: "KPR-TMP-101",
-        amount: 15.00,
+        amount: "15.00",
         confirmedBy: "admin",
         itemType: "TEMPLATE",
         paywayTransactionId: "ABA-TXN-987654",
+        bankRecord: {
+          currency: "USD",
+          merchant: "KOEURNG VIREAK",
+          notes: "Matched ABA Merchant Portal record",
+          successfulAndUnreversed: true,
+        },
       });
     });
   });
@@ -201,8 +216,7 @@ describe("AdminPaymentsFeature Financial Verification & Safety", () => {
     const confirmButtons = screen.getAllByRole("button", { name: /Confirm Payment/i });
     fireEvent.click(confirmButtons[0]);
 
-    const txInput = screen.getByLabelText(/ABA PayWay Transaction Reference/i);
-    fireEvent.change(txInput, { target: { value: "DUPLICATE-TXN" } });
+    enterBankRecord("DUPLICATE-TXN");
 
     fireEvent.click(screen.getByRole("button", { name: /Confirm & Settle Order/i }));
 

@@ -176,8 +176,9 @@ public class TemplatePaymentController {
     @Operation(summary = "Confirm a template payment manually",
             description = "Requires a bearer JWT for a user with the ADMIN role.")
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmManualPayment(
-            @Valid @RequestBody ConfirmTemplatePaymentRequest request
+            @Valid @RequestBody ConfirmTemplatePaymentRequest request, Authentication authentication
     ) {
+        request.setConfirmedBy(authentication.getName());
         PaymentConfirmResponse response = templatePaymentService.confirmManualPayment(request);
         return ResponseEntity.ok(ApiResponse.success("Template payment confirmed successfully", response));
     }
@@ -191,15 +192,6 @@ public class TemplatePaymentController {
     ) {
         PaymentConfirmResponse response = templatePaymentService.detectPaymentFromTelegram(request);
         return ResponseEntity.ok(ApiResponse.success("Telegram payment detection processed", response));
-    }
-
-    @Hidden
-    @PostMapping("/internal/template-payments/confirm")
-    public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmInternalPayment(
-            @Valid @RequestBody ConfirmTemplatePaymentRequest request
-    ) {
-        PaymentConfirmResponse response = templatePaymentService.confirmManualPayment(request);
-        return ResponseEntity.ok(ApiResponse.success("Template payment confirmed successfully", response));
     }
 
     @Hidden

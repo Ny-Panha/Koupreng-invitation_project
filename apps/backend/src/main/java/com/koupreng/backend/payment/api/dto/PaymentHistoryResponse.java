@@ -68,7 +68,7 @@ public class PaymentHistoryResponse {
                 .paymentLink(sub.getPaymentLink())
                 .paymentNote(sub.getPaymentNote())
                 .paidAt(sub.getPaidAt())
-                .expiresAt(sub.getEndDate())
+                .expiresAt(sub.getPaymentExpiresAt())
                 .createdAt(sub.getCreatedAt())
                 .itemType("SUBSCRIPTION")
                 .build();

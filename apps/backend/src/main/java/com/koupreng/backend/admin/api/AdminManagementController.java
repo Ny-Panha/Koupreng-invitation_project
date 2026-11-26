@@ -513,34 +513,19 @@ public class AdminManagementController {
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
             @PathVariable String orderCode,
             Authentication authentication,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @io.swagger.v3.oas.annotations.media.Content(
-                            mediaType = "application/json",
-                            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
-                                    name = "adminReview",
-                                    summary = "Confirm a pending order through the legacy path endpoint",
-                                    value = """
-                                            {"amount":19.00,"confirmedBy":"admin-demo"}
-                                            """
-                            )
-                    )
-            )
-            @RequestBody(required = false) Map<String, Object> body
+            @jakarta.validation.Valid @RequestBody LegacyBankVerification body
     ) {
-        BigDecimal amount = null;
-        if (body != null && body.get("amount") != null) {
-            try {
-                amount = new BigDecimal(String.valueOf(body.get("amount")));
-            } catch (NumberFormatException invalidAmount) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount must be a valid number");
-            }
-        }
-        String confirmedBy = authentication.getName();
-        String transactionId = body != null && body.get("paywayTransactionId") != null
-                ? String.valueOf(body.get("paywayTransactionId")) : null;
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
-                paymentHistoryService.confirmPayment(orderCode, amount, confirmedBy, transactionId)
+                paymentHistoryService.confirmPayment(orderCode, body.amount(), authentication.getName(),
+                        body.paywayTransactionId(), body.bankRecord())
         ));
     }
+
+    public record LegacyBankVerification(
+            @jakarta.validation.constraints.NotNull @jakarta.validation.constraints.DecimalMin("0.01") BigDecimal amount,
+            @jakarta.validation.constraints.NotBlank @jakarta.validation.constraints.Size(max = 100) String paywayTransactionId,
+            @jakarta.validation.Valid @jakarta.validation.constraints.NotNull
+            com.koupreng.backend.payment.api.dto.BankRecordVerification bankRecord
+    ) {}
 }

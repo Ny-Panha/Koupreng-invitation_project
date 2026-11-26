@@ -44,8 +44,13 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @org.springframework.data.jpa.repository.Query("""
             select n.id from Notification n where n.paymentDeliveryKey is not null
             and n.status = com.koupreng.backend.notification.domain.NotificationStatus.PENDING
-            and n.deliveryAttempts < 3 and n.nextDeliveryAt <= :now order by n.id
+            and n.deliveryAttempts < 3 and n.nextDeliveryAt <= :now
+            and ((:ownerEnabled = true and n.paymentDeliveryKey like 'owner:%')
+                or (:adminEnabled = true and n.paymentDeliveryKey not like 'owner:%'))
+            order by n.id
             """)
     List<Long> paymentDeliveries(@org.springframework.data.repository.query.Param("now") Instant now,
+                                @org.springframework.data.repository.query.Param("ownerEnabled") boolean ownerEnabled,
+                                @org.springframework.data.repository.query.Param("adminEnabled") boolean adminEnabled,
                                 org.springframework.data.domain.Pageable limit);
 }

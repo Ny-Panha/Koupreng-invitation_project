@@ -4,6 +4,7 @@ import { useNotifications } from "./hooks/useNotifications";
 import { NotificationList } from "./components/NotificationList";
 import { NotificationStatsGrid } from "./components/NotificationStatsGrid";
 import { ErrorState, LoadingButton } from "@/shared/ui";
+import TelegramNotificationSettings from "./components/TelegramNotificationSettings";
 import "./NotificationPages.css";
 
 export default function NotificationsPage() {
@@ -37,6 +38,7 @@ export default function NotificationsPage() {
         </LoadingButton>
       </header>
 
+      <TelegramNotificationSettings />
       {loading && summary && <LoadingRegion />}
       {summary && <NotificationStatsGrid summary={summary} />}
 

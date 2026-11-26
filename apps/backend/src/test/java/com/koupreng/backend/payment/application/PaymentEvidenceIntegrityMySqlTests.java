@@ -56,7 +56,7 @@ class PaymentEvidenceIntegrityMySqlTests {
             new TransactionTemplate(manager).executeWithoutResult(status -> {
                 var row = service.record(id, BigDecimal.ONE, "USD", "-1001", messageId(id), "42", true,
                         Instant.now(), "FIXTURE", "247", null, null);
-                service.claim(row, order, BigDecimal.ONE, "USD");
+                service.claimReviewedBankRecord(id, order, BigDecimal.ONE, "USD", "fixture", verifiedBankRecord());
             });
             return 1;
         } catch (ApiException conflict) {
@@ -87,10 +87,26 @@ class PaymentEvidenceIntegrityMySqlTests {
         });
         assertEquals("UNMATCHED", evidence.findById(id).orElseThrow().getOutcome());
         assertThrows(ApiException.class, () -> new TransactionTemplate(manager).executeWithoutResult(status -> {
-            var row = service.manualEvidence(id, "SUB-QA");
-            service.claim(row, "SUB-QA", BigDecimal.ONE, "USD");
+            service.claimReviewedBankRecord(id, "SUB-QA", BigDecimal.ONE, "USD", "fixture", null);
         }));
         assertFalse(evidence.findById(id).orElseThrow().isTrusted());
+    }
+
+    private com.koupreng.backend.payment.api.dto.BankRecordVerification verifiedBankRecord() {
+        return new com.koupreng.backend.payment.api.dto.BankRecordVerification(
+                "USD", "KOEURNG VIREAK", "Verified sandbox merchant record", true);
+    }
+
+    @Test
+    void manualVerificationWorksWithoutTelegramEvidence() {
+        String id = id();
+        new TransactionTemplate(manager).executeWithoutResult(status -> service.claimReviewedBankRecord(
+                id, "SUB-QA", BigDecimal.ONE, "USD", "fixture", verifiedBankRecord()));
+        var row = evidence.findById(id).orElseThrow();
+        assertFalse(row.isTrusted());
+        assertEquals("ADMIN_BANK_RECORD", row.getVerificationMethod());
+        assertEquals("fixture", row.getVerifiedBy());
+        assertEquals("PAID", row.getOutcome());
     }
 
     @Test
@@ -99,7 +115,7 @@ class PaymentEvidenceIntegrityMySqlTests {
         new TransactionTemplate(manager).executeWithoutResult(status -> {
             var row = service.record(id, BigDecimal.ONE, "USD", "-1001", messageId(id), "42", true,
                     Instant.now(), "FIXTURE", "247", null, null);
-            service.claim(row, "SUB-QA", BigDecimal.ONE, "USD");
+            service.claimReviewedBankRecord(id, "SUB-QA", BigDecimal.ONE, "USD", "fixture", verifiedBankRecord());
             status.setRollbackOnly();
         });
         assertTrue(evidence.findById(id).isEmpty());

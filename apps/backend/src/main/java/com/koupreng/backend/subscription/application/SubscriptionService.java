@@ -323,6 +323,14 @@ public class SubscriptionService {
                 payerLast3,
                 now
         );
+        String orderReference = blankToNull(request.getDetectedOrderCode());
+        String remark = blankToNull(request.getRemark());
+        if (orderReference != null || remark != null) {
+            matches = matches.stream()
+                    .filter(order -> orderReference == null || order.getOrderCode().equalsIgnoreCase(orderReference))
+                    .filter(order -> remark == null || order.getOrderCode().equalsIgnoreCase(remark))
+                    .toList();
+        }
         if (matches.isEmpty()) {
             if (evidence != null) evidence.setOutcome("UNMATCHED");
             auditDetection("SUBSCRIPTION_PAYMENT_UNMATCHED", null, request, detectedAmount, currency);
@@ -338,7 +346,7 @@ public class SubscriptionService {
             if (evidence != null) evidence.setOutcome("REVIEW_REQUIRED");
             for (Subscription match : matches) {
                 match.setStatus(STATUS_REVIEW_REQUIRED);
-                applyTelegramEvidence(match, request, now, false);
+                applyTelegramEvidence(match, request, now);
             }
             subscriptionRepository.saveAll(matches);
             auditDetection(
@@ -361,11 +369,7 @@ public class SubscriptionService {
         requirePendingMatch(subscription, detectedAmount, currency, payerLast3, now);
         boolean matchingName = request.getPayerName() != null && subscription.getPayerName() != null
                 && normalizedName(request.getPayerName()).equals(normalizedName(subscription.getPayerName()));
-        boolean matchingReference = blankToNull(request.getRemark()) == null
-                || subscription.getOrderCode().equalsIgnoreCase(request.getRemark().trim());
-        matchingReference = matchingReference && (blankToNull(request.getDetectedOrderCode()) == null
-                || subscription.getOrderCode().equalsIgnoreCase(request.getDetectedOrderCode().trim()));
-        boolean hasReference = blankToNull(request.getRemark()) != null || blankToNull(request.getDetectedOrderCode()) != null;
+        boolean hasReference = orderReference != null || remark != null;
         boolean competingTemplate = !hasReference
                 && templatePaymentOrderRepository.hasCompetingPendingPayment(currency, detectedAmount, now);
         Instant alertAt = request.getMerchantMessageAt();
@@ -373,57 +377,19 @@ public class SubscriptionService {
                 && !alertAt.isBefore(subscription.getCreatedAt().minusSeconds(60))
                 && !alertAt.isAfter(now.plusSeconds(60)) && alertAt.isBefore(subscription.getPaymentExpiresAt());
         boolean trusted = evidence != null ? evidence.isTrusted() : request.isTrustedMerchantAlert();
-        if (!paymentProperties.isAutoConfirmTelegramDetected() || !trusted
-                || !matchingName || !matchingReference || !validWindow || competingTemplate) {
-            subscription.setStatus(STATUS_REVIEW_REQUIRED);
-            applyTelegramEvidence(subscription, request, now, false);
-            subscriptionRepository.save(subscription);
-            if (evidence != null) {
-                evidence.setOutcome("REVIEW_REQUIRED");
-                // Only non-conflicting unique matches can be associated automatically for manual review.
-                if (matchingName && matchingReference && trusted && validWindow && !competingTemplate) {
-                    evidence.setOrderCode(subscription.getOrderCode());
-                }
-            }
-            auditDetection("SUBSCRIPTION_PAYMENT_REVIEW_REQUIRED", subscription.getId(), request, detectedAmount, currency);
-            return detectionResponse(subscription, SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
-                    "Merchant evidence recorded. Automatic policy is disabled or evidence requires manual review.");
+        boolean matched = matchingName && trusted && validWindow && !competingTemplate;
+        subscription.setStatus(STATUS_REVIEW_REQUIRED);
+        applyTelegramEvidence(subscription, request, now);
+        subscriptionRepository.save(subscription);
+        if (evidence != null) {
+            evidence.setOutcome(matched ? "MATCHED_UNVERIFIED" : "REVIEW_REQUIRED");
+            if (matched) evidence.setOrderCode(subscription.getOrderCode());
         }
-        if (evidence != null) evidenceService.claim(evidence, subscription.getOrderCode(), detectedAmount, currency);
-        deactivateActiveSubscriptions(subscription.getUser().getId(), now);
-        applyTelegramEvidence(subscription, request, now, true);
-        subscription.setPaidAmount(detectedAmount);
-        subscription.setPaymentStatus(PAYMENT_STATUS_PAID);
-        subscription.setPaidAt(now);
-        subscription.setConfirmedAt(now);
-        subscription.setStartDate(now);
-        subscription.setEndDate(endDate(now, PackageSnapshot.resolve(subscription).getDurationDays()));
-        subscription.setStatus(STATUS_ACTIVE);
-        subscription.setActive(true);
-        Subscription saved = subscriptionRepository.save(subscription);
-        saved.setConfirmSource("TRUSTED_TELEGRAM_MERCHANT_ALERT");
-        if (paymentNotifications != null) paymentNotifications.subscriptionConfirmed(saved);
-
-        if (auditLogService != null) {
-            auditLogService.logSystemEvent(
-                    "SUBSCRIPTION_PAYMENT_CONFIRMED",
-                    "SUBSCRIPTION",
-                    saved.getId(),
-                    "Subscription payment confirmed from trusted Telegram evidence",
-                    Map.of(
-                            "orderCode", saved.getOrderCode(),
-                            "transactionId", transactionId,
-                            "amount", detectedAmount,
-                            "currency", currency,
-                            "payerAccountLast3", payerLast3
-                    )
-            );
-        }
-        return detectionResponse(
-                saved,
-                SubscriptionPaymentDetectionStatus.PAID,
-                "Subscription payment confirmed and package activated."
-        );
+        if (paymentNotifications != null) paymentNotifications.subscriptionReview(subscription, matched);
+        auditDetection("SUBSCRIPTION_PAYMENT_REVIEW_REQUIRED", subscription.getId(), request, detectedAmount, currency);
+        return detectionResponse(subscription, SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
+                matched ? "Payment matched. Waiting for verification against the official bank record."
+                        : "Merchant evidence requires manual review.");
     }
 
     private void requirePendingMatch(
@@ -452,12 +418,8 @@ public class SubscriptionService {
     private void applyTelegramEvidence(
             Subscription subscription,
             TelegramDetectSubscriptionPaymentRequest request,
-            Instant now,
-            boolean claimTransaction
+            Instant now
     ) {
-        subscription.setPaywayTransactionId(claimTransaction
-                ? requireText(request.getPaywayTransactionId(), "PayWay transaction ID is required")
-                : null);
         subscription.setPaywayApprovalCode(blankToNull(request.getPaywayApprovalCode()));
         subscription.setPaywayPayerName(blankToNull(request.getPayerName()));
         subscription.setPaymentDetectedAt(now);
@@ -556,9 +518,12 @@ public class SubscriptionService {
         if (PAYMENT_STATUS_PAID.equalsIgnoreCase(subscription.getPaymentStatus())) {
             return confirmationResponse(subscription, "Subscription payment is already confirmed.");
         }
-        if ((!STATUS_PENDING_PAYMENT.equalsIgnoreCase(subscription.getStatus())
-                && !STATUS_REVIEW_REQUIRED.equalsIgnoreCase(subscription.getStatus()))
-                || !PAYMENT_STATUS_PENDING.equalsIgnoreCase(subscription.getPaymentStatus())) {
+        boolean pending = PAYMENT_STATUS_PENDING.equals(subscription.getPaymentStatus())
+                && (STATUS_PENDING_PAYMENT.equals(subscription.getStatus())
+                    || STATUS_REVIEW_REQUIRED.equals(subscription.getStatus()));
+        boolean expired = STATUS_EXPIRED.equals(subscription.getPaymentStatus())
+                && STATUS_EXPIRED.equals(subscription.getStatus()) && subscription.getOrderCode() != null;
+        if (!pending && !expired) {
             throw new ApiException(
                     HttpStatus.CONFLICT,
                     "SUBSCRIPTION_NOT_PENDING",
@@ -573,12 +538,9 @@ public class SubscriptionService {
         }
 
         Instant now = Instant.now();
-        if (subscription.getPaymentExpiresAt() == null || !subscription.getPaymentExpiresAt().isAfter(now)) {
-            throw new ApiException(HttpStatus.CONFLICT, "Expired subscription requires separate payment investigation");
-        }
         if (evidenceService != null) {
-            PaymentEvidence evidence = evidenceService.manualEvidence(request.paywayTransactionId(), orderCode);
-            evidenceService.claim(evidence, orderCode, paidAmount, subscription.getCurrency());
+            PaymentEvidence evidence = evidenceService.claimReviewedBankRecord(request.paywayTransactionId(), orderCode,
+                    paidAmount, subscription.getCurrency(), request.confirmedBy(), request.bankRecord());
             subscription.setPaywayTransactionId(evidence.getTransactionId());
             subscription.setPaywayApprovalCode(evidence.getApprovalCode());
         }
@@ -692,11 +654,11 @@ public class SubscriptionService {
         if (amount == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount is required");
         }
-        normalizeCurrency(currency);
+        int scale = "KHR".equals(normalizeCurrency(currency)) ? 0 : 2;
         try {
-            return amount.setScale(2, RoundingMode.UNNECESSARY);
+            return amount.setScale(scale, RoundingMode.UNNECESSARY);
         } catch (ArithmeticException exception) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount must have at most two decimal places");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Payment amount has invalid precision for its currency");
         }
     }
 

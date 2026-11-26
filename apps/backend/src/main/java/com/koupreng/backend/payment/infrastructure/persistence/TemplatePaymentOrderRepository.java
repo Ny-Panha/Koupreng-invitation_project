@@ -24,6 +24,14 @@ public interface TemplatePaymentOrderRepository extends JpaRepository<TemplatePa
     boolean hasCompetingPendingPayment(@Param("currency") String currency, @Param("amount") java.math.BigDecimal amount,
                                       @Param("now") Instant now);
 
+    @org.springframework.data.jpa.repository.Modifying
+    @Query("""
+            update TemplatePaymentOrder o
+            set o.status = com.koupreng.backend.payment.domain.PaymentStatus.EXPIRED
+            where o.status = com.koupreng.backend.payment.domain.PaymentStatus.PENDING and o.expiresAt <= :now
+            """)
+    int expirePendingPayments(@Param("now") Instant now);
+
     Optional<TemplatePaymentOrder> findByOrderCode(String orderCode);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)

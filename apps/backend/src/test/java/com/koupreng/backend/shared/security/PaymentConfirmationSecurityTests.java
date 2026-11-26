@@ -30,7 +30,9 @@ class PaymentConfirmationSecurityTests {
               "orderCode": "SUB2609151234",
               "amount": 19.00,
               "confirmedBy": "admin",
-              "itemType": "SUBSCRIPTION"
+              "itemType": "SUBSCRIPTION",
+              "paywayTransactionId": "QA-123",
+              "bankRecord": {"currency":"USD","merchant":"KOEURNG VIREAK","notes":"Portal record", "successfulAndUnreversed":true}
             }
             """;
 

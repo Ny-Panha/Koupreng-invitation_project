@@ -149,6 +149,9 @@ public class RsvpService {
         return summaryForInvitation(invitationId);
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.koupreng.backend.notification.application.TelegramOwnerNotifications telegramNotifications;
+
     @Transactional
     public RsvpResponse update(
             Authentication authentication,
@@ -168,12 +171,16 @@ public class RsvpService {
         Integer requestedAttendeeCount = request.getAttendeeCount() == null
                 ? rsvp.getAttendeeCount()
                 : request.getAttendeeCount();
+        int count = attendeeCount(status, requestedAttendeeCount);
+        boolean changed = status != rsvp.getResponseStatus() || !java.util.Objects.equals(count, rsvp.getAttendeeCount());
         rsvp.setResponseStatus(status);
-        rsvp.setAttendeeCount(attendeeCount(status, requestedAttendeeCount));
+        rsvp.setAttendeeCount(count);
         if (request.getMessage() != null) {
             rsvp.setMessage(trimToNull(request.getMessage()));
         }
-        return RsvpResponse.from(rsvpRepository.save(rsvp));
+        Rsvp saved = rsvpRepository.save(rsvp);
+        if (changed && telegramNotifications != null) telegramNotifications.rsvp(saved);
+        return RsvpResponse.from(saved);
     }
 
     @Transactional
@@ -227,12 +234,16 @@ public class RsvpService {
         int attendeeCount = attendeeCount(request.getResponseStatus(), request.getAttendeeCount());
         Rsvp rsvp = rsvpRepository.findByInvitationIdAndGuestId(invitation.getId(), guest.getId())
                 .orElseGet(Rsvp::new);
+        boolean changed = request.getResponseStatus() != rsvp.getResponseStatus()
+                || !java.util.Objects.equals(attendeeCount, rsvp.getAttendeeCount());
         rsvp.setInvitation(invitation);
         rsvp.setGuest(guest);
         rsvp.setResponseStatus(request.getResponseStatus());
         rsvp.setAttendeeCount(attendeeCount);
         rsvp.setMessage(trimToNull(request.getMessage()));
-        return rsvpRepository.save(rsvp);
+        Rsvp saved = rsvpRepository.save(rsvp);
+        if (changed && telegramNotifications != null) telegramNotifications.rsvp(saved);
+        return saved;
     }
 
     private Optional<Guest> reusableGuest(Long invitationId, RsvpRequest request) {

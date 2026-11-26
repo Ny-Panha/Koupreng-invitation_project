@@ -240,7 +240,7 @@ function Checkout({ checkout, saving, copy, lang, onChange, onSubmit, onRefresh,
     : copy('បន្តការទូទាត់តាម ABA', 'Complete your payment with ABA');
   const message = success ? copy('កញ្ចប់ត្រូវបានបើកដំណើរការដោយជោគជ័យ។', 'Subscription activated successfully.')
     : reviewing ? copy('ត្រូវការអ្នកគ្រប់គ្រងពិនិត្យស្ថានភាពទូទាត់។', 'Payment status needs administrator review.')
-    : checkout.stage === 'expired' ? copy('ការទូទាត់នេះផុតកំណត់។ សូមពិនិត្យប្រវត្តិមុនបង្កើតការទូទាត់ថ្មី។', 'This order has expired. Check your history before starting another payment.')
+    : checkout.stage === 'expired' ? copy('ការទូទាត់នេះផុតកំណត់។ សូមពិនិត្យប្រវត្តិមុនបង្កើតការទូទាត់ថ្មី។', 'This order has expired. If you already paid, contact support with your ABA transaction ID before trying again.')
     : checkout.stage === 'failed' ? copy('ការទូទាត់នេះមិនបានបញ្ចប់។ សូមពិនិត្យស្ថានភាពមុនព្យាយាមម្ដងទៀត។', 'This order did not complete. Check its status before retrying.')
     : grant ? copy('សិទ្ធិសាកល្បងពីអ្នកគ្រប់គ្រង មិនមែនជាការទូទាត់ទេ។', 'Administrator demo access is not a payment.')
     : copy('កំពុងរង់ចាំការបញ្ជាក់ការទូទាត់។ ការផ្ញើព័ត៌មានមិនធ្វើឱ្យកញ្ចប់សកម្មភ្លាមៗទេ។', 'Waiting for payment confirmation. Submitting payer details does not activate your plan.');
@@ -277,6 +277,10 @@ function Checkout({ checkout, saving, copy, lang, onChange, onSubmit, onRefresh,
         {checkout.validationError && <p id="checkout-error" ref={errorMessage} tabIndex={-1} className="pkg-checkout-error" role="alert"><AlertCircle size={16} aria-hidden="true"/>{checkout.validationError}</p>}
       </form> : <section className="pkg-checkout-status" data-stage={checkout.stage} aria-label={copy('ស្ថានភាពការទូទាត់', 'Payment status')}>
         <span className="pkg-state-icon" aria-hidden="true"><StatusIcon size={30}/></span><h3>{headline}</h3><span className={`pkg-status ${checkout.stage}`}>{statusLabel(checkout, copy)}</span><p role="status">{message}</p>
+        {waiting && <p>{copy(
+          "សូមពិនិត្យចំនួនទឹកប្រាក់ និងរូបិយប័ណ្ណនៅ ABA PayWay មុនពេលបង់។ ប្រសិនបើមានប្រអប់កំណត់ចំណាំ សូមបញ្ចូលលេខកូដបញ្ជាទិញ។",
+          "Check the amount and currency in ABA PayWay before paying. If a remark field is available, enter your order code."
+        )}</p>}
         {waiting && expiry && <p className="pkg-payment-deadline">{copy('សុពលភាពការទូទាត់ដល់', 'Payment window ends')} <time dateTime={checkout.expiresAt}>{new Intl.DateTimeFormat(lang==='en'?'en-GB':'km-KH',{dateStyle:'medium',timeStyle:'short'}).format(expiry)}</time></p>}
         {checkout.validationError && <p className="pkg-checkout-error" role="alert">{checkout.validationError}</p>}
         {(waiting || reviewing) && <button type="button" className="pkg-refresh-status" onClick={refresh} disabled={checking}><RefreshCw size={16} aria-hidden="true"/>{checking ? copy('កំពុងពិនិត្យ…', 'Checking…') : copy('ពិនិត្យស្ថានភាពទូទាត់', 'Check payment status')}</button>}

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -139,7 +140,7 @@ class SubscriptionServiceTests {
     }
 
     @Test
-    void exactTelegramEvidenceActivatesOnePendingSubscriptionAtomically() {
+    void exactTelegramEvidenceCannotActivateEvenWithLegacyAutoConfirmFlag() {
         Fixture fixture = fixture();
         fixture.properties.setAutoConfirmTelegramDetected(true);
         Subscription pending = pendingSubscription(fixture.user, "PRO", "199.00", "247");
@@ -151,15 +152,11 @@ class SubscriptionServiceTests {
 
         var response = fixture.service.detectTelegramPayment(detectionRequest("199.00", "247", "trx-1"));
 
-        assertEquals(SubscriptionPaymentDetectionStatus.PAID, response.status());
-        assertEquals("PAID", pending.getPaymentStatus());
-        assertEquals("ACTIVE", pending.getStatus());
-        assertEquals("trx-1", pending.getPaywayTransactionId());
-        assertEquals("383331", pending.getPaywayApprovalCode());
-        assertTrue(pending.isActive());
-        assertNotNull(pending.getStartDate());
-        assertNotNull(pending.getEndDate());
-        assertEquals(365, java.time.temporal.ChronoUnit.DAYS.between(pending.getStartDate(), pending.getEndDate()));
+        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED, response.status());
+        assertEquals("PENDING", pending.getPaymentStatus());
+        assertEquals("REVIEW_REQUIRED", pending.getStatus());
+        assertNull(pending.getPaywayTransactionId());
+        assertFalse(pending.isActive());
         verify(fixture.subscriptionRepository).save(pending);
     }
 
@@ -207,8 +204,11 @@ class SubscriptionServiceTests {
             case "oldAlert" -> request.setMerchantMessageAt(Instant.now().minusSeconds(3600));
             default -> throw new IllegalArgumentException();
         }
-        assertEquals(SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED,
-                fixture.service.detectTelegramPayment(request).status());
+        var expected = switch (defect) {
+            case "reference", "orderReference" -> SubscriptionPaymentDetectionStatus.UNMATCHED;
+            default -> SubscriptionPaymentDetectionStatus.REVIEW_REQUIRED;
+        };
+        assertEquals(expected, fixture.service.detectTelegramPayment(request).status());
         assertFalse(pending.isActive());
         assertEquals(null, pending.getStartDate());
     }

@@ -20,7 +20,18 @@ public class PaymentNotificationService {
         this.properties = properties;
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private TelegramOwnerNotifications ownerNotifications;
+
+    public void subscriptionReview(Subscription order, boolean matched) {
+        if (ownerNotifications != null) ownerNotifications.subscription(order, matched ? "matched" : "review",
+                matched ? "បានផ្គូផ្គងការទូទាត់ / Payment matched. Bank verification pending."
+                        : "ត្រូវការពិនិត្យការទូទាត់ / Payment requires review");
+    }
+
     public void subscriptionPending(Subscription order) {
+        if (ownerNotifications != null) ownerNotifications.subscription(order, "pending",
+                "កំពុងរង់ចាំការទូទាត់ / Subscription payment pending");
         enqueue("subscription-pending:" + order.getOrderCode(), "NEW SUBSCRIPTION PAYMENT",
                 "Order: " + order.getOrderCode() + "\nUser: " + order.getUser().getId()
                 + "\nPackage: " + order.getSubscriptionPackage().getCode()
@@ -39,6 +50,8 @@ public class PaymentNotificationService {
     }
 
     public void subscriptionConfirmed(Subscription order) {
+        if (ownerNotifications != null) ownerNotifications.subscription(order, "activated",
+                "កញ្ចប់សេវាកម្មបានដំណើរការ / Payment verified and subscription activated");
         enqueue("subscription-paid:" + order.getOrderCode(), "SUBSCRIPTION CONFIRMED",
                 "Order: " + order.getOrderCode() + "\nPackage: " + order.getSubscriptionPackage().getCode()
                 + "\nAmount: " + order.getCurrency() + " " + order.getPaidAmount()
