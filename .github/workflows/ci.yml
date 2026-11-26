@@ -285,7 +285,7 @@ jobs:
         working-directory: apps/backend
         run: |
           chmod +x mvnw
-          ./mvnw --batch-mode -Dtest=Phase7CollaborationMySqlTests,Phase9MediaMySqlTests test
+          ./mvnw --batch-mode -Dtest=Phase7CollaborationMySqlTests,Phase9MediaMySqlTests,Phase15PublishingAccessMySqlTests test
 
       - name: Upload HTTP integration reports
         if: always()
