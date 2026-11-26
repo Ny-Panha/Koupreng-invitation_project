@@ -407,7 +407,9 @@ async def process_telegram_update(update: dict):
     if ADMIN_BOT_ENABLED and (command_name(text) in {"/start", "/help", "/status", "/payments",
                                                    "/pending", "/review", "/stats"}):
         if sender_id in TELEGRAM_ALLOWED_ADMIN_IDS and not sender.get("is_bot"):
-            await send_message(chat_id, "Open the authenticated Koupreng Admin Dashboard to review payments.", message_id)
+            await send_message(
+                chat_id, "Open the authenticated Koupreng Admin Dashboard to review payments.", message_id
+            )
         return {"ok": True}
     if ADMIN_BOT_ENABLED and not group_allowed(chat_id):
         return {"ok": True}

@@ -315,6 +315,20 @@
     "isLegacy": false
   },
   {
+    "path": "/api/v1/telegram/user/link",
+    "method": "POST",
+    "tag": "telegram-owner-controller",
+    "summary": "Link",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/telegram/user/link",
+    "method": "DELETE",
+    "tag": "telegram-owner-controller",
+    "summary": "Disconnect",
+    "isLegacy": false
+  },
+  {
     "path": "/api/v1/public/invitations/{slug}/rsvp",
     "method": "POST",
     "tag": "RSVP",
@@ -627,13 +641,6 @@
     "method": "POST",
     "tag": "Subscriptions",
     "summary": "Reconcile trusted Telegram evidence for a subscription payment",
-    "isLegacy": false
-  },
-  {
-    "path": "/api/v1/internal/subscription-payments/confirm",
-    "method": "POST",
-    "tag": "Subscriptions",
-    "summary": "Confirm a reviewed subscription with a recorded merchant transaction",
     "isLegacy": false
   },
   {
@@ -1159,6 +1166,13 @@
     "method": "GET",
     "tag": "Payments",
     "summary": "Get an owned template payment order",
+    "isLegacy": false
+  },
+  {
+    "path": "/api/v1/telegram/user/settings",
+    "method": "GET",
+    "tag": "telegram-owner-controller",
+    "summary": "Settings",
     "isLegacy": false
   },
   {

@@ -369,14 +369,29 @@ final class OpenApiExamples {
                     {"reference":"ABA-TRANSACTION-REFERENCE"}
                     """);
             case "ConfirmTemplatePaymentRequest" -> one("adminReview", "Requires a real pending order and administrator authorization", """
-                    {"orderCode":"<pending-order-code>","amount":0.01,"confirmedBy":"admin-demo"}
+                    {
+                      "orderCode":"<pending-order-code>","amount":0.01,"confirmedBy":"admin-demo",
+                      "paywayTransactionId":"<bank-transaction-id>",
+                      "bankRecord":{"currency":"USD","merchant":"Example Merchant","notes":"Matched official merchant record",
+                        "successfulAndUnreversed":true}
+                    }
                     """);
             case "ConfirmPaymentRequest" -> one("subscriptionReview", "Confirm a real server-priced order after administrator review", """
                     {
                       "orderCode": "<pending-order-code>",
                       "amount": 19.00,
                       "confirmedBy": "admin-demo",
-                      "itemType": "SUBSCRIPTION"
+                      "itemType": "SUBSCRIPTION",
+                      "paywayTransactionId": "<bank-transaction-id>",
+                      "bankRecord": {"currency":"USD","merchant":"Example Merchant","notes":"Matched official merchant record",
+                        "successfulAndUnreversed":true}
+                    }
+                    """);
+            case "LegacyBankVerification" -> one("bankRecordReview", "Verify a real order against official merchant records", """
+                    {
+                      "amount":19.00,"paywayTransactionId":"<bank-transaction-id>",
+                      "bankRecord":{"currency":"USD","merchant":"Example Merchant","notes":"Matched official merchant record",
+                        "successfulAndUnreversed":true}
                     }
                     """);
             case "TelegramDetectPaymentRequest" -> one("adminReview", "Safe placeholder requiring administrator authorization", """

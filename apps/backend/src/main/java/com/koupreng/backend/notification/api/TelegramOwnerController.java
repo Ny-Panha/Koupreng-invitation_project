@@ -1,6 +1,7 @@
 package com.koupreng.backend.notification.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.Hidden;
 import com.koupreng.backend.notification.application.TelegramOwnerService;
 import com.koupreng.backend.shared.response.ApiResponse;
 import org.springframework.http.CacheControl;
@@ -35,6 +36,7 @@ public class TelegramOwnerController {
         return ResponseEntity.noContent().build();
     }
 
+    @Hidden
     @PostMapping("/webhook")
     public Map<String, Object> webhook(
             @RequestHeader(value = "X-Telegram-Bot-Api-Secret-Token", required = false) String secret,

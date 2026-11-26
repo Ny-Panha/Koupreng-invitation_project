@@ -68,6 +68,8 @@ services:
       PUBLIC_UPLOAD_BASE_URL: /uploads
       FRONTEND_BASE_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
       ABA_PAYWAY_STATIC_LINK: ${ABA_PAYWAY_STATIC_LINK:?Set ABA_PAYWAY_STATIC_LINK in .env}
+      # Keep legacy rollback deployments in manual verification mode.
+      AUTO_CONFIRM_TELEGRAM_DETECTED: "false"
       TELEGRAM_BOT_INTERNAL_URL: http://telegram-bot:8000
       TELEGRAM_ALLOWED_GROUP_IDS: ${TELEGRAM_ALLOWED_GROUP_IDS:-}
       TELEGRAM_ALLOWED_PAYMENT_BOT_IDS: ${TELEGRAM_ALLOWED_PAYMENT_BOT_IDS:-}

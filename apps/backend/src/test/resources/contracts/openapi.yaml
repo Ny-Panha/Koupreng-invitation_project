@@ -1652,6 +1652,27 @@ paths:
                 $ref: "#/components/schemas/ApiResponseCreateTemplatePaymentResponse"
       security:
       - bearerAuth: []
+  /api/v1/telegram/user/link:
+    post:
+      tags:
+      - telegram-owner-controller
+      summary: Link
+      operationId: link
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseConnectLink"
+    delete:
+      tags:
+      - telegram-owner-controller
+      summary: Disconnect
+      operationId: disconnect
+      responses:
+        "200":
+          description: OK
   /api/v1/public/invitations/{slug}/rsvp:
     post:
       tags:
@@ -3345,35 +3366,6 @@ paths:
                 $ref: "#/components/schemas/ApiResponseSubscriptionPaymentDetectionResponse"
       security:
       - adminPaymentSecret: []
-  /api/v1/internal/subscription-payments/confirm:
-    post:
-      tags:
-      - Subscriptions
-      summary: Confirm a reviewed subscription with a recorded merchant transaction
-      operationId: confirmInternal
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ConfirmPaymentRequest"
-            examples:
-              subscriptionReview:
-                summary: Confirm a real server-priced order after administrator review
-                value:
-                  orderCode: <pending-order-code>
-                  amount: 19.0
-                  confirmedBy: admin-demo
-                  itemType: SUBSCRIPTION
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ApiResponsePaymentConfirmResponse"
-      security:
-      - adminPaymentSecret: []
   /api/v1/events:
     get:
       tags:
@@ -4358,6 +4350,12 @@ paths:
                   orderCode: <pending-order-code>
                   amount: 0.01
                   confirmedBy: admin-demo
+                  paywayTransactionId: <bank-transaction-id>
+                  bankRecord:
+                    currency: USD
+                    merchant: Example Merchant
+                    notes: Matched official merchant record
+                    successfulAndUnreversed: true
         required: true
       responses:
         "200":
@@ -4385,15 +4383,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: "#/components/schemas/LegacyBankVerification"
             examples:
-              adminReview:
-                summary: Confirm a pending order through the legacy path endpoint
-                description: adminReview
+              bankRecordReview:
+                summary: Verify a real order against official merchant records
                 value:
                   amount: 19.0
-                  confirmedBy: admin-demo
+                  paywayTransactionId: <bank-transaction-id>
+                  bankRecord:
+                    currency: USD
+                    merchant: Example Merchant
+                    notes: Matched official merchant record
+                    successfulAndUnreversed: true
+        required: true
       responses:
         "200":
           description: OK
@@ -4424,6 +4426,12 @@ paths:
                   amount: 19.0
                   confirmedBy: admin-demo
                   itemType: SUBSCRIPTION
+                  paywayTransactionId: <bank-transaction-id>
+                  bankRecord:
+                    currency: USD
+                    merchant: Example Merchant
+                    notes: Matched official merchant record
+                    successfulAndUnreversed: true
         required: true
       responses:
         "200":
@@ -5511,6 +5519,19 @@ paths:
                 $ref: "#/components/schemas/ApiResponseTemplatePaymentStatusResponse"
       security:
       - bearerAuth: []
+  /api/v1/telegram/user/settings:
+    get:
+      tags:
+      - telegram-owner-controller
+      summary: Settings
+      operationId: settings
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseSettings"
   /api/v1/public/packages:
     get:
       tags:
@@ -9856,6 +9877,26 @@ components:
           - CANCELLED
           - EXPIRED
           - REJECTED
+    ApiResponseConnectLink:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/ConnectLink"
+        timestamp:
+          type: string
+          format: date-time
+    ConnectLink:
+      type: object
+      properties:
+        url:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
     RsvpRequest:
       type: object
       properties:
@@ -10864,33 +10905,6 @@ components:
           type: string
         active:
           type: boolean
-    ConfirmPaymentRequest:
-      type: object
-      properties:
-        orderCode:
-          type: string
-          maxLength: 50
-          minLength: 0
-        amount:
-          type: number
-          minimum: 0.01
-        confirmedBy:
-          type: string
-          maxLength: 120
-          minLength: 0
-        itemType:
-          type: string
-          maxLength: 30
-          minLength: 0
-        paywayTransactionId:
-          type: string
-          maxLength: 100
-          minLength: 0
-      required:
-      - amount
-      - confirmedBy
-      - itemType
-      - orderCode
     ContactRequest:
       type: object
       properties:
@@ -11275,6 +11289,27 @@ components:
       required:
       - detectedBy
       - rawMessage
+    BankRecordVerification:
+      type: object
+      properties:
+        currency:
+          type: string
+          minLength: 1
+          pattern: USD|KHR
+        merchant:
+          type: string
+          maxLength: 120
+          minLength: 0
+        notes:
+          type: string
+          maxLength: 280
+          minLength: 0
+        successfulAndUnreversed:
+          type: boolean
+      required:
+      - currency
+      - merchant
+      - notes
     ConfirmTemplatePaymentRequest:
       type: object
       properties:
@@ -11291,9 +11326,56 @@ components:
           type: string
           maxLength: 100
           minLength: 0
+        bankRecord:
+          $ref: "#/components/schemas/BankRecordVerification"
       required:
       - amount
       - confirmedBy
+      - orderCode
+    LegacyBankVerification:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 0.01
+        paywayTransactionId:
+          type: string
+          maxLength: 100
+          minLength: 0
+        bankRecord:
+          $ref: "#/components/schemas/BankRecordVerification"
+      required:
+      - amount
+      - bankRecord
+      - paywayTransactionId
+    ConfirmPaymentRequest:
+      type: object
+      properties:
+        orderCode:
+          type: string
+          maxLength: 50
+          minLength: 0
+        amount:
+          type: number
+          minimum: 0.01
+        confirmedBy:
+          type: string
+          maxLength: 120
+          minLength: 0
+        itemType:
+          type: string
+          maxLength: 30
+          minLength: 0
+        paywayTransactionId:
+          type: string
+          maxLength: 100
+          minLength: 0
+        bankRecord:
+          $ref: "#/components/schemas/BankRecordVerification"
+      required:
+      - amount
+      - confirmedBy
+      - itemType
       - orderCode
     CreateNotificationRequest:
       type: object
@@ -11737,6 +11819,25 @@ components:
           format: date-time
         message:
           type: string
+    ApiResponseSettings:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Settings"
+        timestamp:
+          type: string
+          format: date-time
+    Settings:
+      type: object
+      properties:
+        available:
+          type: boolean
+        connected:
+          type: boolean
     ApiResponseListPublicPackageResponse:
       type: object
       properties:

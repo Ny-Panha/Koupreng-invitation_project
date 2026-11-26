@@ -356,7 +356,7 @@ public class InvitationService {
         return toResponse(save(invitation));
     }
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     private com.koupreng.backend.notification.application.TelegramOwnerNotifications telegramNotifications;
 
     @Transactional

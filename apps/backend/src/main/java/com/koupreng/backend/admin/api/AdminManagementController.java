@@ -513,7 +513,7 @@ public class AdminManagementController {
     public ResponseEntity<ApiResponse<PaymentConfirmResponse>> confirmPayment(
             @PathVariable String orderCode,
             Authentication authentication,
-            @jakarta.validation.Valid @RequestBody LegacyBankVerification body
+            @Valid @RequestBody LegacyBankVerification body
     ) {
         return ResponseEntity.ok(ApiResponse.success(
                 "Payment confirmed successfully",
@@ -525,7 +525,7 @@ public class AdminManagementController {
     public record LegacyBankVerification(
             @jakarta.validation.constraints.NotNull @jakarta.validation.constraints.DecimalMin("0.01") BigDecimal amount,
             @jakarta.validation.constraints.NotBlank @jakarta.validation.constraints.Size(max = 100) String paywayTransactionId,
-            @jakarta.validation.Valid @jakarta.validation.constraints.NotNull
+            @Valid @jakarta.validation.constraints.NotNull
             com.koupreng.backend.payment.api.dto.BankRecordVerification bankRecord
     ) {}
 }
